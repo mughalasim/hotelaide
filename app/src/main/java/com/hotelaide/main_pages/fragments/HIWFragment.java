@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.hotelaide.R;
 import com.hotelaide.utils.Helpers;
 
-import static com.hotelaide.main_pages.eo_activities.HowItWorksActivity.BTN_TXT;
-import static com.hotelaide.main_pages.eo_activities.HowItWorksActivity.DESC;
-import static com.hotelaide.main_pages.eo_activities.HowItWorksActivity.IMAGE;
+//import static com.hotelaide.main_pages.eo_activities.HowItWorksActivity.BTN_TXT;
+//import static com.hotelaide.main_pages.eo_activities.HowItWorksActivity.DESC;
+//import static com.hotelaide.main_pages.eo_activities.HowItWorksActivity.IMAGE;
 
 public class HIWFragment extends Fragment {
 
@@ -39,9 +39,9 @@ public class HIWFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            imageID = getArguments().getInt(IMAGE);
-            desc = getArguments().getString(DESC);
-            btn_txt = getArguments().getString(BTN_TXT);
+//            imageID = getArguments().getInt(IMAGE);
+//            desc = getArguments().getString(DESC);
+//            btn_txt = getArguments().getString(BTN_TXT);
 
             Helpers.LogThis(TAG_LOG, getArguments().toString());
         }

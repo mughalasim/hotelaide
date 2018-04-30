@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hotelaide.R;
-import com.hotelaide.main_pages.fragments.GalleryViewFragment;
+//import com.hotelaide.main_pages.fragments.GalleryViewFragment;
 import com.hotelaide.services.TrackingService;
 import com.hotelaide.utils.Helpers;
 import retrofit2.Call;
@@ -43,7 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.main_pages.activities.RestaurantDetailsActivity.STR_SHARE_LINK;
-import static com.hotelaide.main_pages.eo_activities.RestaurantDetailsActivity.STR_SHARE_LINK;
+//import static com.hotelaide.main_pages.eo_activities.RestaurantDetailsActivity.STR_SHARE_LINK;
 
 public class GalleryViewActivity extends AppCompatActivity {
     private Helpers helper;
@@ -267,8 +267,8 @@ public class GalleryViewActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("image_urls", image_urls.get(i));
 //                    Fragment fragment = new GalleryViewFragment();
-                    fragment.setArguments(bundle);
-                    viewPageradapter.addFragment(fragment);
+//                    fragment.setArguments(bundle);
+//                    viewPageradapter.addFragment(fragment);
                 }
                 viewPager.setAdapter(viewPageradapter);
                 viewPager.setCurrentItem(selected_position);

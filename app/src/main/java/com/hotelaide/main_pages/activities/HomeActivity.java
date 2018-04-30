@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hotelaide.R;
-import com.hotelaide.main_pages.fragments.HomePageFragment;
-import com.hotelaide.main_pages.models.CollectionModel;
+//import com.hotelaide.main_pages.fragments.HomePageFragment;
+//import com.hotelaide.main_pages.models.CollectionModel;
 import com.hotelaide.services.RestaurantService;
 import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
@@ -110,9 +110,9 @@ public class HomeActivity extends ParentActivity {
         String Splits[] = SharedPrefs.getNavigationData().split("~");
         switch (Splits[0]) {
             case STR_NAVIGATION_COLLECTION:
-                startActivity(new Intent(HomeActivity.this, HomePageCollectionActivity.class)
-                        .putExtra("collection_id", Splits[1])
-                );
+//                startActivity(new Intent(HomeActivity.this, HomePageCollectionActivity.class)
+//                        .putExtra("collection_id", Splits[1])
+//                );
                 break;
 
             case STR_NAVIGATION_REST:
@@ -187,7 +187,7 @@ public class HomeActivity extends ParentActivity {
 
     // BUTTON CLICKS ===============================================================================
     public void BTN_FAVOURITES(View view) {
-        startActivity(new Intent(HomeActivity.this, FavoritesActivity.class));
+//        startActivity(new Intent(HomeActivity.this, FavoritesActivity.class));
     }
 
     public void BTN_SEARCH(View view) {
@@ -291,30 +291,30 @@ public class HomeActivity extends ParentActivity {
 
                         for (int i = 0; i < result_length; i++) {
                             JSONObject json_data = jArray.getJSONObject(i);
-                            final CollectionModel collectionModel = new CollectionModel();
+//                            final CollectionModel collectionModel = new CollectionModel();
 
-                            collectionModel.collection_id = json_data.getString("id");
-                            collectionModel.collection_title = json_data.getString("title");
-                            collectionModel.collection_desc = json_data.getString("description");
-                            collectionModel.collection_image = json_data.getString("image");
-                            collectionModel.collection_url = json_data.getString("url");
+//                            collectionModel.collection_id = json_data.getString("id");
+//                            collectionModel.collection_title = json_data.getString("title");
+//                            collectionModel.collection_desc = json_data.getString("description");
+//                            collectionModel.collection_image = json_data.getString("image");
+//                            collectionModel.collection_url = json_data.getString("url");
 
-                            JSONArray rest_ids = json_data.getJSONArray("rest_ids");
-                            if (!rest_ids.isNull(0)) {
-                                for (int x = 0; x < rest_ids.length(); x++) {
-                                    collectionModel.collection_rest_id = rest_ids.optString(x);
-                                    db.setCollectionRestaurants(collectionModel);
-                                }
-                            }
+//                            JSONArray rest_ids = json_data.getJSONArray("rest_ids");
+//                            if (!rest_ids.isNull(0)) {
+//                                for (int x = 0; x < rest_ids.length(); x++) {
+//                                    collectionModel.collection_rest_id = rest_ids.optString(x);
+//                                    db.setCollectionRestaurants(collectionModel);
+//                                }
+//                            }
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString("collection_id", collectionModel.collection_id);
-                            bundle.putString("collection_title", collectionModel.collection_title);
-                            bundle.putString("collection_desc", collectionModel.collection_desc);
-                            bundle.putString("collection_image", collectionModel.collection_image);
-                            Fragment fragment = new HomePageFragment();
-                            fragment.setArguments(bundle);
-                            viewPageradapter.addFragment(fragment);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString("collection_id", collectionModel.collection_id);
+//                            bundle.putString("collection_title", collectionModel.collection_title);
+//                            bundle.putString("collection_desc", collectionModel.collection_desc);
+//                            bundle.putString("collection_image", collectionModel.collection_image);
+//                            Fragment fragment = new HomePageFragment();
+//                            fragment.setArguments(bundle);
+//                            viewPageradapter.addFragment(fragment);
                         }
 
                         viewPager.setAdapter(viewPageradapter);

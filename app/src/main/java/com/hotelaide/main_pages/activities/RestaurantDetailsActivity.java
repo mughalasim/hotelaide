@@ -70,14 +70,14 @@ import java.util.Date;
 
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.adapters.GalleryAdapter;
+//import com.hotelaide.main_pages.adapters.GalleryAdapter;
 import com.hotelaide.main_pages.adapters.RestaurantAdapter;
-import com.hotelaide.main_pages.adapters.ReviewAdapter;
-import com.hotelaide.main_pages.models.DynamicCardModel;
-import com.hotelaide.main_pages.models.EventModel;
-import com.hotelaide.main_pages.models.GalleryModel;
+//import com.hotelaide.main_pages.adapters.ReviewAdapter;
+//import com.hotelaide.main_pages.models.DynamicCardModel;
+//import com.hotelaide.main_pages.models.EventModel;
+//import com.hotelaide.main_pages.models.GalleryModel;
 import com.hotelaide.main_pages.models.RestaurantModel;
-import com.hotelaide.main_pages.models.ReviewModel;
+//import com.hotelaide.main_pages.models.ReviewModel;
 import com.hotelaide.services.RestaurantService;
 import com.hotelaide.services.TrackingService;
 import com.hotelaide.utils.Database;
@@ -87,7 +87,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.BuildConfig.YUMMY_CARD;
+//import static com.hotelaide.BuildConfig.YUMMY_CARD;
 import static com.hotelaide.utils.Helpers.ADAPTER_DISTANCE;
 import static com.hotelaide.utils.Helpers.FLAG_FALSE;
 import static com.hotelaide.utils.Helpers.FLAG_TRUE;
@@ -115,23 +115,23 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
             restaurant_recyclerView,
             review_recyclerView;
 
-    private final ArrayList<GalleryModel>
-            menuList = new ArrayList<>(),
-            galleryList = new ArrayList<>();
-
+//    private final ArrayList<GalleryModel>
+//            menuList = new ArrayList<>(),
+//            galleryList = new ArrayList<>();
+//
     private final ArrayList<RestaurantModel>
             restaurantsList = new ArrayList<>();
 
-    private final ArrayList<ReviewModel>
-            reviewList = new ArrayList<>();
+//    private final ArrayList<ReviewModel>
+//            reviewList = new ArrayList<>();
 
-    private GalleryAdapter
-            menuAdapter,
-            galleryAdapter;
+//    private GalleryAdapter
+//            menuAdapter,
+//            galleryAdapter;
 
     private RestaurantAdapter restaurant_adapter;
 
-    private ReviewAdapter review_adapter;
+//    private ReviewAdapter review_adapter;
 
     private final LinearLayoutManager
             gallery_layoutManager = new LinearLayoutManager(this),
@@ -215,8 +215,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
             visibleItemCount,
             totalItemCount,
             INT_OFFER_ID;
-
-    private DynamicCardModel globalDynamicCardModel;
+//
+//    private DynamicCardModel globalDynamicCardModel;
 
     private boolean
             bool_loading = true,
@@ -329,8 +329,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
         // Review Screen Items
         review_swiperefresh = findViewById(R.id.swiperefresh);
         review_recyclerView = findViewById(R.id.review_recycler);
-        review_adapter = new ReviewAdapter(reviewList);
-        review_recyclerView.setAdapter(review_adapter);
+//        review_adapter = new ReviewAdapter(reviewList);
+//        review_recyclerView.setAdapter(review_adapter);
         review_recyclerView.setHasFixedSize(true);
         review_recyclerView.setLayoutManager(review_layoutManager);
         DividerItemDecoration dividerItemDecoration =
@@ -362,8 +362,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
 
         // Gallery Images
         RecyclerView gallery_recyclerView = findViewById(R.id.gallery_recycler_small);
-        galleryAdapter = new GalleryAdapter(galleryList);
-        gallery_recyclerView.setAdapter(galleryAdapter);
+//        galleryAdapter = new GalleryAdapter(galleryList);
+//        gallery_recyclerView.setAdapter(galleryAdapter);
         gallery_recyclerView.setHasFixedSize(true);
         gallery_layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         gallery_recyclerView.setLayoutManager(gallery_layoutManager);
@@ -375,8 +375,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
 
         // Menu Gallery Images
         menu_recycler_view = findViewById(R.id.menu_recycler_view);
-        menuAdapter = new GalleryAdapter(menuList);
-        menu_recycler_view.setAdapter(menuAdapter);
+//        menuAdapter = new GalleryAdapter(menuList);
+//        menu_recycler_view.setAdapter(menuAdapter);
         menu_recycler_view.setHasFixedSize(true);
         menu_layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         menu_recycler_view.setLayoutManager(menu_layoutManager);
@@ -455,12 +455,12 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                             "Please make sure you have updated all your details before you may proceed");
 
                 } else {
-                    startActivity(new Intent(RestaurantDetailsActivity.this,
-                            BookReservationActivity.class)
-                            .putExtra("restaurant_id", STR_RESTAURANT_ID)
-                            .putExtra("restaurant_name", STR_RESTAURANT_NAME)
-                            .putExtra("restaurant_image", STR_RESTAURANT_IMAGE)
-                    );
+//                    startActivity(new Intent(RestaurantDetailsActivity.this,
+//                            BookReservationActivity.class)
+//                            .putExtra("restaurant_id", STR_RESTAURANT_ID)
+//                            .putExtra("restaurant_name", STR_RESTAURANT_NAME)
+//                            .putExtra("restaurant_image", STR_RESTAURANT_IMAGE)
+//                    );
                 }
             }
 
@@ -494,12 +494,12 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 if (locationManager != null && helper.validateInternetConnection()) {
                     Activity activity = RestaurantDetailsActivity.this;
-                    activity.startActivity(new Intent(RestaurantDetailsActivity.this, MapActivity.class)
-                            .putExtra("restaurant_latitude", RESTAURANT_LATITUDE)
-                            .putExtra("restaurant_longitude", RESTAURANT_LONGITUDE)
-                            .putExtra("restaurant_name", STR_RESTAURANT_NAME)
-                            .putExtra("restaurant_desc", STR_RESTAURANT_DESCRIPTION)
-                            .putExtra("draw_route", locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)));
+//                    activity.startActivity(new Intent(RestaurantDetailsActivity.this, MapActivity.class)
+//                            .putExtra("restaurant_latitude", RESTAURANT_LATITUDE)
+//                            .putExtra("restaurant_longitude", RESTAURANT_LONGITUDE)
+//                            .putExtra("restaurant_name", STR_RESTAURANT_NAME)
+//                            .putExtra("restaurant_desc", STR_RESTAURANT_DESCRIPTION)
+//                            .putExtra("draw_route", locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)));
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     helper.setTracker(TAG_LOG + " - " + STR_RESTAURANT_ID + " :MAP VIEW");
                 }
@@ -942,11 +942,11 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
 
     // NO ADAPTER DATA TO DISPLAY ==================================================================
     private void noReviews() {
-        reviewList.clear();
-        ReviewModel reviewModel = new ReviewModel();
-        reviewList.add(reviewModel);
+//        reviewList.clear();
+//        ReviewModel reviewModel = new ReviewModel();
+//        reviewList.add(reviewModel);
         review_recyclerView.getRecycledViewPool().clear();
-        review_adapter.notifyDataSetChanged();
+//        review_adapter.notifyDataSetChanged();
     }
 
     private void noRestaurants() {
@@ -1002,7 +1002,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                 restaurant_rating2.setVisibility(View.GONE);
                 txt_restaurant_reviews.setVisibility(View.GONE);
                 restaurant_cuisine_layout.setVisibility(View.GONE);
-                asyncGetRestaurants();
+//                asyncGetRestaurants();
                 break;
         }
 
@@ -1029,7 +1029,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
     // LOCATION TRACKING BEFORE CLAIMING AN OFFER ==================================================
     private void fetchLocationAndClaimOffer() {
         if (RESTAURANT_LATITUDE == 0 || RESTAURANT_LONGITUDE == 0) {
-            asyncGetClaimOfferCount(globalDynamicCardModel);
+//            asyncGetClaimOfferCount(globalDynamicCardModel);
         } else {
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             if (locationManager != null && helper.validateInternetConnection()) {
@@ -1080,7 +1080,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                 Helpers.LogThis(TAG_LOG, "DISTANCE: " + String.valueOf(distanceInMeters));
 
                 if (distanceInMeters < CLAIMING_DISTANCE_ALLOWANCE) {
-                    asyncGetClaimOfferCount(globalDynamicCardModel);
+//                    asyncGetClaimOfferCount(globalDynamicCardModel);
                 } else {
                     helper.myDialog(RestaurantDetailsActivity.this, getString(R.string.txt_alert),
                             "You are not within the range of this restaurant in order to claim its offer");
@@ -1269,23 +1269,23 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                             }
 
                             // GALLERY =============================================================
-                            galleryList.clear();
+//                            galleryList.clear();
                             JSONArray galleryImageArrays = json_data.getJSONArray("gallery");
                             if (!galleryImageArrays.isNull(0)) {
                                 LL_gallery.setVisibility(View.VISIBLE);
                                 for (int v = 0; v < galleryImageArrays.length(); v++) {
                                     JSONObject galleryObject = galleryImageArrays.getJSONObject(v);
-                                    GalleryModel galleryModel = new GalleryModel();
-                                    galleryModel.image = galleryObject.getString("full_thumbnail_url");
-                                    galleryModel.image_large = galleryObject.getString("full_image_url");
-                                    galleryModel.type = GALLERY_IMAGE;
-                                    galleryModel.rest_id = STR_RESTAURANT_ID;
-                                    galleryModel.delivery_id = "";
-                                    galleryModel.delivery_name = "";
-                                    galleryModel.delivery_phone = "";
-                                    galleryList.add(galleryModel);
+//                                    GalleryModel galleryModel = new GalleryModel();
+//                                    galleryModel.image = galleryObject.getString("full_thumbnail_url");
+//                                    galleryModel.image_large = galleryObject.getString("full_image_url");
+//                                    galleryModel.type = GALLERY_IMAGE;
+//                                    galleryModel.rest_id = STR_RESTAURANT_ID;
+//                                    galleryModel.delivery_id = "";
+//                                    galleryModel.delivery_name = "";
+//                                    galleryModel.delivery_phone = "";
+//                                    galleryList.add(galleryModel);
                                 }
-                                galleryAdapter.notifyDataSetChanged();
+//                                galleryAdapter.notifyDataSetChanged();
                             } else {
                                 LL_gallery.setVisibility(View.GONE);
                             }
@@ -1309,22 +1309,22 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                             }
 
                             // MENU GALLERY
-                            menuList.clear();
+//                            menuList.clear();
                             JSONArray menuImageArrays = json_data.getJSONArray("menu_gallery");
                             if (!menuImageArrays.isNull(0)) {
                                 for (int v = 0; v < menuImageArrays.length(); v++) {
                                     JSONObject galleryObject = menuImageArrays.getJSONObject(v);
-                                    GalleryModel galleryModel = new GalleryModel();
-                                    galleryModel.image = galleryObject.getString("full_thumbnail_url");
-                                    galleryModel.image_large = galleryObject.getString("full_image_url");
-                                    galleryModel.type = GALLERY_MENU;
-                                    galleryModel.rest_id = STR_RESTAURANT_ID;
-                                    galleryModel.delivery_id = STR_DELIVERY_PARTNER_ID;
-                                    galleryModel.delivery_name = STR_DELIVERY_PARTNER_NAME;
-                                    galleryModel.delivery_phone = STR_DELIVERY_PARTNER_PHONE;
-                                    menuList.add(galleryModel);
+//                                    GalleryModel galleryModel = new GalleryModel();
+//                                    galleryModel.image = galleryObject.getString("full_thumbnail_url");
+//                                    galleryModel.image_large = galleryObject.getString("full_image_url");
+//                                    galleryModel.type = GALLERY_MENU;
+//                                    galleryModel.rest_id = STR_RESTAURANT_ID;
+//                                    galleryModel.delivery_id = STR_DELIVERY_PARTNER_ID;
+//                                    galleryModel.delivery_name = STR_DELIVERY_PARTNER_NAME;
+//                                    galleryModel.delivery_phone = STR_DELIVERY_PARTNER_PHONE;
+//                                    menuList.add(galleryModel);
                                 }
-                                menuAdapter.notifyDataSetChanged();
+//                                menuAdapter.notifyDataSetChanged();
                                 menu_recycler_view.setVisibility(View.VISIBLE);
                                 show_menu_gallery = true;
                             } else {
@@ -1514,7 +1514,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
 
             if (startAfresh) {
                 CURRENT_PAGE = 0;
-                reviewList.clear();
+//                reviewList.clear();
             }
 
             review_swiperefresh.setRefreshing(true);
@@ -1556,25 +1556,25 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
 
                                 for (int i = 0; i < result_length; i++) {
                                     JSONObject json_data = jArray.getJSONObject(i);
-                                    ReviewModel reviewModel = new ReviewModel();
+//                                    ReviewModel reviewModel = new ReviewModel();
 
-                                    reviewModel.user_display_name = json_data.getString("user_display_name");
-                                    reviewModel.user_thumbnail = json_data.getString("user_thumbnail");
-                                    reviewModel.review_text = json_data.getString("review_text");
-                                    reviewModel.rating = json_data.getString("rating");
+//                                    reviewModel.user_display_name = json_data.getString("user_display_name");
+//                                    reviewModel.user_thumbnail = json_data.getString("user_thumbnail");
+//                                    reviewModel.review_text = json_data.getString("review_text");
+//                                    reviewModel.rating = json_data.getString("rating");
 
                                     JSONObject created_at = json_data.getJSONObject("created_at");
                                     if (!created_at.isNull("date")) {
                                         String[] splited = created_at.getString("date").split(" ");
-                                        reviewModel.created_at_date = splited[0];
+//                                        reviewModel.created_at_date = splited[0];
                                     }
 
-                                    reviewList.add(reviewModel);
+//                                    reviewList.add(reviewModel);
 
                                 }
                             }
                             review_recyclerView.getRecycledViewPool().clear();
-                            review_adapter.notifyDataSetChanged();
+//                            review_adapter.notifyDataSetChanged();
                         } else {
                             noReviews();
                         }
@@ -1694,35 +1694,35 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                 more_layout.setVisibility(View.GONE);
 
                 // CREATE A MODEL FOR THE CARD
-                final EventModel eventModel = new EventModel();
-                eventModel.id = eventsObject.getInt("id");
-                eventModel.title = eventsObject.getString("title");
-                eventModel.timing_description = eventsObject.getString("timing_description");
-                eventModel.price = eventsObject.getInt("price");
-                eventModel.full_image_url = eventsObject.getString("full_image_url");
-                eventModel.short_description = eventsObject.getString("short_description");
-                eventModel.venue = eventsObject.getString("venue");
+//                final EventModel eventModel = new EventModel();
+//                eventModel.id = eventsObject.getInt("id");
+//                eventModel.title = eventsObject.getString("title");
+//                eventModel.timing_description = eventsObject.getString("timing_description");
+//                eventModel.price = eventsObject.getInt("price");
+//                eventModel.full_image_url = eventsObject.getString("full_image_url");
+//                eventModel.short_description = eventsObject.getString("short_description");
+//                eventModel.venue = eventsObject.getString("venue");
 
 
                 // SET THE DATA FROM THE THE JSON
-                event_id.setText(String.valueOf(eventModel.id));
-                event_title.setText(eventModel.title);
-                event_timing_description.setText(eventModel.timing_description);
-                event_short_description.setText(eventModel.short_description);
-                if (eventModel.price == 0) {
-                    event_price.setText(R.string.txt_entry_free);
-                } else {
-                    event_price.setText(getString(R.string.txt_entry_fee).concat(String.valueOf(eventModel.price)));
-                }
-                Glide.with(RestaurantDetailsActivity.this).load(eventModel.full_image_url).into(event_icon);
+//                event_id.setText(String.valueOf(eventModel.id));
+//                event_title.setText(eventModel.title);
+//                event_timing_description.setText(eventModel.timing_description);
+//                event_short_description.setText(eventModel.short_description);
+//                if (eventModel.price == 0) {
+//                    event_price.setText(R.string.txt_entry_free);
+//                } else {
+//                    event_price.setText(getString(R.string.txt_entry_fee).concat(String.valueOf(eventModel.price)));
+//                }
+//                Glide.with(RestaurantDetailsActivity.this).load(eventModel.full_image_url).into(event_icon);
 
 
                 // CREATE THE SHOW MORE BUTTON CLICKABLE AND VISIBLE IF SHORT DESCRIPTION != EMPTY
-                if (eventModel.short_description.equals("")) {
-                    show_more.setVisibility(View.GONE);
-                } else {
-                    show_more.setVisibility(View.VISIBLE);
-                }
+//                if (eventModel.short_description.equals("")) {
+//                    show_more.setVisibility(View.GONE);
+//                } else {
+//                    show_more.setVisibility(View.VISIBLE);
+//                }
 
                 // ON CLICK LISTENERS ON THE EVENT ITEM
                 show_more.setOnClickListener(new View.OnClickListener() {
@@ -1743,7 +1743,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                     @Override
                     public void onClick(View v) {
                         ArrayList<String> image_urls = new ArrayList<>();
-                        image_urls.add(eventModel.full_image_url);
+//                        image_urls.add(eventModel.full_image_url);
                         Activity activity = RestaurantDetailsActivity.this;
                         activity.startActivity(new Intent(RestaurantDetailsActivity.this, GalleryViewActivity.class)
                                 .putExtra("image_urls", image_urls)
@@ -1814,22 +1814,22 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                 TERMS_AND_CONDITIONS[v] = active_offers.getString("description");
 
                 // CREATE A MODEL FOR THE CARD =====================================================
-                final DynamicCardModel dynamicCardModel = new DynamicCardModel();
-                dynamicCardModel.CARD_DISCOUNT_AMOUNT = DISCOUNT_AMOUNT;
-                dynamicCardModel.CARD_OFFER_CATEGORY_ID = OFFER_CATEGORY_ID;
-                dynamicCardModel.CARD_OFFER_ID = OFFER_ID;
-                dynamicCardModel.CARD_OFFER_ICON = OFFER_ICON;
-                dynamicCardModel.CARD_TITLE = CARD_TITLE;
-                dynamicCardModel.CARD_BCKGRD_IMAGE = CARD_BCKGRD_IMAGE;
-                dynamicCardModel.CARD_BCKGRD_COLOR = CARD_BCKGRD_COLOR;
-                dynamicCardModel.CARD_BUTTON_TEXT = CARD_BUTTON_TEXT;
-                dynamicCardModel.CARD_DESC = CARD_DESC;
-                dynamicCardModel.CARD_TEXT_COLOR = CARD_TEXT_COLOR;
-                dynamicCardModel.CARD_EXCERPT = CARD_EXCERPT;
-                dynamicCardModel.CARD_ALLOW_REVIEW = CARD_ALLOW_REVIEW;
-                dynamicCardModel.CARD_SHOW_CONFIRMATION_CODE = CARD_SHOW_CONFIRM_CODE;
-                dynamicCardModel.CARD_CONFIRMATION_CODE = "";
-                dynamicCardModel.CARD_TNC = TERMS_AND_CONDITIONS[v];
+//                final DynamicCardModel dynamicCardModel = new DynamicCardModel();
+//                dynamicCardModel.CARD_DISCOUNT_AMOUNT = DISCOUNT_AMOUNT;
+//                dynamicCardModel.CARD_OFFER_CATEGORY_ID = OFFER_CATEGORY_ID;
+//                dynamicCardModel.CARD_OFFER_ID = OFFER_ID;
+//                dynamicCardModel.CARD_OFFER_ICON = OFFER_ICON;
+//                dynamicCardModel.CARD_TITLE = CARD_TITLE;
+//                dynamicCardModel.CARD_BCKGRD_IMAGE = CARD_BCKGRD_IMAGE;
+//                dynamicCardModel.CARD_BCKGRD_COLOR = CARD_BCKGRD_COLOR;
+//                dynamicCardModel.CARD_BUTTON_TEXT = CARD_BUTTON_TEXT;
+//                dynamicCardModel.CARD_DESC = CARD_DESC;
+//                dynamicCardModel.CARD_TEXT_COLOR = CARD_TEXT_COLOR;
+//                dynamicCardModel.CARD_EXCERPT = CARD_EXCERPT;
+//                dynamicCardModel.CARD_ALLOW_REVIEW = CARD_ALLOW_REVIEW;
+//                dynamicCardModel.CARD_SHOW_CONFIRMATION_CODE = CARD_SHOW_CONFIRM_CODE;
+//                dynamicCardModel.CARD_CONFIRMATION_CODE = "";
+//                dynamicCardModel.CARD_TNC = TERMS_AND_CONDITIONS[v];
 
                 // IF THE OFFER IS REDEEMABLE THEN SHOW THE BUTTON =================================
                 if (OFFER_REDEEMABLE) {
@@ -1837,21 +1837,21 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
                     child.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            globalDynamicCardModel = dynamicCardModel;
+//                            globalDynamicCardModel = dynamicCardModel;
                             fetchLocationAndClaimOffer();
 
                             if (BuildConfig.DEBUG) {
-                                helper.ToastMessage(RestaurantDetailsActivity.this, "OFFER ID: " + globalDynamicCardModel.CARD_OFFER_ID);
+//                                helper.ToastMessage(RestaurantDetailsActivity.this, "OFFER ID: " + globalDynamicCardModel.CARD_OFFER_ID);
                             }
 
                         }
                     });
 
                     // SHOW THE CARD IF THE ICON CLICKED ON THE LIST BEFORE MATCHES THE OFFER ID
-                    if (INT_OFFER_ID != 0 && INT_OFFER_ID == dynamicCardModel.CARD_OFFER_ID) {
-                        globalDynamicCardModel = dynamicCardModel;
-                        fetchLocationAndClaimOffer();
-                    }
+//                    if (INT_OFFER_ID != 0 && INT_OFFER_ID == dynamicCardModel.CARD_OFFER_ID) {
+//                        globalDynamicCardModel = dynamicCardModel;
+//                        fetchLocationAndClaimOffer();
+//                    }
 
                     LL_offers_children.addView(child);
                 }
@@ -1863,364 +1863,364 @@ public class RestaurantDetailsActivity extends AppCompatActivity implements OnMa
         }
     }
 
-    private void generateConfirmOffer(final DynamicCardModel dynamicCardModel) {
-        final Dialog dialog = new Dialog(RestaurantDetailsActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_confirm_offer);
-        final TextView txtTitle = dialog.findViewById(R.id.txtTitle);
-        final TextView txtMessage = dialog.findViewById(R.id.txtMessage);
-        final TextView txtOk = dialog.findViewById(R.id.txtOk);
-        final TextView txtCancel = dialog.findViewById(R.id.txtCancel);
-        final TextView digital_card_confirmation_code = dialog.findViewById(R.id.digital_card_confirmation_code);
-        final RoundedImageView digital_card_background_color = dialog.findViewById(R.id.digital_card_background_color);
-        final RoundedImageView digital_card_icon = dialog.findViewById(R.id.digital_card_icon);
+//    private void generateConfirmOffer(final DynamicCardModel dynamicCardModel) {
+//        final Dialog dialog = new Dialog(RestaurantDetailsActivity.this);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_confirm_offer);
+//        final TextView txtTitle = dialog.findViewById(R.id.txtTitle);
+//        final TextView txtMessage = dialog.findViewById(R.id.txtMessage);
+//        final TextView txtOk = dialog.findViewById(R.id.txtOk);
+//        final TextView txtCancel = dialog.findViewById(R.id.txtCancel);
+//        final TextView digital_card_confirmation_code = dialog.findViewById(R.id.digital_card_confirmation_code);
+//        final RoundedImageView digital_card_background_color = dialog.findViewById(R.id.digital_card_background_color);
+//        final RoundedImageView digital_card_icon = dialog.findViewById(R.id.digital_card_icon);
+//
+//        int bgColor = Color.parseColor(dynamicCardModel.CARD_BCKGRD_COLOR);
+//        digital_card_background_color.setBackgroundColor(bgColor);
+//
+//        Glide.with(RestaurantDetailsActivity.this).load(dynamicCardModel.CARD_OFFER_ICON).into(digital_card_icon);
+//
+//        txtTitle.setText(dynamicCardModel.CARD_TITLE);
+//
+//        txtOk.setText(R.string.txt_proceed);
+////        txtCancel.setText(R.string.txt_cancel);
+//        txtCancel.setVisibility(View.VISIBLE);
+//
+//        txtMessage.setText(dynamicCardModel.CARD_EXCERPT);
+//
+//        if (dynamicCardModel.CARD_SHOW_CONFIRMATION_CODE) {
+//            digital_card_confirmation_code.setVisibility(View.VISIBLE);
+//        } else {
+//            digital_card_confirmation_code.setVisibility(View.GONE);
+//        }
+//
+//        txtCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.cancel();
+//            }
+//        });
+//
+//        txtOk.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (dynamicCardModel.CARD_SHOW_CONFIRMATION_CODE) {
+//                    if (digital_card_confirmation_code.getText().toString().length() < 1) {
+//                        digital_card_confirmation_code.setError("Incorrect");
+//                    } else {
+//                        dynamicCardModel.CARD_CONFIRMATION_CODE = digital_card_confirmation_code.getText().toString();
+//                        asyncSetClaimOffer(dynamicCardModel);
+//                        dialog.cancel();
+//                    }
+//                } else {
+//                    asyncSetClaimOffer(dynamicCardModel);
+//                    dialog.cancel();
+//                }
+//            }
+//        });
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.copyFrom(dialog.getWindow().getAttributes());
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        dialog.show();
+//        dialog.getWindow().setAttributes(lp);
+//    }
 
-        int bgColor = Color.parseColor(dynamicCardModel.CARD_BCKGRD_COLOR);
-        digital_card_background_color.setBackgroundColor(bgColor);
-
-        Glide.with(RestaurantDetailsActivity.this).load(dynamicCardModel.CARD_OFFER_ICON).into(digital_card_icon);
-
-        txtTitle.setText(dynamicCardModel.CARD_TITLE);
-
-        txtOk.setText(R.string.txt_proceed);
-//        txtCancel.setText(R.string.txt_cancel);
-        txtCancel.setVisibility(View.VISIBLE);
-
-        txtMessage.setText(dynamicCardModel.CARD_EXCERPT);
-
-        if (dynamicCardModel.CARD_SHOW_CONFIRMATION_CODE) {
-            digital_card_confirmation_code.setVisibility(View.VISIBLE);
-        } else {
-            digital_card_confirmation_code.setVisibility(View.GONE);
-        }
-
-        txtCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-
-        txtOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (dynamicCardModel.CARD_SHOW_CONFIRMATION_CODE) {
-                    if (digital_card_confirmation_code.getText().toString().length() < 1) {
-                        digital_card_confirmation_code.setError("Incorrect");
-                    } else {
-                        dynamicCardModel.CARD_CONFIRMATION_CODE = digital_card_confirmation_code.getText().toString();
-                        asyncSetClaimOffer(dynamicCardModel);
-                        dialog.cancel();
-                    }
-                } else {
-                    asyncSetClaimOffer(dynamicCardModel);
-                    dialog.cancel();
-                }
-            }
-        });
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialog.show();
-        dialog.getWindow().setAttributes(lp);
-    }
-
-    private void generateDigitalCard(final DynamicCardModel dynamicCardModel, final String ref_code) {
-        final Dialog dialog = new Dialog(RestaurantDetailsActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_digital_card);
-        dialog.setCancelable(false);
-
-        final TextView digital_card_title = dialog.findViewById(R.id.digital_card_title);
-        final TextView digital_card_user_name = dialog.findViewById(R.id.digital_card_user_name);
-        final TextView digital_card_ref_code_txt = dialog.findViewById(R.id.digital_card_ref_code_txt);
-        final TextView digital_card_ref_code = dialog.findViewById(R.id.digital_card_ref_code);
-        final TextView digital_card_time_label = dialog.findViewById(R.id.digital_card_time_label);
-        final TextView digital_card_time = dialog.findViewById(R.id.digital_card_time);
-        final TextView digital_card_date_label = dialog.findViewById(R.id.digital_card_date_label);
-        final TextView digital_card_date = dialog.findViewById(R.id.digital_card_date);
-        final TextView digital_card_support_number = dialog.findViewById(R.id.digital_card_support_number);
-        final TextView digital_card_desc = dialog.findViewById(R.id.digital_card_desc);
-        final TextView txtOk = dialog.findViewById(R.id.txtOk);
-        final TextView txtCancel = dialog.findViewById(R.id.txtCancel);
-        final ImageView btn_separator = dialog.findViewById(R.id.btn_separator);
-        RoundedImageView digital_card_icon = dialog.findViewById(R.id.digital_card_icon);
-        RoundedImageView digital_card_background_image = dialog.findViewById(R.id.digital_card_background_image);
-        RoundedImageView digital_card_background_color = dialog.findViewById(R.id.digital_card_background_color);
-
-
-        digital_card_ref_code.setText(ref_code);
-
-//      "EEE, d MMM yyyy HH:mm:ss Z"------- Wed, 4 Jul 2001 12:08:56 -0700
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat sdfDATE = new SimpleDateFormat("d.MMM.yyyy");
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat sdfTIME = new SimpleDateFormat("h:mm a");
-
-//        UserModel userModel = db.getUser();
-        digital_card_user_name.setText(Database.userModel.first_name.concat(" ").concat(Database.userModel.last_name));
-        digital_card_date.setText(sdfDATE.format(new Date()));
-        digital_card_time.setText(sdfTIME.format(new Date()));
-
-
-        digital_card_title.setText(dynamicCardModel.CARD_TITLE);
-        Glide.with(RestaurantDetailsActivity.this).load(dynamicCardModel.CARD_BCKGRD_IMAGE).into(digital_card_background_image);
-        Glide.with(RestaurantDetailsActivity.this).load(dynamicCardModel.CARD_OFFER_ICON).into(digital_card_icon);
-        txtOk.setText(dynamicCardModel.CARD_BUTTON_TEXT);
-        digital_card_desc.setText(dynamicCardModel.CARD_DESC);
-        if (SharedPrefs.getSupportNumber().equals("")) {
-            SharedPrefs.setSupportNumber("254711222222");
-        }
-        digital_card_support_number.setText(SharedPrefs.getSupportNumber());
-        digital_card_support_number.setPaintFlags(digital_card_support_number.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        digital_card_support_number.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogMakeCall(getString(R.string.txt_calling), SharedPrefs.getSupportNumber());
-            }
-        });
-
-        int bckgrdColor = Color.parseColor(dynamicCardModel.CARD_BCKGRD_COLOR);
-        digital_card_background_color.setBackgroundColor(bckgrdColor);
-
-        int textColor = Color.parseColor(dynamicCardModel.CARD_TEXT_COLOR);
-        digital_card_user_name.setTextColor(textColor);
-        digital_card_time_label.setTextColor(textColor);
-        digital_card_time.setTextColor(textColor);
-        digital_card_date_label.setTextColor(textColor);
-        digital_card_date.setTextColor(textColor);
-        digital_card_ref_code.setTextColor(textColor);
-        digital_card_ref_code_txt.setTextColor(textColor);
-
-        if (MPESA_CHECKOUT_ENABLED && dynamicCardModel.CARD_OFFER_CATEGORY_ID == YUMMY_CARD) {
-            txtCancel.setVisibility(View.VISIBLE);
-            btn_separator.setVisibility(View.VISIBLE);
-        } else {
-            txtCancel.setVisibility(View.GONE);
-            btn_separator.setVisibility(View.GONE);
-        }
-
-        txtCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
-
-        txtOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (MPESA_CHECKOUT_ENABLED && dynamicCardModel.CARD_OFFER_CATEGORY_ID == YUMMY_CARD) {
-                    startActivity(new Intent(RestaurantDetailsActivity.this, PaymentActivity.class)
-                            .putExtra("restaurant_id", STR_RESTAURANT_ID)
-                            .putExtra("restaurant_name", STR_RESTAURANT_NAME)
-                            .putExtra("offer_id", dynamicCardModel.CARD_OFFER_ID)
-                            .putExtra("offer_discount", String.valueOf(dynamicCardModel.CARD_DISCOUNT_AMOUNT))
-                            .putExtra("offer_icon", dynamicCardModel.CARD_OFFER_ICON)
-                            .putExtra("tnc", dynamicCardModel.CARD_TNC)
-                    );
-                } else {
-                    if (dynamicCardModel.CARD_ALLOW_REVIEW) {
-                        capturePartialReview();
-                    } else {
-                        helper.myDialog(RestaurantDetailsActivity.this,
-                                getString(R.string.app_name),
-                                getString(R.string.txt_redeem_offer_success));
-                    }
-                }
-                dialog.cancel();
-            }
-        });
-
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialog.show();
-        dialog.getWindow().setAttributes(lp);
-    }
+//    private void generateDigitalCard(final DynamicCardModel dynamicCardModel, final String ref_code) {
+//        final Dialog dialog = new Dialog(RestaurantDetailsActivity.this);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_digital_card);
+//        dialog.setCancelable(false);
+//
+//        final TextView digital_card_title = dialog.findViewById(R.id.digital_card_title);
+//        final TextView digital_card_user_name = dialog.findViewById(R.id.digital_card_user_name);
+//        final TextView digital_card_ref_code_txt = dialog.findViewById(R.id.digital_card_ref_code_txt);
+//        final TextView digital_card_ref_code = dialog.findViewById(R.id.digital_card_ref_code);
+//        final TextView digital_card_time_label = dialog.findViewById(R.id.digital_card_time_label);
+//        final TextView digital_card_time = dialog.findViewById(R.id.digital_card_time);
+//        final TextView digital_card_date_label = dialog.findViewById(R.id.digital_card_date_label);
+//        final TextView digital_card_date = dialog.findViewById(R.id.digital_card_date);
+//        final TextView digital_card_support_number = dialog.findViewById(R.id.digital_card_support_number);
+//        final TextView digital_card_desc = dialog.findViewById(R.id.digital_card_desc);
+//        final TextView txtOk = dialog.findViewById(R.id.txtOk);
+//        final TextView txtCancel = dialog.findViewById(R.id.txtCancel);
+//        final ImageView btn_separator = dialog.findViewById(R.id.btn_separator);
+//        RoundedImageView digital_card_icon = dialog.findViewById(R.id.digital_card_icon);
+//        RoundedImageView digital_card_background_image = dialog.findViewById(R.id.digital_card_background_image);
+//        RoundedImageView digital_card_background_color = dialog.findViewById(R.id.digital_card_background_color);
+//
+//
+//        digital_card_ref_code.setText(ref_code);
+//
+////      "EEE, d MMM yyyy HH:mm:ss Z"------- Wed, 4 Jul 2001 12:08:56 -0700
+//        @SuppressLint("SimpleDateFormat")
+//        SimpleDateFormat sdfDATE = new SimpleDateFormat("d.MMM.yyyy");
+//        @SuppressLint("SimpleDateFormat")
+//        SimpleDateFormat sdfTIME = new SimpleDateFormat("h:mm a");
+//
+////        UserModel userModel = db.getUser();
+//        digital_card_user_name.setText(Database.userModel.first_name.concat(" ").concat(Database.userModel.last_name));
+//        digital_card_date.setText(sdfDATE.format(new Date()));
+//        digital_card_time.setText(sdfTIME.format(new Date()));
+//
+//
+//        digital_card_title.setText(dynamicCardModel.CARD_TITLE);
+//        Glide.with(RestaurantDetailsActivity.this).load(dynamicCardModel.CARD_BCKGRD_IMAGE).into(digital_card_background_image);
+//        Glide.with(RestaurantDetailsActivity.this).load(dynamicCardModel.CARD_OFFER_ICON).into(digital_card_icon);
+//        txtOk.setText(dynamicCardModel.CARD_BUTTON_TEXT);
+//        digital_card_desc.setText(dynamicCardModel.CARD_DESC);
+//        if (SharedPrefs.getSupportNumber().equals("")) {
+//            SharedPrefs.setSupportNumber("254711222222");
+//        }
+//        digital_card_support_number.setText(SharedPrefs.getSupportNumber());
+//        digital_card_support_number.setPaintFlags(digital_card_support_number.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//        digital_card_support_number.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialogMakeCall(getString(R.string.txt_calling), SharedPrefs.getSupportNumber());
+//            }
+//        });
+//
+//        int bckgrdColor = Color.parseColor(dynamicCardModel.CARD_BCKGRD_COLOR);
+//        digital_card_background_color.setBackgroundColor(bckgrdColor);
+//
+//        int textColor = Color.parseColor(dynamicCardModel.CARD_TEXT_COLOR);
+//        digital_card_user_name.setTextColor(textColor);
+//        digital_card_time_label.setTextColor(textColor);
+//        digital_card_time.setTextColor(textColor);
+//        digital_card_date_label.setTextColor(textColor);
+//        digital_card_date.setTextColor(textColor);
+//        digital_card_ref_code.setTextColor(textColor);
+//        digital_card_ref_code_txt.setTextColor(textColor);
+//
+//        if (MPESA_CHECKOUT_ENABLED && dynamicCardModel.CARD_OFFER_CATEGORY_ID == YUMMY_CARD) {
+//            txtCancel.setVisibility(View.VISIBLE);
+//            btn_separator.setVisibility(View.VISIBLE);
+//        } else {
+//            txtCancel.setVisibility(View.GONE);
+//            btn_separator.setVisibility(View.GONE);
+//        }
+//
+//        txtCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                dialog.cancel();
+//            }
+//        });
+//
+//        txtOk.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (MPESA_CHECKOUT_ENABLED && dynamicCardModel.CARD_OFFER_CATEGORY_ID == YUMMY_CARD) {
+//                    startActivity(new Intent(RestaurantDetailsActivity.this, PaymentActivity.class)
+//                            .putExtra("restaurant_id", STR_RESTAURANT_ID)
+//                            .putExtra("restaurant_name", STR_RESTAURANT_NAME)
+//                            .putExtra("offer_id", dynamicCardModel.CARD_OFFER_ID)
+//                            .putExtra("offer_discount", String.valueOf(dynamicCardModel.CARD_DISCOUNT_AMOUNT))
+//                            .putExtra("offer_icon", dynamicCardModel.CARD_OFFER_ICON)
+//                            .putExtra("tnc", dynamicCardModel.CARD_TNC)
+//                    );
+//                } else {
+//                    if (dynamicCardModel.CARD_ALLOW_REVIEW) {
+//                        capturePartialReview();
+//                    } else {
+//                        helper.myDialog(RestaurantDetailsActivity.this,
+//                                getString(R.string.app_name),
+//                                getString(R.string.txt_redeem_offer_success));
+//                    }
+//                }
+//                dialog.cancel();
+//            }
+//        });
+//
+//        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.copyFrom(dialog.getWindow().getAttributes());
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        dialog.show();
+//        dialog.getWindow().setAttributes(lp);
+//    }
 
 
     // CLAIM OFFER ASYNC TASKS =====================================================================
-    private void asyncGetClaimOfferCount(final DynamicCardModel dynamicCardModel) {
-        helper.progressDialog(true);
-        helper.setProgressDialogMessage(getString(R.string.progress_loading_claim_offer_status));
+//    private void asyncGetClaimOfferCount(final DynamicCardModel dynamicCardModel) {
+//        helper.progressDialog(true);
+//        helper.setProgressDialogMessage(getString(R.string.progress_loading_claim_offer_status));
+//
+//        RestaurantService restaurantService = RestaurantService.retrofit.create(RestaurantService.class);
+//        final Call<JsonObject> call = restaurantService.claimOffer(
+//                dynamicCardModel.CARD_OFFER_ID,
+//                Database.userModel.user_id,
+//                dynamicCardModel.CARD_CONFIRMATION_CODE,
+//                CLAIM_OFFER_CHECKING
+//        );
+//
+//        call.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+//                helper.progressDialog(false);
+//                try {
+//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+//                    Helpers.LogThis(TAG_LOG, getString(R.string.log_response) + String.valueOf(response.body()));
+//                    Boolean success = main.getBoolean("success");
+//                    if (success) {
+//                        generateConfirmOffer(dynamicCardModel);
+//                    } else {
+//                        helper.myDialog(RestaurantDetailsActivity.this,
+//                                getString(R.string.app_name), main.getString("failure_message"));
+//                    }
+//                } catch (JSONException e) {
+//                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+//                    helper.myDialog(RestaurantDetailsActivity.this,
+//                            getString(R.string.app_name), getString(R.string.error_unknown));
+//
+//                } catch (Exception e) {
+//                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+//                    helper.myDialog(RestaurantDetailsActivity.this,
+//                            getString(R.string.app_name), getString(R.string.error_unknown));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+//                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + t.toString());
+//                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + call.toString());
+//                helper.progressDialog(false);
+//                helper.ToastMessage(RestaurantDetailsActivity.this, getString(R.string.error_connection));
+//
+//            }
+//        });
+//    }
 
-        RestaurantService restaurantService = RestaurantService.retrofit.create(RestaurantService.class);
-        final Call<JsonObject> call = restaurantService.claimOffer(
-                dynamicCardModel.CARD_OFFER_ID,
-                Database.userModel.user_id,
-                dynamicCardModel.CARD_CONFIRMATION_CODE,
-                CLAIM_OFFER_CHECKING
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helper.progressDialog(false);
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_response) + String.valueOf(response.body()));
-                    Boolean success = main.getBoolean("success");
-                    if (success) {
-                        generateConfirmOffer(dynamicCardModel);
-                    } else {
-                        helper.myDialog(RestaurantDetailsActivity.this,
-                                getString(R.string.app_name), main.getString("failure_message"));
-                    }
-                } catch (JSONException e) {
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
-                    helper.myDialog(RestaurantDetailsActivity.this,
-                            getString(R.string.app_name), getString(R.string.error_unknown));
-
-                } catch (Exception e) {
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
-                    helper.myDialog(RestaurantDetailsActivity.this,
-                            getString(R.string.app_name), getString(R.string.error_unknown));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + t.toString());
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + call.toString());
-                helper.progressDialog(false);
-                helper.ToastMessage(RestaurantDetailsActivity.this, getString(R.string.error_connection));
-
-            }
-        });
-    }
-
-    private void asyncSetClaimOffer(final DynamicCardModel dynamicCardModel) {
-        helper.progressDialog(true);
-        helper.setProgressDialogMessage(getString(R.string.progress_loading_claim_offer));
-
-        RestaurantService restaurantService = RestaurantService.retrofit.create(RestaurantService.class);
-        final Call<JsonObject> call = restaurantService.claimOffer(
-                dynamicCardModel.CARD_OFFER_ID,
-                Database.userModel.user_id,
-                dynamicCardModel.CARD_CONFIRMATION_CODE,
-                CLAIM_OFFER_CLAIMING
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helper.progressDialog(false);
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_response) + String.valueOf(response.body()));
-                    Boolean success = main.getBoolean("success");
-                    if (success) {
-                        generateDigitalCard(dynamicCardModel, main.getString("ref_code"));
-                    } else {
-                        helper.myDialog(RestaurantDetailsActivity.this,
-                                getString(R.string.app_name), main.getString("failure_message"));
-                    }
-                } catch (JSONException e) {
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
-                    helper.myDialog(RestaurantDetailsActivity.this,
-                            getString(R.string.app_name), getString(R.string.error_unknown));
-
-                } catch (Exception e) {
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
-                    helper.myDialog(RestaurantDetailsActivity.this,
-                            getString(R.string.app_name), getString(R.string.error_unknown));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + t.toString());
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + call.toString());
-                helper.progressDialog(false);
-                helper.ToastMessage(RestaurantDetailsActivity.this, getString(R.string.error_connection));
-
-            }
-        });
-    }
+//    private void asyncSetClaimOffer(final DynamicCardModel dynamicCardModel) {
+//        helper.progressDialog(true);
+//        helper.setProgressDialogMessage(getString(R.string.progress_loading_claim_offer));
+//
+//        RestaurantService restaurantService = RestaurantService.retrofit.create(RestaurantService.class);
+//        final Call<JsonObject> call = restaurantService.claimOffer(
+//                dynamicCardModel.CARD_OFFER_ID,
+//                Database.userModel.user_id,
+//                dynamicCardModel.CARD_CONFIRMATION_CODE,
+//                CLAIM_OFFER_CLAIMING
+//        );
+//
+//        call.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+//                helper.progressDialog(false);
+//                try {
+//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+//                    Helpers.LogThis(TAG_LOG, getString(R.string.log_response) + String.valueOf(response.body()));
+//                    Boolean success = main.getBoolean("success");
+//                    if (success) {
+//                        generateDigitalCard(dynamicCardModel, main.getString("ref_code"));
+//                    } else {
+//                        helper.myDialog(RestaurantDetailsActivity.this,
+//                                getString(R.string.app_name), main.getString("failure_message"));
+//                    }
+//                } catch (JSONException e) {
+//                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+//                    helper.myDialog(RestaurantDetailsActivity.this,
+//                            getString(R.string.app_name), getString(R.string.error_unknown));
+//
+//                } catch (Exception e) {
+//                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+//                    helper.myDialog(RestaurantDetailsActivity.this,
+//                            getString(R.string.app_name), getString(R.string.error_unknown));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+//                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + t.toString());
+//                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + call.toString());
+//                helper.progressDialog(false);
+//                helper.ToastMessage(RestaurantDetailsActivity.this, getString(R.string.error_connection));
+//
+//            }
+//        });
+//    }
 
 
     // FETCH RESTAURANTS IN CASE THIS RESTAURANT IS A WHITE RESTAURANT =============================
-    private void asyncGetRestaurants() {
-        restaurantsList.clear();
-
-        RestaurantService restaurantService = RestaurantService.retrofit.create(RestaurantService.class);
-        final Call<JsonObject> call = restaurantService.searchRestaurant(
-                "",
-                "",
-                Database.userModel.city_id,
-                "",
-                "",
-                "",
-                String.valueOf(RESTAURANT_LATITUDE),
-                String.valueOf(RESTAURANT_LONGITUDE),
-                SORT_NEARBY,
-                "",
-                FLAG_TRUE,
-                FLAG_FALSE
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_response) + String.valueOf(response.body()));
-                    if (!main.getBoolean("error")) {
-
-                        JSONArray jArray = main.getJSONArray("result");
-                        int result_length = jArray.length();
-
-                        Helpers.LogThis(TAG_LOG, getString(R.string.log_response_length) + result_length);
-
-                        if (result_length <= 0) {
-                            noRestaurants();
-                        } else {
-
-                            for (int i = 0; i < 10; i++) {
-                                RestaurantModel restaurantModel = db.setRestaurants(jArray.getJSONObject(i + 1));
-                                restaurantsList.add(restaurantModel);
-                            }
-                        }
-                        restaurant_adapter.notifyDataSetChanged();
-
-                    } else {
-                        noRestaurants();
-                    }
-                } catch (JSONException e) {
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
-                    noRestaurants();
-
-                } catch (Exception e) {
-                    noRestaurants();
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + t.toString());
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + call.toString());
-
-                if (helper.validateInternetConnection()) {
-                    final Snackbar snackBar = Snackbar.make(findViewById(R.id.drawer_layout),
-                            getString(R.string.error_connection), Snackbar.LENGTH_INDEFINITE);
-                    snackBar.setAction("Retry", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            snackBar.dismiss();
-                            asyncGetRestaurants();
-                        }
-                    });
-                    snackBar.show();
-                } else {
-                    noRestaurants();
-                }
-            }
-        });
-
-    }
+//    private void asyncGetRestaurants() {
+//        restaurantsList.clear();
+//
+//        RestaurantService restaurantService = RestaurantService.retrofit.create(RestaurantService.class);
+//        final Call<JsonObject> call = restaurantService.searchRestaurant(
+//                "",
+//                "",
+//                Database.userModel.city_id,
+//                "",
+//                "",
+//                "",
+//                String.valueOf(RESTAURANT_LATITUDE),
+//                String.valueOf(RESTAURANT_LONGITUDE),
+//                SORT_NEARBY,
+//                "",
+//                FLAG_TRUE,
+//                FLAG_FALSE
+//        );
+//
+//        call.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+//                try {
+//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+//                    Helpers.LogThis(TAG_LOG, getString(R.string.log_response) + String.valueOf(response.body()));
+//                    if (!main.getBoolean("error")) {
+//
+//                        JSONArray jArray = main.getJSONArray("result");
+//                        int result_length = jArray.length();
+//
+//                        Helpers.LogThis(TAG_LOG, getString(R.string.log_response_length) + result_length);
+//
+//                        if (result_length <= 0) {
+//                            noRestaurants();
+//                        } else {
+//
+//                            for (int i = 0; i < 10; i++) {
+//                                RestaurantModel restaurantModel = db.setRestaurants(jArray.getJSONObject(i + 1));
+//                                restaurantsList.add(restaurantModel);
+//                            }
+//                        }
+//                        restaurant_adapter.notifyDataSetChanged();
+//
+//                    } else {
+//                        noRestaurants();
+//                    }
+//                } catch (JSONException e) {
+//                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+//                    noRestaurants();
+//
+//                } catch (Exception e) {
+//                    noRestaurants();
+//                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+//                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + t.toString());
+//                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + call.toString());
+//
+//                if (helper.validateInternetConnection()) {
+//                    final Snackbar snackBar = Snackbar.make(findViewById(R.id.drawer_layout),
+//                            getString(R.string.error_connection), Snackbar.LENGTH_INDEFINITE);
+//                    snackBar.setAction("Retry", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            snackBar.dismiss();
+//                            asyncGetRestaurants();
+//                        }
+//                    });
+//                    snackBar.show();
+//                } else {
+//                    noRestaurants();
+//                }
+//            }
+//        });
+//
+//    }
 
 }
