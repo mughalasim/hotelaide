@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="end">
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/toolbar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.7"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <include layout="@layout/list_item_none"/>
+
+                        <android.support.v4.widget.SwipeRefreshLayout
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/swiperefresh"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fillViewport="true"
+                            android:tag="0">
+
+                            <android.support.v4.view.ViewPager
+                                android:id="@+id/viewpager"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                        </android.support.v4.widget.SwipeRefreshLayout>
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/tabs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            app:tabBackground="@drawable/tab_selector"
+                            app:tabGravity="center"
+                            app:tabIndicatorHeight="0dp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/scrollPageBack"
+                                android:layout_width="60dp"
+                                android:layout_height="110dp"
+                                android:layout_centerVertical="true"
+                                android:contentDescription="@string/app_name"
+                                android:onClick="MovePrevious"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_home_page_back" />
+
+                            <ImageView
+                                android:id="@+id/scrollPageFront"
+                                android:layout_width="60dp"
+                                android:layout_height="110dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:contentDescription="@string/app_name"
+                                android:onClick="MoveNext"
+                                android:scaleType="fitXY"
+                                app:srcCompat="@drawable/ic_home_page_forward" />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                     <!--RESTAURANT SEARCH ======================================================-->
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/grey"
+                        android:gravity="center"
+                        android:onClick="BTN_SEARCH"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="55dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/general_padding"
+                            app:srcCompat="@drawable/ic_search" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/text_bold_left"
+                                android:layout_margin="0dp"
+                                android:text="@string/txt_search"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                style="@style/text_left"
+                                android:layout_margin="0dp"
+                                android:text="@string/txt_find_restaurants" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- DISCOUNTS AND OFFERS ===================================================-->
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/light_grey"
+                        android:gravity="center"
+                        android:onClick="BTN_DISCOUNTS"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="55dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/general_padding"
+                            app:srcCompat="@drawable/ic_discounts_offers" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/text_bold_left"
+                                android:layout_margin="0dp"
+                                android:text="@string/txt_discounts_offers"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                style="@style/text_left"
+                                android:layout_margin="0dp"
+                                android:text="@string/txt_saving" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- NEARBY RESTAURANTS  ====================================================-->
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/grey"
+                        android:gravity="center"
+                        android:onClick="BTN_NEARBY"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="55dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/general_padding"
+                            app:srcCompat="@drawable/ic_location" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/text_bold_left"
+                                android:layout_margin="0dp"
+                                android:text="@string/txt_nearby"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                style="@style/text_left"
+                                android:layout_margin="0dp"
+                                android:text="@string/txt_restaurants_nearby" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- FAVOURITES =============================================================-->
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@color/black" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/light_grey"
+                        android:gravity="center"
+                        android:onClick="BTN_FAVOURITES"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="55dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/general_padding"
+                            app:srcCompat="@drawable/ic_favorite_grey" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/text_bold_left"
+                                android:layout_margin="0dp"
+                                android:text="@string/txt_favorites"
+                                android:textColor="@color/black" />
+
+                            <TextView
+                                style="@style/text_left"
+                                android:layout_margin="0dp"
+                                android:text="@string/txt_favourites_desc" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <include layout="@layout/navigation_view" />
+
+</android.support.v4.widget.DrawerLayout>

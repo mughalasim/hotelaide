@@ -1,0 +1,61 @@
+<resources>
+    <!--TOOLBAR AND NAVBAR HEIGHTS ==============================================================-->
+    <dimen name="nav_header_height">90dp</dimen>
+    <dimen name="collapsing_normal_toolbar_height">100dp</dimen>
+    <dimen name="collapsing_details_toolbar_height">180dp</dimen>
+
+
+    <!--IMAGE DIMENS ============================================================================-->
+    <dimen name="restaurant_adapter_image_size">65dp</dimen>
+    <dimen name="restaurant_review_image_size">45dp</dimen>
+    <dimen name="country_flag_image_size">45dp</dimen>
+    <dimen name="restaurant_details_gallery_small">65dp</dimen>
+    <dimen name="restaurant_details_event_height">95dp</dimen>
+    <dimen name="restaurant_details_share_icons">35dp</dimen>
+    <dimen name="restaurant_search_icon_height">20dp</dimen>
+    <dimen name="my_account_profile_pic">140dp</dimen>
+    <dimen name="digital_card_icon_large_bg">130sp</dimen>
+    <dimen name="digital_card_icon_large">115sp</dimen>
+    <dimen name="digital_card_icon_small">90sp</dimen>
+    <dimen name="digital_card_height">230sp</dimen>
+    <dimen name="main_logo_image_size">75sp</dimen>
+    <dimen name="like_btn_image_size">30sp</dimen>
+    <dimen name="offer_button_height">50sp</dimen>
+    <dimen name="hiw_image_size">100sp</dimen>
+
+
+    <!--PADDING =================================================================================-->
+    <dimen name="general_padding">10dp</dimen>
+    <dimen name="login_activity_padding">20dp</dimen>
+    <dimen name="restaurant_details_working_hrs_padding">40sp</dimen>
+    <dimen name="collapsing_details_toolbar_padding">10sp</dimen>
+    <dimen name="collapsing_details_toolbar_side_padding">8sp</dimen>
+    <dimen name="toolbar_image_padding">-10sp</dimen>
+
+
+    <!--TEXT SIZES ==============================================================================-->
+    <dimen name="text_size_xx_large">34sp</dimen>
+    <dimen name="text_size_x_large">20sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_normal">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_web">7sp</dimen>
+
+
+    <!--MARGINS AND SPACINGS ====================================================================-->
+    <dimen name="text_size_header_margin">2sp</dimen>
+    <dimen name="text_size_normal_margin">2sp</dimen>
+    <dimen name="text_size_small_margin">1sp</dimen>
+    <dimen name="text_line_spacing">1dp</dimen>
+    <dimen name="text_line_multiplier">1.2</dimen>
+
+
+    <!--EDIT TEXTS AND BUTTON HEIGHTS ===========================================================-->
+    <dimen name="button_height">45sp</dimen>
+    <dimen name="edit_text_height">33sp</dimen>
+    <dimen name="call_button_height">5sp</dimen>
+    <dimen name="call_button_width">10sp</dimen>
+    <dimen name="rating_bar_height">15sp</dimen>
+
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/day_of_week"
+        style="@style/text_left"
+        android:text="@string/txt_mon"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/time_open"
+        android:gravity="start"
+        android:paddingStart="@dimen/restaurant_details_working_hrs_padding"
+        android:paddingLeft="@dimen/restaurant_details_working_hrs_padding"
+        android:paddingRight="0dp"
+        android:paddingEnd="0dp"
+        style="@style/text_left" />
+
+</RelativeLayout>

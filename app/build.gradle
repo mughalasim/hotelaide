@@ -1,32 +1,127 @@
 apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.compileSDK
+    buildToolsVersion rootProject.buildTools
+    flavorDimensions "versionCode"
     defaultConfig {
         applicationId "com.hotelaide"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion rootProject.minSDK
+        targetSdkVersion rootProject.targetSDK
+        versionCode rootProject.versionCode
+        versionName "$rootProject.versionName"
+        vectorDrawables.useSupportLibrary = true
+        resConfigs "en"
     }
+
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable rootProject.debugMode
+            minifyEnabled rootProject.minify
+            useProguard rootProject.minify
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources true
+        }
+        debug {
+            debuggable rootProject.debugMode
+            minifyEnabled rootProject.minify
+            useProguard rootProject.minify
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources true
+        }
+    }
+
+    productFlavors {
+        prod {
+            buildConfigField 'String',    'MAIN_URL',             '"https://api.eatout.co.ke/api/v2/"'
+            buildConfigField 'Integer',   'DATABASE_VERSION',     "$rootProject.versionCode"
+            buildConfigField 'Integer',   'CONNECTION_TIMEOUT',   '35'
+            buildConfigField 'Boolean',   'LOGGING',              "$rootProject.debugMode"
         }
     }
 }
 
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:$rootProject.SupportLibrary"
+    implementation "com.android.support:exifinterface:$rootProject.SupportLibrary"
+    implementation "com.android.support:cardview-v7:$rootProject.SupportLibrary"
+    implementation "com.android.support:customtabs:$rootProject.SupportLibrary"
+    implementation "com.android.support:design:$rootProject.SupportLibrary"
+    implementation "com.android.support:recyclerview-v7:$rootProject.SupportLibrary"
+
+    // RETROFIT ENDPOINT CALLING
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+
+    // JSON PARSING
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    // PICTURE LOADING
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
+
+    // ROUNDED IMAGE VIEW
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    // FIREBASE AUTHENTICATION
+    implementation "com.google.firebase:firebase-auth:$rootProject.GooglePlaySDK"
+
+    // FIREBASE PUSH NOTIFICATIONS
+    implementation "com.google.firebase:firebase-messaging:$rootProject.GooglePlaySDK"
+
+    // FIREBASE DEEP LINKING
+    implementation "com.google.firebase:firebase-invites:$rootProject.GooglePlaySDK"
+
+    // FIREBASE PERFORMANCE TESTING
+    implementation "com.google.firebase:firebase-perf:$rootProject.GooglePlaySDK"
+
+    // FIREBASE REALTIME DATABASE
+    implementation "com.google.firebase:firebase-database:$rootProject.GooglePlaySDK"
+
+    // FACEBOOK SDK
+    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
+
+    // FACEBOOK NOTIFICATIONS
+    implementation 'com.facebook.android:notifications:1.0.2'
+
+    // GOOGLE
+    implementation "com.google.android.gms:play-services-maps:$rootProject.GooglePlaySDK"
+    implementation "com.google.android.gms:play-services-location:$rootProject.GooglePlaySDK"
+    implementation "com.google.android.gms:play-services-auth:$rootProject.GooglePlaySDK"
+    implementation ("com.google.android.gms:play-services-analytics:$rootProject.GooglePlaySDK") {
+        exclude module: 'play-services-ads'
+    }
+
+    // FABRIC CRASH TOOLS
+    implementation ('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+        transitive = true
+    }
+
+    // YOYO ANIMATIONS
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
+    // NOTIFICATION BADGES
+    implementation 'me.leolin:ShortcutBadger:1.1.19@aar'
+
+    // GIF VIEWER
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
+
+    // FOR LIBRARY
+//     implementation project(':eatoutlibrary')
+
+    // COUNTRY CODE SELECTOR
+    implementation 'com.github.joielechong:countrycodepicker:2.1.5'
+
+    // STETHO INSPECTOR BY FACEBOOK
+    // implementation 'com.facebook.stetho:stetho:1.5.0'
+    // implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    // IMAGE SCALING
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
+
 }
+apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'

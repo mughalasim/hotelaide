@@ -1,0 +1,220 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/login_background"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter" />
+
+    <ImageView
+        android:id="@+id/mainLogo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_logo_image_size"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/login_activity_padding"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter"
+        android:src="@drawable/main_logo_white" />
+
+    <LinearLayout
+        android:id="@+id/LL_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40sp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/login_activity_padding"
+        android:layout_marginRight="@dimen/login_activity_padding"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/bckgrd_text_fields"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="@dimen/general_padding"
+            android:layout_height="wrap_content">
+
+            <com.rilixtech.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="@dimen/general_padding"
+                android:layout_marginEnd="@dimen/general_padding"
+                app:ccp_defaultCode="254"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/user_phone"
+                android:digits="0123456789"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/et_hint_phone"
+                android:inputType="phone"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/login_activity_padding"
+            android:layout_marginTop="@dimen/login_activity_padding"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Button_Yes"
+                android:layout_width="0dp"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:onClick="sendPhoneNumber"
+                android:text="@string/txt_login" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/Text_Small"
+            android:onClick="termsAndConditions"
+            android:text="@string/txt_terms"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LL_activation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="40sp"
+        android:layout_marginLeft="@dimen/login_activity_padding"
+        android:layout_marginRight="@dimen/login_activity_padding"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            style="@style/Text_Normal"
+            android:onClick="termsAndConditions"
+            android:text="@string/txt_enter_otp"
+            android:textColor="@color/white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/general_padding"
+            android:layout_height="?android:attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="5"
+                android:gravity="center"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/passcode1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:textSize="@dimen/text_size_xx_large"
+                    android:textStyle="bold"
+                    android:background="@drawable/bckgrd_text_fields"
+                    android:layout_marginRight="@dimen/general_padding"
+                    android:layout_marginEnd="@dimen/general_padding"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/passcode2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:textSize="@dimen/text_size_xx_large"
+                    android:textStyle="bold"
+                    android:background="@drawable/bckgrd_text_fields"
+                    android:layout_marginRight="@dimen/general_padding"
+                    android:layout_marginEnd="@dimen/general_padding"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/passcode3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:textSize="@dimen/text_size_xx_large"
+                    android:textStyle="bold"
+                    android:background="@drawable/bckgrd_text_fields"
+                    android:layout_marginRight="@dimen/general_padding"
+                    android:layout_marginEnd="@dimen/general_padding"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/passcode4"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:textSize="@dimen/text_size_xx_large"
+                    android:textStyle="bold"
+                    android:background="@drawable/bckgrd_text_fields"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/activation_code"
+                style="@style/Edit_Text"
+                android:layout_height="match_parent"
+                android:digits="0123456789"
+                android:maxLength="4"
+                android:maxLines="1"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_large"
+                android:background="#00000000"
+                android:textColor="#00000000"
+                android:cursorVisible="false"
+                android:inputType="number" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/login_activity_padding"
+            android:layout_marginTop="@dimen/login_activity_padding"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/retry"
+                style="@style/Button_No"
+                android:layout_weight="1"
+                android:onClick="retryLogin"
+                android:text="@string/txt_retry" />
+
+            <TextView
+                style="@style/Button_Yes"
+                android:layout_weight="1"
+                android:onClick="sendActivationCode"
+                android:text="@string/txt_login" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/Text_Small"
+            android:onClick="termsAndConditions"
+            android:text="@string/txt_policy"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

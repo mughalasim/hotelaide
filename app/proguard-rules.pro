@@ -19,3 +19,48 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#For file mapping
+-printmapping proguard_mapping.txt
+
+-verbose
+
+#For retrofit issues
+-dontwarn okio.**
+-dontwarn retrofit2.Platform$Java8
+-keep class retrofit.** { *; }
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+-dontwarn javax.annotation.**
+-dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
+
+#For the search Bar
+-keep class android.support.v7.widget.SearchView { *; }
+
+#For Facebook
+-keepattributes *Annotation*
+-keep class com.facebook.** {
+   *;
+}
+
+#For FireBase Database Models
+-keepattributes Signature
+-keepclassmembers class com.hotelaide.models.** {
+  *;
+}
+
+# Google play ads
+-dontwarn com.google.android.gms.**
+
+-ignorewarnings
+
+
+#For the Animation Classes
+-keep class com.daimajia.* { *; }
+-keep interface com.daimajia.* { *; }
+-keep public class com.daimajia.* { *; }
+-keep class com.daimajia.easing.** { *; }
+-keep interface com.daimajia.easing.** { *; }
+-keep class com.nineoldandroids.* { *; }
+-keep interface com.nineoldandroids.* { *; }
+-keep public class com.nineoldandroids.* { *; }
