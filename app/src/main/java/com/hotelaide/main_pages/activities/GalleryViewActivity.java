@@ -266,7 +266,7 @@ public class GalleryViewActivity extends AppCompatActivity {
                 for (int i = 0; i < data_size; i++) {
                     Bundle bundle = new Bundle();
                     bundle.putString("image_urls", image_urls.get(i));
-                    Fragment fragment = new GalleryViewFragment();
+//                    Fragment fragment = new GalleryViewFragment();
                     fragment.setArguments(bundle);
                     viewPageradapter.addFragment(fragment);
                 }
