@@ -503,8 +503,8 @@ public class RestaurantSearchActivity extends ParentActivity {
     }
 
     private void resetSearchBy() {
-        search_by_city.setText(db.getCityNameByID(Database.userModel.city_id));
-        search_by_city.setTag(Database.userModel.city_id);
+        search_by_city.setText(db.getCityNameByID(Database.userModel.dob));
+        search_by_city.setTag(Database.userModel.dob);
 
         if (search_by_city.getText().toString().equals("")) {
             search_by_city.setText(getString(R.string.txt_search_all));

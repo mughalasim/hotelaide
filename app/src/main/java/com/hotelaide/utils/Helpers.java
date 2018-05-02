@@ -46,14 +46,10 @@ import java.util.regex.Pattern;
 
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.eo_activities.AboutUsActivity;
-import com.hotelaide.main_pages.eo_activities.ChangeLocationActivity;
-import com.hotelaide.main_pages.eo_activities.FavoritesActivity;
-import com.hotelaide.main_pages.eo_activities.HomeActivity;
-import com.hotelaide.main_pages.eo_activities.HowItWorksActivity;
-import com.hotelaide.main_pages.eo_activities.MyAccountActivity;
-import com.hotelaide.main_pages.eo_activities.MyReservationsActivity;
-import com.hotelaide.main_pages.eo_activities.RestaurantSearchActivity;
+import com.hotelaide.main_pages.activities.AboutUsActivity;
+import com.hotelaide.main_pages.activities.HomeActivity;
+import com.hotelaide.main_pages.activities.MyAccountActivity;
+import com.hotelaide.main_pages.activities.RestaurantSearchActivity;
 import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.services.GeneralService;
 import com.hotelaide.services.UserService;
@@ -166,22 +162,6 @@ public class Helpers {
 
             case R.id.find_restaurants:
                 context.startActivity(new Intent(context, RestaurantSearchActivity.class));
-                break;
-
-            case R.id.favorites:
-                context.startActivity(new Intent(context, FavoritesActivity.class));
-                break;
-
-            case R.id.reservations:
-                context.startActivity(new Intent(context, MyReservationsActivity.class));
-                break;
-
-            case R.id.how_it_works:
-                context.startActivity(new Intent(context, HowItWorksActivity.class));
-                break;
-
-            case R.id.change_location:
-                context.startActivity(new Intent(context, ChangeLocationActivity.class));
                 break;
 
             case R.id.my_account:
@@ -503,8 +483,8 @@ public class Helpers {
     private int getNotificationIcon() {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
         return useWhiteIcon ?
-                R.drawable.main_logo_icon_white :
-                R.drawable.main_logo_icon_orange;
+                R.drawable.main_logo_icon :
+                R.drawable.main_logo_icon;
     }
 
 
@@ -733,13 +713,13 @@ public class Helpers {
     public void asyncSetUser(UserModel userModel) {
         UserService userService = UserService.retrofit.create(UserService.class);
         final Call<JsonObject> call = userService.updateUser(
-                userModel.salutation,
+                userModel.first_name,
                 userModel.first_name,
                 userModel.last_name,
                 userModel.email,
                 userModel.profile_pic,
                 userModel.banner_pic,
-                userModel.city_id,
+                userModel.user_token,
                 userModel.phone,
                 userModel.dob,
                 userModel.fb_id

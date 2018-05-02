@@ -7,6 +7,7 @@
     <!--META DATA ===============================================================================-->
     <string name="facebook_app_id">2274737566777252</string>
     <string name="fb_login_protocol_scheme">fb2274775673160777252</string>
+    <string name="fabric_api_key">jhwdvbweilfhuihdq</string>
 
     <!--ERROR MESSAGES ==========================================================================-->
     <string name="error_field_required">This field is required</string>

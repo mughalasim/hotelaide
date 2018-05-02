@@ -34,7 +34,6 @@ public interface LoginService {
 
                     Request.Builder requestBuilder = original.newBuilder()
                             .header("X-Auth-Token", Database.userModel.user_token)
-                            .header("Client-Identifier", BuildConfig.IDENTIFIER)
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();

@@ -25,7 +25,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import com.hotelaide.main_pages.eo_activities.HomeActivity;
+import com.hotelaide.main_pages.activities.HomeActivity;
 import com.hotelaide.utils.Helpers;
 
 import static com.hotelaide.utils.Helpers.STR_NAVIGATION_COLLECTION;

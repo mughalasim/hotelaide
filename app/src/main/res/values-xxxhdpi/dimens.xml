@@ -18,7 +18,7 @@
     <dimen name="digital_card_icon_large">155sp</dimen>
     <dimen name="digital_card_icon_small">115sp</dimen>
     <dimen name="digital_card_height">280sp</dimen>
-    <dimen name="main_logo_image_size">100sp</dimen>
+    <dimen name="main_logo_image_size">90sp</dimen>
     <dimen name="like_btn_image_size">40sp</dimen>
     <dimen name="offer_button_height">55sp</dimen>
     <dimen name="hiw_image_size">160sp</dimen>

@@ -7,8 +7,9 @@
     <color name="white">#ffffff</color>
 
     <color name="orange">#a88330</color>
-    <color name="blue">#4955a3</color>
-    <color name="dark_blue">#11194e</color>
+    <color name="light_blue">#f2fcfe</color>
+    <color name="blue">#cce7f5</color>
+    <color name="dark_blue">#a5d2ea</color>
     <color name="green">#53b326</color>
     <color name="dark_green">#479b20</color>
 

@@ -93,8 +93,6 @@ public class MyAccountActivity extends ParentActivity {
 
         fetchFromDB();
 
-        setSalutationFromDb();
-
         setToUI();
 
         setDates();
@@ -174,7 +172,7 @@ public class MyAccountActivity extends ParentActivity {
         Helpers.LogThis(TAG_LOG, "ON START " +
                 userModelMyAccount.user_id + " - " +
                 userModelMyAccount.user_token + " - " +
-                userModelMyAccount.salutation + " - " +
+                userModelMyAccount.dob + " - " +
                 userModelMyAccount.first_name + " - " +
                 userModelMyAccount.last_name + " - " +
                 userModelMyAccount.email + " - " +
@@ -182,46 +180,14 @@ public class MyAccountActivity extends ParentActivity {
                 userModelMyAccount.banner_pic + " - " +
                 userModelMyAccount.phone + " - " +
                 userModelMyAccount.dob + " - " +
-                userModelMyAccount.points + " - " +
-                userModelMyAccount.city_id + " - " +
+                userModelMyAccount.dob + " - " +
+                userModelMyAccount.dob + " - " +
                 userModelMyAccount.fb_id
         );
     }
 
-    private void setSalutationFromDb() {
-        String[] salutationArray = getResources().getStringArray(R.array.spinner_salutaions);
-        if (userModelMyAccount.salutation.equals(salutationArray[0])) {
-            user_salutation.setSelection(0);
-        } else if (userModelMyAccount.salutation.equals(salutationArray[1])) {
-            user_salutation.setSelection(1);
-        } else if (userModelMyAccount.salutation.equals(salutationArray[2])) {
-            user_salutation.setSelection(2);
-        } else if (userModelMyAccount.salutation.equals(salutationArray[3])) {
-            user_salutation.setSelection(3);
-        } else if (userModelMyAccount.salutation.equals(salutationArray[4])) {
-            user_salutation.setSelection(4);
-        } else if (userModelMyAccount.salutation.equals(salutationArray[5])) {
-            user_salutation.setSelection(5);
-        } else if (userModelMyAccount.salutation.equals(salutationArray[6])) {
-            user_salutation.setSelection(6);
-        }
-
-        user_salutation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                userModelMyAccount.salutation = user_salutation.getSelectedItem().toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
     private void setToUI() {
-        userModelMyAccount.salutation = user_salutation.getSelectedItem().toString();
-        user_points.setText(userModelMyAccount.points);
+
         user_first_name.setText(userModelMyAccount.first_name);
         user_last_name.setText(userModelMyAccount.last_name);
         user_email.setText(userModelMyAccount.email);
@@ -340,12 +306,11 @@ public class MyAccountActivity extends ParentActivity {
             userModel.email = user_email.getText().toString();
             userModel.first_name = user_first_name.getText().toString();
             userModel.last_name = user_last_name.getText().toString();
-            userModel.salutation = user_salutation.getSelectedItem().toString();
 
             Helpers.LogThis(TAG_LOG, "BEFORE UPDATE " +
                     userModel.user_id + " - " +
                     userModel.user_token + " - " +
-                    userModel.salutation + " - " +
+                    userModel.dob + " - " +
                     userModel.first_name + " - " +
                     userModel.last_name + " - " +
                     userModel.email + " - " +
@@ -353,8 +318,8 @@ public class MyAccountActivity extends ParentActivity {
                     userModel.banner_pic + " - " +
                     userModel.phone + " - " +
                     userModel.dob + " - " +
-                    userModel.points + " - " +
-                    userModel.city_id + " - " +
+                    userModel.dob + " - " +
+                    userModel.dob + " - " +
                     userModel.fb_id
             );
 

@@ -26,7 +26,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 import com.hotelaide.R;
-import com.hotelaide.main_pages.activities.RestaurantDetailsActivity;
 import com.hotelaide.main_pages.models.RestaurantModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
@@ -158,23 +157,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
                 holder.offer_icon.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (helper.validateInternetConnection()) {
-                            if (holder.txtId.getText().toString().length() > 0) {
-                                String id = holder.txtId.getText().toString();
-                                String name = holder.txtName.getText().toString();
-                                String cuisine = holder.txtCuisine.getText().toString();
-                                Activity activity = (Activity) context;
-                                activity.startActivity(new Intent(context,
-                                        RestaurantDetailsActivity.class)
-                                        .putExtra("restaurant_id", id)
-                                        .putExtra("restaurant_name", name)
-                                        .putExtra("restaurant_desc", cuisine)
-                                        .putExtra("offer_id", restaurantModel.offer_id));
-                                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            }
-                        } else {
-                            helper.myDialog(context, "Alert", context.getString(R.string.error_connection));
-                        }
+
                     }
                 });
             }
@@ -208,31 +191,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
             Glide.with(context).load(restaurantModel.image).into(holder.image);
 
-            if (db.getLikedRestaurantIDMatch(restaurantModel.id)) {
-                holder.image_like.setVisibility(View.VISIBLE);
-            } else {
-                holder.image_like.setVisibility(View.GONE);
-            }
 
             holder.itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (helper.validateInternetConnection() && holder.txtId.getText().toString().length() > 0) {
-                        String id = holder.txtId.getText().toString();
-                        String name = holder.txtName.getText().toString();
-                        String cuisine = holder.txtCuisine.getText().toString();
-                        Activity activity = (Activity) context;
-                        activity.startActivity(new Intent(context,
-                                RestaurantDetailsActivity.class)
-                                .putExtra("restaurant_id", id)
-                                .putExtra("restaurant_name", name)
-                                .putExtra("restaurant_desc", cuisine)
-                                .putExtra("offer_id", 0));
-                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-                    } else {
-                        helper.myDialog(context, "Alert", context.getString(R.string.error_connection));
-                    }
                 }
             });
         }

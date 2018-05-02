@@ -169,7 +169,7 @@ public class LocationService extends Service {
             final Call<JsonObject> call = restaurantService.searchRestaurant(
                     "",
                     "",
-                    Database.userModel.city_id,
+                    Database.userModel.dob,
                     "",
                     "",
                     "",

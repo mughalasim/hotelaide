@@ -23,8 +23,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import bolts.AppLinks;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.eo_activities.HomeActivity;
-import com.hotelaide.main_pages.eo_activities.ParentActivity;
+import com.hotelaide.main_pages.activities.HomeActivity;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -53,10 +52,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         db.getUser();
 
         SharedPrefs.setToken(Database.userModel.user_token);
-        SharedPrefs.setUserName(
-                Database.userModel.salutation,
-                Database.userModel.first_name,
-                Database.userModel.last_name);
 
         setContentView(R.layout.activity_splash_screen);
 
@@ -195,12 +190,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                     Helpers.setAppNavigation(STR_NAVIGATION_REST, STR_REST_ID, STR_REST_ID, STR_REST_ID);
                 }
 
-            } else if (path[1].equals("collections")) {
-                String STR_COLLECTION_ID = db.getCollectionIDFromURL(slug);
-                Helpers.LogThis(TAG_LOG, STR_COLLECTION_ID);
-                if (!STR_COLLECTION_ID.equals("")) {
-                    Helpers.setAppNavigation(STR_NAVIGATION_COLLECTION, STR_COLLECTION_ID, STR_COLLECTION_ID, STR_COLLECTION_ID);
-                }
             }
         }
 
@@ -262,9 +251,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                             if (!db.getRestaurantIDFromSlug(DATA).equals("")) {
                                 Helpers.setAppNavigation(STR_NAVIGATION_REST, DATA, DATA, DATA);
 
-                            } else if (!db.getCollectionIDFromURL(DATA).equals("")) {
-                                Helpers.setAppNavigation(STR_NAVIGATION_COLLECTION, db.getCollectionIDFromURL(DATA), DATA, DATA);
-
                             } else {
                                 Helpers.setAppNavigation(STR_NAVIGATION_SEARCH, db.getRestaurantIDFromSlug(DATA), DATA, DATA);
                             }
@@ -284,17 +270,14 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void startUp() {
         handleDynamicLinks();
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Helpers.LogThis(TAG_LOG, "Start Up");
-                if (Database.userModel.phone.equals("")) {
-                    ParentActivity.asyncGetAllRestaurants();
+                if (Database.userModel.user_token.equals("")) {
                     startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                 } else if (db.validateUserName()) {
-                    ParentActivity.asyncGetAllRestaurants();
-                    startActivity(new Intent(SplashScreenActivity.this, SetAccount.class).putExtra("city_id", Database.userModel.city_id));
+                    startActivity(new Intent(SplashScreenActivity.this, SetAccount.class));
                 } else {
                     startActivity(new Intent(SplashScreenActivity.this, HomeActivity.class));
                 }
@@ -302,6 +285,5 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         }, 500);
     }
-
 
 }

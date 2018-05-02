@@ -8,30 +8,19 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.hotelaide.R;
 import com.hotelaide.utils.Helpers;
 
-//import static com.hotelaide.main_pages.eo_activities.HowItWorksActivity.BTN_TXT;
-//import static com.hotelaide.main_pages.eo_activities.HowItWorksActivity.DESC;
-//import static com.hotelaide.main_pages.eo_activities.HowItWorksActivity.IMAGE;
 
-public class HIWFragment extends Fragment {
+public class StartUpAboutUsFragment extends Fragment {
 
     private View rootview;
 
-    private int imageID = 0;
-
-    private String
-            desc = "",
-            btn_txt = "";
-
     private final String TAG_LOG =
-            "HIW FRAGMENT";
+            "FRAGMENT";
 
-    public HIWFragment() {
+    public StartUpAboutUsFragment() {
 
     }
 
@@ -39,10 +28,6 @@ public class HIWFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            imageID = getArguments().getInt(IMAGE);
-//            desc = getArguments().getString(DESC);
-//            btn_txt = getArguments().getString(BTN_TXT);
-
             Helpers.LogThis(TAG_LOG, getArguments().toString());
         }
     }
@@ -52,19 +37,11 @@ public class HIWFragment extends Fragment {
                              Bundle savedInstanceState) {
         if (rootview == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.fragment_hiw, container, false);
+                rootview = inflater.inflate(R.layout.fragment_startup_login, container, false);
                 final Helpers helpers = new Helpers(getActivity());
-
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-                TextView button1 = rootview.findViewById(R.id.button);
-                TextView description = rootview.findViewById(R.id.description);
-                final ImageView image = rootview.findViewById(R.id.image);
 
-                button1.setText(btn_txt);
-                button1.setTag(btn_txt);
-                description.setText(desc);
-                image.setImageResource(imageID);
 
             } catch (InflateException e) {
                 e.printStackTrace();

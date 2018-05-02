@@ -16,8 +16,6 @@ import java.util.List;
 
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.models.CollectionModel;
-import com.hotelaide.main_pages.models.ReservationModel;
 import com.hotelaide.main_pages.models.RestaurantModel;
 import com.hotelaide.main_pages.models.UserModel;
 
@@ -51,18 +49,6 @@ public class Database extends SQLiteOpenHelper {
     public static final String TYPE_TABLE_ID = "Type_Id";
     public static final String TYPE_NAME = "Name";
 
-    // LIKED RESTAURANTS STORED IN THE DATABASE ====================================================
-    private static final String LIKED_RESTAURANTS_TABLE_NAME = "Liked_Restaurant_Table";
-    private static final String LIKED_RESTAURANT_TABLE_ID = "Restaurant_Id";
-
-    // COLLECTION RESTAURANT STORED IN THE DATABASE ================================================
-    private static final String COLLECTION_RESTAURANT_TABLE_NAME = "Collection_Restaurant_Table";
-    private static final String COLLECTION_RESTAURANT_TABLE_ID = "Table_Id";
-    private static final String COLLECTION_RESTAURANT_COLLECTION_ID = "Collection_Id";
-    private static final String COLLECTION_RESTAURANT_COLLECTION_URL = "Url";
-    private static final String COLLECTION_RESTAURANT_TITLE = "Title";
-    private static final String COLLECTION_RESTAURANT_DESC = "Description";
-    private static final String COLLECTION_RESTAURANT_ID = "Restaurant_Id";
 
     // RESTAURANTS STORED IN THE DATABASE =========================================================
     private static final String RESTAURANT_TABLE_NAME = "Restaurant_Table";
@@ -97,20 +83,6 @@ public class Database extends SQLiteOpenHelper {
     private static final String USER_POINTS = "Points";
     private static final String USER_FB_ID = "Fb_Id";
 
-    // RESERVATIONS STORED IN THE DATABASE =========================================================
-    private static final String RESERVATION_TABLE_NAME = "Reservation_Table";
-    private static final String RESERVATION_ID = "Reservation_Id";
-    private static final String RESERVATION_USER_ID = "User_id";
-    private static final String RESERVATION_RESTAURANT_ID = "Restaurant_Id";
-    private static final String RESERVATION_RESTAURANT_NAME = "Restaurant_Name";
-    private static final String RESERVATION_IMAGE = "Image";
-    private static final String RESERVATION_TIME = "Time";
-    private static final String RESERVATION_DATE = "Date";
-    private static final String RESERVATION_CREATED = "Created_Date";
-    private static final String RESERVATION_PERSONS = "Persons";
-    private static final String RESERVATION_CHILDREN = "Children";
-    private static final String RESERVATION_NOTE = "Note";
-    private static final String RESERVATION_STATE = "State";
 
     public static UserModel userModel = new UserModel();
 
@@ -143,22 +115,6 @@ public class Database extends SQLiteOpenHelper {
                 + TYPE_TABLE_NAME +
                 "(" + TYPE_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 TYPE_NAME + " TEXT)"
-        );
-
-        db.execSQL("CREATE TABLE IF NOT EXISTS "
-                + LIKED_RESTAURANTS_TABLE_NAME +
-                "(" + LIKED_RESTAURANT_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL)"
-        );
-
-        db.execSQL("CREATE TABLE IF NOT EXISTS "
-                + COLLECTION_RESTAURANT_TABLE_NAME +
-                "(" + COLLECTION_RESTAURANT_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL," +
-                COLLECTION_RESTAURANT_COLLECTION_ID + " TEXT," +
-                COLLECTION_RESTAURANT_COLLECTION_URL + " TEXT," +
-                COLLECTION_RESTAURANT_TITLE + " TEXT," +
-                COLLECTION_RESTAURANT_DESC + " TEXT," +
-                COLLECTION_RESTAURANT_ID + " TEXT" +
-                ")"
         );
 
         db.execSQL("CREATE TABLE IF NOT EXISTS "
@@ -199,24 +155,6 @@ public class Database extends SQLiteOpenHelper {
                 ")"
         );
 
-
-        db.execSQL("CREATE TABLE IF NOT EXISTS " +
-                RESERVATION_TABLE_NAME + "(" +
-                RESERVATION_ID + " INTEGER PRIMARY KEY NOT NULL," +
-                RESERVATION_USER_ID + " TEXT," +
-                RESERVATION_RESTAURANT_ID + " TEXT," +
-                RESERVATION_RESTAURANT_NAME + " TEXT," +
-                RESERVATION_IMAGE + " TEXT," +
-                RESERVATION_TIME + " TEXT," +
-                RESERVATION_DATE + " TEXT," +
-                RESERVATION_CREATED + " TEXT," +
-                RESERVATION_PERSONS + " TEXT," +
-                RESERVATION_CHILDREN + " TEXT," +
-                RESERVATION_NOTE + " TEXT," +
-                RESERVATION_STATE + " TEXT" +
-                ")"
-        );
-
     }
 
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
@@ -225,22 +163,7 @@ public class Database extends SQLiteOpenHelper {
 
 
     // DELETE ALL FUNCTIONS ========================================================================
-    public void deleteLikeTable() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + LIKED_RESTAURANTS_TABLE_NAME);
 
-    }
-
-    public void deleteReservationTable() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + RESERVATION_TABLE_NAME);
-
-    }
-
-    public void deleteCollectionTable() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + COLLECTION_RESTAURANT_TABLE_NAME);
-    }
 
     public void deleteAllTables() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -248,9 +171,6 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + CITY_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AREA_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + RESTAURANT_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + COLLECTION_RESTAURANT_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + RESERVATION_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + LIKED_RESTAURANTS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME);
 
         onCreate(db);
@@ -383,69 +303,6 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    // LIKED RESTAURANT FUNCTIONS ==================================================================
-    public void setLikedRestaurant(String RestaurantID) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(LIKED_RESTAURANT_TABLE_ID, RestaurantID);
-        setToDB(LIKED_RESTAURANTS_TABLE_NAME, LIKED_RESTAURANT_TABLE_ID, RestaurantID, contentValues);
-    }
-
-    public Boolean getLikedRestaurantIDMatch(String RestaurantID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String whereClause = LIKED_RESTAURANT_TABLE_ID + " = ?";
-        String[] whereArgs = new String[]{String.valueOf(RestaurantID)};
-        Cursor cursor = db.query(LIKED_RESTAURANTS_TABLE_NAME, null, whereClause, whereArgs,
-                null, null, null);
-        int count = cursor.getCount();
-        cursor.close();
-        return count > 0;
-    }
-
-    public void deleteLikedRestaurant(String RestaurantID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String whereClause = LIKED_RESTAURANT_TABLE_ID + " = ?";
-        String[] whereArgs = new String[]{String.valueOf(RestaurantID)};
-        db.delete(LIKED_RESTAURANTS_TABLE_NAME, whereClause, whereArgs);
-    }
-
-
-    // COLLECTION RESTAURANT =======================================================================
-    public void setCollectionRestaurants(CollectionModel collectionModel) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLLECTION_RESTAURANT_COLLECTION_ID, collectionModel.collection_id);
-        contentValues.put(COLLECTION_RESTAURANT_COLLECTION_URL, collectionModel.collection_url);
-        contentValues.put(COLLECTION_RESTAURANT_TITLE, collectionModel.collection_title);
-        contentValues.put(COLLECTION_RESTAURANT_DESC, collectionModel.collection_desc);
-        contentValues.put(COLLECTION_RESTAURANT_ID, collectionModel.collection_rest_id);
-        db.insert(COLLECTION_RESTAURANT_TABLE_NAME, null, contentValues);
-    }
-
-    public CollectionModel getCollectionRestaurant(String collection_id) {
-        CollectionModel collectionModel = new CollectionModel();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String whereClause = COLLECTION_RESTAURANT_COLLECTION_ID + " = ?";
-        String[] whereArgs = new String[]{collection_id};
-        Cursor cursor = db.query(COLLECTION_RESTAURANT_TABLE_NAME, null, whereClause, whereArgs,
-                null, null, null);
-
-        if (cursor != null) {
-            int count = cursor.getCount();
-            if (count > 0) {
-                cursor.moveToFirst();
-                do {
-                    collectionModel.collection_title = cursor.getString(cursor.getColumnIndex(COLLECTION_RESTAURANT_TITLE));
-                    collectionModel.collection_desc = cursor.getString(cursor.getColumnIndex(COLLECTION_RESTAURANT_DESC));
-                    collectionModel.collection_url = cursor.getString(cursor.getColumnIndex(COLLECTION_RESTAURANT_COLLECTION_URL));
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-        }
-
-        return collectionModel;
-    }
-
 
     // RESTAURANT FUNCTIONS ========================================================================
     public RestaurantModel setRestaurants(JSONObject json_data) {
@@ -540,19 +397,9 @@ public class Database extends SQLiteOpenHelper {
         switch (RetrievalType) {
             case RETRIEVE_ALL_RESTAURANTS:
                 whereClause = RESTAURANT_CITY_ID + " = ?";
-                whereArgs = new String[]{userModel.city_id};
+                whereArgs = new String[]{userModel.dob};
                 cursor = db.query(RESTAURANT_TABLE_NAME, null, whereClause, whereArgs,
                         null, null, RESTAURANT_PREMIUM_LEVEL + " DESC, " + RESTAURANT_NAME + " ASC");
-                break;
-
-            case RETRIEVE_LIKED_RESTAURANTS:
-                cursor = db.rawQuery(createJoin(LIKED_RESTAURANTS_TABLE_NAME,
-                        LIKED_RESTAURANT_TABLE_ID), null);
-                break;
-
-            case RETRIEVE_COLLECTION_RESTAURANTS:
-                cursor = db.rawQuery(createJoinWithClause(COLLECTION_RESTAURANT_TABLE_NAME,
-                        COLLECTION_RESTAURANT_ID, COLLECTION_ID), null);
                 break;
 
         }
@@ -594,91 +441,6 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    // RESERVATION FUNCTIONS =======================================================================
-    public ReservationModel setReservation(JSONObject json_data) {
-
-        ReservationModel reservationModel = new ReservationModel();
-        try {
-            reservationModel.id = json_data.getInt("id");
-            reservationModel.user_id = json_data.getString("user_id");
-            reservationModel.restaurant_id = json_data.getString("restaurant_id");
-            reservationModel.restaurant_name = json_data.getString("restaurant_name");
-            reservationModel.image = json_data.getString("full_restaurant_thumb_image");
-            reservationModel.time = json_data.getString("reservation_time");
-            reservationModel.date = json_data.getString("reservation_date");
-            reservationModel.created_date = json_data.getString("created_date");
-            reservationModel.persons = json_data.getString("persons");
-            reservationModel.children = json_data.getString("children");
-            reservationModel.note = json_data.getString("note");
-            reservationModel.state = json_data.getString("state");
-
-
-            SQLiteDatabase db = this.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(RESERVATION_ID, reservationModel.id);
-            contentValues.put(RESERVATION_USER_ID, reservationModel.user_id);
-            contentValues.put(RESERVATION_RESTAURANT_ID, reservationModel.restaurant_id);
-            contentValues.put(RESERVATION_RESTAURANT_NAME, reservationModel.restaurant_name);
-            contentValues.put(RESERVATION_IMAGE, reservationModel.image);
-            contentValues.put(RESERVATION_TIME, reservationModel.time);
-            contentValues.put(RESERVATION_DATE, reservationModel.date);
-            contentValues.put(RESERVATION_CREATED, reservationModel.created_date);
-            contentValues.put(RESERVATION_PERSONS, reservationModel.persons);
-            contentValues.put(RESERVATION_CHILDREN, reservationModel.children);
-            contentValues.put(RESERVATION_NOTE, reservationModel.note);
-            contentValues.put(RESERVATION_STATE, reservationModel.state);
-
-            String whereClause = RESERVATION_ID + " = ?";
-            String[] whereArgs = new String[]{String.valueOf(reservationModel.id)};
-            int no_of_rows_affected = db.update(RESERVATION_TABLE_NAME, contentValues, whereClause,
-                    whereArgs);
-
-            if (no_of_rows_affected == 0) {
-                db.insert(RESERVATION_TABLE_NAME, null, contentValues);
-            }
-
-
-        } catch (JSONException e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
-            return reservationModel;
-        }
-        return reservationModel;
-    }
-
-    public ArrayList<ReservationModel> getAllReservations() {
-
-        ArrayList<ReservationModel> list = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = db.query(RESERVATION_TABLE_NAME, null, null, null, null, null, RESERVATION_ID + " DESC");
-        if (cursor != null) {
-            int count = cursor.getCount();
-            if (count > 0) {
-                cursor.moveToFirst();
-                do {
-                    ReservationModel reservationModel = new ReservationModel();
-                    reservationModel.id = cursor.getInt(cursor.getColumnIndex(RESERVATION_ID));
-                    reservationModel.user_id = cursor.getString(cursor.getColumnIndex(RESERVATION_USER_ID));
-                    reservationModel.restaurant_id = cursor.getString(cursor.getColumnIndex(RESERVATION_RESTAURANT_ID));
-                    reservationModel.restaurant_name = cursor.getString(cursor.getColumnIndex(RESERVATION_RESTAURANT_NAME));
-                    reservationModel.image = cursor.getString(cursor.getColumnIndex(RESERVATION_IMAGE));
-                    reservationModel.time = cursor.getString(cursor.getColumnIndex(RESERVATION_TIME));
-                    reservationModel.date = cursor.getString(cursor.getColumnIndex(RESERVATION_DATE));
-                    reservationModel.created_date = cursor.getString(cursor.getColumnIndex(RESERVATION_CREATED));
-                    reservationModel.persons = cursor.getString(cursor.getColumnIndex(RESERVATION_PERSONS));
-                    reservationModel.children = cursor.getString(cursor.getColumnIndex(RESERVATION_CHILDREN));
-                    reservationModel.note = cursor.getString(cursor.getColumnIndex(RESERVATION_NOTE));
-                    reservationModel.state = cursor.getString(cursor.getColumnIndex(RESERVATION_STATE));
-
-                    list.add(reservationModel);
-
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-        }
-        return list;
-    }
-
 
     // USER FUNCTIONS ==============================================================================
     public Boolean setUser(JSONObject main) {
@@ -695,7 +457,7 @@ public class Database extends SQLiteOpenHelper {
 
                 userModel.user_id = user.getInt("id");
                 userModel.user_token = formatString(user.getString("user_token"));
-                userModel.salutation = formatString(user.getString("salutation"));
+                userModel.dob = formatString(user.getString("salutation"));
                 userModel.first_name = formatString(user.getString("first_name"));
                 userModel.last_name = formatString(user.getString("last_name"));
                 userModel.email = formatString(user.getString("email"));
@@ -703,27 +465,27 @@ public class Database extends SQLiteOpenHelper {
                 userModel.banner_pic = formatString(user.getString("banner_pic"));
                 userModel.phone = formatString(user.getString("phone"));
                 userModel.dob = formatString(user.getString("date_of_birth"));
-                userModel.points = user.getString("points");
+                userModel.dob = user.getString("points");
                 userModel.fb_id = user.getString("fb_id");
                 JSONObject city = user.getJSONObject("city");
                 if (!city.isNull("id")) {
-                    userModel.city_id = city.getString("id");
+                    userModel.dob = city.getString("id");
                 } else {
-                    userModel.city_id = "";
+                    userModel.dob = "";
                 }
 
                 contentValues.put(USER_ID, userModel.user_id);
                 contentValues.put(USER_TOKEN, userModel.user_token);
-                contentValues.put(USER_SALUTATION, userModel.salutation);
+                contentValues.put(USER_SALUTATION, userModel.dob);
                 contentValues.put(USER_FIRST_NAME, userModel.first_name);
                 contentValues.put(USER_LAST_NAME, userModel.last_name);
                 contentValues.put(USER_EMAIL, userModel.email);
                 contentValues.put(USER_IMAGE, userModel.profile_pic);
                 contentValues.put(USER_COUNTRY_CODE, userModel.banner_pic);
-                contentValues.put(USER_CITY_ID, userModel.city_id);
+                contentValues.put(USER_CITY_ID, userModel.dob);
                 contentValues.put(USER_PHONE, userModel.phone);
                 contentValues.put(USER_DOB, userModel.dob);
-                contentValues.put(USER_POINTS, userModel.points);
+                contentValues.put(USER_POINTS, userModel.dob);
                 contentValues.put(USER_FB_ID, userModel.fb_id);
 
                 String whereClause = USER_ID + " = ?";
@@ -738,7 +500,7 @@ public class Database extends SQLiteOpenHelper {
                 Helpers.LogThis(TAG_LOG, "AFTER UPDATE " +
                         userModel.user_id + " - " +
                         userModel.user_token + " - " +
-                        userModel.salutation + " - " +
+                        userModel.dob + " - " +
                         userModel.first_name + " - " +
                         userModel.last_name + " - " +
                         userModel.email + " - " +
@@ -746,8 +508,8 @@ public class Database extends SQLiteOpenHelper {
                         userModel.banner_pic + " - " +
                         userModel.phone + " - " +
                         userModel.dob + " - " +
-                        userModel.points + " - " +
-                        userModel.city_id + " - " +
+                        userModel.dob + " - " +
+                        userModel.dob + " - " +
                         userModel.fb_id
                 );
                 response = true;
@@ -780,16 +542,16 @@ public class Database extends SQLiteOpenHelper {
                 do {
                     userModel.user_id = cursor.getInt(cursor.getColumnIndex(USER_ID));
                     userModel.user_token = cursor.getString(cursor.getColumnIndex(USER_TOKEN));
-                    userModel.salutation = cursor.getString(cursor.getColumnIndex(USER_SALUTATION));
+                    userModel.dob = cursor.getString(cursor.getColumnIndex(USER_SALUTATION));
                     userModel.first_name = cursor.getString(cursor.getColumnIndex(USER_FIRST_NAME));
                     userModel.last_name = cursor.getString(cursor.getColumnIndex(USER_LAST_NAME));
                     userModel.email = cursor.getString(cursor.getColumnIndex(USER_EMAIL));
                     userModel.profile_pic = cursor.getString(cursor.getColumnIndex(USER_IMAGE));
                     userModel.banner_pic = cursor.getString(cursor.getColumnIndex(USER_COUNTRY_CODE));
-                    userModel.city_id = cursor.getString(cursor.getColumnIndex(USER_CITY_ID));
+                    userModel.dob = cursor.getString(cursor.getColumnIndex(USER_CITY_ID));
                     userModel.phone = cursor.getString(cursor.getColumnIndex(USER_PHONE));
                     userModel.dob = cursor.getString(cursor.getColumnIndex(USER_DOB));
-                    userModel.points = cursor.getString(cursor.getColumnIndex(USER_POINTS));
+                    userModel.dob = cursor.getString(cursor.getColumnIndex(USER_POINTS));
                     userModel.fb_id = cursor.getString(cursor.getColumnIndex(USER_FB_ID));
 
                 } while (cursor.moveToNext());
@@ -830,11 +592,6 @@ public class Database extends SQLiteOpenHelper {
                 + NewId + " = a." + RESTAURANT_ID;
     }
 
-    private String createJoinWithClause(String NewTableName, String NewId, String CollectionID) {
-        return "SELECT * FROM " + NewTableName + " l INNER JOIN " + RESTAURANT_TABLE_NAME + " a ON l."
-                + NewId + " = a." + RESTAURANT_ID + " WHERE " + COLLECTION_RESTAURANT_COLLECTION_ID
-                + " = " + CollectionID;
-    }
 
 
     // VALIDATIONS AND FORMATTING ==================================================================
@@ -893,28 +650,6 @@ public class Database extends SQLiteOpenHelper {
             cursor.close();
         }
         return rest_id;
-    }
-
-    public String getCollectionIDFromURL(String URL) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String whereClause = COLLECTION_RESTAURANT_COLLECTION_URL + " = ?";
-        String collection_id = "";
-        String[] whereArgs = new String[]{URL};
-        Cursor cursor;
-        cursor = db.query(COLLECTION_RESTAURANT_TABLE_NAME, null, whereClause, whereArgs,
-                null, null, null);
-
-        if (cursor != null) {
-            int count = cursor.getCount();
-            if (count > 0) {
-                cursor.moveToFirst();
-                do {
-                    collection_id = cursor.getString(cursor.getColumnIndex(COLLECTION_RESTAURANT_COLLECTION_ID));
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-        }
-        return collection_id;
     }
 
 }

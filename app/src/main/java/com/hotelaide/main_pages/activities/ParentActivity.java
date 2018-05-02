@@ -266,45 +266,4 @@ public class ParentActivity extends AppCompatActivity implements
 
     }
 
-
-    // FIREBASE DATABASE RESTAURANT QUICK LOAD =====================================================
-    public static void asyncGetAllRestaurants() {
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Database");
-        final Database db = new Database();
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
-                    Gson gson = new Gson();
-                    JSONObject jsonObject = new JSONObject(gson.toJson(dataSnapshot.getValue()));
-
-                    JSONArray jArray = jsonObject.getJSONArray("result");
-                    int result_length = jArray.length();
-
-                    Helpers.LogThis("PARENT", "FETCH REST FROM FIREBASE");
-                    if (result_length > 0) {
-                        for (int i = 0; i < result_length; i++) {
-                            // Helpers.LogThis("PARENT", "ONE REST OBJECT: " + jArray.getJSONObject(i).toString());
-                            db.setRestaurants(jArray.getJSONObject(i));
-                        }
-                    }
-                    database.goOffline();
-                    Helpers.LogThis("PARENT", "OFFLINE FIREBASE DATABASE");
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Helpers.LogThis("PARENT", "DATABASE ERROR: " + error.toString());
-            }
-        });
-    }
-
 }
