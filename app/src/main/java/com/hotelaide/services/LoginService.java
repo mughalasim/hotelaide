@@ -33,7 +33,7 @@ public interface LoginService {
                     Request original = chain.request();
 
                     Request.Builder requestBuilder = original.newBuilder()
-                            .header("X-Auth-Token", Database.userModel.token)
+                            .header("X-Auth-Token", Database.userModel.user_token)
                             .header("Client-Identifier", BuildConfig.IDENTIFIER)
                             .method(original.method(), original.body());
 

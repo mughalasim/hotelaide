@@ -35,7 +35,7 @@ public interface RestaurantService {
                 public Response intercept(@NonNull Chain chain) throws IOException {
                     Request original = chain.request();
                     Request request = original.newBuilder()
-                            .header("X-Auth-Token", Database.userModel.token)
+                            .header("X-Auth-Token", Database.userModel.user_token)
                             .header("Client-Identifier", BuildConfig.IDENTIFIER)
                             .method(original.method(), original.body())
                             .build();

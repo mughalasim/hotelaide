@@ -129,7 +129,7 @@ public class ParentActivity extends AppCompatActivity implements
         }
 
         userName.setText(Database.userModel.first_name.concat(" ").concat(Database.userModel.last_name));
-        Glide.with(this).load(Database.userModel.image).into(userPic);
+        Glide.with(this).load(Database.userModel.profile_pic).into(userPic);
         userEmail.setText(Database.userModel.email);
         userPic.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,8 +3,8 @@
 buildscript {
     ext.kotlin_version = '1.2.30'
     repositories {
-        jcenter()
         google()
+        jcenter()
         maven { url 'https://maven.fabric.io/public' }
         flatDir {
             dirs 'libs' //this way we can find the .aar file in libs folder
@@ -21,6 +21,7 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }

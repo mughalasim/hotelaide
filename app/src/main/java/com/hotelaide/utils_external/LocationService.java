@@ -162,9 +162,9 @@ public class LocationService extends Service {
     private void asyncSearchRestaurantsWithDiscounts(double longitude, double latitude) {
         Helpers.LogThis(TAG_LOG, "USER TOKEN: " + SharedPrefs.getToken());
 
-        Database.userModel.token = SharedPrefs.getToken();
+        Database.userModel.user_token = SharedPrefs.getToken();
 
-        if (helper.validateInternetConnection() && !Database.userModel.token.equals("")) {
+        if (helper.validateInternetConnection() && !Database.userModel.user_token.equals("")) {
             RestaurantService restaurantService = RestaurantService.retrofit.create(RestaurantService.class);
             final Call<JsonObject> call = restaurantService.searchRestaurant(
                     "",

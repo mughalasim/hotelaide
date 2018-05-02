@@ -194,13 +194,13 @@ public class SetAccount extends AppCompatActivity {
 
         Helpers.LogThis(TAG_LOG, "ON START " +
                 userModelMyAccount.user_id + " - " +
-                userModelMyAccount.token + " - " +
+                userModelMyAccount.user_token + " - " +
                 userModelMyAccount.salutation + " - " +
                 userModelMyAccount.first_name + " - " +
                 userModelMyAccount.last_name + " - " +
                 userModelMyAccount.email + " - " +
-                userModelMyAccount.image + " - " +
-                userModelMyAccount.country_code + " - " +
+                userModelMyAccount.profile_pic + " - " +
+                userModelMyAccount.banner_pic + " - " +
                 userModelMyAccount.phone + " - " +
                 userModelMyAccount.dob + " - " +
                 userModelMyAccount.points + " - " +
@@ -248,7 +248,7 @@ public class SetAccount extends AppCompatActivity {
         if (!userModelMyAccount.phone.equals("")) {
             user_phone.setText(
                     getString(R.string.txt_open_bracket)
-                            .concat(userModelMyAccount.country_code)
+                            .concat(userModelMyAccount.banner_pic)
                             .concat(getString(R.string.txt_closed_bracket))
                             .concat(userModelMyAccount.phone));
         }
@@ -277,7 +277,7 @@ public class SetAccount extends AppCompatActivity {
         });
 
 
-        Glide.with(SetAccount.this).load(userModelMyAccount.image).into(user_image);
+        Glide.with(SetAccount.this).load(userModelMyAccount.profile_pic).into(user_image);
         clearErrors();
     }
 
@@ -364,13 +364,13 @@ public class SetAccount extends AppCompatActivity {
             asyncSetUser();
             Helpers.LogThis(TAG_LOG,
                     userModel.user_id + " - " +
-                            userModel.token + " - " +
+                            userModel.user_token + " - " +
                             userModel.salutation + " - " +
                             userModel.first_name + " - " +
                             userModel.last_name + " - " +
                             userModel.email + " - " +
-                            userModel.image + " - " +
-                            userModel.country_code + " - " +
+                            userModel.profile_pic + " - " +
+                            userModel.banner_pic + " - " +
                             userModel.phone + " - " +
                             userModel.dob + " - " +
                             userModel.points + " - " +
@@ -423,7 +423,7 @@ public class SetAccount extends AppCompatActivity {
                                         }
 
 
-//                                        userModelMyAccount.image = "https://graph.facebook.com/" + profile.getId() + "/picture?fields=url";
+//                                        userModelMyAccount.profile_pic = "https://graph.facebook.com/" + profile.getId() + "/picture?fields=url";
 
                                         Bundle params = new Bundle();
                                         params.putString("fields", "id,email,gender,cover,picture.type(large)");
@@ -435,8 +435,8 @@ public class SetAccount extends AppCompatActivity {
                                                             try {
                                                                 JSONObject data = response.getJSONObject();
                                                                 if (data.has("picture")) {
-                                                                    userModelMyAccount.image = data.getJSONObject("picture").getJSONObject("data").getString("url");
-                                                                    Helpers.LogThis(TAG_LOG, "FB PROFILE IMAGE URL: " + userModelMyAccount.image);
+                                                                    userModelMyAccount.profile_pic = data.getJSONObject("picture").getJSONObject("data").getString("url");
+                                                                    Helpers.LogThis(TAG_LOG, "FB PROFILE IMAGE URL: " + userModelMyAccount.profile_pic);
                                                                     setToUI();
 
                                                                 }
@@ -495,8 +495,8 @@ public class SetAccount extends AppCompatActivity {
                 userModelMyAccount.first_name,
                 userModelMyAccount.last_name,
                 userModelMyAccount.email,
-                userModelMyAccount.image,
-                userModelMyAccount.country_code,
+                userModelMyAccount.profile_pic,
+                userModelMyAccount.banner_pic,
                 userModelMyAccount.city_id,
                 userModelMyAccount.phone,
                 userModelMyAccount.dob,

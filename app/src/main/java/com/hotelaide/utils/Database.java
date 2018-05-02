@@ -694,13 +694,13 @@ public class Database extends SQLiteOpenHelper {
                 JSONObject user = main.getJSONObject("user");
 
                 userModel.user_id = user.getInt("id");
-                userModel.token = formatString(user.getString("token"));
+                userModel.user_token = formatString(user.getString("user_token"));
                 userModel.salutation = formatString(user.getString("salutation"));
                 userModel.first_name = formatString(user.getString("first_name"));
                 userModel.last_name = formatString(user.getString("last_name"));
                 userModel.email = formatString(user.getString("email"));
-                userModel.image = formatString(user.getString("thumbnail"));
-                userModel.country_code = formatString(user.getString("country_code"));
+                userModel.profile_pic = formatString(user.getString("thumbnail"));
+                userModel.banner_pic = formatString(user.getString("banner_pic"));
                 userModel.phone = formatString(user.getString("phone"));
                 userModel.dob = formatString(user.getString("date_of_birth"));
                 userModel.points = user.getString("points");
@@ -713,13 +713,13 @@ public class Database extends SQLiteOpenHelper {
                 }
 
                 contentValues.put(USER_ID, userModel.user_id);
-                contentValues.put(USER_TOKEN, userModel.token);
+                contentValues.put(USER_TOKEN, userModel.user_token);
                 contentValues.put(USER_SALUTATION, userModel.salutation);
                 contentValues.put(USER_FIRST_NAME, userModel.first_name);
                 contentValues.put(USER_LAST_NAME, userModel.last_name);
                 contentValues.put(USER_EMAIL, userModel.email);
-                contentValues.put(USER_IMAGE, userModel.image);
-                contentValues.put(USER_COUNTRY_CODE, userModel.country_code);
+                contentValues.put(USER_IMAGE, userModel.profile_pic);
+                contentValues.put(USER_COUNTRY_CODE, userModel.banner_pic);
                 contentValues.put(USER_CITY_ID, userModel.city_id);
                 contentValues.put(USER_PHONE, userModel.phone);
                 contentValues.put(USER_DOB, userModel.dob);
@@ -737,13 +737,13 @@ public class Database extends SQLiteOpenHelper {
 
                 Helpers.LogThis(TAG_LOG, "AFTER UPDATE " +
                         userModel.user_id + " - " +
-                        userModel.token + " - " +
+                        userModel.user_token + " - " +
                         userModel.salutation + " - " +
                         userModel.first_name + " - " +
                         userModel.last_name + " - " +
                         userModel.email + " - " +
-                        userModel.image + " - " +
-                        userModel.country_code + " - " +
+                        userModel.profile_pic + " - " +
+                        userModel.banner_pic + " - " +
                         userModel.phone + " - " +
                         userModel.dob + " - " +
                         userModel.points + " - " +
@@ -779,13 +779,13 @@ public class Database extends SQLiteOpenHelper {
                 cursor.moveToFirst();
                 do {
                     userModel.user_id = cursor.getInt(cursor.getColumnIndex(USER_ID));
-                    userModel.token = cursor.getString(cursor.getColumnIndex(USER_TOKEN));
+                    userModel.user_token = cursor.getString(cursor.getColumnIndex(USER_TOKEN));
                     userModel.salutation = cursor.getString(cursor.getColumnIndex(USER_SALUTATION));
                     userModel.first_name = cursor.getString(cursor.getColumnIndex(USER_FIRST_NAME));
                     userModel.last_name = cursor.getString(cursor.getColumnIndex(USER_LAST_NAME));
                     userModel.email = cursor.getString(cursor.getColumnIndex(USER_EMAIL));
-                    userModel.image = cursor.getString(cursor.getColumnIndex(USER_IMAGE));
-                    userModel.country_code = cursor.getString(cursor.getColumnIndex(USER_COUNTRY_CODE));
+                    userModel.profile_pic = cursor.getString(cursor.getColumnIndex(USER_IMAGE));
+                    userModel.banner_pic = cursor.getString(cursor.getColumnIndex(USER_COUNTRY_CODE));
                     userModel.city_id = cursor.getString(cursor.getColumnIndex(USER_CITY_ID));
                     userModel.phone = cursor.getString(cursor.getColumnIndex(USER_PHONE));
                     userModel.dob = cursor.getString(cursor.getColumnIndex(USER_DOB));

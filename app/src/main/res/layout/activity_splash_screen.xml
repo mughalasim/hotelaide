@@ -7,17 +7,18 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/login_background"
         android:contentDescription="@string/app_name" />
 
     <ImageView
         android:id="@+id/mainLogo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/collapsing_normal_toolbar_height"
+        android:layout_height="@dimen/my_account_profile_pic"
+        android:background="@color/colorPrimary"
+        android:alpha="0.5"
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
-        android:src="@drawable/main_logo_icon_white" />
-
+        android:src="@mipmap/ic_launcher" />
 
 </RelativeLayout>

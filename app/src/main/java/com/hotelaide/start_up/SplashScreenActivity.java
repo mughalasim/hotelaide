@@ -52,7 +52,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         db.getUser();
 
-        SharedPrefs.setToken(Database.userModel.token);
+        SharedPrefs.setToken(Database.userModel.user_token);
         SharedPrefs.setUserName(
                 Database.userModel.salutation,
                 Database.userModel.first_name,
