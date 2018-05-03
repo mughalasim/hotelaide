@@ -101,11 +101,6 @@ public class HomeActivity extends ParentActivity {
 //                );
                 break;
 
-            case STR_NAVIGATION_SEARCH:
-                startActivity(new Intent(HomeActivity.this, RestaurantSearchActivity.class)
-                        .putExtra("extra", "offer"));
-                break;
-
             default:
                 helper.ToastMessage(HomeActivity.this, getString(R.string.error_unknown));
                 break;

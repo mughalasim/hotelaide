@@ -49,7 +49,6 @@ import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.AboutUsActivity;
 import com.hotelaide.main_pages.activities.HomeActivity;
 import com.hotelaide.main_pages.activities.MyAccountActivity;
-import com.hotelaide.main_pages.activities.RestaurantSearchActivity;
 import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.services.GeneralService;
 import com.hotelaide.services.UserService;
@@ -143,25 +142,13 @@ public class Helpers {
                 context.startActivity(new Intent(context, HomeActivity.class));
                 break;
 
-            case R.id.discounts_offers:
-                context.startActivity(new Intent(context, RestaurantSearchActivity.class)
-                        .putExtra("extra", "offer"));
-                break;
-
             case R.id.nearby_restaurants:
                 final LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
                 if (manager != null) {
                     if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         dialogNoGPS(context);
-                    } else {
-                        context.startActivity(new Intent(context, RestaurantSearchActivity.class)
-                                .putExtra("extra", "nearby"));
                     }
                 }
-                break;
-
-            case R.id.find_restaurants:
-                context.startActivity(new Intent(context, RestaurantSearchActivity.class));
                 break;
 
             case R.id.my_account:
@@ -434,8 +421,8 @@ public class Helpers {
                 .playOn(v);
     }
 
-    public void animate_fade_in_up(View v) {
-        YoYo.with(Techniques.FadeInUp)
+    public void animate_fade_in(View v) {
+        YoYo.with(Techniques.FadeIn)
                 .duration(INT_ANIMATION_TIME)
                 .playOn(v);
     }

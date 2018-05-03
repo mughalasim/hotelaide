@@ -1,6 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,7 +7,15 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bckgrd_login"
+        android:background="@color/black"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter" />
+
+    <ImageView
+        android:id="@+id/login_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/login_bck1"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter" />
 
@@ -20,6 +27,7 @@
         android:padding="@dimen/general_padding"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
+        android:background="@color/dim"
         android:src="@drawable/main_logo_white" />
 
     <android.support.design.widget.TabLayout
@@ -27,15 +35,19 @@
         android:layout_below="@+id/mainLogo"
         android:layout_width="match_parent"
         android:background="@color/dim"
-        android:layout_height="@dimen/edit_text_height"
-        app:tabBackground="@drawable/tab_selector"
+        android:layout_height="@dimen/main_logo_image_size"
+        app:tabSelectedTextColor="@color/colorPrimaryLight"
+        app:tabTextColor="@color/colorAccent"
+        app:tabTextAppearance="@style/Text_Title"
+        app:tabIndicatorColor="@color/colorPrimaryLight"
+        app:tabMode="scrollable"
         app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"/>
+        app:tabIndicatorHeight="@dimen/line_thickness"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_below="@+id/tabs"
-        android:padding="@dimen/general_padding"
+        android:padding="@dimen/login_activity_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

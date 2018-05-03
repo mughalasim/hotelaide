@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/txt_no_results"
-        style="@style/Header_Text"
+        style="@style/Text_Header"
         android:layout_below="@id/imageView"
         android:text="@string/txt_no_restaurants"
         android:textAllCaps="false" />

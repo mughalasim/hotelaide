@@ -7,19 +7,14 @@
     <!--META DATA ===============================================================================-->
     <string name="facebook_app_id">2274737566777252</string>
     <string name="fb_login_protocol_scheme">fb2274775673160777252</string>
-    <string name="fabric_api_key">jhwdvbweilfhuihdq</string>
+    <string name="maps_api_key">AIzaSyBq_io43Sxc4sOaXpMXEEmLC"</string>
 
     <!--ERROR MESSAGES ==========================================================================-->
     <string name="error_field_required">This field is required</string>
     <string name="error_field_invalid">This field is invalid</string>
-    <string name="error_500">Server Error, Please try again later</string>
     <string name="error_connection">Please check your internet connection</string>
     <string name="error_unknown">Oops! something went wrong, Please try again later</string>
-    <string name="error_memory">Your device ran out of memory, Please close other running apps in the background and try again</string>
     <string name="error_location_fetch">Unable to fetch your current location</string>
-    <string name="error_fav">Unable to add to favourites, Please try again later</string>
-    <string name="error_call">No Number available to call, please try again later</string>
-    <string name="error_app_not_installed">This app has not been installed</string>
 
     <!--LOGGING =================================================================================-->
     <string name="log_exception">EXCEPTION:&#160;</string>
@@ -36,62 +31,23 @@
 
     <!--LOADING DIALOGS =========================================================================-->
     <string name="progress_fetch_fb_details">fetching your details from Facebook…please wait…</string>
-    <string name="progress_loading_countries">Fetching all countries from the server</string>
-    <string name="progress_loading_restaurant_info">Loading Restaurant Information.. Please wait</string>
-    <string name="progress_loading_review">Posting your review, please wait…</string>
-    <string name="progress_loading_claim_offer">Redeeming your offer, please wait…</string>
-    <string name="progress_loading_claim_offer_status">Checking offer status, please wait…</string>
-    <string name="progress_loading_calculate_disc">Calculating your discount, please wait…</string>
     <string name="progress_loading_account_update">Updating your account. Please wait…</string>
-    <string name="progress_loading_mpesa_request">Requesting for Mpesa Pin Prompt, Please wait..</string>
     <string name="progress_loading_get_location">Fetching your current location, Please wait…</string>
-    <string name="progress_validate_reservation">Validating reservation for the set Date and Time, Please wait…</string>
-    <string name="progress_making_reservation">Making your reservation, Please wait…</string>
 
     <!--EDIT TEXT HINTS =========================================================================-->
     <string name="et_hint_first_name">First Name</string>
     <string name="et_hint_last_name">Last Name</string>
     <string name="et_hint_email">Email</string>
+    <string name="et_hint_pass">Password</string>
     <string name="et_hint_search_here">Search here…</string>
     <string name="et_hint_phone">Phone Number</string>
     <string name="et_hint_dob">Date Of Birth (YYYY-MM-DD)</string>
-    <string name="et_hint_amount">Enter Amount</string>
 
     <!-- LAYOUT SET TEXT ========================================================================-->
-    <string name="txt_login">LOG IN</string>
-    <string name="txt_share">SHARE</string>
     <string name="txt_cancel" tools:ignore="ButtonCase">CANCEL</string>
-    <string name="txt_continue">CONTINUE</string>
     <string name="txt_ok">OK</string>
     <string name="txt_enable">ENABLE</string>
-    <string name="txt_retry">RETRY</string>
-    <string name="txt_view">RESTAURANT</string>
     <string name="txt_loading_please_wait">Loading… please wait…</string>
-    <string name="txt_call_now">CALL NOW</string>
-    <string name="txt_welcome">Welcome to the EatOut App, Please wait as we set your location to the closest city available…</string>
-    <string name="txt_restaurant_description">INFO</string>
-    <string name="txt_operating_hours">HOURS</string>
-    <string name="txt_to">to</string>
-    <string name="txt_mon">Mon:</string>
-    <string name="txt_tue">Tue:</string>
-    <string name="txt_wed">Wed:</string>
-    <string name="txt_thu">Thu:</string>
-    <string name="txt_fri">Fri:</string>
-    <string name="txt_sat">Sat:</string>
-    <string name="txt_sun">Sun:</string>
-    <string name="txt_photo_gallery">PHOTOS</string>
-    <string name="txt_error_connecting">There seems to be a connection problem, please try again later</string>
-    <string name="txt_post_your_review_partial">WIN EATOUT VOUCHERS</string>
-    <string name="txt_post_your_review_partial_message">Submit your rating below and stand a chance to win EatOut restaurant vouchers and other prizes</string>
-    <string name="txt_post">POST</string>
-    <string name="txt_explore_restaurants">Explore Restaurants</string>
-    <string name="txt_explore_nearby">EXPLORE NEARBY</string>
-    <string name="txt_back">BACK</string>
-    <string name="txt_terms_payment_title">Terms &amp; Conditions</string>
-    <string name="txt_terms_payment_more">More terms and conditions</string>
-    <string name="txt_terms_payment_body">Offer subject to change at anytime and is based on the individual restaurants terms and conditions</string>
-    <string name="txt_terms">By signing up you agree to our <u>Terms &amp; Conditions</u></string>
-    <string name="txt_policy">By tapping on \'Log In\', you agree to our terms and conditions and our Privacy Policy</string>
     <string name="txt_update_details">UPDATE</string>
     <string name="txt_points">YUMMY POINTS</string>
     <string name="txt_eatout_site_and_apps">EatOut Site and Apps</string>
@@ -100,23 +56,9 @@
     <string name="txt_nairobi_restaurant_week">Nairobi Restaurant Week</string>
     <string name="txt_taste_awards">Taste Awards</string>
     <string name="txt_app_version">App Version</string>
-    <string name="txt_no_gallery_images">No Gallery Images</string>
-    <string name="txt_no_favourites">No Restaurants Liked</string>
-    <string name="txt_no_favourites2">Why not search for some</string>
     <string name="txt_no_restaurants">Oops! No restaurants found</string>
-    <string name="txt_no_reviews">No Reviews posted yet, Be the first to post something</string>
-    <string name="txt_no_reservations">No Reservations created</string>
-    <string name="txt_no_reservations2">Why not search for restaurants that have that feature</string>
-    <string name="txt_payment_discount">Yay! MPESA customers automatically qualify for a discount when paying through EatOut Enter the total bill amount below</string>
-    <string name="txt_confirm_mpesa_tel">Please confirm your MPESA telephone number below and click continue</string>
-    <string name="txt_bill">BILL</string>
-    <string name="txt_discount">DISCOUNT</string>
-    <string name="txt_revised_bill">REVISED BILL</string>
     <string name="txt_open_bracket">&#160;(</string>
     <string name="txt_closed_bracket">)&#160;</string>
-    <string name="txt_add_review">Rate to win EatOut Vouchers</string>
-    <string name="txt_card_title">Card Title</string>
-    <string name="txt_confirmation_code">Confirmation Code</string>
     <string name="txt_find_restaurants">Find the Best Restaurants in Town</string>
     <string name="txt_discounts_offers"><![CDATA[Discounts & Offers]]></string>
     <string name="txt_saving">Instant savings with your digital Card</string>
@@ -124,9 +66,6 @@
     <string name="txt_restaurants_nearby">Check out restaurants near you</string>
     <string name="txt_favorites">Favorites</string>
     <string name="txt_favourites_desc">Directly access your most loved Places</string>
-    <string name="txt_closed">Closed</string>
-    <string name="txt_read_reviews">Read Reviews</string>
-    <string name="txt_reviews">REVIEWS</string>
     <string name="txt_location_title">LOCATION SERVICES</string>
     <string name="txt_locations_permission">EatOut needs to access your location but your GPS seems to be disabled. You must enable it to proceed</string>
     <string name="txt_srch_rating">Rating</string>
@@ -137,71 +76,13 @@
     <string name="txt_old_version_desc">Seems like you are using an old version of the app, Please update the app from the playstore to get access to new features</string>
     <string name="txt_update_now">UPDATE NOW</string>
     <string name="txt_later">LATER</string>
-    <string name="txt_restaurant_no_offer">This restaurant has no offers. Please consider any of the following restaurants in the neighbourhood</string>
     <string name="txt_search">Search</string>
     <string name="txt_search_all">All</string>
     <string name="txt_area">Area</string>
     <string name="txt_city">City</string>
     <string name="txt_cuisine">Cuisine</string>
     <string name="txt_type">Type</string>
-    <string name="txt_validate">VALIDATE</string>
-    <string name="txt_address">ADDRESS</string>
-    <string name="txt_proceed">PROCEED</string>
-    <string name="txt_alert">Alert</string>
-    <string name="txt_call_permissions">Please grant calling permissions to the EATOUT App to carry out this function</string>
-    <string name="txt_contact_us">For support call:&#160;</string>
-    <string name="txt_calling">Calling EatOut support team</string>
-    <string name="txt_redeem_offer_success">You have successfully redeemed your offer</string>
     <string name="txt_results">Results</string>
-    <string name="txt_coming_soon">Coming Soon</string>
-    <string name="txt_events">EVENTS</string>
-    <string name="txt_cuisine_colon">Cuisine:</string>
-    <string name="txt_location_colon">Location:</string>
-    <string name="txt_rating_outof">/10</string>
-    <string name="txt_enter_pin">ENTER PIN</string>
-    <string name="txt_enter_pin_desc">Please wait as a dialog pops up to capture your MPESA pin on the number you entered, Once completed please click done</string>
-    <string name="txt_done">DONE</string>
-    <string name="txt_please_wait">PLEASE WAIT</string>
-    <string name="txt_re_check">RE-CHECK</string>
-    <string name="txt_error">ERROR</string>
-    <string name="txt_entry_free">Entry Free</string>
-    <string name="txt_entry_fee">Entry Fee:</string>
-    <string name="txt_claim_offer_terms">Please note that only one offer can be claimed at any one time.</string>
-    <string name="txt_date">Date:&#160;</string>
-    <string name="txt_time">Time:&#160;</string>
-    <string name="txt_created_on">Created on</string>
-    <string name="txt_reservation">RESERVATION</string>
-    <string name="txt_special_requirements">Special Requirements</string>
-    <string name="txt_children">Children:</string>
-    <string name="txt_adults">Adults:</string>
-    <string name="txt_reservation_state">Reservation State:</string>
-    <string name="txt_skip">SKIP</string>
-    <string name="txt_enter_otp">Please enter your 4 digit One Time Pin (OTP) that you received in the SMS</string>
-    <string name="txt_name">Name:</string>
-    <string name="txt_phone">Phone:</string>
-    <string name="txt_email">Email:</string>
-    <string name="txt_set_reservation">Kindly set your reservation date and time</string>
-    <string name="txt_set_reservation2">Kindly set your reservation attendees and any other special requirements</string>
-    <string name="txt_0">0</string>
-    <string name="txt_reservation_state_1">Processing Reservation</string>
-    <string name="txt_reservation_state_2">Awaiting response from the Restaurant</string>
-    <string name="txt_reservation_state_3">Accepted</string>
-    <string name="txt_reservation_state_4">Declined</string>
-    <string name="txt_setlocation_1">Seems like the closest available city is&#160;</string>
-    <string name="txt_setlocation_2">&#160; (</string>
-    <string name="txt_setlocation_3">). You can always change this location later</string>
-    <string name="txt_show_less">Show less</string>
-    <string name="txt_show_more">Show more</string>
-    <string name="txt_permission_title">Permission not Granted!</string>
-    <string name="txt_permission_desc">Please allow the EATOUT App to access your location</string>
-    <string name="txt_ref">Ref:</string>
-    <string name="txt_call_to_order">&#160;CALL TO ORDER</string>
-
-
-    <!--LINKS-->
-    <string name="link_website">Visit our&#160;<u>Website</u></string>
-    <string name="link_facebook">Like us on&#160;<u>Facebook</u></string>
-    <string name="link_call_us">Call us on&#160;</string>
 
 
     <!--ALL DRAWER TEXTS ========================================================================-->
@@ -215,7 +96,13 @@
     <string name="drawer_my_account">My account</string>
     <string name="drawer_about_us">About us</string>
     <string name="drawer_home">Home</string>
-    <string name="drawer_play_video">Play video</string>
+
+    <!-- START UP NAVIGATION TEXT ===============================================================-->
+    <string name="nav_login">Login</string>
+    <string name="nav_sign_up">Sign Up</string>
+    <string name="nav_forgot_pass">Forgot Password</string>
+    <string name="nav_about_us">About Us</string>
+    <string name="nav_contact_us">Contact Us</string>
 
 
 

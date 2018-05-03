@@ -33,7 +33,7 @@ allprojects {
 
 ext {
     // SDK and tools
-    minSDK = 15
+    minSDK = 18
     targetSDK = 22
     compileSDK = 26
     buildTools = '27.0.3'
@@ -43,12 +43,12 @@ ext {
     GooglePlaySDK = '15.0.0'
 
     // Debug the App
-    debugMode = false
-    minify = true
+    debugMode = true
+    minify = false
 
     // App Versioning
-    versionCode = 42
-    versionName = 4.2
+    versionCode = 1
+    versionName = 0.1
 
 }
 

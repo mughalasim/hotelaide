@@ -33,7 +33,7 @@
                     android:weightSum="1">
 
                     <TextView
-                        style="@style/Header_Text"
+                        style="@style/Text_Header"
                         android:gravity="start"
                         android:textColor="@color/colorPrimary"
                         android:text="@string/txt_eatout_site_and_apps" />
@@ -44,7 +44,7 @@
                         android:text="@string/about1" />
 
                     <TextView
-                        style="@style/Header_Text"
+                        style="@style/Text_Header"
                         android:gravity="start"
                         android:textColor="@color/colorPrimary"
                         android:text="@string/txt_yummy_card" />
@@ -55,7 +55,7 @@
                         android:text="@string/about2" />
 
                     <TextView
-                        style="@style/Header_Text"
+                        style="@style/Text_Header"
                         android:gravity="start"
                         android:textColor="@color/colorPrimary"
                         android:text="@string/txt_yummy_magazine" />
@@ -66,7 +66,7 @@
                         android:text="@string/about3" />
 
                     <TextView
-                        style="@style/Header_Text"
+                        style="@style/Text_Header"
                         android:gravity="start"
                         android:textColor="@color/colorPrimary"
                         android:text="@string/txt_nairobi_restaurant_week" />
@@ -77,7 +77,7 @@
                         android:text="@string/about4" />
 
                     <TextView
-                        style="@style/Header_Text"
+                        style="@style/Text_Header"
                         android:gravity="start"
                         android:textColor="@color/colorPrimary"
                         android:text="@string/txt_taste_awards" />
@@ -89,7 +89,7 @@
 
 
                     <TextView
-                        style="@style/Header_Text"
+                        style="@style/Text_Header"
                         android:gravity="start"
                         android:textColor="@color/colorPrimary"
                         android:text="@string/txt_app_version" />

@@ -21,20 +21,20 @@ android {
             minifyEnabled rootProject.minify
             useProguard rootProject.minify
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            shrinkResources true
+            shrinkResources rootProject.minify
         }
         debug {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.minify
             useProguard rootProject.minify
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            shrinkResources true
+            shrinkResources rootProject.minify
         }
     }
 
     productFlavors {
         prod {
-            buildConfigField 'String',    'MAIN_URL',             '"https://api.eatout.co.ke/api/v2/"'
+            buildConfigField 'String',    'MAIN_URL',             '"https://api.hotelaide.co.ke/"'
             buildConfigField 'Integer',   'DATABASE_VERSION',     "$rootProject.versionCode"
             buildConfigField 'Integer',   'CONNECTION_TIMEOUT',   '35'
             buildConfigField 'Boolean',   'LOGGING',              "$rootProject.debugMode"
@@ -108,15 +108,12 @@ dependencies {
     // GIF VIEWER
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
 
-    // FOR LIBRARY
-//     implementation project(':eatoutlibrary')
-
     // COUNTRY CODE SELECTOR
     implementation 'com.github.joielechong:countrycodepicker:2.1.5'
 
     // STETHO INSPECTOR BY FACEBOOK
-    // implementation 'com.facebook.stetho:stetho:1.5.0'
-    // implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+     implementation 'com.facebook.stetho:stetho:1.5.0'
+     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
     // IMAGE SCALING
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'

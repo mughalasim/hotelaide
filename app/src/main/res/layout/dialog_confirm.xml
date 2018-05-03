@@ -18,7 +18,7 @@
             android:id="@+id/txtTitle"
             android:text="@string/app_name"
             android:textSize="@dimen/text_size_x_large"
-            style="@style/Header_Text" />
+            style="@style/Text_Header" />
 
         <ScrollView
             android:layout_width="match_parent"

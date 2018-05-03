@@ -22,22 +22,18 @@
             android:title="@string/drawer_find_restaurants" />
 
         <item
-            android:id="@+id/favorites"
             android:icon="@drawable/ic_favorite_grey"
             android:title="@string/drawer_favourites" />
 
         <item
-            android:id="@+id/reservations"
             android:icon="@drawable/ic_reservation"
             android:title="@string/drawer_reservations" />
 
         <item
-            android:id="@+id/how_it_works"
             android:icon="@drawable/ic_how_it_works"
             android:title="@string/drawer_how_it_works" />
 
         <item
-            android:id="@+id/change_location"
             android:icon="@drawable/ic_location"
             android:title="@string/drawer_change_location" />
 

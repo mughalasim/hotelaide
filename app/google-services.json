@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "919429713814",
-    "firebase_url": "https://hotelaide-kenya.firebaseio.com",
-    "project_id": "hotelaide-kenya",
-    "storage_bucket": "hotelaide-kenya.appspot.com"
+    "project_number": "887165129652",
+    "firebase_url": "https://hotel-aide-africa.firebaseio.com",
+    "project_id": "hotel-aide-africa",
+    "storage_bucket": "hotel-aide-africa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:919429713814:android:427a10b5d10876f0",
+        "mobilesdk_app_id": "1:887165129652:android:427a10b5d10876f0",
         "android_client_info": {
           "package_name": "com.hotelaide"
         }
       },
       "oauth_client": [
         {
-          "client_id": "919429713814-i466ria4pkv662tu0q65rqt3cjl99i30.apps.googleusercontent.com",
+          "client_id": "887165129652-23htcafbvsi6h42fc720nb9gd83i794u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.hotelaide",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "919429713814-ufirc8b0khjj6jr48bdk99h3t900q1v7.apps.googleusercontent.com",
+          "client_id": "887165129652-5tmkp7u18bds1kj4edbp92va7is3hdji.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBQSB1U_GCqXG8tr-jX-gpEf3nSYqmn3K4"
+          "current_key": "AIzaSyCCc45P-R50C_Hy1Jw6A00CjNN4vrZAB3c"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "919429713814-ufirc8b0khjj6jr48bdk99h3t900q1v7.apps.googleusercontent.com",
+              "client_id": "887165129652-5tmkp7u18bds1kj4edbp92va7is3hdji.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

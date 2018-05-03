@@ -9,9 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.HomeActivity;
@@ -35,8 +37,38 @@ public class LoginActivity extends AppCompatActivity {
 
     private Database db;
 
+    private ImageView login_background;
+
     private final String
             TAG_LOG = "LOGIN";
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
+
+    private int[] navIcons = {
+            R.drawable.tab_ic_login,
+            R.drawable.tab_ic_sign_up,
+            R.drawable.tab_ic_forgot_pass,
+            R.drawable.tab_ic_about_us,
+            R.drawable.tab_ic_contact_us
+    };
+
+    private int[] navLabels = {
+            R.string.nav_login,
+            R.string.nav_sign_up,
+            R.string.nav_forgot_pass,
+            R.string.nav_about_us,
+            R.string.nav_contact_us
+    };
+
+    private int[] navIconsActive = {
+            R.drawable.tab_ic_login_active,
+            R.drawable.tab_ic_sign_up_active,
+            R.drawable.tab_ic_forgot_pass_active,
+            R.drawable.tab_ic_about_us_active,
+            R.drawable.tab_ic_contact_us_active
+    };
 
 
     // OVERRIDE METHODS ============================================================================
@@ -72,8 +104,9 @@ public class LoginActivity extends AppCompatActivity {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        ViewPager viewPager = findViewById(R.id.viewpager);
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tabs);
+        login_background = findViewById(R.id.login_background);
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager, true);
@@ -81,30 +114,59 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        LoginActivity.ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Fragment fragment1 = new StartUpLoginFragment();
-        adapter.addFragment(fragment1);
+        adapter.addFragment(fragment1, getResources().getString(navLabels[0]));
 
         Fragment fragment2 = new StartUpSignUpFragment();
-        adapter.addFragment(fragment2);
+        adapter.addFragment(fragment2, getResources().getString(navLabels[1]));
 
         Fragment fragment3 = new StartUpAboutUsFragment();
-        adapter.addFragment(fragment3);
+        adapter.addFragment(fragment3, getResources().getString(navLabels[2]));
 
         Fragment fragment4 = new StartUpForgotPassFragment();
-        adapter.addFragment(fragment4);
+        adapter.addFragment(fragment4, getResources().getString(navLabels[3]));
 
         Fragment fragment5 = new StartUpContactUsFragment();
-        adapter.addFragment(fragment5);
+        adapter.addFragment(fragment5, getResources().getString(navLabels[4]));
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(5);
-    }
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                helper.animate_fade_in(login_background);
+                if (position == 0) {
+                    login_background.setImageResource(R.drawable.login_bck1);
+                } else if (position == 1) {
+                    login_background.setImageResource(R.drawable.login_bck2);
+                } else if (position == 2) {
+                    login_background.setImageResource(R.drawable.login_bck3);
+                } else if (position == 3) {
+                    login_background.setImageResource(R.drawable.login_bck4);
+                } else if (position == 4) {
+                    login_background.setImageResource(R.drawable.login_bck5);
+                }
+                login_background.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
 
         private ViewPagerAdapter(FragmentManager manager) {
             super(manager);
@@ -120,13 +182,27 @@ public class LoginActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        private void addFragment(Fragment fragment) {
+        public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
 
     }
 
 
+    // SET ONCLICKS ================================================================================
+    public void TERMS_CONDITIONS(View view) {
+        helper.ToastMessage(LoginActivity.this, "OPEN SOME TERMS AND CONDITONS HERE");
+    }
+
+    public void FORGOT_PASS(View view) {
+        viewPager.setCurrentItem(2);
+    }
 
 
 
@@ -139,7 +215,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
-
 
 
     // LOGIN ASYNC FUNCTIONS =======================================================================
@@ -247,7 +322,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void startUp() {
         finish();
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
     }
 
 }

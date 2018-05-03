@@ -3,10 +3,15 @@
 
     <item android:state_focused="true" android:state_pressed="true">
         <shape>
-            <gradient android:angle="270"
-                android:centerColor="@color/light_grey"
+            <gradient android:angle="180"
+                android:centerColor="@color/white"
                 android:endColor="@color/light_grey"
                 android:startColor="@color/light_grey" />
+            <stroke
+                android:width="@dimen/line_thickness"
+                android:color="@color/colorPrimary" />
+            <corners
+                android:radius="@dimen/radius_button" />
         </shape>
     </item>
 
@@ -14,10 +19,15 @@
 
     <item android:state_focused="false" android:state_pressed="true">
         <shape>
-            <gradient android:angle="270"
-                android:centerColor="@color/light_grey"
+            <gradient android:angle="180"
+                android:centerColor="@color/white"
                 android:endColor="@color/light_grey"
                 android:startColor="@color/light_grey" />
+            <stroke
+                android:width="@dimen/line_thickness"
+                android:color="@color/colorPrimary" />
+            <corners
+                android:radius="@dimen/radius_button" />
         </shape>
     </item>
 
@@ -26,15 +36,15 @@
 
     <item android:state_focused="true" android:state_pressed="false">
         <shape>
-            <gradient android:angle="270"
+            <gradient android:angle="180"
                 android:centerColor="@color/white"
-                android:endColor="@color/white"
-                android:startColor="@color/white" />
+                android:endColor="@color/light_grey"
+                android:startColor="@color/light_grey" />
             <stroke
-                android:width="2dp"
+                android:width="@dimen/line_thickness"
                 android:color="@color/colorPrimary" />
             <corners
-                android:radius="5dp" />
+                android:radius="@dimen/radius_button" />
         </shape>
     </item>
 
@@ -42,15 +52,15 @@
 
     <item android:state_focused="false" android:state_pressed="false">
         <shape>
-            <gradient android:angle="270"
-                android:centerColor="@color/white"
+            <gradient android:angle="180"
+                android:centerColor="@color/light_grey"
                 android:endColor="@color/white"
                 android:startColor="@color/white" />
             <stroke
-                android:width="1dp"
-                android:color="@color/white" />
+                android:width="@dimen/line_thickness"
+                android:color="@color/colorPrimaryDark" />
             <corners
-                android:radius="5dp" />
+                android:radius="@dimen/radius_button" />
         </shape>
     </item>
 
