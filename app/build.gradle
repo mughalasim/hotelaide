@@ -13,6 +13,7 @@ android {
         versionName "$rootProject.versionName"
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
+//        multiDexEnabled true
     }
 
     buildTypes {
@@ -52,10 +53,8 @@ dependencies {
     implementation "com.android.support:design:$rootProject.SupportLibrary"
     implementation "com.android.support:recyclerview-v7:$rootProject.SupportLibrary"
 
-    // RETROFIT ENDPOINT CALLING
+    // RETROFIT DEPENDENCIES
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-
-    // JSON PARSING
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     // PICTURE LOADING
@@ -66,30 +65,17 @@ dependencies {
 
     // FIREBASE AUTHENTICATION
     implementation "com.google.firebase:firebase-auth:$rootProject.GooglePlaySDK"
-
-    // FIREBASE PUSH NOTIFICATIONS
     implementation "com.google.firebase:firebase-messaging:$rootProject.GooglePlaySDK"
-
-    // FIREBASE DEEP LINKING
     implementation "com.google.firebase:firebase-invites:$rootProject.GooglePlaySDK"
-
-    // FIREBASE PERFORMANCE TESTING
     implementation "com.google.firebase:firebase-perf:$rootProject.GooglePlaySDK"
-
-    // FIREBASE REALTIME DATABASE
     implementation "com.google.firebase:firebase-database:$rootProject.GooglePlaySDK"
-
-    // FACEBOOK SDK
-    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
-
-    // FACEBOOK NOTIFICATIONS
-    implementation 'com.facebook.android:notifications:1.0.2'
 
     // GOOGLE
     implementation "com.google.android.gms:play-services-maps:$rootProject.GooglePlaySDK"
     implementation "com.google.android.gms:play-services-location:$rootProject.GooglePlaySDK"
     implementation "com.google.android.gms:play-services-auth:$rootProject.GooglePlaySDK"
-    implementation ("com.google.android.gms:play-services-analytics:$rootProject.GooglePlaySDK") {
+    implementation ("com.google.android.gms:play-services-analytics:$rootProject.GooglePlaySDK")
+            {
         exclude module: 'play-services-ads'
     }
 
@@ -111,9 +97,11 @@ dependencies {
     // COUNTRY CODE SELECTOR
     implementation 'com.github.joielechong:countrycodepicker:2.1.5'
 
-    // STETHO INSPECTOR BY FACEBOOK
-     implementation 'com.facebook.stetho:stetho:1.5.0'
-     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    // FACEBOOK DEPENDENCIES
+    implementation 'com.facebook.android:notifications:1.0.2'
+    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
     // IMAGE SCALING
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
