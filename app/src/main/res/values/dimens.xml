@@ -22,7 +22,7 @@
 
 
     <!--PADDING =================================================================================-->
-    <dimen name="general_padding">15dp</dimen>
+    <dimen name="general_padding">25dp</dimen>
     <dimen name="login_activity_padding">40dp</dimen>
     <dimen name="toolbar_image_padding">-5sp</dimen>
 

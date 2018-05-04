@@ -17,8 +17,9 @@ public class StartUpAboutUsFragment extends Fragment {
 
     private View rootview;
 
-    private final String TAG_LOG =
-            "FRAGMENT";
+    private Helpers helpers;
+
+    private final String TAG_LOG = "FRAGMENT LOGIN";
 
     public StartUpAboutUsFragment() {
 
@@ -27,21 +28,17 @@ public class StartUpAboutUsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            Helpers.LogThis(TAG_LOG, getArguments().toString());
-        }
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootview == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.fragment_startup_login, container, false);
-                final Helpers helpers = new Helpers(getActivity());
+                rootview = inflater.inflate(R.layout.fragment_startup_about_us, container, false);
+                helpers = new Helpers(getActivity());
+
+
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-
-
 
             } catch (InflateException e) {
                 e.printStackTrace();

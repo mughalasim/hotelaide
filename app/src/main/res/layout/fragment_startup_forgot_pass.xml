@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/login_activity_padding">
+
+            <TextView
+                style="@style/Text_Header"
+                android:text="LOCKED OUT?"/>
+
+
+            <include layout="@layout/horizontal_line"/>
+
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_gravity="center"
+                android:text="Don't worry, give us your email address that you used to sign up and well send you a reset link"/>
+
+            <EditText
+                style="@style/Edit_Text"
+                android:inputType="textEmailAddress"
+                android:hint="@string/et_hint_email"/>
+
+
+            <include layout="@layout/horizontal_line"/>
+
+           <include layout="@layout/fragment_buttons"/>
+
+            <TextView
+                style="@style/Text_Small"
+                android:layout_gravity="center"
+                android:onClick="TERMS_CONDITIONS"
+                android:text="@string/txt_terms_conditions"/>
+
+        </LinearLayout>
+
+    </ScrollView>

@@ -46,7 +46,7 @@
             </intent-filter>
 
             <intent-filter>
-                <data android:scheme="https" android:host="p245z.app.goo.gl" />
+                <data android:scheme="https" android:host="p245p.app.goo.gl" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -73,7 +73,7 @@
         <activity
             android:name=".start_up.LoginActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
 
         <activity

@@ -1,48 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginBottom="@dimen/login_activity_padding">
 
             <TextView
-                style="@style/Text_Header"
-                android:text="Welcome"/>
+                style="@style/Text_Title"
+                android:text="THROUGH SOCIAL MEDIA"/>
+
+            <TextView
+                style="@style/Text_Small"
+                android:onClick="SIGN_UP"
+                android:text="Tap on one below and instantly sign up using either of your accounts on Facebook or Google+"/>
+
+            <TextView
+                style="@style/Button_Yes"
+                android:layout_marginTop="@dimen/general_padding"
+                android:layout_width="match_parent"
+                android:gravity="start|center_vertical"
+                android:drawableStart="@drawable/com_facebook_button_icon"
+                android:paddingLeft="@dimen/general_padding"
+                android:text=" FACEBOOK"/>
+
+            <TextView
+                style="@style/Button_No"
+                android:layout_marginTop="@dimen/general_padding"
+                android:layout_marginEnd="0dp"
+                android:layout_width="match_parent"
+                android:gravity="start|center_vertical"
+                android:drawableStart="@drawable/googleg_standard_color_18"
+                android:paddingLeft="@dimen/general_padding"
+                android:text=" GOOGLE"/>
+
+            <include layout="@layout/horizontal_line"/>
 
             <TextView
                 style="@style/Text_Title"
-                android:text="Login"/>
-
-
-
-            <include layout="@layout/horizontal_line"/>
+                android:text="REGISTER"/>
 
             <TextView
                 style="@style/Text_Small"
                 android:layout_gravity="center"
                 android:onClick="SIGN_UP"
-                android:text="Enter your email and password to login or SIGN UP here"/>
+                android:text="You could opt to give us some details about you so we can sign you up and get you started"/>
+
+            <EditText
+                style="@style/Edit_Text"
+                android:inputType="text"
+                android:hint="@string/et_hint_first_name" />
+
+            <EditText
+                style="@style/Edit_Text"
+                android:inputType="text"
+                android:hint="@string/et_hint_last_name"/>
 
             <TextView
                 style="@style/Edit_Text"
-                android:text="@string/et_hint_email"/>
+                android:text="@string/et_hint_dob"/>
 
-            <TextView
+            <EditText
                 style="@style/Edit_Text"
-                android:text="@string/et_hint_pass"/>
+                android:inputType="textEmailAddress"
+                android:hint="@string/et_hint_email"/>
 
-            <include layout="@layout/horizontal_line"/>
+            <EditText
+                style="@style/Edit_Text"
+                android:inputType="textPassword"
+                android:hint="@string/et_hint_pass"/>
+
+            <EditText
+                style="@style/Edit_Text"
+                android:inputType="textPassword"
+                android:hint="@string/et_hint_pass_confirm"/>
+
 
            <include layout="@layout/fragment_buttons"/>
 
             <TextView
                 style="@style/Text_Small"
+                android:paddingTop="@dimen/general_padding"
                 android:layout_gravity="center"
-                android:text="Terms and conditions"/>
+                android:onClick="LOGIN"
+                android:text="OOps! I already Have an account"/>
+
+            <TextView
+                style="@style/Text_Small"
+                android:layout_gravity="center"
+                android:onClick="TERMS_CONDITIONS"
+                android:text="@string/txt_terms_conditions"/>
 
         </LinearLayout>
 

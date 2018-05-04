@@ -1,46 +1,14 @@
 package com.hotelaide.main_pages.activities;
 
-import android.content.Context;
-import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import com.hotelaide.R;
 //import com.hotelaide.main_pages.fragments.HomePageFragment;
 //import com.hotelaide.main_pages.models.CollectionModel;
-import com.hotelaide.services.RestaurantService;
-import com.hotelaide.services.UserService;
-import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-import static com.hotelaide.utils.Database.userModel;
-import static com.hotelaide.utils.Helpers.FLAG_TRUE;
 import static com.hotelaide.utils.Helpers.STR_NAVIGATION_COLLECTION;
-import static com.hotelaide.utils.Helpers.STR_NAVIGATION_REST;
-import static com.hotelaide.utils.Helpers.STR_NAVIGATION_SEARCH;
 
 public class HomeActivity extends ParentActivity {
 

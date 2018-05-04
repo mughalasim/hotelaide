@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.HomeActivity;
@@ -35,6 +36,10 @@ public class LoginActivity extends AppCompatActivity {
     private Helpers
             helper;
 
+    public TextView
+            btn_confirm,
+            btn_cancel;
+
     private Database db;
 
     private ImageView login_background;
@@ -43,16 +48,8 @@ public class LoginActivity extends AppCompatActivity {
             TAG_LOG = "LOGIN";
 
     private TabLayout tabLayout;
+
     private ViewPager viewPager;
-
-
-    private int[] navIcons = {
-            R.drawable.tab_ic_login,
-            R.drawable.tab_ic_sign_up,
-            R.drawable.tab_ic_forgot_pass,
-            R.drawable.tab_ic_about_us,
-            R.drawable.tab_ic_contact_us
-    };
 
     private int[] navLabels = {
             R.string.nav_login,
@@ -60,14 +57,6 @@ public class LoginActivity extends AppCompatActivity {
             R.string.nav_forgot_pass,
             R.string.nav_about_us,
             R.string.nav_contact_us
-    };
-
-    private int[] navIconsActive = {
-            R.drawable.tab_ic_login_active,
-            R.drawable.tab_ic_sign_up_active,
-            R.drawable.tab_ic_forgot_pass_active,
-            R.drawable.tab_ic_about_us_active,
-            R.drawable.tab_ic_contact_us_active
     };
 
 
@@ -122,10 +111,10 @@ public class LoginActivity extends AppCompatActivity {
         Fragment fragment2 = new StartUpSignUpFragment();
         adapter.addFragment(fragment2, getResources().getString(navLabels[1]));
 
-        Fragment fragment3 = new StartUpAboutUsFragment();
+        Fragment fragment3 = new StartUpForgotPassFragment();
         adapter.addFragment(fragment3, getResources().getString(navLabels[2]));
 
-        Fragment fragment4 = new StartUpForgotPassFragment();
+        Fragment fragment4 = new StartUpAboutUsFragment();
         adapter.addFragment(fragment4, getResources().getString(navLabels[3]));
 
         Fragment fragment5 = new StartUpContactUsFragment();
@@ -200,10 +189,13 @@ public class LoginActivity extends AppCompatActivity {
         helper.ToastMessage(LoginActivity.this, "OPEN SOME TERMS AND CONDITONS HERE");
     }
 
+    public void LOGIN(View view) {
+        viewPager.setCurrentItem(0);
+    }
+
     public void FORGOT_PASS(View view) {
         viewPager.setCurrentItem(2);
     }
-
 
 
     // ONCLICK VIEWS ===============================================================================

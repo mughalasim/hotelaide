@@ -22,6 +22,8 @@ public class StartUpLoginFragment extends Fragment {
             btn_confirm,
             btn_cancel;
 
+    private Helpers helpers;
+
     private final String TAG_LOG = "FRAGMENT LOGIN";
 
     public StartUpLoginFragment() {
@@ -38,7 +40,7 @@ public class StartUpLoginFragment extends Fragment {
         if (rootview == null && getActivity() != null) {
             try {
                 rootview = inflater.inflate(R.layout.fragment_startup_login, container, false);
-                final Helpers helpers = new Helpers(getActivity());
+                helpers = new Helpers(getActivity());
                 btn_cancel = rootview.findViewById(R.id.btn_cancel);
                 btn_confirm = rootview.findViewById(R.id.btn_confirm);
 

@@ -1,58 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:scrollbars="none"
+    android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="@dimen/login_activity_padding">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/login_activity_padding"
+        android:orientation="vertical">
 
-            <TextView
-                style="@style/Text_Header"
-                android:text="Welcome"/>
-
-            <TextView
-                style="@style/Text_Title"
-                android:text="Login"/>
+        <TextView
+            style="@style/Text_Header"
+            android:text="@string/txt_welcome" />
 
 
+        <include layout="@layout/horizontal_line" />
 
-            <include layout="@layout/horizontal_line"/>
+        <TextView
+            style="@style/Text_Small"
+            android:layout_gravity="center"
+            android:text="@string/txt_welcome_login" />
 
-            <TextView
-                style="@style/Text_Small"
-                android:layout_gravity="center"
-                android:onClick="SIGN_UP"
-                android:text="Enter your email and password to login"/>
+        <EditText
+            style="@style/Edit_Text"
+            android:hint="@string/et_hint_email"
+            android:inputType="textEmailAddress" />
 
-            <EditText
-                style="@style/Edit_Text"
-                android:inputType="textEmailAddress"
-                android:text="@string/et_hint_email"/>
+        <EditText
+            style="@style/Edit_Text"
+            android:hint="@string/et_hint_pass"
+            android:drawableEnd="@drawable/ic_pass_reveal"
+            android:inputType="textPassword" />
 
-            <EditText
-                style="@style/Edit_Text"
-                android:inputType="textPassword"
-                android:text="@string/et_hint_pass"/>
+        <include layout="@layout/horizontal_line" />
 
-            <include layout="@layout/horizontal_line"/>
+        <include layout="@layout/fragment_buttons" />
 
-           <include layout="@layout/fragment_buttons"/>
+        <TextView
+            style="@style/Text_Small"
+            android:layout_gravity="center"
+            android:onClick="FORGOT_PASS"
+            android:text="@string/txt_forgot_password" />
 
-            <TextView
-                style="@style/Text_Small"
-                android:layout_gravity="center"
-                android:onClick="FORGOT_PASS"
-                android:text="Forgot Password"/>
+        <TextView
+            style="@style/Text_Small"
+            android:layout_gravity="center"
+            android:onClick="TERMS_CONDITIONS"
+            android:text="@string/txt_terms_conditions" />
 
-            <TextView
-                style="@style/Text_Small"
-                android:layout_gravity="center"
-                android:onClick="TERMS_CONDITIONS"
-                android:text="Terms and conditions"/>
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
+</ScrollView>

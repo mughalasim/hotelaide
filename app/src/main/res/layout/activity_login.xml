@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_logo_image_size"
         android:layout_alignParentTop="true"
-        android:padding="@dimen/general_padding"
+        android:padding="@dimen/text_size_header_margin"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
         android:background="@color/dim"
@@ -47,7 +47,9 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_below="@+id/tabs"
-        android:padding="@dimen/login_activity_padding"
+        android:paddingLeft="@dimen/general_padding"
+        android:paddingRight="@dimen/general_padding"
+        android:paddingBottom="@dimen/general_padding"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

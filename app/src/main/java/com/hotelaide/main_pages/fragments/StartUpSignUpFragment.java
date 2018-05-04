@@ -8,6 +8,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.hotelaide.R;
 import com.hotelaide.utils.Helpers;
@@ -17,8 +18,13 @@ public class StartUpSignUpFragment extends Fragment {
 
     private View rootview;
 
-    private final String TAG_LOG =
-            "FRAGMENT";
+    private TextView
+            btn_confirm,
+            btn_cancel;
+
+    private Helpers helpers;
+
+    private final String TAG_LOG = "FRAGMENT LOGIN";
 
     public StartUpSignUpFragment() {
 
@@ -27,20 +33,23 @@ public class StartUpSignUpFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            Helpers.LogThis(TAG_LOG, getArguments().toString());
-        }
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootview == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.fragment_startup_login, container, false);
-                final Helpers helpers = new Helpers(getActivity());
+                rootview = inflater.inflate(R.layout.fragment_startup_signup, container, false);
+                helpers = new Helpers(getActivity());
+                btn_cancel = rootview.findViewById(R.id.btn_cancel);
+                btn_confirm = rootview.findViewById(R.id.btn_confirm);
 
+                btn_cancel.setVisibility(View.GONE);
+                btn_confirm.setVisibility(View.VISIBLE);
 
+                btn_confirm.setText(getString(R.string.nav_sign_up));
+
+                setListerners();
 
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -51,6 +60,22 @@ public class StartUpSignUpFragment extends Fragment {
             ((ViewGroup) container.getParent()).removeView(rootview);
         }
         return rootview;
+    }
+
+    private void setListerners() {
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 }

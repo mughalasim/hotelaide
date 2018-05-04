@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/login_activity_padding">
+
+            <TextView
+                style="@style/Text_Header"
+                android:text="WHO ARE WE"/>
+
+
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_gravity="center"
+                android:text="@string/about1"/>
+
+
+            <include layout="@layout/horizontal_line"/>
+
+            <TextView
+                style="@style/Text_Header"
+                android:text="WHAT WE DO"/>
+
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_gravity="center"
+                android:text="@string/about2"/>
+
+
+
+            <include layout="@layout/horizontal_line"/>
+
+            <TextView
+                style="@style/Text_Header"
+                android:text="HOW WE HELP YOU"/>
+
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_gravity="center"
+                android:text="@string/about3"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>

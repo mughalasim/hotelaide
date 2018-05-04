@@ -13,7 +13,6 @@ android {
         versionName "$rootProject.versionName"
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
-//        multiDexEnabled true
     }
 
     buildTypes {
@@ -22,14 +21,14 @@ android {
             minifyEnabled rootProject.minify
             useProguard rootProject.minify
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            shrinkResources rootProject.minify
+//            shrinkResources rootProject.minify
         }
         debug {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.minify
             useProguard rootProject.minify
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            shrinkResources rootProject.minify
+//            shrinkResources rootProject.minify
         }
     }
 
@@ -64,17 +63,17 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
     // FIREBASE AUTHENTICATION
-    implementation "com.google.firebase:firebase-auth:$rootProject.GooglePlaySDK"
-    implementation "com.google.firebase:firebase-messaging:$rootProject.GooglePlaySDK"
-    implementation "com.google.firebase:firebase-invites:$rootProject.GooglePlaySDK"
-    implementation "com.google.firebase:firebase-perf:$rootProject.GooglePlaySDK"
-    implementation "com.google.firebase:firebase-database:$rootProject.GooglePlaySDK"
+    implementation 'com.google.firebase:firebase-auth:15.1.0'
+    implementation 'com.google.firebase:firebase-messaging:15.0.2'
+    implementation 'com.google.firebase:firebase-invites:15.0.1'
+    implementation 'com.google.firebase:firebase-perf:15.1.0'
+    implementation 'com.google.firebase:firebase-database:15.0.1'
 
     // GOOGLE
-    implementation "com.google.android.gms:play-services-maps:$rootProject.GooglePlaySDK"
-    implementation "com.google.android.gms:play-services-location:$rootProject.GooglePlaySDK"
-    implementation "com.google.android.gms:play-services-auth:$rootProject.GooglePlaySDK"
-    implementation ("com.google.android.gms:play-services-analytics:$rootProject.GooglePlaySDK")
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation ('com.google.android.gms:play-services-analytics:15.0.0')
             {
         exclude module: 'play-services-ads'
     }
