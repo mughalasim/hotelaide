@@ -18,21 +18,7 @@ public class AboutUsActivity extends ParentActivity {
         String TAG_LOG = "ABOUT US";
         initialize(R.id.about_us, TAG_LOG);
 
-        findAllViews();
-
         helper.setTracker(TAG_LOG);
-
-    }
-
-    private void findAllViews() {
-        TextView version_number = findViewById(R.id.version_number);
-
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            version_number.setText(pInfo.versionName);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
 
     }
 

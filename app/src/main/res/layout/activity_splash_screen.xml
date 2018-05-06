@@ -13,10 +13,10 @@
     <ImageView
         android:id="@+id/mainLogo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/main_logo_image_size"
+        android:layout_height="@dimen/my_account_profile_pic"
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
-        android:src="@drawable/main_logo_icon" />
+        android:src="@drawable/main_logo_vertical" />
 
 </RelativeLayout>

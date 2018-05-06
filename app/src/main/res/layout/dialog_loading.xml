@@ -11,10 +11,9 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/main_logo_image_size"
         android:layout_gravity="center"
-        android:paddingTop="@dimen/general_padding"
-        android:src="@drawable/loading_food" />
+        android:src="@drawable/main_logo_icon" />
 
     <TextView
         android:id="@+id/messageText"

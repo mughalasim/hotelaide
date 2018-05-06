@@ -16,7 +16,7 @@
             android:layout_height="@dimen/collapsing_details_toolbar_height"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            android:src="@drawable/my_account_background" />
+            android:src="@drawable/bckgrd_login" />
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/user_image"
@@ -34,7 +34,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_gravity="center"
             android:layout_margin="@dimen/general_padding"
             android:background="@color/dim"
@@ -46,12 +45,15 @@
             <TextView
                 style="@style/Text_Small"
                 android:layout_gravity="center"
-                android:text="@string/txt_points"
+                android:text="@string/txt_availability"
+                android:layout_marginTop="0dp"
                 android:textColor="@color/white" />
 
             <TextView
-                android:id="@+id/user_points"
+                android:id="@+id/user_availability"
                 style="@style/Text_Small"
+                android:layout_marginTop="0dp"
+                android:text="Full Time"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 

@@ -28,8 +28,6 @@
                 android:hint="@string/et_hint_email"/>
 
 
-            <include layout="@layout/horizontal_line"/>
-
            <include layout="@layout/fragment_buttons"/>
 
             <TextView

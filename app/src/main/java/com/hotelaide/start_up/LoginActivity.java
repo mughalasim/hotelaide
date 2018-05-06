@@ -42,7 +42,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private Database db;
 
-    private ImageView login_background;
+    private ImageView
+            login_background,
+            login_background2;
 
     private final String
             TAG_LOG = "LOGIN";
@@ -96,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tabs);
         login_background = findViewById(R.id.login_background);
+        login_background2 = findViewById(R.id.login_background2);
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager, true);
@@ -133,15 +136,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 helper.animate_fade_in(login_background);
                 if (position == 0) {
-                    login_background.setImageResource(R.drawable.login_bck1);
+                    login_background.setImageResource(R.drawable.bckgrd_login);
                 } else if (position == 1) {
-                    login_background.setImageResource(R.drawable.login_bck2);
+                    login_background.setImageResource(R.drawable.bckgrd_login);
                 } else if (position == 2) {
-                    login_background.setImageResource(R.drawable.login_bck3);
+                    login_background.setImageResource(R.drawable.bckgrd_login);
                 } else if (position == 3) {
-                    login_background.setImageResource(R.drawable.login_bck4);
+                    login_background.setImageResource(R.drawable.bckgrd_login);
                 } else if (position == 4) {
-                    login_background.setImageResource(R.drawable.login_bck5);
+                    login_background.setImageResource(R.drawable.bckgrd_login);
                 }
                 login_background.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
@@ -184,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    // SET ONCLICKS ================================================================================
+    // SET ON CLICKS ===============================================================================
     public void TERMS_CONDITIONS(View view) {
         helper.ToastMessage(LoginActivity.this, "OPEN SOME TERMS AND CONDITONS HERE");
     }
@@ -197,16 +200,10 @@ public class LoginActivity extends AppCompatActivity {
         viewPager.setCurrentItem(2);
     }
 
-
-    // ONCLICK VIEWS ===============================================================================
-
-    private void dropDownKeyboard(EditText editText) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-        }
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    public void SIGN_UP(View view) {
+        viewPager.setCurrentItem(1);
     }
+
 
 
     // LOGIN ASYNC FUNCTIONS =======================================================================
@@ -263,7 +260,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void asyncRegisterUser(final UserModel userModel) {
 
-        helper.setProgressDialogMessage("Regsiteration in progress... please wait...");
+        helper.setProgressDialogMessage("Registration in progress... please wait...");
         helper.progressDialog(true);
 
         LoginService loginService = LoginService.retrofit.create

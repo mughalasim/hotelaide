@@ -12,7 +12,7 @@ import static com.hotelaide.utils.Helpers.STR_NAVIGATION_COLLECTION;
 
 public class HomeActivity extends ParentActivity {
 
-    private SwipeRefreshLayout swiperefresh;
+//    private SwipeRefreshLayout swiperefresh;
 
     private final String TAG_LOG = "HOME";
 
@@ -33,17 +33,17 @@ public class HomeActivity extends ParentActivity {
         asyncGetLikedRestaurants();
 
         if (SharedPrefs.getAsyncCallUserDetails()) {
-            helper.asyncGetUser();
+//            helper.asyncGetUser();
         }
 
-        swiperefresh.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        asyncGetCollections();
-                    }
-                }
-        );
+//        swiperefresh.setOnRefreshListener(
+//                new SwipeRefreshLayout.OnRefreshListener() {
+//                    @Override
+//                    public void onRefresh() {
+////                        asyncGetCollections();
+//                    }
+//                }
+//        );
 
         helper.setTracker(TAG_LOG);
 
@@ -79,7 +79,7 @@ public class HomeActivity extends ParentActivity {
 
     private void findAllViews() {
 
-        swiperefresh = findViewById(R.id.swiperefresh);
+//        swiperefresh = findViewById(R.id.swiperefresh);
 
     }
 
@@ -88,7 +88,7 @@ public class HomeActivity extends ParentActivity {
 
     // GET COLLECTIONS =============================================================================
     private void asyncGetCollections() {
-        swiperefresh.setRefreshing(true);
+//        swiperefresh.setRefreshing(true);
 
 //        RestaurantService restaurantService = RestaurantService.retrofit.create(RestaurantService.class);
 //        final Call<JsonObject> call = restaurantService.getAllRestaurantCollections(

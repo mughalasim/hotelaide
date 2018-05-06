@@ -20,95 +20,22 @@
 
             <include layout="@layout/toolbar" />
 
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/general_padding"
+                android:paddingLeft="@dimen/general_padding"
+                android:paddingRight="@dimen/general_padding">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp"
-                    android:layout_marginBottom="35dp"
-                    android:weightSum="1">
+                <include layout="@layout/fragment_startup_about_us" />
 
-                    <TextView
-                        style="@style/Text_Header"
-                        android:gravity="start"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/txt_eatout_site_and_apps" />
-
-                    <TextView
-                        style="@style/Text_Normal"
-                        android:gravity="start"
-                        android:text="@string/about1" />
-
-                    <TextView
-                        style="@style/Text_Header"
-                        android:gravity="start"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/txt_yummy_card" />
-
-                    <TextView
-                        style="@style/Text_Normal"
-                        android:gravity="start"
-                        android:text="@string/about2" />
-
-                    <TextView
-                        style="@style/Text_Header"
-                        android:gravity="start"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/txt_yummy_magazine" />
-
-                    <TextView
-                        style="@style/Text_Normal"
-                        android:gravity="start"
-                        android:text="@string/about3" />
-
-                    <TextView
-                        style="@style/Text_Header"
-                        android:gravity="start"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/txt_nairobi_restaurant_week" />
-
-                    <TextView
-                        style="@style/Text_Normal"
-                        android:gravity="start"
-                        android:text="@string/about4" />
-
-                    <TextView
-                        style="@style/Text_Header"
-                        android:gravity="start"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/txt_taste_awards" />
-
-                    <TextView
-                        style="@style/Text_Normal"
-                        android:gravity="start"
-                        android:text="@string/about5" />
-
-
-                    <TextView
-                        style="@style/Text_Header"
-                        android:gravity="start"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/txt_app_version" />
-
-                    <TextView
-                        android:id="@+id/version_number"
-                        style="@style/Text_Normal"
-                        android:gravity="start"
-                        android:layout_gravity="start"/>
-
-
-                </LinearLayout>
-
-            </ScrollView>
+            </LinearLayout>
 
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <include layout="@layout/navigation_view"/>
+    <include layout="@layout/navigation_view" />
 
 </android.support.v4.widget.DrawerLayout>

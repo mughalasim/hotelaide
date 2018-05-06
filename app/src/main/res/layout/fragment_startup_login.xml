@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:scrollbars="none"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,27 +19,52 @@
         <include layout="@layout/horizontal_line" />
 
         <TextView
-            style="@style/Text_Small"
+            style="@style/Text_Normal"
             android:layout_gravity="center"
             android:text="@string/txt_welcome_login" />
 
         <EditText
+            android:id="@+id/et_useremail"
             style="@style/Edit_Text"
             android:hint="@string/et_hint_email"
             android:inputType="textEmailAddress" />
 
-        <EditText
-            style="@style/Edit_Text"
-            android:hint="@string/et_hint_pass"
-            android:drawableEnd="@drawable/ic_pass_reveal"
-            android:inputType="textPassword" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/general_padding"
+            android:layout_height="@dimen/edit_text_height">
 
-        <include layout="@layout/horizontal_line" />
+            <EditText
+                android:id="@+id/et_userpassword"
+                style="@style/Edit_Text"
+                android:paddingTop="0dp"
+                android:layout_marginTop="0dp"
+                android:hint="@string/et_hint_pass"
+                android:inputType="textPassword" />
+
+            <ImageView
+                android:id="@+id/et_userpassword_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:paddingEnd="@dimen/general_padding"
+                android:contentDescription="@string/app_name" />
+
+        </RelativeLayout>
+
 
         <include layout="@layout/fragment_buttons" />
 
         <TextView
-            style="@style/Text_Small"
+            style="@style/Text_Normal"
+            android:layout_gravity="center"
+            android:onClick="SIGN_UP"
+            android:paddingTop="@dimen/general_padding"
+            android:text="@string/nav_sign_up" />
+
+        <TextView
+            style="@style/Text_Normal"
             android:layout_gravity="center"
             android:onClick="FORGOT_PASS"
             android:text="@string/txt_forgot_password" />

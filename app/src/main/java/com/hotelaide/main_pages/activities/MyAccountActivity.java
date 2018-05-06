@@ -48,9 +48,6 @@ import com.hotelaide.utils_external.LocationService;
 
 public class MyAccountActivity extends ParentActivity {
 
-    private Spinner
-            user_salutation;
-
     private EditText
             user_first_name,
             user_last_name,
@@ -63,8 +60,7 @@ public class MyAccountActivity extends ParentActivity {
 
     private TextView
             user_phone,
-            user_dob,
-            user_points;
+            user_dob;
 
 
     private final String
@@ -146,10 +142,6 @@ public class MyAccountActivity extends ParentActivity {
     private void findAllViews() {
 
         user_image = findViewById(R.id.user_image);
-
-        user_salutation = findViewById(R.id.user_salutation);
-
-        user_points = findViewById(R.id.user_points);
 
         user_first_name = findViewById(R.id.user_first_name);
         user_last_name = findViewById(R.id.user_last_name);

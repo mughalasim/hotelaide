@@ -4,47 +4,40 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/bckgrd_transparent"
     android:gravity="center"
-    android:textAlignment="center"
-    android:theme="@style/AppTheme"
     app:layout_collapseMode="pin"
-    app:layout_scrollFlags="scroll|enterAlways"
-    app:titleTextColor="@color/white">
+    app:titleTextColor="@color/colorPrimary">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginRight="?attr/actionBarSize"
-        android:layout_marginEnd="?attr/actionBarSize"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/toolbar_text"
             style="@style/Text_Header"
-            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="0dp"
             android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:visibility="gone" />
+            android:layout_height="match_parent"
+            android:textColor="@color/colorPrimary"
+            android:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/toolbar_image"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:layout_marginEnd="@dimen/toolbar_image_padding"
-            android:layout_marginRight="@dimen/toolbar_image_padding"
             android:orientation="vertical"
             android:visibility="visible">
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
-                android:padding="8dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/main_logo_white" />
+                android:layout_marginStart="-80dp"
+                android:src="@drawable/main_logo_horizontal" />
 
         </LinearLayout>
 

@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="drawerArrowStyle">@style/WhiteDrawerIconStyle</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@drawable/bckgrd_login</item>
         <item name="actionOverflowMenuStyle">@style/WhiteDrawerIconStyle</item>
     </style>
 
@@ -17,7 +17,7 @@
 
     <style name="WhiteDrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
-        <item name="color">@android:color/white</item>
+        <item name="color">@color/colorPrimary</item>
     </style>
 
 
@@ -71,7 +71,7 @@
     <style name="Text_Header" parent="AppTheme">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_gravity">start|center_vertical</item>
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
@@ -83,7 +83,7 @@
     <style name="Text_Title" parent="AppTheme">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_gravity">start|center_vertical</item>
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
@@ -95,7 +95,7 @@
     <style name="Text_Normal" parent="AppTheme">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_gravity">start|center_vertical</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="android:lineSpacingMultiplier">@dimen/text_line_multiplier</item>
         <item name="android:lineSpacingExtra">@dimen/text_line_spacing</item>
@@ -107,7 +107,7 @@
     <style name="Text_Small" parent="AppTheme">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_gravity">start|center_vertical</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:layout_marginTop">@dimen/general_padding</item>
@@ -128,7 +128,7 @@
     <style name="Text_Left_Bold" parent="AppTheme">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:gravity">start|center_vertical</item>
         <item name="android:layout_gravity">left</item>
         <item name="android:lineSpacingMultiplier">@dimen/text_line_multiplier</item>
         <item name="android:lineSpacingExtra">@dimen/text_line_spacing</item>
