@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
-        android:src="@drawable/bckgrd_login"/>
+        android:src="@drawable/bckgrd_transparent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,6 +26,7 @@
             android:gravity="start"
             android:text="@string/app_name"
             android:layout_margin="0dp"
+            android:textColor="@color/colorAccentLight"
             android:maxLines="1"
             android:maxLength="17" />
 
@@ -33,6 +34,7 @@
             android:id="@+id/nav_user_email"
             style="@style/Text_Small"
             android:text="@string/app_name"
+            android:textColor="@color/white"
             android:maxLines="1"
             android:maxLength="35"
             android:layout_marginTop="@dimen/text_size_header_margin"
@@ -46,9 +48,10 @@
         android:layout_height="@dimen/nav_profile_image_size"
         android:layout_marginBottom="@dimen/general_padding"
         android:layout_marginStart="@dimen/general_padding"
+        android:layout_marginTop="@dimen/general_padding"
         android:layout_centerVertical="true"
         app:riv_border_width="@dimen/line_thickness"
-        app:riv_corner_radius="@dimen/radius_image"
+        app:riv_corner_radius="@dimen/nav_profile_image_size"
         android:src="@color/light_grey"
         app:riv_border_color="@color/colorAccentDark"/>
 

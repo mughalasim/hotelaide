@@ -4,10 +4,12 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     android:background="@color/colorPrimaryLight"
     app:headerLayout="@layout/header_navigation"
     app:menu="@menu/drawer"
+    app:itemIconTint="@color/white"
+    app:itemTextColor="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -30,8 +32,8 @@
             style="@style/Text_Normal"
             android:layout_above="@+id/drawer_logo"
             android:textSize="@dimen/text_size_normal"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/general_padding"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/dark_grey"
             android:text="@string/app_name" />
 
     </RelativeLayout>

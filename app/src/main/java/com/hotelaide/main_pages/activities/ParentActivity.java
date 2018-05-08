@@ -120,9 +120,13 @@ public class ParentActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
 
-        nav_user_name.setText(Database.userModel.first_name.concat(" ").concat(Database.userModel.last_name));
-        Glide.with(this).load(Database.userModel.profile_pic).into(nav_img_user_pic);
-        nav_user_email.setText(Database.userModel.email);
+        nav_user_name.setText("ASIM MUGHAL");
+        nav_user_email.setText("asimkenya@gmail.com");
+        Glide.with(this).load("https://media.creativemornings.com/uploads/user/avatar/49419/Bechtel_Profile_Square.jpg").into(nav_img_user_pic);
+
+//        nav_user_name.setText(Database.userModel.first_name.concat(" ").concat(Database.userModel.last_name));
+//        Glide.with(this).load(Database.userModel.profile_pic).into(nav_img_user_pic);
+//        nav_user_email.setText(Database.userModel.email);
         nav_img_user_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

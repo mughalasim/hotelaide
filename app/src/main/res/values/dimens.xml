@@ -15,7 +15,7 @@
 
     <!--IMAGE DIMENS ============================================================================-->
     <dimen name="restaurant_adapter_image_size">60dp</dimen>
-    <dimen name="nav_profile_image_size">90dp</dimen>
+    <dimen name="nav_profile_image_size">70sp</dimen>
     <dimen name="my_account_profile_pic">150dp</dimen>
     <dimen name="main_logo_image_size">60sp</dimen>
 
