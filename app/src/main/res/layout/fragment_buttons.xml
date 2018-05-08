@@ -9,11 +9,11 @@
     <TextView
         android:id="@+id/btn_cancel"
         style="@style/Button_No"
-        android:text="NO" />
+        android:text="@string/txt_cancel" />
 
     <TextView
         android:id="@+id/btn_confirm"
         style="@style/Button_Yes"
-        android:text="YES" />
+        android:text="@string/txt_ok" />
 
 </LinearLayout>

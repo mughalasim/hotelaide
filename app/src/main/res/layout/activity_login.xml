@@ -21,7 +21,7 @@
         android:scaleType="fitCenter" />
 
     <ImageView
-        android:id="@+id/mainLogo"
+        android:id="@+id/main_logo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_logo_image_size"
         android:layout_alignParentTop="true"
@@ -34,7 +34,7 @@
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
-        android:layout_below="@+id/mainLogo"
+        android:layout_below="@+id/main_logo"
         android:layout_width="match_parent"
         android:background="@drawable/bckgrd_transparent"
         android:layout_height="@dimen/main_logo_image_size"
@@ -50,15 +50,12 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_below="@+id/tabs"
-        android:paddingLeft="@dimen/general_padding"
-        android:paddingRight="@dimen/general_padding"
-        android:paddingBottom="@dimen/general_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 
     <include
-        android:layout_below="@+id/mainLogo"
+        android:layout_below="@+id/main_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/horizontal_line"/>

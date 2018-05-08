@@ -10,6 +10,7 @@
         <item name="drawerArrowStyle">@style/WhiteDrawerIconStyle</item>
         <item name="android:windowBackground">@drawable/bckgrd_login</item>
         <item name="actionOverflowMenuStyle">@style/WhiteDrawerIconStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
 

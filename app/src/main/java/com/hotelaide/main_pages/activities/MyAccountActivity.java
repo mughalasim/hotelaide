@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -82,7 +81,7 @@ public class MyAccountActivity extends ParentActivity {
 
         setContentView(R.layout.activity_my_account);
 
-        initialize(R.id.my_account, TAG_LOG);
+        initialize(R.id.drawer_my_account, TAG_LOG);
 
         findAllViews();
 
@@ -281,9 +280,7 @@ public class MyAccountActivity extends ParentActivity {
         if (user_email.getText().toString().length() < 1) {
             userModelMyAccount.email = NULL;
             mandatoryFields(userModelMyAccount);
-        } else if (helper.validateEmail(user_email.getText().toString())) {
-            user_email.setError(getString(R.string.error_field_invalid));
-        } else {
+        } else if (helper.validateEmail(user_email)){
             mandatoryFields(userModelMyAccount);
         }
     }
@@ -315,7 +312,7 @@ public class MyAccountActivity extends ParentActivity {
             );
 
             helper.asyncSetUser(userModelMyAccount);
-            startActivity(new Intent(MyAccountActivity.this, HomeActivity.class));
+            startActivity(new Intent(MyAccountActivity.this, DashboardActivity.class));
             finish();
         }
 

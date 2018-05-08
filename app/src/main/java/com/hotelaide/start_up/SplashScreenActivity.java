@@ -23,7 +23,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import bolts.AppLinks;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.activities.HomeActivity;
+import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -121,12 +121,14 @@ public class SplashScreenActivity extends AppCompatActivity {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_confirm);
                 dialog.setCancelable(false);
-                final TextView txtMessage = dialog.findViewById(R.id.txtMessage);
-                final TextView txtOk = dialog.findViewById(R.id.txtOk);
-                final TextView txtTitle = dialog.findViewById(R.id.txtTitle);
-                txtTitle.setText(STR_NOTIF_TITLE);
-                txtMessage.setText(STR_NOTIF_BODY);
-                txtOk.setOnClickListener(new View.OnClickListener() {
+                final TextView txt_message = dialog.findViewById(R.id.txt_message);
+                final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+                final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                final TextView txt_title = dialog.findViewById(R.id.txt_title);
+                txt_title.setText(STR_NOTIF_TITLE);
+                txt_message.setText(STR_NOTIF_BODY);
+                btn_cancel.setVisibility(View.GONE);
+                btn_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         SharedPrefs.setNavigationPushCLicked(true);
@@ -279,7 +281,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 } else if (db.validateUserName()) {
                     startActivity(new Intent(SplashScreenActivity.this, SetAccount.class));
                 } else {
-                    startActivity(new Intent(SplashScreenActivity.this, HomeActivity.class));
+                    startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class));
                 }
                 finish();
             }

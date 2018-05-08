@@ -16,30 +16,13 @@
         <TextView
             android:id="@+id/toolbar_text"
             style="@style/Text_Header"
-            android:gravity="center"
-            android:layout_width="wrap_content"
+            android:gravity="start|center"
             android:layout_marginTop="0dp"
+            android:paddingStart="@dimen/general_padding"
+            android:paddingEnd="0dp"
             android:text="@string/app_name"
             android:layout_height="match_parent"
-            android:textColor="@color/colorPrimary"
-            android:visibility="visible" />
-
-        <LinearLayout
-            android:id="@+id/toolbar_image"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerInside"
-                android:layout_marginStart="-80dp"
-                android:src="@drawable/main_logo_horizontal" />
-
-        </LinearLayout>
+            android:textColor="@color/colorPrimary" />
 
     </RelativeLayout>
 

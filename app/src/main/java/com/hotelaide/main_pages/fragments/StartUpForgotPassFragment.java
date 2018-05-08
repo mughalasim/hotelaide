@@ -8,6 +8,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hotelaide.R;
@@ -21,6 +22,8 @@ public class StartUpForgotPassFragment extends Fragment {
     private TextView
             btn_confirm,
             btn_cancel;
+
+    private EditText et_useremail;
 
     private Helpers helpers;
 
@@ -41,13 +44,8 @@ public class StartUpForgotPassFragment extends Fragment {
             try {
                 rootview = inflater.inflate(R.layout.fragment_startup_forgot_pass, container, false);
                 helpers = new Helpers(getActivity());
-                btn_cancel = rootview.findViewById(R.id.btn_cancel);
-                btn_confirm = rootview.findViewById(R.id.btn_confirm);
 
-                btn_cancel.setVisibility(View.GONE);
-                btn_confirm.setVisibility(View.VISIBLE);
-;
-                btn_confirm.setText(getString(R.string.txt_reset));
+                findAllViews();
 
                 setListerners();
 
@@ -62,18 +60,25 @@ public class StartUpForgotPassFragment extends Fragment {
         return rootview;
     }
 
-    private void setListerners() {
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    private void findAllViews() {
+        et_useremail = rootview.findViewById(R.id.user_email);
+        btn_cancel = rootview.findViewById(R.id.btn_cancel);
+        btn_confirm = rootview.findViewById(R.id.btn_confirm);
 
-            }
-        });
+        btn_cancel.setVisibility(View.GONE);
+        btn_confirm.setVisibility(View.VISIBLE);
+        btn_confirm.setText(getString(R.string.txt_reset));
+    }
+
+    private void setListerners() {
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (helpers.validateEmail(et_useremail)){
+                    et_useremail.setText("");
+                    helpers.ToastMessage(getContext(), "SENDING RESET LINK");
+                }
             }
         });
     }

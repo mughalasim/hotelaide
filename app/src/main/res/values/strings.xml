@@ -15,6 +15,7 @@
     <string name="error_connection">Please check your internet connection</string>
     <string name="error_unknown">Oops! something went wrong, Please try again later</string>
     <string name="error_location_fetch">Unable to fetch your current location</string>
+    <string name="error_call_permissions">You have not granted permissions to this app to make calls</string>
 
     <!--LOGGING =================================================================================-->
     <string name="log_exception">EXCEPTION:&#160;</string>
@@ -23,7 +24,7 @@
 
 
     <!-- About Us ===============================================================================-->
-    <string name="about1">EatOut is an online and mobile platform that puts the local dining scene in the palm of your hand. Our web and mobile apps enable users to browse, discover and get access to discounts and offers at hundreds of restaurants in the East Africa. In the mood for Japanese? We’ll show you the closest Sushi place. Users can search for restaurants based on location, cuisine or budget and get comprehensive information including contact details, menus, maps, opening hours, photos, reviews and much more.</string>
+    <string name="about1">Is a cloud based hotel management software that covers all hotel internal operations and becomes the hotel\'s direct gateway to all the online sales and marketing channels.HotelAide was planned not to be another PMS, but a solution that would be Cloud based to offer the ultimate remote accessibility for both hotel owners and management companies. In 2010 we decided to start the development of Cloudinn PMS, to offer hotels and resorts a fully integrated, accessible, flexible, affordable and dynamic solution</string>
     <string name="about2">Since launching in 2015, Yummy Card has become Nairobi’s largest dining club, with a current membership base of over 15,000 members. The program offers an unparalleled, one-of-a-kind marketing strategy for your restaurant; one that has helped restaurants fill seats and build loyalty. Our research shows that over 50% of our members choose to eat out at a Yummy Card restaurant at least once a week. Members have the option of using their physical cards or displaying a digital version on the EatOut App. Discounts apply on the entire bill and at all times, however cannot be used at the same time as another offer. Some restaurants may exclude holidays and celebration days. Order you card today by visiting www.joinyummy.com.</string>
     <string name="about3">Yummy Magazine is the region’s only lifestyle magazine focused on food and drink. With a print run of 12,000 distributed through over 15,000 copies publication launching in 2015, Yummy Card has become Nairobi’s largest dining club, with a current Yummy is Nairobi’s premier urban lifestyle magazine specifically for foodies with 12,000 copies are distributed monthly through over 100 locations (cafes, restaurants, shopping malls) in Nairobi, reaching a broad spectrum individuals with high disposable income, young professionals, corporate executives, decision makers, expats and tourists. Download back issues at www.yummymagaizne.com.</string>
     <string name="about4">Since inception in 2013, the annual Nairobi Restaurant Week has quickly become the most anticipated event in the culinary calendar. Each year the top chefs from 50+ of the best restaurants in Nairobi are invited to create one of a kind, limited edition, prix-fixed menus, in the city’s biggest celebration of food and drink. For a list of this year\'s participants visit www.nairobirestaurantweek.com.</string>
@@ -32,7 +33,6 @@
 
     <!--Address =================================================================================-->
     <string name="txt_address">Crazy Broken Road,\n33125 - 00100,\nNairobi,\nKenya</string>
-    <string name="txt_address_phone">landline: (254) 20 562 3658\nMobile: (254) 716 140 603</string>
     <string name="txt_address_email">asimkenya@gmail.com</string>
 
 
@@ -67,6 +67,8 @@
     <string name="txt_no_restaurants">Oops! No restaurants found</string>
     <string name="txt_open_bracket">(</string>
     <string name="txt_closed_bracket">)&#160;</string>
+    <string name="txt_call">You are about to make a call. Are you sure you wish to proceed?</string>
+    <string name="txt_call_title">MAKE A CALL</string>
     <string name="txt_location_title">LOCATION SERVICES</string>
     <string name="txt_locations_permission">EatOut needs to access your location but your GPS seems to be disabled. You must enable it to proceed</string>
     <string name="txt_version">Version:&#160;</string>
@@ -79,18 +81,20 @@
     <string name="txt_forgot_password">Forgot Password</string>
     <string name="txt_welcome">Welcome</string>
     <string name="txt_welcome_login">Kindly enter your email and password to login</string>
+    <string name="txt_address_landline">Landline:&#160;</string>
+    <string name="txt_address_mobile">Mobile:&#160;</string>
+
+
 
     <!--ALL DRAWER TEXTS ========================================================================-->
-    <string name="drawer_nearby_restaurants">Nearby restaurants</string>
-    <string name="drawer_discounts_offers">Discounts &amp; offers</string>
-    <string name="drawer_find_restaurants">Find restaurants</string>
-    <string name="drawer_favourites">Favourites</string>
-    <string name="drawer_reservations">My Reservations</string>
-    <string name="drawer_how_it_works">How it works</string>
-    <string name="drawer_change_location">Change location</string>
-    <string name="drawer_my_account">My account</string>
-    <string name="drawer_about_us">About us</string>
-    <string name="drawer_home">Home</string>
+    <string name="drawer_dashboard">Dashboard</string>
+    <string name="drawer_find_jobs">Find Jobs</string>
+    <string name="drawer_messages">Messages</string>
+    <string name="drawer_registration">Hotel Registration</string>
+    <string name="drawer_subscription">Subscription Plan</string>
+    <string name="drawer_my_account">Profile</string>
+    <string name="drawer_settings">App Settings</string>
+    <string name="drawer_about_us">About Us</string>
 
     <!-- START UP NAVIGATION TEXT ===============================================================-->
     <string name="nav_login">Login</string>

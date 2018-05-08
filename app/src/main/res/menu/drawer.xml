@@ -1,51 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/home"
-            android:icon="@drawable/ic_home"
-            android:title="@string/drawer_home" />
+    <group
+        android:id="@+id/main_group"
+        android:checkableBehavior="single">
 
         <item
-            android:id="@+id/discounts_offers"
-            android:icon="@drawable/ic_discounts_offers"
-            android:title="@string/drawer_discounts_offers" />
+            android:id="@+id/drawer_dashboard"
+            android:title="@string/drawer_dashboard" />
 
         <item
-            android:id="@+id/nearby_restaurants"
-            android:icon="@drawable/ic_change_locations"
-            android:title="@string/drawer_nearby_restaurants" />
+            android:id="@+id/drawer_messages"
+            android:title="@string/drawer_messages" />
 
         <item
-            android:id="@+id/find_restaurants"
-            android:icon="@drawable/ic_search"
-            android:title="@string/drawer_find_restaurants" />
+            android:id="@+id/drawer_find_jobs"
+            android:title="@string/drawer_find_jobs" />
 
         <item
-            android:icon="@drawable/ic_favorite_grey"
-            android:title="@string/drawer_favourites" />
+            android:id="@+id/drawer_registration"
+            android:title="@string/drawer_registration" />
 
         <item
-            android:icon="@drawable/ic_reservation"
-            android:title="@string/drawer_reservations" />
+            android:id="@+id/drawer_subscription_plan"
+            android:title="@string/drawer_subscription" />
 
         <item
-            android:icon="@drawable/ic_how_it_works"
-            android:title="@string/drawer_how_it_works" />
-
-        <item
-            android:icon="@drawable/ic_location"
-            android:title="@string/drawer_change_location" />
-
-        <item
-            android:id="@+id/my_account"
-            android:icon="@drawable/ic_person"
+            android:id="@+id/drawer_my_account"
             android:title="@string/drawer_my_account" />
 
+    </group>
+
+
+    <group
+        android:id="@+id/settings_group"
+        android:checkableBehavior="single">
+
         <item
-            android:id="@+id/about_us"
-            android:icon="@drawable/ic_info"
+            android:id="@+id/drawer_about_us"
             android:title="@string/drawer_about_us" />
 
+        <item
+            android:id="@+id/drawer_app_settings"
+            android:title="@string/drawer_settings" />
+
     </group>
+
 </menu>

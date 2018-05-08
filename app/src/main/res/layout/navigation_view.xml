@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:fitsSystemWindows="true"
+    android:background="@color/colorPrimaryLight"
     app:headerLayout="@layout/header_navigation"
     app:menu="@menu/drawer"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,15 +16,23 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/drawer_logo"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/main_logo_horizontal"
+            android:background="@drawable/bckgrd_transparent"
+            android:layout_height="@dimen/main_logo_image_size" />
+
         <TextView
             android:id="@+id/app_version"
             style="@style/Text_Normal"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/drawer_logo"
             android:textSize="@dimen/text_size_normal"
-            android:text="@string/app_name"
-            android:paddingBottom="@dimen/general_padding"
-            android:layout_margin="@dimen/text_size_medium" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/general_padding"
+            android:text="@string/app_name" />
 
     </RelativeLayout>
 

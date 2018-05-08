@@ -25,7 +25,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import com.hotelaide.main_pages.activities.HomeActivity;
+import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.utils.Helpers;
 
 import static com.hotelaide.utils.Helpers.STR_NAVIGATION_COLLECTION;
@@ -57,7 +57,7 @@ public class NotificationService extends FirebaseMessagingService {
                 NotificationsManager.presentNotification(
                         this,
                         data,
-                        new Intent(getApplicationContext(), HomeActivity.class)
+                        new Intent(getApplicationContext(), DashboardActivity.class)
                 );
 
             } else {

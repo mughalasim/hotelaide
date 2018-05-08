@@ -14,10 +14,10 @@
     <item android:state_enabled="true">
         <shape>
             <padding
-                android:left="@dimen/line_thickness"
-                android:top="@dimen/line_thickness"
-                android:right="@dimen/line_thickness"
-                android:bottom="@dimen/line_thickness" />
+                android:left="0dp"
+                android:top="0dp"
+                android:right="0dp"
+                android:bottom="0dp" />
         </shape>
     </item>
 

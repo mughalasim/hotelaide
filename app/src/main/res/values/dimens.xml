@@ -21,7 +21,7 @@
 
 
     <!--PADDING =================================================================================-->
-    <dimen name="general_padding">25dp</dimen>
+    <dimen name="general_padding">20dp</dimen>
     <dimen name="login_activity_padding">40dp</dimen>
 
 
@@ -44,6 +44,7 @@
 
     <!--EDIT TEXTS AND BUTTON HEIGHTS ===========================================================-->
     <dimen name="button_height">45sp</dimen>
+    <dimen name="panel_height">55sp</dimen>
     <dimen name="edit_text_height">35sp</dimen>
     <dimen name="rating_bar_height">18sp</dimen>
 

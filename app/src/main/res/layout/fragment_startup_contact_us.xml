@@ -2,6 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/general_padding"
+    android:paddingRight="@dimen/general_padding"
+    android:paddingBottom="@dimen/general_padding"
     android:scrollbars="none">
 
     <LinearLayout
@@ -37,17 +40,53 @@
             style="@style/Text_Title"
             android:text="TELEPHONE" />
 
-        <TextView
-            style="@style/Text_Normal"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:text="@string/txt_address_phone" />
+            android:layout_marginTop="@dimen/general_padding"
+            android:layout_height="wrap_content">
 
-        <include layout="@layout/horizontal_line" />
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:text="@string/txt_address_landline" />
 
-        <TextView
-            style="@style/Text_Title"
-            android:text="MAP" />
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:onClick="MAKE_CALL"
+                android:layout_marginTop="0dp"
+                android:text="(254)20 567 897" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/general_padding"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:text="@string/txt_address_mobile" />
+
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:onClick="makeCall"
+                android:layout_marginTop="0dp"
+                android:text="(254)716 140 603" />
+
+        </LinearLayout>
 
 
     </LinearLayout>

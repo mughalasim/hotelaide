@@ -18,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +37,7 @@ import com.hotelaide.R;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
+
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 @SuppressWarnings("unchecked")
@@ -56,9 +56,9 @@ public class ParentActivity extends AppCompatActivity implements
 
     private BroadcastReceiver receiver;
 
-    private TextView userName, userEmail, toolbar_text;
+    private TextView nav_user_name, nav_user_email, toolbar_text;
 
-    private RoundedImageView userPic;
+    private RoundedImageView nav_img_user_pic;
 
     private int drawer_id;
 
@@ -75,7 +75,7 @@ public class ParentActivity extends AppCompatActivity implements
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
@@ -91,15 +91,8 @@ public class ParentActivity extends AppCompatActivity implements
     }
 
     private void setUpToolBarAndDrawer() {
-        final LinearLayout toolbar_image = toolbar.findViewById(R.id.toolbar_image);
-        if (toolbarTitle.equals("")) {
-            toolbar_image.setVisibility(View.VISIBLE);
-            toolbar_text.setVisibility(View.GONE);
-        } else {
-            toolbar_image.setVisibility(View.GONE);
-            toolbar_text.setVisibility(View.VISIBLE);
-            toolbar_text.setText(toolbarTitle);
-        }
+
+        toolbar_text.setText(toolbarTitle);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -108,9 +101,9 @@ public class ParentActivity extends AppCompatActivity implements
 
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
-        userName = header.findViewById(R.id.username);
-        userEmail = header.findViewById(R.id.userEmail);
-        userPic = header.findViewById(R.id.userPic);
+        nav_user_name = header.findViewById(R.id.nav_user_name);
+        nav_user_email = header.findViewById(R.id.nav_user_email);
+        nav_img_user_pic = header.findViewById(R.id.nav_img_user_pic);
 
     }
 
@@ -127,10 +120,10 @@ public class ParentActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
 
-        userName.setText(Database.userModel.first_name.concat(" ").concat(Database.userModel.last_name));
-        Glide.with(this).load(Database.userModel.profile_pic).into(userPic);
-        userEmail.setText(Database.userModel.email);
-        userPic.setOnClickListener(new View.OnClickListener() {
+        nav_user_name.setText(Database.userModel.first_name.concat(" ").concat(Database.userModel.last_name));
+        Glide.with(this).load(Database.userModel.profile_pic).into(nav_img_user_pic);
+        nav_user_email.setText(Database.userModel.email);
+        nav_img_user_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ParentActivity.this, MyAccountActivity.class));
@@ -208,16 +201,16 @@ public class ParentActivity extends AppCompatActivity implements
                             final Dialog dialog = new Dialog(ParentActivity.this);
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.setContentView(R.layout.dialog_confirm);
-                            final TextView txtMessage = dialog.findViewById(R.id.txtMessage);
-                            final TextView txtOk = dialog.findViewById(R.id.txtOk);
-                            final TextView txtCancel = dialog.findViewById(R.id.txtCancel);
-                            final TextView txtTitle = dialog.findViewById(R.id.txtTitle);
-                            txtCancel.setVisibility(View.VISIBLE);
-                            txtTitle.setText(R.string.txt_old_version_title);
-                            txtMessage.setText(R.string.txt_old_version_desc);
+                            final TextView txt_message = dialog.findViewById(R.id.txt_message);
+                            final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+                            final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                            final TextView txt_title = dialog.findViewById(R.id.txt_title);
+                            btn_cancel.setVisibility(View.VISIBLE);
+                            txt_title.setText(R.string.txt_old_version_title);
+                            txt_message.setText(R.string.txt_old_version_desc);
 
-                            txtOk.setText(R.string.txt_update_now);
-                            txtOk.setOnClickListener(new View.OnClickListener() {
+                            btn_confirm.setText(R.string.txt_update_now);
+                            btn_confirm.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     final String appPackageName = getPackageName();
@@ -230,8 +223,8 @@ public class ParentActivity extends AppCompatActivity implements
                                 }
                             });
 
-                            txtCancel.setText(R.string.txt_later);
-                            txtCancel.setOnClickListener(new View.OnClickListener() {
+                            btn_cancel.setText(R.string.txt_later);
+                            btn_cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     SharedPrefs.setAllowUpdateApp(false);

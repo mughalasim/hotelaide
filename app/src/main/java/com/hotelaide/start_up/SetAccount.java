@@ -35,7 +35,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonObject;
-import com.hotelaide.main_pages.activities.HomeActivity;
+import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONException;
@@ -295,9 +295,7 @@ public class SetAccount extends AppCompatActivity {
         if (user_email.getText().toString().length() < 1) {
             userModelMyAccount.email = NULL;
             mandatoryFields(userModelMyAccount);
-        } else if (helper.validateEmail(user_email.getText().toString())) {
-            user_email.setError(getString(R.string.error_field_invalid));
-        } else {
+        } else if (helper.validateEmail(user_email)) {
             mandatoryFields(userModelMyAccount);
         }
     }
@@ -462,7 +460,7 @@ public class SetAccount extends AppCompatActivity {
                     if (db.setUser(main)) {
                         helper.progressDialog(false);
                         helper.ToastMessage(SetAccount.this, "Successfully Updated, Welcome to the EatOut App");
-                        startActivity(new Intent(SetAccount.this, HomeActivity.class));
+                        startActivity(new Intent(SetAccount.this, DashboardActivity.class));
                         finish();
                     } else {
                         helper.ToastMessage(SetAccount.this, "Invalid credentials entered, Please try again");

@@ -2,6 +2,9 @@
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
+    android:paddingLeft="@dimen/general_padding"
+    android:paddingRight="@dimen/general_padding"
+    android:paddingBottom="@dimen/general_padding"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
@@ -11,7 +14,7 @@
             android:layout_marginBottom="@dimen/login_activity_padding">
 
             <TextView
-                style="@style/Text_Header"
+                style="@style/Text_Title"
                 android:text="WHO ARE WE"/>
 
 
@@ -24,7 +27,7 @@
             <include layout="@layout/horizontal_line"/>
 
             <TextView
-                style="@style/Text_Header"
+                style="@style/Text_Title"
                 android:text="WHAT WE DO"/>
 
             <TextView
@@ -37,7 +40,7 @@
             <include layout="@layout/horizontal_line"/>
 
             <TextView
-                style="@style/Text_Header"
+                style="@style/Text_Title"
                 android:text="HOW WE HELP YOU"/>
 
             <TextView

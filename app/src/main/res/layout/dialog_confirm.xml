@@ -15,7 +15,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/txtTitle"
+            android:id="@+id/txt_title"
             android:text="@string/app_name"
             android:textSize="@dimen/text_size_x_large"
             style="@style/Text_Header" />
@@ -33,34 +33,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtMessage"
+                    android:id="@+id/txt_message"
                     style="@style/Text_Normal"
-                    android:text="@string/error_location_fetch"
-                    android:paddingTop="@dimen/login_activity_padding"
-                    android:paddingBottom="@dimen/login_activity_padding"
+                    android:text="@string/error_unknown"
                     android:textSize="@dimen/text_size_medium" />
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/login_activity_padding"
-                    android:paddingLeft="@dimen/login_activity_padding"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/txtCancel"
-                        style="@style/Button_No"
-                        android:layout_weight="1"
-                        android:text="@string/txt_cancel"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/txtOk"
-                        style="@style/Button_Yes"
-                        android:layout_weight="1"
-                        android:text="@string/txt_ok" />
-
-                </LinearLayout>
+                <include layout="@layout/fragment_buttons"/>
 
             </LinearLayout>
 

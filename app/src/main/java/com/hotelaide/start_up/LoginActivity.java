@@ -1,6 +1,5 @@
 package com.hotelaide.start_up;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,14 +9,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hotelaide.R;
-import com.hotelaide.main_pages.activities.HomeActivity;
+import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.fragments.StartUpAboutUsFragment;
 import com.hotelaide.main_pages.fragments.StartUpContactUsFragment;
 import com.hotelaide.main_pages.fragments.StartUpForgotPassFragment;
@@ -204,6 +200,11 @@ public class LoginActivity extends AppCompatActivity {
         viewPager.setCurrentItem(1);
     }
 
+    public void MAKE_CALL (View view){
+        TextView textView = (TextView) view;
+        helper.dialogMakeCall(LoginActivity.this, textView.getText().toString());
+    }
+
 
 
     // LOGIN ASYNC FUNCTIONS =======================================================================
@@ -311,7 +312,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void startUp() {
         finish();
-        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
     }
 
 }

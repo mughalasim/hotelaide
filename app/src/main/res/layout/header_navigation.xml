@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
-        android:id="@+id/userBanner"
+        android:id="@+id/nav_img_user_banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
@@ -16,12 +16,12 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/general_padding"
-        android:layout_toEndOf="@id/userPic"
+        android:layout_toEndOf="@id/nav_img_user_pic"
         android:layout_centerVertical="true"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/username"
+            android:id="@+id/nav_user_name"
             style="@style/Text_Header"
             android:gravity="start"
             android:text="@string/app_name"
@@ -30,7 +30,7 @@
             android:maxLength="17" />
 
         <TextView
-            android:id="@+id/userEmail"
+            android:id="@+id/nav_user_email"
             style="@style/Text_Small"
             android:text="@string/app_name"
             android:maxLines="1"
@@ -41,7 +41,7 @@
     </LinearLayout>
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/userPic"
+        android:id="@+id/nav_img_user_pic"
         android:layout_width="@dimen/nav_profile_image_size"
         android:layout_height="@dimen/nav_profile_image_size"
         android:layout_marginBottom="@dimen/general_padding"

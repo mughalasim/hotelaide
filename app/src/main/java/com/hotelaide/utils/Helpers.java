@@ -1,5 +1,6 @@
 package com.hotelaide.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationManager;
@@ -11,8 +12,10 @@ import android.location.LocationManager;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.util.Patterns;
@@ -47,12 +50,13 @@ import java.util.regex.Pattern;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.AboutUsActivity;
-import com.hotelaide.main_pages.activities.HomeActivity;
+import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.activities.MyAccountActivity;
 import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.services.GeneralService;
 import com.hotelaide.services.UserService;
 import com.hotelaide.start_up.SplashScreenActivity;
+
 import me.leolin.shortcutbadger.ShortcutBadger;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,7 +89,7 @@ public class Helpers {
 //    public final static String STR_LOGGED_OUT_TRUE = "true";
 //    private final static String STR_LOGGED_OUT_FALSE = "false";
 
-    private final static int INT_ANIMATION_TIME = 600;
+    private final static int INT_ANIMATION_TIME = 300;
 
     public final static String STR_NAVIGATION_REST = "restaurant_id";
     public final static String STR_NAVIGATION_COLLECTION = "collection_id";
@@ -138,24 +142,15 @@ public class Helpers {
     // DRAWER CLICKS ===============================================================================
     public void Drawer_Item_Clicked(Context context, int id) {
         switch (id) {
-            case R.id.home:
-                context.startActivity(new Intent(context, HomeActivity.class));
+            case R.id.drawer_dashboard:
+                context.startActivity(new Intent(context, DashboardActivity.class));
                 break;
 
-            case R.id.nearby_restaurants:
-                final LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-                if (manager != null) {
-                    if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                        dialogNoGPS(context);
-                    }
-                }
-                break;
-
-            case R.id.my_account:
+            case R.id.drawer_my_account:
                 context.startActivity(new Intent(context, MyAccountActivity.class));
                 break;
 
-            case R.id.about_us:
+            case R.id.drawer_about_us:
                 context.startActivity(new Intent(context, AboutUsActivity.class));
                 break;
         }
@@ -228,12 +223,14 @@ public class Helpers {
     public void myDialog(Context DialogContext, String Title, String Message) {
         final Dialog dialog = new Dialog(DialogContext);
         dialog.setContentView(R.layout.dialog_confirm);
-        final TextView txtMessage = dialog.findViewById(R.id.txtMessage);
-        final TextView txtOk = dialog.findViewById(R.id.txtOk);
-        final TextView txtTitle = dialog.findViewById(R.id.txtTitle);
-        txtTitle.setText(Title);
-        txtMessage.setText(Message);
-        txtOk.setOnClickListener(new View.OnClickListener() {
+        final TextView txt_message = dialog.findViewById(R.id.txt_message);
+        final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+        final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        final TextView txt_title = dialog.findViewById(R.id.txt_title);
+        txt_title.setText(Title);
+        txt_message.setText(Message);
+        btn_cancel.setVisibility(View.GONE);
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
@@ -246,22 +243,59 @@ public class Helpers {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm);
-        final TextView txtMessage = dialog.findViewById(R.id.txtMessage);
-        final TextView txtOk = dialog.findViewById(R.id.txtOk);
-        final TextView txtCancel = dialog.findViewById(R.id.txtCancel);
-        final TextView txtTitle = dialog.findViewById(R.id.txtTitle);
-        txtTitle.setText(R.string.txt_location_title);
-        txtMessage.setText(R.string.txt_locations_permission);
-        txtOk.setText(context.getString(R.string.txt_enable));
-        txtOk.setOnClickListener(new View.OnClickListener() {
+        final TextView txt_message = dialog.findViewById(R.id.txt_message);
+        final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+        final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        final TextView txt_title = dialog.findViewById(R.id.txt_title);
+        txt_title.setText(R.string.txt_location_title);
+        txt_message.setText(R.string.txt_locations_permission);
+        btn_confirm.setText(context.getString(R.string.txt_enable));
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                 dialog.cancel();
             }
         });
-        txtCancel.setVisibility(View.VISIBLE);
-        txtCancel.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setVisibility(View.VISIBLE);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
+
+    public void dialogMakeCall(final Context context, final String phoneNumber) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_confirm);
+        final TextView txt_message = dialog.findViewById(R.id.txt_message);
+        final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+        final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        final TextView txt_title = dialog.findViewById(R.id.txt_title);
+        txt_title.setText(R.string.txt_call_title);
+        txt_message.setText(R.string.txt_call);
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" + phoneNumber));
+                    context.startActivity(intent);
+
+                } else {
+                    myDialog(context,
+                            context.getString(R.string.app_name),
+                            context.getString(R.string.error_call_permissions));
+                }
+                dialog.cancel();
+            }
+        });
+        btn_cancel.setVisibility(View.VISIBLE);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
@@ -281,9 +315,20 @@ public class Helpers {
 
 
     // VALIDATIONS =================================================================================
-    public boolean validateEmail(String email) {
+    public boolean validateEmail(EditText editText) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
-        return !pattern.matcher(email).matches();
+        if (editText.getText().toString().length() < 1) {
+            editText.setError(context.getString(R.string.error_field_required));
+            animate_wobble(editText);
+            return false;
+        } else if (!pattern.matcher(editText.getText().toString()).matches()) {
+            editText.setError(context.getString(R.string.error_field_required));
+            animate_wobble(editText);
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
     }
 
     public boolean validateAppIsInstalled(String uri) {
@@ -309,16 +354,6 @@ public class Helpers {
 
     }
 
-    public boolean validateMobileNumber(String MobileNumber) {
-        return MobileNumber.length() < 9
-                || MobileNumber.contains(" ")
-                || MobileNumber.contains(",")
-                || MobileNumber.contains(".")
-                || MobileNumber.contains("(")
-                || MobileNumber.contains("#")
-                || MobileNumber.contains(")");
-    }
-
     public boolean validateGooglePlayServices(Activity activity) {
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int status = googleApiAvailability.isGooglePlayServicesAvailable(activity);
@@ -329,6 +364,29 @@ public class Helpers {
             return false;
         }
         return true;
+    }
+
+    public boolean validateEmptyEditText(EditText editText) {
+        if (editText.getText().toString().length() < 1) {
+            editText.setError(context.getString(R.string.error_field_required));
+            animate_wobble(editText);
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
+
+    }
+
+    public boolean validateEmptyTextView(TextView textView, String errorMessage) {
+        if (textView.getText().toString().length() < 1) {
+            ToastMessage(context, errorMessage);
+            animate_wobble(textView);
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
 

@@ -87,7 +87,7 @@
         <activity android:name=".main_pages.activities.ParentActivity" />
 
         <activity
-            android:name=".main_pages.activities.HomeActivity"
+            android:name=".main_pages.activities.DashboardActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

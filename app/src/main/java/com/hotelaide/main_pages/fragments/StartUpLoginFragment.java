@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hotelaide.R;
-import com.hotelaide.main_pages.activities.HomeActivity;
+import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.utils.Helpers;
 
 
@@ -31,10 +31,10 @@ public class StartUpLoginFragment extends Fragment {
             btn_cancel;
 
     private EditText
-            et_userpassword,
-            et_useremail;
+            et_user_pass,
+            et_user_email;
 
-    private ImageView et_userpassword_reveal;
+    private ImageView img_user_pass_toggle;
 
     private Helpers helpers;
 
@@ -65,7 +65,7 @@ public class StartUpLoginFragment extends Fragment {
 
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-                dropDownKeyboard(et_useremail);
+                dropDownKeyboard(et_user_email);
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -80,13 +80,13 @@ public class StartUpLoginFragment extends Fragment {
         btn_cancel = rootview.findViewById(R.id.btn_cancel);
         btn_confirm = rootview.findViewById(R.id.btn_confirm);
 
-        et_userpassword_reveal = rootview.findViewById(R.id.et_userpassword_toggle);
-        et_userpassword_reveal.setTag(TAG_PASS_HIDDEN);
-        et_userpassword_reveal.setImageResource(R.drawable.ic_pass_hide);
+        img_user_pass_toggle = rootview.findViewById(R.id.img_user_pass_toggle);
+        img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
+        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
 
 
-        et_useremail = rootview.findViewById(R.id.et_useremail);
-        et_userpassword = rootview.findViewById(R.id.et_userpassword);
+        et_user_email = rootview.findViewById(R.id.et_useremail);
+        et_user_pass = rootview.findViewById(R.id.et_userpassword);
 
     }
 
@@ -105,29 +105,28 @@ public class StartUpLoginFragment extends Fragment {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_userpassword.getText().toString().length() < 1) {
-                    et_userpassword.setError(getString(R.string.error_field_required));
-                } else if (et_useremail.getText().toString().length() < 1) {
-                    et_useremail.setError(getString(R.string.error_field_required));
-                } else if (et_useremail.getText().toString().contains("asim")) {
-                    startActivity(new Intent(getActivity(), HomeActivity.class));
+                if (helpers.validateEmptyEditText(et_user_pass)
+                        && helpers.validateEmptyEditText(et_user_email)
+                        && et_user_email.getText().toString().contains("asim")) {
+                    startActivity(new Intent(getActivity(), DashboardActivity.class));
                 }
 
             }
         });
 
-        et_userpassword_reveal.setOnClickListener(new View.OnClickListener() {
+        img_user_pass_toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_userpassword_reveal.getTag().toString().equals(TAG_PASS_HIDDEN)) {
-                    et_userpassword_reveal.setImageResource(R.drawable.ic_pass_show);
-                    et_userpassword_reveal.setTag(TAG_PASS_SHOWN);
-                    et_userpassword.setTransformationMethod(null);
-                }else{
-                    et_userpassword_reveal.setImageResource(R.drawable.ic_pass_hide);
-                    et_userpassword_reveal.setTag(TAG_PASS_HIDDEN);
-                    et_userpassword.setTransformationMethod(new PasswordTransformationMethod());
+                if (img_user_pass_toggle.getTag().toString().equals(TAG_PASS_HIDDEN)) {
+                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_show);
+                    img_user_pass_toggle.setTag(TAG_PASS_SHOWN);
+                    et_user_pass.setTransformationMethod(null);
+                } else {
+                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
+                    img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
+                    et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
                 }
+                helpers.animate_wobble(img_user_pass_toggle);
             }
         });
     }

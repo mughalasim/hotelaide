@@ -1,100 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:gravity="bottom"
+    sothree:umanoFadeColor="@color/dim"
+    sothree:umanoPanelHeight="@dimen/panel_height"
+    android:paddingBottom="@dimen/general_padding"
+    sothree:umanoShadowHeight="6dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/general_padding"
+        android:paddingRight="@dimen/general_padding"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="@dimen/login_activity_padding">
+            android:paddingBottom="@dimen/general_padding">
 
             <TextView
                 style="@style/Text_Title"
-                android:text="THROUGH SOCIAL MEDIA"/>
+                android:text="REGISTER" />
 
             <TextView
-                style="@style/Text_Small"
-                android:onClick="SIGN_UP"
-                android:text="Tap on one below and instantly sign up using either of your accounts on Facebook or Google+"/>
-
-            <TextView
-                style="@style/Button_Yes"
-                android:layout_marginTop="@dimen/general_padding"
-                android:layout_width="match_parent"
-                android:gravity="start|center_vertical"
-                android:drawableStart="@drawable/com_facebook_button_icon"
-                android:paddingLeft="@dimen/general_padding"
-                android:text=" FACEBOOK"/>
-
-            <TextView
-                style="@style/Button_No"
-                android:layout_marginTop="@dimen/general_padding"
-                android:layout_marginEnd="0dp"
-                android:layout_width="match_parent"
-                android:gravity="start|center_vertical"
-                android:drawableStart="@drawable/googleg_standard_color_18"
-                android:paddingLeft="@dimen/general_padding"
-                android:text=" GOOGLE"/>
-
-            <include layout="@layout/horizontal_line"/>
-
-            <TextView
-                style="@style/Text_Title"
-                android:text="REGISTER"/>
-
-            <TextView
-                style="@style/Text_Small"
+                style="@style/Text_Normal"
                 android:layout_gravity="center"
                 android:onClick="SIGN_UP"
-                android:text="You could opt to give us some details about you so we can sign you up and get you started"/>
+                android:text="You could opt to give us some details about you so we can sign you up and get you started" />
 
             <EditText
+                android:id="@+id/et_user_first_name"
                 style="@style/Edit_Text"
-                android:inputType="text"
-                android:hint="@string/et_hint_first_name" />
+                android:hint="@string/et_hint_first_name"
+                android:inputType="text" />
 
             <EditText
+                android:id="@+id/et_user_last_name"
                 style="@style/Edit_Text"
-                android:inputType="text"
-                android:hint="@string/et_hint_last_name"/>
+                android:hint="@string/et_hint_last_name"
+                android:inputType="text" />
 
             <TextView
+                android:id="@+id/txt_user_dob"
                 style="@style/Edit_Text"
-                android:text="@string/et_hint_dob"/>
+                android:text="@string/et_hint_dob" />
 
             <EditText
+                android:id="@+id/et_user_email"
                 style="@style/Edit_Text"
-                android:inputType="textEmailAddress"
-                android:hint="@string/et_hint_email"/>
+                android:hint="@string/et_hint_email"
+                android:inputType="textEmailAddress" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/general_padding"
+                android:layout_height="@dimen/edit_text_height">
+
+                <EditText
+                    android:id="@+id/et_user_pass"
+                    style="@style/Edit_Text"
+                    android:paddingTop="0dp"
+                    android:layout_marginTop="0dp"
+                    android:hint="@string/et_hint_pass"
+                    android:inputType="textPassword" />
+
+                <ImageView
+                    android:id="@+id/img_user_pass_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingEnd="@dimen/general_padding"
+                    android:contentDescription="@string/app_name" />
+
+            </RelativeLayout>
 
             <EditText
+                android:id="@+id/et_user_pass_confirm"
                 style="@style/Edit_Text"
-                android:inputType="textPassword"
-                android:hint="@string/et_hint_pass"/>
+                android:hint="@string/et_hint_pass_confirm"
+                android:inputType="textPassword" />
 
-            <EditText
-                style="@style/Edit_Text"
-                android:inputType="textPassword"
-                android:hint="@string/et_hint_pass_confirm"/>
-
-
-           <include layout="@layout/fragment_buttons"/>
+            <include layout="@layout/fragment_buttons" />
 
             <TextView
-                style="@style/Text_Small"
-                android:paddingTop="@dimen/general_padding"
+                style="@style/Text_Normal"
                 android:layout_gravity="center"
                 android:onClick="LOGIN"
-                android:text="OOps! I already Have an account"/>
+                android:paddingTop="@dimen/general_padding"
+                android:text="OOps! I already have an account" />
 
             <TextView
                 style="@style/Text_Small"
                 android:layout_gravity="center"
                 android:onClick="TERMS_CONDITIONS"
-                android:text="@string/txt_terms_conditions"/>
+                android:text="@string/txt_terms_conditions" />
 
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/general_padding"
+        android:paddingRight="@dimen/general_padding"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Text_Normal"
+            android:text="Social Medial Sign up" />
+
+        <TextView
+            style="@style/Text_Normal"
+            android:onClick="SIGN_UP"
+            android:text="Tap on one below and instantly sign up using either of your accounts on Facebook or Google+" />
+
+        <TextView
+            style="@style/Button_Yes"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/general_padding"
+            android:drawableStart="@drawable/com_facebook_button_icon"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/general_padding"
+            android:text=" FACEBOOK" />
+
+        <TextView
+            style="@style/Button_No"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginEnd="0dp"
+            android:layout_marginTop="@dimen/general_padding"
+            android:drawableStart="@drawable/googleg_standard_color_18"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/general_padding"
+            android:text=" GOOGLE" />
+
+
+    </LinearLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
