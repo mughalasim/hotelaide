@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,6 +11,15 @@
         android:background="@drawable/bckgrd_login"
         android:contentDescription="@string/app_name" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="skipping.json"
+        app:lottie_loop="true" />
+
     <ImageView
         android:id="@+id/main_logo"
         android:layout_width="match_parent"
@@ -18,5 +28,7 @@
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
         android:src="@drawable/main_logo_vertical" />
+
+
 
 </RelativeLayout>
