@@ -87,10 +87,10 @@
             <RatingBar
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/rating_bar_height"
+                android:layout_height="@dimen/button_height"
                 android:layout_gravity="start|center_vertical"
                 android:isIndicator="true"
-                android:minHeight="@dimen/rating_bar_height"
+                android:minHeight="@dimen/button_height"
                 android:layout_marginTop="@dimen/text_size_small_margin"
                 android:numStars="5"
                 android:paddingLeft="-2dp"

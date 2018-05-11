@@ -10,7 +10,7 @@
     sothree:umanoFadeColor="@color/dim"
     sothree:umanoPanelHeight="@dimen/panel_height"
     android:paddingBottom="@dimen/general_padding"
-    sothree:umanoShadowHeight="6dp">
+    sothree:umanoShadowHeight="4dp">
 
     <ScrollView
         android:layout_width="match_parent"

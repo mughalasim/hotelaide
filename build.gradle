@@ -34,7 +34,7 @@ allprojects {
 ext {
     // SDK and tools
     minSDK = 18
-    targetSDK = 22
+    targetSDK = 26
     compileSDK = 26
     buildTools = '27.0.3'
 
@@ -42,8 +42,9 @@ ext {
     SupportLibrary = '27.1.1'
 
     // Debug the App
-    debugMode = true
+    debugMode = false
     minify = true
+    proguard = true
 
     // App Versioning
     versionCode = 1

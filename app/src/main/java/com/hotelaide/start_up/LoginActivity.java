@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.fragments.StartUpAboutUsFragment;
@@ -36,11 +37,12 @@ public class LoginActivity extends AppCompatActivity {
             btn_confirm,
             btn_cancel;
 
+    private LottieAnimationView animation_view;
+
     private Database db;
 
     private ImageView
-            login_background,
-            login_background2;
+            login_background;
 
     private final String
             TAG_LOG = "LOGIN";
@@ -94,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tabs);
         login_background = findViewById(R.id.login_background);
-        login_background2 = findViewById(R.id.login_background2);
+        animation_view = findViewById(R.id.animation_view);
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager, true);
@@ -130,19 +132,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                helper.animate_fade_in(login_background);
-                if (position == 0) {
-                    login_background.setImageResource(R.drawable.bckgrd_login);
-                } else if (position == 1) {
-                    login_background.setImageResource(R.drawable.bckgrd_login);
-                } else if (position == 2) {
-                    login_background.setImageResource(R.drawable.bckgrd_login);
-                } else if (position == 3) {
-                    login_background.setImageResource(R.drawable.bckgrd_login);
-                } else if (position == 4) {
-                    login_background.setImageResource(R.drawable.bckgrd_login);
-                }
-                login_background.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                PLAY_ANIM();
             }
 
             @Override
@@ -203,6 +193,10 @@ public class LoginActivity extends AppCompatActivity {
     public void MAKE_CALL (View view){
         TextView textView = (TextView) view;
         helper.dialogMakeCall(LoginActivity.this, textView.getText().toString());
+    }
+
+    public void PLAY_ANIM(){
+        animation_view.playAnimation();
     }
 
 

@@ -43,9 +43,8 @@
 
 
     <!--EDIT TEXTS AND BUTTON HEIGHTS ===========================================================-->
-    <dimen name="button_height">45sp</dimen>
+    <dimen name="button_height">40sp</dimen>
     <dimen name="panel_height">55sp</dimen>
-    <dimen name="edit_text_height">35sp</dimen>
-    <dimen name="rating_bar_height">18sp</dimen>
+    <dimen name="edit_text_height">38sp</dimen>
 
 </resources>

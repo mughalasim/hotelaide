@@ -89,7 +89,7 @@ public class Helpers {
 //    public final static String STR_LOGGED_OUT_TRUE = "true";
 //    private final static String STR_LOGGED_OUT_FALSE = "false";
 
-    private final static int INT_ANIMATION_TIME = 300;
+    private final static int INT_ANIMATION_TIME = 800;
 
     public final static String STR_NAVIGATION_REST = "restaurant_id";
     public final static String STR_NAVIGATION_COLLECTION = "collection_id";
@@ -319,7 +319,7 @@ public class Helpers {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         if (editText.getText().toString().length() < 1) {
             editText.setError(context.getString(R.string.error_field_required));
-            animate_wobble(editText);
+            animate_flash(editText);
             return false;
         } else if (!pattern.matcher(editText.getText().toString()).matches()) {
             editText.setError(context.getString(R.string.error_field_required));
@@ -369,7 +369,7 @@ public class Helpers {
     public boolean validateEmptyEditText(EditText editText) {
         if (editText.getText().toString().length() < 1) {
             editText.setError(context.getString(R.string.error_field_required));
-            animate_wobble(editText);
+            animate_flash(editText);
             return false;
         } else {
             editText.setError(null);
@@ -381,7 +381,7 @@ public class Helpers {
     public boolean validateEmptyTextView(TextView textView, String errorMessage) {
         if (textView.getText().toString().length() < 1) {
             ToastMessage(context, errorMessage);
-            animate_wobble(textView);
+            animate_flash(textView);
             return false;
         } else {
             return true;

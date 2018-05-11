@@ -39,7 +39,6 @@
     <!--LOADING DIALOGS =========================================================================-->
     <string name="progress_fetch_fb_details">fetching your details from Facebook…please wait…</string>
     <string name="progress_loading_account_update">Updating your account. Please wait…</string>
-    <string name="progress_loading_get_location">Fetching your current location, Please wait…</string>
 
     <!--EDIT TEXT HINTS =========================================================================-->
     <string name="et_hint_first_name">First Name</string>
@@ -47,7 +46,6 @@
     <string name="et_hint_email">Email</string>
     <string name="et_hint_pass">Password</string>
     <string name="et_hint_pass_confirm">Confirm Password</string>
-    <string name="et_hint_search_here">Search here…</string>
     <string name="et_hint_phone">Phone Number</string>
     <string name="et_hint_dob">Date Of Birth (YYYY-MM-DD)</string>
 
@@ -58,12 +56,6 @@
     <string name="txt_loading_please_wait">Loading… please wait…</string>
     <string name="txt_update_details">UPDATE</string>
     <string name="txt_availability">Availability:&#160;</string>
-    <string name="txt_eatout_site_and_apps">EatOut Site and Apps</string>
-    <string name="txt_yummy_card">Yummy Card</string>
-    <string name="txt_yummy_magazine">Yummy Magazine</string>
-    <string name="txt_nairobi_restaurant_week">Nairobi Restaurant Week</string>
-    <string name="txt_taste_awards">Taste Awards</string>
-    <string name="txt_app_version">App Version</string>
     <string name="txt_no_restaurants">Oops! No restaurants found</string>
     <string name="txt_open_bracket">(</string>
     <string name="txt_closed_bracket">)&#160;</string>

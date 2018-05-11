@@ -5,20 +5,21 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/login_background2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background = "@drawable/bckgrd_login"
-        android:contentDescription="@string/app_name"
-        android:scaleType="fitCenter" />
-
-    <ImageView
         android:id="@+id/login_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bckgrd_login"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        android:layout_centerInParent="true"
+        app:lottie_fileName="anim_skipping.json"
+        app:lottie_loop="false" />
 
     <ImageView
         android:id="@+id/main_logo"
@@ -30,7 +31,6 @@
         android:scaleType="fitCenter"
         android:background="@drawable/bckgrd_transparent"
         android:src="@drawable/main_logo_horizontal" />
-
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"

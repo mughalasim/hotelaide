@@ -13,23 +13,23 @@ android {
         versionName "$rootProject.versionName"
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
-        multiDexEnabled true
+//        multiDexEnabled true
     }
 
     buildTypes {
         release {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.minify
-            useProguard rootProject.minify
+            useProguard rootProject.proguard
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            shrinkResources rootProject.minify
+            shrinkResources rootProject.minify
         }
         debug {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.minify
-            useProguard rootProject.minify
+            useProguard rootProject.proguard
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            shrinkResources rootProject.minify
+            shrinkResources rootProject.minify
         }
     }
 
@@ -90,9 +90,6 @@ dependencies {
 
     // NOTIFICATION BADGES
     implementation 'me.leolin:ShortcutBadger:1.1.19@aar'
-
-    // GIF VIEWER
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
 
     // COUNTRY CODE SELECTOR
     implementation 'com.github.joielechong:countrycodepicker:2.1.5'
