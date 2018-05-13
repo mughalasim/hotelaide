@@ -37,12 +37,7 @@ public class LoginActivity extends AppCompatActivity {
             btn_confirm,
             btn_cancel;
 
-    private LottieAnimationView animation_view;
-
     private Database db;
-
-    private ImageView
-            login_background;
 
     private final String
             TAG_LOG = "LOGIN";
@@ -95,8 +90,6 @@ public class LoginActivity extends AppCompatActivity {
     private void findAllViews() {
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tabs);
-        login_background = findViewById(R.id.login_background);
-        animation_view = findViewById(R.id.animation_view);
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager, true);
@@ -132,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                PLAY_ANIM();
+
             }
 
             @Override
@@ -193,10 +186,6 @@ public class LoginActivity extends AppCompatActivity {
     public void MAKE_CALL (View view){
         TextView textView = (TextView) view;
         helper.dialogMakeCall(LoginActivity.this, textView.getText().toString());
-    }
-
-    public void PLAY_ANIM(){
-        animation_view.playAnimation();
     }
 
 

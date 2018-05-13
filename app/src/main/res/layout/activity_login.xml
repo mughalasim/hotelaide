@@ -12,15 +12,6 @@
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:lottie_autoPlay="true"
-        android:layout_centerInParent="true"
-        app:lottie_fileName="anim_skipping.json"
-        app:lottie_loop="false" />
-
     <ImageView
         android:id="@+id/main_logo"
         android:layout_width="match_parent"
