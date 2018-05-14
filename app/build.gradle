@@ -67,7 +67,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:15.1.0'
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
     implementation 'com.google.firebase:firebase-invites:15.0.1'
-    implementation 'com.google.firebase:firebase-perf:15.1.0'
+    implementation 'com.google.firebase:firebase-perf:15.2.0'
     implementation 'com.google.firebase:firebase-database:15.0.1'
 
     // GOOGLE
@@ -107,7 +107,7 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
     // ANIMATIONS
-    implementation 'com.airbnb.android:lottie:2.5.4'
+//    implementation 'com.airbnb.android:lottie:2.5.4'
 
 
 }

@@ -97,7 +97,6 @@
                 android:paddingStart="-2dp"
                 android:paddingRight="0dp"
                 android:paddingEnd="0dp"
-                android:progressDrawable="@drawable/ic_change_locations"
                 android:stepSize="0.2" />
 
         </LinearLayout>

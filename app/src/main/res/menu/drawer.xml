@@ -1,28 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group
-        android:id="@+id/main_group"
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/drawer_dashboard"
             android:title="@string/drawer_dashboard" />
 
-        <item
-            android:id="@+id/drawer_messages"
-            android:title="@string/drawer_messages" />
+        <item android:title="@string/drawer_messages" />
 
-        <item
-            android:id="@+id/drawer_find_jobs"
-            android:title="@string/drawer_find_jobs" />
+        <item android:title="@string/drawer_find_jobs" />
 
-        <item
-            android:id="@+id/drawer_registration"
-            android:title="@string/drawer_registration" />
+        <item android:title="@string/drawer_registration" />
 
-        <item
-            android:id="@+id/drawer_subscription_plan"
-            android:title="@string/drawer_subscription" />
+        <item android:title="@string/drawer_subscription" />
 
         <item
             android:id="@+id/drawer_my_account"
@@ -31,17 +21,13 @@
     </group>
 
 
-    <group
-        android:id="@+id/settings_group"
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/drawer_about_us"
             android:title="@string/drawer_about_us" />
 
-        <item
-            android:id="@+id/drawer_app_settings"
-            android:title="@string/drawer_settings" />
+        <item android:title="@string/drawer_settings" />
 
     </group>
 

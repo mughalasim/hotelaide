@@ -82,7 +82,7 @@
                 style="@style/Text_Normal"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:onClick="makeCall"
+                android:onClick="MAKE_CALL"
                 android:layout_marginTop="0dp"
                 android:text="(254)716 140 603" />
 

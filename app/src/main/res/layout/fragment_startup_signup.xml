@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.sothree.slidinguppanel.SlidingUpPanelLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/sliding_layout"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
+    android:paddingBottom="@dimen/general_padding"
     sothree:umanoFadeColor="@color/dim"
     sothree:umanoPanelHeight="@dimen/panel_height"
-    android:paddingBottom="@dimen/general_padding"
     sothree:umanoShadowHeight="4dp">
 
     <ScrollView
@@ -36,6 +35,35 @@
                 android:onClick="SIGN_UP"
                 android:text="You could opt to give us some details about you so we can sign you up and get you started" />
 
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/general_padding"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_btn_job_seeker"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/colorPrimary"
+                    android:textAppearance="@style/Text_Normal"
+                    android:layout_height="wrap_content"
+                    android:text="Job Seeker"
+                    tools:targetApi="lollipop" />
+
+                <RadioButton
+                    android:id="@+id/radio_btn_employer"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/colorPrimary"
+                    android:textAppearance="@style/Text_Normal"
+                    android:layout_height="wrap_content"
+                    tools:targetApi="lollipop"
+                    android:text="Employer"/>
+
+            </RadioGroup>
+
             <EditText
                 android:id="@+id/et_user_first_name"
                 style="@style/Edit_Text"
@@ -61,25 +89,25 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/general_padding"
-                android:layout_height="@dimen/edit_text_height">
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_marginTop="@dimen/general_padding">
 
                 <EditText
                     android:id="@+id/et_user_pass"
                     style="@style/Edit_Text"
-                    android:paddingTop="0dp"
                     android:layout_marginTop="0dp"
                     android:hint="@string/et_hint_pass"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:paddingTop="0dp" />
 
                 <ImageView
                     android:id="@+id/img_user_pass_toggle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:paddingEnd="@dimen/general_padding"
-                    android:contentDescription="@string/app_name" />
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:paddingEnd="@dimen/general_padding" />
 
             </RelativeLayout>
 
@@ -111,9 +139,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/general_padding"
-        android:paddingRight="@dimen/general_padding"
-        android:orientation="vertical">
+        android:paddingRight="@dimen/general_padding">
 
         <TextView
             style="@style/Text_Normal"

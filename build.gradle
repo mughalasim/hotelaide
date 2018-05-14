@@ -6,10 +6,8 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
-        flatDir {
-            dirs 'libs' //this way we can find the .aar file in libs folder
-        }
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
         classpath 'com.google.gms:google-services:3.2.1'

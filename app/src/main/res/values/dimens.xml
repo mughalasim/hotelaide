@@ -4,7 +4,6 @@
     <dimen name="collapsing_details_toolbar_height">210dp</dimen>
 
     <!-- BORDER CORNERS =========================================================================-->
-    <dimen name="radius_image">50dp</dimen>
     <dimen name="radius_button">3sp</dimen>
 
 
@@ -26,7 +25,6 @@
 
 
     <!--TEXT SIZES ==============================================================================-->
-    <dimen name="text_size_xx_large">28sp</dimen>
     <dimen name="text_size_x_large">22sp</dimen>
     <dimen name="text_size_large">20sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>

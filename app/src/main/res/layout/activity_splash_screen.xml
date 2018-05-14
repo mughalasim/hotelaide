@@ -11,23 +11,13 @@
         android:background="@drawable/bckgrd_login"
         android:contentDescription="@string/app_name" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        app:lottie_autoPlay="true"
-        android:layout_centerInParent="true"
-        app:lottie_fileName="anim_stars.json"
-        app:lottie_loop="true" />
-
     <ImageView
         android:id="@+id/main_logo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/my_account_profile_pic"
-        android:layout_above="@+id/animation_view"
         android:contentDescription="@string/app_name"
+        android:layout_centerInParent="true"
         android:scaleType="centerInside"
         android:src="@drawable/main_logo_vertical" />
-
 
 </RelativeLayout>

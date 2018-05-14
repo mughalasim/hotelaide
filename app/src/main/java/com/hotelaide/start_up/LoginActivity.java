@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.fragments.StartUpAboutUsFragment;

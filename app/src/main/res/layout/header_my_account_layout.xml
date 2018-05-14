@@ -50,7 +50,6 @@
                 android:textColor="@color/white" />
 
             <TextView
-                android:id="@+id/user_availability"
                 style="@style/Text_Small"
                 android:layout_marginTop="0dp"
                 android:text="Full Time"

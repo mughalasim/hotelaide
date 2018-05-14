@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hotelaide.R;
@@ -31,6 +33,12 @@ public class StartUpSignUpFragment extends Fragment {
             txt_user_dob,
             btn_confirm,
             btn_cancel;
+
+    private RadioGroup radio_group;
+
+    private RadioButton
+            radio_btn_job_seeker,
+            radio_btn_employer;
 
     private ImageView img_user_pass_toggle;
 
@@ -101,6 +109,9 @@ public class StartUpSignUpFragment extends Fragment {
         img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
 
         setDates();
+
+        radio_group = rootview.findViewById(R.id.radio_group);
+
     }
 
     private void setListerners() {
@@ -108,7 +119,11 @@ public class StartUpSignUpFragment extends Fragment {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (
+                int selectedRadioBtn = radio_group.getCheckedRadioButtonId();
+                if (selectedRadioBtn != R.id.radio_btn_employer && selectedRadioBtn != R.id.radio_btn_job_seeker) {
+                    helpers.myDialog(getContext(), "Alert!",
+                            "Please set whether you are applying as a Job Seeker or Employer.");
+                } else if (
                         helpers.validateEmptyEditText(et_user_first_name) &&
                                 helpers.validateEmptyEditText(et_user_last_name) &&
                                 helpers.validateEmail(et_user_email) &&
@@ -120,7 +135,7 @@ public class StartUpSignUpFragment extends Fragment {
                         helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
                     } else if (et_user_pass.getText().toString().length() < 8) {
                         helpers.ToastMessage(getContext(), "Password too short");
-                    }else{
+                    } else {
                         helpers.ToastMessage(getContext(), "REGISTRATION IN PROGRESS");
                     }
                 }
@@ -145,6 +160,19 @@ public class StartUpSignUpFragment extends Fragment {
                 helpers.animate_wobble(img_user_pass_toggle);
             }
         });
+
+
+        radio_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.radio_btn_job_seeker) {
+
+                } else {
+
+                }
+            }
+        });
+
     }
 
 
