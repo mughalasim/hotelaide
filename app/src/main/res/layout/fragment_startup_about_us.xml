@@ -1,54 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="none"
+<com.southernbox.springscrollview.SpringScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/general_padding"
     android:paddingLeft="@dimen/general_padding"
     android:paddingRight="@dimen/general_padding"
-    android:paddingBottom="@dimen/general_padding"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:scrollbars="none">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="@dimen/login_activity_padding">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/login_activity_padding"
+        android:orientation="vertical">
 
-            <TextView
-                style="@style/Text_Title"
-                android:text="WHO ARE WE"/>
-
-
-            <TextView
-                style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:text="@string/about1"/>
+        <TextView
+            style="@style/Text_Title"
+            android:text="WHO ARE WE" />
 
 
-            <include layout="@layout/horizontal_line"/>
-
-            <TextView
-                style="@style/Text_Title"
-                android:text="WHAT WE DO"/>
-
-            <TextView
-                style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:text="@string/about2"/>
+        <TextView
+            style="@style/Text_Normal"
+            android:layout_gravity="center"
+            android:text="@string/about1" />
 
 
+        <include layout="@layout/horizontal_line" />
 
-            <include layout="@layout/horizontal_line"/>
+        <TextView
+            style="@style/Text_Title"
+            android:text="WHAT WE DO" />
 
-            <TextView
-                style="@style/Text_Title"
-                android:text="HOW WE HELP YOU"/>
-
-            <TextView
-                style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:text="@string/about3"/>
+        <TextView
+            style="@style/Text_Normal"
+            android:layout_gravity="center"
+            android:text="@string/about2" />
 
 
-        </LinearLayout>
+        <include layout="@layout/horizontal_line" />
 
-    </ScrollView>
+        <TextView
+            style="@style/Text_Title"
+            android:text="HOW WE HELP YOU" />
+
+        <TextView
+            style="@style/Text_Normal"
+            android:layout_gravity="center"
+            android:text="@string/about3" />
+
+
+    </LinearLayout>
+
+</com.southernbox.springscrollview.SpringScrollView>

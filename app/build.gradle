@@ -52,6 +52,8 @@ dependencies {
     implementation "com.android.support:customtabs:$rootProject.SupportLibrary"
     implementation "com.android.support:design:$rootProject.SupportLibrary"
     implementation "com.android.support:recyclerview-v7:$rootProject.SupportLibrary"
+    implementation "com.android.support:support-dynamic-animation:$rootProject.SupportLibrary"
+    implementation "com.android.support:animated-vector-drawable:$rootProject.SupportLibrary"
 
     // RETROFIT DEPENDENCIES
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -101,13 +103,16 @@ dependencies {
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
     // IMAGE SCALING
-    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+//    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
     // SLIDING UP PANEL
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
     // ANIMATIONS
 //    implementation 'com.airbnb.android:lottie:2.5.4'
+
+    // SPRING SCROLL
+    implementation 'com.southernbox:SpringScrollView:1.0.0'
 
 
 }
