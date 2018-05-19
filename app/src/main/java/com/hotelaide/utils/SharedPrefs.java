@@ -6,192 +6,217 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.hotelaide.R;
+import com.hotelaide.main_pages.models.UserModel;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SharedPrefs {
     @SuppressLint("StaticFieldLeak")
     private static final Context context = MyApplication.getAppContext();
     private static final String SHARED_PREFS = "SHARED_PREFS";
+    private static final int MODE = Activity.MODE_PRIVATE;
 
-    // ASYNC CALLS ON FIRST ACTIVITY STARTUP =======================================================
-    @NonNull
-    public static Boolean getAsyncCallHomePage() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getBoolean("ASYNC_HOME", true);
+
+    // INTEGER VARIABLE NAMES ======================================================================
+    public static final String DATABASE_VERSION = "DATABASE_VERSION";
+    public static final String USER_ID = "USER_ID";
+
+    // STRING VARIABLE NAMES =======================================================================
+    public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
+    public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
+    public static final String CLIENT_SECRET = "CLIENT_SECRET";
+
+    public static final String USER_SALUTATION = "USER_SALUTATION";
+    public static final String USER_F_NAME = "USER_F_NAME";
+    public static final String USER_L_NAME = "USER_L_NAME";
+    public static final String USER_EMAIL = "USER_EMAIL";
+    public static final String USER_IMG_PROFILE = "USER_IMG_PROFILE";
+    public static final String USER_IMG_BANNER = "USER_IMG_BANNER";
+    public static final String USER_COUNTRY_CODE = "USER_COUNTRY_CODE";
+    public static final String USER_PHONE = "USER_PHONE";
+    public static final String USER_DOB = "USER_DOB";
+    public static final String USER_FB_ID = "USER_FB_ID";
+    public static final String USER_GOOGLE_ID = "USER_GOOGLE_ID";
+    public static final String USER_GEO_LAT = "USER_GEO_LAT";
+    public static final String USER_GEO_LNG = "USER_GEO_LNG";
+    public static final String USER_ACCOUNT_TYPE = "USER_ACCOUNT_TYPE";
+
+    public static final String NAV_DATA = "NAV_DATA";
+
+
+    // BOOLEAN VARIABLE NAMES ======================================================================
+    public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
+    public static final String IS_PUSH_CLICKED = "IS_PUSH_CLICKED";
+    public static final String CALL_ASYNC_USER = "CALL_ASYNC_USER";
+
+
+
+    // GENERIC GET AND SET INTEGER VARIABLES =======================================================
+    public static int getInt(String variableName) {
+        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        return mySharedPreferences.getInt(variableName, 0);
     }
 
-    public static void setAsyncCallHomePage(Boolean update) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
+    public static void setInt(String variableName, int variableValue) {
+        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
         SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putBoolean("ASYNC_HOME", update);
+        editor.putInt(variableName, variableValue);
         editor.apply();
     }
 
-    @NonNull
-    public static Boolean getAsyncCallUserDetails() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getBoolean("ASYNC_USER_DETAILS", true);
+
+    // GENERIC GET AND SET STRING VARIABLES ========================================================
+    public static String getString(String variableName) {
+        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        return mySharedPreferences.getString(variableName, "");
     }
 
-    public static void setAsyncCallUserDetails(Boolean update) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
+    public static void setString(String variableName, String variableValue) {
+        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
         SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putBoolean("ASYNC_USER_DETAILS", update);
+        editor.putString(variableName, variableValue);
         editor.apply();
     }
 
 
+    // GENERIC GET AND SET BOOLEAN VARIABLES =======================================================
+    @NonNull
+    public static Boolean getBool(String variableName) {
+        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        return mySharedPreferences.getBoolean(variableName, true);
+    }
 
-    // OTHER FUNCTIONS =============================================================================
+    public static void setBool(String variableName, Boolean variableValue) {
+        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences.Editor editor = mySharedPreferences.edit();
+        editor.putBoolean(variableName, variableValue);
+        editor.apply();
+    }
+
+
+    // GENERIC GET AND SET DOUBLE ==================================================================
+    public static Double getDouble(String variableName) {
+        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        return Double.parseDouble(mySharedPreferences.getString(variableName, "0"));
+    }
+
+    public static void setDouble(String variableName, Double longitude) {
+        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences.Editor editor = mySharedPreferences.edit();
+        editor.putString(variableName, String.valueOf(longitude));
+        editor.apply();
+    }
+
+
+    // DELETE FUNCTION =============================================================================
     public static void deleteAllSharedPrefs() {
-        SharedPreferences settings = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
+        SharedPreferences settings = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
         settings.edit().clear().apply();
     }
 
 
+    // USER FUNCTIONS ==============================================================================
+    public Boolean setUser(JSONObject main) {
+        Helpers.LogThis(SHARED_PREFS, "USER SET");
+        Boolean response;
+        Helpers.LogThis(SHARED_PREFS, main.toString());
+        try {
+            String request_msg = main.getString("success");
+            if (request_msg.equals("true")) {
 
-    // SHARED_PREFS ================================================================================
-    public static String getToken() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getString("TOKEN", "");
+                JSONObject user = main.getJSONObject("user");
+
+                setInt(USER_ID, user.getInt("id"));
+                setString(USER_SALUTATION, user.getString("salutation"));
+                setString(USER_F_NAME, user.getString("first_name"));
+                setString(USER_L_NAME, user.getString("last_name"));
+                setString(USER_EMAIL, user.getString("email"));
+                setString(USER_IMG_PROFILE, user.getString("profile_url"));
+                setString(USER_IMG_BANNER, user.getString("profile_url"));
+                setInt(USER_COUNTRY_CODE, user.getInt("country_code"));
+                setInt(USER_PHONE, user.getInt("phone_number"));
+                setString(USER_DOB, user.getString("dob"));
+                setString(USER_FB_ID, user.getString("facebook_id"));
+                setString(USER_GOOGLE_ID, user.getString("google_id"));
+                setDouble(USER_GEO_LAT, user.getDouble("geolat"));
+                setDouble(USER_GEO_LNG, user.getDouble("geolng"));
+                setString(USER_ACCOUNT_TYPE, user.getString("account_type"));
+
+
+                Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
+                        getInt(USER_ID) + " - " +
+                        getString(USER_SALUTATION) + " - " +
+                        getString(USER_F_NAME) + " - " +
+                        getString(USER_L_NAME) + " - " +
+                        getString(USER_EMAIL) + " - " +
+                        getString(USER_IMG_PROFILE) + " - " +
+                        getString(USER_IMG_BANNER) + " - " +
+                        getInt(USER_COUNTRY_CODE) + " - " +
+                        getInt(USER_PHONE) + " - " +
+                        getString(USER_DOB) + " - " +
+                        getString(USER_FB_ID) + " - " +
+                        getString(USER_GOOGLE_ID) + " - " +
+                        getDouble(USER_GEO_LAT) + " - " +
+                        getDouble(USER_GEO_LNG) + " - " +
+                        getString(USER_ACCOUNT_TYPE)
+                );
+                response = true;
+
+            } else {
+                response = false;
+            }
+        } catch (JSONException e) {
+            Helpers.LogThis(SHARED_PREFS, MyApplication.getAppContext().getString(R.string.log_exception) + e.toString());
+            response = false;
+        } catch (Exception e) {
+            Helpers.LogThis(SHARED_PREFS, MyApplication.getAppContext().getString(R.string.log_exception) + e.toString());
+            response = false;
+        }
+        return response;
     }
 
-    public static void setToken(String token) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString("TOKEN", token);
-        editor.apply();
-    }
+    public UserModel getUser() {
+        Helpers.LogThis(SHARED_PREFS, "USER GET");
 
-    public static String getUserName() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getString("USERNAME", "");
-    }
-
-    public static void setUserName(String salutation, String fName, String lName) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString("USERNAME", salutation + ". "+fName + " " + lName);
-        editor.apply();
-    }
-
-    public static String getCountryFlag() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getString("COUNTRYFLAG", "");
-    }
-
-    public static void setCountryFlag(String countryFlag) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString("COUNTRYFLAG", countryFlag);
-        editor.apply();
-    }
-
-    public static String getSupportNumber() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getString("SUPPORTNUMBER", "");
-    }
-
-    public static void setSupportNumber(String support_number) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString("SUPPORTNUMBER", support_number);
-        editor.apply();
-    }
-
-    @NonNull
-    public static Integer getOldDataBaseVersion() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getInt("DATABASE_VERSION", 0);
-    }
-
-    public static void setNewDataBaseVersion(int db_version) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putInt("DATABASE_VERSION", db_version);
-        editor.apply();
-    }
-
-    @NonNull
-    public static Boolean getAllowUpdateApp() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getBoolean("UPDATEAPP", true);
-    }
-
-    public static void setAllowUpdateApp(Boolean update) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putBoolean("UPDATEAPP", update);
-        editor.apply();
-    }
+        UserModel userModel = new UserModel();
+        userModel.id = SharedPrefs.getInt(USER_ID);
+        userModel.salutation = SharedPrefs.getString(USER_SALUTATION);
+        userModel.first_name = SharedPrefs.getString(USER_F_NAME);
+        userModel.last_name = SharedPrefs.getString(USER_L_NAME);
+        userModel.email = SharedPrefs.getString(USER_EMAIL);
+        userModel.img_profile = SharedPrefs.getString(USER_IMG_PROFILE);
+        userModel.img_banner = SharedPrefs.getString(USER_IMG_BANNER);
+        userModel.country_code = SharedPrefs.getInt(USER_COUNTRY_CODE);
+        userModel.phone = SharedPrefs.getInt(USER_PHONE);
+        userModel.dob = SharedPrefs.getString(USER_DOB);
+        userModel.fb_id = SharedPrefs.getString(USER_FB_ID);
+        userModel.google_id = SharedPrefs.getString(USER_GOOGLE_ID);
+        userModel.geo_lat = SharedPrefs.getDouble(USER_GEO_LAT);
+        userModel.geo_lng = SharedPrefs.getDouble(USER_GEO_LNG);
+        userModel.account_type = SharedPrefs.getString(USER_ACCOUNT_TYPE);
 
 
-    // NAVIGATION DATA =============================================================================
-    public static String getNavigationData() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getString("NAVDATA", "");
-    }
+        Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
+                getInt(USER_ID) + " - " +
+                getString(USER_SALUTATION) + " - " +
+                getString(USER_F_NAME) + " - " +
+                getString(USER_L_NAME) + " - " +
+                getString(USER_EMAIL) + " - " +
+                getString(USER_IMG_PROFILE) + " - " +
+                getString(USER_IMG_BANNER) + " - " +
+                getInt(USER_COUNTRY_CODE) + " - " +
+                getInt(USER_PHONE) + " - " +
+                getString(USER_DOB) + " - " +
+                getString(USER_FB_ID) + " - " +
+                getString(USER_GOOGLE_ID) + " - " +
+                getDouble(USER_GEO_LAT) + " - " +
+                getDouble(USER_GEO_LNG) + " - " +
+                getString(USER_ACCOUNT_TYPE)
+        );
 
-    public static void setNavigationData(String navigationData) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString("NAVDATA", navigationData);
-        editor.apply();
-    }
-
-    @NonNull
-    public static Boolean getNavigationPushCLicked() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getBoolean("PUSHCLICKED", false);
-    }
-
-    public static void setNavigationPushCLicked(Boolean update) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putBoolean("PUSHCLICKED", update);
-        editor.apply();
-    }
-
-
-
-
-    // GEO LOCATION TRACKING =======================================================================
-    public static Double getLongitude() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return Double.parseDouble(mySharedPreferences.getString("LONGITUDE", "0"));
-    }
-
-    public static void setLongitude(Double longitude) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString("LONGITUDE", String.valueOf(longitude));
-        editor.apply();
-    }
-
-    public static Double getLatitude() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return Double.parseDouble(mySharedPreferences.getString("LATITUDE", "0"));
-    }
-
-    public static void setLatitude(Double Latitude) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString("LATITUDE", String.valueOf(Latitude));
-        editor.apply();
-    }
-
-    // ACCOUNT SETTINGS ============================================================================
-
-    @NonNull
-    public static Boolean getAllowNearbyPushNotifs() {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        return mySharedPreferences.getBoolean("NEARBYPUSH", false);
-    }
-
-    public static void setAllowNearbyPushNotifs(Boolean update) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putBoolean("NEARBYPUSH", update);
-        editor.apply();
+        return userModel;
     }
 
 }

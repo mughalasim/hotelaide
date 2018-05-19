@@ -7,8 +7,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.ActionMode;
@@ -44,6 +45,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -51,9 +54,6 @@ import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.AboutUsActivity;
 import com.hotelaide.main_pages.activities.DashboardActivity;
-import com.hotelaide.main_pages.activities.MyAccountActivity;
-import com.hotelaide.main_pages.models.UserModel;
-import com.hotelaide.services.GeneralService;
 import com.hotelaide.services.UserService;
 import com.hotelaide.start_up.SplashScreenActivity;
 
@@ -63,37 +63,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
+import static android.content.pm.PackageManager.GET_SIGNATURES;
 import static android.content.pm.PackageManager.NameNotFoundException;
 import static com.hotelaide.utils.Database.CUISINE_NAME;
 import static com.hotelaide.utils.Database.CUISINE_TABLE_NAME;
-import static com.hotelaide.utils.Database.userModel;
+import static com.hotelaide.utils.SharedPrefs.CALL_ASYNC_USER;
+import static com.hotelaide.utils.SharedPrefs.NAV_DATA;
 
 public class Helpers {
 
     public final static String TAG_LOG = "HELPER CLASS";
-    public final static String SORT_NEARBY = "n";
-    public final static String SORT_A_Z = "az";
-    public final static String SORT_FEATURED = "pre";
-    public final static String SORT_RATING = "p";
-
-    public final static String ORDER_ASCENDING = "a";
-//    public final static String ORDER_DESCENDING = "d";
-
-    public final static String FLAG_TRUE = "1";
-    public final static String FLAG_FALSE = "0";
 
     public final static String ADAPTER_DEFAULT = "DEFAULT";
     public final static String ADAPTER_DISTANCE = "DISTANCE";
 
-//    public final static String STR_LOGGED_OUT_EXTRA = "logged_out";
-//    public final static String STR_LOGGED_OUT_TRUE = "true";
-//    private final static String STR_LOGGED_OUT_FALSE = "false";
-
     private final static int INT_ANIMATION_TIME = 800;
-
-    public final static String STR_NAVIGATION_REST = "restaurant_id";
-    public final static String STR_NAVIGATION_COLLECTION = "collection_id";
-    public final static String STR_NAVIGATION_SEARCH = "search";
 
     private static Tracker sTracker;
     private static GoogleAnalytics sAnalytics;
@@ -133,7 +117,6 @@ public class Helpers {
     public void setTracker(String TAG_LOG) {
         sTracker.setScreenName("ANDROID - " + TAG_LOG);
         sTracker.setAppVersion(BuildConfig.VERSION_NAME);
-        sTracker.setClientId(String.valueOf(userModel.user_id));
         sTracker.send(new HitBuilders.ScreenViewBuilder().build());
         Helpers.LogThis(TAG_LOG, "TRACKED");
     }
@@ -144,10 +127,6 @@ public class Helpers {
         switch (id) {
             case R.id.drawer_dashboard:
                 context.startActivity(new Intent(context, DashboardActivity.class));
-                break;
-
-            case R.id.drawer_my_account:
-                context.startActivity(new Intent(context, MyAccountActivity.class));
                 break;
 
             case R.id.drawer_about_us:
@@ -175,30 +154,30 @@ public class Helpers {
         }
     }
 
-//    public void getShaCertificate() {
-//        PackageInfo info;
-//        try {
-//
-//            info = context.getPackageManager().getPackageInfo(
-//                    "com.hotelaide", GET_SIGNATURES);
-//
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md;
-//                md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                String something = new String(Base64.encode(md.digest(), 0));
-//                Log.e("Hash key", something);
-//                System.out.println("Hash key" + something);
-//            }
-//
-//        } catch (NameNotFoundException e) {
-//            LogThis("name not found " + e.toString());
-//        } catch (NoSuchAlgorithmException e) {
-//            LogThis("no such algorithm " + e.toString());
-//        } catch (Exception e) {
-//            LogThis("exception " + e.toString());
-//        }
-//    }
+    public void getShaCertificate() {
+        PackageInfo info;
+        try {
+
+            info = context.getPackageManager().getPackageInfo(
+                    "com.hotelaide", GET_SIGNATURES);
+
+            for (android.content.pm.Signature signature : info.signatures) {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String something = new String(Base64.encode(md.digest(), 0));
+                Log.e("Hash key", something);
+                System.out.println("Hash key" + something);
+            }
+
+        } catch (NameNotFoundException e) {
+            LogThis(TAG_LOG, "name not found " + e.toString());
+        } catch (NoSuchAlgorithmException e) {
+            LogThis(TAG_LOG, "no such algorithm " + e.toString());
+        } catch (Exception e) {
+            LogThis(TAG_LOG, "exception " + e.toString());
+        }
+    }
 
 
     // DIALOGS AND DISPLAYS ========================================================================
@@ -392,7 +371,7 @@ public class Helpers {
 
     // NAVIGATION ==================================================================================
     public static void setAppNavigation(String whereTo, String id, String Title, String body) {
-        SharedPrefs.setNavigationData(whereTo + "~" + id + "~" + Title + "~" + body);
+        SharedPrefs.setString(NAV_DATA, whereTo + "~" + id + "~" + Title + "~" + body);
         Helpers.LogThis("NAVIGATE", "NAVIGATE TO: " + whereTo + "~" + id + "~" + Title + "~" + body);
     }
 
@@ -601,8 +580,6 @@ public class Helpers {
 
                             String CITY_NAME;
 
-                            SharedPrefs.setCountryFlag(countryObject.getString("country_flag"));
-
                             JSONArray active_cities = countryObject.getJSONArray("active_cities");
                             int result_length2 = active_cities.length();
                             for (int w = 0; w < result_length2; w++) {
@@ -728,14 +705,14 @@ public class Helpers {
     // GET USER ====================================================================================
     public void asyncGetUser() {
         UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.getUserObject();
+        final Call<JsonObject> call = userService.getUser();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
                     db.setUser(main);
-                    SharedPrefs.setAsyncCallUserDetails(false);
+                    SharedPrefs.setBool(CALL_ASYNC_USER, false);
 
                 } catch (JSONException e) {
                     LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
@@ -755,45 +732,34 @@ public class Helpers {
     }
 
     // SET USER ====================================================================================
-    public void asyncSetUser(UserModel userModel) {
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.updateUser(
-                userModel.first_name,
-                userModel.first_name,
-                userModel.last_name,
-                userModel.email,
-                userModel.profile_pic,
-                userModel.banner_pic,
-                userModel.user_token,
-                userModel.phone,
-                userModel.dob,
-                userModel.fb_id
-        );
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    if (!db.setUser(main)) {
-                        ToastMessage(context, "Account Update Failed");
-                    }
-                } catch (JSONException e) {
-                    Helpers.LogThis(TAG_LOG, "JSON exception " + e.toString());
-                    ToastMessage(context, "Account Update Failed");
-                } catch (Exception e) {
-                    Helpers.LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-                    ToastMessage(context, "Account Update Failed");
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
-                Helpers.LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
-                ToastMessage(context, "Account Update Failed");
-            }
-        });
-    }
+//    public void asyncUpdateUser(UserModel userModel) {
+//        UserService userService = UserService.retrofit.create(UserService.class);
+//        final Call<JsonObject> call = userService.updateUser();
+//        call.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+//                try {
+//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+//                    if (!db.setUser(main)) {
+//                        ToastMessage(context, "Account Update Failed");
+//                    }
+//                } catch (JSONException e) {
+//                    Helpers.LogThis(TAG_LOG, "JSON exception " + e.toString());
+//                    ToastMessage(context, "Account Update Failed");
+//                } catch (Exception e) {
+//                    Helpers.LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
+//                    ToastMessage(context, "Account Update Failed");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+//                Helpers.LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
+//                Helpers.LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
+//                ToastMessage(context, "Account Update Failed");
+//            }
+//        });
+//    }
 
 
 }

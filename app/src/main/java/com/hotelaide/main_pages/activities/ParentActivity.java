@@ -40,6 +40,8 @@ import com.hotelaide.utils.SharedPrefs;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
+import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
+
 @SuppressWarnings("unchecked")
 public class ParentActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
@@ -130,7 +132,7 @@ public class ParentActivity extends AppCompatActivity implements
         nav_img_user_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ParentActivity.this, MyAccountActivity.class));
+//                startActivity(new Intent(ParentActivity.this, MyAccountActivity.class));
             }
         });
 
@@ -171,7 +173,7 @@ public class ParentActivity extends AppCompatActivity implements
         super.onResume();
         updateDrawer();
         navigationView.getMenu().findItem(drawer_id).setChecked(true);
-        if (SharedPrefs.getAllowUpdateApp()) {
+        if (SharedPrefs.getBool(ALLOW_UPDATE_APP)) {
             getAppVersionFromFirebase();
         }
     }
@@ -231,7 +233,7 @@ public class ParentActivity extends AppCompatActivity implements
                             btn_cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    SharedPrefs.setAllowUpdateApp(false);
+                                    SharedPrefs.setBool(ALLOW_UPDATE_APP, false);
                                     dialog.cancel();
                                 }
                             });
@@ -241,7 +243,7 @@ public class ParentActivity extends AppCompatActivity implements
 
                         } else {
                             ShortcutBadger.applyCount(ParentActivity.this, 0);
-                            SharedPrefs.setAllowUpdateApp(false);
+                            SharedPrefs.setBool(ALLOW_UPDATE_APP, false);
                         }
 
                         Helpers.LogThis(TAG_LOG, "DATABASE VERSION: " + NEW_VERSION_CODE);

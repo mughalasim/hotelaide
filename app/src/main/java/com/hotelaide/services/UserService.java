@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -24,7 +26,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface UserService {
-
     String TAG_LOG = "SERVICE: USER";
 
     OkHttpClient okClient = new OkHttpClient.Builder()
@@ -33,7 +34,7 @@ public interface UserService {
                 public Response intercept(@NonNull Chain chain) throws IOException {
                     Request original = chain.request();
                     Request request = original.newBuilder()
-                            .header("X-Auth-Token", Database.userModel.user_token)
+                            .addHeader("Authorization", "Bearer " + SharedPrefs.getString(SharedPrefs.ACCESS_TOKEN))
                             .method(original.method(), original.body())
                             .build();
 
@@ -63,37 +64,28 @@ public interface UserService {
             .build();
 
 
-    // GET USER ====================================================================================
-    @GET("get-user/")
-    Call<JsonObject> getUserObject();
+    // GET USERS ===================================================================================
+    @GET("api/user")
+    Call<JsonObject> getUser();
 
-    // GET USERS FAVOURITES ========================================================================
-    @GET("user/favorites/{user_id}")
-    Call<JsonObject> getFavourites(
-            @Path("user_id") int user_id
-    );
 
     // UPDATE USER =================================================================================
     @FormUrlEncoded
-    @POST("user/update")
-    Call<JsonObject> updateUser(
-            @Field("salutation") String salutation,
+    @POST("api/user/{id}")
+    Call<JsonObject> userUpdate(
+            @Path("id") int id,
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
+            @Field("country_code") int country_code,
+            @Field("phone_number") int phone_number,
             @Field("email") String email,
-            @Field("thumbnail") String thumbnail,
-            @Field("country_code") String country_code,
-            @Field("city") String city,
-            @Field("phone_number") String phone,
-            @Field("date_of_birth") String date_of_birth,
-            @Field("fb_id") String fb_id
+            @Field("password") String password,
+            @Field("account_type") String account_type,
+            @Field("geo_lat") double geo_lat,
+            @Field("geo_lng") double geo_lng,
+            @Field("dob") String dob,
+            @Field("fb_id") String fb_id,
+            @Field("google_id") String google_id
     );
-
-    // GET ALL LIKED RESTAURANTS ===================================================================
-    @GET("user/favorite-by-id/{user_id}")
-    Call<JsonObject> getAllLikedRestaurants(
-            @Path("user_id") int user_id
-    );
-
 
 }

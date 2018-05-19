@@ -9,6 +9,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.hotelaide.BuildConfig;
 import com.hotelaide.utils.Database;
+import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -22,9 +25,8 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-
 public interface LoginService {
-    Database db = new Database();
+    String TAG_LOG = "SERVICE: LOGIN";
 
     OkHttpClient okClient = new OkHttpClient.Builder()
             .addInterceptor(new Interceptor() {
@@ -33,11 +35,21 @@ public interface LoginService {
                     Request original = chain.request();
 
                     Request.Builder requestBuilder = original.newBuilder()
-                            .header("X-Auth-Token", Database.userModel.user_token)
+                            .addHeader("Authorization", "Bearer " + SharedPrefs.getString(SharedPrefs.ACCESS_TOKEN))
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
-                    return chain.proceed(request);
+
+                    Response response = chain.proceed(request);
+                    Helpers.LogThis(TAG_LOG, "URL: " + request.url());
+                    Helpers.LogThis(TAG_LOG, "CODE:" + response.code());
+                    if (response.code() == 401) {
+                        Helpers.LogThis(TAG_LOG, "MESSAGE: " + response.message());
+                    } else if (response.code() > 300) {
+                        Helpers.LogThis(TAG_LOG, "MESSAGE: " + response.message());
+                    }
+
+                    return response;
                 }
             })
             .connectTimeout(BuildConfig.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
@@ -52,40 +64,31 @@ public interface LoginService {
             .build();
 
 
-    // AUTHENTICATE PHONE ==========================================================================
+    // AUTHENTICATE FUNCTION =======================================================================
     @FormUrlEncoded
-    @POST("user-otp")
-    Call<JsonObject> sendPhone(
-            @Field("phone") String phone,
-            @Field("country_code") String country_code
-    );
-
-    // AUTHENTICATE CODE ===========================================================================
-    @FormUrlEncoded
-    @POST("user-validate")
-    Call<JsonObject> sendCode(
-            @Field("otp") String otp,
-            @Field("phone") String phone
+    @POST("oauth/token")
+    Call<JsonObject> userLogin(
+            @Field("client_id") String client_id,
+            @Field("client_secret") String client_secret,
+            @Field("grant_type") String grant_type,
+            @Field("username") String email,
+            @Field("password") String password
     );
 
 
-    // REGISTER ====================================================================================
+    // REGISTER USER ===============================================================================
     @FormUrlEncoded
-    @POST("register")
-    Call<JsonObject> register(
+    @POST("api/user/register")
+    Call<JsonObject> userRegister(
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
+            @Field("phone_number") String phone_number,
             @Field("email") String email,
             @Field("password") String password,
-            @Field("country_code") String country_code,
-            @Field("fb_id") String fb_id
-    );
-
-    //  AUTHENTICATION FACEBOOK USER ===============================================================
-    @GET("get-fb-user")
-    Call<JsonObject> getFBUser(
-            @Query("fb_id") String fb_id,
-            @Query("fb_email") String email
+            @Field("account_type") String account_type,
+            @Field("dob") String dob,
+            @Field("fb_id") String fb_id,
+            @Field("google_id") String google_id
     );
 
 }

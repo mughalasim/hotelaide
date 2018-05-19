@@ -278,8 +278,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 Helpers.LogThis(TAG_LOG, "Start Up");
                 if (Database.userModel.user_token.equals("")) {
                     startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
-                } else if (db.validateUserName()) {
-                    startActivity(new Intent(SplashScreenActivity.this, SetAccount.class));
                 } else {
                     startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class));
                 }

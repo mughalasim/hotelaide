@@ -68,17 +68,10 @@
 
         </activity>
 
-        <service android:name=".utils_external.LocationService" android:process=":service" />
-
         <activity
             android:name=".start_up.LoginActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".start_up.SetAccount"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
 
@@ -94,12 +87,6 @@
 
         <activity
             android:name=".main_pages.activities.AboutUsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-
-        <activity
-            android:name=".main_pages.activities.MyAccountActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -157,14 +144,6 @@
             android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name=".utils_external.NotificationService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 

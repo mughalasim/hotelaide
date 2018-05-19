@@ -18,7 +18,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hotelaide.R;
-import com.hotelaide.main_pages.activities.MyAccountActivity;
 import com.hotelaide.utils.Helpers;
 
 import java.util.Calendar;
