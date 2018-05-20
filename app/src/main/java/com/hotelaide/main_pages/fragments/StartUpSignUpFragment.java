@@ -74,7 +74,7 @@ public class StartUpSignUpFragment extends Fragment {
 
                 findAllViews();
 
-                setListerners();
+                setListeners();
 
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -113,7 +113,7 @@ public class StartUpSignUpFragment extends Fragment {
 
     }
 
-    private void setListerners() {
+    private void setListeners() {
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override

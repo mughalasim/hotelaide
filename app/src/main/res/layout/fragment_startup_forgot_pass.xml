@@ -2,16 +2,16 @@
 <com.southernbox.springscrollview.SpringScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none"
-    android:paddingLeft="@dimen/general_padding"
-    android:paddingRight="@dimen/general_padding"
-    android:paddingBottom="@dimen/general_padding"
+    android:paddingLeft="@dimen/padding_small"
+    android:paddingRight="@dimen/padding_small"
+    android:paddingBottom="@dimen/padding_small"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginBottom="@dimen/login_activity_padding">
+            android:layout_marginBottom="@dimen/padding_large">
 
             <TextView
                 style="@style/Text_Title"

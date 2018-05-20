@@ -25,7 +25,7 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/main_logo_horizontal"
             android:background="@drawable/bckgrd_transparent"
-            android:layout_height="@dimen/main_logo_image_size" />
+            android:layout_height="@dimen/img_size_small" />
 
         <TextView
             android:id="@+id/app_version"

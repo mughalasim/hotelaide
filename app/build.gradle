@@ -22,14 +22,14 @@ android {
             minifyEnabled rootProject.minify
             useProguard rootProject.proguard
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            shrinkResources rootProject.minify
+            shrinkResources rootProject.proguard
         }
         debug {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.minify
             useProguard rootProject.proguard
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            shrinkResources rootProject.minify
+            shrinkResources rootProject.proguard
         }
     }
 
@@ -37,6 +37,7 @@ android {
         prod {
             buildConfigField 'String',    'MAIN_URL',             '"https://hotelaide.kiiya.co.ke"'
             buildConfigField 'String',    'CLIENT_ID',            '"2"'
+            buildConfigField 'String',    'CLIENT_SECRET',        '"XXqjSXvCfv81CgqoK7bgKdQpxmKPhvR6EBeklOtn"'
             buildConfigField 'String',    'GRANT_TYPE',           '"password"'
             buildConfigField 'Integer',   'DATABASE_VERSION',     "$rootProject.versionCode"
             buildConfigField 'Integer',   'CONNECTION_TIMEOUT',   '35'

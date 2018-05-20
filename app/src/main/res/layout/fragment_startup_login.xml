@@ -2,15 +2,15 @@
 <com.southernbox.springscrollview.SpringScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/general_padding"
-    android:paddingRight="@dimen/general_padding"
-    android:paddingBottom="@dimen/general_padding"
+    android:paddingLeft="@dimen/padding_small"
+    android:paddingRight="@dimen/padding_small"
+    android:paddingBottom="@dimen/padding_small"
     android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/login_activity_padding"
+        android:layout_marginBottom="@dimen/padding_large"
         android:orientation="vertical">
 
         <TextView
@@ -33,8 +33,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/general_padding"
-            android:layout_height="@dimen/edit_text_height">
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_height="@dimen/height_edit_text">
 
             <EditText
                 android:id="@+id/et_userpassword"
@@ -50,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                android:paddingEnd="@dimen/general_padding"
+                android:paddingEnd="@dimen/padding_small"
                 android:contentDescription="@string/app_name" />
 
         </RelativeLayout>
@@ -62,7 +62,7 @@
             style="@style/Text_Normal"
             android:layout_gravity="center"
             android:onClick="SIGN_UP"
-            android:paddingTop="@dimen/general_padding"
+            android:paddingTop="@dimen/padding_small"
             android:text="@string/nav_sign_up" />
 
         <TextView

@@ -7,12 +7,12 @@
                 android:startColor="@color/colorAccentLight"
                 android:centerColor="@color/colorAccent"
                 android:endColor="@color/colorAccentDark"
-                android:angle="@dimen/color_angle" />
+                android:angle="@dimen/angle_color" />
             <stroke
                 android:width="@dimen/line_thickness"
                 android:color="@color/colorAccentLight" />
             <corners
-                android:radius="@dimen/radius_button" />
+                android:radius="@dimen/radius_corner" />
         </shape>
     </item>
 
@@ -22,12 +22,12 @@
                 android:startColor="@color/colorAccentLight"
                 android:centerColor="@color/colorAccent"
                 android:endColor="@color/colorAccentDark"
-                android:angle="@dimen/color_angle" />
+                android:angle="@dimen/angle_color" />
             <stroke
                 android:width="@dimen/line_thickness"
                 android:color="@color/colorAccentLight" />
             <corners
-                android:radius="@dimen/radius_button" />
+                android:radius="@dimen/radius_corner" />
         </shape>
     </item>
 
@@ -37,12 +37,12 @@
                 android:startColor="@color/colorAccentLight"
                 android:centerColor="@color/colorAccent"
                 android:endColor="@color/colorAccentDark"
-                android:angle="@dimen/color_angle" />
+                android:angle="@dimen/angle_color" />
             <stroke
                 android:width="@dimen/line_thickness"
                 android:color="@color/colorAccentLight" />
             <corners
-                android:radius="@dimen/radius_button" />
+                android:radius="@dimen/radius_corner" />
         </shape>
     </item>
 
@@ -52,12 +52,12 @@
                 android:startColor="@color/colorAccentDark"
                 android:centerColor="@color/colorAccent"
                 android:endColor="@color/colorAccentLight"
-                android:angle="@dimen/color_angle" />
+                android:angle="@dimen/angle_color" />
             <stroke
                 android:width="@dimen/line_thickness"
                 android:color="@color/colorAccentDark" />
             <corners
-                android:radius="@dimen/radius_button" />
+                android:radius="@dimen/radius_corner" />
         </shape>
     </item>
 

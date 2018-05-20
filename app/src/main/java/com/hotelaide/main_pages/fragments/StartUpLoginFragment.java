@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.method.PasswordTransformationMethod;
@@ -17,9 +18,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
+import com.hotelaide.services.LoginService;
+import com.hotelaide.services.UserService;
+import com.hotelaide.start_up.LoginActivity;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class StartUpLoginFragment extends Fragment {
@@ -47,6 +61,7 @@ public class StartUpLoginFragment extends Fragment {
 
     }
 
+    // OVERRIDE METHODS ============================================================================
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +76,7 @@ public class StartUpLoginFragment extends Fragment {
 
                 findAllViews();
 
-                setListerners();
+                setListeners();
 
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -76,6 +91,8 @@ public class StartUpLoginFragment extends Fragment {
         return rootview;
     }
 
+
+    // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
         btn_cancel = rootview.findViewById(R.id.btn_cancel);
         btn_confirm = rootview.findViewById(R.id.btn_confirm);
@@ -90,25 +107,18 @@ public class StartUpLoginFragment extends Fragment {
 
     }
 
-    private void setListerners() {
+    private void setListeners() {
         btn_cancel.setVisibility(View.GONE);
         btn_confirm.setVisibility(View.VISIBLE);
         btn_confirm.setText(getString(R.string.nav_login));
-
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (helpers.validateEmptyEditText(et_user_pass)
                         && helpers.validateEmptyEditText(et_user_email)
-                        && et_user_email.getText().toString().contains("asim")) {
-                    startActivity(new Intent(getActivity(), DashboardActivity.class));
+                        && helpers.validateEmail(et_user_email)) {
+                    asyncLogin(et_user_email.getText().toString(), et_user_pass.getText().toString());
                 }
 
             }
@@ -131,7 +141,6 @@ public class StartUpLoginFragment extends Fragment {
         });
     }
 
-
     private void dropDownKeyboard(EditText editText) {
         if (getActivity() != null) {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -142,4 +151,88 @@ public class StartUpLoginFragment extends Fragment {
         }
     }
 
+
+    // LOGIN ASYNC FUNCTIONS =======================================================================
+    private void asyncLogin(final String email, final String password) {
+
+        helpers.setProgressDialogMessage("Validating your credentials, please wait...");
+        helpers.progressDialog(true);
+
+        LoginService loginService = LoginService.retrofit.create(LoginService.class);
+        final Call<JsonObject> call = loginService.userLogin(
+                BuildConfig.CLIENT_ID,
+                BuildConfig.CLIENT_SECRET,
+                BuildConfig.GRANT_TYPE,
+                email,
+                password
+        );
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                helpers.progressDialog(false);
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+                    if (!main.has("error")) {
+                        Helpers.LogThis(TAG_LOG, main.getString("access_token"));
+                        SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, main.getString("access_token"));
+                        asyncGetUser();
+                    } else {
+                        helpers.ToastMessage(getActivity(), main.getString("message"));
+                    }
+                } catch (JSONException e) {
+                    helpers.ToastMessage(getActivity(), e.toString());
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                helpers.progressDialog(false);
+                if (helpers.validateInternetConnection()) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                } else {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                }
+
+            }
+        });
+
+    }
+
+    public void asyncGetUser() {
+        helpers.setProgressDialogMessage("Fetching your data, please wait...");
+        helpers.progressDialog(true);
+
+        UserService userService = UserService.retrofit.create(UserService.class);
+        final Call<JsonObject> call = userService.getUser();
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+                    if (SharedPrefs.setUser(main)) {
+                        if (getActivity() != null)
+                            getActivity().finish();
+                        startActivity(new Intent(getActivity(), DashboardActivity.class));
+                    } else {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_unknown));
+                    }
+                } catch (JSONException e) {
+                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+
+                } catch (Exception e) {
+                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + t.toString());
+                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + call.toString());
+            }
+
+        });
+    }
 }

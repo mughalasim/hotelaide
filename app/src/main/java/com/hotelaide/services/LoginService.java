@@ -35,7 +35,7 @@ public interface LoginService {
                     Request original = chain.request();
 
                     Request.Builder requestBuilder = original.newBuilder()
-                            .addHeader("Authorization", "Bearer " + SharedPrefs.getString(SharedPrefs.ACCESS_TOKEN))
+//                            .addHeader("Authorization", "Bearer " + SharedPrefs.getString(SharedPrefs.ACCESS_TOKEN))
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();

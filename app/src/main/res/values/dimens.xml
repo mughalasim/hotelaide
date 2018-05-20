@@ -1,27 +1,27 @@
 <resources>
     <!--TOOLBAR AND NAVBAR HEIGHTS ==============================================================-->
-    <dimen name="nav_header_height">150dp</dimen>
-    <dimen name="collapsing_details_toolbar_height">210dp</dimen>
 
     <!-- BORDER CORNERS =========================================================================-->
-    <dimen name="radius_button">3sp</dimen>
+    <dimen name="radius_corner">3sp</dimen>
 
 
     <!-- LINE THICKNESS =========================================================================-->
     <dimen name="line_thickness">1dp</dimen>
-    <dimen name="color_angle">315</dimen>
+
+    <!--ANGLES ==================================================================================-->
+    <dimen name="angle_color">315</dimen>
 
 
     <!--IMAGE DIMENS ============================================================================-->
-    <dimen name="restaurant_adapter_image_size">60dp</dimen>
-    <dimen name="nav_profile_image_size">70sp</dimen>
-    <dimen name="my_account_profile_pic">150dp</dimen>
-    <dimen name="main_logo_image_size">60sp</dimen>
+    <dimen name="img_size_large">120sp</dimen>
+    <dimen name="img_size_medium">70sp</dimen>
+    <dimen name="img_size_small">50sp</dimen>
 
 
     <!--PADDING =================================================================================-->
-    <dimen name="general_padding">20dp</dimen>
-    <dimen name="login_activity_padding">40dp</dimen>
+    <dimen name="padding_large">40dp</dimen>
+    <dimen name="padding_medium">30dp</dimen>
+    <dimen name="padding_small">20dp</dimen>
 
 
     <!--TEXT SIZES ==============================================================================-->
@@ -33,16 +33,17 @@
 
 
     <!--MARGINS AND SPACINGS ====================================================================-->
-    <dimen name="text_size_header_margin">4sp</dimen>
-    <dimen name="text_size_normal_margin">4sp</dimen>
-    <dimen name="text_size_small_margin">2sp</dimen>
+    <dimen name="text_margin">4sp</dimen>
     <dimen name="text_line_spacing">1sp</dimen>
     <dimen name="text_line_multiplier">1.2</dimen>
 
 
-    <!--EDIT TEXTS AND BUTTON HEIGHTS ===========================================================-->
-    <dimen name="button_height">40sp</dimen>
-    <dimen name="panel_height">55sp</dimen>
-    <dimen name="edit_text_height">38sp</dimen>
+    <!--FIXED ITEM HEIGHTS ======================================================================-->
+    <dimen name="height_button">40sp</dimen>
+    <dimen name="height_edit_text">39sp</dimen>
+    <dimen name="height_panel">55sp</dimen>
+    <dimen name="height_nav_header">150dp</dimen>
+    <dimen name="height_collapsing_toolbar">210dp</dimen>
+
 
 </resources>

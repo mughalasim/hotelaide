@@ -2,7 +2,7 @@
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:contentDescription="@string/app_name"
-    android:layout_marginTop="@dimen/general_padding"
+    android:layout_marginTop="@dimen/padding_small"
     android:layout_width="match_parent"
     android:src="@color/colorPrimaryDark"
     android:layout_height="@dimen/line_thickness">

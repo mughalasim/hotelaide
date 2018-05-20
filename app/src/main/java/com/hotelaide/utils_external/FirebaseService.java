@@ -25,20 +25,12 @@ import com.hotelaide.utils.MyApplication;
 
 public class FirebaseService extends FirebaseInstanceIdService {
 
-    private static final String TAG = "FIREBASE";
-
     @Override
     public void onTokenRefresh() {
-        // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Helpers.LogThis(TAG, "Refreshed token: " + refreshedToken);
+        Helpers.LogThis( "FIREBASE", "Refreshed token: " + refreshedToken);
 
-        sendRegistrationToServer(refreshedToken);
-    }
-
-
-    private void sendRegistrationToServer(String token) {
-        AppEventsLogger.newLogger(MyApplication.getAppContext(), token);
-        AppEventsLogger.setPushNotificationsRegistrationId(token);
+        AppEventsLogger.newLogger(MyApplication.getAppContext(), refreshedToken);
+        AppEventsLogger.setPushNotificationsRegistrationId(refreshedToken);
     }
 }

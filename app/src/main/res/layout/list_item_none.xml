@@ -10,10 +10,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="@dimen/my_account_profile_pic"
-        android:layout_height="@dimen/my_account_profile_pic"
+        android:layout_width="@dimen/img_size_medium"
+        android:layout_height="@dimen/img_size_medium"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/login_activity_padding"
         android:contentDescription="@string/app_name"
         app:srcCompat="@drawable/ic_sad_face" />
 
@@ -21,7 +20,7 @@
         android:id="@+id/txt_no_results"
         style="@style/Text_Header"
         android:layout_below="@id/imageView"
-        android:text="@string/txt_no_restaurants"
+        android:text="@string/txt_no_items_found"
         android:textAllCaps="false" />
 
 

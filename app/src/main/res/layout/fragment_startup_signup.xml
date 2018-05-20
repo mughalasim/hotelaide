@@ -6,24 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    android:paddingBottom="@dimen/general_padding"
+    android:paddingBottom="@dimen/padding_small"
     sothree:umanoFadeColor="@color/dim"
-    sothree:umanoPanelHeight="@dimen/panel_height"
+    sothree:umanoPanelHeight="@dimen/height_panel"
     sothree:umanoShadowHeight="4dp">
 
     <com.southernbox.springscrollview.SpringScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/general_padding"
-        android:paddingRight="@dimen/general_padding"
+        android:paddingLeft="@dimen/padding_small"
+        android:paddingRight="@dimen/padding_small"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/general_padding">
+            android:paddingBottom="@dimen/padding_small">
 
             <TextView
                 style="@style/Text_Title"
@@ -38,7 +38,7 @@
             <RadioGroup
                 android:id="@+id/radio_group"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/general_padding"
+                android:layout_marginTop="@dimen/padding_small"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -89,8 +89,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/edit_text_height"
-                android:layout_marginTop="@dimen/general_padding">
+                android:layout_height="@dimen/height_edit_text"
+                android:layout_marginTop="@dimen/padding_small">
 
                 <EditText
                     android:id="@+id/et_user_pass"
@@ -107,7 +107,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/app_name"
-                    android:paddingEnd="@dimen/general_padding" />
+                    android:paddingEnd="@dimen/padding_small" />
 
             </RelativeLayout>
 
@@ -123,7 +123,7 @@
                 style="@style/Text_Normal"
                 android:layout_gravity="center"
                 android:onClick="LOGIN"
-                android:paddingTop="@dimen/general_padding"
+                android:paddingTop="@dimen/padding_small"
                 android:text="OOps! I already have an account" />
 
             <TextView
@@ -140,8 +140,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/general_padding"
-        android:paddingRight="@dimen/general_padding">
+        android:paddingLeft="@dimen/padding_small"
+        android:paddingRight="@dimen/padding_small">
 
         <TextView
             style="@style/Text_Normal"
@@ -155,22 +155,22 @@
         <TextView
             style="@style/Button_Yes"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginTop="@dimen/general_padding"
+            android:layout_height="@dimen/height_button"
+            android:layout_marginTop="@dimen/padding_small"
             android:drawableStart="@drawable/com_facebook_button_icon"
             android:gravity="start|center_vertical"
-            android:paddingLeft="@dimen/general_padding"
+            android:paddingLeft="@dimen/padding_small"
             android:text=" FACEBOOK" />
 
         <TextView
             style="@style/Button_No"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
+            android:layout_height="@dimen/height_button"
             android:layout_marginEnd="0dp"
-            android:layout_marginTop="@dimen/general_padding"
+            android:layout_marginTop="@dimen/padding_small"
             android:drawableStart="@drawable/googleg_standard_color_18"
             android:gravity="start|center_vertical"
-            android:paddingLeft="@dimen/general_padding"
+            android:paddingLeft="@dimen/padding_small"
             android:text=" GOOGLE" />
 
 

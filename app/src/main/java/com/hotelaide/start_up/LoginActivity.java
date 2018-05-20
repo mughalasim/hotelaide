@@ -36,8 +36,6 @@ public class LoginActivity extends AppCompatActivity {
             btn_confirm,
             btn_cancel;
 
-    private Database db;
-
     private final String
             TAG_LOG = "LOGIN";
 
@@ -61,20 +59,9 @@ public class LoginActivity extends AppCompatActivity {
 
         helper = new Helpers(LoginActivity.this);
 
-        db = new Database();
-
         setContentView(R.layout.activity_login);
 
         findAllViews();
-
-        helper.setTracker(TAG_LOG);
-
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
     }
 
     @Override
@@ -116,22 +103,22 @@ public class LoginActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(5);
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -187,115 +174,6 @@ public class LoginActivity extends AppCompatActivity {
         helper.dialogMakeCall(LoginActivity.this, textView.getText().toString());
     }
 
-
-
-    // LOGIN ASYNC FUNCTIONS =======================================================================
-    private void asyncLogin(final String email, final String password) {
-
-        helper.setProgressDialogMessage("Logging in, please wait...");
-        helper.progressDialog(true);
-
-        LoginService loginService = LoginService.retrofit.create
-                (LoginService.class);
-
-//        final Call<JsonObject> call = loginService.sendPhone(phone, country_code);
-
-//        call.enqueue(new Callback<JsonObject>() {
-//            @Override
-//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-//                helper.progressDialog(false);
-//                try {
-//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-//                    if (main.getBoolean("success")) {
-//                        Helpers.LogThis(TAG_LOG, main.getString("otp"));
-//                        refreshForms(STR_ACTIVATION);
-//                    } else {
-//                        helper.ToastMessage(LoginActivity.this, "Invalid Phone Number, Please try again");
-//                    }
-//                } catch (JSONException e) {
-//                    helper.ToastMessage(LoginActivity.this, e.toString());
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-//                helper.progressDialog(false);
-//                if (helper.validateInternetConnection()) {
-//                    final Snackbar snackBar = Snackbar.make(findViewById(R.id.activity_login),
-//                            getString(R.string.error_connection), Snackbar.LENGTH_LONG);
-//                    snackBar.setAction("Dismiss", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            snackBar.dismiss();
-//                        }
-//                    });
-//                    snackBar.show();
-//                } else {
-//                    helper.ToastMessage(LoginActivity.this, getString(R.string.error_500));
-//                }
-//
-//            }
-//        });
-
-    }
-
-    private void asyncRegisterUser(final UserModel userModel) {
-
-        helper.setProgressDialogMessage("Registration in progress... please wait...");
-        helper.progressDialog(true);
-
-        LoginService loginService = LoginService.retrofit.create
-                (LoginService.class);
-
-//        final Call<JsonObject> call = loginService.sendCode(otp, phone);
-
-//        call.enqueue(new Callback<JsonObject>() {
-//            @Override
-//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-//                helper.progressDialog(false);
-//                try {
-//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-//                    if (db.setUser(main)) {
-//                        startUp();
-//
-//                    } else {
-//                        helper.ToastMessage(LoginActivity.this, "Invalid Activation Code, Please try again");
-//                    }
-//                } catch (JSONException e) {
-//                    helper.ToastMessage(LoginActivity.this, e.toString());
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-//                helper.progressDialog(false);
-//                if (helper.validateInternetConnection()) {
-//                    final Snackbar snackBar = Snackbar.make(findViewById(R.id.activity_login),
-//                            getString(R.string.error_connection), Snackbar.LENGTH_INDEFINITE);
-//                    snackBar.setAction("Dismiss", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            snackBar.dismiss();
-//                        }
-//                    });
-//                    snackBar.show();
-//                } else {
-//                    helper.ToastMessage(LoginActivity.this, getString(R.string.error_500));
-//                }
-//
-//            }
-//        });
-
-    }
-
-    private void startUp() {
-        finish();
-        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-    }
 
 }
 

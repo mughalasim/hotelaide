@@ -48,8 +48,6 @@ public class SharedPrefs {
 
     // BOOLEAN VARIABLE NAMES ======================================================================
     public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
-    public static final String IS_PUSH_CLICKED = "IS_PUSH_CLICKED";
-    public static final String CALL_ASYNC_USER = "CALL_ASYNC_USER";
 
 
 
@@ -118,7 +116,7 @@ public class SharedPrefs {
 
 
     // USER FUNCTIONS ==============================================================================
-    public Boolean setUser(JSONObject main) {
+    public static Boolean setUser(JSONObject main) {
         Helpers.LogThis(SHARED_PREFS, "USER SET");
         Boolean response;
         Helpers.LogThis(SHARED_PREFS, main.toString());
@@ -177,25 +175,25 @@ public class SharedPrefs {
         return response;
     }
 
-    public UserModel getUser() {
+    public static UserModel getUser() {
         Helpers.LogThis(SHARED_PREFS, "USER GET");
 
         UserModel userModel = new UserModel();
-        userModel.id = SharedPrefs.getInt(USER_ID);
-        userModel.salutation = SharedPrefs.getString(USER_SALUTATION);
-        userModel.first_name = SharedPrefs.getString(USER_F_NAME);
-        userModel.last_name = SharedPrefs.getString(USER_L_NAME);
-        userModel.email = SharedPrefs.getString(USER_EMAIL);
-        userModel.img_profile = SharedPrefs.getString(USER_IMG_PROFILE);
-        userModel.img_banner = SharedPrefs.getString(USER_IMG_BANNER);
-        userModel.country_code = SharedPrefs.getInt(USER_COUNTRY_CODE);
-        userModel.phone = SharedPrefs.getInt(USER_PHONE);
-        userModel.dob = SharedPrefs.getString(USER_DOB);
-        userModel.fb_id = SharedPrefs.getString(USER_FB_ID);
-        userModel.google_id = SharedPrefs.getString(USER_GOOGLE_ID);
-        userModel.geo_lat = SharedPrefs.getDouble(USER_GEO_LAT);
-        userModel.geo_lng = SharedPrefs.getDouble(USER_GEO_LNG);
-        userModel.account_type = SharedPrefs.getString(USER_ACCOUNT_TYPE);
+        userModel.id = getInt(USER_ID);
+        userModel.salutation = getString(USER_SALUTATION);
+        userModel.first_name = getString(USER_F_NAME);
+        userModel.last_name = getString(USER_L_NAME);
+        userModel.email = getString(USER_EMAIL);
+        userModel.img_profile = getString(USER_IMG_PROFILE);
+        userModel.img_banner = getString(USER_IMG_BANNER);
+        userModel.country_code = getInt(USER_COUNTRY_CODE);
+        userModel.phone = getInt(USER_PHONE);
+        userModel.dob = getString(USER_DOB);
+        userModel.fb_id = getString(USER_FB_ID);
+        userModel.google_id = getString(USER_GOOGLE_ID);
+        userModel.geo_lat = getDouble(USER_GEO_LAT);
+        userModel.geo_lng = getDouble(USER_GEO_LNG);
+        userModel.account_type = getString(USER_ACCOUNT_TYPE);
 
 
         Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +

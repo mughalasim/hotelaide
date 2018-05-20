@@ -20,10 +20,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.ActionMode;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -34,14 +31,16 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.JsonObject;
+import com.hotelaide.BuildConfig;
+import com.hotelaide.R;
+import com.hotelaide.main_pages.activities.AboutUsActivity;
+import com.hotelaide.main_pages.activities.DashboardActivity;
+import com.hotelaide.services.UserService;
+import com.hotelaide.start_up.SplashScreenActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,13 +48,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.regex.Pattern;
-
-import com.hotelaide.BuildConfig;
-import com.hotelaide.R;
-import com.hotelaide.main_pages.activities.AboutUsActivity;
-import com.hotelaide.main_pages.activities.DashboardActivity;
-import com.hotelaide.services.UserService;
-import com.hotelaide.start_up.SplashScreenActivity;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 import retrofit2.Call;
@@ -65,22 +57,15 @@ import retrofit2.Response;
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
 import static android.content.pm.PackageManager.GET_SIGNATURES;
 import static android.content.pm.PackageManager.NameNotFoundException;
-import static com.hotelaide.utils.Database.CUISINE_NAME;
-import static com.hotelaide.utils.Database.CUISINE_TABLE_NAME;
-import static com.hotelaide.utils.SharedPrefs.CALL_ASYNC_USER;
-import static com.hotelaide.utils.SharedPrefs.NAV_DATA;
 
 public class Helpers {
 
     public final static String TAG_LOG = "HELPER CLASS";
 
-    public final static String ADAPTER_DEFAULT = "DEFAULT";
-    public final static String ADAPTER_DISTANCE = "DISTANCE";
-
     private final static int INT_ANIMATION_TIME = 800;
 
-    private static Tracker sTracker;
-    private static GoogleAnalytics sAnalytics;
+//    private static Tracker sTracker;
+//    private static GoogleAnalytics sAnalytics;
 
     private final Context context;
 
@@ -103,23 +88,23 @@ public class Helpers {
         dialog.setContentView(R.layout.dialog_loading);
         dialog.setCancelable(false);
         ProgressDialogMessage = dialog.findViewById(R.id.messageText);
-        sAnalytics = GoogleAnalytics.getInstance(context);
-        getDefaultTracker();
+//        sAnalytics = GoogleAnalytics.getInstance(context);
+//        getDefaultTracker();
     }
 
     // GOOGLE ANALYTICS TRACKING ===================================================================
-    synchronized private void getDefaultTracker() {
-        if (sTracker == null) {
-            sTracker = sAnalytics.newTracker(R.xml.global_tracker);
-        }
-    }
+//    synchronized private void getDefaultTracker() {
+//        if (sTracker == null) {
+//            sTracker = sAnalytics.newTracker(R.xml.global_tracker);
+//        }
+//    }
 
-    public void setTracker(String TAG_LOG) {
-        sTracker.setScreenName("ANDROID - " + TAG_LOG);
-        sTracker.setAppVersion(BuildConfig.VERSION_NAME);
-        sTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        Helpers.LogThis(TAG_LOG, "TRACKED");
-    }
+//    public void setTracker(String TAG_LOG) {
+//        sTracker.setScreenName("ANDROID - " + TAG_LOG);
+//        sTracker.setAppVersion(BuildConfig.VERSION_NAME);
+//        sTracker.send(new HitBuilders.ScreenViewBuilder().build());
+//        Helpers.LogThis(TAG_LOG, "TRACKED");
+//    }
 
 
     // DRAWER CLICKS ===============================================================================
@@ -369,14 +354,7 @@ public class Helpers {
     }
 
 
-    // NAVIGATION ==================================================================================
-    public static void setAppNavigation(String whereTo, String id, String Title, String body) {
-        SharedPrefs.setString(NAV_DATA, whereTo + "~" + id + "~" + Title + "~" + body);
-        Helpers.LogThis("NAVIGATE", "NAVIGATE TO: " + whereTo + "~" + id + "~" + Title + "~" + body);
-    }
-
-
-    // FORMAT NUMBERS
+    // FORMAT CURRENCY ==============================================================================
     public String formatNumbersCurrency(String amount) {
         String[] amount_array = amount.split("\\.");
         String[] savingarray = amount_array[0].split("");
@@ -408,32 +386,6 @@ public class Helpers {
             return newalloc.toString();
         }
 
-    }
-
-
-    // ACTION BAR SETTINGS FOR THE EDIT TEXT =======================================================
-    public void setDefaultEditTextSelectionMode(EditText editText) {
-        editText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                return false;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-
-            }
-        });
     }
 
 
@@ -513,195 +465,6 @@ public class Helpers {
 
 
     // COMMON ASYNC TASKS ==========================================================================
-    // GET CUISINES ================================================================================
-    public void asyncGetCuisines() {
-        if (db.getListItems(CUISINE_TABLE_NAME, CUISINE_NAME).size() < 2) {
-            GeneralService generalService = GeneralService.retrofit.create(GeneralService.class);
-            final Call<JsonObject> call = generalService.getAllCuisines();
-            call.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                    try {
-                        JSONObject main = new JSONObject(String.valueOf(response.body()));
-                        LogThis(TAG_LOG, context.getString(R.string.log_response) + String.valueOf(response.body()));
-
-                        if (!main.getBoolean("error")) {
-                            JSONArray jArray = main.getJSONArray("result");
-                            db.setCuisine(
-                                    "0",
-                                    "All"
-                            );
-                            for (int i = 0; i < jArray.length(); i++) {
-                                JSONObject json_data = jArray.getJSONObject(i);
-                                db.setCuisine(
-                                        json_data.getString("id"),
-                                        json_data.getString("name")
-                                );
-                            }
-                        }
-                        context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-                    } catch (JSONException e) {
-                        context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-                        LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-
-                    } catch (Exception e) {
-                        context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-                        LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
-                    call.clone();
-                }
-            });
-        }
-    }
-
-    // GET CITIES ==================================================================================
-    public void asyncGetCities() {
-        GeneralService generalService = GeneralService.retrofit.create(GeneralService.class);
-        final Call<JsonObject> call = generalService.getCountries();
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    LogThis(TAG_LOG, context.getString(R.string.log_response) + String.valueOf(response.body()));
-                    if (!main.getBoolean("error")) {
-
-                        JSONArray jArray = main.getJSONArray("result");
-                        int result_length = jArray.length();
-
-                        for (int i = 0; i < result_length; i++) {
-                            JSONObject countryObject = jArray.getJSONObject(i);
-
-                            String CITY_NAME;
-
-                            JSONArray active_cities = countryObject.getJSONArray("active_cities");
-                            int result_length2 = active_cities.length();
-                            for (int w = 0; w < result_length2; w++) {
-                                JSONObject cityObject = active_cities.getJSONObject(w);
-                                final String CITY_ID = cityObject.getString("id");
-                                CITY_NAME = cityObject.getString("name");
-                                db.setCity(CITY_ID, CITY_NAME);
-
-                                asyncGetAreas(CITY_ID);
-                            }
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-
-                } catch (Exception e) {
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
-
-            }
-        });
-
-    }
-
-    // GET AREAS ===================================================================================
-    public void asyncGetAreas(final String city_id) {
-        GeneralService generalService = GeneralService.retrofit.create(GeneralService.class);
-        final Call<JsonObject> call = generalService.getAllAreas(city_id);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    LogThis(TAG_LOG, context.getString(R.string.log_response) + String.valueOf(response.body()));
-                    if (!main.getBoolean("error")) {
-                        JSONArray jArray = main.getJSONArray("result");
-                        db.setArea(
-                                "0",
-                                "All",
-                                String.valueOf(city_id)
-                        );
-                        for (int i = 0; i < jArray.length(); i++) {
-                            JSONObject json_data = jArray.getJSONObject(i);
-                            db.setArea(
-                                    json_data.getString("id"),
-                                    json_data.getString("name"),
-                                    String.valueOf(city_id)
-                            );
-                        }
-                    }
-                    context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-                } catch (JSONException e) {
-                    context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-
-                } catch (Exception e) {
-                    context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
-                context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-            }
-        });
-
-    }
-
-    // GET RESTAURANT TYPES ========================================================================
-    public void asyncGetTypes() {
-        GeneralService generalService = GeneralService.retrofit.create(GeneralService.class);
-        final Call<JsonObject> call = generalService.getAllTypes();
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    LogThis(TAG_LOG, context.getString(R.string.log_response) + String.valueOf(response.body()));
-                    if (!main.getBoolean("error")) {
-                        JSONArray jArray = main.getJSONArray("result");
-                        db.setType(
-                                "0",
-                                "All"
-                        );
-                        for (int i = 0; i < jArray.length(); i++) {
-                            JSONObject json_data = jArray.getJSONObject(i);
-                            db.setType(
-                                    json_data.getString("id"),
-                                    json_data.getString("name")
-                            );
-                        }
-                    }
-                    context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-                } catch (JSONException e) {
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-                    context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-
-                } catch (Exception e) {
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-                    context.sendBroadcast(new Intent().setAction(BroadcastValueAsyncCompleted));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
-            }
-        });
-
-    }
-
     // GET USER ====================================================================================
     public void asyncGetUser() {
         UserService userService = UserService.retrofit.create(UserService.class);
@@ -711,8 +474,7 @@ public class Helpers {
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    db.setUser(main);
-                    SharedPrefs.setBool(CALL_ASYNC_USER, false);
+                    SharedPrefs.setUser(main);
 
                 } catch (JSONException e) {
                     LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());

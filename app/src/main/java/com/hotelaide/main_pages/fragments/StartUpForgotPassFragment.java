@@ -47,7 +47,7 @@ public class StartUpForgotPassFragment extends Fragment {
 
                 findAllViews();
 
-                setListerners();
+                setListeners();
 
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -70,7 +70,7 @@ public class StartUpForgotPassFragment extends Fragment {
         btn_confirm.setText(getString(R.string.txt_reset));
     }
 
-    private void setListerners() {
+    private void setListeners() {
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override

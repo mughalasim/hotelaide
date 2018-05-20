@@ -24,9 +24,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/general_padding"
-                android:paddingLeft="@dimen/general_padding"
-                android:paddingRight="@dimen/general_padding">
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingLeft="@dimen/padding_small"
+                android:paddingRight="@dimen/padding_small">
 
                 <include layout="@layout/fragment_startup_about_us" />
 

@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="drawerArrowStyle">@style/WhiteDrawerIconStyle</item>
-        <item name="android:windowBackground">@drawable/bckgrd_login</item>
+        <item name="android:windowBackground">@drawable/bckgrd_app</item>
         <item name="actionOverflowMenuStyle">@style/WhiteDrawerIconStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>
@@ -36,20 +36,17 @@
     <!-- EDIT TEXT STYLES =======================================================================-->
 
     <style name="Edit_Text" parent="AppTheme">
-        <item name="android:layout_height">@dimen/edit_text_height</item>
+        <item name="android:layout_height">@dimen/height_edit_text</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="android:background">@drawable/bckgrd_text_fields</item>
-        <item name="android:paddingLeft">@dimen/general_padding</item>
-        <item name="android:paddingRight">@dimen/general_padding</item>
+        <item name="android:paddingLeft">@dimen/padding_small</item>
+        <item name="android:paddingRight">@dimen/padding_small</item>
         <item name="android:maxLines">1</item>
-        <item name="android:longClickable">false</item>
-        <item name="android:textSelectHandle">@drawable/edit_text_selection_background</item>
-        <item name="android:selectable">false</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textColorHint">@color/colorPrimaryDark</item>
-        <item name="android:layout_marginTop">@dimen/general_padding</item>
+        <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
@@ -64,7 +61,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
-        <item name="android:layout_marginTop">@dimen/general_padding</item>
+        <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:textSize">@dimen/text_size_x_large</item>
     </style>
 
@@ -76,7 +73,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:layout_marginTop">@dimen/general_padding</item>
+        <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
@@ -88,7 +85,7 @@
         <item name="android:lineSpacingMultiplier">@dimen/text_line_multiplier</item>
         <item name="android:lineSpacingExtra">@dimen/text_line_spacing</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:layout_marginTop">@dimen/general_padding</item>
+        <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
@@ -98,7 +95,7 @@
         <item name="android:layout_gravity">start|center_vertical</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:layout_marginTop">@dimen/general_padding</item>
+        <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
@@ -108,7 +105,7 @@
         <item name="android:gravity">center_vertical|start</item>
         <item name="android:lineSpacingMultiplier">@dimen/text_line_multiplier</item>
         <item name="android:lineSpacingExtra">@dimen/text_line_spacing</item>
-        <item name="android:layout_marginTop">@dimen/general_padding</item>
+        <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
@@ -117,7 +114,7 @@
     <!-- BUTTON STYLES ==========================================================================-->
 
     <style name="Button_Yes" parent="AppTheme">
-        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:layout_height">@dimen/height_button</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_gravity">center</item>
@@ -130,7 +127,7 @@
     </style>
 
     <style name="Button_No" parent="AppTheme">
-        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:layout_height">@dimen/height_button</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_gravity">center</item>
@@ -140,7 +137,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
-        <item name="android:layout_marginRight">@dimen/general_padding</item>
+        <item name="android:layout_marginRight">@dimen/padding_small</item>
     </style>
 
 </resources>
