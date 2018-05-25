@@ -2,19 +2,19 @@
 
 <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sliding_panel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    android:paddingBottom="@dimen/padding_small"
     sothree:umanoFadeColor="@color/dim"
     sothree:umanoPanelHeight="@dimen/height_panel"
-    sothree:umanoShadowHeight="4dp">
+    sothree:umanoShadowHeight="@dimen/line_thickness">
 
     <com.southernbox.springscrollview.SpringScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_small"
         android:paddingLeft="@dimen/padding_small"
         android:paddingRight="@dimen/padding_small"
         android:scrollbars="none">
@@ -26,43 +26,11 @@
             android:paddingBottom="@dimen/padding_small">
 
             <TextView
-                style="@style/Text_Title"
-                android:text="REGISTER" />
-
-            <TextView
                 style="@style/Text_Normal"
                 android:layout_gravity="center"
                 android:onClick="SIGN_UP"
                 android:text="You could opt to give us some details about you so we can sign you up and get you started" />
 
-            <RadioGroup
-                android:id="@+id/radio_group"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/padding_small"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_btn_job_seeker"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/colorPrimary"
-                    android:textAppearance="@style/Text_Normal"
-                    android:layout_height="wrap_content"
-                    android:text="Job Seeker"
-                    tools:targetApi="lollipop" />
-
-                <RadioButton
-                    android:id="@+id/radio_btn_employer"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:buttonTint="@color/colorPrimary"
-                    android:textAppearance="@style/Text_Normal"
-                    android:layout_height="wrap_content"
-                    tools:targetApi="lollipop"
-                    android:text="Employer"/>
-
-            </RadioGroup>
 
             <EditText
                 android:id="@+id/et_user_first_name"
@@ -70,22 +38,59 @@
                 android:hint="@string/et_hint_first_name"
                 android:inputType="text" />
 
+
             <EditText
                 android:id="@+id/et_user_last_name"
                 style="@style/Edit_Text"
                 android:hint="@string/et_hint_last_name"
                 android:inputType="text" />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.rilixtech.CountryCodePicker
+                    android:id="@+id/ccp_user_country_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/padding_small"
+                    android:background="@drawable/bckgrd_text_fields"
+                    android:gravity="center"
+                    android:paddingEnd="@dimen/padding_small"
+                    android:paddingStart="@dimen/padding_small"
+                    sothree:ccp_defaultCode="254"
+                    sothree:ccp_textColor="@color/colorAccent"
+                    sothree:ccp_textSize="@dimen/text_size_normal" />
+
+                <EditText
+                    android:id="@+id/et_user_phone"
+                    style="@style/Edit_Text"
+                    android:layout_marginTop="0dp"
+                    android:digits="0123456789"
+                    android:hint="@string/et_hint_phone"
+                    android:inputType="phone"
+                    android:maxLength="9"
+                    android:maxLines="1" />
+
+            </LinearLayout>
+
+
             <TextView
                 android:id="@+id/txt_user_dob"
                 style="@style/Edit_Text"
                 android:text="@string/et_hint_dob" />
+
 
             <EditText
                 android:id="@+id/et_user_email"
                 style="@style/Edit_Text"
                 android:hint="@string/et_hint_email"
                 android:inputType="textEmailAddress" />
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -140,29 +145,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_small"
         android:paddingLeft="@dimen/padding_small"
         android:paddingRight="@dimen/padding_small">
 
         <TextView
+            android:id="@+id/panel_title"
             style="@style/Text_Normal"
-            android:text="Social Medial Sign up" />
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_panel"
+            android:layout_marginTop="0dp"
+            android:textColor="@color/colorPrimary"
+            android:text="Sign up with social Media instead" />
 
         <TextView
             style="@style/Text_Normal"
-            android:onClick="SIGN_UP"
+            android:layout_marginBottom="0dp"
             android:text="Tap on one below and instantly sign up using either of your accounts on Facebook or Google+" />
 
-        <TextView
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btn_login_facebook"
             style="@style/Button_Yes"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_button"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_small"
+            android:paddingBottom="@dimen/padding_small"
             android:layout_marginTop="@dimen/padding_small"
-            android:drawableStart="@drawable/com_facebook_button_icon"
-            android:gravity="start|center_vertical"
-            android:paddingLeft="@dimen/padding_small"
-            android:text=" FACEBOOK" />
+            android:gravity="center" />
+
 
         <TextView
+            android:id="@+id/btn_login_google"
             style="@style/Button_No"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_button"

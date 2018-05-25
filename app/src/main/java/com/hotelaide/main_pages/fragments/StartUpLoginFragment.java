@@ -61,6 +61,7 @@ public class StartUpLoginFragment extends Fragment {
 
     }
 
+
     // OVERRIDE METHODS ============================================================================
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -176,7 +177,7 @@ public class StartUpLoginFragment extends Fragment {
                     if (!main.has("error")) {
                         Helpers.LogThis(TAG_LOG, main.getString("access_token"));
                         SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, main.getString("access_token"));
-                        asyncGetUser();
+                        //asyncGetUser();
                     } else {
                         helpers.ToastMessage(getActivity(), main.getString("message"));
                     }
@@ -199,40 +200,5 @@ public class StartUpLoginFragment extends Fragment {
             }
         });
 
-    }
-
-    public void asyncGetUser() {
-        helpers.setProgressDialogMessage("Fetching your data, please wait...");
-        helpers.progressDialog(true);
-
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.getUser();
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    if (SharedPrefs.setUser(main)) {
-                        if (getActivity() != null)
-                            getActivity().finish();
-                        startActivity(new Intent(getActivity(), DashboardActivity.class));
-                    } else {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_unknown));
-                    }
-                } catch (JSONException e) {
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
-
-                } catch (Exception e) {
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + t.toString());
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + call.toString());
-            }
-
-        });
     }
 }

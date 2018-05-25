@@ -35,7 +35,6 @@ public interface LoginService {
                     Request original = chain.request();
 
                     Request.Builder requestBuilder = original.newBuilder()
-//                            .addHeader("Authorization", "Bearer " + SharedPrefs.getString(SharedPrefs.ACCESS_TOKEN))
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
@@ -82,7 +81,8 @@ public interface LoginService {
     Call<JsonObject> userRegister(
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
-            @Field("phone_number") String phone_number,
+            @Field("country_code") int country_code,
+            @Field("phone_number") int phone_number,
             @Field("email") String email,
             @Field("password") String password,
             @Field("account_type") String account_type,

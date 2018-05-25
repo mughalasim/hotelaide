@@ -5,8 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--META DATA ===============================================================================-->
-    <string name="facebook_app_id">2274737566777252</string>
-    <string name="fb_login_protocol_scheme">fb2274775673160777252</string>
+    <string name="facebook_app_id">213335282601524</string>
+    <string name="fb_login_protocol_scheme">fb213335282601524</string>
     <string name="maps_api_key">AIzaSyBq_io43Sxc4sOaXpMXEEmLC"</string>
 
     <!--ERROR MESSAGES ==========================================================================-->
@@ -29,7 +29,7 @@
 
 
     <!--Address =================================================================================-->
-    <string name="txt_address">Crazy Broken Road,\n33125 – 00100,\nNairobi,\nKenya</string>
+    <string name="txt_address">Some Place Road,\n338125 – 00100,\nNairobi,\nKenya</string>
 
 
     <!--LOADING DIALOGS =========================================================================-->
@@ -48,6 +48,7 @@
     <!-- LAYOUT SET TEXT ========================================================================-->
     <string name="txt_cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="txt_ok">OK</string>
+    <string name="txt_back">BACK</string>
     <string name="txt_enable">ENABLE</string>
     <string name="txt_loading_please_wait">Loading… please wait…</string>
     <string name="txt_update_details">UPDATE</string>

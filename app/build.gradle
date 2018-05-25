@@ -35,11 +35,17 @@ android {
 
     productFlavors {
         prod {
+            // MAIN INFO
             buildConfigField 'String',    'MAIN_URL',             '"https://hotelaide.kiiya.co.ke"'
             buildConfigField 'String',    'CLIENT_ID',            '"2"'
             buildConfigField 'String',    'CLIENT_SECRET',        '"XXqjSXvCfv81CgqoK7bgKdQpxmKPhvR6EBeklOtn"'
             buildConfigField 'String',    'GRANT_TYPE',           '"password"'
+            // DATABASE INFO
             buildConfigField 'Integer',   'DATABASE_VERSION',     "$rootProject.versionCode"
+            // ACCOUNT TYPES
+            buildConfigField 'String',    'ACCOUNT_TYPE_JOB',      '"job_seeker"'
+            buildConfigField 'String',    'ACCOUNT_TYPE_EMPLOYEER','"employer"'
+
             buildConfigField 'Integer',   'CONNECTION_TIMEOUT',   '35'
             buildConfigField 'Boolean',   'LOGGING',              "$rootProject.debugMode"
         }
@@ -69,11 +75,11 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
     // FIREBASE AUTHENTICATION
-    implementation 'com.google.firebase:firebase-auth:15.1.0'
-    implementation 'com.google.firebase:firebase-messaging:15.0.2'
-    implementation 'com.google.firebase:firebase-invites:15.0.1'
-    implementation 'com.google.firebase:firebase-perf:15.2.0'
-    implementation 'com.google.firebase:firebase-database:15.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+    implementation 'com.google.firebase:firebase-invites:16.0.0'
+    implementation 'com.google.firebase:firebase-perf:16.0.0'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
 
     // GOOGLE
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
@@ -111,8 +117,8 @@ dependencies {
     // SLIDING UP PANEL
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
-    // ANIMATIONS
-//    implementation 'com.airbnb.android:lottie:2.5.4'
+    // COUNTRY CODE AND PHONE NUMBER SELECTOR
+    implementation 'com.github.joielechong:countrycodepicker:2.1.5'
 
     // SPRING SCROLL
     implementation 'com.southernbox:SpringScrollView:1.0.0'
