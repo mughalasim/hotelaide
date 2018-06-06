@@ -41,8 +41,12 @@ import com.hotelaide.utils.SharedPrefs;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.SharedPrefs.USER_ACCOUNT_TYPE;
+import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
+import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
+import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
+import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
 
-@SuppressWarnings("unchecked")
 public class ParentActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
@@ -110,25 +114,9 @@ public class ParentActivity extends AppCompatActivity implements
     }
 
     void updateDrawer() {
-        MenuItem reservations = navigationView.getMenu().getItem(5);
-        reservations.setVisible(false);
-
-        TextView app_version = findViewById(R.id.app_version);
-
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            app_version.setText(getString(R.string.txt_version).concat(pInfo.versionName));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        nav_user_name.setText("ASIM MUGHAL");
-        nav_user_email.setText("asimkenya@gmail.com");
-        Glide.with(this).load("https://media.creativemornings.com/uploads/user/avatar/49419/Bechtel_Profile_Square.jpg").into(nav_img_user_pic);
-
-//        nav_user_name.setText(Database.userModel.first_name.concat(" ").concat(Database.userModel.last_name));
-//        Glide.with(this).load(Database.userModel.profile_pic).into(nav_img_user_pic);
-//        nav_user_email.setText(Database.userModel.email);
+        nav_user_name.setText(SharedPrefs.getString(USER_F_NAME).concat(" ").concat(SharedPrefs.getString(USER_L_NAME)));
+        Glide.with(this).load(SharedPrefs.getString(USER_IMG_AVATAR)).into(nav_img_user_pic);
+        nav_user_email.setText(SharedPrefs.getString(USER_EMAIL));
         nav_img_user_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,8 +124,29 @@ public class ParentActivity extends AppCompatActivity implements
             }
         });
 
-
         navigationView.getMenu().findItem(drawer_id).setChecked(true);
+
+        TextView app_version = findViewById(R.id.app_version);
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            app_version.setText(getString(R.string.txt_version).concat(pInfo.versionName));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        // FIND THE MENU ITEMS ==================================================================
+        MenuItem reservations = navigationView.getMenu().getItem(5);
+        reservations.setVisible(false);
+
+        helper.asyncGetUser();
+
+        if(SharedPrefs.getString(USER_ACCOUNT_TYPE).equals(BuildConfig.ACCOUNT_TYPE_EMPLOYEER)){
+
+        } else{
+
+        }
+
     }
 
     private void listenExitBroadcast() {
@@ -195,7 +204,7 @@ public class ParentActivity extends AppCompatActivity implements
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
                     Gson gson = new Gson();
                     JSONObject jsonObject = new JSONObject(gson.toJson(dataSnapshot.getValue()));
@@ -257,7 +266,7 @@ public class ParentActivity extends AppCompatActivity implements
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
                 Helpers.LogThis(TAG_LOG, "DATABASE:" + error.toString());
             }
         });

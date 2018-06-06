@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -15,7 +16,6 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -33,6 +33,7 @@ public interface LoginService {
                     Request original = chain.request();
 
                     Request.Builder requestBuilder = original.newBuilder()
+                            .addHeader("Accept", "application/json")
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
@@ -70,10 +71,7 @@ public interface LoginService {
     @FormUrlEncoded
     @POST("api/login")
     Call<JsonObject> userLogin(
-            @Field("client_id") String client_id,
-            @Field("client_secret") String client_secret,
-            @Field("grant_type") String grant_type,
-            @Field("username") String email,
+            @Field("email") String email,
             @Field("password") String password
     );
 
@@ -88,10 +86,11 @@ public interface LoginService {
             @Field("phone_number") int phone_number,
             @Field("email") String email,
             @Field("password") String password,
-            @Field("account_type") String account_type,
-            @Field("dob") String dob,
-            @Field("fb_id") String fb_id,
-            @Field("google_id") String google_id
+            @Field("password_confirmation") String password_confirmation,
+            @Field("account_type") String account_type
+//            @Field("dob") String dob,
+//            @Field("fb_id") String fb_id,
+//            @Field("google_id") String google_id
     );
 
 }

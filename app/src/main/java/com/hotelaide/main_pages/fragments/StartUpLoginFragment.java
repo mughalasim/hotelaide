@@ -161,9 +161,6 @@ public class StartUpLoginFragment extends Fragment {
 
         LoginService loginService = LoginService.retrofit.create(LoginService.class);
         final Call<JsonObject> call = loginService.userLogin(
-                BuildConfig.CLIENT_ID,
-                BuildConfig.CLIENT_SECRET,
-                BuildConfig.GRANT_TYPE,
                 email,
                 password
         );
@@ -187,7 +184,7 @@ public class StartUpLoginFragment extends Fragment {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                         }
                     } else {
-                        helpers.ToastMessage(getActivity(), main.getString("message"));
+                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
 
                 } catch (JSONException e) {

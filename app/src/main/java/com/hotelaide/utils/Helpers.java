@@ -41,11 +41,14 @@ import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.services.UserService;
 import com.hotelaide.start_up.SplashScreenActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -384,6 +387,41 @@ public class Helpers {
             return newalloc + "." + amount_array[1];
         } else {
             return newalloc.toString();
+        }
+
+    }
+
+
+//    "email": ["The email has already been taken."],
+//    "password": [ "The password confirmation does not match."]
+
+    public void handleErrorMessage(final Context context, JSONObject data) {
+        try {
+            Iterator<String> iter = data.keys();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                try {
+                    JSONArray message_array = new JSONArray(String.valueOf(data.get(key)));
+                    String display_message = "";
+                    for (int i = 0; i < message_array.length(); i++) {
+                        display_message = display_message.concat(String.valueOf(i+1) + ". ").concat(message_array.getString(i)).concat("\n");
+                    }
+                    myDialog(context, context.getString(R.string.txt_errors), display_message);
+
+                    Helpers.LogThis(TAG_LOG, display_message);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    LogThis(TAG_LOG, e.toString());
+                    myDialog(context, context.getString(R.string.app_name), context.getString(R.string.error_unknown));
+                }
+            }
+
+
+        } catch (Exception j) {
+            j.printStackTrace();
+            LogThis(TAG_LOG, j.toString());
+            myDialog(context, context.getString(R.string.app_name), context.getString(R.string.error_unknown));
         }
 
     }

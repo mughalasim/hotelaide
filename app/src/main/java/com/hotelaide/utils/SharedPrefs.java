@@ -150,7 +150,7 @@ public class SharedPrefs {
                 setString(PROFILE_URL, user.getString("profile_url"));
                 setInt(USER_COUNTRY_CODE, user.getInt("country_code"));
                 setInt(USER_PHONE, user.getInt("phone_number"));
-                setString(USER_DOB, user.getString("dob"));
+//                setString(USER_DOB, user.getString("dob"));
                 setString(USER_FB_ID, user.getString("facebook_id"));
                 setString(USER_GOOGLE_ID, user.getString("google_id"));
                 setDouble(USER_GEO_LAT, user.getDouble("geolat"));

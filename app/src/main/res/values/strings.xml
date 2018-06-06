@@ -72,6 +72,7 @@
     <string name="txt_welcome_login">Kindly enter your email and password to login</string>
     <string name="txt_address_landline">Landline:&#160;</string>
     <string name="txt_address_mobile">Mobile:&#160;</string>
+    <string name="txt_errors">Errors</string>
 
     <!--ALL DRAWER TEXTS ========================================================================-->
     <string name="drawer_dashboard">Dashboard</string>
@@ -79,7 +80,7 @@
     <string name="drawer_messages">Messages</string>
     <string name="drawer_registration">Hotel Registration</string>
     <string name="drawer_subscription">Subscription Plan</string>
-    <string name="drawer_my_account">Profile</string>
+    <string name="drawer_my_account">My Account</string>
     <string name="drawer_settings">App Settings</string>
     <string name="drawer_about_us">About Us</string>
 

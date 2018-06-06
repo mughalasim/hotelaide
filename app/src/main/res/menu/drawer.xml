@@ -6,13 +6,21 @@
             android:id="@+id/drawer_dashboard"
             android:title="@string/drawer_dashboard" />
 
-        <item android:title="@string/drawer_messages" />
+        <item
+            android:id="@+id/drawer_messages"
+            android:title="@string/drawer_messages" />
 
-        <item android:title="@string/drawer_find_jobs" />
+        <item
+            android:id="@+id/drawer_find_jobs"
+            android:title="@string/drawer_find_jobs" />
 
-        <item android:title="@string/drawer_registration" />
+        <item
+            android:id="@+id/drawer_registration"
+            android:title="@string/drawer_registration" />
 
-        <item android:title="@string/drawer_subscription" />
+        <item
+            android:id="@+id/drawer_subscription"
+            android:title="@string/drawer_subscription" />
 
         <item
             android:id="@+id/drawer_my_account"
@@ -27,7 +35,9 @@
             android:id="@+id/drawer_about_us"
             android:title="@string/drawer_about_us" />
 
-        <item android:title="@string/drawer_settings" />
+        <item
+            android:id="@+id/drawer_settings"
+            android:title="@string/drawer_settings" />
 
     </group>
 

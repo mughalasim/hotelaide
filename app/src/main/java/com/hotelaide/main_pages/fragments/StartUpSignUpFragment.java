@@ -394,8 +394,8 @@ public class StartUpSignUpFragment extends Fragment {
         regModel.last_name = et_user_last_name.getText().toString();
         regModel.country_code = ccp_user_country_code.getDefaultCountryCodeAsInt();
         regModel.phone_number = Integer.parseInt(et_user_phone.getText().toString());
-        regModel.email = et_user_last_name.getText().toString();
-        regModel.password = et_user_last_name.getText().toString();
+        regModel.email = et_user_email.getText().toString();
+        regModel.password = et_user_pass.getText().toString();
         regModel.account_type = accountType;
         regModel.dob = txt_user_dob.getText().toString();
         regModel.fb_id = "";
@@ -412,7 +412,7 @@ public class StartUpSignUpFragment extends Fragment {
                         + "\n Last name: " + regModel.last_name
                         + "\n Country Code: " + regModel.country_code
                         + "\n Phone Number: " + regModel.phone_number
-                        + "\n Emial: " + regModel.email
+                        + "\n Email: " + regModel.email
                         + "\n Pass: " + regModel.password
                         + "\n Account Type: " + regModel.account_type
                         + "\n DOB: " + regModel.dob
@@ -571,10 +571,11 @@ public class StartUpSignUpFragment extends Fragment {
                 regModel.phone_number,
                 regModel.email,
                 regModel.password,
-                regModel.account_type,
-                regModel.dob,
-                regModel.fb_id,
-                regModel.google_id
+                regModel.password,
+                regModel.account_type
+//                regModel.dob,
+//                regModel.fb_id,
+//                regModel.google_id
         );
 
         call.enqueue(new Callback<JsonObject>() {
@@ -597,7 +598,7 @@ public class StartUpSignUpFragment extends Fragment {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                         }
                     } else {
-                        helpers.ToastMessage(getActivity(), main.getString("message"));
+                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
                 } catch (JSONException e) {
                     helpers.ToastMessage(getActivity(), e.toString());
