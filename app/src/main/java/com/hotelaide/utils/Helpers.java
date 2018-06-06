@@ -87,7 +87,7 @@ public class Helpers {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_loading);
         dialog.setCancelable(false);
-        ProgressDialogMessage = dialog.findViewById(R.id.messageText);
+        ProgressDialogMessage = dialog.findViewById(R.id.message_text);
 //        sAnalytics = GoogleAnalytics.getInstance(context);
 //        getDefaultTracker();
     }

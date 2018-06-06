@@ -2,6 +2,7 @@ package com.hotelaide.start_up;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.fragments.StartUpAboutUsFragment;
@@ -21,16 +23,25 @@ import com.hotelaide.main_pages.fragments.StartUpLoginFragment;
 import com.hotelaide.main_pages.fragments.StartUpSignUpFragment;
 import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.services.LoginService;
+import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActivity extends AppCompatActivity {
 
     private Helpers
-            helper;
+            helpers;
 
     public TextView
             btn_confirm,
@@ -57,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        helper = new Helpers(LoginActivity.this);
+        helpers = new Helpers(LoginActivity.this);
 
         setContentView(R.layout.activity_login);
 
@@ -66,8 +77,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (helper != null) {
-            helper.dismissProgressDialog();
+        if (helpers != null) {
+            helpers.dismissProgressDialog();
         }
         super.onDestroy();
     }
@@ -154,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // SET ON CLICKS ===============================================================================
     public void TERMS_CONDITIONS(View view) {
-        helper.ToastMessage(LoginActivity.this, "OPEN SOME TERMS AND CONDITONS HERE");
+        helpers.ToastMessage(LoginActivity.this, "OPEN SOME TERMS AND CONDITONS HERE");
     }
 
     public void LOGIN(View view) {
@@ -169,11 +180,10 @@ public class LoginActivity extends AppCompatActivity {
         viewPager.setCurrentItem(1);
     }
 
-    public void MAKE_CALL (View view){
+    public void MAKE_CALL(View view) {
         TextView textView = (TextView) view;
-        helper.dialogMakeCall(LoginActivity.this, textView.getText().toString());
+        helpers.dialogMakeCall(LoginActivity.this, textView.getText().toString());
     }
-
 
 }
 

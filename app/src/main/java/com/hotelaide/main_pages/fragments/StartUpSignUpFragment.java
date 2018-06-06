@@ -44,7 +44,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
+import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.services.LoginService;
+import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.rilixtech.CountryCodePicker;
@@ -201,6 +203,15 @@ public class StartUpSignUpFragment extends Fragment {
 
     private void setListeners() {
 
+        // TODO - Delete later
+        et_user_first_name.setText("Asim");
+        et_user_last_name.setText("Mughal");
+        et_user_phone.setText("0716140603");
+        et_user_pass.setText("ppppppppp");
+        et_user_pass_confirm.setText("ppppppppp");
+        et_user_email.setText("asimkenya@gmail.com");
+
+
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,9 +227,7 @@ public class StartUpSignUpFragment extends Fragment {
                         helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
                     } else if (et_user_pass.getText().toString().length() < 8) {
                         helpers.ToastMessage(getContext(), "Password too short");
-                    } else if (et_user_phone.getText().toString().length() < 8) {
-                        helpers.ToastMessage(getContext(), "Phone number is invalid");
-                    } else if (ccp_user_country_code.isValid()) {
+                    } else if (!ccp_user_country_code.isValid()) {
                         helpers.ToastMessage(getContext(), "Phone number is invalid");
                     } else {
                         showDialogSetAccountType(getActivity(), LOGIN_REGISTER);
@@ -399,7 +408,7 @@ public class StartUpSignUpFragment extends Fragment {
 
     private void logRegModel(RegModel regModel) {
         Helpers.LogThis(TAG_LOG,
-                "\n First name: " + regModel.first_name
+                "\n\n First name: " + regModel.first_name
                         + "\n Last name: " + regModel.last_name
                         + "\n Country Code: " + regModel.country_code
                         + "\n Phone Number: " + regModel.phone_number
@@ -460,7 +469,7 @@ public class StartUpSignUpFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            Helpers.LogThis(TAG_LOG, " " + task.getResult());
+//                            Helpers.LogThis(TAG_LOG, " " + task.getResult());
 
                             if (task.isSuccessful()) {
                                 try {
@@ -573,11 +582,20 @@ public class StartUpSignUpFragment extends Fragment {
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 helpers.progressDialog(false);
                 try {
+
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    if (!main.has("error")) {
-                        Helpers.LogThis(TAG_LOG, main.getString("access_token"));
-                        SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, main.getString("access_token"));
-                        //asyncGetUser();
+
+                    Helpers.LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success") && getActivity() != null) {
+                        JSONObject data = main.getJSONObject("data");
+                        if (SharedPrefs.setUser(data.getJSONObject("user"))) {
+                            SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
+                            startActivity(new Intent(getActivity(), DashboardActivity.class));
+                            getActivity().finish();
+                        } else {
+                            helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        }
                     } else {
                         helpers.ToastMessage(getActivity(), main.getString("message"));
                     }
@@ -585,12 +603,12 @@ public class StartUpSignUpFragment extends Fragment {
                     helpers.ToastMessage(getActivity(), e.toString());
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 helpers.progressDialog(false);
+                Helpers.LogThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                 } else {

@@ -73,7 +73,7 @@
                     android:digits="0123456789"
                     android:hint="@string/et_hint_phone"
                     android:inputType="phone"
-                    android:maxLength="9"
+                    android:maxLength="10"
                     android:maxLines="1" />
 
             </LinearLayout>

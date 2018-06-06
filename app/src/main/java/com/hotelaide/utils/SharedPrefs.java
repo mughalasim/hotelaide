@@ -32,8 +32,9 @@ public class SharedPrefs {
     public static final String USER_F_NAME = "USER_F_NAME";
     public static final String USER_L_NAME = "USER_L_NAME";
     public static final String USER_EMAIL = "USER_EMAIL";
-    public static final String USER_IMG_PROFILE = "USER_IMG_PROFILE";
+    public static final String USER_IMG_AVATAR = "USER_IMG_AVATAR";
     public static final String USER_IMG_BANNER = "USER_IMG_BANNER";
+    public static final String PROFILE_URL = "PROFILE_URL";
     public static final String USER_COUNTRY_CODE = "USER_COUNTRY_CODE";
     public static final String USER_PHONE = "USER_PHONE";
     public static final String USER_DOB = "USER_DOB";
@@ -116,23 +117,37 @@ public class SharedPrefs {
 
 
     // USER FUNCTIONS ==============================================================================
-    public static Boolean setUser(JSONObject main) {
+//    "user": {
+////            "id": 12,
+////            "first_name": "Erick",
+////            "last_name": "Kiiya",
+////            "phone_number": 703988016,
+////            "profile_url": "https://hotelaide.kiiya.co.ke/@erick.kiiya.4",
+////            "email": "asimken3ya@gmail.com",
+////            "avatar": "https://hotelaide.kiiya.co.ke",
+////            "banner": "https://hotelaide.kiiya.co.ke",
+////            "account_type": null,
+////            "geolat": null,
+////            "geolng": null,
+////            "facebook_id": null,
+////            "education_experience": null,
+////            "work_experience": null,
+////            "google_id": null
+////        }
+
+    public static Boolean setUser(JSONObject user) {
         Helpers.LogThis(SHARED_PREFS, "USER SET");
         Boolean response;
-        Helpers.LogThis(SHARED_PREFS, main.toString());
+        Helpers.LogThis(SHARED_PREFS, user.toString());
         try {
-            String request_msg = main.getString("success");
-            if (request_msg.equals("true")) {
-
-                JSONObject user = main.getJSONObject("user");
-
                 setInt(USER_ID, user.getInt("id"));
-                setString(USER_SALUTATION, user.getString("salutation"));
+//                setString(USER_SALUTATION, user.getString("salutation"));
                 setString(USER_F_NAME, user.getString("first_name"));
                 setString(USER_L_NAME, user.getString("last_name"));
                 setString(USER_EMAIL, user.getString("email"));
-                setString(USER_IMG_PROFILE, user.getString("profile_url"));
-                setString(USER_IMG_BANNER, user.getString("profile_url"));
+                setString(USER_IMG_AVATAR, user.getString("avatar"));
+                setString(USER_IMG_BANNER, user.getString("banner"));
+                setString(PROFILE_URL, user.getString("profile_url"));
                 setInt(USER_COUNTRY_CODE, user.getInt("country_code"));
                 setInt(USER_PHONE, user.getInt("phone_number"));
                 setString(USER_DOB, user.getString("dob"));
@@ -149,7 +164,7 @@ public class SharedPrefs {
                         getString(USER_F_NAME) + " - " +
                         getString(USER_L_NAME) + " - " +
                         getString(USER_EMAIL) + " - " +
-                        getString(USER_IMG_PROFILE) + " - " +
+                        getString(USER_IMG_AVATAR) + " - " +
                         getString(USER_IMG_BANNER) + " - " +
                         getInt(USER_COUNTRY_CODE) + " - " +
                         getInt(USER_PHONE) + " - " +
@@ -162,9 +177,6 @@ public class SharedPrefs {
                 );
                 response = true;
 
-            } else {
-                response = false;
-            }
         } catch (JSONException e) {
             Helpers.LogThis(SHARED_PREFS, MyApplication.getAppContext().getString(R.string.log_exception) + e.toString());
             response = false;
@@ -184,7 +196,7 @@ public class SharedPrefs {
         userModel.first_name = getString(USER_F_NAME);
         userModel.last_name = getString(USER_L_NAME);
         userModel.email = getString(USER_EMAIL);
-        userModel.img_profile = getString(USER_IMG_PROFILE);
+        userModel.img_profile = getString(USER_IMG_AVATAR);
         userModel.img_banner = getString(USER_IMG_BANNER);
         userModel.country_code = getInt(USER_COUNTRY_CODE);
         userModel.phone = getInt(USER_PHONE);
@@ -202,7 +214,7 @@ public class SharedPrefs {
                 getString(USER_F_NAME) + " - " +
                 getString(USER_L_NAME) + " - " +
                 getString(USER_EMAIL) + " - " +
-                getString(USER_IMG_PROFILE) + " - " +
+                getString(USER_IMG_AVATAR) + " - " +
                 getString(USER_IMG_BANNER) + " - " +
                 getInt(USER_COUNTRY_CODE) + " - " +
                 getInt(USER_PHONE) + " - " +

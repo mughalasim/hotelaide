@@ -2,28 +2,26 @@ package com.hotelaide.services;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.hotelaide.BuildConfig;
+import com.hotelaide.utils.Helpers;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-import com.hotelaide.BuildConfig;
-import com.hotelaide.utils.Database;
-import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.SharedPrefs;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface LoginService {
     String TAG_LOG = "SERVICE: LOGIN";
@@ -56,16 +54,21 @@ public interface LoginService {
             .writeTimeout(BuildConfig.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .build();
 
+
+    Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
+
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BuildConfig.MAIN_URL)
             .client(okClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
 
     // AUTHENTICATE FUNCTION =======================================================================
     @FormUrlEncoded
-    @POST("oauth/token")
+    @POST("api/login")
     Call<JsonObject> userLogin(
             @Field("client_id") String client_id,
             @Field("client_secret") String client_secret,
@@ -77,7 +80,7 @@ public interface LoginService {
 
     // REGISTER USER ===============================================================================
     @FormUrlEncoded
-    @POST("api/user/register")
+    @POST("api/register")
     Call<JsonObject> userRegister(
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,

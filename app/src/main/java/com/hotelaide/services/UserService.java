@@ -2,6 +2,8 @@ package com.hotelaide.services;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -13,16 +15,20 @@ import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
 import okhttp3.Interceptor;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface UserService {
@@ -57,10 +63,14 @@ public interface UserService {
             .writeTimeout(BuildConfig.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .build();
 
+    Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
+
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BuildConfig.MAIN_URL)
             .client(okClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
 
@@ -70,9 +80,10 @@ public interface UserService {
 
 
     // UPDATE USER =================================================================================
+    @Multipart
     @FormUrlEncoded
     @POST("api/user/{id}")
-    Call<JsonObject> userUpdate(
+    Call<JsonObject> setUser(
             @Path("id") int id,
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
@@ -85,7 +96,9 @@ public interface UserService {
             @Field("geo_lng") double geo_lng,
             @Field("dob") String dob,
             @Field("fb_id") String fb_id,
-            @Field("google_id") String google_id
+            @Field("google_id") String google_id,
+            @Part MultipartBody.Part p_pic,
+            @Part MultipartBody.Part banner
     );
 
 }

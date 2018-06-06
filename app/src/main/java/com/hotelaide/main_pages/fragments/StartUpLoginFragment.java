@@ -174,23 +174,32 @@ public class StartUpLoginFragment extends Fragment {
                 helpers.progressDialog(false);
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    if (!main.has("error")) {
-                        Helpers.LogThis(TAG_LOG, main.getString("access_token"));
-                        SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, main.getString("access_token"));
-                        //asyncGetUser();
+
+                    Helpers.LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success") && getActivity() != null) {
+                        JSONObject data = main.getJSONObject("data");
+                        if (SharedPrefs.setUser(data.getJSONObject("user"))) {
+                            SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
+                            startActivity(new Intent(getActivity(), DashboardActivity.class));
+                            getActivity().finish();
+                        } else {
+                            helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        }
                     } else {
                         helpers.ToastMessage(getActivity(), main.getString("message"));
                     }
+
                 } catch (JSONException e) {
                     helpers.ToastMessage(getActivity(), e.toString());
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 helpers.progressDialog(false);
+                Helpers.LogThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                 } else {

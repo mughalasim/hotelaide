@@ -26,7 +26,7 @@ public class UserModel {
 //   USER_F_NAME
 //   USER_L_NAME
 //   USER_EMAIL
-//   USER_IMG_PROFILE
+//   USER_IMG_AVATAR
 //   USER_IMG_BANNER
 //   USER_COUNTRY_CODE
 //   USER_PHONE
