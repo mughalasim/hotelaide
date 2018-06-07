@@ -45,8 +45,8 @@ import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
+import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.services.LoginService;
-import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.rilixtech.CountryCodePicker;
@@ -61,6 +61,8 @@ import java.util.TimeZone;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.hotelaide.utils.Helpers.START_FIRST_TIME;
 
 
 public class StartUpSignUpFragment extends Fragment {
@@ -100,22 +102,7 @@ public class StartUpSignUpFragment extends Fragment {
     private LoginButton btn_login_facebook;
     private CallbackManager mCallbackManager;
     private FirebaseAuth mAuth;
-
-
-    // REGISTRATION MODEL ==========================================================================
-    private class RegModel {
-        String first_name = "";
-        String last_name = "";
-        int country_code;
-        int phone_number;
-        String email = "";
-        String password = "";
-        String account_type = "";
-        String dob = "";
-        String fb_id = "";
-        String google_id = "";
-        String pic = "";
-    }
+    private UserModel userModel;
 
     public StartUpSignUpFragment() {
 
@@ -251,7 +238,7 @@ public class StartUpSignUpFragment extends Fragment {
                     et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
                     et_user_pass_confirm.setTransformationMethod(new PasswordTransformationMethod());
                 }
-                helpers.animate_wobble(img_user_pass_toggle);
+                helpers.animateWobble(img_user_pass_toggle);
             }
         });
 
@@ -389,35 +376,35 @@ public class StartUpSignUpFragment extends Fragment {
     }
 
     private void setToModelFromFields(String accountType) {
-        RegModel regModel = new RegModel();
-        regModel.first_name = et_user_first_name.getText().toString();
-        regModel.last_name = et_user_last_name.getText().toString();
-        regModel.country_code = ccp_user_country_code.getDefaultCountryCodeAsInt();
-        regModel.phone_number = Integer.parseInt(et_user_phone.getText().toString());
-        regModel.email = et_user_email.getText().toString();
-        regModel.password = et_user_pass.getText().toString();
-        regModel.account_type = accountType;
-        regModel.dob = txt_user_dob.getText().toString();
-        regModel.fb_id = "";
-        regModel.google_id = "";
+        userModel = new UserModel();
+        userModel.first_name = et_user_first_name.getText().toString();
+        userModel.last_name = et_user_last_name.getText().toString();
+        userModel.country_code = ccp_user_country_code.getDefaultCountryCodeAsInt();
+        userModel.phone = Integer.parseInt(et_user_phone.getText().toString());
+        userModel.email = et_user_email.getText().toString();
+        userModel.password = et_user_pass.getText().toString();
+        userModel.account_type = accountType;
+        userModel.dob = txt_user_dob.getText().toString();
+        userModel.fb_id = "";
+        userModel.google_id = "";
 
-        logRegModel(regModel);
+        logRegModel(userModel);
 
-        asyncRegister(regModel);
+        asyncRegister(userModel);
     }
 
-    private void logRegModel(RegModel regModel) {
+    private void logRegModel(UserModel userModel) {
         Helpers.LogThis(TAG_LOG,
-                "\n\n First name: " + regModel.first_name
-                        + "\n Last name: " + regModel.last_name
-                        + "\n Country Code: " + regModel.country_code
-                        + "\n Phone Number: " + regModel.phone_number
-                        + "\n Email: " + regModel.email
-                        + "\n Pass: " + regModel.password
-                        + "\n Account Type: " + regModel.account_type
-                        + "\n DOB: " + regModel.dob
-                        + "\n FB_ID: " + regModel.fb_id
-                        + "\n G_ID: " + regModel.google_id
+                "\n\n First name: " + userModel.first_name
+                        + "\n Last name: " + userModel.last_name
+                        + "\n Country Code: " + userModel.country_code
+                        + "\n Phone Number: " + userModel.phone
+                        + "\n Email: " + userModel.email
+                        + "\n Pass: " + userModel.password
+                        + "\n Account Type: " + userModel.account_type
+                        + "\n DOB: " + userModel.dob
+                        + "\n FB_ID: " + userModel.fb_id
+                        + "\n G_ID: " + userModel.google_id
         );
 
     }
@@ -479,17 +466,17 @@ public class StartUpSignUpFragment extends Fragment {
                                         Helpers.LogThis(TAG_LOG, "FB USER ID: " + user.getUid());
                                         Helpers.LogThis(TAG_LOG, "FB PROFILE ID: " + profile.getId());
 
-                                        final RegModel regModel = new RegModel();
+                                        final UserModel userModel = new UserModel();
 
-                                        regModel.fb_id = profile.getId();
+                                        userModel.fb_id = profile.getId();
 
                                         if (user.getDisplayName() != null) {
                                             if (user.getDisplayName().contains(" ")) {
                                                 String[] userFullName = user.getDisplayName().split(" ");
-                                                regModel.first_name = userFullName[0];
-                                                regModel.last_name = userFullName[1];
+                                                userModel.first_name = userFullName[0];
+                                                userModel.last_name = userFullName[1];
                                             } else {
-                                                regModel.first_name = user.getDisplayName();
+                                                userModel.first_name = user.getDisplayName();
                                             }
                                         }
 
@@ -505,8 +492,8 @@ public class StartUpSignUpFragment extends Fragment {
                                                             try {
                                                                 JSONObject data = response.getJSONObject();
                                                                 if (data.has("picture")) {
-                                                                    regModel.pic = data.getJSONObject("picture").getJSONObject("data").getString("url");
-                                                                    Helpers.LogThis(TAG_LOG, "FB PROFILE IMAGE URL: " + regModel.pic);
+                                                                    userModel.img_avatar = data.getJSONObject("picture").getJSONObject("data").getString("url");
+                                                                    Helpers.LogThis(TAG_LOG, "FB PROFILE IMAGE URL: " + userModel.img_avatar);
 
                                                                 }
                                                             } catch (Exception e) {
@@ -516,9 +503,9 @@ public class StartUpSignUpFragment extends Fragment {
                                                     }
                                                 }).executeAsync();
 
-                                        regModel.email = user.getEmail();
+                                        userModel.email = user.getEmail();
 
-                                        logRegModel(regModel);
+                                        logRegModel(userModel);
 
                                         showDialogSetAccountType(getActivity(), LOGIN_FACEBOOK);
 
@@ -557,25 +544,25 @@ public class StartUpSignUpFragment extends Fragment {
 
 
     // LOGIN ASYNC FUNCTIONS =======================================================================
-    private void asyncRegister(RegModel regModel) {
+    private void asyncRegister(UserModel userModel) {
 
         helpers.setProgressDialogMessage("Creating your account, please wait...");
         helpers.progressDialog(true);
-        logRegModel(regModel);
+        logRegModel(userModel);
 
         LoginService loginService = LoginService.retrofit.create(LoginService.class);
         final Call<JsonObject> call = loginService.userRegister(
-                regModel.first_name,
-                regModel.last_name,
-                regModel.country_code,
-                regModel.phone_number,
-                regModel.email,
-                regModel.password,
-                regModel.password,
-                regModel.account_type
-//                regModel.dob,
-//                regModel.fb_id,
-//                regModel.google_id
+                userModel.first_name,
+                userModel.last_name,
+                userModel.country_code,
+                userModel.phone,
+                userModel.email,
+                userModel.password,
+                userModel.password,
+                userModel.account_type,
+                userModel.dob,
+                userModel.fb_id,
+                userModel.google_id
         );
 
         call.enqueue(new Callback<JsonObject>() {
@@ -592,7 +579,7 @@ public class StartUpSignUpFragment extends Fragment {
                         JSONObject data = main.getJSONObject("data");
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
                             SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
-                            startActivity(new Intent(getActivity(), DashboardActivity.class));
+                            startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(START_FIRST_TIME, START_FIRST_TIME));
                             getActivity().finish();
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));

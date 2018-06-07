@@ -50,7 +50,7 @@ import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
 public class ParentActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
-    Helpers helper;
+    Helpers helpers;
 
     Database db;
 
@@ -74,7 +74,7 @@ public class ParentActivity extends AppCompatActivity implements
 
 
     void initialize(int drawer_id, String toolbarTitle) {
-        helper = new Helpers(ParentActivity.this);
+        helpers = new Helpers(ParentActivity.this);
         db = new Database();
         this.drawer_id = drawer_id;
         this.toolbarTitle = toolbarTitle;
@@ -136,15 +136,24 @@ public class ParentActivity extends AppCompatActivity implements
 
 
         // FIND THE MENU ITEMS ==================================================================
-        MenuItem reservations = navigationView.getMenu().getItem(5);
-        reservations.setVisible(false);
+        MenuItem messages = navigationView.getMenu().getItem(1);
+        MenuItem search = navigationView.getMenu().getItem(2);
+        MenuItem registration = navigationView.getMenu().getItem(3);
+        MenuItem subscription = navigationView.getMenu().getItem(4);
 
-        helper.asyncGetUser();
+        if (SharedPrefs.getString(USER_ACCOUNT_TYPE).equals(BuildConfig.ACCOUNT_TYPE_EMPLOYEER)) {
+            subscription.setVisible(true);
+            messages.setVisible(true);
+            registration.setVisible(true);
+            subscription.setVisible(true);
+            search.setVisible(false);
 
-        if(SharedPrefs.getString(USER_ACCOUNT_TYPE).equals(BuildConfig.ACCOUNT_TYPE_EMPLOYEER)){
-
-        } else{
-
+        } else {
+            subscription.setVisible(false);
+            messages.setVisible(false);
+            registration.setVisible(false);
+            subscription.setVisible(false);
+            search.setVisible(true);
         }
 
     }
@@ -165,9 +174,14 @@ public class ParentActivity extends AppCompatActivity implements
     // BASIC OVERRIDE METHODS ======================================================================
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        helper.Drawer_Item_Clicked(ParentActivity.this, id);
+        final int id = item.getItemId();
         drawer.closeDrawer(GravityCompat.START);
+        drawer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                helpers.Drawer_Item_Clicked(ParentActivity.this, id);
+            }
+        }, 200);
         return true;
     }
 
@@ -193,7 +207,7 @@ public class ParentActivity extends AppCompatActivity implements
             unregisterReceiver(receiver);
             receiver = null;
         }
-        helper.dismissProgressDialog();
+        helpers.dismissProgressDialog();
         super.onDestroy();
     }
 

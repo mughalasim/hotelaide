@@ -38,6 +38,7 @@ import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.AboutUsActivity;
 import com.hotelaide.main_pages.activities.DashboardActivity;
+import com.hotelaide.main_pages.activities.ProfileActivity;
 import com.hotelaide.services.UserService;
 import com.hotelaide.start_up.SplashScreenActivity;
 
@@ -45,7 +46,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
@@ -64,22 +64,22 @@ import static android.content.pm.PackageManager.NameNotFoundException;
 public class Helpers {
 
     public final static String TAG_LOG = "HELPER CLASS";
-
     private final static int INT_ANIMATION_TIME = 800;
-
 //    private static Tracker sTracker;
 //    private static GoogleAnalytics sAnalytics;
-
     private final Context context;
-
     private static Toast mToast;
-
     private final TextView ProgressDialogMessage;
-
     private final Dialog dialog;
 
     public final static String BroadcastValue = "com.hotelaide.ACTIONLOGOUT";
     public final static String BroadcastValueAsyncCompleted = "com.hotelaide.COMPLETED";
+
+    public final static String START_FIRST_TIME = "FIRSTTIMER";
+    public final static String START_RETURN = "RETURN";
+    public final static String START_LAUNCH = "LAUNCH";
+
+
 
     private Database db;
 
@@ -115,6 +115,10 @@ public class Helpers {
         switch (id) {
             case R.id.drawer_dashboard:
                 context.startActivity(new Intent(context, DashboardActivity.class));
+                break;
+
+            case R.id.drawer_my_profile:
+                context.startActivity(new Intent(context, ProfileActivity.class));
                 break;
 
             case R.id.drawer_about_us:
@@ -290,7 +294,7 @@ public class Helpers {
             return false;
         } else if (!pattern.matcher(editText.getText().toString()).matches()) {
             editText.setError(context.getString(R.string.error_field_required));
-            animate_wobble(editText);
+            animateWobble(editText);
             return false;
         } else {
             editText.setError(null);
@@ -428,7 +432,7 @@ public class Helpers {
 
 
     // ANIMATIONS ==================================================================================
-    public void animate_wobble(View v) {
+    public void animateWobble(View v) {
         YoYo.with(Techniques.Wobble)
                 .duration(INT_ANIMATION_TIME).delay(20)
                 .playOn(v);
@@ -442,19 +446,19 @@ public class Helpers {
                 .playOn(v);
     }
 
-    public void animate_slide_in(View v) {
+    public void animateSlide_in(View v) {
         YoYo.with(Techniques.SlideInRight)
                 .duration(INT_ANIMATION_TIME).delay(10)
                 .playOn(v);
     }
 
-    public void animate_fade_in(View v) {
+    public void animateFadeIn(View v) {
         YoYo.with(Techniques.FadeIn)
                 .duration(2000)
                 .playOn(v);
     }
 
-    public static void animate_recyclerview(View view) {
+    public static void animateRecyclerView(View view) {
         ScaleAnimation anim = new ScaleAnimation(
                 0.0f, 1.0f, 0.0f, 1.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f,
@@ -512,7 +516,12 @@ public class Helpers {
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    SharedPrefs.setUser(main);
+
+                    LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        SharedPrefs.setUser(main.getJSONObject("data"));
+                    }
 
                 } catch (JSONException e) {
                     LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());

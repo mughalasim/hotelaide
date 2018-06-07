@@ -3,12 +3,17 @@ package com.hotelaide.main_pages.activities;
 import android.os.Bundle;
 
 import com.hotelaide.R;
+import com.hotelaide.utils.SharedPrefs;
 
 import java.io.File;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+
+import static com.hotelaide.utils.Helpers.START_FIRST_TIME;
+import static com.hotelaide.utils.Helpers.START_LAUNCH;
+import static com.hotelaide.utils.Helpers.START_RETURN;
 
 public class DashboardActivity extends ParentActivity {
 
@@ -25,6 +30,8 @@ public class DashboardActivity extends ParentActivity {
         initialize(R.id.drawer_dashboard, TAG_LOG);
 
         findAllViews();
+
+        handleExtraBundles();
 
 //        helper.setTracker(TAG_LOG);
 
@@ -48,6 +55,23 @@ public class DashboardActivity extends ParentActivity {
     private void findAllViews() {
 
 
+    }
+
+    private void handleExtraBundles() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getString(START_FIRST_TIME) != null) {
+
+            helpers.myDialog(DashboardActivity.this,
+                    "WELCOME", SharedPrefs.getString(SharedPrefs.USER_F_NAME) + ", thank you for joining "
+                    + getString(R.string.app_name) +
+                    ", You are on the Dashboard where you can easily navigate through the app.");
+
+        } else if (extras != null && extras.getString(START_RETURN) != null) {
+            helpers.ToastMessage(DashboardActivity.this, "Welcome back " + SharedPrefs.getString(SharedPrefs.USER_F_NAME));
+
+        } else if (extras != null && extras.getString(START_LAUNCH) != null) {
+            helpers.asyncGetUser();
+        }
     }
 
 }

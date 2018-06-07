@@ -2,28 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
 
+        <!--0-->
         <item
             android:id="@+id/drawer_dashboard"
             android:title="@string/drawer_dashboard" />
 
+        <!--1-->
         <item
             android:id="@+id/drawer_messages"
             android:title="@string/drawer_messages" />
 
+        <!--2-->
         <item
             android:id="@+id/drawer_find_jobs"
             android:title="@string/drawer_find_jobs" />
 
+        <!--3-->
         <item
             android:id="@+id/drawer_registration"
             android:title="@string/drawer_registration" />
 
+        <!--4-->
         <item
             android:id="@+id/drawer_subscription"
             android:title="@string/drawer_subscription" />
 
+        <!--5-->
         <item
-            android:id="@+id/drawer_my_account"
+            android:id="@+id/drawer_my_profile"
             android:title="@string/drawer_my_account" />
 
     </group>
@@ -31,10 +37,12 @@
 
     <group android:checkableBehavior="single">
 
+        <!--6-->
         <item
             android:id="@+id/drawer_about_us"
             android:title="@string/drawer_about_us" />
 
+        <!--7-->
         <item
             android:id="@+id/drawer_settings"
             android:title="@string/drawer_settings" />

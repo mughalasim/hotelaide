@@ -7,7 +7,7 @@ public class UserModel {
     public String first_name = "";
     public String last_name = "";
     public String email = "";
-    public String img_profile = "";
+    public String img_avatar = "";
     public String img_banner = "";
     public int country_code;
     public int phone;
@@ -17,6 +17,7 @@ public class UserModel {
     public double geo_lat;
     public double geo_lng;
     public String account_type = "";
+    public String password = "";
 
 }
 

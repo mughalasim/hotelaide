@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 
 import com.hotelaide.R;
 import com.hotelaide.main_pages.models.UserModel;
+import com.hotelaide.main_pages.models.WorkExperienceModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,7 +51,6 @@ public class SharedPrefs {
 
     // BOOLEAN VARIABLE NAMES ======================================================================
     public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
-
 
 
     // GENERIC GET AND SET INTEGER VARIABLES =======================================================
@@ -117,65 +118,67 @@ public class SharedPrefs {
 
 
     // USER FUNCTIONS ==============================================================================
-//    "user": {
-////            "id": 12,
-////            "first_name": "Erick",
-////            "last_name": "Kiiya",
-////            "phone_number": 703988016,
-////            "profile_url": "https://hotelaide.kiiya.co.ke/@erick.kiiya.4",
-////            "email": "asimken3ya@gmail.com",
-////            "avatar": "https://hotelaide.kiiya.co.ke",
-////            "banner": "https://hotelaide.kiiya.co.ke",
-////            "account_type": null,
-////            "geolat": null,
-////            "geolng": null,
-////            "facebook_id": null,
-////            "education_experience": null,
-////            "work_experience": null,
-////            "google_id": null
-////        }
-
     public static Boolean setUser(JSONObject user) {
         Helpers.LogThis(SHARED_PREFS, "USER SET");
         Boolean response;
         Helpers.LogThis(SHARED_PREFS, user.toString());
         try {
-                setInt(USER_ID, user.getInt("id"));
+            setInt(USER_ID, user.getInt("id"));
 //                setString(USER_SALUTATION, user.getString("salutation"));
-                setString(USER_F_NAME, user.getString("first_name"));
-                setString(USER_L_NAME, user.getString("last_name"));
-                setString(USER_EMAIL, user.getString("email"));
-                setString(USER_IMG_AVATAR, user.getString("avatar"));
-                setString(USER_IMG_BANNER, user.getString("banner"));
-                setString(PROFILE_URL, user.getString("profile_url"));
-                setInt(USER_COUNTRY_CODE, user.getInt("country_code"));
-                setInt(USER_PHONE, user.getInt("phone_number"));
-//                setString(USER_DOB, user.getString("dob"));
-                setString(USER_FB_ID, user.getString("facebook_id"));
-                setString(USER_GOOGLE_ID, user.getString("google_id"));
-                setDouble(USER_GEO_LAT, user.getDouble("geolat"));
-                setDouble(USER_GEO_LNG, user.getDouble("geolng"));
-                setString(USER_ACCOUNT_TYPE, user.getString("account_type"));
+            setString(USER_F_NAME, user.getString("first_name"));
+            setString(USER_L_NAME, user.getString("last_name"));
+            setString(USER_EMAIL, user.getString("email"));
+            setString(USER_IMG_AVATAR, user.getString("avatar"));
+            setString(USER_IMG_BANNER, user.getString("banner"));
+            setString(PROFILE_URL, user.getString("profile_url"));
+            setInt(USER_COUNTRY_CODE, user.getInt("country_code"));
+            setInt(USER_PHONE, user.getInt("phone_number"));
+            setString(USER_DOB, user.getString("dob"));
+            setString(USER_FB_ID, user.getString("facebook_id"));
+            setString(USER_GOOGLE_ID, user.getString("google_id"));
+            setDouble(USER_GEO_LAT, user.getDouble("geolat"));
+            setDouble(USER_GEO_LNG, user.getDouble("geolng"));
+            setString(USER_ACCOUNT_TYPE, user.getString("account_type"));
 
 
-                Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
-                        getInt(USER_ID) + " - " +
-                        getString(USER_SALUTATION) + " - " +
-                        getString(USER_F_NAME) + " - " +
-                        getString(USER_L_NAME) + " - " +
-                        getString(USER_EMAIL) + " - " +
-                        getString(USER_IMG_AVATAR) + " - " +
-                        getString(USER_IMG_BANNER) + " - " +
-                        getInt(USER_COUNTRY_CODE) + " - " +
-                        getInt(USER_PHONE) + " - " +
-                        getString(USER_DOB) + " - " +
-                        getString(USER_FB_ID) + " - " +
-                        getString(USER_GOOGLE_ID) + " - " +
-                        getDouble(USER_GEO_LAT) + " - " +
-                        getDouble(USER_GEO_LNG) + " - " +
-                        getString(USER_ACCOUNT_TYPE)
-                );
-                response = true;
+            JSONArray work_experience = user.getJSONArray("work_experience");
+            if (work_experience != null && work_experience.length() > 0) {
+                Database db = new Database();
+
+                for (int i = 0; i < work_experience.length(); i++) {
+                    JSONObject work_object = work_experience.getJSONObject(i);
+                    WorkExperienceModel workExperienceModel = new WorkExperienceModel();
+                    workExperienceModel.id = work_object.getInt("id");
+                    workExperienceModel.company_name = work_object.getString("company_name");
+                    workExperienceModel.position = work_object.getString("position");
+                    workExperienceModel.start_date = work_object.getString("start_date");
+                    workExperienceModel.end_date = work_object.getString("end_date");
+                    workExperienceModel.responsibilities = work_object.getString("company_name");
+                    workExperienceModel.current = work_object.getBoolean("current");
+
+                    db.setWorkExperience(workExperienceModel);
+                }
+
+            }
+
+            Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
+                    getInt(USER_ID) + " - " +
+                    getString(USER_SALUTATION) + " - " +
+                    getString(USER_F_NAME) + " - " +
+                    getString(USER_L_NAME) + " - " +
+                    getString(USER_EMAIL) + " - " +
+                    getString(USER_IMG_AVATAR) + " - " +
+                    getString(USER_IMG_BANNER) + " - " +
+                    getInt(USER_COUNTRY_CODE) + " - " +
+                    getInt(USER_PHONE) + " - " +
+                    getString(USER_DOB) + " - " +
+                    getString(USER_FB_ID) + " - " +
+                    getString(USER_GOOGLE_ID) + " - " +
+                    getDouble(USER_GEO_LAT) + " - " +
+                    getDouble(USER_GEO_LNG) + " - " +
+                    getString(USER_ACCOUNT_TYPE)
+            );
+            response = true;
 
         } catch (JSONException e) {
             Helpers.LogThis(SHARED_PREFS, MyApplication.getAppContext().getString(R.string.log_exception) + e.toString());
@@ -196,7 +199,7 @@ public class SharedPrefs {
         userModel.first_name = getString(USER_F_NAME);
         userModel.last_name = getString(USER_L_NAME);
         userModel.email = getString(USER_EMAIL);
-        userModel.img_profile = getString(USER_IMG_AVATAR);
+        userModel.img_avatar = getString(USER_IMG_AVATAR);
         userModel.img_banner = getString(USER_IMG_BANNER);
         userModel.country_code = getInt(USER_COUNTRY_CODE);
         userModel.phone = getInt(USER_PHONE);

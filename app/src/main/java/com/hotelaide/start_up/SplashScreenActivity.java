@@ -17,6 +17,7 @@ import com.hotelaide.utils_external.FirebaseService;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.hotelaide.utils.Helpers.START_LAUNCH;
 import static com.hotelaide.utils.SharedPrefs.ACCESS_TOKEN;
 import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.SharedPrefs.DATABASE_VERSION;
@@ -78,7 +79,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 if (SharedPrefs.getString(ACCESS_TOKEN).equals("")) {
                     startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                 } else {
-                    startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class));
+                    startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class).putExtra(START_LAUNCH, START_LAUNCH));
                 }
                 finish();
             }

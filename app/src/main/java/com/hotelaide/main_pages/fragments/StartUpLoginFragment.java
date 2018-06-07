@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.method.PasswordTransformationMethod;
@@ -19,12 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
-import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.services.LoginService;
-import com.hotelaide.services.UserService;
-import com.hotelaide.start_up.LoginActivity;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
@@ -34,6 +30,8 @@ import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.hotelaide.utils.Helpers.START_RETURN;
 
 
 public class StartUpLoginFragment extends Fragment {
@@ -137,7 +135,7 @@ public class StartUpLoginFragment extends Fragment {
                     img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
                     et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
                 }
-                helpers.animate_wobble(img_user_pass_toggle);
+                helpers.animateWobble(img_user_pass_toggle);
             }
         });
     }
@@ -178,7 +176,7 @@ public class StartUpLoginFragment extends Fragment {
                         JSONObject data = main.getJSONObject("data");
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
                             SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
-                            startActivity(new Intent(getActivity(), DashboardActivity.class));
+                            startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(START_RETURN, START_RETURN));
                             getActivity().finish();
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));
