@@ -13,15 +13,17 @@
 
 
     <!--IMAGE DIMENS ============================================================================-->
-    <dimen name="img_size_large">120sp</dimen>
+    <dimen name="img_size_large">180sp</dimen>
     <dimen name="img_size_medium">70sp</dimen>
     <dimen name="img_size_small">50sp</dimen>
+    <dimen name="img_size_tiny">20sp</dimen>
 
 
     <!--PADDING =================================================================================-->
     <dimen name="padding_large">40dp</dimen>
     <dimen name="padding_medium">30dp</dimen>
     <dimen name="padding_small">20dp</dimen>
+    <dimen name="padding_tiny">10dp</dimen>
 
 
     <!--TEXT SIZES ==============================================================================-->
@@ -43,7 +45,7 @@
     <dimen name="height_edit_text">39sp</dimen>
     <dimen name="height_panel">55sp</dimen>
     <dimen name="height_nav_header">150dp</dimen>
-    <dimen name="height_collapsing_toolbar">210dp</dimen>
+    <dimen name="height_collapsing_toolbar">250dp</dimen>
 
 
 </resources>

@@ -7,33 +7,221 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="end">
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_collapsing_toolbar"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <ImageView
+                android:id="@+id/img_banner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:paddingBottom="@dimen/padding_medium"
+                android:src="@drawable/bckgrd_transparent"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:alpha="0.4"
+                android:paddingBottom="@dimen/padding_medium"
+                android:src="@color/black"/>
+
+            <TextView
+                android:id="@+id/btn_banner_upload"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="SET BANNER"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="@dimen/padding_large"
+                android:layout_marginEnd="@dimen/padding_small"
+                 android:textSize="@dimen/text_size_small"
+                android:textColor="@color/white" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/img_avatar"
+                android:layout_width="@dimen/img_size_large"
+                android:layout_height="@dimen/img_size_large"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                app:riv_border_width="@dimen/line_thickness"
+                app:riv_corner_radius="@dimen/radius_corner"
+                android:src="@color/light_grey"
+                app:riv_border_color="@color/colorAccentDark"/>
 
             <include layout="@layout/toolbar" />
 
+
+        </RelativeLayout>
+
+        <com.southernbox.springscrollview.SpringScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/padding_small"
+            android:paddingLeft="@dimen/padding_small"
+            android:paddingRight="@dimen/padding_small">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/padding_small"
-                android:paddingLeft="@dimen/padding_small"
-                android:paddingRight="@dimen/padding_small">
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/Text_Title"
+                    android:gravity="start"
+                    android:text="Basic Information"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Text_Normal"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/et_hint_first_name"/>
+
+                    <TextView
+                        android:id="@+id/txt_user_f_name"
+                        style="@style/Text_Normal"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/et_hint_first_name"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Text_Normal"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/et_hint_last_name"/>
+
+                    <TextView
+                        android:id="@+id/txt_user_l_name"
+                        style="@style/Text_Normal"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/et_hint_last_name"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Text_Normal"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/et_hint_email"/>
+
+                    <TextView
+                        android:id="@+id/txt_user_email"
+                        style="@style/Text_Normal"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/et_hint_email"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Text_Normal"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/et_hint_phone"/>
+
+                    <TextView
+                        android:id="@+id/bracket_open"
+                        style="@style/Text_Normal"
+                        android:layout_toLeftOf="@+id/txt_user_country_code"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:text="("/>
+
+                    <TextView
+                        android:id="@+id/txt_user_country_code"
+                        style="@style/Text_Normal"
+                        android:layout_toLeftOf="@+id/bracket_close"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:text="254"/>
+
+                    <TextView
+                        android:id="@+id/bracket_close"
+                        style="@style/Text_Normal"
+                        android:layout_toLeftOf="@+id/txt_user_phone"
+                        android:layout_marginEnd="@dimen/text_margin"
+                        android:text=")"/>
+
+                    <TextView
+                        android:id="@+id/txt_user_phone"
+                        style="@style/Text_Normal"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/et_hint_phone"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/Text_Normal"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/et_hint_dob"/>
+
+                    <TextView
+                        android:id="@+id/txt_user_dob"
+                        style="@style/Text_Normal"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/et_hint_dob"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_height="@dimen/line_thickness"
+                    android:background="@color/colorPrimary"/>
+
+                <TextView
+                    style="@style/Text_Title"
+                    android:gravity="start"
+                    android:text="Work Experience"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_work_experience"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btn_add_work_experience"
+                    style="@style/Text_Normal"
+                    android:gravity="end"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_width="match_parent"
+                    android:text="ADD" />
 
 
             </LinearLayout>
 
-        </LinearLayout>
+        </com.southernbox.springscrollview.SpringScrollView>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
 
     <include layout="@layout/navigation_view" />
 

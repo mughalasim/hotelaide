@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.NavigationView
+<android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_view"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:fitsSystemWindows="false"
-    android:background="@color/colorPrimaryLight"
     app:headerLayout="@layout/header_navigation"
-    app:menu="@menu/drawer"
-    app:itemIconTint="@color/white"
-    app:itemTextColor="@color/white"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:menu="@menu/drawer">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,20 +17,22 @@
         <ImageView
             android:id="@+id/drawer_logo"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/img_size_small"
             android:layout_alignParentBottom="true"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/main_logo_horizontal"
             android:background="@drawable/bckgrd_transparent"
-            android:layout_height="@dimen/img_size_small" />
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/main_logo_horizontal" />
 
         <TextView
             android:id="@+id/app_version"
             style="@style/Text_Normal"
             android:layout_above="@+id/drawer_logo"
-            android:textSize="@dimen/text_size_normal"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/dark_grey"
-            android:text="@string/app_name" />
+            android:layout_alignParentRight="true"
+            android:paddingBottom="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
+            android:text="@string/app_name"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/text_size_small" />
 
     </RelativeLayout>
 

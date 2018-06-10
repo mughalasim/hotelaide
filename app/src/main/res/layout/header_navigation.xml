@@ -5,27 +5,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
+        android:id="@+id/nav_user_banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
+        android:paddingBottom="@dimen/padding_medium"
         android:src="@drawable/bckgrd_transparent"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:alpha="0.4"
+        android:paddingBottom="@dimen/padding_medium"
+        android:src="@color/black"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/padding_small"
-        android:layout_toEndOf="@id/nav_img_user_pic"
-        android:layout_centerVertical="true"
+        android:background="@drawable/bckgrd_transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/padding_medium"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/nav_user_name"
             style="@style/Text_Header"
-            android:gravity="start"
+            android:gravity="end"
             android:text="@string/app_name"
             android:layout_margin="0dp"
-            android:textColor="@color/colorAccentLight"
+            android:textColor="@color/white"
             android:maxLines="1"
             android:maxLength="17" />
 
@@ -37,20 +49,18 @@
             android:maxLines="1"
             android:maxLength="35"
             android:layout_marginTop="@dimen/text_margin"
-            android:layout_gravity="start" />
+            android:layout_gravity="end" />
 
     </LinearLayout>
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/nav_img_user_pic"
-        android:layout_width="@dimen/img_size_small"
-        android:layout_height="@dimen/img_size_small"
-        android:layout_marginBottom="@dimen/padding_small"
-        android:layout_marginStart="@dimen/padding_small"
-        android:layout_marginTop="@dimen/padding_small"
-        android:layout_centerVertical="true"
+        android:layout_width="@dimen/img_size_medium"
+        android:layout_height="@dimen/img_size_medium"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/padding_medium"
         app:riv_border_width="@dimen/line_thickness"
-        app:riv_corner_radius="@dimen/img_size_small"
+        app:riv_corner_radius="@dimen/img_size_medium"
         android:src="@color/light_grey"
         app:riv_border_color="@color/colorAccentDark"/>
 

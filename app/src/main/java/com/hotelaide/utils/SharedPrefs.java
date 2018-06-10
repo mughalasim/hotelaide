@@ -145,7 +145,9 @@ public class SharedPrefs {
             if (work_experience != null && work_experience.length() > 0) {
                 Database db = new Database();
 
-                for (int i = 0; i < work_experience.length(); i++) {
+                int array_length = work_experience.length();
+
+                for (int i = 0; i < array_length; i++) {
                     JSONObject work_object = work_experience.getJSONObject(i);
                     WorkExperienceModel workExperienceModel = new WorkExperienceModel();
                     workExperienceModel.id = work_object.getInt("id");
@@ -153,7 +155,7 @@ public class SharedPrefs {
                     workExperienceModel.position = work_object.getString("position");
                     workExperienceModel.start_date = work_object.getString("start_date");
                     workExperienceModel.end_date = work_object.getString("end_date");
-                    workExperienceModel.responsibilities = work_object.getString("company_name");
+                    workExperienceModel.responsibilities = work_object.getString("responsibilities");
                     workExperienceModel.current = work_object.getBoolean("current");
 
                     db.setWorkExperience(workExperienceModel);

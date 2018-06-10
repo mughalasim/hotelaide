@@ -36,6 +36,7 @@
     <string name="progress_fetch_fb_details">fetching your details from Facebook…please wait…</string>
     <string name="progress_loading_account_update">Updating your account. Please wait…</string>
 
+
     <!--EDIT TEXT HINTS =========================================================================-->
     <string name="et_hint_first_name">First Name</string>
     <string name="et_hint_last_name">Last Name</string>
@@ -43,7 +44,27 @@
     <string name="et_hint_pass">Password</string>
     <string name="et_hint_pass_confirm">Confirm Password</string>
     <string name="et_hint_phone">Phone Number</string>
-    <string name="et_hint_dob">Date Of Birth (YYYY-MM-DD)</string>
+    <string name="et_hint_dob">Date Of Birth (DD-MM-YYYY)</string>
+
+
+    <!--ALL DRAWER TEXTS ========================================================================-->
+    <string name="drawer_dashboard">Dashboard</string>
+    <string name="drawer_find_jobs">Find Jobs</string>
+    <string name="drawer_messages">Messages</string>
+    <string name="drawer_registration">Hotel Registration</string>
+    <string name="drawer_subscription">Subscription Plan</string>
+    <string name="drawer_my_profile">My Profile</string>
+    <string name="drawer_settings">App Settings</string>
+    <string name="drawer_about_us">About Us</string>
+
+
+    <!-- START UP NAVIGATION TEXT ===============================================================-->
+    <string name="nav_login">Login</string>
+    <string name="nav_sign_up">Sign Up</string>
+    <string name="nav_forgot_pass">Forgot Password</string>
+    <string name="nav_about_us">About Us</string>
+    <string name="nav_contact_us">Contact Us</string>
+
 
     <!-- LAYOUT SET TEXT ========================================================================-->
     <string name="txt_cancel" tools:ignore="ButtonCase">CANCEL</string>
@@ -73,22 +94,9 @@
     <string name="txt_address_landline">Landline:&#160;</string>
     <string name="txt_address_mobile">Mobile:&#160;</string>
     <string name="txt_errors">Errors</string>
+    <string name="txt_more">More</string>
+    <string name="txt_less">Less</string>
 
-    <!--ALL DRAWER TEXTS ========================================================================-->
-    <string name="drawer_dashboard">Dashboard</string>
-    <string name="drawer_find_jobs">Find Jobs</string>
-    <string name="drawer_messages">Messages</string>
-    <string name="drawer_registration">Hotel Registration</string>
-    <string name="drawer_subscription">Subscription Plan</string>
-    <string name="drawer_my_account">My Account</string>
-    <string name="drawer_settings">App Settings</string>
-    <string name="drawer_about_us">About Us</string>
 
-    <!-- START UP NAVIGATION TEXT ===============================================================-->
-    <string name="nav_login">Login</string>
-    <string name="nav_sign_up">Sign Up</string>
-    <string name="nav_forgot_pass">Forgot Password</string>
-    <string name="nav_about_us">About Us</string>
-    <string name="nav_contact_us">Contact Us</string>
 
 </resources>

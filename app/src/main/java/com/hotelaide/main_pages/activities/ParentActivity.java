@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,6 +46,7 @@ import static com.hotelaide.utils.SharedPrefs.USER_ACCOUNT_TYPE;
 import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
 import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
+import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
 import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
 
 public class ParentActivity extends AppCompatActivity implements
@@ -65,6 +67,8 @@ public class ParentActivity extends AppCompatActivity implements
     private TextView nav_user_name, nav_user_email, toolbar_text;
 
     private RoundedImageView nav_img_user_pic;
+
+    private ImageView nav_user_banner;
 
     private int drawer_id;
 
@@ -110,17 +114,25 @@ public class ParentActivity extends AppCompatActivity implements
         nav_user_name = header.findViewById(R.id.nav_user_name);
         nav_user_email = header.findViewById(R.id.nav_user_email);
         nav_img_user_pic = header.findViewById(R.id.nav_img_user_pic);
+        nav_user_banner = header.findViewById(R.id.nav_user_banner);
 
     }
 
     void updateDrawer() {
         nav_user_name.setText(SharedPrefs.getString(USER_F_NAME).concat(" ").concat(SharedPrefs.getString(USER_L_NAME)));
         Glide.with(this).load(SharedPrefs.getString(USER_IMG_AVATAR)).into(nav_img_user_pic);
+        Glide.with(this).load(SharedPrefs.getString(USER_IMG_BANNER)).into(nav_user_banner);
         nav_user_email.setText(SharedPrefs.getString(USER_EMAIL));
         nav_img_user_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(ParentActivity.this, MyAccountActivity.class));
+                drawer.closeDrawer(GravityCompat.START);
+                drawer.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(ParentActivity.this, ProfileActivity.class));
+                    }
+                }, 80);
             }
         });
 
@@ -181,7 +193,7 @@ public class ParentActivity extends AppCompatActivity implements
             public void run() {
                 helpers.Drawer_Item_Clicked(ParentActivity.this, id);
             }
-        }, 200);
+        }, 80);
         return true;
     }
 

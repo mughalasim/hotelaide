@@ -63,7 +63,6 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-
     // WORK EXPERIENCE FUNCTIONS ===================================================================
     public void setWorkExperience(WorkExperienceModel workExperienceModel) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -76,7 +75,14 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(EXPERIENCE_RESPONSIBILITIES, workExperienceModel.responsibilities);
         contentValues.put(EXPERIENCE_CURRENT, workExperienceModel.current);
 
-        db.insert(EXPERIENCE_TABLE_NAME, null, contentValues);
+        String whereClause = EXPERIENCE_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(workExperienceModel.id)};
+        int no_of_rows_affected = db.update(EXPERIENCE_TABLE_NAME, contentValues, whereClause,
+                whereArgs);
+
+        if (no_of_rows_affected == 0) {
+            db.insert(EXPERIENCE_TABLE_NAME, null, contentValues);
+        }
     }
 
     public WorkExperienceModel getWorkExperienceByID(String id) {
@@ -128,7 +134,6 @@ public class Database extends SQLiteOpenHelper {
                     workExperienceModel.end_date = cursor.getString(cursor.getColumnIndex(EXPERIENCE_END_DATE));
                     workExperienceModel.responsibilities = cursor.getString(cursor.getColumnIndex(EXPERIENCE_RESPONSIBILITIES));
                     workExperienceModel.current = cursor.getInt(cursor.getColumnIndex(EXPERIENCE_CURRENT)) > 0;
-
 
                     list.add(workExperienceModel);
 

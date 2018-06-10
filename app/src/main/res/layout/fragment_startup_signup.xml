@@ -116,11 +116,13 @@
 
             </RelativeLayout>
 
+
             <EditText
                 android:id="@+id/et_user_pass_confirm"
                 style="@style/Edit_Text"
                 android:hint="@string/et_hint_pass_confirm"
                 android:inputType="textPassword" />
+
 
             <include layout="@layout/fragment_buttons" />
 
