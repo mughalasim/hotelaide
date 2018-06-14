@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sliding_panel"
@@ -165,7 +164,6 @@
             android:layout_marginBottom="0dp"
             android:text="Tap on one below and instantly sign up using either of your accounts on Facebook or Google+" />
 
-
         <com.facebook.login.widget.LoginButton
             android:id="@+id/btn_login_facebook"
             style="@style/Button_Yes"
@@ -175,7 +173,6 @@
             android:paddingBottom="@dimen/padding_small"
             android:layout_marginTop="@dimen/padding_small"
             android:gravity="center" />
-
 
         <TextView
             android:id="@+id/btn_login_google"
@@ -188,7 +185,6 @@
             android:gravity="start|center_vertical"
             android:paddingLeft="@dimen/padding_small"
             android:text=" GOOGLE" />
-
 
     </LinearLayout>
 

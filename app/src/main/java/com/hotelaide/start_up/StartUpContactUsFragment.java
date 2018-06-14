@@ -1,4 +1,4 @@
-package com.hotelaide.main_pages.fragments;
+package com.hotelaide.start_up;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +13,7 @@ import com.hotelaide.R;
 import com.hotelaide.utils.Helpers;
 
 
-public class StartUpAboutUsFragment extends Fragment {
+public class StartUpContactUsFragment extends Fragment {
 
     private View rootview;
 
@@ -21,7 +21,7 @@ public class StartUpAboutUsFragment extends Fragment {
 
     private final String TAG_LOG = "FRAGMENT LOGIN";
 
-    public StartUpAboutUsFragment() {
+    public StartUpContactUsFragment() {
 
     }
 
@@ -34,9 +34,8 @@ public class StartUpAboutUsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootview == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.fragment_startup_about_us, container, false);
+                rootview = inflater.inflate(R.layout.fragment_startup_contact_us, container, false);
                 helpers = new Helpers(getActivity());
-
 
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 

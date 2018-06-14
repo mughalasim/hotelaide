@@ -83,20 +83,18 @@ public interface UserService {
     @FormUrlEncoded
     @POST("api/user/{id}")
     Call<JsonObject> setUser(
-            @Path("id") int id,
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
             @Field("country_code") int country_code,
             @Field("phone_number") int phone_number,
             @Field("email") String email,
             @Field("password") String password,
-            @Field("account_type") String account_type,
             @Field("geo_lat") double geo_lat,
             @Field("geo_lng") double geo_lng,
             @Field("dob") String dob,
             @Field("fb_id") String fb_id,
             @Field("google_id") String google_id,
-            @Part MultipartBody.Part p_pic,
+            @Part MultipartBody.Part avatar,
             @Part MultipartBody.Part banner
     );
 

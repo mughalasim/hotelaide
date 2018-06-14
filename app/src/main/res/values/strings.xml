@@ -15,6 +15,7 @@
     <string name="error_server">There seems to be an issue with the server, Please try again later</string>
     <string name="error_unknown">Oops! something went wrong, Please try again later</string>
     <string name="error_call_permissions">You have not granted permissions to this app to make calls</string>
+    <string name="error_permissions">Dear user, App permissions have not been granted! The App cannot function without these permissions. Please grant them from the phone settings</string>
 
     <!--LOGGING =================================================================================-->
     <string name="log_exception">EXCEPTION:&#160;</string>
@@ -42,8 +43,10 @@
     <string name="et_hint_last_name">Last Name</string>
     <string name="et_hint_email">Email</string>
     <string name="et_hint_pass">Password</string>
+    <string name="et_hint_new_pass">New password</string>
     <string name="et_hint_pass_confirm">Confirm Password</string>
     <string name="et_hint_phone">Phone Number</string>
+    <string name="et_hint_country_code">Country Code</string>
     <string name="et_hint_dob">Date Of Birth (DD-MM-YYYY)</string>
 
 
@@ -64,6 +67,17 @@
     <string name="nav_forgot_pass">Forgot Password</string>
     <string name="nav_about_us">About Us</string>
     <string name="nav_contact_us">Contact Us</string>
+
+    <!-- PROFILE NAVIGATION TEXT ================================================================-->
+    <string name="nav_profile">Basic Information</string>
+    <string name="nav_education">Education</string>
+    <string name="nav_work">Work Experience</string>
+    <string name="nav_documents">Documents</string>
+    <string name="nav_pass">Change Password</string>
+
+
+    <!--PERMISSION RATIONALS ====================================================================-->
+    <string name="rationale_image">HotelAide needs to access your Camera and write to your external storage for Images that you would like to set. Please grant these permissions in order to use the feature</string>
 
 
     <!-- LAYOUT SET TEXT ========================================================================-->
@@ -96,7 +110,12 @@
     <string name="txt_errors">Errors</string>
     <string name="txt_more">More</string>
     <string name="txt_less">Less</string>
-
+    <string name="txt_set_image">You can set this image by selecting one from your gallery or opt to take a new picture from your camera</string>
+    <string name="txt_camera">CAMERA</string>
+    <string name="txt_gallery">GALLERY</string>
+    <string name="txt_take_me_there">Take Me There</string>
+    <string name="txt_alert">Alert!</string>
+    <string name="txt_update_password">UPDATE PASSWORD</string>
 
 
 </resources>

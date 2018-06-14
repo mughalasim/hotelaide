@@ -1,6 +1,7 @@
-package com.hotelaide.main_pages.fragments;
+package com.hotelaide.start_up;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -190,15 +191,6 @@ public class StartUpSignUpFragment extends Fragment {
 
     private void setListeners() {
 
-        // TODO - Delete later
-        et_user_first_name.setText("Asim");
-        et_user_last_name.setText("Mughal");
-        et_user_phone.setText("0716140603");
-        et_user_pass.setText("ppppppppp");
-        et_user_pass_confirm.setText("ppppppppp");
-        et_user_email.setText("asimkenya@gmail.com");
-
-
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -293,7 +285,7 @@ public class StartUpSignUpFragment extends Fragment {
                     day = String.valueOf(selectedDay);
                 }
 
-                txt_user_dob.setText(year.concat("-").concat(month).concat("-").concat(day));
+                txt_user_dob.setText(day.concat("-").concat(month).concat("-").concat(year));
             }
         };
 
@@ -304,7 +296,7 @@ public class StartUpSignUpFragment extends Fragment {
                 if (getContext() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                     DatePickerDialog datePicker = new DatePickerDialog(getContext(),
-                            R.style.AppTheme, datePickerListener,
+                            AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),
                             cal.get(Calendar.DAY_OF_MONTH));

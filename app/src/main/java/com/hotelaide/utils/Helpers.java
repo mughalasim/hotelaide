@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
@@ -71,6 +72,9 @@ public class Helpers {
     private static Toast mToast;
     private final TextView ProgressDialogMessage;
     private final Dialog dialog;
+
+
+    public final static int INT_PERMISSIONS_CAMERA = 601;
 
     public final static String BroadcastValue = "com.hotelaide.ACTIONLOGOUT";
     public final static String BroadcastValueAsyncCompleted = "com.hotelaide.COMPLETED";
@@ -208,6 +212,37 @@ public class Helpers {
             }
         });
         dialog.show();
+    }
+
+    public void myPermissionsDialog(final Context dialogContext, int[] grantResults) {
+        for (int result : grantResults) {
+            if (result == -1) {
+                final Dialog dialog = new Dialog(dialogContext);
+                dialog.setContentView(R.layout.dialog_confirm);
+                final TextView txt_message = dialog.findViewById(R.id.txt_message);
+                final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+                final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                final TextView txt_title = dialog.findViewById(R.id.txt_title);
+                txt_title.setText(R.string.txt_alert);
+                txt_message.setText(R.string.error_permissions);
+                btn_confirm.setText(R.string.txt_take_me_there);
+                btn_cancel.setVisibility(View.GONE);
+                btn_confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", dialogContext.getPackageName(), null);
+                        intent.setData(uri);
+                        dialogContext.startActivity(intent);
+                        dialog.cancel();
+                    }
+                });
+                dialog.show();
+                break;
+            }
+        }
     }
 
     public void dialogNoGPS(final Context context) {
@@ -454,7 +489,7 @@ public class Helpers {
 
     public void animateFadeIn(View v) {
         YoYo.with(Techniques.FadeIn)
-                .duration(2000)
+                .duration(300)
                 .playOn(v);
     }
 

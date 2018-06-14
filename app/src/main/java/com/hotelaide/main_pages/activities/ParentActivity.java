@@ -132,7 +132,7 @@ public class ParentActivity extends AppCompatActivity implements
                     public void run() {
                         startActivity(new Intent(ParentActivity.this, ProfileActivity.class));
                     }
-                }, 80);
+                }, 150);
             }
         });
 
@@ -193,7 +193,7 @@ public class ParentActivity extends AppCompatActivity implements
             public void run() {
                 helpers.Drawer_Item_Clicked(ParentActivity.this, id);
             }
-        }, 80);
+        }, 150);
         return true;
     }
 

@@ -118,6 +118,8 @@ dependencies {
     // SPRING SCROLL
     implementation 'com.southernbox:SpringScrollView:1.0.0'
 
+    // PERMISSIONS CHECKER LIBRARY
+    implementation 'pub.devrel:easypermissions:1.2.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

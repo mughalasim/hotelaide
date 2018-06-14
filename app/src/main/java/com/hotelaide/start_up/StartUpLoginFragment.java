@@ -1,4 +1,4 @@
-package com.hotelaide.main_pages.fragments;
+package com.hotelaide.start_up;
 
 import android.content.Context;
 import android.content.Intent;

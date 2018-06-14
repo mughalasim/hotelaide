@@ -1,4 +1,4 @@
-package com.hotelaide.main_pages.fragments;
+package com.hotelaide.start_up;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
