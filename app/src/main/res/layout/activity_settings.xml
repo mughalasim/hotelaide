@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="end">
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/toolbar" />
+
+            <Switch
+                android:id="@+id/switch_app_updates"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_button"
+                android:paddingEnd="@dimen/padding_small"
+                android:paddingStart="@dimen/padding_small"
+                android:text="Notify me on Updates"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                style="@style/Text_Normal"
+                android:paddingEnd="@dimen/padding_small"
+                android:layout_marginTop="0dp"
+                android:paddingStart="@dimen/padding_small"
+                android:text="Turning this on will allow the app to notify you if there is a new update available in the Play Store" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_line_spacing"
+                android:layout_marginTop="@dimen/padding_small"
+                android:background="@color/dark_grey" />
+
+            <TextView
+                style="@style/Text_Small"
+                android:layout_gravity="center"
+                android:text="Delete your account" />
+
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <include layout="@layout/navigation_view" />
+
+</android.support.v4.widget.DrawerLayout>

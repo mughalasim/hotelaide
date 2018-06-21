@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -34,6 +35,12 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -72,8 +79,8 @@ public class StartUpSignUpFragment extends Fragment {
 
     private TextView
             panel_title,
-            btn_login_google,
             txt_user_dob,
+            btn_login_google2,
             btn_confirm,
             btn_cancel;
 
@@ -103,7 +110,12 @@ public class StartUpSignUpFragment extends Fragment {
     private LoginButton btn_login_facebook;
     private CallbackManager mCallbackManager;
     private FirebaseAuth mAuth;
-    private UserModel userModel;
+    private UserModel globalUserModel;
+
+    // GOOGLE STUFF
+    private SignInButton btn_login_google;
+    private GoogleSignInClient mGoogleSignInClient;
+    private int GOOGLE_REQUEST_CODE = 999;
 
     public StartUpSignUpFragment() {
 
@@ -134,7 +146,11 @@ public class StartUpSignUpFragment extends Fragment {
 
                 initializeFacebook(getActivity());
 
+                initializeGoogle(getActivity());
+
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
+                globalUserModel = new UserModel();
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -148,7 +164,13 @@ public class StartUpSignUpFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        Helpers.LogThis(TAG_LOG, "ACTIVITY RESULT " + data.toString() + " : " + requestCode + " : " + resultCode);
+        if (requestCode == GOOGLE_REQUEST_CODE) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        } else {
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     // BASIC FUNCTIONS =============================================================================
@@ -183,6 +205,7 @@ public class StartUpSignUpFragment extends Fragment {
 
         btn_login_facebook = rootview.findViewById(R.id.btn_login_facebook);
         btn_login_google = rootview.findViewById(R.id.btn_login_google);
+        btn_login_google2 = rootview.findViewById(R.id.btn_login_google2);
         btn_login_facebook.setFragment(this);
 
         setDates();
@@ -231,13 +254,6 @@ public class StartUpSignUpFragment extends Fragment {
                     et_user_pass_confirm.setTransformationMethod(new PasswordTransformationMethod());
                 }
                 helpers.animateWobble(img_user_pass_toggle);
-            }
-        });
-
-        btn_login_google.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialogSetAccountType(getActivity(), LOGIN_GOOGLE);
             }
         });
 
@@ -320,39 +336,55 @@ public class StartUpSignUpFragment extends Fragment {
         final RadioGroup radio_group = dialog.findViewById(R.id.radio_group);
         final RadioButton radio_btn_job_seeker = dialog.findViewById(R.id.radio_btn_job_seeker);
         final RadioButton radio_btn_employer = dialog.findViewById(R.id.radio_btn_employer);
+        final LinearLayout ll_password = dialog.findViewById(R.id.ll_password);
+        final EditText et_user_pass = dialog.findViewById(R.id.et_user_pass);
+        final EditText et_user_pass_confirm = dialog.findViewById(R.id.et_user_pass_confirm);
+        final ImageView img_user_pass_toggle = dialog.findViewById(R.id.img_user_pass_toggle);
+        img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
+        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
+        img_user_pass_toggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (img_user_pass_toggle.getTag().toString().equals(TAG_PASS_HIDDEN)) {
+                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_show);
+                    img_user_pass_toggle.setTag(TAG_PASS_SHOWN);
+                    et_user_pass.setTransformationMethod(null);
+                    et_user_pass_confirm.setTransformationMethod(null);
+                } else {
+                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
+                    img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
+                    et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
+                    et_user_pass_confirm.setTransformationMethod(new PasswordTransformationMethod());
+                }
+                helpers.animateWobble(img_user_pass_toggle);
+            }
+        });
+
+        if (loginType.equals(LOGIN_REGISTER)) {
+            ll_password.setVisibility(View.GONE);
+        } else {
+            ll_password.setVisibility(View.VISIBLE);
+        }
+
         btn_cancel.setVisibility(View.VISIBLE);
-        btn_cancel.setText(getString(R.string.txt_back));
+        btn_cancel.setText(getString(R.string.txt_cancel));
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int selectedRadioBtn = radio_group.getCheckedRadioButtonId();
-                if (selectedRadioBtn != R.id.radio_btn_employer && selectedRadioBtn != R.id.radio_btn_job_seeker) {
-                    helpers.ToastMessage(getContext(), "No selection has been made");
-                    helpers.animate_flash(radio_btn_employer);
-                    helpers.animate_flash(radio_btn_job_seeker);
+                if (ll_password.getVisibility() == View.VISIBLE) {
+                    if (helpers.validateEmptyEditText(et_user_pass) && helpers.validateEmptyEditText(et_user_pass_confirm)) {
+                        if (!et_user_pass.getText().toString().equals(et_user_pass_confirm.getText().toString())) {
+                            helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
+                        } else if (et_user_pass.getText().toString().length() < 8) {
+                            helpers.ToastMessage(getContext(), "Password too short");
+                        } else {
+                            globalUserModel.password = et_user_pass.getText().toString();
+                            checkRadioButtons(radio_group, radio_btn_employer, radio_btn_job_seeker, dialog, loginType);
+                        }
+                    }
                 } else {
-                    String selectedAccountType = "";
-                    if (selectedRadioBtn == R.id.radio_btn_employer) {
-                        selectedAccountType = BuildConfig.ACCOUNT_TYPE_EMPLOYEER;
-                    } else {
-                        selectedAccountType = BuildConfig.ACCOUNT_TYPE_JOB;
-                    }
-                    dialog.cancel();
-
-                    switch (loginType) {
-                        case LOGIN_REGISTER:
-                            setToModelFromFields(selectedAccountType);
-                            break;
-
-                        case LOGIN_FACEBOOK:
-                            helpers.ToastMessage(activity, "OPEN FACEBOOK TO LOGIN");
-                            break;
-
-                        case LOGIN_GOOGLE:
-                            helpers.ToastMessage(activity, "OPEN GOOGLE TO LOGIN");
-                            break;
-                    }
+                    checkRadioButtons(radio_group, radio_btn_employer, radio_btn_job_seeker, dialog, loginType);
                 }
             }
         });
@@ -367,8 +399,37 @@ public class StartUpSignUpFragment extends Fragment {
         dialog.show();
     }
 
+    private void checkRadioButtons(final RadioGroup radio_group,
+                                   final RadioButton radio_btn_employer,
+                                   final RadioButton radio_btn_job_seeker,
+                                   final Dialog dialog, String loginType) {
+        int selectedRadioBtn = radio_group.getCheckedRadioButtonId();
+        if (selectedRadioBtn != R.id.radio_btn_employer && selectedRadioBtn != R.id.radio_btn_job_seeker) {
+            helpers.ToastMessage(getContext(), "No selection has been made");
+            helpers.animate_flash(radio_btn_employer);
+            helpers.animate_flash(radio_btn_job_seeker);
+        } else {
+            String selectedAccountType = "";
+            if (selectedRadioBtn == R.id.radio_btn_employer) {
+                selectedAccountType = BuildConfig.ACCOUNT_TYPE_EMPLOYEER;
+            } else {
+                selectedAccountType = BuildConfig.ACCOUNT_TYPE_JOB;
+            }
+
+            if (loginType.equals(LOGIN_REGISTER)) {
+                setToModelFromFields(selectedAccountType);
+            } else {
+                globalUserModel.account_type = selectedAccountType;
+                logRegModel(globalUserModel);
+                asyncRegister(globalUserModel);
+            }
+
+            dialog.cancel();
+        }
+    }
+
     private void setToModelFromFields(String accountType) {
-        userModel = new UserModel();
+        UserModel userModel = new UserModel();
         userModel.first_name = et_user_first_name.getText().toString();
         userModel.last_name = et_user_last_name.getText().toString();
         userModel.country_code = ccp_user_country_code.getDefaultCountryCodeAsInt();
@@ -426,8 +487,6 @@ public class StartUpSignUpFragment extends Fragment {
         });
     }
 
-
-    // HANDLE FACEBOOK SIGN IN AND OUT =============================================================
     private void handleFacebookAccessToken(final Activity activity, final AccessToken token) {
         helpers.setProgressDialogMessage(getString(R.string.progress_fetch_fb_details));
         helpers.progressDialog(true);
@@ -441,14 +500,12 @@ public class StartUpSignUpFragment extends Fragment {
                         public void onFailure(@NonNull Exception e) {
                             helpers.progressDialog(false);
                             helpers.ToastMessage(activity, "Failed to login with Facebook");
-                            signOut();
+                            signOutFaceBook();
                         }
                     })
                     .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-
-//                            Helpers.LogThis(TAG_LOG, " " + task.getResult());
 
                             if (task.isSuccessful()) {
                                 try {
@@ -458,24 +515,20 @@ public class StartUpSignUpFragment extends Fragment {
                                         Helpers.LogThis(TAG_LOG, "FB USER ID: " + user.getUid());
                                         Helpers.LogThis(TAG_LOG, "FB PROFILE ID: " + profile.getId());
 
-                                        final UserModel userModel = new UserModel();
-
-                                        userModel.fb_id = profile.getId();
+                                        globalUserModel.fb_id = profile.getId();
 
                                         if (user.getDisplayName() != null) {
                                             if (user.getDisplayName().contains(" ")) {
                                                 String[] userFullName = user.getDisplayName().split(" ");
-                                                userModel.first_name = userFullName[0];
-                                                userModel.last_name = userFullName[1];
+                                                globalUserModel.first_name = userFullName[0];
+                                                globalUserModel.last_name = userFullName[1];
                                             } else {
-                                                userModel.first_name = user.getDisplayName();
+                                                globalUserModel.first_name = user.getDisplayName();
                                             }
                                         }
 
-//                                        userModelMyAccount.image = "https://graph.facebook.com/" + profile.getId() + "/picture?fields=url";
-
                                         Bundle params = new Bundle();
-                                        params.putString("fields", "id,email,gender,cover,picture.type(large)");
+                                        params.putString("fields", "id,email,picture.type(large)");
                                         new GraphRequest(token, "me", params, HttpMethod.GET,
                                                 new GraphRequest.Callback() {
                                                     @Override
@@ -484,9 +537,8 @@ public class StartUpSignUpFragment extends Fragment {
                                                             try {
                                                                 JSONObject data = response.getJSONObject();
                                                                 if (data.has("picture")) {
-                                                                    userModel.img_avatar = data.getJSONObject("picture").getJSONObject("data").getString("url");
-                                                                    Helpers.LogThis(TAG_LOG, "FB PROFILE IMAGE URL: " + userModel.img_avatar);
-
+                                                                    globalUserModel.img_avatar = data.getJSONObject("picture").getJSONObject("data").getString("url");
+                                                                    Helpers.LogThis(TAG_LOG, "FB PROFILE IMAGE URL: " + globalUserModel.img_avatar);
                                                                 }
                                                             } catch (Exception e) {
                                                                 e.printStackTrace();
@@ -495,26 +547,29 @@ public class StartUpSignUpFragment extends Fragment {
                                                     }
                                                 }).executeAsync();
 
-                                        userModel.email = user.getEmail();
+                                        globalUserModel.email = user.getEmail();
 
-                                        logRegModel(userModel);
+                                        logRegModel(globalUserModel);
 
                                         showDialogSetAccountType(getActivity(), LOGIN_FACEBOOK);
 
-                                        signOut();
+                                        signOutFaceBook();
 
                                     } else {
-                                        signOut();
-                                        helpers.ToastMessage(activity, "Failed to fetch details from Facebook, please try again later");
+                                        signOutFaceBook();
+                                        helpers.ToastMessage(activity, "Failed to fetch details from Facebook, please try again later1");
+                                        Helpers.LogThis(TAG_LOG, "USER NULL");
                                     }
 
                                 } catch (NullPointerException e) {
-                                    signOut();
-                                    helpers.ToastMessage(activity, "Failed to fetch details from Facebook, please try again later");
+                                    signOutFaceBook();
+                                    Helpers.LogThis(TAG_LOG, e.toString());
+                                    helpers.ToastMessage(activity, "Failed to fetch details from Facebook, please try again later2");
                                 }
 
                             } else {
                                 helpers.ToastMessage(activity, getString(R.string.error_unknown));
+                                Helpers.LogThis(TAG_LOG, task.toString());
                             }
 
                             helpers.progressDialog(false);
@@ -525,17 +580,69 @@ public class StartUpSignUpFragment extends Fragment {
         } else {
             helpers.progressDialog(false);
             helpers.ToastMessage(activity, "Failed to fetch details from Facebook, Please update your Google Play Services");
-            signOut();
+            signOutFaceBook();
         }
     }
 
-    private void signOut() {
+    private void signOutFaceBook() {
         mAuth.signOut();
         LoginManager.getInstance().logOut();
     }
 
 
-    // LOGIN ASYNC FUNCTIONS =======================================================================
+    // GOOGLE SET UP ===============================================================================
+    private void initializeGoogle(final Activity activity) {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+        btn_login_google.setSize(SignInButton.SIZE_STANDARD);
+        setGooglePlusButtonText(btn_login_google);
+        btn_login_google2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE);
+            }
+        });
+    }
+
+    protected void setGooglePlusButtonText(SignInButton signInButton){
+        // Find the TextView that is inside of the SignInButton and set its text
+        for (int i = 0; i < signInButton.getChildCount(); i++) {
+            View v = signInButton.getChildAt(i);
+
+            if (v instanceof TextView) {
+                TextView tv = (TextView) v;
+                tv.setText("SIGN UP WITH GOOGLE");
+                return;
+            }
+        }
+    }
+    private void signOutGoogle(){
+        mGoogleSignInClient.signOut();
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            globalUserModel.google_id = account.getId();
+            globalUserModel.email = account.getEmail();
+            globalUserModel.first_name = account.getGivenName();
+            globalUserModel.last_name = account.getFamilyName();
+            if (account.getPhotoUrl() != null)
+                globalUserModel.img_avatar = account.getPhotoUrl().toString();
+            showDialogSetAccountType(getActivity(), LOGIN_GOOGLE);
+            signOutGoogle();
+
+        } catch (ApiException e) {
+            Helpers.LogThis(TAG_LOG, "signInResult : CODE: " + e.getStatusCode());
+            helpers.ToastMessage(getActivity(), getResources().getString(R.string.error_unknown));
+        }
+    }
+
+    // REGISTER ASYNC FUNCTIONS ====================================================================
     private void asyncRegister(UserModel userModel) {
 
         helpers.setProgressDialogMessage("Creating your account, please wait...");

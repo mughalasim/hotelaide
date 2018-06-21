@@ -11,6 +11,8 @@
         <item name="android:windowBackground">@drawable/bckgrd_app</item>
         <item name="actionOverflowMenuStyle">@style/WhiteDrawerIconStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowMinWidthMajor">98%</item>
+        <item name="android:windowMinWidthMinor">98%</item>
     </style>
 
 

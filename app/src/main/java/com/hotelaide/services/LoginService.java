@@ -70,7 +70,7 @@ public interface LoginService {
 
     // AUTHENTICATE FUNCTION =======================================================================
     @FormUrlEncoded
-    @POST("api/login")
+    @POST("login")
     Call<JsonObject> userLogin(
             @Field("email") String email,
             @Field("password") String password
@@ -79,7 +79,7 @@ public interface LoginService {
 
     // REGISTER USER ===============================================================================
     @FormUrlEncoded
-    @POST("api/register")
+    @POST("register")
     Call<JsonObject> userRegister(
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
@@ -92,6 +92,13 @@ public interface LoginService {
             @Field("dob") String dob,
             @Field("fb_id") String fb_id,
             @Field("google_id") String google_id
+    );
+
+    // RESET PASSWORD =======================================================================
+    @FormUrlEncoded
+    @POST("password/password")
+    Call<JsonObject> resetPassword(
+            @Field("email") String email
     );
 
 }

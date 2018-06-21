@@ -36,7 +36,7 @@ android {
     productFlavors {
         prod {
             // MAIN INFO
-            buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.kiiya.co.ke/"'
+            buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.kiiya.co.ke/api/"'
             // DATABASE INFO
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
             // ACCOUNT TYPES

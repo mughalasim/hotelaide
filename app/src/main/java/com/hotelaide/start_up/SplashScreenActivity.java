@@ -26,7 +26,7 @@ import static com.hotelaide.utils.SharedPrefs.DATABASE_VERSION;
 public class SplashScreenActivity extends AppCompatActivity {
     private Database db;
     private final String TAG_LOG = "SPLASH";
-//    private Helpers helpers;
+    private Helpers helpers;
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -35,7 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         Fabric.with(this, new Crashlytics());
         db = new Database();
-//        helpers = new Helpers(SplashScreenActivity.this);
+        helpers = new Helpers(SplashScreenActivity.this);
 
         setDataBaseVersion();
 
@@ -44,7 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         handleFireBase();
 
         // Uncomment Only when SHA Cert needed for Facebook API
-//         helpers.getShaCertificate();
+         helpers.getShaCertificate();
 
         startUp();
 

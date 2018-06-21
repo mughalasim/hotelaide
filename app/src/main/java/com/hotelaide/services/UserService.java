@@ -74,14 +74,14 @@ public interface UserService {
 
 
     // GET USERS ===================================================================================
-    @GET("api/user")
+    @GET("user")
     Call<JsonObject> getUser();
 
 
     // UPDATE USER =================================================================================
     @Multipart
     @FormUrlEncoded
-    @POST("api/user/{id}")
+    @POST("user/{id}")
     Call<JsonObject> setUser(
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,

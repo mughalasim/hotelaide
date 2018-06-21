@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -32,6 +33,8 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.JsonObject;
@@ -41,6 +44,7 @@ import com.hotelaide.main_pages.activities.AboutUsActivity;
 import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.activities.ProfileActivity;
 import com.hotelaide.services.UserService;
+import com.hotelaide.start_up.LoginActivity;
 import com.hotelaide.start_up.SplashScreenActivity;
 
 import org.json.JSONArray;
@@ -127,6 +131,14 @@ public class Helpers {
 
             case R.id.drawer_about_us:
                 context.startActivity(new Intent(context, AboutUsActivity.class));
+                break;
+
+            case R.id.drawer_log_out:
+                SharedPrefs.deleteAllSharedPrefs();
+                AccessToken.setCurrentAccessToken(null);
+                LoginManager.getInstance().logOut();
+                context.startActivity(new Intent(context, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                context.sendBroadcast(new Intent().setAction(BroadcastValue));
                 break;
         }
     }

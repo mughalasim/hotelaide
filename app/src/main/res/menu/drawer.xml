@@ -49,4 +49,14 @@
 
     </group>
 
+    <group android:checkableBehavior="single">
+
+        <!--8-->
+        <item
+            android:id="@+id/drawer_log_out"
+            android:title="@string/drawer_log_out" />
+
+
+    </group>
+
 </menu>

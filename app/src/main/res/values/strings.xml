@@ -59,6 +59,7 @@
     <string name="drawer_my_profile">My Profile</string>
     <string name="drawer_settings">App Settings</string>
     <string name="drawer_about_us">About Us</string>
+    <string name="drawer_log_out">Log Out</string>
 
 
     <!-- START UP NAVIGATION TEXT ===============================================================-->

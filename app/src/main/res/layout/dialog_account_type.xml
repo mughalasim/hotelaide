@@ -70,6 +70,48 @@
 
                 </RadioGroup>
 
+                <LinearLayout
+                    android:id="@+id/ll_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Text_Normal"
+                        android:text="Please set your new password" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_edit_text"
+                        android:layout_marginTop="@dimen/padding_small">
+
+                        <EditText
+                            android:id="@+id/et_user_pass"
+                            style="@style/Edit_Text"
+                            android:layout_marginTop="0dp"
+                            android:hint="@string/et_hint_pass"
+                            android:inputType="textPassword"
+                            android:paddingTop="0dp" />
+
+                        <ImageView
+                            android:id="@+id/img_user_pass_toggle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/app_name"
+                            android:paddingEnd="@dimen/padding_small" />
+
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/et_user_pass_confirm"
+                        style="@style/Edit_Text"
+                        android:hint="@string/et_hint_pass_confirm"
+                        android:inputType="textPassword" />
+
+                </LinearLayout>
+
                 <include layout="@layout/fragment_buttons" />
 
             </LinearLayout>
