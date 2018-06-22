@@ -2,82 +2,90 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="@dimen/text_margin"
+    android:background="@drawable/bckgrd_text_fields"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/txt_position"
             style="@style/Text_Normal"
-            android:text="Company Name"
+            android:layout_marginTop="0dp"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
+            android:text="Software Engineer" />
+
+        <TextView
+            style="@style/Text_Normal"
+            android:layout_marginTop="0dp"
+            android:text=" at "
             android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/txt_company_name"
             style="@style/Text_Normal"
-            android:layout_alignParentEnd="true"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
+            android:layout_marginTop="0dp"
             android:text="Eatout Limited" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/text_margin"
         android:layout_height="wrap_content">
 
         <TextView
             style="@style/Text_Normal"
-            android:text="Position Held"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/txt_position"
-            style="@style/Text_Normal"
-            android:layout_alignParentEnd="true"
-            android:text="Software Engineer" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            style="@style/Text_Normal"
-            android:text="Start Date"
+            android:text="From "
+            android:layout_marginTop="0dp"
             android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/txt_start_date"
             style="@style/Text_Normal"
-            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
             android:text="12/12/2018" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <TextView
+            android:id="@+id/txt_to"
             style="@style/Text_Normal"
-            android:text="End Date"
+            android:layout_marginTop="0dp"
+            android:text=" to "
             android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/txt_end_date"
             style="@style/Text_Normal"
-            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
             android:text="12/12/2018" />
 
         <TextView
             android:id="@+id/txt_current"
             style="@style/Text_Normal"
-            android:layout_alignParentEnd="true"
-            android:text="Currently Work here" />
+            android:layout_marginTop="0dp"
+            android:text=" and is currently working here" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_height="@dimen/line_thickness"
+            android:background="@color/dark_grey"/>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -86,10 +94,12 @@
         <TextView
             android:id="@+id/txt_responsibilities_label"
             style="@style/Text_Normal"
+            android:layout_marginTop="@dimen/text_margin"
             android:text="Responsibilities"
             android:textColor="@color/colorPrimary" />
 
         <TextView
+            android:layout_marginTop="@dimen/text_margin"
             android:id="@+id/txt_responsibilities"
             style="@style/Text_Normal"
             android:layout_alignParentEnd="true"
@@ -107,12 +117,6 @@
             android:textColor="@color/colorPrimary" />
 
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/padding_small"
-        android:layout_height="@dimen/line_thickness"
-        android:background="@color/dark_grey"/>
 
 </LinearLayout>
 

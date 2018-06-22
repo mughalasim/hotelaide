@@ -43,6 +43,7 @@ import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.AboutUsActivity;
 import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.activities.ProfileActivity;
+import com.hotelaide.main_pages.activities.SettingsActivity;
 import com.hotelaide.services.UserService;
 import com.hotelaide.start_up.LoginActivity;
 import com.hotelaide.start_up.SplashScreenActivity;
@@ -87,8 +88,6 @@ public class Helpers {
     public final static String START_RETURN = "RETURN";
     public final static String START_LAUNCH = "LAUNCH";
 
-
-
     private Database db;
 
     public Helpers(Context context) {
@@ -102,6 +101,7 @@ public class Helpers {
 //        sAnalytics = GoogleAnalytics.getInstance(context);
 //        getDefaultTracker();
     }
+
 
     // GOOGLE ANALYTICS TRACKING ===================================================================
 //    synchronized private void getDefaultTracker() {
@@ -133,6 +133,10 @@ public class Helpers {
                 context.startActivity(new Intent(context, AboutUsActivity.class));
                 break;
 
+            case R.id.drawer_settings:
+                context.startActivity(new Intent(context, SettingsActivity.class));
+                break;
+
             case R.id.drawer_log_out:
                 SharedPrefs.deleteAllSharedPrefs();
                 AccessToken.setCurrentAccessToken(null);
@@ -149,6 +153,7 @@ public class Helpers {
         Context context = MyApplication.getAppContext();
         SharedPrefs.deleteAllSharedPrefs();
         Database db = new Database();
+        db.deleteAllTables();
         context.startActivity(new Intent(context, SplashScreenActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         context.sendBroadcast(new Intent().setAction(BroadcastValue));
@@ -332,6 +337,7 @@ public class Helpers {
     }
 
 
+
     // VALIDATIONS =================================================================================
     public boolean validateEmail(EditText editText) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
@@ -408,6 +414,7 @@ public class Helpers {
     }
 
 
+
     // FORMAT CURRENCY ==============================================================================
     public String formatNumbersCurrency(String amount) {
         String[] amount_array = amount.split("\\.");
@@ -442,10 +449,6 @@ public class Helpers {
 
     }
 
-
-//    "email": ["The email has already been taken."],
-//    "password": [ "The password confirmation does not match."]
-
     public void handleErrorMessage(final Context context, JSONObject data) {
         try {
             Iterator<String> iter = data.keys();
@@ -476,6 +479,7 @@ public class Helpers {
         }
 
     }
+
 
 
     // ANIMATIONS ==================================================================================
@@ -515,6 +519,7 @@ public class Helpers {
     }
 
 
+
     // NOTIFICATION CREATER ========================================================================
     public void createNotification(Context context, String MessageTitle, String messageBody, Bundle data) {
         Intent intent = new Intent(context, SplashScreenActivity.class);
@@ -551,6 +556,7 @@ public class Helpers {
                 R.drawable.main_logo_icon :
                 R.drawable.main_logo_icon;
     }
+
 
 
     // COMMON ASYNC TASKS ==========================================================================

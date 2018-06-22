@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,24 +18,40 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.main_pages.fragments.ChangePasswordFragment;
+import com.hotelaide.main_pages.fragments.DocumentsFragment;
+import com.hotelaide.main_pages.fragments.EducationFragment;
 import com.hotelaide.main_pages.fragments.ProfileUpdateFragment;
 import com.hotelaide.main_pages.fragments.WorkExperienceFragment;
+import com.hotelaide.main_pages.models.UserModel;
+import com.hotelaide.services.UserService;
 import com.hotelaide.start_up.LoginActivity;
 import com.hotelaide.start_up.StartUpAboutUsFragment;
 import com.hotelaide.start_up.StartUpContactUsFragment;
 import com.hotelaide.start_up.StartUpForgotPassFragment;
 import com.hotelaide.start_up.StartUpLoginFragment;
 import com.hotelaide.start_up.StartUpSignUpFragment;
+import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import static android.support.v4.view.ViewPager.SCROLL_STATE_IDLE;
 import static com.hotelaide.utils.Helpers.INT_PERMISSIONS_CAMERA;
+import static com.hotelaide.utils.Helpers.START_RETURN;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
 
@@ -43,26 +60,21 @@ public class ProfileActivity extends ParentActivity {
     private ImageView
             img_banner;
 
+    private AppBarLayout app_bar_layout;
+
+    private Boolean isCollapsedToolbar = false;
+
     private RoundedImageView
             img_avatar;
 
     private final String
-            TAG_LOG = "PROFILE MAIN";
+            TAG_LOG = "MY PROFILE";
 
     private TabLayout tabLayout;
 
     private ViewPager viewPager;
 
     private final int RESULT_BANNER = 222, RESULT_AVATAR = 333;
-
-    private int[] navLabels = {
-            R.string.nav_profile,
-            R.string.nav_education,
-            R.string.nav_work,
-            R.string.nav_documents,
-            R.string.nav_pass
-    };
-
 
 
     // OVERRIDE METHODS ============================================================================
@@ -113,6 +125,8 @@ public class ProfileActivity extends ParentActivity {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
+        app_bar_layout = findViewById(R.id.app_bar_layout);
+
         img_avatar = findViewById(R.id.img_avatar);
         img_banner = findViewById(R.id.img_banner);
 
@@ -129,6 +143,20 @@ public class ProfileActivity extends ParentActivity {
     }
 
     private void setListeners() {
+        app_bar_layout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
+                    isCollapsedToolbar = true;
+                } else if (verticalOffset == 0) {
+                    isCollapsedToolbar = false;
+                } else {
+                    isCollapsedToolbar = false;
+
+                }
+            }
+        });
+
         final String[] perms = {
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -202,39 +230,63 @@ public class ProfileActivity extends ParentActivity {
         ProfileActivity.ViewPagerAdapter adapter = new ProfileActivity.ViewPagerAdapter(getSupportFragmentManager());
 
         Fragment fragment1 = new ProfileUpdateFragment();
-        adapter.addFragment(fragment1, getResources().getString(navLabels[0]));
+        adapter.addFragment(fragment1, getResources().getString(R.string.nav_profile));
 
-        Fragment fragment2 = new WorkExperienceFragment();
-        adapter.addFragment(fragment2, getResources().getString(navLabels[1]));
+        Fragment fragment2 = new EducationFragment();
+        adapter.addFragment(fragment2, getResources().getString(R.string.nav_education));
 
         Fragment fragment3 = new WorkExperienceFragment();
-        adapter.addFragment(fragment3, getResources().getString(navLabels[2]));
+        adapter.addFragment(fragment3, getResources().getString(R.string.nav_work));
 
-        Fragment fragment4 = new WorkExperienceFragment();
-        adapter.addFragment(fragment4, getResources().getString(navLabels[3]));
+        Fragment fragment4 = new DocumentsFragment();
+        adapter.addFragment(fragment4, getResources().getString(R.string.nav_documents));
 
-        Fragment fragment5 = new WorkExperienceFragment();
-        adapter.addFragment(fragment5, getResources().getString(navLabels[4]));
+        Fragment fragment5 = new ChangePasswordFragment();
+        adapter.addFragment(fragment5, getResources().getString(R.string.nav_pass));
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(5);
 
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (isCollapsedToolbar) {
+                    switch (position) {
+                        case 1:
+                            toolbar.setTitle(R.string.nav_profile);
+                            break;
+
+                        case 2:
+                            toolbar.setTitle(R.string.nav_education);
+                            break;
+
+                        case 3:
+                            toolbar.setTitle(R.string.nav_work);
+                            break;
+
+                        case 4:
+                            toolbar.setTitle(R.string.nav_documents);
+                            break;
+
+                        case 5:
+                            toolbar.setTitle(R.string.nav_pass);
+                            break;
+                    }
+                } else {
+                    toolbar.setTitle(TAG_LOG);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -264,6 +316,83 @@ public class ProfileActivity extends ParentActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
+    }
+
+
+    // LOGIN ASYNC FUNCTIONS =======================================================================
+    private void asyncUpdate(final UserModel userModel, final MultipartBody.Part avatar, final MultipartBody.Part banner) {
+
+        helpers.setProgressDialogMessage("Updating profile, please wait...");
+        helpers.progressDialog(true);
+
+        // TODO - image uploading
+//        File avatar_file = new File("");
+//        MultipartBody.Part avatar = MultipartBody.Part.createFormData("file", avatar_file.getName(), RequestBody.create(MediaType.parse("image/*"), avatar_file));
+//
+//        File baner_file = new File("");
+//        MultipartBody.Part banner = MultipartBody.Part.createFormData("file", baner_file.getName(), RequestBody.create(MediaType.parse("image/*"), baner_file));
+
+
+        UserService userService = UserService.retrofit.create(UserService.class);
+        final Call<JsonObject> call = userService.setUser(
+                userModel.first_name,
+                userModel.last_name,
+                userModel.country_code,
+                userModel.phone,
+                userModel.email,
+                userModel.password,
+                userModel.geo_lat,
+                userModel.geo_lng,
+                userModel.dob,
+                userModel.fb_id,
+                userModel.google_id,
+                avatar,
+                banner
+        );
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                helpers.progressDialog(false);
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                    Helpers.LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        JSONObject data = main.getJSONObject("data");
+                        if (SharedPrefs.setUser(data.getJSONObject("user"))) {
+                            SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
+//                            startActivity(new Intent(ProfileActivity.this, DashboardActivity.class).putExtra(START_RETURN, START_RETURN));
+//                            finish();
+                            helpers.ToastMessage(ProfileActivity.this, "SUCCESSFULLY UPDATED");
+
+                        } else {
+                            helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
+                        }
+                    } else {
+                        helpers.handleErrorMessage(ProfileActivity.this, main.getJSONObject("data"));
+                    }
+
+                } catch (JSONException e) {
+                    helpers.ToastMessage(ProfileActivity.this, e.toString());
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                helpers.progressDialog(false);
+                Helpers.LogThis(TAG_LOG, t.toString());
+                if (helpers.validateInternetConnection()) {
+                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
+                } else {
+                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_connection));
+                }
+
+            }
+        });
 
     }
 

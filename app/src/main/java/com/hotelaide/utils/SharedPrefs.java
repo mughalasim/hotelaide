@@ -85,7 +85,7 @@ public class SharedPrefs {
     @NonNull
     public static Boolean getBool(String variableName) {
         SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
-        return mySharedPreferences.getBoolean(variableName, true);
+        return mySharedPreferences.getBoolean(variableName, false);
     }
 
     public static void setBool(String variableName, Boolean variableValue) {

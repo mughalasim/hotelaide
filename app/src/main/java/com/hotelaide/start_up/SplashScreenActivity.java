@@ -10,6 +10,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
+import com.hotelaide.main_pages.activities.ProfileActivity;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -26,7 +27,7 @@ import static com.hotelaide.utils.SharedPrefs.DATABASE_VERSION;
 public class SplashScreenActivity extends AppCompatActivity {
     private Database db;
     private final String TAG_LOG = "SPLASH";
-    private Helpers helpers;
+//    private Helpers helpers;
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -35,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         Fabric.with(this, new Crashlytics());
         db = new Database();
-        helpers = new Helpers(SplashScreenActivity.this);
+//        helpers = new Helpers(SplashScreenActivity.this);
 
         setDataBaseVersion();
 
@@ -44,7 +45,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         handleFireBase();
 
         // Uncomment Only when SHA Cert needed for Facebook API
-         helpers.getShaCertificate();
+//         helpers.getShaCertificate();
 
         startUp();
 
@@ -58,8 +59,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             db.deleteAllTables();
             SharedPrefs.deleteAllSharedPrefs();
             SharedPrefs.setInt(DATABASE_VERSION, BuildConfig.DATABASE_VERSION);
+            SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
         }
-        SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
     }
 
     private void handleFireBase() {

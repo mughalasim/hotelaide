@@ -1,264 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sothree="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/sliding_panel"
+
+<com.southernbox.springscrollview.SpringScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="bottom"
-    sothree:umanoFadeColor="@color/dim"
-    sothree:umanoPanelHeight="@dimen/height_panel"
-    sothree:umanoShadowHeight="@dimen/line_thickness">
+    android:layout_height="match_parent">
 
-    <com.southernbox.springscrollview.SpringScrollView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_profile_update"
+        xmlns:sothree="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="@dimen/padding_small"
-        android:paddingLeft="@dimen/padding_small"
-        android:paddingRight="@dimen/padding_small"
-        android:scrollbars="none">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/padding_small">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_small">
-
-                <TextView
-                    android:id="@+id/txt_user_f_name_label"
-                    style="@style/Text_Normal"
-                    android:layout_centerVertical="true"
-                    android:text="@string/et_hint_first_name"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/txt_user_f_name"
-                    style="@style/Text_Normal"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:minWidth="@dimen/height_edit_text"
-                    android:text="@string/et_hint_first_name" />
-
-                <EditText
-                    android:id="@+id/et_user_first_name"
-                    style="@style/Edit_Text"
-                    android:layout_marginStart="@dimen/padding_small"
-                    android:layout_marginTop="0dp"
-                    android:layout_toEndOf="@+id/txt_user_f_name_label"
-                    android:gravity="end|center_vertical"
-                    android:hint="@string/et_hint_first_name"
-                    android:inputType="text" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/txt_user_l_name_label"
-                    style="@style/Text_Normal"
-                    android:layout_centerVertical="true"
-                    android:text="@string/et_hint_last_name"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/txt_user_l_name"
-                    style="@style/Text_Normal"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:minWidth="@dimen/height_edit_text"
-                    android:text="@string/et_hint_last_name" />
-
-                <EditText
-                    android:id="@+id/et_user_last_name"
-                    style="@style/Edit_Text"
-                    android:layout_marginStart="@dimen/padding_small"
-                    android:layout_marginTop="0dp"
-                    android:layout_toEndOf="@+id/txt_user_l_name_label"
-                    android:gravity="end|center_vertical"
-                    android:hint="@string/et_hint_last_name"
-                    android:inputType="text" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/txt_user_email_label"
-                    style="@style/Text_Normal"
-                    android:layout_centerVertical="true"
-                    android:text="@string/et_hint_email"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/txt_user_email"
-                    style="@style/Text_Normal"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:minWidth="@dimen/height_edit_text" />
-
-                <EditText
-                    android:id="@+id/et_user_email"
-                    style="@style/Edit_Text"
-                    android:layout_marginStart="@dimen/padding_small"
-                    android:layout_marginTop="0dp"
-                    android:layout_toEndOf="@+id/txt_user_email_label"
-                    android:gravity="end|center_vertical"
-                    android:hint="@string/et_hint_email"
-                    android:inputType="textEmailAddress" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/txt_user_country_code_label"
-                    style="@style/Text_Normal"
-                    android:layout_centerVertical="true"
-                    android:text="@string/et_hint_country_code"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/txt_user_country_code"
-                    style="@style/Text_Normal"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:minWidth="@dimen/height_edit_text"
-                    android:text="@string/et_hint_country_code" />
-
-                <com.rilixtech.CountryCodePicker
-                    android:id="@+id/ccp_user_country_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_edit_text"
-                    android:layout_marginStart="@dimen/padding_small"
-                    android:layout_toEndOf="@+id/txt_user_country_code_label"
-                    android:background="@drawable/bckgrd_text_fields"
-                    android:gravity="end|center_vertical"
-                    android:paddingEnd="@dimen/padding_small"
-                    android:paddingStart="@dimen/padding_small"
-                    sothree:ccp_defaultCode="254"
-                    sothree:ccp_textColor="@color/colorAccent"
-                    sothree:ccp_textSize="@dimen/text_size_normal" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/txt_user_phone_label"
-                    style="@style/Text_Normal"
-                    android:layout_centerVertical="true"
-                    android:text="@string/et_hint_phone"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/txt_user_phone"
-                    style="@style/Text_Normal"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:minWidth="@dimen/height_edit_text"
-                    android:text="@string/et_hint_phone" />
-
-                <EditText
-                    android:id="@+id/et_user_phone"
-                    style="@style/Edit_Text"
-                    android:layout_marginStart="@dimen/padding_small"
-                    android:layout_marginTop="0dp"
-                    android:layout_toEndOf="@+id/txt_user_phone_label"
-                    android:digits="0123456789"
-                    android:gravity="end|center_vertical"
-                    android:hint="@string/et_hint_phone"
-                    android:inputType="phone"
-                    android:maxLength="10"
-                    android:maxLines="1" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/Text_Normal"
-                    android:layout_centerVertical="true"
-                    android:text="@string/et_hint_dob"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/txt_user_dob"
-                    style="@style/Text_Normal"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/et_hint_dob" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </com.southernbox.springscrollview.SpringScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/padding_small"
-        android:paddingLeft="@dimen/padding_small"
-        android:paddingRight="@dimen/padding_small">
-
-        <TextView
-            style="@style/Text_Title"
-            android:gravity="start"
-            android:layout_marginTop="0dp"
-            android:text="@string/txt_update_password" />
-
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingStart="@dimen/padding_small">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_edit_text"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_small">
 
-            <EditText
-                android:id="@+id/et_user_pass"
-                style="@style/Edit_Text"
-                android:layout_marginTop="0dp"
-                android:hint="@string/et_hint_new_pass"
-                android:inputType="textPassword"
-                android:paddingTop="0dp" />
+            <TextView
+                android:id="@+id/txt_user_f_name_label"
+                style="@style/Text_Normal"
+                android:layout_centerVertical="true"
+                android:text="@string/et_hint_first_name"
+                android:textColor="@color/colorPrimary" />
 
-            <ImageView
-                android:id="@+id/img_user_pass_toggle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/txt_user_f_name"
+                style="@style/Text_Normal"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:contentDescription="@string/app_name"
-                android:paddingEnd="@dimen/padding_small" />
+                android:minWidth="@dimen/height_edit_text"
+                android:text="@string/et_hint_first_name" />
+
+            <EditText
+                android:id="@+id/et_user_first_name"
+                style="@style/Edit_Text"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/txt_user_f_name_label"
+                android:gravity="end|center_vertical"
+                android:hint="@string/et_hint_first_name"
+                android:inputType="text" />
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/et_user_pass_confirm"
-            style="@style/Edit_Text"
-            android:hint="@string/et_hint_pass_confirm"
-            android:inputType="textPassword" />
+            <TextView
+                android:id="@+id/txt_user_l_name_label"
+                style="@style/Text_Normal"
+                android:layout_centerVertical="true"
+                android:text="@string/et_hint_last_name"
+                android:textColor="@color/colorPrimary" />
 
-        <include layout="@layout/fragment_buttons" />
+            <TextView
+                android:id="@+id/txt_user_l_name"
+                style="@style/Text_Normal"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:minWidth="@dimen/height_edit_text"
+                android:text="@string/et_hint_last_name" />
+
+            <EditText
+                android:id="@+id/et_user_last_name"
+                style="@style/Edit_Text"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/txt_user_l_name_label"
+                android:gravity="end|center_vertical"
+                android:hint="@string/et_hint_last_name"
+                android:inputType="text" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_user_email_label"
+                style="@style/Text_Normal"
+                android:layout_centerVertical="true"
+                android:text="@string/et_hint_email"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_user_email"
+                style="@style/Text_Normal"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:minWidth="@dimen/height_edit_text" />
+
+            <EditText
+                android:id="@+id/et_user_email"
+                style="@style/Edit_Text"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/txt_user_email_label"
+                android:gravity="end|center_vertical"
+                android:hint="@string/et_hint_email"
+                android:inputType="textEmailAddress" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_user_country_code_label"
+                style="@style/Text_Normal"
+                android:layout_centerVertical="true"
+                android:text="@string/et_hint_country_code"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_user_country_code"
+                style="@style/Text_Normal"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:minWidth="@dimen/height_edit_text"
+                android:text="@string/et_hint_country_code" />
+
+            <com.rilixtech.CountryCodePicker
+                android:id="@+id/ccp_user_country_code"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_edit_text"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_toEndOf="@+id/txt_user_country_code_label"
+                android:background="@drawable/bckgrd_text_fields"
+                android:gravity="end|center_vertical"
+                android:paddingEnd="@dimen/padding_small"
+                android:paddingStart="@dimen/padding_small"
+                sothree:ccp_defaultCode="254"
+                sothree:ccp_textColor="@color/colorAccent"
+                sothree:ccp_textSize="@dimen/text_size_normal" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_user_phone_label"
+                style="@style/Text_Normal"
+                android:layout_centerVertical="true"
+                android:text="@string/et_hint_phone"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_user_phone"
+                style="@style/Text_Normal"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:minWidth="@dimen/height_edit_text"
+                android:text="@string/et_hint_phone" />
+
+            <EditText
+                android:id="@+id/et_user_phone"
+                style="@style/Edit_Text"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/txt_user_phone_label"
+                android:digits="0123456789"
+                android:gravity="end|center_vertical"
+                android:hint="@string/et_hint_phone"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:maxLines="1" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_centerVertical="true"
+                android:text="@string/et_hint_dob"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_user_dob"
+                style="@style/Text_Normal"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="@string/et_hint_dob" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+</com.southernbox.springscrollview.SpringScrollView>
+

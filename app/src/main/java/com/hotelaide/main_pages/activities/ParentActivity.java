@@ -268,7 +268,6 @@ public class ParentActivity extends AppCompatActivity implements
                             btn_cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    SharedPrefs.setBool(ALLOW_UPDATE_APP, false);
                                     dialog.cancel();
                                 }
                             });
@@ -278,7 +277,6 @@ public class ParentActivity extends AppCompatActivity implements
 
                         } else {
                             ShortcutBadger.applyCount(ParentActivity.this, 0);
-                            SharedPrefs.setBool(ALLOW_UPDATE_APP, false);
                         }
 
                         Helpers.LogThis(TAG_LOG, "DATABASE VERSION: " + NEW_VERSION_CODE);

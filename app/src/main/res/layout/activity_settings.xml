@@ -43,6 +43,7 @@
                 android:background="@color/dark_grey" />
 
             <TextView
+                android:id="@+id/delete_account"
                 style="@style/Text_Small"
                 android:layout_gravity="center"
                 android:text="Delete your account" />

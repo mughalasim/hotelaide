@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hotelaide.R;
@@ -32,10 +33,15 @@ public class WorkExperienceFragment extends Fragment {
 
     private LinearLayout ll_work_experience;
 
-    private TextView btn_add_work_experience;
+    private RelativeLayout no_list_items;
+
+    private TextView
+            txt_no_results,
+            btn_add_work_experience;
 
 
-    public WorkExperienceFragment() {}
+    public WorkExperienceFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,9 @@ public class WorkExperienceFragment extends Fragment {
 
         ll_work_experience = rootview.findViewById(R.id.ll_work_experience);
 
+        txt_no_results = rootview.findViewById(R.id.txt_no_results);
+        no_list_items = rootview.findViewById(R.id.no_list_items);
+
         btn_add_work_experience = rootview.findViewById(R.id.btn_add_work_experience);
     }
 
@@ -78,16 +87,23 @@ public class WorkExperienceFragment extends Fragment {
         LayoutInflater linf;
         linf = LayoutInflater.from(getActivity());
 
+        ll_work_experience.removeAllViews();
+
         int array_size = workExperienceModelArrayList.size();
 
         for (int v = 0; v < array_size; v++) {
             View child = linf.inflate(R.layout.list_item_work_experience, null);
+
+            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,  LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 20, 0, 0);
+            child.setLayoutParams(params);
 
             final TextView txt_company_name = child.findViewById(R.id.txt_company_name);
             final TextView txt_position = child.findViewById(R.id.txt_position);
             final TextView txt_start_date = child.findViewById(R.id.txt_start_date);
             final TextView txt_end_date = child.findViewById(R.id.txt_end_date);
             final TextView txt_current = child.findViewById(R.id.txt_current);
+            final TextView txt_to = child.findViewById(R.id.txt_to);
             final TextView txt_responsibilities = child.findViewById(R.id.txt_responsibilities);
             final TextView txt_responsibilities_show = child.findViewById(R.id.txt_responsibilities_show);
 
@@ -100,10 +116,12 @@ public class WorkExperienceFragment extends Fragment {
             if (workExperienceModel.current) {
                 txt_current.setVisibility(View.VISIBLE);
                 txt_end_date.setVisibility(View.GONE);
+                txt_to.setVisibility(View.GONE);
             } else {
                 txt_current.setVisibility(View.GONE);
                 txt_end_date.setVisibility(View.VISIBLE);
                 txt_end_date.setText(workExperienceModel.end_date);
+                txt_to.setText(R.string.txt_to);
             }
 
             txt_responsibilities.setText(workExperienceModel.responsibilities);
@@ -116,10 +134,10 @@ public class WorkExperienceFragment extends Fragment {
             txt_responsibilities_show.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(txt_responsibilities_show.getText().toString().equals(getResources().getString(R.string.txt_more))){
+                    if (txt_responsibilities_show.getText().toString().equals(getResources().getString(R.string.txt_more))) {
                         txt_responsibilities.setMaxLines(Integer.MAX_VALUE);
                         txt_responsibilities_show.setText(getResources().getString(R.string.txt_less));
-                    }else{
+                    } else {
                         txt_responsibilities.setMaxLines(3);
                         txt_responsibilities_show.setText(getResources().getString(R.string.txt_more));
                     }
@@ -128,6 +146,12 @@ public class WorkExperienceFragment extends Fragment {
 
             ll_work_experience.addView(child);
 
+        }
+
+        if (ll_work_experience.getChildCount() <= 0) {
+            no_list_items.setVisibility(View.VISIBLE);
+        } else {
+            no_list_items.setVisibility(View.GONE);
         }
 
     }

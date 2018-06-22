@@ -33,14 +33,6 @@ public class DashboardActivity extends ParentActivity {
 
         handleExtraBundles();
 
-//        helper.setTracker(TAG_LOG);
-
-
-        // TODO - image uploading
-//        File file = new File();// initialize file here;
-//
-//        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
 
     }
 

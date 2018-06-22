@@ -57,7 +57,7 @@
     <string name="drawer_registration">Hotel Registration</string>
     <string name="drawer_subscription">Subscription Plan</string>
     <string name="drawer_my_profile">My Profile</string>
-    <string name="drawer_settings">App Settings</string>
+    <string name="drawer_settings">Settings</string>
     <string name="drawer_about_us">About Us</string>
     <string name="drawer_log_out">Log Out</string>
 
@@ -117,6 +117,8 @@
     <string name="txt_take_me_there">Take Me There</string>
     <string name="txt_alert">Alert!</string>
     <string name="txt_update_password">UPDATE PASSWORD</string>
+    <string name="txt_delete">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap OK to proceed or CANCEL to go back</string>
+    <string name="txt_to">&#160;to&#160;</string>
 
 
 </resources>

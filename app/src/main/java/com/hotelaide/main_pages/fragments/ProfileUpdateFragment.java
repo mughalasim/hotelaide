@@ -3,7 +3,6 @@ package com.hotelaide.main_pages.fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,29 +18,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.activities.DashboardActivity;
-import com.hotelaide.main_pages.models.UserModel;
-import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.rilixtech.CountryCodePicker;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import okhttp3.MultipartBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.hotelaide.utils.Helpers.START_RETURN;
 import static com.hotelaide.utils.SharedPrefs.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.SharedPrefs.USER_DOB;
 import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
@@ -64,9 +51,7 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
             et_user_first_name,
             et_user_last_name,
             et_user_email,
-            et_user_phone,
-            et_user_pass,
-            et_user_pass_confirm;
+            et_user_phone;
 
     private TextView
             txt_user_first_name,
@@ -76,7 +61,8 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
             txt_user_phone,
             txt_user_dob;
 
-    private ImageView img_user_pass_toggle;
+    private LinearLayout ll_profile_update;
+
 
     private CountryCodePicker ccp_user_country_code;
 
@@ -158,6 +144,8 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
+        ll_profile_update = rootview.findViewById(R.id.ll_profile_update);
+
         txt_user_first_name = rootview.findViewById(R.id.txt_user_f_name);
         txt_user_last_name = rootview.findViewById(R.id.txt_user_l_name);
         txt_user_email = rootview.findViewById(R.id.txt_user_email);
@@ -166,6 +154,8 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
         txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
 
         setDates();
+
+        ll_profile_update.setOnClickListener(this);
 
         txt_user_first_name.setOnClickListener(this);
         txt_user_last_name.setOnClickListener(this);
@@ -181,13 +171,8 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
         ccp_user_country_code = rootview.findViewById(R.id.ccp_user_country_code);
         ccp_user_country_code.registerPhoneNumberTextView(et_user_phone);
 
-        et_user_pass = rootview.findViewById(R.id.et_user_pass);
-        et_user_pass_confirm = rootview.findViewById(R.id.et_user_pass_confirm);
         txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
 
-        img_user_pass_toggle = rootview.findViewById(R.id.img_user_pass_toggle);
-        img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
 
     }
 
@@ -209,31 +194,11 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
     }
 
     private void setListeners() {
-
-        img_user_pass_toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (img_user_pass_toggle.getTag().toString().equals(TAG_PASS_HIDDEN)) {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_show);
-                    img_user_pass_toggle.setTag(TAG_PASS_SHOWN);
-                    et_user_pass.setTransformationMethod(null);
-                    et_user_pass_confirm.setTransformationMethod(null);
-                } else {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-                    img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-                    et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
-                    et_user_pass_confirm.setTransformationMethod(new PasswordTransformationMethod());
-                }
-                helpers.animateWobble(img_user_pass_toggle);
-            }
-        });
-
         // ADD TEXT WATCHERS
         addTextChangeListener(et_user_first_name, txt_user_first_name, USER_F_NAME, true);
         addTextChangeListener(et_user_last_name, txt_user_last_name, USER_L_NAME, true);
         addTextChangeListener(et_user_email, txt_user_email, USER_EMAIL, true);
         addTextChangeListener(et_user_phone, txt_user_phone, USER_PHONE, false);
-
 
     }
 
@@ -348,79 +313,6 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
 
 
 
-    // LOGIN ASYNC FUNCTIONS =======================================================================
-    private void asyncUpdate(final UserModel userModel, final MultipartBody.Part avatar, final MultipartBody.Part banner) {
-
-        helpers.setProgressDialogMessage("Updating profile, please wait...");
-        helpers.progressDialog(true);
-
-        // TODO - image uploading
-//        File avatar_file = new File("");
-//        MultipartBody.Part avatar = MultipartBody.Part.createFormData("file", avatar_file.getName(), RequestBody.create(MediaType.parse("image/*"), avatar_file));
-//
-//        File baner_file = new File("");
-//        MultipartBody.Part banner = MultipartBody.Part.createFormData("file", baner_file.getName(), RequestBody.create(MediaType.parse("image/*"), baner_file));
-
-
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.setUser(
-                userModel.first_name,
-                userModel.last_name,
-                userModel.country_code,
-                userModel.phone,
-                userModel.email,
-                userModel.password,
-                userModel.geo_lat,
-                userModel.geo_lng,
-                userModel.dob,
-                userModel.fb_id,
-                userModel.google_id,
-                avatar,
-                banner
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-
-                    Helpers.LogThis(TAG_LOG, main.toString());
-
-                    if (main.getBoolean("success") && getActivity() != null) {
-                        JSONObject data = main.getJSONObject("data");
-                        if (SharedPrefs.setUser(data.getJSONObject("user"))) {
-                            SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
-                            startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(START_RETURN, START_RETURN));
-                            getActivity().finish();
-                        } else {
-                            helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                        }
-                    } else {
-                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
-                    }
-
-                } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), e.toString());
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
-                }
-
-            }
-        });
-
-    }
 
 
 }

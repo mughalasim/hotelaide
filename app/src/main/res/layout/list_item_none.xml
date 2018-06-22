@@ -12,6 +12,7 @@
         android:id="@+id/imageView"
         android:layout_width="@dimen/img_size_medium"
         android:layout_height="@dimen/img_size_medium"
+        android:layout_marginTop="@dimen/padding_small"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/app_name"
         app:srcCompat="@drawable/ic_sad_face" />

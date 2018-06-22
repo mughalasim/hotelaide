@@ -98,4 +98,11 @@ public interface UserService {
             @Part MultipartBody.Part banner
     );
 
+    // DELETE USERS ================================================================================
+    @GET("user/delete/{user_id}")
+    Call<JsonObject> deleteUser(
+            @Path("user_id") int user_id
+    );
+
+
 }
