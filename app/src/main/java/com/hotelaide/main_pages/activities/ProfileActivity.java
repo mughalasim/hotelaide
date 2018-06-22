@@ -76,6 +76,22 @@ public class ProfileActivity extends ParentActivity {
 
     private final int RESULT_BANNER = 222, RESULT_AVATAR = 333;
 
+    private int[] fragTitleList = {
+            R.string.nav_profile,
+            R.string.nav_education,
+            R.string.nav_work,
+            R.string.nav_documents,
+            R.string.nav_pass
+    };
+
+    private Fragment[] fragList = {
+            new ProfileUpdateFragment(),
+            new EducationFragment(),
+            new WorkExperienceFragment(),
+            new DocumentsFragment(),
+            new ChangePasswordFragment()
+    };
+
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -148,10 +164,13 @@ public class ProfileActivity extends ParentActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
                     isCollapsedToolbar = true;
+                    toolbar_text.setText(fragTitleList[viewPager.getCurrentItem()]);
                 } else if (verticalOffset == 0) {
                     isCollapsedToolbar = false;
+                    toolbar_text.setText(TAG_LOG);
                 } else {
                     isCollapsedToolbar = false;
+                    toolbar_text.setText(TAG_LOG);
 
                 }
             }
@@ -229,20 +248,10 @@ public class ProfileActivity extends ParentActivity {
     private void setupViewPager(ViewPager viewPager) {
         ProfileActivity.ViewPagerAdapter adapter = new ProfileActivity.ViewPagerAdapter(getSupportFragmentManager());
 
-        Fragment fragment1 = new ProfileUpdateFragment();
-        adapter.addFragment(fragment1, getResources().getString(R.string.nav_profile));
-
-        Fragment fragment2 = new EducationFragment();
-        adapter.addFragment(fragment2, getResources().getString(R.string.nav_education));
-
-        Fragment fragment3 = new WorkExperienceFragment();
-        adapter.addFragment(fragment3, getResources().getString(R.string.nav_work));
-
-        Fragment fragment4 = new DocumentsFragment();
-        adapter.addFragment(fragment4, getResources().getString(R.string.nav_documents));
-
-        Fragment fragment5 = new ChangePasswordFragment();
-        adapter.addFragment(fragment5, getResources().getString(R.string.nav_pass));
+        for (int i = 0; i <= fragTitleList.length-1; i++) {
+            Fragment fragment = fragList[i];
+            adapter.addFragment(fragment, getResources().getString(fragTitleList[i]));
+        }
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(5);
@@ -256,29 +265,9 @@ public class ProfileActivity extends ParentActivity {
             @Override
             public void onPageSelected(int position) {
                 if (isCollapsedToolbar) {
-                    switch (position) {
-                        case 1:
-                            toolbar.setTitle(R.string.nav_profile);
-                            break;
-
-                        case 2:
-                            toolbar.setTitle(R.string.nav_education);
-                            break;
-
-                        case 3:
-                            toolbar.setTitle(R.string.nav_work);
-                            break;
-
-                        case 4:
-                            toolbar.setTitle(R.string.nav_documents);
-                            break;
-
-                        case 5:
-                            toolbar.setTitle(R.string.nav_pass);
-                            break;
-                    }
+                    toolbar_text.setText(fragTitleList[position]);
                 } else {
-                    toolbar.setTitle(TAG_LOG);
+                    toolbar_text.setText(TAG_LOG);
                 }
             }
 
@@ -321,12 +310,12 @@ public class ProfileActivity extends ParentActivity {
 
 
     // LOGIN ASYNC FUNCTIONS =======================================================================
-    private void asyncUpdate(final UserModel userModel, final MultipartBody.Part avatar, final MultipartBody.Part banner) {
+    private void asyncUpdateImages(final UserModel userModel, final MultipartBody.Part avatar, final MultipartBody.Part banner) {
 
         helpers.setProgressDialogMessage("Updating profile, please wait...");
         helpers.progressDialog(true);
 
-        // TODO - image uploading
+        // TODO - image uploading and update the endpoint
 //        File avatar_file = new File("");
 //        MultipartBody.Part avatar = MultipartBody.Part.createFormData("file", avatar_file.getName(), RequestBody.create(MediaType.parse("image/*"), avatar_file));
 //

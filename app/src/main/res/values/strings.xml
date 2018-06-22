@@ -109,8 +109,6 @@
     <string name="txt_address_landline">Landline:&#160;</string>
     <string name="txt_address_mobile">Mobile:&#160;</string>
     <string name="txt_errors">Errors</string>
-    <string name="txt_more">More</string>
-    <string name="txt_less">Less</string>
     <string name="txt_set_image">You can set this image by selecting one from your gallery or opt to take a new picture from your camera</string>
     <string name="txt_camera">CAMERA</string>
     <string name="txt_gallery">GALLERY</string>
@@ -119,6 +117,14 @@
     <string name="txt_update_password">UPDATE PASSWORD</string>
     <string name="txt_delete">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap OK to proceed or CANCEL to go back</string>
     <string name="txt_to">&#160;to&#160;</string>
+    <string name="txt_select_date">Select Date</string>
+    <string name="txt_not_work_here">I do not work here</string>
+    <string name="txt_work_here">I currently work here</string>
+    <string name="txt_end_date">End Date</string>
+    <string name="txt_start_date">Start Date</string>
+    <string name="txt_position_held">Position Held</string>
+    <string name="txt_company_name">Company Name</string>
+    <string name="txt_responsibilities">Responsibilities</string>
 
 
 </resources>

@@ -59,6 +59,7 @@ public class Database extends SQLiteOpenHelper {
 
     public void deleteAllTables() {
         SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + EXPERIENCE_TABLE_NAME);
         onCreate(db);
     }
 

@@ -1,107 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sliding_panel"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingStart="@dimen/padding_small"
-    android:paddingEnd="@dimen/padding_small"
-    android:paddingBottom="@dimen/padding_small"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        style="@style/Text_Normal"
-        android:text="Company Name"
-        android:textColor="@color/colorPrimary" />
-
-    <EditText
-        android:id="@+id/et_company_name"
-        style="@style/Edit_Text"
-        android:text="Eatout Limited" />
-
-
-    <TextView
-        style="@style/Text_Normal"
-        android:text="Position Held"
-        android:textColor="@color/colorPrimary" />
-
-    <EditText
-        android:id="@+id/et_position"
-        style="@style/Edit_Text"
-        android:text="Software Engineer" />
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            style="@style/Text_Normal"
-            android:text="Start Date"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/txt_start_date"
-            style="@style/Text_Normal"
-            android:layout_alignParentEnd="true"
-            android:text="Not Set" />
-
-    </RelativeLayout>
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/padding_small"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/radio_btn_no"
-            android:text="I do not work here"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <RadioButton
-            android:id="@+id/radio_btn_yes"
-            android:layout_marginStart="@dimen/padding_small"
-            android:text="I currently work here"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RadioGroup>
-
-    <RelativeLayout
-        android:id="@+id/ll_end_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            style="@style/Text_Normal"
-            android:text="End Date"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/txt_end_date"
-            style="@style/Text_Normal"
-            android:layout_alignParentEnd="true"
-            android:text="Not set" />
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/txt_responsibilities_label"
-        style="@style/Text_Normal"
-        android:text="Responsibilities"
-        android:textColor="@color/colorPrimary" />
-
-    <EditText
-        android:id="@+id/et_responsibilities"
-        style="@style/Edit_Text"
         android:layout_height="wrap_content"
-        android:maxLines="700"
-        android:isScrollContainer="true"
-        android:padding="@dimen/padding_small"
-        android:text="@string/about1" />
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_small"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingStart="@dimen/padding_small">
 
-    <include layout="@layout/fragment_buttons"/>
-</LinearLayout>
 
+        <TextView
+            android:id="@+id/txt_title"
+            style="@style/Text_Title"
+            android:text="ADD WORK EXPERIENCE"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/txt_id"
+            style="@style/Text_Normal"
+            android:visibility="gone" />
+
+        <TextView
+            style="@style/Text_Normal"
+            android:text="@string/txt_company_name"
+            android:textColor="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/et_company_name"
+            style="@style/Edit_Text"
+            android:hint="@string/txt_company_name" />
+
+        <TextView
+            style="@style/Text_Normal"
+            android:text="@string/txt_position_held"
+            android:textColor="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/et_position"
+            style="@style/Edit_Text"
+            android:hint="@string/txt_position_held" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Text_Normal"
+                android:text="@string/txt_start_date"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_start_date"
+                style="@style/Text_Normal"
+                android:layout_alignParentEnd="true"
+                android:text="@string/txt_select_date" />
+
+        </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_btn_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/txt_not_work_here" />
+
+            <RadioButton
+                android:id="@+id/radio_btn_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_small"
+                android:text="@string/txt_work_here" />
+
+        </RadioGroup>
+
+        <RelativeLayout
+            android:id="@+id/rl_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Text_Normal"
+                android:text="@string/txt_end_date"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_end_date"
+                style="@style/Text_Normal"
+                android:layout_alignParentEnd="true"
+                android:text="@string/txt_select_date" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_responsibilities_label"
+            style="@style/Text_Normal"
+            android:text="@string/txt_responsibilities"
+            android:textColor="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/et_responsibilities"
+            style="@style/Edit_Text"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="true"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="2000"
+            android:maxLines="150"
+            android:padding="@dimen/padding_small"
+            android:hint="@string/txt_responsibilities"/>
+
+        <include layout="@layout/fragment_buttons" />
+
+    </LinearLayout>
+
+</ScrollView>
 
 

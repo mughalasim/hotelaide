@@ -1,43 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.southernbox.springscrollview.SpringScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipe_refresh"
+
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_panel"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="0dp"
+    sothree:umanoShadowHeight="0dp">
 
-    <RelativeLayout
+    <com.southernbox.springscrollview.SpringScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/padding_small"
-        android:paddingBottom="@dimen/padding_small"
-        android:paddingEnd="@dimen/padding_small">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/ll_work_experience"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_add_work_experience"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
+            android:paddingStart="@dimen/padding_small">
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_work_experience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_add_work_experience"
+                android:orientation="vertical">
 
-        <include layout="@layout/list_item_none"/>
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/btn_add_work_experience"
-            style="@style/Button_Yes"
-            android:text="ADD"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:padding="@dimen/text_margin"
-            android:textColor="@color/white"
-            android:layout_marginTop="@dimen/padding_small"
-            android:layout_alignParentEnd="true"
-            android:textSize="@dimen/text_size_small" />
+            <include layout="@layout/list_item_none" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/btn_add_work_experience"
+                style="@style/Button_Yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/padding_small"
+                android:padding="@dimen/text_margin"
+                android:text="ADD"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_small" />
 
-</com.southernbox.springscrollview.SpringScrollView>
+        </RelativeLayout>
+
+    </com.southernbox.springscrollview.SpringScrollView>
+
+
+    <include layout="@layout/fragment_add_work_experience" />
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 
 

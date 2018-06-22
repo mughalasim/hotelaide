@@ -1,95 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/text_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bckgrd_text_fields"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/text_margin">
 
     <LinearLayout
+        android:id="@+id/top_panel"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txt_position"
-            style="@style/Text_Normal"
-            android:layout_marginTop="0dp"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold"
-            android:text="Software Engineer" />
+            <TextView
+                android:id="@+id/txt_position"
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
 
-        <TextView
-            style="@style/Text_Normal"
-            android:layout_marginTop="0dp"
-            android:text=" at "
-            android:textColor="@color/colorPrimary" />
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp"
+                android:text=" at "
+                android:textColor="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/txt_company_name"
-            style="@style/Text_Normal"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold"
-            android:layout_marginTop="0dp"
-            android:text="Eatout Limited" />
+            <TextView
+                android:id="@+id/txt_company_name"
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/text_margin"
-        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin"
+            android:orientation="horizontal">
 
-        <TextView
-            style="@style/Text_Normal"
-            android:text="From "
-            android:layout_marginTop="0dp"
-            android:textColor="@color/colorPrimary" />
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp"
+                android:text="From "
+                android:textColor="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/txt_start_date"
-            style="@style/Text_Normal"
-            android:layout_marginTop="0dp"
-            android:text="12/12/2018" />
+            <TextView
+                android:id="@+id/txt_start_date"
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp" />
 
-        <TextView
-            android:id="@+id/txt_to"
-            style="@style/Text_Normal"
-            android:layout_marginTop="0dp"
-            android:text=" to "
-            android:textColor="@color/colorPrimary" />
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp"
+                android:text=" to "
+                android:textColor="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/txt_end_date"
-            style="@style/Text_Normal"
-            android:layout_marginTop="0dp"
-            android:text="12/12/2018" />
+            <TextView
+                android:id="@+id/txt_end_date"
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp" />
 
-        <TextView
-            android:id="@+id/txt_current"
-            style="@style/Text_Normal"
-            android:layout_marginTop="0dp"
-            android:text=" and is currently working here" />
+            <TextView
+                android:id="@+id/txt_current"
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp"
+                android:text="Present"
+                android:textColor="@color/colorPrimary" />
 
-    </LinearLayout>
+        </LinearLayout>
 
 
         <View
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/padding_small"
             android:layout_height="@dimen/line_thickness"
-            android:background="@color/dark_grey"/>
+            android:layout_marginTop="@dimen/padding_small"
+            android:background="@color/dark_grey" />
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:layout_below="@+id/top_panel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txt_responsibilities_label"
@@ -99,26 +99,25 @@
             android:textColor="@color/colorPrimary" />
 
         <TextView
-            android:layout_marginTop="@dimen/text_margin"
             android:id="@+id/txt_responsibilities"
             style="@style/Text_Normal"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/txt_responsibilities_label"
+            android:layout_marginTop="@dimen/text_margin"
             android:maxLines="3"
             android:text="@string/about1" />
 
-        <TextView
-            android:id="@+id/txt_responsibilities_show"
-            style="@style/Text_Small"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/txt_responsibilities"
-            android:layout_marginTop="@dimen/padding_tiny"
-            android:text="@string/txt_more"
-            android:textColor="@color/colorPrimary" />
+    </LinearLayout>
 
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/btn_delete"
+        android:contentDescription="@string/app_name"
+        android:layout_width="@dimen/img_size_tiny"
+        app:srcCompat="@drawable/ic_cancel"
+        android:layout_alignParentEnd="true"
+        android:layout_height="@dimen/img_size_tiny" />
 
-</LinearLayout>
+</RelativeLayout>
 
 
 

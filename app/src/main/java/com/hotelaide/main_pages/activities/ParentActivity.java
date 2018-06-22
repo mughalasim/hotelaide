@@ -64,7 +64,9 @@ public class ParentActivity extends AppCompatActivity implements
 
     private BroadcastReceiver receiver;
 
-    private TextView nav_user_name, nav_user_email, toolbar_text;
+    private TextView nav_user_name, nav_user_email;
+
+    public TextView toolbar_text;
 
     private RoundedImageView nav_img_user_pic;
 
