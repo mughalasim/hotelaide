@@ -132,6 +132,7 @@ public class ProfileActivity extends ParentActivity {
 
         setListeners();
 
+        helpers.asyncGetUser();
 
     }
 
@@ -143,25 +144,31 @@ public class ProfileActivity extends ParentActivity {
                 if (resultCode == RESULT_OK) {
                     Uri resultUri = result.getUri();
                     File file = new File(resultUri.getPath());
-                    MultipartBody.Part partFile = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                    asyncUpdateImages(partFile, RESULT_EXPECTED);
 
                     if (RESULT_EXPECTED == RESULT_AVATAR) {
                         Glide.with(this).load(resultUri).into(img_avatar);
+                        MultipartBody.Part partFile = MultipartBody.Part.createFormData("avatar",
+                                file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        asyncUpdateImages(partFile, RESULT_EXPECTED);
                     } else {
                         Glide.with(this).load(resultUri).into(img_banner);
+                        MultipartBody.Part partFile = MultipartBody.Part.createFormData("banner",
+                                file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        asyncUpdateImages(partFile, RESULT_EXPECTED);
                     }
 
 
                 } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    helpers.ToastMessage(ProfileActivity.this, getResources().getString(R.string.error_unknown));
+                    helpers.ToastMessage(ProfileActivity.this,
+                            getResources().getString(R.string.error_unknown));
                 }
                 break;
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
         helpers.myPermissionsDialog(ProfileActivity.this, grantResults);
@@ -314,15 +321,15 @@ public class ProfileActivity extends ParentActivity {
         Call<JsonObject> call;
 
         if (type == RESULT_AVATAR) {
-            call = userService.setUserAvatar(
+            call = userService.setUserImages(
                     SharedPrefs.getInt(USER_ID),
                     partFile,
-                    ""
+                    null
             );
         } else {
-            call = userService.setUserBanner(
+            call = userService.setUserImages(
                     SharedPrefs.getInt(USER_ID),
-                    "",
+                    null,
                     partFile
             );
         }
@@ -337,8 +344,7 @@ public class ProfileActivity extends ParentActivity {
                     Helpers.LogThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
-                        JSONObject data = main.getJSONObject("data");
-                        if (SharedPrefs.setUser(data.getJSONObject("user"))) {
+                        if (SharedPrefs.setUser(main.getJSONObject("user"))) {
                             helpers.ToastMessage(ProfileActivity.this, "Image updated");
 
                         } else {
@@ -348,9 +354,12 @@ public class ProfileActivity extends ParentActivity {
                         helpers.handleErrorMessage(ProfileActivity.this, main.getJSONObject("data"));
                     }
 
+                    setFromSharedPrefs();
+
                 } catch (JSONException e) {
                     helpers.ToastMessage(ProfileActivity.this, e.toString());
                     e.printStackTrace();
+                    setFromSharedPrefs();
                 }
             }
 
@@ -369,80 +378,5 @@ public class ProfileActivity extends ParentActivity {
 
     }
 
-//
-//    private void asyncUpdateImages(final UserModel userModel, final MultipartBody.Part avatar, final MultipartBody.Part banner) {
-//
-//        helpers.setProgressDialogMessage("Updating profile, please wait...");
-//        helpers.progressDialog(true);
-//
-//        // TODO - image uploading and update the endpoint
-////        File avatar_file = new File("");
-////        MultipartBody.Part avatar = MultipartBody.Part.createFormData("file", avatar_file.getName(), RequestBody.create(MediaType.parse("image/*"), avatar_file));
-////
-////        File baner_file = new File("");
-////        MultipartBody.Part banner = MultipartBody.Part.createFormData("file", baner_file.getName(), RequestBody.create(MediaType.parse("image/*"), baner_file));
-//
-//
-//        UserService userService = UserService.retrofit.create(UserService.class);
-//        final Call<JsonObject> call = userService.setUser(
-//                userModel.first_name,
-//                userModel.last_name,
-//                userModel.country_code,
-//                userModel.phone,
-//                userModel.email,
-//                userModel.password,
-//                userModel.geo_lat,
-//                userModel.geo_lng,
-//                userModel.dob,
-//                userModel.fb_id,
-//                userModel.google_id,
-//                avatar,
-//                banner
-//        );
-//
-//        call.enqueue(new Callback<JsonObject>() {
-//            @Override
-//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-//                helpers.progressDialog(false);
-//                try {
-//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-//
-//                    Helpers.LogThis(TAG_LOG, main.toString());
-//
-//                    if (main.getBoolean("success")) {
-//                        JSONObject data = main.getJSONObject("data");
-//                        if (SharedPrefs.setUser(data.getJSONObject("user"))) {
-//                            SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
-////                            startActivity(new Intent(ProfileActivity.this, DashboardActivity.class).putExtra(START_RETURN, START_RETURN));
-////                            finish();
-//                            helpers.ToastMessage(ProfileActivity.this, "SUCCESSFULLY UPDATED");
-//
-//                        } else {
-//                            helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
-//                        }
-//                    } else {
-//                        helpers.handleErrorMessage(ProfileActivity.this, main.getJSONObject("data"));
-//                    }
-//
-//                } catch (JSONException e) {
-//                    helpers.ToastMessage(ProfileActivity.this, e.toString());
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-//                helpers.progressDialog(false);
-//                Helpers.LogThis(TAG_LOG, t.toString());
-//                if (helpers.validateInternetConnection()) {
-//                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
-//                } else {
-//                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_connection));
-//                }
-//
-//            }
-//        });
-//
-//    }
 
 }

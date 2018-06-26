@@ -197,6 +197,8 @@
 
         </RelativeLayout>
 
+        <include layout="@layout/fragment_buttons"/>
+
     </LinearLayout>
 
 </com.southernbox.springscrollview.SpringScrollView>

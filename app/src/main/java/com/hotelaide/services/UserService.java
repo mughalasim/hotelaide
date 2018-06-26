@@ -98,21 +98,11 @@ public interface UserService {
     );
 
     @Multipart
-    @FormUrlEncoded
     @POST("user/update-images/{user_id}")
-    Call<JsonObject> setUserBanner(
-            @Path("user_id") int user_id,
-            @Field("avatar") String avatar,
-            @Part MultipartBody.Part banner
-    );
-
-    @Multipart
-    @FormUrlEncoded
-    @POST("user/update-images/{user_id}")
-    Call<JsonObject> setUserAvatar(
+    Call<JsonObject> setUserImages(
             @Path("user_id") int user_id,
             @Part MultipartBody.Part avatar,
-            @Field("banner") String banner
+            @Part MultipartBody.Part banner
     );
 
     @FormUrlEncoded

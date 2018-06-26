@@ -119,6 +119,7 @@
     <string name="txt_to">&#160;to&#160;</string>
     <string name="txt_select_date">Select Date</string>
     <string name="txt_not_work_here">I do not work here</string>
+    <string name="txt_not_set">Not Set</string>
     <string name="txt_work_here">I currently work here</string>
     <string name="txt_end_date">End Date</string>
     <string name="txt_start_date">Start Date</string>

@@ -21,18 +21,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.main_pages.models.UserModel;
+import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.rilixtech.CountryCodePicker;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.hotelaide.utils.SharedPrefs.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.SharedPrefs.USER_DOB;
 import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
 import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
+import static com.hotelaide.utils.SharedPrefs.USER_ID;
 import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
 import static com.hotelaide.utils.SharedPrefs.USER_PHONE;
 
@@ -54,6 +65,8 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
             et_user_phone;
 
     private TextView
+            btn_confirm,
+            btn_cancel,
             txt_user_first_name,
             txt_user_last_name,
             txt_user_email,
@@ -137,9 +150,22 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
                 helpers.animateFadeIn(ccp_user_country_code);
                 break;
 
+            case R.id.btn_confirm:
+                UserModel userModel = new UserModel();
+                userModel.id = SharedPrefs.getInt(USER_ID);
+                userModel.first_name = txt_user_first_name.getText().toString();
+                userModel.last_name = txt_user_last_name.getText().toString();
+                userModel.email = txt_user_email.getText().toString();
+                userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
+                userModel.phone = Integer.parseInt(txt_user_phone.getText().toString());
+                if (!txt_user_dob.getText().toString().equals(getString(R.string.txt_not_set))) {
+                    userModel.dob = txt_user_dob.getText().toString();
+                }
+                asyncUpdateDetails(userModel);
+                break;
+
         }
     }
-
 
 
     // BASIC FUNCTIONS =============================================================================
@@ -153,6 +179,11 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
         txt_user_phone = rootview.findViewById(R.id.txt_user_phone);
         txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
 
+        btn_cancel = rootview.findViewById(R.id.btn_cancel);
+        btn_confirm = rootview.findViewById(R.id.btn_confirm);
+        btn_cancel.setVisibility(View.GONE);
+        btn_confirm.setText(getString(R.string.txt_update_details));
+
         setDates();
 
         ll_profile_update.setOnClickListener(this);
@@ -162,6 +193,7 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
         txt_user_email.setOnClickListener(this);
         txt_user_country_code.setOnClickListener(this);
         txt_user_phone.setOnClickListener(this);
+        btn_confirm.setOnClickListener(this);
 
         et_user_first_name = rootview.findViewById(R.id.et_user_first_name);
         et_user_last_name = rootview.findViewById(R.id.et_user_last_name);
@@ -182,7 +214,11 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
         txt_user_email.setText(SharedPrefs.getString(USER_EMAIL));
         txt_user_phone.setText(String.valueOf(SharedPrefs.getInt(USER_PHONE)));
         txt_user_country_code.setText(String.valueOf(SharedPrefs.getInt(USER_COUNTRY_CODE)));
-        txt_user_dob.setText(SharedPrefs.getString(USER_DOB));
+        if (SharedPrefs.getString(USER_DOB).equals("null")) {
+            txt_user_dob.setText(getString(R.string.txt_not_set));
+        } else {
+            txt_user_dob.setText(SharedPrefs.getString(USER_DOB));
+        }
 
         // SET TO EDT TEXTS
         et_user_first_name.setText(SharedPrefs.getString(USER_F_NAME));
@@ -312,7 +348,70 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
     }
 
 
+    // ASYNC UPDATE DETAILS ========================================================================
 
+
+    private void asyncUpdateDetails(final UserModel userModel) {
+
+        helpers.setProgressDialogMessage("Updating profile, please wait...");
+        helpers.progressDialog(true);
+
+        UserService userService = UserService.retrofit.create(UserService.class);
+        final Call<JsonObject> call = userService.setUserDetails(
+                userModel.id,
+                userModel.first_name,
+                userModel.last_name,
+                userModel.country_code,
+                userModel.phone,
+                userModel.email,
+                userModel.geo_lat,
+                userModel.geo_lng,
+                userModel.dob,
+                userModel.fb_id,
+                userModel.google_id
+        );
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                helpers.progressDialog(false);
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                    Helpers.LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        if (SharedPrefs.setUser(main.getJSONObject("data"))) {
+                            helpers.ToastMessage(getActivity(), main.getString("message"));
+                            setFromSharedPrefs();
+
+                        } else {
+                            helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        }
+                    } else {
+                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                    }
+
+                } catch (JSONException e) {
+                    helpers.ToastMessage(getActivity(), e.toString());
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                helpers.progressDialog(false);
+                Helpers.LogThis(TAG_LOG, t.toString());
+                if (helpers.validateInternetConnection()) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                } else {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                }
+
+            }
+        });
+
+    }
 
 
 }
