@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
+import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.fragments.ChangePasswordFragment;
 import com.hotelaide.main_pages.fragments.DocumentsFragment;
@@ -27,31 +28,30 @@ import com.hotelaide.main_pages.fragments.ProfileUpdateFragment;
 import com.hotelaide.main_pages.fragments.WorkExperienceFragment;
 import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.services.UserService;
-import com.hotelaide.start_up.LoginActivity;
-import com.hotelaide.start_up.StartUpAboutUsFragment;
-import com.hotelaide.start_up.StartUpContactUsFragment;
-import com.hotelaide.start_up.StartUpForgotPassFragment;
-import com.hotelaide.start_up.StartUpLoginFragment;
-import com.hotelaide.start_up.StartUpSignUpFragment;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.support.v4.view.ViewPager.SCROLL_STATE_IDLE;
 import static com.hotelaide.utils.Helpers.INT_PERMISSIONS_CAMERA;
-import static com.hotelaide.utils.Helpers.START_RETURN;
+import static com.hotelaide.utils.SharedPrefs.USER_ACCOUNT_TYPE;
+import static com.hotelaide.utils.SharedPrefs.USER_ID;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
 
@@ -74,9 +74,13 @@ public class ProfileActivity extends ParentActivity {
 
     private ViewPager viewPager;
 
-    private final int RESULT_BANNER = 222, RESULT_AVATAR = 333;
+    private final int
+            RESULT_BANNER = 222,
+            RESULT_AVATAR = 333;
+    private int
+            RESULT_EXPECTED = 0;
 
-    private int[] fragTitleList = {
+    private int[] jobSeekerTitleList = {
             R.string.nav_profile,
             R.string.nav_education,
             R.string.nav_work,
@@ -84,7 +88,7 @@ public class ProfileActivity extends ParentActivity {
             R.string.nav_pass
     };
 
-    private Fragment[] fragList = {
+    private Fragment[] jobSeekerFragments = {
             new ProfileUpdateFragment(),
             new EducationFragment(),
             new WorkExperienceFragment(),
@@ -92,6 +96,18 @@ public class ProfileActivity extends ParentActivity {
             new ChangePasswordFragment()
     };
 
+    private int[] employerTitleList = {
+            R.string.nav_profile,
+            R.string.nav_pass
+    };
+
+    private Fragment[] employerFragments = {
+            new ProfileUpdateFragment(),
+            new ChangePasswordFragment()
+    };
+
+    private Fragment[] selectedFragments = {};
+    private int[] selectedTitles = {};
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -101,6 +117,14 @@ public class ProfileActivity extends ParentActivity {
         setContentView(R.layout.activity_my_profile);
 
         initialize(R.id.drawer_my_profile, TAG_LOG);
+
+        if (SharedPrefs.getString(USER_ACCOUNT_TYPE).equals(BuildConfig.ACCOUNT_TYPE_JOB)) {
+            selectedTitles = jobSeekerTitleList;
+            selectedFragments = jobSeekerFragments;
+        } else {
+            selectedTitles = employerTitleList;
+            selectedFragments = employerFragments;
+        }
 
         findAllViews();
 
@@ -114,19 +138,23 @@ public class ProfileActivity extends ParentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         switch (requestCode) {
-            case RESULT_AVATAR:
+            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                CropImage.ActivityResult result = CropImage.getActivityResult(imageReturnedIntent);
                 if (resultCode == RESULT_OK) {
-                    Uri selectedImage = imageReturnedIntent.getData();
-//                    img_avatar.setImageURI(selectedImage);
-                    Glide.with(this).load(selectedImage).into(img_avatar);
-                }
+                    Uri resultUri = result.getUri();
+                    File file = new File(resultUri.getPath());
+                    MultipartBody.Part partFile = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                    asyncUpdateImages(partFile, RESULT_EXPECTED);
 
-                break;
-            case RESULT_BANNER:
-                if (resultCode == RESULT_OK) {
-                    Uri selectedImage = imageReturnedIntent.getData();
-//                    img_banner.setImageURI(selectedImage);
-                    Glide.with(this).load(selectedImage).into(img_banner);
+                    if (RESULT_EXPECTED == RESULT_AVATAR) {
+                        Glide.with(this).load(resultUri).into(img_avatar);
+                    } else {
+                        Glide.with(this).load(resultUri).into(img_banner);
+                    }
+
+
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    helpers.ToastMessage(ProfileActivity.this, getResources().getString(R.string.error_unknown));
                 }
                 break;
         }
@@ -164,7 +192,7 @@ public class ProfileActivity extends ParentActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
                     isCollapsedToolbar = true;
-                    toolbar_text.setText(fragTitleList[viewPager.getCurrentItem()]);
+                    toolbar_text.setText(selectedTitles[viewPager.getCurrentItem()]);
                 } else if (verticalOffset == 0) {
                     isCollapsedToolbar = false;
                     toolbar_text.setText(TAG_LOG);
@@ -185,7 +213,11 @@ public class ProfileActivity extends ParentActivity {
             @Override
             public void onClick(View v) {
                 if (EasyPermissions.hasPermissions(ProfileActivity.this, perms)) {
-                    dialogSetImage(RESULT_BANNER, "SET BANNER");
+                    RESULT_EXPECTED = RESULT_BANNER;
+                    CropImage.activity()
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(ProfileActivity.this);
+
                 } else {
                     EasyPermissions.requestPermissions(ProfileActivity.this, getString(R.string.rationale_image),
                             INT_PERMISSIONS_CAMERA, perms);
@@ -198,7 +230,10 @@ public class ProfileActivity extends ParentActivity {
             @Override
             public void onClick(View v) {
                 if (EasyPermissions.hasPermissions(ProfileActivity.this, perms)) {
-                    dialogSetImage(RESULT_AVATAR, "SET AVATAR");
+                    RESULT_EXPECTED = RESULT_AVATAR;
+                    CropImage.activity()
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .start(ProfileActivity.this);
                 } else {
                     EasyPermissions.requestPermissions(ProfileActivity.this, getString(R.string.rationale_image),
                             INT_PERMISSIONS_CAMERA, perms);
@@ -207,50 +242,12 @@ public class ProfileActivity extends ParentActivity {
         });
     }
 
-    private void dialogSetImage(final int result_code, String title) {
-        final Dialog dialog = new Dialog(ProfileActivity.this);
-        dialog.setContentView(R.layout.dialog_set_image);
-        final TextView btn_camera = dialog.findViewById(R.id.btn_camera);
-        final TextView btn_gallery = dialog.findViewById(R.id.btn_gallery);
-        final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
-        final TextView txt_title = dialog.findViewById(R.id.txt_title);
-        txt_title.setText(title);
-
-        btn_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, result_code);
-                dialog.cancel();
-            }
-        });
-
-        btn_gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, result_code);
-                dialog.cancel();
-            }
-        });
-
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
-    }
-
     private void setupViewPager(ViewPager viewPager) {
         ProfileActivity.ViewPagerAdapter adapter = new ProfileActivity.ViewPagerAdapter(getSupportFragmentManager());
 
-        for (int i = 0; i <= fragTitleList.length-1; i++) {
-            Fragment fragment = fragList[i];
-            adapter.addFragment(fragment, getResources().getString(fragTitleList[i]));
+        for (int i = 0; i <= selectedTitles.length - 1; i++) {
+            Fragment fragment = selectedFragments[i];
+            adapter.addFragment(fragment, getResources().getString(selectedTitles[i]));
         }
 
         viewPager.setAdapter(adapter);
@@ -265,7 +262,7 @@ public class ProfileActivity extends ParentActivity {
             @Override
             public void onPageSelected(int position) {
                 if (isCollapsedToolbar) {
-                    toolbar_text.setText(fragTitleList[position]);
+                    toolbar_text.setText(selectedTitles[position]);
                 } else {
                     toolbar_text.setText(TAG_LOG);
                 }
@@ -310,35 +307,25 @@ public class ProfileActivity extends ParentActivity {
 
 
     // LOGIN ASYNC FUNCTIONS =======================================================================
-    private void asyncUpdateImages(final UserModel userModel, final MultipartBody.Part avatar, final MultipartBody.Part banner) {
-
-        helpers.setProgressDialogMessage("Updating profile, please wait...");
-        helpers.progressDialog(true);
-
-        // TODO - image uploading and update the endpoint
-//        File avatar_file = new File("");
-//        MultipartBody.Part avatar = MultipartBody.Part.createFormData("file", avatar_file.getName(), RequestBody.create(MediaType.parse("image/*"), avatar_file));
-//
-//        File baner_file = new File("");
-//        MultipartBody.Part banner = MultipartBody.Part.createFormData("file", baner_file.getName(), RequestBody.create(MediaType.parse("image/*"), baner_file));
-
+    private void asyncUpdateImages(final MultipartBody.Part partFile, final int type) {
 
         UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.setUser(
-                userModel.first_name,
-                userModel.last_name,
-                userModel.country_code,
-                userModel.phone,
-                userModel.email,
-                userModel.password,
-                userModel.geo_lat,
-                userModel.geo_lng,
-                userModel.dob,
-                userModel.fb_id,
-                userModel.google_id,
-                avatar,
-                banner
-        );
+
+        Call<JsonObject> call;
+
+        if (type == RESULT_AVATAR) {
+            call = userService.setUserAvatar(
+                    SharedPrefs.getInt(USER_ID),
+                    partFile,
+                    ""
+            );
+        } else {
+            call = userService.setUserBanner(
+                    SharedPrefs.getInt(USER_ID),
+                    "",
+                    partFile
+            );
+        }
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -352,10 +339,7 @@ public class ProfileActivity extends ParentActivity {
                     if (main.getBoolean("success")) {
                         JSONObject data = main.getJSONObject("data");
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
-                            SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
-//                            startActivity(new Intent(ProfileActivity.this, DashboardActivity.class).putExtra(START_RETURN, START_RETURN));
-//                            finish();
-                            helpers.ToastMessage(ProfileActivity.this, "SUCCESSFULLY UPDATED");
+                            helpers.ToastMessage(ProfileActivity.this, "Image updated");
 
                         } else {
                             helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
@@ -384,5 +368,81 @@ public class ProfileActivity extends ParentActivity {
         });
 
     }
+
+//
+//    private void asyncUpdateImages(final UserModel userModel, final MultipartBody.Part avatar, final MultipartBody.Part banner) {
+//
+//        helpers.setProgressDialogMessage("Updating profile, please wait...");
+//        helpers.progressDialog(true);
+//
+//        // TODO - image uploading and update the endpoint
+////        File avatar_file = new File("");
+////        MultipartBody.Part avatar = MultipartBody.Part.createFormData("file", avatar_file.getName(), RequestBody.create(MediaType.parse("image/*"), avatar_file));
+////
+////        File baner_file = new File("");
+////        MultipartBody.Part banner = MultipartBody.Part.createFormData("file", baner_file.getName(), RequestBody.create(MediaType.parse("image/*"), baner_file));
+//
+//
+//        UserService userService = UserService.retrofit.create(UserService.class);
+//        final Call<JsonObject> call = userService.setUser(
+//                userModel.first_name,
+//                userModel.last_name,
+//                userModel.country_code,
+//                userModel.phone,
+//                userModel.email,
+//                userModel.password,
+//                userModel.geo_lat,
+//                userModel.geo_lng,
+//                userModel.dob,
+//                userModel.fb_id,
+//                userModel.google_id,
+//                avatar,
+//                banner
+//        );
+//
+//        call.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+//                helpers.progressDialog(false);
+//                try {
+//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+//
+//                    Helpers.LogThis(TAG_LOG, main.toString());
+//
+//                    if (main.getBoolean("success")) {
+//                        JSONObject data = main.getJSONObject("data");
+//                        if (SharedPrefs.setUser(data.getJSONObject("user"))) {
+//                            SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
+////                            startActivity(new Intent(ProfileActivity.this, DashboardActivity.class).putExtra(START_RETURN, START_RETURN));
+////                            finish();
+//                            helpers.ToastMessage(ProfileActivity.this, "SUCCESSFULLY UPDATED");
+//
+//                        } else {
+//                            helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
+//                        }
+//                    } else {
+//                        helpers.handleErrorMessage(ProfileActivity.this, main.getJSONObject("data"));
+//                    }
+//
+//                } catch (JSONException e) {
+//                    helpers.ToastMessage(ProfileActivity.this, e.toString());
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+//                helpers.progressDialog(false);
+//                Helpers.LogThis(TAG_LOG, t.toString());
+//                if (helpers.validateInternetConnection()) {
+//                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
+//                } else {
+//                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_connection));
+//                }
+//
+//            }
+//        });
+//
+//    }
 
 }

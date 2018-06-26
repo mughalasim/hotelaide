@@ -2,6 +2,7 @@ package com.hotelaide.services;
 
 import android.support.annotation.NonNull;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -34,6 +35,7 @@ public interface UserService {
     String TAG_LOG = "SERVICE: USER";
 
     OkHttpClient okClient = new OkHttpClient.Builder()
+            .addNetworkInterceptor(new StethoInterceptor())
             .addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(@NonNull Chain chain) throws IOException {
@@ -79,26 +81,49 @@ public interface UserService {
 
 
     // UPDATE USER =================================================================================
-    @Multipart
     @FormUrlEncoded
-    @POST("user/{id}")
-    Call<JsonObject> setUser(
+    @POST("user/{user_id}")
+    Call<JsonObject> setUserDetails(
+            @Path("user_id") int user_id,
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
             @Field("country_code") int country_code,
             @Field("phone_number") int phone_number,
             @Field("email") String email,
-            @Field("password") String password,
             @Field("geo_lat") double geo_lat,
             @Field("geo_lng") double geo_lng,
             @Field("dob") String dob,
             @Field("fb_id") String fb_id,
-            @Field("google_id") String google_id,
-            @Part MultipartBody.Part avatar,
+            @Field("google_id") String google_id
+    );
+
+    @Multipart
+    @FormUrlEncoded
+    @POST("user/update-images/{user_id}")
+    Call<JsonObject> setUserBanner(
+            @Path("user_id") int user_id,
+            @Field("avatar") String avatar,
             @Part MultipartBody.Part banner
     );
 
-    // DELETE USERS ================================================================================
+    @Multipart
+    @FormUrlEncoded
+    @POST("user/update-images/{user_id}")
+    Call<JsonObject> setUserAvatar(
+            @Path("user_id") int user_id,
+            @Part MultipartBody.Part avatar,
+            @Field("banner") String banner
+    );
+
+    @FormUrlEncoded
+    @POST("user/{user_id}/password")
+    Call<JsonObject> setUserPassword(
+            @Path("user_id") int user_id,
+            @Field("password") String password
+    );
+
+
+    // DELETE USER =================================================================================
     @GET("user/delete/{user_id}")
     Call<JsonObject> deleteUser(
             @Path("user_id") int user_id

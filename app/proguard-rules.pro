@@ -34,8 +34,10 @@
 -dontwarn javax.annotation.**
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 
+
 #For the search Bar
 -keep class android.support.v7.widget.SearchView { *; }
+
 
 #For Facebook
 -keepattributes *Annotation*
@@ -43,11 +45,17 @@
    *;
 }
 
+
 #For FireBase Database Models
 -keepattributes Signature
 -keepclassmembers class com.hotelaide.models.** {
   *;
 }
+
+
+# For the Image Cropping Library
+-keep class android.support.v7.widget.** { *; }
+
 
 # Google play ads
 -dontwarn com.google.android.gms.**

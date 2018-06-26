@@ -13,7 +13,7 @@
 
 
     <!--IMAGE DIMENS ============================================================================-->
-    <dimen name="img_size_large">180sp</dimen>
+    <dimen name="img_size_large">130sp</dimen>
     <dimen name="img_size_medium">70sp</dimen>
     <dimen name="img_size_small">50sp</dimen>
     <dimen name="img_size_tiny">20sp</dimen>
@@ -43,9 +43,9 @@
     <!--FIXED ITEM HEIGHTS ======================================================================-->
     <dimen name="height_button">40sp</dimen>
     <dimen name="height_edit_text">39sp</dimen>
-    <dimen name="height_panel">55sp</dimen>
-    <dimen name="height_nav_header">150dp</dimen>
-    <dimen name="height_collapsing_toolbar">250dp</dimen>
+    <dimen name="height_panel">45sp</dimen>
+    <dimen name="height_nav_header">120dp</dimen>
+    <dimen name="height_collapsing_toolbar">220dp</dimen>
 
 
 </resources>

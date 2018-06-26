@@ -91,7 +91,6 @@ public class StartUpForgotPassFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (helpers.validateEmail(et_user_email)){
-                    et_user_email.setText("");
                     asyncResetPassword(et_user_email.getText().toString());
                 }
             }
@@ -119,10 +118,10 @@ public class StartUpForgotPassFragment extends Fragment {
                     Helpers.LogThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success") && getActivity() != null) {
-                        JSONObject data = main.getJSONObject("data");
-                        helpers.myDialog(getActivity(), getResources().getString(R.string.app_name), data.getString("message"));
+                        helpers.myDialog(getActivity(), getResources().getString(R.string.app_name), main.getString("message"));
+                        et_user_email.setText("");
                     } else {
-                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                        helpers.myDialog(getActivity(), getResources().getString(R.string.app_name), main.getString("message"));
                     }
                 } catch (JSONException e) {
                     helpers.ToastMessage(getActivity(), e.toString());

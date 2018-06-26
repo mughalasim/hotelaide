@@ -58,10 +58,12 @@
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="@dimen/height_panel"
+                        app:riv_oval="false"
+                        android:scaleType="centerCrop"
                         android:src="@color/light_grey"
                         app:riv_border_color="@color/colorAccentDark"
                         app:riv_border_width="@dimen/line_thickness"
-                        app:riv_corner_radius="@dimen/radius_corner" />
+                        app:riv_corner_radius="@dimen/img_size_large" />
 
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tabs"
