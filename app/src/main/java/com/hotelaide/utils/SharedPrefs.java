@@ -154,8 +154,6 @@ public class SharedPrefs {
                     }
                 }
 
-            } else {
-                response = true;
             }
 
             Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
@@ -175,6 +173,8 @@ public class SharedPrefs {
                     getDouble(USER_GEO_LNG) + " - " +
                     getString(USER_ACCOUNT_TYPE)
             );
+
+            response = true;
 
         } catch (JSONException e) {
             Helpers.LogThis(SHARED_PREFS, MyApplication.getAppContext().getString(R.string.log_exception) + e.toString());

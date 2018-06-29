@@ -189,7 +189,36 @@ public class WorkExperienceFragment extends Fragment {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (rl_end_date.getVisibility() == View.VISIBLE) {
+                    if (txt_end_date.getText().toString().equals(getString(R.string.txt_select_date))) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.txt_select_date));
+                    } else {
+                        generalChecks();
+                    }
+                } else {
+                    generalChecks();
+                }
+            }
 
+            private void generalChecks() {
+                if (txt_start_date.getText().toString().equals(getString(R.string.txt_select_date))){
+                    helpers.ToastMessage(getActivity(), getString(R.string.txt_select_date));
+                }else if (txt_start_date.getText().toString().equals(txt_end_date.getText().toString())){
+                    helpers.ToastMessage(getActivity(), "Start date cannot be the same as the end date");
+                } else if (helpers.validateEmptyEditText(et_company_name) &&
+                        helpers.validateEmptyEditText(et_position) &&
+                        helpers.validateEmptyEditText(et_responsibilities)){
+                    WorkExperienceModel workExperienceModel = new WorkExperienceModel();
+                    workExperienceModel.company_name = et_company_name.getText().toString();
+                    workExperienceModel.position = et_position.getText().toString();
+                    workExperienceModel.responsibilities = et_responsibilities.getText().toString();
+                    workExperienceModel.start_date = txt_start_date.getText().toString();
+                    workExperienceModel.end_date = txt_end_date.getText().toString();
+                    workExperienceModel.current = radio_btn_yes.isChecked();
+
+                    asyncUpdateDetails(workExperienceModel);
+
+                }
             }
         });
 
@@ -383,7 +412,7 @@ public class WorkExperienceFragment extends Fragment {
     }
 
     private void deleteWorkExperience(int workExperienceId, int childId) {
-        // TODO - Fix deleting a child view
+        // TODO - REMOVE A CHILD VIEW FROM A LINEAR LAYOUT
         ll_work_experience.removeView(ll_work_experience.findViewById(childId));
     }
 
@@ -434,7 +463,6 @@ public class WorkExperienceFragment extends Fragment {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 helpers.progressDialog(false);
                 Helpers.LogThis(TAG_LOG, t.toString());
-                setFromSharedPrefs();
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                 } else {

@@ -40,9 +40,9 @@ ext {
     SupportLibrary = '27.1.1'
 
     // Debug the App
-    debugMode = true
+    debugMode = false
     minify = true
-    proguard = false
+    proguard = true
 
     // App Versioning
     versionCode = 3

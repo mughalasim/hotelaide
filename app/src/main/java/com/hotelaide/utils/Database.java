@@ -101,6 +101,7 @@ public class Database extends SQLiteOpenHelper {
 
             return true;
         } catch (JSONException e) {
+            Helpers.LogThis(TAG_LOG, e.toString());
             return false;
         }
     }
