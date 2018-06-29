@@ -6,14 +6,12 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.hotelaide.BuildConfig;
+import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-import com.hotelaide.BuildConfig;
-import com.hotelaide.utils.Database;
-import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.SharedPrefs;
 
 import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
@@ -32,8 +30,8 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
-public interface UserService {
-    String TAG_LOG = "SERVICE: USER";
+public interface WorkExperienceService {
+    String TAG_LOG = "SERVICE: WORK";
 
     OkHttpClient okClient = new OkHttpClient.Builder()
             .addNetworkInterceptor(new StethoInterceptor())
@@ -76,49 +74,46 @@ public interface UserService {
             .build();
 
 
-    // GET USERS ===================================================================================
-    @GET("user")
-    Call<JsonObject> getUser();
-
-
-    // UPDATE USER =================================================================================
-    @FormUrlEncoded
-    @PUT("user/{user_id}")
-    Call<JsonObject> setUserDetails(
-            @Path("user_id") int user_id,
-            @Field("first_name") String first_name,
-            @Field("last_name") String last_name,
-            @Field("country_code") int country_code,
-            @Field("phone_number") int phone_number,
-            @Field("email") String email,
-            @Field("geo_lat") double geo_lat,
-            @Field("geo_lng") double geo_lng,
-            @Field("dob") String dob,
-            @Field("fb_id") String fb_id,
-            @Field("google_id") String google_id
-    );
-
-    @Multipart
-    @POST("user/update-images/{user_id}")
-    Call<JsonObject> setUserImages(
-            @Path("user_id") int user_id,
-            @Part MultipartBody.Part avatar,
-            @Part MultipartBody.Part banner
-    );
-
-    @FormUrlEncoded
-    @POST("user/{user_id}/password")
-    Call<JsonObject> setUserPassword(
-            @Path("user_id") int user_id,
-            @Field("password") String password
-    );
-
-
-    // DELETE USER =================================================================================
-    @GET("user/delete/{user_id}")
-    Call<JsonObject> deleteUser(
+    // GET ALL WORK EXPERIENCES ====================================================================
+    @GET("user/{user_id}/work-experience")
+    Call<JsonObject> getAllWorkExperiences(
             @Path("user_id") int user_id
     );
+
+
+    // CREATE WORK EXPERIENCE ======================================================================
+    @FormUrlEncoded
+    @POST("user/{user_id}/work-experience")
+    Call<JsonObject> setWorkExperience(
+            @Path("user_id") int user_id,
+            @Field("company_name") String company_name,
+            @Field("position") String position,
+            @Field("start_date") String start_date,
+            @Field("end_date") String end_date,
+            @Field("responsibilities") String responsibilities,
+            @Field("current") Boolean current
+    );
+
+    // UPDATE WORK EXPERIENCE ======================================================================
+    @FormUrlEncoded
+    @PUT("user/{user_id}/work-experience/{work_experience_id}")
+    Call<JsonObject> updateWorkExperience(
+            @Path("user_id") int user_id,
+            @Path("work_experience_id") int work_experience_id,
+            @Field("company_name") String company_name,
+            @Field("position") String position,
+            @Field("start_date") String start_date,
+            @Field("end_date") String end_date,
+            @Field("responsibilities") String responsibilities,
+            @Field("current") int current
+    );
+
+    // DELETE ONE WORK EXPERIENCES =================================================================
+    @GET("user/{user_id}/work-experience/{work_experience_id}")
+    Call<JsonObject> deleteOneWorkExperience(
+            @Path("user_id") int user_id
+    );
+
 
 
 }

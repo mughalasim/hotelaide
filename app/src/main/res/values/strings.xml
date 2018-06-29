@@ -126,6 +126,7 @@
     <string name="txt_position_held">Position Held</string>
     <string name="txt_company_name">Company Name</string>
     <string name="txt_responsibilities">Responsibilities</string>
+    <string name="txt_success">Successfully updated</string>
 
 
 </resources>

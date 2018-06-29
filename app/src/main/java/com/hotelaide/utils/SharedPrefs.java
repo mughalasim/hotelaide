@@ -150,20 +150,12 @@ public class SharedPrefs {
                     int array_length = work_experience.length();
 
                     for (int i = 0; i < array_length; i++) {
-                        JSONObject work_object = work_experience.getJSONObject(i);
-                        WorkExperienceModel workExperienceModel = new WorkExperienceModel();
-                        workExperienceModel.id = work_object.getInt("id");
-                        workExperienceModel.company_name = work_object.getString("company_name");
-                        workExperienceModel.position = work_object.getString("position");
-                        workExperienceModel.start_date = work_object.getString("start_date");
-                        workExperienceModel.end_date = work_object.getString("end_date");
-                        workExperienceModel.responsibilities = work_object.getString("responsibilities");
-                        workExperienceModel.current = work_object.getBoolean("current");
-
-                        db.setWorkExperience(workExperienceModel);
+                        db.setWorkExperienceFromJson(work_experience.getJSONObject(i));
                     }
-
                 }
+
+            } else {
+                response = true;
             }
 
             Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
@@ -183,7 +175,6 @@ public class SharedPrefs {
                     getDouble(USER_GEO_LNG) + " - " +
                     getString(USER_ACCOUNT_TYPE)
             );
-            response = true;
 
         } catch (JSONException e) {
             Helpers.LogThis(SHARED_PREFS, MyApplication.getAppContext().getString(R.string.log_exception) + e.toString());

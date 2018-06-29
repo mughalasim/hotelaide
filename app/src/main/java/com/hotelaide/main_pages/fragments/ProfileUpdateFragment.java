@@ -190,7 +190,7 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
 
         txt_user_first_name.setOnClickListener(this);
         txt_user_last_name.setOnClickListener(this);
-        txt_user_email.setOnClickListener(this);
+//        txt_user_email.setOnClickListener(this);
         txt_user_country_code.setOnClickListener(this);
         txt_user_phone.setOnClickListener(this);
         btn_confirm.setOnClickListener(this);
@@ -233,7 +233,7 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
         // ADD TEXT WATCHERS
         addTextChangeListener(et_user_first_name, txt_user_first_name, USER_F_NAME, true);
         addTextChangeListener(et_user_last_name, txt_user_last_name, USER_L_NAME, true);
-        addTextChangeListener(et_user_email, txt_user_email, USER_EMAIL, true);
+//        addTextChangeListener(et_user_email, txt_user_email, USER_EMAIL, true);
         addTextChangeListener(et_user_phone, txt_user_phone, USER_PHONE, false);
 
     }
@@ -349,8 +349,6 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
 
 
     // ASYNC UPDATE DETAILS ========================================================================
-
-
     private void asyncUpdateDetails(final UserModel userModel) {
 
         helpers.setProgressDialogMessage("Updating profile, please wait...");
@@ -383,7 +381,6 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
                     if (main.getBoolean("success")) {
                         if (SharedPrefs.setUser(main.getJSONObject("data"))) {
                             helpers.ToastMessage(getActivity(), main.getString("message"));
-                            setFromSharedPrefs();
 
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));
@@ -391,6 +388,8 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
+
+                    setFromSharedPrefs();
 
                 } catch (JSONException e) {
                     helpers.ToastMessage(getActivity(), e.toString());
@@ -402,6 +401,7 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 helpers.progressDialog(false);
                 Helpers.LogThis(TAG_LOG, t.toString());
+                setFromSharedPrefs();
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                 } else {

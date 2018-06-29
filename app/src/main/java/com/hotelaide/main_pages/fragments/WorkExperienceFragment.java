@@ -1,6 +1,8 @@
 package com.hotelaide.main_pages.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,13 +20,27 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.main_pages.models.WorkExperienceModel;
+import com.hotelaide.services.UserService;
+import com.hotelaide.services.WorkExperienceService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class WorkExperienceFragment extends Fragment {
@@ -58,7 +75,12 @@ public class WorkExperienceFragment extends Fragment {
     private RadioButton
             radio_btn_no,
             radio_btn_yes;
-
+    private final String
+            STR_DATE_START = "START_DATE",
+            STR_DATE_END = "END_DATE";
+    private String
+            STR_DATE_TYPE = "";
+    DatePickerDialog.OnDateSetListener datePickerListener;
 
     public WorkExperienceFragment() {
     }
@@ -83,6 +105,8 @@ public class WorkExperienceFragment extends Fragment {
                 findAllViews();
 
                 setListeners();
+
+                setDates();
 
                 populateWorkExperience();
 
@@ -162,7 +186,76 @@ public class WorkExperienceFragment extends Fragment {
             }
         });
 
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+
+
+    }
+
+    private void setDates() {
+
+        datePickerListener = new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int selectedYear,
+                                  int selectedMonth, int selectedDay) {
+                String year = String.valueOf(selectedYear);
+                String month, day;
+
+                if (selectedMonth < 9) {
+                    month = "0" + String.valueOf(selectedMonth + 1);
+                } else {
+                    month = String.valueOf(selectedMonth + 1);
+                }
+
+                if (selectedDay < 10) {
+                    day = "0" + String.valueOf(selectedDay);
+                } else {
+                    day = String.valueOf(selectedDay);
+                }
+                if (STR_DATE_TYPE.equals(STR_DATE_START)) {
+                    txt_start_date.setText(day.concat("-").concat(month).concat("-").concat(year));
+                } else {
+                    txt_end_date.setText(day.concat("-").concat(month).concat("-").concat(year));
+                }
+            }
+        };
+
+
+        txt_start_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker(STR_DATE_START, "Set Start Date");
+
+            }
+        });
+
+        txt_end_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker(STR_DATE_END, "Set End Date");
+            }
+        });
+
+    }
+
+    private void showDatePicker(String type, String title) {
+        if (getActivity() != null) {
+            STR_DATE_TYPE = type;
+            Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+            DatePickerDialog datePicker = new DatePickerDialog(getActivity(),
+                    AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, datePickerListener,
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH));
+            datePicker.setCancelable(false);
+            datePicker.setTitle(title);
+            datePicker.show();
+            datePicker.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
+            datePicker.show();
+        }
     }
 
     private void populateWorkExperience() {
@@ -175,8 +268,7 @@ public class WorkExperienceFragment extends Fragment {
         int array_size = workExperienceModelArrayList.size();
 
         for (int v = 0; v < array_size; v++) {
-            @SuppressLint("InflateParams")
-            final View child = linf.inflate(R.layout.list_item_work_experience, null);
+            @SuppressLint("InflateParams") final View child = linf.inflate(R.layout.list_item_work_experience, null);
 
             ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(0, 20, 0, 0);
@@ -297,6 +389,62 @@ public class WorkExperienceFragment extends Fragment {
 
     // ASYNC UPDATE / ADD WORK EXPERIENCE ==========================================================
     // TODO - CALL TO ADD / UPDATE W/E
+    private void asyncUpdateDetails(final WorkExperienceModel workExperienceModel) {
+
+        helpers.setProgressDialogMessage("Updating profile, please wait...");
+        helpers.progressDialog(true);
+
+        WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
+        final Call<JsonObject> call = workExperienceService.setWorkExperience(
+                workExperienceModel.id,
+                workExperienceModel.company_name,
+                workExperienceModel.position,
+                workExperienceModel.start_date,
+                workExperienceModel.end_date,
+                workExperienceModel.responsibilities,
+                workExperienceModel.current
+        );
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                helpers.progressDialog(false);
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                    Helpers.LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        if (db.setWorkExperienceFromJson(main.getJSONObject("data"))) {
+                            helpers.ToastMessage(getActivity(), getString(R.string.txt_success));
+                        } else {
+                            helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        }
+                    } else {
+                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                    }
+
+                } catch (JSONException e) {
+                    helpers.ToastMessage(getActivity(), e.toString());
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                helpers.progressDialog(false);
+                Helpers.LogThis(TAG_LOG, t.toString());
+                setFromSharedPrefs();
+                if (helpers.validateInternetConnection()) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                } else {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                }
+
+            }
+        });
+
+    }
 
 
     // ASYNC DELETE WORK EXPERIENCE ================================================================

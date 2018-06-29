@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.main_pages.models.WorkExperienceModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Database extends SQLiteOpenHelper {
@@ -65,24 +68,40 @@ public class Database extends SQLiteOpenHelper {
 
 
     // WORK EXPERIENCE FUNCTIONS ===================================================================
-    public void setWorkExperience(WorkExperienceModel workExperienceModel) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(EXPERIENCE_ID, workExperienceModel.id);
-        contentValues.put(EXPERIENCE_COMPANY_NAME, workExperienceModel.company_name);
-        contentValues.put(EXPERIENCE_POSITION, workExperienceModel.position);
-        contentValues.put(EXPERIENCE_START_DATE, workExperienceModel.start_date);
-        contentValues.put(EXPERIENCE_END_DATE, workExperienceModel.end_date);
-        contentValues.put(EXPERIENCE_RESPONSIBILITIES, workExperienceModel.responsibilities);
-        contentValues.put(EXPERIENCE_CURRENT, workExperienceModel.current);
+    public Boolean setWorkExperienceFromJson(JSONObject work_object) {
+        try {
+            WorkExperienceModel workExperienceModel = new WorkExperienceModel();
+            workExperienceModel.id = work_object.getInt("id");
+            workExperienceModel.company_name = work_object.getString("company_name");
+            workExperienceModel.position = work_object.getString("position");
+            workExperienceModel.start_date = work_object.getString("start_date");
+            workExperienceModel.end_date = work_object.getString("end_date");
+            workExperienceModel.responsibilities = work_object.getString("responsibilities");
+            workExperienceModel.current = work_object.getBoolean("current");
 
-        String whereClause = EXPERIENCE_ID + " = ?";
-        String[] whereArgs = new String[]{String.valueOf(workExperienceModel.id)};
-        int no_of_rows_affected = db.update(EXPERIENCE_TABLE_NAME, contentValues, whereClause,
-                whereArgs);
 
-        if (no_of_rows_affected == 0) {
-            db.insert(EXPERIENCE_TABLE_NAME, null, contentValues);
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(EXPERIENCE_ID, workExperienceModel.id);
+            contentValues.put(EXPERIENCE_COMPANY_NAME, workExperienceModel.company_name);
+            contentValues.put(EXPERIENCE_POSITION, workExperienceModel.position);
+            contentValues.put(EXPERIENCE_START_DATE, workExperienceModel.start_date);
+            contentValues.put(EXPERIENCE_END_DATE, workExperienceModel.end_date);
+            contentValues.put(EXPERIENCE_RESPONSIBILITIES, workExperienceModel.responsibilities);
+            contentValues.put(EXPERIENCE_CURRENT, workExperienceModel.current);
+
+            String whereClause = EXPERIENCE_ID + " = ?";
+            String[] whereArgs = new String[]{String.valueOf(workExperienceModel.id)};
+            int no_of_rows_affected = db.update(EXPERIENCE_TABLE_NAME, contentValues, whereClause,
+                    whereArgs);
+
+            if (no_of_rows_affected == 0) {
+                db.insert(EXPERIENCE_TABLE_NAME, null, contentValues);
+            }
+
+            return true;
+        } catch (JSONException e) {
+            return false;
         }
     }
 
