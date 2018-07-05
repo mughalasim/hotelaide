@@ -1,12 +1,15 @@
 package com.hotelaide.main_pages.fragments;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -22,15 +24,14 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.main_pages.models.WorkExperienceModel;
-import com.hotelaide.services.UserService;
 import com.hotelaide.services.WorkExperienceService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,13 +50,15 @@ public class WorkExperienceFragment extends Fragment {
     private Helpers helpers;
     private Database db;
     private final String TAG_LOG = "WORK EXPERIENCE";
-    // TOP PANEL ====================================
-    private LinearLayout ll_work_experience;
-    private RelativeLayout no_list_items;
+    // TOP PANEL ===================================================================================
+    private RecyclerView recycler_view;
     private TextView
-            txt_no_results,
             btn_add_work_experience;
-    // BOTTOM PANEL =================================
+    private ArrayList<WorkExperienceModel> model_list = new ArrayList<>();
+    private WorkExperienceAdapter adapter;
+    private SwipeRefreshLayout swipe_refresh;
+
+    // BOTTOM PANEL ================================================================================
     SlidingUpPanelLayout sliding_panel;
     private TextView
             txt_id,
@@ -80,8 +83,8 @@ public class WorkExperienceFragment extends Fragment {
             STR_DATE_END = "END_DATE";
     private String
             STR_DATE_TYPE = "";
-    DatePickerDialog.OnDateSetListener datePickerListener;
-
+    DatePickerDialog.OnDateSetListener
+            datePickerListener;
     public WorkExperienceFragment() {
     }
 
@@ -108,7 +111,7 @@ public class WorkExperienceFragment extends Fragment {
 
                 setDates();
 
-                populateWorkExperience();
+                asyncGetAllWorkExperience();
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -121,13 +124,17 @@ public class WorkExperienceFragment extends Fragment {
 
 
     // BASIC METHODS ===============================================================================
-
     private void findAllViews() {
         // TOP PANEL =============================================================
-        ll_work_experience = rootview.findViewById(R.id.ll_work_experience);
-        txt_no_results = rootview.findViewById(R.id.txt_no_results);
-        no_list_items = rootview.findViewById(R.id.no_list_items);
+        swipe_refresh = rootview.findViewById(R.id.swipe_refresh);
+        recycler_view = rootview.findViewById(R.id.work_experience_recycler);
         btn_add_work_experience = rootview.findViewById(R.id.btn_add_work_experience);
+        adapter = new WorkExperienceAdapter(model_list);
+        recycler_view.setAdapter(adapter);
+        recycler_view.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recycler_view.setLayoutManager(layoutManager);
+
         // BOTTOM PANEL =============================================================
         sliding_panel = rootview.findViewById(R.id.sliding_panel);
         txt_id = rootview.findViewById(R.id.txt_id);
@@ -148,6 +155,14 @@ public class WorkExperienceFragment extends Fragment {
     }
 
     private void setListeners() {
+
+        swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                asyncGetAllWorkExperience();
+            }
+        });
+
         btn_add_work_experience.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,6 +195,9 @@ public class WorkExperienceFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radio_btn_no) {
                     rl_end_date.setVisibility(View.VISIBLE);
+                    if(txt_end_date.getText().toString().equals("")){
+                        txt_end_date.setText(R.string.txt_select_date);
+                    }
                 } else {
                     rl_end_date.setVisibility(View.GONE);
                 }
@@ -201,14 +219,16 @@ public class WorkExperienceFragment extends Fragment {
             }
 
             private void generalChecks() {
-                if (txt_start_date.getText().toString().equals(getString(R.string.txt_select_date))){
+                if (txt_start_date.getText().toString().equals(getString(R.string.txt_select_date))) {
                     helpers.ToastMessage(getActivity(), getString(R.string.txt_select_date));
-                }else if (txt_start_date.getText().toString().equals(txt_end_date.getText().toString())){
+                } else if (txt_start_date.getText().toString().equals(txt_end_date.getText().toString())) {
                     helpers.ToastMessage(getActivity(), "Start date cannot be the same as the end date");
                 } else if (helpers.validateEmptyEditText(et_company_name) &&
                         helpers.validateEmptyEditText(et_position) &&
-                        helpers.validateEmptyEditText(et_responsibilities)){
+                        helpers.validateEmptyEditText(et_responsibilities)) {
                     WorkExperienceModel workExperienceModel = new WorkExperienceModel();
+                    if (!txt_id.getText().toString().equals(""))
+                        workExperienceModel.id = Integer.valueOf(txt_id.getText().toString());
                     workExperienceModel.company_name = et_company_name.getText().toString();
                     workExperienceModel.position = et_position.getText().toString();
                     workExperienceModel.responsibilities = et_responsibilities.getText().toString();
@@ -216,7 +236,8 @@ public class WorkExperienceFragment extends Fragment {
                     workExperienceModel.end_date = txt_end_date.getText().toString();
                     workExperienceModel.current = radio_btn_yes.isChecked();
 
-                    asyncUpdateDetails(workExperienceModel);
+                    asyncUpdateAddWE(workExperienceModel,
+                            btn_confirm.getText().toString().equals(getString(R.string.txt_update)));
 
                 }
             }
@@ -244,10 +265,18 @@ public class WorkExperienceFragment extends Fragment {
                 } else {
                     day = String.valueOf(selectedDay);
                 }
+
+                String date_to_set =
+                        year
+                                .concat(getString(R.string.txt_date_separator))
+                                .concat(month)
+                                .concat(getString(R.string.txt_date_separator))
+                                .concat(day);
+
                 if (STR_DATE_TYPE.equals(STR_DATE_START)) {
-                    txt_start_date.setText(day.concat("-").concat(month).concat("-").concat(year));
+                    txt_start_date.setText(date_to_set);
                 } else {
-                    txt_end_date.setText(day.concat("-").concat(month).concat("-").concat(year));
+                    txt_end_date.setText(date_to_set);
                 }
             }
         };
@@ -288,89 +317,16 @@ public class WorkExperienceFragment extends Fragment {
     }
 
     private void populateWorkExperience() {
-        ArrayList<WorkExperienceModel> workExperienceModelArrayList = db.getAllWorkExperience();
-        LayoutInflater linf;
-        linf = LayoutInflater.from(getActivity());
-
-        ll_work_experience.removeAllViews();
-
-        int array_size = workExperienceModelArrayList.size();
-
-        for (int v = 0; v < array_size; v++) {
-            @SuppressLint("InflateParams") final View child = linf.inflate(R.layout.list_item_work_experience, null);
-
-            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 20, 0, 0);
-            child.setLayoutParams(params);
-
-            final TextView txt_company_name = child.findViewById(R.id.txt_company_name);
-            final TextView txt_position = child.findViewById(R.id.txt_position);
-            final TextView txt_start_date = child.findViewById(R.id.txt_start_date);
-            final TextView txt_end_date = child.findViewById(R.id.txt_end_date);
-            final TextView txt_current = child.findViewById(R.id.txt_current);
-            final TextView txt_responsibilities = child.findViewById(R.id.txt_responsibilities);
-            final ImageView btn_delete = child.findViewById(R.id.btn_delete);
-
-            final WorkExperienceModel workExperienceModel = workExperienceModelArrayList.get(v);
-
-            txt_company_name.setText(workExperienceModel.company_name);
-            txt_position.setText(workExperienceModel.position);
-            txt_start_date.setText(workExperienceModel.start_date);
-
-            if (workExperienceModel.current) {
-                txt_current.setVisibility(View.VISIBLE);
-                txt_end_date.setVisibility(View.GONE);
-            } else {
-                txt_current.setVisibility(View.GONE);
-                txt_end_date.setVisibility(View.VISIBLE);
-                txt_end_date.setText(workExperienceModel.end_date);
-            }
-
-            txt_responsibilities.setText(workExperienceModel.responsibilities);
-
-            txt_responsibilities.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (txt_responsibilities.getMaxLines() == 3) {
-                        txt_responsibilities.setMaxLines(Integer.MAX_VALUE);
-                    } else {
-                        txt_responsibilities.setMaxLines(3);
-                    }
-                }
-            });
-
-            child.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openBottomPanel(workExperienceModel, true);
-                }
-            });
-
-            btn_delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    deleteWorkExperience(workExperienceModel.id, child.getId());
-                }
-            });
-
-            child.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    deleteWorkExperience(workExperienceModel.id, child.getId());
-                    return false;
-                }
-            });
-
-            ll_work_experience.addView(child);
-
-        }
-
-        if (ll_work_experience.getChildCount() <= 0) {
-            no_list_items.setVisibility(View.VISIBLE);
-            txt_no_results.setText("Oops! No Work Experience has been added to your profile");
-        } else {
-            no_list_items.setVisibility(View.GONE);
-        }
+        model_list.clear();
+        model_list = db.getAllWorkExperience();
+        recycler_view.invalidate();
+        adapter.updateData(model_list);
+        adapter.notifyDataSetChanged();
+//        if (model_list.size() <= 0) {
+//            noRestaurants(true);
+//        } else {
+//            noRestaurants(false);
+//        }
 
     }
 
@@ -388,7 +344,7 @@ public class WorkExperienceFragment extends Fragment {
     private void openBottomPanel(WorkExperienceModel workExperienceModel, Boolean isUpdate) {
         sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         if (isUpdate) {
-            txt_title.setText("EDIT WORK EXPERIENCE");
+            txt_title.setText(R.string.txt_edit_we);
             txt_id.setText(String.valueOf(workExperienceModel.id));
             et_company_name.setText(workExperienceModel.company_name);
             et_position.setText(workExperienceModel.position);
@@ -401,38 +357,113 @@ public class WorkExperienceFragment extends Fragment {
             }
             txt_end_date.setText(workExperienceModel.end_date);
             et_responsibilities.setText(workExperienceModel.responsibilities);
-            btn_confirm.setText("UPDATE");
+            btn_confirm.setText(R.string.txt_update);
 
         } else {
             clearBottomPanel();
-            txt_title.setText("ADD NEW WORK EXPERIENCE");
-            btn_confirm.setText("ADD");
+            txt_title.setText(R.string.txt_add_we);
+            btn_confirm.setText(R.string.txt_add);
         }
 
     }
 
-    private void deleteWorkExperience(int workExperienceId, int childId) {
-        // TODO - REMOVE A CHILD VIEW FROM A LINEAR LAYOUT
-        ll_work_experience.removeView(ll_work_experience.findViewById(childId));
+    private void logWorkExperienceModel(WorkExperienceModel workExperienceModel) {
+        Helpers.LogThis(TAG_LOG,
+                workExperienceModel.id + " - " +
+                        workExperienceModel.company_name + " - " +
+                        workExperienceModel.position + " - " +
+                        workExperienceModel.start_date + " - " +
+                        workExperienceModel.end_date + " - " +
+                        workExperienceModel.responsibilities + " - " +
+                        workExperienceModel.current
+        );
+
+
     }
 
-    // ASYNC UPDATE / ADD WORK EXPERIENCE ==========================================================
-    // TODO - CALL TO ADD / UPDATE W/E
-    private void asyncUpdateDetails(final WorkExperienceModel workExperienceModel) {
 
-        helpers.setProgressDialogMessage("Updating profile, please wait...");
+
+    // ASYNC GET ALL  WORK EXPERIENCES =============================================================
+    private void asyncGetAllWorkExperience() {
+        WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
+        final Call<JsonObject> call = workExperienceService.getAllWorkExperiences(SharedPrefs.getInt(SharedPrefs.USER_ID));
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                swipe_refresh.setRefreshing(false);
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+                    Helpers.LogThis(TAG_LOG, main.toString());
+                    if (main.getBoolean("success")) {
+                        db.deleteExperienceTable();
+                        JSONArray work_object = main.getJSONArray("data");
+                        int length = work_object.length();
+                        if (length > 0) {
+                            for (int i = 0; i < length; i++) {
+                                db.setWorkExperienceFromJson(work_object.getJSONObject(i));
+                            }
+                        }
+                        populateWorkExperience();
+                    } else {
+                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                    }
+
+                } catch (JSONException e) {
+                    helpers.ToastMessage(getActivity(), e.toString());
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                swipe_refresh.setRefreshing(false);
+                Helpers.LogThis(TAG_LOG, t.toString());
+                populateWorkExperience();
+                if (helpers.validateInternetConnection()) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                } else {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                }
+
+            }
+        });
+    }
+
+
+    // ASYNC UPDATE / ADD WORK EXPERIENCE ==========================================================
+    private void asyncUpdateAddWE(final WorkExperienceModel workExperienceModel, final Boolean isUpdate) {
+
+        Call<JsonObject> call;
+        logWorkExperienceModel(workExperienceModel);
+
+        if (isUpdate) {
+            helpers.setProgressDialogMessage("Updating work experience, please wait...");
+            WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
+            call = workExperienceService.updateWorkExperience(
+                    SharedPrefs.getInt(SharedPrefs.USER_ID),
+                    workExperienceModel.id,
+                    workExperienceModel.company_name,
+                    workExperienceModel.position,
+                    workExperienceModel.start_date,
+                    workExperienceModel.end_date,
+                    workExperienceModel.responsibilities,
+                    workExperienceModel.current
+            );
+        } else {
+            helpers.setProgressDialogMessage("Adding work experience, please wait...");
+            WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
+            call = workExperienceService.setWorkExperience(
+                    SharedPrefs.getInt(SharedPrefs.USER_ID),
+                    workExperienceModel.company_name,
+                    workExperienceModel.position,
+                    workExperienceModel.start_date,
+                    workExperienceModel.end_date,
+                    workExperienceModel.responsibilities,
+                    workExperienceModel.current
+            );
+        }
         helpers.progressDialog(true);
 
-        WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
-        final Call<JsonObject> call = workExperienceService.setWorkExperience(
-                workExperienceModel.id,
-                workExperienceModel.company_name,
-                workExperienceModel.position,
-                workExperienceModel.start_date,
-                workExperienceModel.end_date,
-                workExperienceModel.responsibilities,
-                workExperienceModel.current
-        );
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -440,19 +471,18 @@ public class WorkExperienceFragment extends Fragment {
                 helpers.progressDialog(false);
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
-
                     Helpers.LogThis(TAG_LOG, main.toString());
-
                     if (main.getBoolean("success")) {
                         if (db.setWorkExperienceFromJson(main.getJSONObject("data"))) {
                             helpers.ToastMessage(getActivity(), getString(R.string.txt_success));
+                            populateWorkExperience();
+                            sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                         }
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
-
                 } catch (JSONException e) {
                     helpers.ToastMessage(getActivity(), e.toString());
                     e.printStackTrace();
@@ -476,6 +506,176 @@ public class WorkExperienceFragment extends Fragment {
 
 
     // ASYNC DELETE WORK EXPERIENCE ================================================================
-    // TODO - CALL TO DELETE W/E
+    private void deleteWorkExperience(int workExperienceId, final int position) {
+        WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
+        final Call<JsonObject> call = workExperienceService.deleteOneWorkExperience(workExperienceId);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                swipe_refresh.setRefreshing(false);
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+                    Helpers.LogThis(TAG_LOG, main.toString());
+                    if (main.getBoolean("success")) {
+                        adapter.removeItem(position);
+                    } else {
+                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                    }
 
+                } catch (JSONException e) {
+                    helpers.ToastMessage(getActivity(), e.toString());
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                swipe_refresh.setRefreshing(false);
+                Helpers.LogThis(TAG_LOG, t.toString());
+                populateWorkExperience();
+                if (helpers.validateInternetConnection()) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                } else {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                }
+
+            }
+        });
+    }
+
+
+
+
+//==================================================================================================
+//==================================================================================================
+    // ADAPTER CLASS ===============================================================================
+    public class WorkExperienceAdapter extends RecyclerView.Adapter<WorkExperienceAdapter.ViewHolder> {
+        private final ArrayList<WorkExperienceModel> workExperienceModels;
+        private final String TAG_LOG = "W/E ADAPTER";
+        private Context context;
+        private Helpers helpers;
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            RelativeLayout
+                    no_list_item,
+                    list_item;
+
+            final TextView
+                    txt_no_results,
+                    txt_company_name,
+                    txt_position,
+                    txt_start_date,
+                    txt_end_date,
+                    txt_current,
+                    txt_responsibilities;
+            final ImageView btn_delete;
+
+            ViewHolder(View v) {
+                super(v);
+                txt_no_results = v.findViewById(R.id.txt_no_results);
+                txt_company_name = v.findViewById(R.id.txt_company_name);
+                txt_position = v.findViewById(R.id.txt_position);
+                txt_start_date = v.findViewById(R.id.txt_start_date);
+                txt_end_date = v.findViewById(R.id.txt_end_date);
+                txt_current = v.findViewById(R.id.txt_current);
+                txt_responsibilities = v.findViewById(R.id.txt_responsibilities);
+                btn_delete = v.findViewById(R.id.btn_delete);
+                no_list_item = v.findViewById(R.id.no_list_items);
+                list_item = v.findViewById(R.id.list_item);
+            }
+
+        }
+
+        public WorkExperienceAdapter(ArrayList<WorkExperienceModel> workExperienceModels) {
+            this.workExperienceModels = workExperienceModels;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_item_work_experience, parent, false);
+            return new ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+            context = holder.itemView.getContext();
+            helpers = new Helpers(context);
+
+            final WorkExperienceModel workExperienceModel = workExperienceModels.get(position);
+
+            if (workExperienceModel.company_name.equals("")) {
+                holder.no_list_item.setVisibility(View.VISIBLE);
+                holder.list_item.setVisibility(View.GONE);
+                holder.txt_no_results.setText(R.string.error_no_we);
+
+            } else {
+                holder.no_list_item.setVisibility(View.GONE);
+                holder.list_item.setVisibility(View.VISIBLE);
+
+                holder.txt_company_name.setText(workExperienceModel.company_name);
+                holder.txt_position.setText(workExperienceModel.position);
+                txt_start_date.setText(workExperienceModel.start_date);
+
+                if (workExperienceModel.current) {
+                    holder.txt_current.setVisibility(View.VISIBLE);
+                    txt_end_date.setVisibility(View.GONE);
+                } else {
+                    holder.txt_current.setVisibility(View.GONE);
+                    holder.txt_end_date.setVisibility(View.VISIBLE);
+                    holder.txt_end_date.setText(workExperienceModel.end_date);
+                }
+
+                holder.txt_responsibilities.setText(workExperienceModel.responsibilities);
+
+                holder.txt_responsibilities.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (holder.txt_responsibilities.getMaxLines() == 3) {
+                            holder.txt_responsibilities.setMaxLines(Integer.MAX_VALUE);
+                        } else {
+                            holder.txt_responsibilities.setMaxLines(3);
+                        }
+                    }
+                });
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openBottomPanel(workExperienceModel, true);
+                    }
+                });
+
+                holder.btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteWorkExperience(workExperienceModel.id, holder.getAdapterPosition());
+                    }
+                });
+
+            }
+        }
+
+
+        @Override
+        public int getItemCount() {
+            return workExperienceModels.size();
+        }
+
+        public void removeItem(int position) {
+            workExperienceModels.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, workExperienceModels.size());
+            populateWorkExperience();
+        }
+
+    public void updateData(ArrayList<WorkExperienceModel> view_model) {
+        workExperienceModels.clear();
+        workExperienceModels.addAll(view_model);
+        notifyDataSetChanged();
+    }
+
+    }
 }

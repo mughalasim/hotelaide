@@ -9,9 +9,12 @@
     sothree:umanoPanelHeight="0dp"
     sothree:umanoShadowHeight="0dp">
 
-    <com.southernbox.springscrollview.SpringScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/tools"
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,17 +24,6 @@
             android:paddingEnd="@dimen/padding_small"
             android:paddingStart="@dimen/padding_small">
 
-            <LinearLayout
-                android:id="@+id/ll_work_experience"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btn_add_work_experience"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-            <include layout="@layout/list_item_none" />
-
             <TextView
                 android:id="@+id/btn_add_work_experience"
                 style="@style/Button_Yes"
@@ -40,14 +32,23 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/padding_small"
                 android:padding="@dimen/text_margin"
-                android:text="ADD"
+                android:text="@string/txt_add"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_small" />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/work_experience_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/btn_add_work_experience"
+                android:orientation="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+
         </RelativeLayout>
 
-    </com.southernbox.springscrollview.SpringScrollView>
 
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <include layout="@layout/fragment_add_work_experience" />
 

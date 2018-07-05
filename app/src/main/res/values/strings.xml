@@ -16,6 +16,7 @@
     <string name="error_unknown">Oops! something went wrong, Please try again later</string>
     <string name="error_call_permissions">You have not granted permissions to this app to make calls</string>
     <string name="error_permissions">Dear user, App permissions have not been granted! The App cannot function without these permissions. Please grant them from the phone settings</string>
+    <string name="error_no_we">Oops! No Work Experience has been added to your profile</string>
 
     <!--LOGGING =================================================================================-->
     <string name="log_exception">EXCEPTION:&#160;</string>
@@ -127,6 +128,12 @@
     <string name="txt_company_name">Company Name</string>
     <string name="txt_responsibilities">Responsibilities</string>
     <string name="txt_success">Successfully updated</string>
+    <string name="txt_update">UPDATE</string>
+    <string name="txt_add">ADD</string>
+    <string name="txt_date_separator">/</string>
+    <string name="txt_add_we">ADD NEW WORK EXPERIENCE</string>
+    <string name="txt_edit_we">EDIT WORK EXPERIENCE</string>
+    <string name="txt_at">&#160;at&#160;</string>
 
 
 </resources>

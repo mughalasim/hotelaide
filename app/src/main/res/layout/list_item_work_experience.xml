@@ -1,121 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bckgrd_text_fields"
     android:orientation="vertical"
-    android:padding="@dimen/text_margin">
+    android:padding="@dimen/padding_tiny">
 
-    <LinearLayout
-        android:id="@+id/top_panel"
+    <RelativeLayout
+        android:id="@+id/list_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/top_panel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_position"
-                style="@style/Text_Normal"
-                android:layout_marginTop="0dp"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/Text_Normal"
-                android:layout_marginTop="0dp"
-                android:text=" at "
-                android:textColor="@color/colorPrimary" />
+                <TextView
+                    android:id="@+id/txt_position"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_company_name"
-                style="@style/Text_Normal"
-                android:layout_marginTop="0dp"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold" />
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/txt_at"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_company_name"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text="From "
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_start_date"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1" />
+
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text=" to "
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_end_date"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:id="@+id/txt_current"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text="Present"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_thickness"
+                android:layout_marginTop="@dimen/text_margin"
+                android:background="@color/dark_grey" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_margin"
-            android:orientation="horizontal">
+            android:layout_below="@+id/top_panel"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_responsibilities_label"
                 style="@style/Text_Normal"
-                android:layout_marginTop="0dp"
-                android:text="From "
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="Responsibilities"
                 android:textColor="@color/colorPrimary" />
 
             <TextView
-                android:id="@+id/txt_start_date"
+                android:id="@+id/txt_responsibilities"
                 style="@style/Text_Normal"
-                android:layout_marginTop="0dp" />
-
-            <TextView
-                style="@style/Text_Normal"
-                android:layout_marginTop="0dp"
-                android:text=" to "
-                android:textColor="@color/colorPrimary" />
-
-            <TextView
-                android:id="@+id/txt_end_date"
-                style="@style/Text_Normal"
-                android:layout_marginTop="0dp" />
-
-            <TextView
-                android:id="@+id/txt_current"
-                style="@style/Text_Normal"
-                android:layout_marginTop="0dp"
-                android:text="Present"
-                android:textColor="@color/colorPrimary" />
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/txt_responsibilities_label"
+                android:layout_marginTop="@dimen/text_margin"
+                android:maxLines="3"
+                android:text="@string/about1" />
 
         </LinearLayout>
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line_thickness"
-            android:layout_marginTop="@dimen/padding_small"
-            android:background="@color/dark_grey" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@+id/top_panel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txt_responsibilities_label"
-            style="@style/Text_Normal"
-            android:layout_marginTop="@dimen/text_margin"
-            android:text="Responsibilities"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/txt_responsibilities"
-            style="@style/Text_Normal"
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="@dimen/img_size_tiny"
+            android:layout_height="@dimen/img_size_tiny"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/txt_responsibilities_label"
-            android:layout_marginTop="@dimen/text_margin"
-            android:maxLines="3"
-            android:text="@string/about1" />
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/ic_cancel" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/btn_delete"
-        android:contentDescription="@string/app_name"
-        android:layout_width="@dimen/img_size_tiny"
-        app:srcCompat="@drawable/ic_cancel"
-        android:layout_alignParentEnd="true"
-        android:layout_height="@dimen/img_size_tiny" />
+    <include layout="@layout/list_item_none"/>
+
 
 </RelativeLayout>
 

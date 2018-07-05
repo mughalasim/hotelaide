@@ -301,7 +301,7 @@ public class StartUpSignUpFragment extends Fragment {
                     day = String.valueOf(selectedDay);
                 }
 
-                txt_user_dob.setText(day.concat("-").concat(month).concat("-").concat(year));
+                txt_user_dob.setText(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
             }
         };
 
