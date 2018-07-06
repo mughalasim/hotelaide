@@ -24,29 +24,24 @@
             android:paddingEnd="@dimen/padding_small"
             android:paddingStart="@dimen/padding_small">
 
-            <TextView
-                android:id="@+id/btn_add_work_experience"
-                style="@style/Button_Yes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/padding_small"
-                android:padding="@dimen/text_margin"
-                android:text="@string/txt_add"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_small" />
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/work_experience_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/btn_add_work_experience"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
-            </android.support.v7.widget.RecyclerView>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btn_add_work_experience"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                sothree:fabSize="normal"
+                sothree:srcCompat="@drawable/ic_add"
+                sothree:rippleColor="@color/white"
+                android:backgroundTint="@color/colorPrimary"/>
 
         </RelativeLayout>
-
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

@@ -12,7 +12,6 @@
         android:paddingEnd="@dimen/padding_small"
         android:paddingStart="@dimen/padding_small">
 
-
         <TextView
             android:id="@+id/txt_title"
             style="@style/Text_Title"
@@ -32,6 +31,7 @@
         <EditText
             android:id="@+id/et_company_name"
             style="@style/Edit_Text"
+            android:inputType="text"
             android:hint="@string/txt_company_name" />
 
         <TextView
@@ -42,66 +42,94 @@
         <EditText
             android:id="@+id/et_position"
             style="@style/Edit_Text"
+            android:inputType="text"
             android:hint="@string/txt_position_held" />
 
-        <RelativeLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_height="@dimen/line_thickness"
+            android:background="@color/colorPrimary"/>
 
-            <TextView
-                style="@style/Text_Normal"
-                android:text="@string/txt_start_date"
-                android:textColor="@color/colorPrimary" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
-            <TextView
-                android:id="@+id/txt_start_date"
-                style="@style/Text_Normal"
-                android:layout_alignParentEnd="true"
-                android:text="@string/txt_select_date" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/txt_start_date_label"
+                    style="@style/Text_Normal"
+                    android:text="@string/txt_start_date"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_start_date"
+                    style="@style/Edit_Text"
+                    android:layout_below="@+id/txt_start_date_label"
+                    android:text="@string/txt_select_date" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_end_date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_end_date_label"
+                    style="@style/Text_Normal"
+                    android:text="@string/txt_end_date"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_end_date"
+                    style="@style/Edit_Text"
+                    android:layout_below="@+id/txt_end_date_label"
+                    android:text="@string/txt_select_date" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <RadioGroup
             android:id="@+id/radio_group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/height_button"
             android:layout_marginTop="@dimen/padding_small"
             android:gravity="center"
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/radio_btn_yes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_weight="1"
+                android:text="@string/txt_work_here" />
+
+            <RadioButton
                 android:id="@+id/radio_btn_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:checked="true"
                 android:text="@string/txt_not_work_here" />
 
-            <RadioButton
-                android:id="@+id/radio_btn_yes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/padding_small"
-                android:text="@string/txt_work_here" />
-
         </RadioGroup>
 
-        <RelativeLayout
-            android:id="@+id/rl_end_date"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/Text_Normal"
-                android:text="@string/txt_end_date"
-                android:textColor="@color/colorPrimary" />
-
-            <TextView
-                android:id="@+id/txt_end_date"
-                style="@style/Text_Normal"
-                android:layout_alignParentEnd="true"
-                android:text="@string/txt_select_date" />
-
-        </RelativeLayout>
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_height="@dimen/line_thickness"
+            android:background="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/txt_responsibilities_label"
@@ -113,12 +141,12 @@
             android:id="@+id/et_responsibilities"
             style="@style/Edit_Text"
             android:layout_height="wrap_content"
-            android:isScrollContainer="true"
+            android:hint="@string/txt_responsibilities"
             android:inputType="textCapSentences|textMultiLine"
+            android:isScrollContainer="true"
             android:maxLength="2000"
             android:maxLines="150"
-            android:padding="@dimen/padding_small"
-            android:hint="@string/txt_responsibilities"/>
+            android:padding="@dimen/padding_small" />
 
         <include layout="@layout/fragment_buttons" />
 

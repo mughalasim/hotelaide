@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/android-studio%203/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_cancel_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_add_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_cancel" />
-                            <entry key="sourceFile" value="C:\Users\Asim Mughal" />
+                            <entry key="outputName" value="ic_add" />
+                            <entry key="sourceFile" value="$APPLICATION_HOME_DIR$/bin/C:\Users\Asim Mughal" />
                           </map>
                         </option>
                       </PersistentState>

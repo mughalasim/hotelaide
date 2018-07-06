@@ -18,15 +18,25 @@ public class Database extends SQLiteOpenHelper {
     private static final String TAG_LOG = "DATABASE";
 
 
-    // WORK EXPERIENCE STORED IN THE DATABASE ================================================
-    private static final String EXPERIENCE_TABLE_NAME = "WORK_EXPERIENCE";
-    private static final String EXPERIENCE_ID = "id";
-    private static final String EXPERIENCE_COMPANY_NAME = "company_name";
-    private static final String EXPERIENCE_POSITION = "position";
-    private static final String EXPERIENCE_START_DATE = "start_date";
-    private static final String EXPERIENCE_END_DATE = "end_date";
-    private static final String EXPERIENCE_RESPONSIBILITIES = "responsibilities";
-    private static final String EXPERIENCE_CURRENT = "current";
+    // WORK EXPERIENCE STORED IN THE DATABASE ======================================================
+    private static final String WORK_EXP_TABLE_NAME = "WORK_EXPERIENCE";
+    private static final String WORK_EXP_ID = "id";
+    private static final String WORK_EXP_COMPANY_NAME = "company_name";
+    private static final String WORK_EXP_POSITION = "position";
+    private static final String WORK_EXP_START_DATE = "start_date";
+    private static final String WORK_EXP_END_DATE = "end_date";
+    private static final String WORK_EXP_RESPONSIBILITIES = "responsibilities";
+    private static final String WORK_EXP_CURRENT = "current";
+
+    // EDUCATIONAL EXPERIENCE STORED IN THE DATABASE ===============================================
+    private static final String EDU_EXP_TABLE_NAME = "EDUCATIONAL_EXPERIENCE";
+    private static final String EDU_EXP_ID = "id";
+    private static final String EDU_EXP_COMPANY_NAME = "company_name";
+    private static final String EDU_EXP_POSITION = "position";
+    private static final String EDU_EXP_START_DATE = "start_date";
+    private static final String EDU_EXP_END_DATE = "end_date";
+    private static final String EDU_EXP_RESPONSIBILITIES = "responsibilities";
+    private static final String EDU_EXP_CURRENT = "current";
 
 
     public Database() {
@@ -36,14 +46,14 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // WORK EXPERIENCE TABLE CREATE
         db.execSQL("CREATE TABLE IF NOT EXISTS "
-                + EXPERIENCE_TABLE_NAME +
-                "(" + EXPERIENCE_ID + " INTEGER PRIMARY KEY NOT NULL," +
-                EXPERIENCE_COMPANY_NAME + " TEXT," +
-                EXPERIENCE_POSITION + " TEXT," +
-                EXPERIENCE_START_DATE + " TEXT," +
-                EXPERIENCE_END_DATE + " TEXT," +
-                EXPERIENCE_RESPONSIBILITIES + " TEXT," +
-                EXPERIENCE_CURRENT + " INTEGER" +
+                + WORK_EXP_TABLE_NAME +
+                "(" + WORK_EXP_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                WORK_EXP_COMPANY_NAME + " TEXT," +
+                WORK_EXP_POSITION + " TEXT," +
+                WORK_EXP_START_DATE + " TEXT," +
+                WORK_EXP_END_DATE + " TEXT," +
+                WORK_EXP_RESPONSIBILITIES + " TEXT," +
+                WORK_EXP_CURRENT + " INTEGER" +
                 ")"
         );
     }
@@ -56,13 +66,13 @@ public class Database extends SQLiteOpenHelper {
     // DELETE ALL FUNCTIONS ========================================================================
     public void deleteExperienceTable() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + EXPERIENCE_TABLE_NAME);
+        db.execSQL("DELETE FROM " + WORK_EXP_TABLE_NAME);
 
     }
 
     public void deleteAllTables() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + EXPERIENCE_TABLE_NAME);
+        db.execSQL("DELETE FROM " + WORK_EXP_TABLE_NAME);
         onCreate(db);
     }
 
@@ -82,21 +92,21 @@ public class Database extends SQLiteOpenHelper {
 
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(EXPERIENCE_ID, workExperienceModel.id);
-            contentValues.put(EXPERIENCE_COMPANY_NAME, workExperienceModel.company_name);
-            contentValues.put(EXPERIENCE_POSITION, workExperienceModel.position);
-            contentValues.put(EXPERIENCE_START_DATE, workExperienceModel.start_date);
-            contentValues.put(EXPERIENCE_END_DATE, workExperienceModel.end_date);
-            contentValues.put(EXPERIENCE_RESPONSIBILITIES, workExperienceModel.responsibilities);
-            contentValues.put(EXPERIENCE_CURRENT, workExperienceModel.current);
+            contentValues.put(WORK_EXP_ID, workExperienceModel.id);
+            contentValues.put(WORK_EXP_COMPANY_NAME, workExperienceModel.company_name);
+            contentValues.put(WORK_EXP_POSITION, workExperienceModel.position);
+            contentValues.put(WORK_EXP_START_DATE, workExperienceModel.start_date);
+            contentValues.put(WORK_EXP_END_DATE, workExperienceModel.end_date);
+            contentValues.put(WORK_EXP_RESPONSIBILITIES, workExperienceModel.responsibilities);
+            contentValues.put(WORK_EXP_CURRENT, workExperienceModel.current);
 
-            String whereClause = EXPERIENCE_ID + " = ?";
+            String whereClause = WORK_EXP_ID + " = ?";
             String[] whereArgs = new String[]{String.valueOf(workExperienceModel.id)};
-            int no_of_rows_affected = db.update(EXPERIENCE_TABLE_NAME, contentValues, whereClause,
+            int no_of_rows_affected = db.update(WORK_EXP_TABLE_NAME, contentValues, whereClause,
                     whereArgs);
 
             if (no_of_rows_affected == 0) {
-                db.insert(EXPERIENCE_TABLE_NAME, null, contentValues);
+                db.insert(WORK_EXP_TABLE_NAME, null, contentValues);
             }
 
             return true;
@@ -110,9 +120,9 @@ public class Database extends SQLiteOpenHelper {
         WorkExperienceModel workExperienceModel = new WorkExperienceModel();
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String whereClause = EXPERIENCE_ID + " = ?";
+        String whereClause = WORK_EXP_ID + " = ?";
         String[] whereArgs = new String[]{id};
-        Cursor cursor = db.query(EXPERIENCE_TABLE_NAME, null, whereClause, whereArgs,
+        Cursor cursor = db.query(WORK_EXP_TABLE_NAME, null, whereClause, whereArgs,
                 null, null, null);
 
         if (cursor != null) {
@@ -120,13 +130,13 @@ public class Database extends SQLiteOpenHelper {
             if (count > 0) {
                 cursor.moveToFirst();
                 do {
-                    workExperienceModel.id = cursor.getInt(cursor.getColumnIndex(EXPERIENCE_ID));
-                    workExperienceModel.company_name = cursor.getString(cursor.getColumnIndex(EXPERIENCE_COMPANY_NAME));
-                    workExperienceModel.position = cursor.getString(cursor.getColumnIndex(EXPERIENCE_POSITION));
-                    workExperienceModel.start_date = cursor.getString(cursor.getColumnIndex(EXPERIENCE_START_DATE));
-                    workExperienceModel.end_date = cursor.getString(cursor.getColumnIndex(EXPERIENCE_END_DATE));
-                    workExperienceModel.responsibilities = cursor.getString(cursor.getColumnIndex(EXPERIENCE_RESPONSIBILITIES));
-                    workExperienceModel.current = cursor.getInt(cursor.getColumnIndex(EXPERIENCE_CURRENT)) > 0;
+                    workExperienceModel.id = cursor.getInt(cursor.getColumnIndex(WORK_EXP_ID));
+                    workExperienceModel.company_name = cursor.getString(cursor.getColumnIndex(WORK_EXP_COMPANY_NAME));
+                    workExperienceModel.position = cursor.getString(cursor.getColumnIndex(WORK_EXP_POSITION));
+                    workExperienceModel.start_date = cursor.getString(cursor.getColumnIndex(WORK_EXP_START_DATE));
+                    workExperienceModel.end_date = cursor.getString(cursor.getColumnIndex(WORK_EXP_END_DATE));
+                    workExperienceModel.responsibilities = cursor.getString(cursor.getColumnIndex(WORK_EXP_RESPONSIBILITIES));
+                    workExperienceModel.current = cursor.getInt(cursor.getColumnIndex(WORK_EXP_CURRENT)) > 0;
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -135,12 +145,21 @@ public class Database extends SQLiteOpenHelper {
         return workExperienceModel;
     }
 
+    public void deleteWorkExperienceByID(String work_exp_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = WORK_EXP_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(work_exp_id)};
+        db.delete(WORK_EXP_TABLE_NAME, whereClause, whereArgs);
+        db.close();
+    }
+
+
     public ArrayList<WorkExperienceModel> getAllWorkExperience() {
 
         ArrayList<WorkExperienceModel> list = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor = db.query(EXPERIENCE_TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = db.query(WORK_EXP_TABLE_NAME, null, null, null, null, null, null);
 
         if (cursor != null) {
             int count = cursor.getCount();
@@ -148,13 +167,13 @@ public class Database extends SQLiteOpenHelper {
                 cursor.moveToFirst();
                 do {
                     WorkExperienceModel workExperienceModel = new WorkExperienceModel();
-                    workExperienceModel.id = cursor.getInt(cursor.getColumnIndex(EXPERIENCE_ID));
-                    workExperienceModel.company_name = cursor.getString(cursor.getColumnIndex(EXPERIENCE_COMPANY_NAME));
-                    workExperienceModel.position = cursor.getString(cursor.getColumnIndex(EXPERIENCE_POSITION));
-                    workExperienceModel.start_date = cursor.getString(cursor.getColumnIndex(EXPERIENCE_START_DATE));
-                    workExperienceModel.end_date = cursor.getString(cursor.getColumnIndex(EXPERIENCE_END_DATE));
-                    workExperienceModel.responsibilities = cursor.getString(cursor.getColumnIndex(EXPERIENCE_RESPONSIBILITIES));
-                    workExperienceModel.current = cursor.getInt(cursor.getColumnIndex(EXPERIENCE_CURRENT)) > 0;
+                    workExperienceModel.id = cursor.getInt(cursor.getColumnIndex(WORK_EXP_ID));
+                    workExperienceModel.company_name = cursor.getString(cursor.getColumnIndex(WORK_EXP_COMPANY_NAME));
+                    workExperienceModel.position = cursor.getString(cursor.getColumnIndex(WORK_EXP_POSITION));
+                    workExperienceModel.start_date = cursor.getString(cursor.getColumnIndex(WORK_EXP_START_DATE));
+                    workExperienceModel.end_date = cursor.getString(cursor.getColumnIndex(WORK_EXP_END_DATE));
+                    workExperienceModel.responsibilities = cursor.getString(cursor.getColumnIndex(WORK_EXP_RESPONSIBILITIES));
+                    workExperienceModel.current = cursor.getInt(cursor.getColumnIndex(WORK_EXP_CURRENT)) > 0;
 
                     list.add(workExperienceModel);
 

@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatDelegate;
@@ -43,6 +44,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.SharedPrefs.USER_ID;
+
 
 public class WorkExperienceFragment extends Fragment {
 
@@ -52,7 +55,7 @@ public class WorkExperienceFragment extends Fragment {
     private final String TAG_LOG = "WORK EXPERIENCE";
     // TOP PANEL ===================================================================================
     private RecyclerView recycler_view;
-    private TextView
+    private FloatingActionButton
             btn_add_work_experience;
     private ArrayList<WorkExperienceModel> model_list = new ArrayList<>();
     private WorkExperienceAdapter adapter;
@@ -85,6 +88,7 @@ public class WorkExperienceFragment extends Fragment {
             STR_DATE_TYPE = "";
     DatePickerDialog.OnDateSetListener
             datePickerListener;
+
     public WorkExperienceFragment() {
     }
 
@@ -195,9 +199,6 @@ public class WorkExperienceFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.radio_btn_no) {
                     rl_end_date.setVisibility(View.VISIBLE);
-                    if(txt_end_date.getText().toString().equals("")){
-                        txt_end_date.setText(R.string.txt_select_date);
-                    }
                 } else {
                     rl_end_date.setVisibility(View.GONE);
                 }
@@ -242,7 +243,6 @@ public class WorkExperienceFragment extends Fragment {
                 }
             }
         });
-
 
     }
 
@@ -355,12 +355,10 @@ public class WorkExperienceFragment extends Fragment {
             } else {
                 radio_btn_no.setChecked(true);
             }
-            txt_end_date.setText(workExperienceModel.end_date);
             et_responsibilities.setText(workExperienceModel.responsibilities);
             btn_confirm.setText(R.string.txt_update);
 
         } else {
-            clearBottomPanel();
             txt_title.setText(R.string.txt_add_we);
             btn_confirm.setText(R.string.txt_add);
         }
@@ -382,11 +380,10 @@ public class WorkExperienceFragment extends Fragment {
     }
 
 
-
     // ASYNC GET ALL  WORK EXPERIENCES =============================================================
     private void asyncGetAllWorkExperience() {
         WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
-        final Call<JsonObject> call = workExperienceService.getAllWorkExperiences(SharedPrefs.getInt(SharedPrefs.USER_ID));
+        final Call<JsonObject> call = workExperienceService.getAllWorkExperiences(SharedPrefs.getInt(USER_ID));
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -440,7 +437,7 @@ public class WorkExperienceFragment extends Fragment {
             helpers.setProgressDialogMessage("Updating work experience, please wait...");
             WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
             call = workExperienceService.updateWorkExperience(
-                    SharedPrefs.getInt(SharedPrefs.USER_ID),
+                    SharedPrefs.getInt(USER_ID),
                     workExperienceModel.id,
                     workExperienceModel.company_name,
                     workExperienceModel.position,
@@ -453,7 +450,7 @@ public class WorkExperienceFragment extends Fragment {
             helpers.setProgressDialogMessage("Adding work experience, please wait...");
             WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
             call = workExperienceService.setWorkExperience(
-                    SharedPrefs.getInt(SharedPrefs.USER_ID),
+                    SharedPrefs.getInt(USER_ID),
                     workExperienceModel.company_name,
                     workExperienceModel.position,
                     workExperienceModel.start_date,
@@ -506,9 +503,12 @@ public class WorkExperienceFragment extends Fragment {
 
 
     // ASYNC DELETE WORK EXPERIENCE ================================================================
-    private void deleteWorkExperience(int workExperienceId, final int position) {
+    private void deleteWorkExperience(final int workExperienceId, final int position) {
         WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
-        final Call<JsonObject> call = workExperienceService.deleteOneWorkExperience(workExperienceId);
+        final Call<JsonObject> call = workExperienceService.deleteOneWorkExperience(
+                SharedPrefs.getInt(USER_ID),
+                workExperienceId
+        );
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -517,11 +517,10 @@ public class WorkExperienceFragment extends Fragment {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
                     Helpers.LogThis(TAG_LOG, main.toString());
                     if (main.getBoolean("success")) {
+                        db.deleteWorkExperienceByID(String.valueOf(workExperienceId));
                         adapter.removeItem(position);
-                    } else {
-                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
-
+                    populateWorkExperience();
                 } catch (JSONException e) {
                     helpers.ToastMessage(getActivity(), e.toString());
                     e.printStackTrace();
@@ -544,9 +543,7 @@ public class WorkExperienceFragment extends Fragment {
     }
 
 
-
-
-//==================================================================================================
+    //==================================================================================================
 //==================================================================================================
     // ADAPTER CLASS ===============================================================================
     public class WorkExperienceAdapter extends RecyclerView.Adapter<WorkExperienceAdapter.ViewHolder> {
@@ -617,15 +614,15 @@ public class WorkExperienceFragment extends Fragment {
 
                 holder.txt_company_name.setText(workExperienceModel.company_name);
                 holder.txt_position.setText(workExperienceModel.position);
-                txt_start_date.setText(workExperienceModel.start_date);
+                holder.txt_start_date.setText(workExperienceModel.start_date);
 
                 if (workExperienceModel.current) {
-                    holder.txt_current.setVisibility(View.VISIBLE);
-                    txt_end_date.setVisibility(View.GONE);
-                } else {
                     holder.txt_current.setVisibility(View.GONE);
                     holder.txt_end_date.setVisibility(View.VISIBLE);
                     holder.txt_end_date.setText(workExperienceModel.end_date);
+                } else {
+                    holder.txt_current.setVisibility(View.VISIBLE);
+                    holder.txt_end_date.setVisibility(View.GONE);
                 }
 
                 holder.txt_responsibilities.setText(workExperienceModel.responsibilities);
@@ -671,11 +668,11 @@ public class WorkExperienceFragment extends Fragment {
             populateWorkExperience();
         }
 
-    public void updateData(ArrayList<WorkExperienceModel> view_model) {
-        workExperienceModels.clear();
-        workExperienceModels.addAll(view_model);
-        notifyDataSetChanged();
-    }
+        public void updateData(ArrayList<WorkExperienceModel> view_model) {
+            workExperienceModels.clear();
+            workExperienceModels.addAll(view_model);
+            notifyDataSetChanged();
+        }
 
     }
 }

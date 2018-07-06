@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bckgrd_text_fields"
     android:orientation="vertical"
+    android:layout_marginTop="@dimen/padding_small"
     android:padding="@dimen/padding_tiny">
 
     <RelativeLayout

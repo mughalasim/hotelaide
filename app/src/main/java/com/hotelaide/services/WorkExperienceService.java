@@ -108,7 +108,8 @@ public interface WorkExperienceService {
     // DELETE ONE WORK EXPERIENCES =================================================================
     @GET("user/{user_id}/work-experience/{work_experience_id}")
     Call<JsonObject> deleteOneWorkExperience(
-            @Path("user_id") int user_id
+            @Path("user_id") int user_id,
+            @Path("work_experience_id") int work_experience_id
     );
 
 
