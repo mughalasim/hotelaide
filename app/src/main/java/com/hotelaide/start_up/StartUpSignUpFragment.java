@@ -19,9 +19,6 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -50,7 +47,6 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonObject;
-import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.models.UserModel;
@@ -232,7 +228,7 @@ public class StartUpSignUpFragment extends Fragment {
                     } else if (!ccp_user_country_code.isValid()) {
                         helpers.ToastMessage(getContext(), "Phone number is invalid");
                     } else {
-                        showDialogSetAccountType(getActivity(), LOGIN_REGISTER);
+                        showDialogSetAccountPassword(getActivity(), LOGIN_REGISTER);
                     }
                 }
             }
@@ -327,52 +323,44 @@ public class StartUpSignUpFragment extends Fragment {
 
     }
 
-    private void showDialogSetAccountType(final Activity activity, final String loginType) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.setContentView(R.layout.dialog_account_type);
-        dialog.setCancelable(false);
-        final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
-        final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
-        final RadioGroup radio_group = dialog.findViewById(R.id.radio_group);
-        final RadioButton radio_btn_job_seeker = dialog.findViewById(R.id.radio_btn_job_seeker);
-        final RadioButton radio_btn_employer = dialog.findViewById(R.id.radio_btn_employer);
-        final LinearLayout ll_password = dialog.findViewById(R.id.ll_password);
-        final EditText et_user_pass = dialog.findViewById(R.id.et_user_pass);
-        final EditText et_user_pass_confirm = dialog.findViewById(R.id.et_user_pass_confirm);
-        final ImageView img_user_pass_toggle = dialog.findViewById(R.id.img_user_pass_toggle);
-        img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-        img_user_pass_toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (img_user_pass_toggle.getTag().toString().equals(TAG_PASS_HIDDEN)) {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_show);
-                    img_user_pass_toggle.setTag(TAG_PASS_SHOWN);
-                    et_user_pass.setTransformationMethod(null);
-                    et_user_pass_confirm.setTransformationMethod(null);
-                } else {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-                    img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-                    et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
-                    et_user_pass_confirm.setTransformationMethod(new PasswordTransformationMethod());
-                }
-                helpers.animateWobble(img_user_pass_toggle);
-            }
-        });
-
+    private void showDialogSetAccountPassword(final Activity activity, final String loginType) {
         if (loginType.equals(LOGIN_REGISTER)) {
-            ll_password.setVisibility(View.GONE);
+            setToModelFromFields();
         } else {
-            ll_password.setVisibility(View.VISIBLE);
-        }
+            final Dialog dialog = new Dialog(activity);
+            dialog.setContentView(R.layout.dialog_account_type);
+            dialog.setCancelable(false);
+            final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+            final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+            final EditText et_user_pass = dialog.findViewById(R.id.et_user_pass);
+            final EditText et_user_pass_confirm = dialog.findViewById(R.id.et_user_pass_confirm);
+            final ImageView img_user_pass_toggle = dialog.findViewById(R.id.img_user_pass_toggle);
+            img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
+            img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
+            img_user_pass_toggle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (img_user_pass_toggle.getTag().toString().equals(TAG_PASS_HIDDEN)) {
+                        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_show);
+                        img_user_pass_toggle.setTag(TAG_PASS_SHOWN);
+                        et_user_pass.setTransformationMethod(null);
+                        et_user_pass_confirm.setTransformationMethod(null);
+                    } else {
+                        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
+                        img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
+                        et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
+                        et_user_pass_confirm.setTransformationMethod(new PasswordTransformationMethod());
+                    }
+                    helpers.animateWobble(img_user_pass_toggle);
+                }
+            });
 
-        btn_cancel.setVisibility(View.VISIBLE);
-        btn_cancel.setText(getString(R.string.txt_cancel));
+            btn_cancel.setVisibility(View.VISIBLE);
+            btn_cancel.setText(getString(R.string.txt_cancel));
 
-        btn_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ll_password.getVisibility() == View.VISIBLE) {
+            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     if (helpers.validateEmptyEditText(et_user_pass) && helpers.validateEmptyEditText(et_user_pass_confirm)) {
                         if (!et_user_pass.getText().toString().equals(et_user_pass_confirm.getText().toString())) {
                             helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
@@ -380,55 +368,27 @@ public class StartUpSignUpFragment extends Fragment {
                             helpers.ToastMessage(getContext(), "Password too short");
                         } else {
                             globalUserModel.password = et_user_pass.getText().toString();
-                            checkRadioButtons(radio_group, radio_btn_employer, radio_btn_job_seeker, dialog, loginType);
+                            asyncRegister(globalUserModel);
                         }
                     }
-                } else {
-                    checkRadioButtons(radio_group, radio_btn_employer, radio_btn_job_seeker, dialog, loginType);
                 }
-            }
-        });
+            });
 
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.cancel();
+                }
+            });
 
-        dialog.show();
-    }
-
-    private void checkRadioButtons(final RadioGroup radio_group,
-                                   final RadioButton radio_btn_employer,
-                                   final RadioButton radio_btn_job_seeker,
-                                   final Dialog dialog, String loginType) {
-        int selectedRadioBtn = radio_group.getCheckedRadioButtonId();
-        if (selectedRadioBtn != R.id.radio_btn_employer && selectedRadioBtn != R.id.radio_btn_job_seeker) {
-            helpers.ToastMessage(getContext(), "No selection has been made");
-            helpers.animate_flash(radio_btn_employer);
-            helpers.animate_flash(radio_btn_job_seeker);
-        } else {
-            String selectedAccountType = "";
-            if (selectedRadioBtn == R.id.radio_btn_employer) {
-                selectedAccountType = BuildConfig.ACCOUNT_TYPE_EMPLOYEER;
-            } else {
-                selectedAccountType = BuildConfig.ACCOUNT_TYPE_JOB;
-            }
-
-            if (loginType.equals(LOGIN_REGISTER)) {
-                setToModelFromFields(selectedAccountType);
-            } else {
-                globalUserModel.account_type = selectedAccountType;
-                logRegModel(globalUserModel);
-                asyncRegister(globalUserModel);
-            }
-
-            dialog.cancel();
+            dialog.show();
         }
+
+
+
     }
 
-    private void setToModelFromFields(String accountType) {
+    private void setToModelFromFields() {
         UserModel userModel = new UserModel();
         userModel.first_name = et_user_first_name.getText().toString();
         userModel.last_name = et_user_last_name.getText().toString();
@@ -436,7 +396,6 @@ public class StartUpSignUpFragment extends Fragment {
         userModel.phone = Integer.parseInt(et_user_phone.getText().toString());
         userModel.email = et_user_email.getText().toString();
         userModel.password = et_user_pass.getText().toString();
-        userModel.account_type = accountType;
         userModel.dob = txt_user_dob.getText().toString();
         userModel.fb_id = "";
         userModel.google_id = "";
@@ -454,7 +413,6 @@ public class StartUpSignUpFragment extends Fragment {
                         + "\n Phone Number: " + userModel.phone
                         + "\n Email: " + userModel.email
                         + "\n Pass: " + userModel.password
-                        + "\n Account Type: " + userModel.account_type
                         + "\n DOB: " + userModel.dob
                         + "\n FB_ID: " + userModel.fb_id
                         + "\n G_ID: " + userModel.google_id
@@ -551,7 +509,7 @@ public class StartUpSignUpFragment extends Fragment {
 
                                         logRegModel(globalUserModel);
 
-                                        showDialogSetAccountType(getActivity(), LOGIN_FACEBOOK);
+                                        showDialogSetAccountPassword(getActivity(), LOGIN_FACEBOOK);
 
                                         signOutFaceBook();
 
@@ -608,7 +566,7 @@ public class StartUpSignUpFragment extends Fragment {
         });
     }
 
-    protected void setGooglePlusButtonText(SignInButton signInButton){
+    protected void setGooglePlusButtonText(SignInButton signInButton) {
         // Find the TextView that is inside of the SignInButton and set its text
         for (int i = 0; i < signInButton.getChildCount(); i++) {
             View v = signInButton.getChildAt(i);
@@ -620,7 +578,8 @@ public class StartUpSignUpFragment extends Fragment {
             }
         }
     }
-    private void signOutGoogle(){
+
+    private void signOutGoogle() {
         mGoogleSignInClient.signOut();
     }
 
@@ -633,7 +592,7 @@ public class StartUpSignUpFragment extends Fragment {
             globalUserModel.last_name = account.getFamilyName();
             if (account.getPhotoUrl() != null)
                 globalUserModel.img_avatar = account.getPhotoUrl().toString();
-            showDialogSetAccountType(getActivity(), LOGIN_GOOGLE);
+            showDialogSetAccountPassword(getActivity(), LOGIN_GOOGLE);
             signOutGoogle();
 
         } catch (ApiException e) {
@@ -658,7 +617,6 @@ public class StartUpSignUpFragment extends Fragment {
                 userModel.email,
                 userModel.password,
                 userModel.password,
-                userModel.account_type,
                 userModel.dob,
                 userModel.fb_id,
                 userModel.google_id

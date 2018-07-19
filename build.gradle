@@ -45,8 +45,8 @@ ext {
     proguard = false
 
     // App Versioning
-    versionCode = 3
-    versionName = 0.3
+    versionCode = 1
+    versionName = 0.1
 
 }
 

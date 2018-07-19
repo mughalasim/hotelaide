@@ -39,10 +39,6 @@ android {
             buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.kiiya.co.ke/api/"'
             // DATABASE INFO
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
-            // ACCOUNT TYPES
-            buildConfigField 'String', 'ACCOUNT_TYPE_JOB', '"job_seeker"'
-            buildConfigField 'String', 'ACCOUNT_TYPE_EMPLOYEER', '"employer"'
-
             buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '35'
             buildConfigField 'Boolean', 'LOGGING', "$rootProject.debugMode"
         }
@@ -109,6 +105,7 @@ dependencies {
 //    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
     // IMAGE CROPPING AND ROTATING
+    //noinspection GradleDynamicVersion
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 
     // SLIDING UP PANEL

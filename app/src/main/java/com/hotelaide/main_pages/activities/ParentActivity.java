@@ -28,21 +28,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import com.makeramen.roundedimageview.RoundedImageView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
+import com.makeramen.roundedimageview.RoundedImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
-import static com.hotelaide.utils.SharedPrefs.USER_ACCOUNT_TYPE;
 import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
 import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
@@ -150,25 +148,12 @@ public class ParentActivity extends AppCompatActivity implements
 
 
         // FIND THE MENU ITEMS ==================================================================
-        MenuItem messages = navigationView.getMenu().getItem(1);
-        MenuItem search = navigationView.getMenu().getItem(2);
-        MenuItem registration = navigationView.getMenu().getItem(3);
-        MenuItem subscription = navigationView.getMenu().getItem(4);
-
-        if (SharedPrefs.getString(USER_ACCOUNT_TYPE).equals(BuildConfig.ACCOUNT_TYPE_EMPLOYEER)) {
-            subscription.setVisible(true);
-            messages.setVisible(true);
-            registration.setVisible(true);
-            subscription.setVisible(true);
-            search.setVisible(false);
-
-        } else {
-            subscription.setVisible(false);
-            messages.setVisible(false);
-            registration.setVisible(false);
-            subscription.setVisible(false);
-            search.setVisible(true);
-        }
+        MenuItem menu_dashboard = navigationView.getMenu().getItem(0);
+        MenuItem menu_find_jobs = navigationView.getMenu().getItem(1);
+        MenuItem menu_my_profile = navigationView.getMenu().getItem(2);
+        MenuItem menu_about_us = navigationView.getMenu().getItem(3);
+        MenuItem menu_settings = navigationView.getMenu().getItem(4);
+        MenuItem menu_log_out = navigationView.getMenu().getItem(5);
 
     }
 

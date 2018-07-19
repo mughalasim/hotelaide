@@ -1,6 +1,5 @@
 package com.hotelaide.services;
 
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -8,9 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
-import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.SharedPrefs;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -91,7 +88,6 @@ public interface LoginService {
             @Field("email") String email,
             @Field("password") String password,
             @Field("password_confirmation") String password_confirmation,
-            @Field("account_type") String account_type,
             @Field("dob") String dob,
             @Field("fb_id") String fb_id,
             @Field("google_id") String google_id

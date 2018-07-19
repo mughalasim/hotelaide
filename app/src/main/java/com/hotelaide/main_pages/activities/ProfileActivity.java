@@ -1,11 +1,9 @@
 package com.hotelaide.main_pages.activities;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -15,18 +13,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
-import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.fragments.ChangePasswordFragment;
 import com.hotelaide.main_pages.fragments.DocumentsFragment;
 import com.hotelaide.main_pages.fragments.EducationFragment;
 import com.hotelaide.main_pages.fragments.ProfileUpdateFragment;
 import com.hotelaide.main_pages.fragments.WorkExperienceFragment;
-import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -50,7 +45,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.Helpers.INT_PERMISSIONS_CAMERA;
-import static com.hotelaide.utils.SharedPrefs.USER_ACCOUNT_TYPE;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
@@ -96,19 +90,6 @@ public class ProfileActivity extends ParentActivity {
             new ChangePasswordFragment()
     };
 
-    private int[] employerTitleList = {
-            R.string.nav_profile,
-            R.string.nav_pass
-    };
-
-    private Fragment[] employerFragments = {
-            new ProfileUpdateFragment(),
-            new ChangePasswordFragment()
-    };
-
-    private Fragment[] selectedFragments = {};
-    private int[] selectedTitles = {};
-
     // OVERRIDE METHODS ============================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,14 +98,6 @@ public class ProfileActivity extends ParentActivity {
         setContentView(R.layout.activity_my_profile);
 
         initialize(R.id.drawer_my_profile, TAG_LOG);
-
-        if (SharedPrefs.getString(USER_ACCOUNT_TYPE).equals(BuildConfig.ACCOUNT_TYPE_JOB)) {
-            selectedTitles = jobSeekerTitleList;
-            selectedFragments = jobSeekerFragments;
-        } else {
-            selectedTitles = employerTitleList;
-            selectedFragments = employerFragments;
-        }
 
         findAllViews();
 
@@ -199,7 +172,7 @@ public class ProfileActivity extends ParentActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
                     isCollapsedToolbar = true;
-                    toolbar_text.setText(selectedTitles[viewPager.getCurrentItem()]);
+                    toolbar_text.setText(jobSeekerTitleList[viewPager.getCurrentItem()]);
                 } else if (verticalOffset == 0) {
                     isCollapsedToolbar = false;
                     toolbar_text.setText(TAG_LOG);
@@ -252,9 +225,9 @@ public class ProfileActivity extends ParentActivity {
     private void setupViewPager(ViewPager viewPager) {
         ProfileActivity.ViewPagerAdapter adapter = new ProfileActivity.ViewPagerAdapter(getSupportFragmentManager());
 
-        for (int i = 0; i <= selectedTitles.length - 1; i++) {
-            Fragment fragment = selectedFragments[i];
-            adapter.addFragment(fragment, getResources().getString(selectedTitles[i]));
+        for (int i = 0; i <= jobSeekerTitleList.length - 1; i++) {
+            Fragment fragment = jobSeekerFragments[i];
+            adapter.addFragment(fragment, getResources().getString(jobSeekerTitleList[i]));
         }
 
         viewPager.setAdapter(adapter);
@@ -269,7 +242,7 @@ public class ProfileActivity extends ParentActivity {
             @Override
             public void onPageSelected(int position) {
                 if (isCollapsedToolbar) {
-                    toolbar_text.setText(selectedTitles[position]);
+                    toolbar_text.setText(jobSeekerTitleList[position]);
                 } else {
                     toolbar_text.setText(TAG_LOG);
                 }

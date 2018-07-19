@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.models.UserModel;
-import com.hotelaide.main_pages.models.WorkExperienceModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +43,6 @@ public class SharedPrefs {
     public static final String USER_GOOGLE_ID = "USER_GOOGLE_ID";
     public static final String USER_GEO_LAT = "USER_GEO_LAT";
     public static final String USER_GEO_LNG = "USER_GEO_LNG";
-    public static final String USER_ACCOUNT_TYPE = "USER_ACCOUNT_TYPE";
 
     public static final String NAV_DATA = "NAV_DATA";
 
@@ -139,22 +136,19 @@ public class SharedPrefs {
             setString(USER_GOOGLE_ID, user.getString("google_id"));
             setDouble(USER_GEO_LAT, user.getDouble("geolat"));
             setDouble(USER_GEO_LNG, user.getDouble("geolng"));
-            setString(USER_ACCOUNT_TYPE, user.getString("account_type"));
 
-            if (user.getString("account_type").equals(BuildConfig.ACCOUNT_TYPE_JOB)) {
 
-                JSONArray work_experience = user.getJSONArray("work_experience");
-                if (work_experience != null && work_experience.length() > 0) {
-                    Database db = new Database();
+            JSONArray work_experience = user.getJSONArray("work_experience");
+            if (work_experience != null && work_experience.length() > 0) {
+                Database db = new Database();
 
-                    int array_length = work_experience.length();
+                int array_length = work_experience.length();
 
-                    for (int i = 0; i < array_length; i++) {
-                        db.setWorkExperienceFromJson(work_experience.getJSONObject(i));
-                    }
+                for (int i = 0; i < array_length; i++) {
+                    db.setWorkExperienceFromJson(work_experience.getJSONObject(i));
                 }
-
             }
+
 
             Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
                     getInt(USER_ID) + " - " +
@@ -170,8 +164,7 @@ public class SharedPrefs {
                     getString(USER_FB_ID) + " - " +
                     getString(USER_GOOGLE_ID) + " - " +
                     getDouble(USER_GEO_LAT) + " - " +
-                    getDouble(USER_GEO_LNG) + " - " +
-                    getString(USER_ACCOUNT_TYPE)
+                    getDouble(USER_GEO_LNG)
             );
 
             response = true;
@@ -204,7 +197,6 @@ public class SharedPrefs {
         userModel.google_id = getString(USER_GOOGLE_ID);
         userModel.geo_lat = getDouble(USER_GEO_LAT);
         userModel.geo_lng = getDouble(USER_GEO_LNG);
-        userModel.account_type = getString(USER_ACCOUNT_TYPE);
 
 
         Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
@@ -221,8 +213,7 @@ public class SharedPrefs {
                 getString(USER_FB_ID) + " - " +
                 getString(USER_GOOGLE_ID) + " - " +
                 getDouble(USER_GEO_LAT) + " - " +
-                getDouble(USER_GEO_LNG) + " - " +
-                getString(USER_ACCOUNT_TYPE)
+                getDouble(USER_GEO_LNG)
         );
 
         return userModel;
