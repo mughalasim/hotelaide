@@ -90,7 +90,8 @@ public interface LoginService {
             @Field("password_confirmation") String password_confirmation,
             @Field("dob") String dob,
             @Field("fb_id") String fb_id,
-            @Field("google_id") String google_id
+            @Field("google_id") String google_id,
+            @Field("account_type") String account_type
     );
 
     // RESET PASSWORD =======================================================================

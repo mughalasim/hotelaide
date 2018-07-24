@@ -2,6 +2,7 @@ package com.hotelaide.main_pages.fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -135,7 +136,7 @@ public class WorkExperienceFragment extends Fragment {
         btn_add_work_experience = rootview.findViewById(R.id.btn_add_work_experience);
         adapter = new WorkExperienceAdapter(model_list);
         recycler_view.setAdapter(adapter);
-        recycler_view.setHasFixedSize(true);
+        recycler_view.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recycler_view.setLayoutManager(layoutManager);
 
@@ -267,11 +268,11 @@ public class WorkExperienceFragment extends Fragment {
                 }
 
                 String date_to_set =
-                        year
+                        day
                                 .concat(getString(R.string.txt_date_separator))
                                 .concat(month)
                                 .concat(getString(R.string.txt_date_separator))
-                                .concat(day);
+                                .concat(year);
 
                 if (STR_DATE_TYPE.equals(STR_DATE_START)) {
                     txt_start_date.setText(date_to_set);
@@ -322,12 +323,18 @@ public class WorkExperienceFragment extends Fragment {
         recycler_view.invalidate();
         adapter.updateData(model_list);
         adapter.notifyDataSetChanged();
-//        if (model_list.size() <= 0) {
-//            noRestaurants(true);
-//        } else {
-//            noRestaurants(false);
-//        }
+        if (model_list.size() <= 0) {
+            noListItems();
+        }
 
+    }
+
+    private void noListItems(){
+        recycler_view.invalidate();
+        model_list.clear();
+        WorkExperienceModel workExperienceModel = new WorkExperienceModel();
+        model_list.add(workExperienceModel);
+        adapter.notifyDataSetChanged();
     }
 
     private void clearBottomPanel() {
@@ -648,7 +655,29 @@ public class WorkExperienceFragment extends Fragment {
                 holder.btn_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        deleteWorkExperience(workExperienceModel.id, holder.getAdapterPosition());
+                        final Dialog dialog = new Dialog(getActivity());
+                        dialog.setContentView(R.layout.dialog_confirm);
+                        final TextView txt_message = dialog.findViewById(R.id.txt_message);
+                        final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+                        final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                        final TextView txt_title = dialog.findViewById(R.id.txt_title);
+                        txt_title.setText("Delete");
+                        txt_message.setText("Are you sure you wish to delete your work experience at " + workExperienceModel.company_name);
+                        btn_cancel.setVisibility(View.VISIBLE);
+                        btn_cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+                        btn_confirm.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                deleteWorkExperience(workExperienceModel.id, holder.getAdapterPosition());
+                                dialog.cancel();
+                            }
+                        });
+                        dialog.show();
                     }
                 });
 
@@ -665,7 +694,9 @@ public class WorkExperienceFragment extends Fragment {
             workExperienceModels.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, workExperienceModels.size());
-            populateWorkExperience();
+            if (workExperienceModels.size() <= 0) {
+                populateWorkExperience();
+            }
         }
 
         public void updateData(ArrayList<WorkExperienceModel> view_model) {

@@ -34,9 +34,10 @@
                 android:id="@+id/btn_add_work_experience"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/padding_large"
+                android:layout_below="@+id/work_experience_recycler"
                 android:layout_alignParentEnd="true"
-                sothree:fabSize="normal"
+                sothree:fabSize="mini"
                 sothree:srcCompat="@drawable/ic_add"
                 sothree:rippleColor="@color/white"
                 android:backgroundTint="@color/colorPrimary"/>

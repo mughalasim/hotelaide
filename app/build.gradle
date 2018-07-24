@@ -37,6 +37,8 @@ android {
         prod {
             // MAIN INFO
             buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.kiiya.co.ke/api/"'
+            // APP TYPE
+            buildConfigField 'String', 'ACCOUNT_TYPE', '"job_seeker"'
             // DATABASE INFO
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
             buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '35'
@@ -56,7 +58,6 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$rootProject.SupportLibrary"
     implementation "com.android.support:support-dynamic-animation:$rootProject.SupportLibrary"
     implementation "com.android.support:animated-vector-drawable:$rootProject.SupportLibrary"
-//    implementation 'com.android.support:multidex:1.0.3'
 
     // RETROFIT DEPENDENCIES
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -79,6 +80,7 @@ dependencies {
 
     // GOOGLE
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-places:15.0.1'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation('com.google.android.gms:play-services-analytics:15.0.0') {

@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.main_pages.fragments.AddressFragment;
 import com.hotelaide.main_pages.fragments.ChangePasswordFragment;
 import com.hotelaide.main_pages.fragments.DocumentsFragment;
 import com.hotelaide.main_pages.fragments.EducationFragment;
@@ -76,6 +77,7 @@ public class ProfileActivity extends ParentActivity {
 
     private int[] jobSeekerTitleList = {
             R.string.nav_profile,
+            R.string.nav_address,
             R.string.nav_education,
             R.string.nav_work,
             R.string.nav_documents,
@@ -84,6 +86,7 @@ public class ProfileActivity extends ParentActivity {
 
     private Fragment[] jobSeekerFragments = {
             new ProfileUpdateFragment(),
+            new AddressFragment(),
             new EducationFragment(),
             new WorkExperienceFragment(),
             new DocumentsFragment(),

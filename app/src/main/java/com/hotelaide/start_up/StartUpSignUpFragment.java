@@ -47,6 +47,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonObject;
+import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.models.UserModel;
@@ -619,7 +620,8 @@ public class StartUpSignUpFragment extends Fragment {
                 userModel.password,
                 userModel.dob,
                 userModel.fb_id,
-                userModel.google_id
+                userModel.google_id,
+                BuildConfig.ACCOUNT_TYPE
         );
 
         call.enqueue(new Callback<JsonObject>() {

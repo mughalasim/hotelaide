@@ -7,7 +7,7 @@
     <!--META DATA ===============================================================================-->
     <string name="facebook_app_id">213335282601524</string>
     <string name="fb_login_protocol_scheme">fb213335282601524</string>
-    <string name="maps_api_key">AIzaSyBq_io43Sxc4sOaXpMXEEmLC"</string>
+    <string name="maps_api_key">AIzaSyCCc45P-R50C_Hy1Jw6A00CjNN4vrZAB3c"</string>
 
     <!--ERROR MESSAGES ==========================================================================-->
     <string name="error_field_required">This field is required</string>
@@ -71,7 +71,8 @@
     <string name="nav_contact_us">Contact Us</string>
 
     <!-- PROFILE NAVIGATION TEXT ================================================================-->
-    <string name="nav_profile">Basic Information</string>
+    <string name="nav_profile">Basic Info</string>
+    <string name="nav_address">Address</string>
     <string name="nav_education">Education</string>
     <string name="nav_work">Work Experience</string>
     <string name="nav_documents">Documents</string>
@@ -130,7 +131,7 @@
     <string name="txt_success">Successfully updated</string>
     <string name="txt_update">UPDATE</string>
     <string name="txt_add">ADD</string>
-    <string name="txt_date_separator">/</string>
+    <string name="txt_date_separator">-</string>
     <string name="txt_add_we">ADD NEW WORK EXPERIENCE</string>
     <string name="txt_edit_we">EDIT WORK EXPERIENCE</string>
     <string name="txt_at">&#160;at&#160;</string>
