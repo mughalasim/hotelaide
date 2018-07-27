@@ -5,12 +5,6 @@ import android.os.Bundle;
 import com.hotelaide.R;
 import com.hotelaide.utils.SharedPrefs;
 
-import java.io.File;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-
 import static com.hotelaide.utils.Helpers.START_FIRST_TIME;
 import static com.hotelaide.utils.Helpers.START_LAUNCH;
 import static com.hotelaide.utils.Helpers.START_RETURN;
@@ -25,7 +19,7 @@ public class DashboardActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_dashboard);
 
         initialize(R.id.drawer_dashboard, TAG_LOG);
 

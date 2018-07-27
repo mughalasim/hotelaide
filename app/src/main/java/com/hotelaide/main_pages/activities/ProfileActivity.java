@@ -333,7 +333,7 @@ public class ProfileActivity extends ParentActivity {
                     setFromSharedPrefs();
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(ProfileActivity.this, e.toString());
+                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
                     e.printStackTrace();
                     setFromSharedPrefs();
                 }

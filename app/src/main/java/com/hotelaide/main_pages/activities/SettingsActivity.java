@@ -129,9 +129,11 @@ public class SettingsActivity extends ParentActivity {
                     }
 
                 } catch (JSONException e) {
+                    helpers.ToastMessage(SettingsActivity.this, getString(R.string.error_server));
                     Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
 
                 } catch (Exception e) {
+                    helpers.ToastMessage(SettingsActivity.this, getString(R.string.error_server));
                     Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
                 }
                 helpers.progressDialog(false);

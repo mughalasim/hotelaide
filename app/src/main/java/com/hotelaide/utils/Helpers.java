@@ -42,6 +42,7 @@ import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.AboutUsActivity;
 import com.hotelaide.main_pages.activities.DashboardActivity;
+import com.hotelaide.main_pages.activities.FindJobsActivity;
 import com.hotelaide.main_pages.activities.ProfileActivity;
 import com.hotelaide.main_pages.activities.SettingsActivity;
 import com.hotelaide.services.UserService;
@@ -123,6 +124,10 @@ public class Helpers {
         switch (id) {
             case R.id.drawer_dashboard:
                 context.startActivity(new Intent(context, DashboardActivity.class));
+                break;
+
+            case R.id.drawer_find_jobs:
+                context.startActivity(new Intent(context, FindJobsActivity.class));
                 break;
 
             case R.id.drawer_my_profile:

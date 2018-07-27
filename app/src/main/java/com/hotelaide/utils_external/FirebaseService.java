@@ -30,7 +30,7 @@ public class FirebaseService extends FirebaseInstanceIdService {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Helpers.LogThis( "FIREBASE", "Refreshed token: " + refreshedToken);
 
-        AppEventsLogger.newLogger(MyApplication.getAppContext(), refreshedToken);
-        AppEventsLogger.setPushNotificationsRegistrationId(refreshedToken);
+//        AppEventsLogger.newLogger(MyApplication.getAppContext(), refreshedToken);
+//        AppEventsLogger.setPushNotificationsRegistrationId(refreshedToken);
     }
 }

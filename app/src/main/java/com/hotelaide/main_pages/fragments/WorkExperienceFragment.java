@@ -413,7 +413,7 @@ public class WorkExperienceFragment extends Fragment {
                     }
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), e.toString());
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -488,7 +488,7 @@ public class WorkExperienceFragment extends Fragment {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), e.toString());
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -529,7 +529,7 @@ public class WorkExperienceFragment extends Fragment {
                     }
                     populateWorkExperience();
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), e.toString());
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }

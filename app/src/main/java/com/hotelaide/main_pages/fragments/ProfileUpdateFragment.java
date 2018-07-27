@@ -390,7 +390,7 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
                     setFromSharedPrefs();
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), e.toString());
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }

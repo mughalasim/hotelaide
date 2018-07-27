@@ -7,7 +7,7 @@ import android.content.Context;
 import com.facebook.stetho.Stetho;
 import com.hotelaide.BuildConfig;
 
-public class MyApplication extends Application{
+public class MyApplication extends Application {
 
         @SuppressLint("StaticFieldLeak")
         private static Context context;

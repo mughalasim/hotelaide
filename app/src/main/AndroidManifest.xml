@@ -86,6 +86,12 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".main_pages.activities.FindJobsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
             android:name=".main_pages.activities.AboutUsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

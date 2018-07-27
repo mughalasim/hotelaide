@@ -26,10 +26,7 @@ public class SharedPrefs {
 
     // STRING VARIABLE NAMES =======================================================================
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
-    public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
-    public static final String CLIENT_SECRET = "CLIENT_SECRET";
 
-    public static final String USER_SALUTATION = "USER_SALUTATION";
     public static final String USER_F_NAME = "USER_F_NAME";
     public static final String USER_L_NAME = "USER_L_NAME";
     public static final String USER_EMAIL = "USER_EMAIL";
@@ -53,12 +50,12 @@ public class SharedPrefs {
 
     // GENERIC GET AND SET INTEGER VARIABLES =======================================================
     public static int getInt(String variableName) {
-        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
         return mySharedPreferences.getInt(variableName, 0);
     }
 
     public static void setInt(String variableName, int variableValue) {
-        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
         SharedPreferences.Editor editor = mySharedPreferences.edit();
         editor.putInt(variableName, variableValue);
         editor.apply();
@@ -67,12 +64,12 @@ public class SharedPrefs {
 
     // GENERIC GET AND SET STRING VARIABLES ========================================================
     public static String getString(String variableName) {
-        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
         return mySharedPreferences.getString(variableName, "");
     }
 
     public static void setString(String variableName, String variableValue) {
-        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
         SharedPreferences.Editor editor = mySharedPreferences.edit();
         editor.putString(variableName, variableValue);
         editor.apply();
@@ -82,12 +79,12 @@ public class SharedPrefs {
     // GENERIC GET AND SET BOOLEAN VARIABLES =======================================================
     @NonNull
     public static Boolean getBool(String variableName) {
-        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
         return mySharedPreferences.getBoolean(variableName, false);
     }
 
     public static void setBool(String variableName, Boolean variableValue) {
-        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
         SharedPreferences.Editor editor = mySharedPreferences.edit();
         editor.putBoolean(variableName, variableValue);
         editor.apply();
@@ -96,12 +93,12 @@ public class SharedPrefs {
 
     // GENERIC GET AND SET DOUBLE ==================================================================
     public static Double getDouble(String variableName) {
-        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
         return Double.parseDouble(mySharedPreferences.getString(variableName, "0"));
     }
 
     public static void setDouble(String variableName, Double longitude) {
-        SharedPreferences mySharedPreferences = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
         SharedPreferences.Editor editor = mySharedPreferences.edit();
         editor.putString(variableName, String.valueOf(longitude));
         editor.apply();
@@ -110,7 +107,7 @@ public class SharedPrefs {
 
     // DELETE FUNCTION =============================================================================
     public static void deleteAllSharedPrefs() {
-        SharedPreferences settings = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+        SharedPreferences settings = context.getSharedPreferences(SHARED_PREFS, MODE);
         settings.edit().clear().apply();
     }
 
@@ -122,7 +119,6 @@ public class SharedPrefs {
         Helpers.LogThis(SHARED_PREFS, user.toString());
         try {
             setInt(USER_ID, user.getInt("id"));
-//                setString(USER_SALUTATION, user.getString("salutation"));
             setString(USER_F_NAME, user.getString("first_name"));
             setString(USER_L_NAME, user.getString("last_name"));
             setString(USER_EMAIL, user.getString("email"));
@@ -152,7 +148,6 @@ public class SharedPrefs {
 
             Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
                     getInt(USER_ID) + " - " +
-                    getString(USER_SALUTATION) + " - " +
                     getString(USER_F_NAME) + " - " +
                     getString(USER_L_NAME) + " - " +
                     getString(USER_EMAIL) + " - " +
@@ -170,10 +165,10 @@ public class SharedPrefs {
             response = true;
 
         } catch (JSONException e) {
-            Helpers.LogThis(SHARED_PREFS, MyApplication.getAppContext().getString(R.string.log_exception) + e.toString());
+            Helpers.LogThis(SHARED_PREFS, context.getString(R.string.log_exception) + e.toString());
             response = false;
         } catch (Exception e) {
-            Helpers.LogThis(SHARED_PREFS, MyApplication.getAppContext().getString(R.string.log_exception) + e.toString());
+            Helpers.LogThis(SHARED_PREFS, context.getString(R.string.log_exception) + e.toString());
             response = false;
         }
         return response;
@@ -184,7 +179,6 @@ public class SharedPrefs {
 
         UserModel userModel = new UserModel();
         userModel.id = getInt(USER_ID);
-        userModel.salutation = getString(USER_SALUTATION);
         userModel.first_name = getString(USER_F_NAME);
         userModel.last_name = getString(USER_L_NAME);
         userModel.email = getString(USER_EMAIL);
@@ -201,7 +195,6 @@ public class SharedPrefs {
 
         Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
                 getInt(USER_ID) + " - " +
-                getString(USER_SALUTATION) + " - " +
                 getString(USER_F_NAME) + " - " +
                 getString(USER_L_NAME) + " - " +
                 getString(USER_EMAIL) + " - " +

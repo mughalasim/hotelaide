@@ -6,6 +6,7 @@ android {
     compileSdkVersion rootProject.compileSDK
     buildToolsVersion rootProject.buildTools
     flavorDimensions "versionCode"
+    dataBinding.enabled true
     defaultConfig {
         applicationId "com.hotelaide"
         minSdkVersion rootProject.minSDK
@@ -14,6 +15,7 @@ android {
         versionName "$rootProject.versionName"
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
+//        multiDexEnabled true
     }
 
     buildTypes {
@@ -37,12 +39,19 @@ android {
         prod {
             // MAIN INFO
             buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.kiiya.co.ke/api/"'
+
             // APP TYPE
             buildConfigField 'String', 'ACCOUNT_TYPE', '"job_seeker"'
+
             // DATABASE INFO
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
             buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '35'
             buildConfigField 'Boolean', 'LOGGING', "$rootProject.debugMode"
+
+            // INSTANT SEARCH
+            buildConfigField 'String', 'ALGOLIA_APP_ID', '"latency"'
+            buildConfigField 'String', 'ALGOLIA_SEARCH_API_KEY', '"3d9875e51fbd20c7754e65422f7ce5e1"'
+            buildConfigField 'String', 'ALGOLIA_INDEX_NAME', '"bestbuy"'
         }
     }
 }
@@ -125,6 +134,11 @@ dependencies {
     // STETHO INSPECTOR BY FACEBOOK
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    // INSTANT SEARCH
+    implementation 'com.algolia:algoliasearch-android:3.23.13'
+//    implementation 'org.greenrobot:eventbus:3.1.1'
+//    implementation 'com.android.support:multidex:1.0.3'
 
 }
 apply plugin: 'com.google.gms.google-services'

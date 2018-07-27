@@ -186,7 +186,7 @@ public class StartUpLoginFragment extends Fragment {
                     }
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), e.toString());
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }

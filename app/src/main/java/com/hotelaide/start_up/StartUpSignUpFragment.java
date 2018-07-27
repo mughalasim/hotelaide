@@ -647,7 +647,7 @@ public class StartUpSignUpFragment extends Fragment {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), e.toString());
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
