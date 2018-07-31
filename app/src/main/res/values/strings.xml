@@ -17,6 +17,7 @@
     <string name="error_call_permissions">You have not granted permissions to this app to make calls</string>
     <string name="error_permissions">Dear user, App permissions have not been granted! The App cannot function without these permissions. Please grant them from the phone settings</string>
     <string name="error_no_we">Oops! No Work Experience has been added to your profile</string>
+    <string name="error_no_jobs">Oops! No Jobs found for the search criteria above</string>
 
     <!--LOGGING =================================================================================-->
     <string name="log_exception">EXCEPTION:&#160;</string>

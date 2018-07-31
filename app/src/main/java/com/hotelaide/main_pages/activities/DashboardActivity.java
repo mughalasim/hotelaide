@@ -37,7 +37,6 @@ public class DashboardActivity extends ParentActivity {
 
 
     // BASIC FUNCTIONS =============================================================================
-
     private void findAllViews() {
 
 

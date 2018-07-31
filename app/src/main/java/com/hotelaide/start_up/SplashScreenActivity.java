@@ -6,15 +6,16 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.appevents.AppEventsLogger;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.DashboardActivity;
-import com.hotelaide.main_pages.activities.ProfileActivity;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
-import com.hotelaide.utils_external.FirebaseService;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -64,12 +65,15 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void handleFireBase() {
-        FirebaseService firebaseService = new FirebaseService();
-        firebaseService.onTokenRefresh();
-
-        if (FirebaseInstanceId.getInstance().getToken() != null) {
-            Helpers.LogThis(TAG_LOG, FirebaseInstanceId.getInstance().getToken());
-        }
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(SplashScreenActivity.this,
+                new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        String refreshedToken = instanceIdResult.getToken();
+                        AppEventsLogger.newLogger(SplashScreenActivity.this, refreshedToken);
+                        AppEventsLogger.setPushNotificationsRegistrationId(refreshedToken);
+                    }
+                });
     }
 
     private void startUp() {

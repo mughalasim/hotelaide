@@ -154,16 +154,13 @@
 
 
         <!--CLOUD MESSAGING SERVICES ============================================================-->
-
         <service
-            android:name=".utils_external.FirebaseService"
-            android:exported="false"
-            android:permission="">
+            android:name=".utils_external.MyFirebaseMessagingService"
+            android:stopWithTask="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
 
         <!--GOOGLE PLAY STORE CAMPAIGN MANAGEMENT ===============================================-->
 

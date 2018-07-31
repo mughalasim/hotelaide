@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.hotelaide.BuildConfig;
+import com.hotelaide.main_pages.models.JobModel;
 import com.hotelaide.main_pages.models.WorkExperienceModel;
 
 import org.json.JSONException;
@@ -17,6 +18,15 @@ public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "HotelAide.db";
     private static final String TAG_LOG = "DATABASE";
 
+
+    // JOB SEARCHES IN THE DATABASE ======================================================
+    private static final String JOB_TABLE_NAME = "JOB_SEARCH";
+    private static final String JOB_ID = "id";
+    private static final String JOB_NAME = "job_name";
+    private static final String JOB_POSTED_ON = "posted_on";
+    private static final String JOB_HOTEL_ID = "hotel_id";
+    private static final String JOB_HOTEL_IMAGE = "hotel_image";
+    private static final String JOB_HOTEL_LOCATION = "hotel_loation";
 
     // WORK EXPERIENCE STORED IN THE DATABASE ======================================================
     private static final String WORK_EXP_TABLE_NAME = "WORK_EXPERIENCE";
@@ -44,7 +54,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        // WORK EXPERIENCE TABLE CREATE
+        // WORK EXPERIENCE TABLE ===================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + WORK_EXP_TABLE_NAME +
                 "(" + WORK_EXP_ID + " INTEGER PRIMARY KEY NOT NULL," +
@@ -56,6 +66,19 @@ public class Database extends SQLiteOpenHelper {
                 WORK_EXP_CURRENT + " INTEGER" +
                 ")"
         );
+
+        // JOB SEARCH TABLE ========================================================================
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + JOB_TABLE_NAME +
+                "(" + JOB_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                JOB_NAME + " TEXT," +
+                JOB_POSTED_ON + " TEXT," +
+                JOB_HOTEL_ID + " INTEGER," +
+                JOB_HOTEL_IMAGE + " TEXT," +
+                JOB_HOTEL_LOCATION + " TEXT" +
+                ")"
+        );
+
     }
 
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
@@ -70,9 +93,16 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public void deleteJobTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
+
+    }
+
     public void deleteAllTables() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + WORK_EXP_TABLE_NAME);
+        db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
         onCreate(db);
     }
 
@@ -153,7 +183,6 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-
     public ArrayList<WorkExperienceModel> getAllWorkExperience() {
 
         ArrayList<WorkExperienceModel> list = new ArrayList<>();
@@ -176,6 +205,112 @@ public class Database extends SQLiteOpenHelper {
                     workExperienceModel.current = cursor.getInt(cursor.getColumnIndex(WORK_EXP_CURRENT)) > 0;
 
                     list.add(workExperienceModel);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        return list;
+    }
+
+
+    // JOB SEARCH FUNCTIONS ========================================================================
+    public JobModel setJobFromJson(JSONObject job_object) {
+        JobModel jobModel = new JobModel();
+        try {
+            jobModel.id = job_object.getInt("id");
+            jobModel.name = job_object.getString("title");
+            jobModel.posted_on = job_object.getString("posted_on");
+
+            JSONObject hotel_object = job_object.getJSONObject("hotel");
+            jobModel.hotel_id = hotel_object.getInt("id");
+            jobModel.hotel_image = hotel_object.getString("image");
+            jobModel.hotel_location = hotel_object.getString("full_address");
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(JOB_ID, jobModel.id);
+            contentValues.put(JOB_NAME, jobModel.name);
+            contentValues.put(JOB_POSTED_ON, jobModel.posted_on);
+            contentValues.put(JOB_HOTEL_ID, jobModel.hotel_id);
+            contentValues.put(JOB_HOTEL_IMAGE, jobModel.hotel_image);
+            contentValues.put(JOB_HOTEL_LOCATION, jobModel.hotel_location);
+
+            String whereClause = JOB_ID + " = ?";
+            String[] whereArgs = new String[]{String.valueOf(jobModel.id)};
+            int no_of_rows_affected = db.update(JOB_TABLE_NAME, contentValues, whereClause,
+                    whereArgs);
+
+            if (no_of_rows_affected == 0) {
+                db.insert(JOB_TABLE_NAME, null, contentValues);
+            }
+
+            return jobModel;
+
+        } catch (JSONException e) {
+            Helpers.LogThis(TAG_LOG, e.toString());
+            return jobModel;
+        }
+    }
+
+    public JobModel getHotelIdByJobID(String job_id) {
+        JobModel jobModel = new JobModel();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String whereClause = JOB_ID + " = ?";
+        String[] whereArgs = new String[]{job_id};
+        Cursor cursor = db.query(JOB_TABLE_NAME, null, whereClause, whereArgs,
+                null, null, null);
+
+        if (cursor != null) {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+                do {
+                    jobModel.id = cursor.getInt(cursor.getColumnIndex(JOB_ID));
+                    jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
+                    jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
+                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_HOTEL_ID));
+                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_IMAGE));
+                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_LOCATION));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        return jobModel;
+    }
+
+    public void deleteJobByID(String work_exp_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = JOB_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(work_exp_id)};
+        db.delete(JOB_TABLE_NAME, whereClause, whereArgs);
+        db.close();
+    }
+
+    public ArrayList<JobModel> getAllJobs() {
+
+        ArrayList<JobModel> list = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(JOB_TABLE_NAME, null, null, null, null, null, null);
+
+        if (cursor != null) {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+                do {
+                    JobModel jobModel = new JobModel();
+                    jobModel.id = cursor.getInt(cursor.getColumnIndex(JOB_ID));
+                    jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
+                    jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
+                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_HOTEL_ID));
+                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_IMAGE));
+                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_LOCATION));
+
+                    list.add(jobModel);
 
                 } while (cursor.moveToNext());
             }
