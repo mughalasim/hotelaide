@@ -4,16 +4,17 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.EditText;
 
 import com.hotelaide.BuildConfig;
 import com.hotelaide.main_pages.models.JobModel;
+import com.hotelaide.main_pages.models.CountyModel;
 import com.hotelaide.main_pages.models.WorkExperienceModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "HotelAide.db";
@@ -49,6 +50,11 @@ public class Database extends SQLiteOpenHelper {
     private static final String EDU_EXP_RESPONSIBILITIES = "responsibilities";
     private static final String EDU_EXP_CURRENT = "current";
 
+    // COUNTIES STORED IN THE DATABASE =============================================================
+    private static final String COUNTY_TABLE_NAME = "COUNTIES";
+    private static final String COUNTY_ID = "id";
+    private static final String COUNTY_NAME = "name";
+
 
     public Database() {
         super(MyApplication.getAppContext(), DATABASE_NAME, null, BuildConfig.DATABASE_VERSION);
@@ -80,6 +86,14 @@ public class Database extends SQLiteOpenHelper {
                 ")"
         );
 
+        // REGION TABLE ========================================================================
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + COUNTY_TABLE_NAME +
+                "(" + COUNTY_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                COUNTY_NAME + " TEXT" +
+                ")"
+        );
+
     }
 
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
@@ -100,10 +114,17 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public void deleteRegionTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
+
+    }
+
     public void deleteAllTables() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + WORK_EXP_TABLE_NAME);
         db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
+        db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
         onCreate(db);
     }
 
@@ -351,5 +372,46 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
+
+    // COUNTY FUNCTIONS ============================================================================
+    public void setCounties(CountyModel countyModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COUNTY_ID, countyModel.id);
+        contentValues.put(COUNTY_NAME, countyModel.name);
+
+        String whereClause = COUNTY_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(countyModel.id)};
+        int no_of_rows_affected = db.update(COUNTY_TABLE_NAME, contentValues, whereClause, whereArgs);
+
+        if (no_of_rows_affected == 0) {
+            db.insert(COUNTY_TABLE_NAME, null, contentValues);
+        }
+    }
+
+    public List<CountyModel> getAllCounties() {
+        final List<CountyModel> arrayList = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(COUNTY_TABLE_NAME, null, null, null, null, null, null);
+
+        CountyModel countyModelNull = new CountyModel();
+        countyModelNull.id = 0;
+        countyModelNull.name = "Please set a County";
+        arrayList.add(countyModelNull);
+
+        int count = cursor.getCount();
+        if (count > 0) {
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                CountyModel countyModel = new CountyModel();
+                countyModel.id = cursor.getInt(cursor.getColumnIndex(COUNTY_ID));
+                countyModel.name = cursor.getString(cursor.getColumnIndex(COUNTY_NAME));
+                arrayList.add(countyModel);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return arrayList;
+    }
 
 }

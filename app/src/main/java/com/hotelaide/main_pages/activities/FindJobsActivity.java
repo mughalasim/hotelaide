@@ -22,7 +22,6 @@ import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
 import com.bumptech.glide.Glide;
-import com.google.gson.JsonIOException;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.models.JobModel;
 import com.hotelaide.utils.Helpers;
@@ -32,7 +31,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.jar.JarException;
 
 import static com.hotelaide.BuildConfig.ALGOLIA_APP_ID;
 import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_NAME;
@@ -152,7 +150,6 @@ public class FindJobsActivity extends ParentActivity {
                         Helpers.LogThis(TAG_LOG, content.toString());
 
                         model_list.clear();
-                        adapter.updateData(model_list);
 
                         if (content.getInt("nbHits") > 0) {
                             JSONArray hits_array = content.getJSONArray("hits");
@@ -165,8 +162,10 @@ public class FindJobsActivity extends ParentActivity {
                         if (model_list.size() <= 0) {
                             noListItems();
                         }
-
+                        recycler_view.invalidate();
+                        adapter.updateData(model_list);
                         adapter.notifyDataSetChanged();
+
                     } else if (error != null) {
                         Helpers.LogThis(TAG_LOG, error.toString());
 
@@ -191,7 +190,8 @@ public class FindJobsActivity extends ParentActivity {
                     visibleItemCount = layoutManager.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
-                    if (continue_pagination
+                    if ( helpers.validateInternetConnection()
+                            && continue_pagination
                             && (visibleItemCount + pastVisibleItems) >= totalItemCount
                             && LAST_PAGE != CURRENT_PAGE) {
 

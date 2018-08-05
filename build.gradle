@@ -45,13 +45,13 @@ ext {
     SupportLibrary = '27.1.1'
 
     // Debug the App
-    debugMode = true
+    debugMode = false
     minify = true
-    proguard = false
+    proguard = true
 
     // App Versioning
-    versionCode = 1
-    versionName = 0.1
+    versionCode = 4
+    versionName = 0.4
 
 }
 

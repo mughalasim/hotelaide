@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -45,35 +47,28 @@ import static com.hotelaide.utils.SharedPrefs.USER_ID;
 import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
 import static com.hotelaide.utils.SharedPrefs.USER_PHONE;
 
-public class ProfileUpdateFragment extends Fragment implements View.OnClickListener {
+public class ProfileUpdateFragment extends Fragment {
 
     private View rootview;
 
     private Helpers helpers;
 
     private final String
-            TAG_LOG = "PROFILE UPDATE",
-            TAG_PASS_HIDDEN = "0",
-            TAG_PASS_SHOWN = "1";
+            TAG_LOG = "PROFILE UPDATE";
 
     private EditText
             et_user_first_name,
             et_user_last_name,
-            et_user_email,
             et_user_phone;
 
+    private Spinner
+            spinner_user_gender;
+
     private TextView
-            btn_confirm,
-            btn_cancel,
-            txt_user_first_name,
-            txt_user_last_name,
             txt_user_email,
-            txt_user_country_code,
-            txt_user_phone,
             txt_user_dob;
 
-    private LinearLayout ll_profile_update;
-
+    FloatingActionButton btn_update_profile;
 
     private CountryCodePicker ccp_user_country_code;
 
@@ -100,8 +95,6 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
 
                 setFromSharedPrefs();
 
-                hideEditTexts();
-
                 setListeners();
 
                 dropDownKeyboard(et_user_first_name);
@@ -115,103 +108,29 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
         return rootview;
     }
 
-    @Override
-    public void onClick(View v) {
-        hideEditTexts();
-        switch (v.getId()) {
-            case R.id.txt_user_f_name:
-                et_user_first_name.setVisibility(View.VISIBLE);
-                validateEmptyEditText(et_user_first_name, USER_F_NAME, true);
-                helpers.animateFadeIn(et_user_first_name);
-                break;
-
-            case R.id.txt_user_l_name:
-                et_user_last_name.setVisibility(View.VISIBLE);
-                validateEmptyEditText(et_user_last_name, USER_L_NAME, true);
-                helpers.animateFadeIn(et_user_last_name);
-                break;
-
-            case R.id.txt_user_email:
-                et_user_email.setVisibility(View.VISIBLE);
-                validateEmptyEditText(et_user_email, USER_EMAIL, true);
-                helpers.animateFadeIn(et_user_email);
-                break;
-
-            case R.id.txt_user_phone:
-                et_user_phone.setVisibility(View.VISIBLE);
-                validateEmptyEditText(et_user_phone, USER_PHONE, false);
-                helpers.animateFadeIn(et_user_phone);
-                break;
-
-            case R.id.txt_user_country_code:
-                ccp_user_country_code.setVisibility(View.VISIBLE);
-                helpers.animateFadeIn(ccp_user_country_code);
-                break;
-
-            case R.id.btn_confirm:
-                UserModel userModel = new UserModel();
-                userModel.id = SharedPrefs.getInt(USER_ID);
-                userModel.first_name = txt_user_first_name.getText().toString();
-                userModel.last_name = txt_user_last_name.getText().toString();
-                userModel.email = txt_user_email.getText().toString();
-                userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
-                userModel.phone = Integer.parseInt(txt_user_phone.getText().toString());
-                if (!txt_user_dob.getText().toString().equals(getString(R.string.txt_not_set))) {
-                    userModel.dob = txt_user_dob.getText().toString();
-                }
-                asyncUpdateDetails(userModel);
-                break;
-
-        }
-    }
-
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        ll_profile_update = rootview.findViewById(R.id.ll_profile_update);
-
-        txt_user_first_name = rootview.findViewById(R.id.txt_user_f_name);
-        txt_user_last_name = rootview.findViewById(R.id.txt_user_l_name);
         txt_user_email = rootview.findViewById(R.id.txt_user_email);
-        txt_user_country_code = rootview.findViewById(R.id.txt_user_country_code);
-        txt_user_phone = rootview.findViewById(R.id.txt_user_phone);
         txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
 
-        btn_cancel = rootview.findViewById(R.id.btn_cancel);
-        btn_confirm = rootview.findViewById(R.id.btn_confirm);
-        btn_cancel.setVisibility(View.GONE);
-        btn_confirm.setText(getString(R.string.txt_update_details));
+        btn_update_profile = rootview.findViewById(R.id.btn_update_profile);
 
         setDates();
 
-        ll_profile_update.setOnClickListener(this);
-
-        txt_user_first_name.setOnClickListener(this);
-        txt_user_last_name.setOnClickListener(this);
-//        txt_user_email.setOnClickListener(this);
-        txt_user_country_code.setOnClickListener(this);
-        txt_user_phone.setOnClickListener(this);
-        btn_confirm.setOnClickListener(this);
-
         et_user_first_name = rootview.findViewById(R.id.et_user_first_name);
         et_user_last_name = rootview.findViewById(R.id.et_user_last_name);
-        et_user_email = rootview.findViewById(R.id.et_user_email);
-
+        spinner_user_gender = rootview.findViewById(R.id.spinner_user_gender);
+        txt_user_email = rootview.findViewById(R.id.txt_user_email);
         et_user_phone = rootview.findViewById(R.id.et_user_phone);
         ccp_user_country_code = rootview.findViewById(R.id.ccp_user_country_code);
         ccp_user_country_code.registerPhoneNumberTextView(et_user_phone);
-
         txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
 
 
     }
 
     private void setFromSharedPrefs() {
-        txt_user_first_name.setText(SharedPrefs.getString(USER_F_NAME));
-        txt_user_last_name.setText(SharedPrefs.getString(USER_L_NAME));
-        txt_user_email.setText(SharedPrefs.getString(USER_EMAIL));
-        txt_user_phone.setText(String.valueOf(SharedPrefs.getInt(USER_PHONE)));
-        txt_user_country_code.setText(String.valueOf(SharedPrefs.getInt(USER_COUNTRY_CODE)));
         if (SharedPrefs.getString(USER_DOB).equals("null")) {
             txt_user_dob.setText(getString(R.string.txt_not_set));
         } else {
@@ -221,19 +140,40 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
         // SET TO EDT TEXTS
         et_user_first_name.setText(SharedPrefs.getString(USER_F_NAME));
         et_user_last_name.setText(SharedPrefs.getString(USER_L_NAME));
-        et_user_email.setText(SharedPrefs.getString(USER_EMAIL));
+        txt_user_email.setText(SharedPrefs.getString(USER_EMAIL));
         et_user_phone.setText(String.valueOf(SharedPrefs.getInt(USER_PHONE)));
         ccp_user_country_code.setCountryForPhoneCode(SharedPrefs.getInt(USER_COUNTRY_CODE));
 
     }
 
     private void setListeners() {
-        // ADD TEXT WATCHERS
-        addTextChangeListener(et_user_first_name, txt_user_first_name, USER_F_NAME, true);
-        addTextChangeListener(et_user_last_name, txt_user_last_name, USER_L_NAME, true);
-//        addTextChangeListener(et_user_email, txt_user_email, USER_EMAIL, true);
-        addTextChangeListener(et_user_phone, txt_user_phone, USER_PHONE, false);
+        btn_update_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserModel userModel = new UserModel();
+                userModel.id = SharedPrefs.getInt(USER_ID);
+                userModel.first_name = fetchFromEditText(et_user_first_name);
+                userModel.last_name = fetchFromEditText(et_user_last_name);
+                userModel.email = txt_user_email.getText().toString();
+                userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
 
+                if (!fetchFromEditText(et_user_phone).equals(""))
+                    userModel.phone = Integer.parseInt(fetchFromEditText(et_user_phone));
+
+                if (!txt_user_dob.getText().toString().equals(getString(R.string.txt_not_set))) {
+                    userModel.dob = txt_user_dob.getText().toString();
+                }
+                asyncUpdateDetails(userModel);
+            }
+        });
+    }
+
+    private String fetchFromEditText(EditText editText) {
+        String data = "";
+        if (editText.getText().toString().length() > 1) {
+            data = editText.getText().toString();
+        }
+        return data;
     }
 
     private void setDates() {
@@ -282,58 +222,6 @@ public class ProfileUpdateFragment extends Fragment implements View.OnClickListe
 
     }
 
-    public void hideEditTexts() {
-        et_user_first_name.setVisibility(View.GONE);
-        et_user_last_name.setVisibility(View.GONE);
-        et_user_email.setVisibility(View.GONE);
-        et_user_phone.setVisibility(View.GONE);
-        ccp_user_country_code.setVisibility(View.GONE);
-        txt_user_country_code.setText(ccp_user_country_code.getSelectedCountryCode());
-    }
-
-    private void validateEmptyEditText(
-            final EditText editText,
-            final String sharedPrefName,
-            final boolean isString) {
-        if (editText.getText().toString().length() < 1) {
-            if (isString) {
-                editText.setText(SharedPrefs.getString(sharedPrefName));
-            } else {
-                editText.setText(String.valueOf(SharedPrefs.getInt(sharedPrefName)));
-            }
-        }
-    }
-
-    private void addTextChangeListener(
-            EditText editText,
-            final TextView textView,
-            final String sharedPrefName,
-            final boolean isString) {
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0) {
-                    textView.setText(s.toString());
-                } else {
-                    if (isString) {
-                        textView.setText(SharedPrefs.getString(sharedPrefName));
-                    } else {
-                        textView.setText(String.valueOf(SharedPrefs.getInt(sharedPrefName)));
-                    }
-                }
-            }
-        });
-    }
 
     private void dropDownKeyboard(EditText editText) {
         if (getActivity() != null) {

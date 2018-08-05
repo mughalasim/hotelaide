@@ -37,6 +37,7 @@ import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
@@ -45,6 +46,7 @@ import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.activities.FindJobsActivity;
 import com.hotelaide.main_pages.activities.ProfileActivity;
 import com.hotelaide.main_pages.activities.SettingsActivity;
+import com.hotelaide.main_pages.models.CountyModel;
 import com.hotelaide.services.UserService;
 import com.hotelaide.start_up.LoginActivity;
 import com.hotelaide.start_up.SplashScreenActivity;
@@ -72,7 +74,7 @@ public class Helpers {
 
     public final static String TAG_LOG = "HELPER CLASS";
     private final static int INT_ANIMATION_TIME = 800;
-//    private static Tracker sTracker;
+    //    private static Tracker sTracker;
 //    private static GoogleAnalytics sAnalytics;
     private final Context context;
     private static Toast mToast;
@@ -342,7 +344,6 @@ public class Helpers {
     }
 
 
-
     // VALIDATIONS =================================================================================
     public boolean validateEmail(EditText editText) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
@@ -419,7 +420,6 @@ public class Helpers {
     }
 
 
-
     // FORMAT CURRENCY ==============================================================================
     public String formatNumbersCurrency(String amount) {
         String[] amount_array = amount.split("\\.");
@@ -463,7 +463,7 @@ public class Helpers {
                     JSONArray message_array = new JSONArray(String.valueOf(data.get(key)));
                     String display_message = "";
                     for (int i = 0; i < message_array.length(); i++) {
-                        display_message = display_message.concat(String.valueOf(i+1) + ". ").concat(message_array.getString(i)).concat("\n");
+                        display_message = display_message.concat(String.valueOf(i + 1) + ". ").concat(message_array.getString(i)).concat("\n");
                     }
                     myDialog(context, context.getString(R.string.txt_errors), display_message);
 
@@ -484,7 +484,6 @@ public class Helpers {
         }
 
     }
-
 
 
     // ANIMATIONS ==================================================================================
@@ -522,7 +521,6 @@ public class Helpers {
         anim.setDuration(INT_ANIMATION_TIME);
         view.startAnimation(anim);
     }
-
 
 
     // NOTIFICATION CREATER ========================================================================
@@ -563,7 +561,6 @@ public class Helpers {
     }
 
 
-
     // COMMON ASYNC TASKS ==========================================================================
     // GET USER ====================================================================================
     public void asyncGetUser() {
@@ -598,35 +595,46 @@ public class Helpers {
         });
     }
 
-    // SET USER ====================================================================================
-//    public void asyncUpdateUser(UserModel userModel) {
-//        UserService userService = UserService.retrofit.create(UserService.class);
-//        final Call<JsonObject> call = userService.updateUser();
-//        call.enqueue(new Callback<JsonObject>() {
-//            @Override
-//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-//                try {
-//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-//                    if (!db.setUser(main)) {
-//                        ToastMessage(context, "Account Update Failed");
-//                    }
-//                } catch (JSONException e) {
-//                    Helpers.LogThis(TAG_LOG, "JSON exception " + e.toString());
-//                    ToastMessage(context, "Account Update Failed");
-//                } catch (Exception e) {
-//                    Helpers.LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
-//                    ToastMessage(context, "Account Update Failed");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-//                Helpers.LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
-//                Helpers.LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
-//                ToastMessage(context, "Account Update Failed");
-//            }
-//        });
-//    }
+    // GET COUNTIES ================================================================================
+    public void asyncGetCounties() {
+        UserService userService = UserService.retrofit.create(UserService.class);
+        final Call<JsonObject> call = userService.getCounties();
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                    LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        JSONArray main_array = main.getJSONArray("data");
+                        int length = main_array.length();
+                        for (int i = 0; i < length; i++) {
+                            JSONObject object = main_array.getJSONObject(i);
+                            CountyModel countyModel = new CountyModel();
+                            countyModel.id = object.getInt("id");
+                            countyModel.name = object.getString("county_name");
+                            db.setCounties(countyModel);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
+
+                } catch (Exception e) {
+                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
+                LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
+            }
+
+        });
+    }
 
 
 }

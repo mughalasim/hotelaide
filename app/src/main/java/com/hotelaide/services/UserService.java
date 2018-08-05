@@ -120,5 +120,9 @@ public interface UserService {
             @Path("user_id") int user_id
     );
 
+    // GET ALL COUNTIES ============================================================================
+    @GET("counties")
+    Call<JsonObject> getCounties();
+
 
 }

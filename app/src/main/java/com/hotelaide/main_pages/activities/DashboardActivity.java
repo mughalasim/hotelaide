@@ -56,6 +56,7 @@ public class DashboardActivity extends ParentActivity {
 
         } else if (extras != null && extras.getString(START_LAUNCH) != null) {
             helpers.asyncGetUser();
+            helpers.asyncGetCounties();
         }
     }
 

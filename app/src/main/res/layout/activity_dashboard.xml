@@ -21,6 +21,94 @@
 
             <include layout="@layout/toolbar" />
 
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.southernbox.springscrollview.SpringScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:background="@color/grey"
+                            android:gravity="center"
+                            android:layout_height="@dimen/height_edit_text">
+
+                            <TextView
+                                style="@style/Text_Title"
+                                android:layout_marginTop="0dp"
+                                android:gravity="start"
+                                android:paddingStart="@dimen/padding_large"
+                                android:text="Latest Jobs"/>
+
+                        </LinearLayout>
+
+                        <include layout="@layout/list_item_none"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/padding_medium"/>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:background="@color/grey"
+                            android:gravity="center"
+                            android:layout_height="@dimen/height_edit_text">
+
+                            <TextView
+                                style="@style/Text_Title"
+                                android:layout_marginTop="0dp"
+                                android:gravity="start"
+                                android:paddingStart="@dimen/padding_large"
+                                android:text="Notifications"/>
+
+                        </LinearLayout>
+
+                        <include layout="@layout/list_item_none"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/padding_medium"/>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:background="@color/grey"
+                            android:gravity="center"
+                            android:layout_height="@dimen/height_edit_text">
+
+                            <TextView
+                                style="@style/Text_Title"
+                                android:layout_marginTop="0dp"
+                                android:gravity="start"
+                                android:paddingStart="@dimen/padding_large"
+                                android:text="My Messages"/>
+
+                        </LinearLayout>
+
+                        <include layout="@layout/list_item_none"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/padding_medium"/>
+
+
+
+
+                    </LinearLayout>
+
+
+                </com.southernbox.springscrollview.SpringScrollView>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>

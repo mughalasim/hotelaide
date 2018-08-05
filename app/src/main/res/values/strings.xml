@@ -43,12 +43,14 @@
     <!--EDIT TEXT HINTS =========================================================================-->
     <string name="et_hint_first_name">First Name</string>
     <string name="et_hint_last_name">Last Name</string>
+    <string name="et_hint_gender">Gender</string>
     <string name="et_hint_email">Email</string>
     <string name="et_hint_pass">Password</string>
     <string name="et_hint_new_pass">New password</string>
     <string name="et_hint_pass_confirm">Confirm Password</string>
     <string name="et_hint_phone">Phone Number</string>
-    <string name="et_hint_country_code">Country Code</string>
+    <string name="et_hint_postcode">Postal Code</string>
+    <string name="et_hint_country_code">Country</string>
     <string name="et_hint_dob">Date Of Birth (DD-MM-YYYY)</string>
 
 
@@ -83,6 +85,11 @@
     <!--PERMISSION RATIONALS ====================================================================-->
     <string name="rationale_image">HotelAide needs to access your Camera and write to your external storage for Images that you would like to set. Please grant these permissions in order to use the feature</string>
 
+    <!--ARRAY GENDER ============================================================================-->
+    <string-array name="select_gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 
     <!-- LAYOUT SET TEXT ========================================================================-->
     <string name="txt_cancel" tools:ignore="ButtonCase">CANCEL</string>
@@ -136,6 +143,11 @@
     <string name="txt_add_we">ADD NEW WORK EXPERIENCE</string>
     <string name="txt_edit_we">EDIT WORK EXPERIENCE</string>
     <string name="txt_at">&#160;at&#160;</string>
+    <string name="txt_region">Region</string>
+    <string name="txt_longitude">Longitude</string>
+    <string name="txt_latitude">Latitude</string>
+    <string name="txt_full_address">Full Address</string>
+    <string name="txt_map_loaction">Location Map (Click to set Location)</string>
 
 
 </resources>
