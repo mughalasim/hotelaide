@@ -148,6 +148,7 @@
     <string name="txt_latitude">Latitude</string>
     <string name="txt_full_address">Full Address</string>
     <string name="txt_map_loaction">Location Map (Click to set Location)</string>
+    <string name="txt_search_here">search here…</string>
 
 
 </resources>

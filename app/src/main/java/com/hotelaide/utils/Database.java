@@ -304,12 +304,15 @@ public class Database extends SQLiteOpenHelper {
         return jobModel;
     }
 
-    public ArrayList<JobModel> getAllJobModelsBySearch(String search) {
+    public ArrayList<JobModel> getAllJobModelsBySearch(String search, String location) {
 
         ArrayList<JobModel> list = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + JOB_TABLE_NAME + " WHERE " + JOB_NAME + "  LIKE  '%" + search + "%' ", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + JOB_TABLE_NAME
+                + " WHERE " + JOB_NAME + "  LIKE  '%" + search + "%' "
+                + " AND " + JOB_HOTEL_LOCATION + "  LIKE  '%" + location + "%' "
+                , null);
 
         if (cursor != null) {
             int count = cursor.getCount();
@@ -342,7 +345,7 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<JobModel> getAllJobs() {
+    public ArrayList<JobModel> getAllJobs(String county) {
 
         ArrayList<JobModel> list = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
@@ -396,7 +399,7 @@ public class Database extends SQLiteOpenHelper {
 
         CountyModel countyModelNull = new CountyModel();
         countyModelNull.id = 0;
-        countyModelNull.name = "Please set a County";
+        countyModelNull.name = "ALL COUNTIES";
         arrayList.add(countyModelNull);
 
         int count = cursor.getCount();

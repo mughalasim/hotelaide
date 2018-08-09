@@ -27,6 +27,10 @@ public class DashboardActivity extends ParentActivity {
 
         handleExtraBundles();
 
+        helpers.asyncGetUser();
+
+        helpers.asyncGetCounties();
+
 
     }
 
@@ -54,9 +58,6 @@ public class DashboardActivity extends ParentActivity {
         } else if (extras != null && extras.getString(START_RETURN) != null) {
             helpers.ToastMessage(DashboardActivity.this, "Welcome back " + SharedPrefs.getString(SharedPrefs.USER_F_NAME));
 
-        } else if (extras != null && extras.getString(START_LAUNCH) != null) {
-            helpers.asyncGetUser();
-            helpers.asyncGetCounties();
         }
     }
 

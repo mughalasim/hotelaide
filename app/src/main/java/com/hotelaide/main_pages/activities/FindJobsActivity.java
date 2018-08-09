@@ -11,9 +11,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.algolia.search.saas.AlgoliaException;
@@ -23,6 +26,7 @@ import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
 import com.bumptech.glide.Glide;
 import com.hotelaide.R;
+import com.hotelaide.main_pages.models.CountyModel;
 import com.hotelaide.main_pages.models.JobModel;
 import com.hotelaide.utils.Helpers;
 
@@ -30,6 +34,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import static com.hotelaide.BuildConfig.ALGOLIA_APP_ID;
@@ -57,6 +63,8 @@ public class FindJobsActivity extends ParentActivity {
     private CompletionHandler completionHandler;
     private static final int HITS_PER_PAGE = 20;
 
+    private Spinner
+            spinner_county;
 
     // SEARCH FUNCTIONALITY ------------------------------
     private RecyclerView recycler_view;
@@ -81,7 +89,7 @@ public class FindJobsActivity extends ParentActivity {
 
         setUpTextWatcher();
 
-        populateAllJobsFromDatabase();
+        searchDatabase();
 
     }
 
@@ -103,6 +111,14 @@ public class FindJobsActivity extends ParentActivity {
         layoutManager = new LinearLayoutManager(FindJobsActivity.this);
         recycler_view.setLayoutManager(layoutManager);
 
+        spinner_county = findViewById(R.id.spinner_county);
+        ArrayAdapter<CountyModel> dataAdapter1 = new ArrayAdapter<>(
+                this,
+                R.layout.list_item_spinner,
+                db.getAllCounties()
+        );
+        spinner_county.setAdapter(dataAdapter1);
+
 
     }
 
@@ -120,13 +136,27 @@ public class FindJobsActivity extends ParentActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (helpers.validateInternetConnection() && et_search.getText().toString().length() > 0) {
-                    index.searchAsync(new Query(et_search.getText().toString()), completionHandler);
-                } else if (et_search.getText().toString().length() > 0) {
-                    searchDatabase(et_search.getText().toString());
+                if (helpers.validateInternetConnection()) {
+                    searchOnline();
                 } else {
-                    populateAllJobsFromDatabase();
+                    searchDatabase();
                 }
+            }
+        });
+
+        spinner_county.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (helpers.validateInternetConnection()) {
+                    searchOnline();
+                } else {
+                    searchDatabase();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
@@ -135,10 +165,28 @@ public class FindJobsActivity extends ParentActivity {
         Client client = new Client(ALGOLIA_APP_ID, ALGOLIA_SEARCH_API_KEY);
         index = client.getIndex(ALGOLIA_INDEX_NAME);
         query = new Query();
-//        query.setAttributesToRetrieve("title", "image", "rating", "year");
+        query.setAttributesToRetrieve("id", "title", "posted_on", "hotel", "location");
         query.setHitsPerPage(HITS_PER_PAGE);
     }
 
+    private void searchOnline() {
+        if (spinner_county.getSelectedItemPosition() == 0) {
+            query.setFilters("");
+        } else {
+            try {
+                query.setFilters("location.county_name:" + URLEncoder.encode(spinner_county.getSelectedItem().toString(), "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                query.setFilters("");
+            }
+        }
+        if (et_search.getText().toString().length() > 0) {
+            query.setQuery(et_search.getText().toString());
+        } else {
+            query.setQuery("");
+        }
+        index.searchAsync(query, completionHandler);
+    }
 
     private void setUpSearchListener() {
 
@@ -190,7 +238,7 @@ public class FindJobsActivity extends ParentActivity {
                     visibleItemCount = layoutManager.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
-                    if ( helpers.validateInternetConnection()
+                    if (helpers.validateInternetConnection()
                             && continue_pagination
                             && (visibleItemCount + pastVisibleItems) >= totalItemCount
                             && LAST_PAGE != CURRENT_PAGE) {
@@ -322,7 +370,6 @@ public class FindJobsActivity extends ParentActivity {
             }
         }
 
-
         @Override
         public int getItemCount() {
             return jobModels.size();
@@ -343,9 +390,13 @@ public class FindJobsActivity extends ParentActivity {
     }
 
 
-    private void searchDatabase(String search_field) {
+    private void searchDatabase() {
         model_list.clear();
-        model_list = db.getAllJobModelsBySearch(search_field);
+        if (spinner_county.getSelectedItemPosition() != 0) {
+            model_list = db.getAllJobModelsBySearch(fetchFromEditText(et_search), spinner_county.getSelectedItem().toString());
+        } else {
+            model_list = db.getAllJobModelsBySearch(fetchFromEditText(et_search), "");
+        }
         recycler_view.invalidate();
         adapter.updateData(model_list);
         adapter.notifyDataSetChanged();
@@ -354,16 +405,12 @@ public class FindJobsActivity extends ParentActivity {
         }
     }
 
-    private void populateAllJobsFromDatabase() {
-        model_list.clear();
-        model_list = db.getAllJobs();
-        recycler_view.invalidate();
-        adapter.updateData(model_list);
-        adapter.notifyDataSetChanged();
-        if (model_list.size() < 1) {
-            noListItems();
+    private String fetchFromEditText(EditText editText) {
+        String data = "";
+        if (editText.getText().toString().length() > 1) {
+            data = editText.getText().toString();
         }
-
+        return data;
     }
 
     private void noListItems() {
