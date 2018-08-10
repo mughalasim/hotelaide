@@ -68,7 +68,7 @@ public class ProfileUpdateFragment extends Fragment {
             txt_user_email,
             txt_user_dob;
 
-    FloatingActionButton btn_update_profile;
+    FloatingActionButton btn_update;
 
     private CountryCodePicker ccp_user_country_code;
 
@@ -114,7 +114,7 @@ public class ProfileUpdateFragment extends Fragment {
         txt_user_email = rootview.findViewById(R.id.txt_user_email);
         txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
 
-        btn_update_profile = rootview.findViewById(R.id.btn_update_profile);
+        btn_update = rootview.findViewById(R.id.btn_update);
 
         setDates();
 
@@ -147,7 +147,7 @@ public class ProfileUpdateFragment extends Fragment {
     }
 
     private void setListeners() {
-        btn_update_profile.setOnClickListener(new View.OnClickListener() {
+        btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserModel userModel = new UserModel();

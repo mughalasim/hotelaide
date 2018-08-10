@@ -11,6 +11,7 @@
 
     <!--ERROR MESSAGES ==========================================================================-->
     <string name="error_field_required">This field is required</string>
+    <string name="error_field_length">This field is too short</string>
     <string name="error_connection">Please check your internet connection</string>
     <string name="error_server">There seems to be an issue with the server, Please try again later</string>
     <string name="error_unknown">Oops! something went wrong, Please try again later</string>
@@ -18,6 +19,7 @@
     <string name="error_permissions">Dear user, App permissions have not been granted! The App cannot function without these permissions. Please grant them from the phone settings</string>
     <string name="error_no_we">Oops! No Work Experience has been added to your profile</string>
     <string name="error_no_jobs">Oops! No Jobs found for the search criteria above</string>
+    <string name="error_pass">Oops! Your new and confirmed password do not match</string>
 
     <!--LOGGING =================================================================================-->
     <string name="log_exception">EXCEPTION:&#160;</string>
@@ -46,7 +48,8 @@
     <string name="et_hint_gender">Gender</string>
     <string name="et_hint_email">Email</string>
     <string name="et_hint_pass">Password</string>
-    <string name="et_hint_new_pass">New password</string>
+    <string name="et_hint_pass_current">Current Password</string>
+    <string name="et_hint_pass_new">New password</string>
     <string name="et_hint_pass_confirm">Confirm Password</string>
     <string name="et_hint_phone">Phone Number</string>
     <string name="et_hint_postcode">Postal Code</string>

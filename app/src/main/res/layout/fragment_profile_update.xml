@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.southernbox.springscrollview.SpringScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:sothree="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ll_profile_update"
@@ -52,11 +52,11 @@
         <Spinner
             android:id="@+id/spinner_user_gender"
             style="@style/Edit_Text"
+            android:entries="@array/select_gender"
             android:gravity="end|center_vertical"
             android:hint="@string/et_hint_last_name"
-            android:textAlignment="textEnd"
-            android:entries="@array/select_gender"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textAlignment="textEnd" />
 
 
         <!--EMAIL ===============================================================================-->
@@ -69,9 +69,8 @@
             android:id="@+id/txt_user_email"
             style="@style/Edit_Text"
             android:gravity="end|center_vertical"
-            android:text="@string/app_name"
-            android:minWidth="@dimen/height_edit_text" />
-
+            android:minWidth="@dimen/height_edit_text"
+            android:text="@string/app_name" />
 
 
         <!--COUNTRY CODE ========================================================================-->
@@ -83,8 +82,8 @@
         <com.rilixtech.CountryCodePicker
             android:id="@+id/ccp_user_country_code"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/padding_small"
             android:layout_height="@dimen/height_edit_text"
+            android:layout_marginTop="@dimen/padding_small"
             android:background="@drawable/bckgrd_text_fields"
             android:gravity="end|center_vertical"
             android:paddingEnd="@dimen/padding_small"
@@ -92,7 +91,6 @@
             sothree:ccp_defaultCode="254"
             sothree:ccp_textColor="@color/colorAccent"
             sothree:ccp_textSize="@dimen/text_size_normal" />
-
 
 
         <!--PHONE NUMBER ========================================================================-->
@@ -127,16 +125,16 @@
 
         <!-- UPDATE PROFILE =====================================================================-->
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btn_update_profile"
-            android:layout_height="wrap_content"
+            android:id="@+id/btn_update"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="@dimen/padding_large"
             android:layout_marginBottom="@dimen/padding_small"
+            android:layout_marginEnd="@dimen/padding_tiny"
+            android:layout_marginTop="@dimen/padding_large"
             sothree:fabSize="mini"
-            sothree:srcCompat="@drawable/ic_update"
             sothree:rippleColor="@color/white"
-            android:backgroundTint="@color/colorPrimary"/>
+            sothree:srcCompat="@drawable/ic_done" />
 
     </LinearLayout>
 

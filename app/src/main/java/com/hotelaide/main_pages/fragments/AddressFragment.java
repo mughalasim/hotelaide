@@ -50,7 +50,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             et_postcode;
 
     private FloatingActionButton
-            btn_update_profile;
+            btn_update;
 
     public AddressFragment() {
     }
@@ -138,7 +138,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         et_full_address = rootview.findViewById(R.id.et_full_address);
         txt_longitude = rootview.findViewById(R.id.txt_longitude);
         txt_latitude = rootview.findViewById(R.id.txt_latitude);
-        btn_update_profile = rootview.findViewById(R.id.btn_update_profile);
+        btn_update = rootview.findViewById(R.id.btn_update);
 
     }
 
