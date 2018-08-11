@@ -38,10 +38,13 @@ public class SharedPrefs {
     public static final String USER_DOB = "USER_DOB";
     public static final String USER_FB_ID = "USER_FB_ID";
     public static final String USER_GOOGLE_ID = "USER_GOOGLE_ID";
-    public static final String USER_GEO_LAT = "USER_GEO_LAT";
-    public static final String USER_GEO_LNG = "USER_GEO_LNG";
+    public static final String USER_LAT = "USER_LAT";
+    public static final String USER_LNG = "USER_LNG";
+    public static final String USER_POSTAL_CODE = "USER_POSTAL_CODE";
+    public static final String USER_FULL_ADDRESS = "USER_FULL_ADDRESS";
 
-    public static final String NAV_DATA = "NAV_DATA";
+    public static final String EXPERIENCE_TYPE_WORK = "WORK_EXPERIENCE";
+    public static final String EXPERIENCE_TYPE_EDUCATION = "EDUCATION_EXPERIENCE";
 
 
     // BOOLEAN VARIABLE NAMES ======================================================================
@@ -130,9 +133,18 @@ public class SharedPrefs {
             setString(USER_DOB, user.getString("dob"));
             setString(USER_FB_ID, user.getString("facebook_id"));
             setString(USER_GOOGLE_ID, user.getString("google_id"));
-            setDouble(USER_GEO_LAT, user.getDouble("geolat"));
-            setDouble(USER_GEO_LNG, user.getDouble("geolng"));
 
+            if (!user.isNull("lat"))
+                setDouble(USER_LAT, user.getDouble("lat"));
+
+            if (!user.isNull("lng"))
+                setDouble(USER_LNG, user.getDouble("lng"));
+
+            if (!user.isNull("full_address"))
+                setString(USER_FULL_ADDRESS, user.getString("full_address"));
+
+            if (!user.isNull("postal_code"))
+                setString(USER_POSTAL_CODE, user.getString("postal_code"));
 
             JSONArray work_experience = user.getJSONArray("work_experience");
             if (work_experience != null && work_experience.length() > 0) {
@@ -141,7 +153,18 @@ public class SharedPrefs {
                 int array_length = work_experience.length();
 
                 for (int i = 0; i < array_length; i++) {
-                    db.setWorkExperienceFromJson(work_experience.getJSONObject(i));
+                    db.setExperienceFromJson(work_experience.getJSONObject(i), EXPERIENCE_TYPE_WORK);
+                }
+            }
+
+            JSONArray education_experience = user.getJSONArray("education_experience");
+            if (education_experience != null && education_experience.length() > 0) {
+                Database db = new Database();
+
+                int array_length = education_experience.length();
+
+                for (int i = 0; i < array_length; i++) {
+                    db.setExperienceFromJson(education_experience.getJSONObject(i), EXPERIENCE_TYPE_EDUCATION);
                 }
             }
 
@@ -158,8 +181,8 @@ public class SharedPrefs {
                     getString(USER_DOB) + " - " +
                     getString(USER_FB_ID) + " - " +
                     getString(USER_GOOGLE_ID) + " - " +
-                    getDouble(USER_GEO_LAT) + " - " +
-                    getDouble(USER_GEO_LNG)
+                    getDouble(USER_LAT) + " - " +
+                    getDouble(USER_LNG)
             );
 
             response = true;
@@ -189,8 +212,8 @@ public class SharedPrefs {
         userModel.dob = getString(USER_DOB);
         userModel.fb_id = getString(USER_FB_ID);
         userModel.google_id = getString(USER_GOOGLE_ID);
-        userModel.geo_lat = getDouble(USER_GEO_LAT);
-        userModel.geo_lng = getDouble(USER_GEO_LNG);
+        userModel.geo_lat = getDouble(USER_LAT);
+        userModel.geo_lng = getDouble(USER_LNG);
 
 
         Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
@@ -205,8 +228,8 @@ public class SharedPrefs {
                 getString(USER_DOB) + " - " +
                 getString(USER_FB_ID) + " - " +
                 getString(USER_GOOGLE_ID) + " - " +
-                getDouble(USER_GEO_LAT) + " - " +
-                getDouble(USER_GEO_LNG)
+                getDouble(USER_LAT) + " - " +
+                getDouble(USER_LNG)
         );
 
         return userModel;

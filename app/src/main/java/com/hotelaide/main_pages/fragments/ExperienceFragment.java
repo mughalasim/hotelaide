@@ -26,8 +26,8 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.models.WorkExperienceModel;
-import com.hotelaide.services.WorkExperienceService;
+import com.hotelaide.main_pages.models.ExperienceModel;
+import com.hotelaide.services.ExperienceService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -45,22 +45,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
+public class ExperienceFragment extends Fragment {
 
-public class WorkExperienceFragment extends Fragment {
-
-    private View rootview;
+    private View root_view;
     private Helpers helpers;
     private Database db;
-    private final String TAG_LOG = "WORK EXPERIENCE";
+    private final String TAG_LOG = "EXPERIENCE";
+    private String EXPERIENCE_TYPE = "";
+
     // TOP PANEL ===================================================================================
     private RecyclerView recycler_view;
     private FloatingActionButton
-            btn_add_work_experience;
-    private ArrayList<WorkExperienceModel> model_list = new ArrayList<>();
-    private WorkExperienceAdapter adapter;
+            btn_add;
+    private ArrayList<ExperienceModel> model_list = new ArrayList<>();
+    private ExperienceAdapter adapter;
     private SwipeRefreshLayout swipe_refresh;
+    private RelativeLayout no_list_items;
 
     // BOTTOM PANEL ================================================================================
     SlidingUpPanelLayout sliding_panel;
@@ -72,9 +75,9 @@ public class WorkExperienceFragment extends Fragment {
             btn_cancel,
             btn_confirm;
     private EditText
-            et_company_name,
-            et_position,
-            et_responsibilities;
+            et_name,
+            et_position_level,
+            et_responsibilities_field;
     private RelativeLayout
             rl_end_date;
     private RadioGroup
@@ -90,7 +93,7 @@ public class WorkExperienceFragment extends Fragment {
     DatePickerDialog.OnDateSetListener
             datePickerListener;
 
-    public WorkExperienceFragment() {
+    public ExperienceFragment() {
     }
 
 
@@ -102,11 +105,16 @@ public class WorkExperienceFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootview == null && getActivity() != null) {
+        if (root_view == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.fragment_work_experience, container, false);
+                root_view = inflater.inflate(R.layout.fragment_work_experience, container, false);
                 helpers = new Helpers(getActivity());
                 db = new Database();
+
+                Bundle bundle = this.getArguments();
+                if (bundle != null) {
+                    EXPERIENCE_TYPE = bundle.getString("EXPERIENCE_TYPE");
+                }
 
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
@@ -122,39 +130,47 @@ public class WorkExperienceFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(rootview);
+            ((ViewGroup) container.getParent()).removeView(root_view);
         }
-        return rootview;
+        return root_view;
     }
 
 
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         // TOP PANEL =============================================================
-        swipe_refresh = rootview.findViewById(R.id.swipe_refresh);
-        recycler_view = rootview.findViewById(R.id.work_experience_recycler);
-        btn_add_work_experience = rootview.findViewById(R.id.btn_add_work_experience);
-        adapter = new WorkExperienceAdapter(model_list);
+        no_list_items = root_view.findViewById(R.id.no_list_items);
+        TextView txt_no_results = root_view.findViewById(R.id.txt_no_results);
+        if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
+            txt_no_results.setText(getString(R.string.error_no_we));
+        } else {
+            txt_no_results.setText(getString(R.string.error_no_ee));
+        }
+
+        swipe_refresh = root_view.findViewById(R.id.swipe_refresh);
+        recycler_view = root_view.findViewById(R.id.recycler_view);
+        btn_add = root_view.findViewById(R.id.btn_add);
+        adapter = new ExperienceAdapter(model_list);
         recycler_view.setAdapter(adapter);
         recycler_view.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recycler_view.setLayoutManager(layoutManager);
 
         // BOTTOM PANEL =============================================================
-        sliding_panel = rootview.findViewById(R.id.sliding_panel);
-        txt_id = rootview.findViewById(R.id.txt_id);
-        txt_title = rootview.findViewById(R.id.txt_title);
-        txt_start_date = rootview.findViewById(R.id.txt_start_date);
-        txt_end_date = rootview.findViewById(R.id.txt_end_date);
-        btn_cancel = rootview.findViewById(R.id.btn_cancel);
-        btn_confirm = rootview.findViewById(R.id.btn_confirm);
-        et_company_name = rootview.findViewById(R.id.et_company_name);
-        et_position = rootview.findViewById(R.id.et_position);
-        et_responsibilities = rootview.findViewById(R.id.et_responsibilities);
-        rl_end_date = rootview.findViewById(R.id.rl_end_date);
-        radio_group = rootview.findViewById(R.id.radio_group);
-        radio_btn_no = rootview.findViewById(R.id.radio_btn_no);
-        radio_btn_yes = rootview.findViewById(R.id.radio_btn_yes);
+        sliding_panel = root_view.findViewById(R.id.sliding_panel);
+        txt_id = root_view.findViewById(R.id.txt_id);
+        txt_title = root_view.findViewById(R.id.txt_title);
+        txt_start_date = root_view.findViewById(R.id.txt_start_date);
+        txt_end_date = root_view.findViewById(R.id.txt_end_date);
+        btn_cancel = root_view.findViewById(R.id.btn_cancel);
+        btn_confirm = root_view.findViewById(R.id.btn_confirm);
+        et_name = root_view.findViewById(R.id.et_name);
+        et_position_level = root_view.findViewById(R.id.et_position_level);
+        et_responsibilities_field = root_view.findViewById(R.id.et_responsibilities_field);
+        rl_end_date = root_view.findViewById(R.id.rl_end_date);
+        radio_group = root_view.findViewById(R.id.radio_group);
+        radio_btn_no = root_view.findViewById(R.id.radio_btn_no);
+        radio_btn_yes = root_view.findViewById(R.id.radio_btn_yes);
 
 
     }
@@ -168,7 +184,7 @@ public class WorkExperienceFragment extends Fragment {
             }
         });
 
-        btn_add_work_experience.setOnClickListener(new View.OnClickListener() {
+        btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openBottomPanel(null, false);
@@ -224,21 +240,30 @@ public class WorkExperienceFragment extends Fragment {
                 if (txt_start_date.getText().toString().equals(getString(R.string.txt_select_date))) {
                     helpers.ToastMessage(getActivity(), getString(R.string.txt_select_date));
                 } else if (txt_start_date.getText().toString().equals(txt_end_date.getText().toString())) {
-                    helpers.ToastMessage(getActivity(), "Start date cannot be the same as the end date");
-                } else if (helpers.validateEmptyEditText(et_company_name) &&
-                        helpers.validateEmptyEditText(et_position) &&
-                        helpers.validateEmptyEditText(et_responsibilities)) {
-                    WorkExperienceModel workExperienceModel = new WorkExperienceModel();
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_same_date));
+                } else if (helpers.validateEmptyEditText(et_name) &&
+                        helpers.validateEmptyEditText(et_position_level) &&
+                        helpers.validateEmptyEditText(et_responsibilities_field)) {
+                    ExperienceModel experienceModel = new ExperienceModel();
                     if (!txt_id.getText().toString().equals(""))
-                        workExperienceModel.id = Integer.valueOf(txt_id.getText().toString());
-                    workExperienceModel.company_name = et_company_name.getText().toString();
-                    workExperienceModel.position = et_position.getText().toString();
-                    workExperienceModel.responsibilities = et_responsibilities.getText().toString();
-                    workExperienceModel.start_date = txt_start_date.getText().toString();
-                    workExperienceModel.end_date = txt_end_date.getText().toString();
-                    workExperienceModel.current = radio_btn_yes.isChecked();
+                        experienceModel.experience_id = Integer.valueOf(txt_id.getText().toString());
+                    experienceModel.name = et_name.getText().toString();
+                    experienceModel.position_level = et_position_level.getText().toString();
+                    experienceModel.responsibilities_field = et_responsibilities_field.getText().toString();
 
-                    asyncUpdateAddWE(workExperienceModel,
+                    if (!txt_start_date.getText().toString().equals(getString(R.string.txt_select_date)))
+                        experienceModel.start_date = txt_start_date.getText().toString();
+
+                    if (!txt_end_date.getText().toString().equals(getString(R.string.txt_select_date))) {
+                        experienceModel.end_date = txt_end_date.getText().toString();
+                    } else {
+                        experienceModel.end_date = txt_start_date.getText().toString();
+                    }
+
+                    if (radio_btn_yes.isChecked())
+                        experienceModel.current = 1;
+
+                    asyncUpdateAddWE(experienceModel,
                             btn_confirm.getText().toString().equals(getString(R.string.txt_update)));
 
                 }
@@ -317,9 +342,10 @@ public class WorkExperienceFragment extends Fragment {
         }
     }
 
-    private void populateWorkExperience() {
+    private void populateExperienceFromDB() {
+        no_list_items.setVisibility(View.GONE);
         model_list.clear();
-        model_list = db.getAllWorkExperience();
+        model_list = db.getAllExperience(EXPERIENCE_TYPE);
         recycler_view.invalidate();
         adapter.updateData(model_list);
         adapter.notifyDataSetChanged();
@@ -329,68 +355,77 @@ public class WorkExperienceFragment extends Fragment {
 
     }
 
-    private void noListItems(){
+    private void noListItems() {
+        no_list_items.setVisibility(View.VISIBLE);
         recycler_view.invalidate();
         model_list.clear();
-        WorkExperienceModel workExperienceModel = new WorkExperienceModel();
-        model_list.add(workExperienceModel);
+        ExperienceModel experienceModel = new ExperienceModel();
+        model_list.add(experienceModel);
         adapter.notifyDataSetChanged();
     }
 
     private void clearBottomPanel() {
         txt_id.setText("");
         txt_title.setText("");
-        et_company_name.setText("");
-        et_position.setText("");
+        et_name.setText("");
+        et_position_level.setText("");
         txt_start_date.setText(R.string.txt_select_date);
         txt_end_date.setText(R.string.txt_select_date);
         radio_btn_no.setChecked(true);
-        et_responsibilities.setText("");
+        et_responsibilities_field.setText("");
     }
 
-    private void openBottomPanel(WorkExperienceModel workExperienceModel, Boolean isUpdate) {
+    private void openBottomPanel(ExperienceModel experienceModel, Boolean isUpdate) {
         sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
         if (isUpdate) {
-            txt_title.setText(R.string.txt_edit_we);
-            txt_id.setText(String.valueOf(workExperienceModel.id));
-            et_company_name.setText(workExperienceModel.company_name);
-            et_position.setText(workExperienceModel.position);
-            txt_start_date.setText(workExperienceModel.start_date);
-            txt_end_date.setText(workExperienceModel.end_date);
-            if (workExperienceModel.current) {
+            txt_title.setText(R.string.txt_edit_exp);
+            txt_id.setText(String.valueOf(experienceModel.experience_id));
+            et_name.setText(experienceModel.name);
+            et_position_level.setText(experienceModel.position_level);
+            txt_start_date.setText(experienceModel.start_date);
+            txt_end_date.setText(experienceModel.end_date);
+            if (experienceModel.current == 1) {
                 radio_btn_yes.setChecked(true);
             } else {
                 radio_btn_no.setChecked(true);
             }
-            et_responsibilities.setText(workExperienceModel.responsibilities);
+            et_responsibilities_field.setText(experienceModel.responsibilities_field);
             btn_confirm.setText(R.string.txt_update);
 
         } else {
-            txt_title.setText(R.string.txt_add_we);
+            txt_title.setText(R.string.txt_add_exp);
             btn_confirm.setText(R.string.txt_add);
         }
 
     }
 
-    private void logWorkExperienceModel(WorkExperienceModel workExperienceModel) {
+    private void logWorkExperienceModel(ExperienceModel experienceModel) {
         Helpers.LogThis(TAG_LOG,
-                workExperienceModel.id + " - " +
-                        workExperienceModel.company_name + " - " +
-                        workExperienceModel.position + " - " +
-                        workExperienceModel.start_date + " - " +
-                        workExperienceModel.end_date + " - " +
-                        workExperienceModel.responsibilities + " - " +
-                        workExperienceModel.current
+                experienceModel.experience_id + " - " +
+                        experienceModel.name + " - " +
+                        experienceModel.position_level + " - " +
+                        experienceModel.start_date + " - " +
+                        experienceModel.end_date + " - " +
+                        experienceModel.responsibilities_field + " - " +
+                        experienceModel.current + " - " +
+                        experienceModel.type
         );
 
 
     }
 
 
-    // ASYNC GET ALL  WORK EXPERIENCES =============================================================
+    // ASYNC GET ALL EXPERIENCES ===================================================================
     private void asyncGetAllWorkExperience() {
-        WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
-        final Call<JsonObject> call = workExperienceService.getAllWorkExperiences(SharedPrefs.getInt(USER_ID));
+        ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
+
+        Call<JsonObject> call;
+        if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
+            call = experienceService.getAllWorkExperiences(SharedPrefs.getInt(USER_ID));
+        } else {
+            call = experienceService.getAllEducationExperiences(SharedPrefs.getInt(USER_ID));
+        }
+
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -399,15 +434,15 @@ public class WorkExperienceFragment extends Fragment {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
                     Helpers.LogThis(TAG_LOG, main.toString());
                     if (main.getBoolean("success")) {
-                        db.deleteExperienceTable();
+                        db.deleteExperienceTableByType(EXPERIENCE_TYPE);
                         JSONArray work_object = main.getJSONArray("data");
                         int length = work_object.length();
                         if (length > 0) {
                             for (int i = 0; i < length; i++) {
-                                db.setWorkExperienceFromJson(work_object.getJSONObject(i));
+                                db.setExperienceFromJson(work_object.getJSONObject(i), EXPERIENCE_TYPE);
                             }
                         }
-                        populateWorkExperience();
+                        populateExperienceFromDB();
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
@@ -422,7 +457,7 @@ public class WorkExperienceFragment extends Fragment {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 swipe_refresh.setRefreshing(false);
                 Helpers.LogThis(TAG_LOG, t.toString());
-                populateWorkExperience();
+                populateExperienceFromDB();
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                 } else {
@@ -434,40 +469,68 @@ public class WorkExperienceFragment extends Fragment {
     }
 
 
-    // ASYNC UPDATE / ADD WORK EXPERIENCE ==========================================================
-    private void asyncUpdateAddWE(final WorkExperienceModel workExperienceModel, final Boolean isUpdate) {
+    // ASYNC UPDATE / ADD EXPERIENCE ===============================================================
+    private void asyncUpdateAddWE(final ExperienceModel experienceModel, final Boolean isUpdate) {
 
         Call<JsonObject> call;
-        logWorkExperienceModel(workExperienceModel);
+        logWorkExperienceModel(experienceModel);
 
         if (isUpdate) {
-            helpers.setProgressDialogMessage("Updating work experience, please wait...");
-            WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
-            call = workExperienceService.updateWorkExperience(
-                    SharedPrefs.getInt(USER_ID),
-                    workExperienceModel.id,
-                    workExperienceModel.company_name,
-                    workExperienceModel.position,
-                    workExperienceModel.start_date,
-                    workExperienceModel.end_date,
-                    workExperienceModel.responsibilities,
-                    workExperienceModel.current
-            );
-        } else {
-            helpers.setProgressDialogMessage("Adding work experience, please wait...");
-            WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
-            call = workExperienceService.setWorkExperience(
-                    SharedPrefs.getInt(USER_ID),
-                    workExperienceModel.company_name,
-                    workExperienceModel.position,
-                    workExperienceModel.start_date,
-                    workExperienceModel.end_date,
-                    workExperienceModel.responsibilities,
-                    workExperienceModel.current
-            );
-        }
-        helpers.progressDialog(true);
+            helpers.setProgressDialogMessage("Updating experience, please wait...");
+            ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
 
+            if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
+                call = experienceService.updateWorkExperience(
+                        SharedPrefs.getInt(USER_ID),
+                        experienceModel.experience_id,
+                        experienceModel.name,
+                        experienceModel.position_level,
+                        experienceModel.start_date,
+                        experienceModel.end_date,
+                        experienceModel.responsibilities_field,
+                        experienceModel.current
+                );
+            } else {
+                call = experienceService.updateEducationExperience(
+                        SharedPrefs.getInt(USER_ID),
+                        experienceModel.experience_id,
+                        experienceModel.name,
+                        experienceModel.position_level,
+                        experienceModel.start_date,
+                        experienceModel.end_date,
+                        experienceModel.responsibilities_field,
+                        experienceModel.current
+                );
+            }
+
+        } else {
+            helpers.setProgressDialogMessage("Adding experience, please wait...");
+            ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
+
+            if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
+                call = experienceService.setWorkExperience(
+                        SharedPrefs.getInt(USER_ID),
+                        experienceModel.name,
+                        experienceModel.position_level,
+                        experienceModel.start_date,
+                        experienceModel.end_date,
+                        experienceModel.responsibilities_field,
+                        experienceModel.current
+                );
+            } else {
+                call = experienceService.setEducationExperience(
+                        SharedPrefs.getInt(USER_ID),
+                        experienceModel.name,
+                        experienceModel.position_level,
+                        experienceModel.start_date,
+                        experienceModel.end_date,
+                        experienceModel.responsibilities_field,
+                        experienceModel.current
+                );
+            }
+        }
+
+        helpers.progressDialog(true);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -477,9 +540,9 @@ public class WorkExperienceFragment extends Fragment {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
                     Helpers.LogThis(TAG_LOG, main.toString());
                     if (main.getBoolean("success")) {
-                        if (db.setWorkExperienceFromJson(main.getJSONObject("data"))) {
+                        if (db.setExperienceFromJson(main.getJSONObject("data"), EXPERIENCE_TYPE)) {
                             helpers.ToastMessage(getActivity(), getString(R.string.txt_success));
-                            populateWorkExperience();
+                            populateExperienceFromDB();
                             sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));
@@ -510,12 +573,22 @@ public class WorkExperienceFragment extends Fragment {
 
 
     // ASYNC DELETE WORK EXPERIENCE ================================================================
-    private void deleteWorkExperience(final int workExperienceId, final int position) {
-        WorkExperienceService workExperienceService = WorkExperienceService.retrofit.create(WorkExperienceService.class);
-        final Call<JsonObject> call = workExperienceService.deleteOneWorkExperience(
-                SharedPrefs.getInt(USER_ID),
-                workExperienceId
-        );
+    private void deleteExperience(final int experienceId, final int position) {
+        ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
+
+        Call<JsonObject> call;
+        if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
+            call = experienceService.deleteOneWorkExperience(
+                    SharedPrefs.getInt(USER_ID),
+                    experienceId
+            );
+        } else {
+            call = experienceService.deleteOneEducationExperience(
+                    SharedPrefs.getInt(USER_ID),
+                    experienceId
+            );
+        }
+
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -524,10 +597,10 @@ public class WorkExperienceFragment extends Fragment {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
                     Helpers.LogThis(TAG_LOG, main.toString());
                     if (main.getBoolean("success")) {
-                        db.deleteWorkExperienceByID(String.valueOf(workExperienceId));
+                        db.deleteExperienceByID(String.valueOf(experienceId), EXPERIENCE_TYPE);
                         adapter.removeItem(position);
                     }
-                    populateWorkExperience();
+                    populateExperienceFromDB();
                 } catch (JSONException e) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     e.printStackTrace();
@@ -538,7 +611,7 @@ public class WorkExperienceFragment extends Fragment {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 swipe_refresh.setRefreshing(false);
                 Helpers.LogThis(TAG_LOG, t.toString());
-                populateWorkExperience();
+                populateExperienceFromDB();
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                 } else {
@@ -550,14 +623,10 @@ public class WorkExperienceFragment extends Fragment {
     }
 
 
-    //==============================================================================================
-    //==============================================================================================
     // ADAPTER CLASS ===============================================================================
-    public class WorkExperienceAdapter extends RecyclerView.Adapter<WorkExperienceAdapter.ViewHolder> {
-        private final ArrayList<WorkExperienceModel> workExperienceModels;
-        private final String TAG_LOG = "W/E ADAPTER";
+    public class ExperienceAdapter extends RecyclerView.Adapter<ExperienceAdapter.ViewHolder> {
+        private final ArrayList<ExperienceModel> experienceModels;
         private Context context;
-        private Helpers helpers;
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -567,23 +636,23 @@ public class WorkExperienceFragment extends Fragment {
 
             final TextView
                     txt_no_results,
-                    txt_company_name,
-                    txt_position,
+                    txt_name,
+                    txt_position_level,
                     txt_start_date,
                     txt_end_date,
                     txt_current,
-                    txt_responsibilities;
+                    txt_responsibilities_field;
             final ImageView btn_delete;
 
             ViewHolder(View v) {
                 super(v);
                 txt_no_results = v.findViewById(R.id.txt_no_results);
-                txt_company_name = v.findViewById(R.id.txt_company_name);
-                txt_position = v.findViewById(R.id.txt_position);
+                txt_name = v.findViewById(R.id.txt_name);
+                txt_position_level = v.findViewById(R.id.txt_position_level);
                 txt_start_date = v.findViewById(R.id.txt_start_date);
                 txt_end_date = v.findViewById(R.id.txt_end_date);
                 txt_current = v.findViewById(R.id.txt_current);
-                txt_responsibilities = v.findViewById(R.id.txt_responsibilities);
+                txt_responsibilities_field = v.findViewById(R.id.txt_responsibilities_field);
                 btn_delete = v.findViewById(R.id.btn_delete);
                 no_list_item = v.findViewById(R.id.no_list_items);
                 list_item = v.findViewById(R.id.list_item);
@@ -591,15 +660,15 @@ public class WorkExperienceFragment extends Fragment {
 
         }
 
-        public WorkExperienceAdapter(ArrayList<WorkExperienceModel> workExperienceModels) {
-            this.workExperienceModels = workExperienceModels;
+        ExperienceAdapter(ArrayList<ExperienceModel> experienceModels) {
+            this.experienceModels = experienceModels;
         }
 
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item_work_experience, parent, false);
+                    .inflate(R.layout.list_item_experience, parent, false);
             return new ViewHolder(v);
         }
 
@@ -608,9 +677,9 @@ public class WorkExperienceFragment extends Fragment {
             context = holder.itemView.getContext();
             helpers = new Helpers(context);
 
-            final WorkExperienceModel workExperienceModel = workExperienceModels.get(position);
+            final ExperienceModel experienceModel = experienceModels.get(position);
 
-            if (workExperienceModel.company_name.equals("")) {
+            if (experienceModel.name.equals("")) {
                 holder.no_list_item.setVisibility(View.VISIBLE);
                 holder.list_item.setVisibility(View.GONE);
                 holder.txt_no_results.setText(R.string.error_no_we);
@@ -619,28 +688,28 @@ public class WorkExperienceFragment extends Fragment {
                 holder.no_list_item.setVisibility(View.GONE);
                 holder.list_item.setVisibility(View.VISIBLE);
 
-                holder.txt_company_name.setText(workExperienceModel.company_name);
-                holder.txt_position.setText(workExperienceModel.position);
-                holder.txt_start_date.setText(workExperienceModel.start_date);
+                holder.txt_name.setText(experienceModel.name);
+                holder.txt_position_level.setText(experienceModel.position_level);
+                holder.txt_start_date.setText(experienceModel.start_date);
 
-                if (workExperienceModel.current) {
+                if (experienceModel.current == 0) {
                     holder.txt_current.setVisibility(View.GONE);
                     holder.txt_end_date.setVisibility(View.VISIBLE);
-                    holder.txt_end_date.setText(workExperienceModel.end_date);
+                    holder.txt_end_date.setText(experienceModel.end_date);
                 } else {
                     holder.txt_current.setVisibility(View.VISIBLE);
                     holder.txt_end_date.setVisibility(View.GONE);
                 }
 
-                holder.txt_responsibilities.setText(workExperienceModel.responsibilities);
+                holder.txt_responsibilities_field.setText(experienceModel.responsibilities_field);
 
-                holder.txt_responsibilities.setOnClickListener(new View.OnClickListener() {
+                holder.txt_responsibilities_field.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (holder.txt_responsibilities.getMaxLines() == 3) {
-                            holder.txt_responsibilities.setMaxLines(Integer.MAX_VALUE);
+                        if (holder.txt_responsibilities_field.getMaxLines() == 3) {
+                            holder.txt_responsibilities_field.setMaxLines(Integer.MAX_VALUE);
                         } else {
-                            holder.txt_responsibilities.setMaxLines(3);
+                            holder.txt_responsibilities_field.setMaxLines(3);
                         }
                     }
                 });
@@ -648,36 +717,38 @@ public class WorkExperienceFragment extends Fragment {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openBottomPanel(workExperienceModel, true);
+                        openBottomPanel(experienceModel, true);
                     }
                 });
 
                 holder.btn_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final Dialog dialog = new Dialog(getActivity());
-                        dialog.setContentView(R.layout.dialog_confirm);
-                        final TextView txt_message = dialog.findViewById(R.id.txt_message);
-                        final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
-                        final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
-                        final TextView txt_title = dialog.findViewById(R.id.txt_title);
-                        txt_title.setText("Delete");
-                        txt_message.setText("Are you sure you wish to delete your work experience at " + workExperienceModel.company_name);
-                        btn_cancel.setVisibility(View.VISIBLE);
-                        btn_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.cancel();
-                            }
-                        });
-                        btn_confirm.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                deleteWorkExperience(workExperienceModel.id, holder.getAdapterPosition());
-                                dialog.cancel();
-                            }
-                        });
-                        dialog.show();
+                        if (getActivity() != null) {
+                            final Dialog dialog = new Dialog(getActivity());
+                            dialog.setContentView(R.layout.dialog_confirm);
+                            final TextView txt_message = dialog.findViewById(R.id.txt_message);
+                            final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+                            final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                            final TextView txt_title = dialog.findViewById(R.id.txt_title);
+                            txt_title.setText(getString(R.string.txt_delete));
+                            txt_message.setText(getString(R.string.txt_delete_experience).concat(experienceModel.name));
+                            btn_cancel.setVisibility(View.VISIBLE);
+                            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.cancel();
+                                }
+                            });
+                            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    deleteExperience(experienceModel.experience_id, holder.getAdapterPosition());
+                                    dialog.cancel();
+                                }
+                            });
+                            dialog.show();
+                        }
                     }
                 });
 
@@ -687,21 +758,21 @@ public class WorkExperienceFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return workExperienceModels.size();
+            return experienceModels.size();
         }
 
         public void removeItem(int position) {
-            workExperienceModels.remove(position);
+            experienceModels.remove(position);
             notifyItemRemoved(position);
-            notifyItemRangeChanged(position, workExperienceModels.size());
-            if (workExperienceModels.size() <= 0) {
-                populateWorkExperience();
+            notifyItemRangeChanged(position, experienceModels.size());
+            if (experienceModels.size() <= 0) {
+                populateExperienceFromDB();
             }
         }
 
-        public void updateData(ArrayList<WorkExperienceModel> view_model) {
-            workExperienceModels.clear();
-            workExperienceModels.addAll(view_model);
+        void updateData(ArrayList<ExperienceModel> view_model) {
+            experienceModels.clear();
+            experienceModels.addAll(view_model);
             notifyDataSetChanged();
         }
 

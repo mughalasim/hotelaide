@@ -1,13 +1,8 @@
 package com.hotelaide.main_pages.activities;
 
-import android.Manifest;
 import android.app.Dialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.view.Window;
 import android.widget.CompoundButton;
@@ -89,7 +84,7 @@ public class SettingsActivity extends ParentActivity {
                 final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
                 final TextView txt_title = dialog.findViewById(R.id.txt_title);
                 txt_title.setText(R.string.txt_alert);
-                txt_message.setText(R.string.txt_delete);
+                txt_message.setText(R.string.txt_delete_account);
                 btn_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

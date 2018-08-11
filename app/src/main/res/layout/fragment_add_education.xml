@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sliding_panel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_small"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingStart="@dimen/padding_small">
+
+        <TextView
+            android:id="@+id/txt_title"
+            style="@style/Text_Title"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/txt_id"
+            style="@style/Text_Normal"
+            android:visibility="gone" />
+
+        <TextView
+            style="@style/Text_Normal"
+            android:text="Institution Name"
+            android:textColor="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/et_institution_name"
+            style="@style/Edit_Text"
+            android:inputType="text"
+            android:hint="Institution Name" />
+
+        <TextView
+            style="@style/Text_Normal"
+            android:text="Education level"
+            android:textColor="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/et_education_level"
+            style="@style/Edit_Text"
+            android:inputType="text"
+            android:hint="Education level" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_height="@dimen/line_thickness"
+            android:background="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/txt_start_date_label"
+                    style="@style/Text_Normal"
+                    android:text="@string/txt_start_date"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_start_date"
+                    style="@style/Edit_Text"
+                    android:layout_below="@+id/txt_start_date_label"
+                    android:text="@string/txt_select_date" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_end_date"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_end_date_label"
+                    style="@style/Text_Normal"
+                    android:text="@string/txt_end_date"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_end_date"
+                    style="@style/Edit_Text"
+                    android:layout_below="@+id/txt_end_date_label"
+                    android:text="@string/txt_select_date" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_button"
+            android:layout_marginTop="@dimen/padding_small"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_btn_yes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_weight="1"
+                android:text="I currently study here" />
+
+            <RadioButton
+                android:id="@+id/radio_btn_no"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="I completed my studies here" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_height="@dimen/line_thickness"
+            android:background="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/txt_responsibilities_label"
+            style="@style/Text_Normal"
+            android:text="Field of study"
+            android:textColor="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/et_field_of_study"
+            style="@style/Edit_Text"
+            android:layout_height="wrap_content"
+            android:hint="Field of study"
+            android:inputType="textCapSentences|textMultiLine"
+            android:isScrollContainer="true"
+            android:maxLength="2000"
+            android:maxLines="150"
+            android:padding="@dimen/padding_small" />
+
+        <include layout="@layout/fragment_buttons" />
+
+    </LinearLayout>
+
+</ScrollView>
+
+

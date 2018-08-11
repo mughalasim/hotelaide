@@ -26,8 +26,8 @@ import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
-import static com.hotelaide.utils.SharedPrefs.USER_GEO_LAT;
-import static com.hotelaide.utils.SharedPrefs.USER_GEO_LNG;
+import static com.hotelaide.utils.SharedPrefs.USER_LAT;
+import static com.hotelaide.utils.SharedPrefs.USER_LNG;
 
 
 public class AddressFragment extends Fragment implements OnMapReadyCallback {
@@ -147,8 +147,8 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 //        spinner_county.setSelection(getIndex(spinner_county, SharedPrefs.getInt(USER_COUNTY)));
 //        et_postcode.setText(SharedPrefs.getString(USER_POSTCODE));
 
-        txt_latitude.setText(String.valueOf(SharedPrefs.getDouble(USER_GEO_LAT)));
-        txt_longitude.setText(String.valueOf(SharedPrefs.getDouble(USER_GEO_LNG)));
+        txt_latitude.setText(String.valueOf(SharedPrefs.getDouble(USER_LAT)));
+        txt_longitude.setText(String.valueOf(SharedPrefs.getDouble(USER_LNG)));
     }
 
     private int getIndex(Spinner spinner, String myString) {

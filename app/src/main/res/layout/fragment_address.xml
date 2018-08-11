@@ -57,7 +57,7 @@
         <!-- FRAGMENT ==========================================================================-->
         <TextView
             style="@style/Text_Normal"
-            android:text="@string/txt_map_loaction"
+            android:text="@string/txt_map_location"
             android:textColor="@color/colorPrimary" />
 
         <android.support.v4.widget.NestedScrollView

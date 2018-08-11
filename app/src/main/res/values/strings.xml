@@ -17,9 +17,11 @@
     <string name="error_unknown">Oops! something went wrong, Please try again later</string>
     <string name="error_call_permissions">You have not granted permissions to this app to make calls</string>
     <string name="error_permissions">Dear user, App permissions have not been granted! The App cannot function without these permissions. Please grant them from the phone settings</string>
-    <string name="error_no_we">Oops! No Work Experience has been added to your profile</string>
+    <string name="error_no_we">Oops! No work experience added</string>
+    <string name="error_no_ee">Oops! No educational experience added</string>
     <string name="error_no_jobs">Oops! No Jobs found for the search criteria above</string>
     <string name="error_pass">Oops! Your new and confirmed password do not match</string>
+    <string name="error_same_date">Start date cannot be the same as the end date</string>
 
     <!--LOGGING =================================================================================-->
     <string name="log_exception">EXCEPTION:&#160;</string>
@@ -128,7 +130,7 @@
     <string name="txt_take_me_there">Take Me There</string>
     <string name="txt_alert">Alert!</string>
     <string name="txt_update_password">UPDATE PASSWORD</string>
-    <string name="txt_delete">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap OK to proceed or CANCEL to go back</string>
+    <string name="txt_delete_account">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap OK to proceed or CANCEL to go back</string>
     <string name="txt_to">&#160;to&#160;</string>
     <string name="txt_select_date">Select Date</string>
     <string name="txt_not_work_here">I do not work here</string>
@@ -143,15 +145,17 @@
     <string name="txt_update">UPDATE</string>
     <string name="txt_add">ADD</string>
     <string name="txt_date_separator">-</string>
-    <string name="txt_add_we">ADD NEW WORK EXPERIENCE</string>
-    <string name="txt_edit_we">EDIT WORK EXPERIENCE</string>
+    <string name="txt_add_exp">ADD NEW EXPERIENCE</string>
+    <string name="txt_edit_exp">EDIT EXPERIENCE</string>
     <string name="txt_at">&#160;at&#160;</string>
     <string name="txt_region">Region</string>
     <string name="txt_longitude">Longitude</string>
     <string name="txt_latitude">Latitude</string>
     <string name="txt_full_address">Full Address</string>
-    <string name="txt_map_loaction">Location Map (Click to set Location)</string>
+    <string name="txt_map_location">Location Map (Click to set Location)</string>
     <string name="txt_search_here">search here…</string>
+    <string name="txt_delete_experience">Are you sure you wish to delete your experience at&#160;</string>
+    <string name="txt_delete">Delete</string>
 
 
 </resources>

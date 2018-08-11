@@ -20,9 +20,8 @@ import com.hotelaide.R;
 import com.hotelaide.main_pages.fragments.AddressFragment;
 import com.hotelaide.main_pages.fragments.ChangePasswordFragment;
 import com.hotelaide.main_pages.fragments.DocumentsFragment;
-import com.hotelaide.main_pages.fragments.EducationFragment;
+import com.hotelaide.main_pages.fragments.ExperienceFragment;
 import com.hotelaide.main_pages.fragments.ProfileUpdateFragment;
-import com.hotelaide.main_pages.fragments.WorkExperienceFragment;
 import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -46,6 +45,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.Helpers.INT_PERMISSIONS_CAMERA;
+import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_EDUCATION;
+import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
@@ -87,8 +88,8 @@ public class ProfileActivity extends ParentActivity {
     private Fragment[] jobSeekerFragments = {
             new ProfileUpdateFragment(),
             new AddressFragment(),
-            new EducationFragment(),
-            new WorkExperienceFragment(),
+            new ExperienceFragment(),
+            new ExperienceFragment(),
             new DocumentsFragment(),
             new ChangePasswordFragment()
     };
@@ -230,6 +231,15 @@ public class ProfileActivity extends ParentActivity {
 
         for (int i = 0; i <= jobSeekerTitleList.length - 1; i++) {
             Fragment fragment = jobSeekerFragments[i];
+            if (i == 2) {
+                Bundle bundle = new Bundle();
+                bundle.putString("EXPERIENCE_TYPE", EXPERIENCE_TYPE_EDUCATION);
+                fragment.setArguments(bundle);
+            } else if (i == 3) {
+                Bundle bundle = new Bundle();
+                bundle.putString("EXPERIENCE_TYPE", EXPERIENCE_TYPE_WORK);
+                fragment.setArguments(bundle);
+            }
             adapter.addFragment(fragment, getResources().getString(jobSeekerTitleList[i]));
         }
 

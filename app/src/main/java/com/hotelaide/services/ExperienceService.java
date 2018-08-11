@@ -20,6 +20,7 @@ import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -27,7 +28,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-public interface WorkExperienceService {
+public interface ExperienceService {
     String TAG_LOG = "SERVICE: WORK";
 
     OkHttpClient okClient = new OkHttpClient.Builder()
@@ -88,7 +89,7 @@ public interface WorkExperienceService {
             @Field("start_date") String start_date,
             @Field("end_date") String end_date,
             @Field("responsibilities") String responsibilities,
-            @Field("current") Boolean current
+            @Field("current") int current
     );
 
     // UPDATE WORK EXPERIENCE ======================================================================
@@ -102,14 +103,58 @@ public interface WorkExperienceService {
             @Field("start_date") String start_date,
             @Field("end_date") String end_date,
             @Field("responsibilities") String responsibilities,
-            @Field("current") Boolean current
+            @Field("current") int current
     );
 
     // DELETE ONE WORK EXPERIENCES =================================================================
-    @GET("user/{user_id}/work-experience/{work_experience_id}")
+    @DELETE("user/{user_id}/work-experience/{work_experience_id}")
     Call<JsonObject> deleteOneWorkExperience(
             @Path("user_id") int user_id,
             @Path("work_experience_id") int work_experience_id
+    );
+
+
+//==================================================================================================
+
+    // GET ALL EDUCATION EXPERIENCES ===============================================================
+    @GET("user/{user_id}/education-experience")
+    Call<JsonObject> getAllEducationExperiences(
+            @Path("user_id") int user_id
+    );
+
+
+    // CREATE EDUCATION EXPERIENCE =================================================================
+    @FormUrlEncoded
+    @POST("user/{user_id}/education-experience")
+    Call<JsonObject> setEducationExperience(
+            @Path("user_id") int user_id,
+            @Field("institution_name") String institution_name,
+            @Field("education_level") String education_level,
+            @Field("start_date") String start_date,
+            @Field("end_date") String end_date,
+            @Field("study_field") String study_field,
+            @Field("current") int current
+    );
+
+    // UPDATE EDUCATION EXPERIENCE =================================================================
+    @FormUrlEncoded
+    @PUT("user/{user_id}/education-experience/{education_experience_id}")
+    Call<JsonObject> updateEducationExperience(
+            @Path("user_id") int user_id,
+            @Path("education_experience_id") int education_experience_id,
+            @Field("institution_name") String institution_name,
+            @Field("education_level") String education_level,
+            @Field("start_date") String start_date,
+            @Field("end_date") String end_date,
+            @Field("study_field") String study_field,
+            @Field("current") int current
+    );
+
+    // DELETE ONE EDUCATION EXPERIENCES ============================================================
+    @DELETE("user/{user_id}/education-experience/{education_experience_id}")
+    Call<JsonObject> deleteOneEducationExperience(
+            @Path("user_id") int user_id,
+            @Path("education_experience_id") int education_experience_id
     );
 
 

@@ -3,7 +3,7 @@
 
     <item android:state_focused="true" android:state_pressed="true">
         <shape>
-            <gradient android:angle="180"
+            <gradient android:angle="@dimen/angle_color"
                 android:centerColor="@color/white"
                 android:endColor="@color/light_grey"
                 android:startColor="@color/light_grey" />
@@ -19,7 +19,7 @@
 
     <item android:state_focused="false" android:state_pressed="true">
         <shape>
-            <gradient android:angle="180"
+            <gradient android:angle="@dimen/angle_color"
                 android:centerColor="@color/white"
                 android:endColor="@color/light_grey"
                 android:startColor="@color/light_grey" />
@@ -36,7 +36,7 @@
 
     <item android:state_focused="true" android:state_pressed="false">
         <shape>
-            <gradient android:angle="180"
+            <gradient android:angle="@dimen/angle_color"
                 android:centerColor="@color/white"
                 android:endColor="@color/light_grey"
                 android:startColor="@color/light_grey" />
@@ -52,13 +52,13 @@
 
     <item android:state_focused="false" android:state_pressed="false">
         <shape>
-            <gradient android:angle="180"
+            <gradient android:angle="@dimen/angle_color"
                 android:centerColor="@color/light_grey"
                 android:endColor="@color/white"
                 android:startColor="@color/white" />
             <stroke
                 android:width="@dimen/line_thickness"
-                android:color="@color/colorPrimaryDark" />
+                android:color="@color/grey" />
             <corners
                 android:radius="@dimen/radius_corner" />
         </shape>

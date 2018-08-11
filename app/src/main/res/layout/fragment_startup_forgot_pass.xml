@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.southernbox.springscrollview.SpringScrollView android:layout_width="match_parent"
+<com.southernbox.springscrollview.SpringScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
+    android:paddingBottom="@dimen/padding_small"
     android:paddingLeft="@dimen/padding_small"
     android:paddingRight="@dimen/padding_small"
-    android:paddingBottom="@dimen/padding_small"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:scrollbars="none">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginBottom="@dimen/padding_large">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/padding_large"
+        android:orientation="vertical">
 
-            <TextView
-                style="@style/Text_Title"
-                android:text="LOCKED OUT?"/>
-
-
-            <include layout="@layout/horizontal_line"/>
-
-            <TextView
-                style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:text="Don't worry, give us your email address that you used to sign up and well send you a reset link"/>
-
-            <EditText
-                android:id="@+id/user_email"
-                style="@style/Edit_Text"
-                android:inputType="textEmailAddress"
-                android:hint="@string/et_hint_email"/>
+        <TextView
+            style="@style/Text_Title"
+            android:text="LOCKED OUT?" />
 
 
-           <include layout="@layout/fragment_buttons"/>
+        <include layout="@layout/horizontal_line" />
 
-            <TextView
-                style="@style/Text_Small"
-                android:layout_gravity="center"
-                android:onClick="TERMS_CONDITIONS"
-                android:text="@string/txt_terms_conditions"/>
+        <TextView
+            style="@style/Text_Normal"
+            android:layout_gravity="center"
+            android:text="Don't worry, give us your email address that you used to sign up and well send you a reset link" />
 
-        </LinearLayout>
+        <EditText
+            android:id="@+id/user_email"
+            style="@style/Edit_Text"
+            android:hint="@string/et_hint_email"
+            android:inputType="textEmailAddress" />
 
-    </com.southernbox.springscrollview.SpringScrollView>
+
+        <include layout="@layout/fragment_buttons" />
+
+        <TextView
+            style="@style/Text_Small"
+            android:layout_gravity="center"
+            android:onClick="TERMS_CONDITIONS"
+            android:text="@string/txt_terms_conditions" />
+
+    </LinearLayout>
+
+</com.southernbox.springscrollview.SpringScrollView>

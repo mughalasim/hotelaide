@@ -25,17 +25,22 @@
             android:paddingStart="@dimen/padding_small">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/work_experience_recycler"
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <include layout="@layout/list_item_none"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recycler_view"
+                android:layout_width="match_parent" />
+
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/btn_add_work_experience"
+                android:id="@+id/btn_add"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/padding_large"
-                android:layout_below="@+id/work_experience_recycler"
+                android:layout_below="@+id/recycler_view"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/padding_tiny"
                 sothree:fabSize="mini"
@@ -46,7 +51,7 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/fragment_add_work_experience" />
+    <include layout="@layout/fragment_add_experience" />
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
