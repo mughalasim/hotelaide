@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -19,6 +18,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
@@ -37,7 +37,6 @@ import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
@@ -539,7 +538,7 @@ public class Helpers {
                 .setContentText(messageBody)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
-                .setLights(context.getResources().getColor(R.color.colorPrimary), 1000, 1000)
+                .setLights(ContextCompat.getColor(context, R.color.colorPrimary), 1000, 1000)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
 

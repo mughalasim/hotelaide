@@ -1,14 +1,12 @@
 package com.hotelaide.main_pages.fragments;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -206,8 +203,9 @@ public class ProfileUpdateFragment extends Fragment {
             public void onClick(View v) {
                 if (getActivity() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-                    DatePickerDialog datePicker = new DatePickerDialog(getActivity(),
-                            AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, datePickerListener,
+                    DatePickerDialog datePicker = new DatePickerDialog(
+                            new ContextThemeWrapper(getActivity(), android.R.style.Theme_Holo_Light_Dialog),
+                            datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),
                             cal.get(Calendar.DAY_OF_MONTH));

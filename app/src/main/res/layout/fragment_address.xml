@@ -16,7 +16,7 @@
         <!-- REGION  ============================================================================-->
         <TextView
             style="@style/Text_Normal"
-            android:text="@string/txt_region"
+            android:text="@string/txt_county"
             android:textColor="@color/colorPrimary" />
 
         <Spinner
@@ -54,7 +54,7 @@
             android:inputType="text" />
 
 
-        <!-- FRAGMENT ==========================================================================-->
+        <!-- FRAGMENT ===========================================================================-->
         <TextView
             style="@style/Text_Normal"
             android:text="@string/txt_map_location"
@@ -65,10 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_small">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/map"
@@ -76,7 +75,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_collapsing_toolbar" />
 
-            </LinearLayout>
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/btn_find_location"
+                    android:layout_alignBottom="@+id/map"
+                    android:layout_alignParentEnd="true"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/padding_tiny"
+                    sothree:fabSize="mini"
+                    sothree:srcCompat="@drawable/ic_location"
+                    sothree:rippleColor="@color/white"/>
+
+            </RelativeLayout>
 
         </android.support.v4.widget.NestedScrollView>
 

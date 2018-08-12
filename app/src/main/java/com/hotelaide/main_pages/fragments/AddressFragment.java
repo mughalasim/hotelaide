@@ -50,6 +50,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             et_postcode;
 
     private FloatingActionButton
+            btn_find_location,
             btn_update;
 
     public AddressFragment() {
@@ -139,7 +140,24 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         txt_longitude = rootview.findViewById(R.id.txt_longitude);
         txt_latitude = rootview.findViewById(R.id.txt_latitude);
         btn_update = rootview.findViewById(R.id.btn_update);
+        btn_find_location = rootview.findViewById(R.id.btn_find_location);
 
+    }
+
+    private void setListeners(){
+        btn_find_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void setFromSharedPrefs() {

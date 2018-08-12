@@ -132,6 +132,7 @@
     <string name="txt_update_password">UPDATE PASSWORD</string>
     <string name="txt_delete_account">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap OK to proceed or CANCEL to go back</string>
     <string name="txt_to">&#160;to&#160;</string>
+    <string name="txt_from">from&#160;</string>
     <string name="txt_select_date">Select Date</string>
     <string name="txt_not_work_here">I do not work here</string>
     <string name="txt_not_set">Not Set</string>
@@ -148,7 +149,7 @@
     <string name="txt_add_exp">ADD NEW EXPERIENCE</string>
     <string name="txt_edit_exp">EDIT EXPERIENCE</string>
     <string name="txt_at">&#160;at&#160;</string>
-    <string name="txt_region">Region</string>
+    <string name="txt_county">County</string>
     <string name="txt_longitude">Longitude</string>
     <string name="txt_latitude">Latitude</string>
     <string name="txt_full_address">Full Address</string>
@@ -156,6 +157,10 @@
     <string name="txt_search_here">search here…</string>
     <string name="txt_delete_experience">Are you sure you wish to delete your experience at&#160;</string>
     <string name="txt_delete">Delete</string>
+    <string name="txt_field_study">Field of Study</string>
+    <string name="txt_education_level">Education Level</string>
+    <string name="txt_institution_name">Institution Name</string>
+    <string name="txt_present">Present</string>
 
 
 </resources>

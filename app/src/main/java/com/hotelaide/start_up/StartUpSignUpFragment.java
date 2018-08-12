@@ -1,7 +1,6 @@
 package com.hotelaide.start_up;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -9,7 +8,9 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.view.ContextThemeWrapper;
 import android.text.method.PasswordTransformationMethod;
 import android.util.TypedValue;
 import android.view.InflateException;
@@ -262,16 +263,18 @@ public class StartUpSignUpFragment extends Fragment {
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
-                    panel_title.setTextColor(getResources().getColor(R.color.colorAccent));
-                    panel_title.setText("SOCIAL MEDIA SIGN UP");
-                    panel_title.setTypeface(panel_title.getTypeface(), Typeface.BOLD);
-                    panel_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size_large));
-                } else {
-                    panel_title.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    panel_title.setText("Sign up with social Media instead");
-                    panel_title.setTypeface(panel_title.getTypeface(), Typeface.NORMAL);
-                    panel_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size_normal));
+                if(getActivity()!=null){
+                    if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+                        panel_title.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+                        panel_title.setText("SOCIAL MEDIA SIGN UP");
+                        panel_title.setTypeface(panel_title.getTypeface(), Typeface.BOLD);
+                        panel_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size_large));
+                    } else {
+                        panel_title.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                        panel_title.setText("Sign up with social Media instead");
+                        panel_title.setTypeface(panel_title.getTypeface(), Typeface.NORMAL);
+                        panel_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size_normal));
+                    }
                 }
             }
         });
@@ -308,8 +311,9 @@ public class StartUpSignUpFragment extends Fragment {
             public void onClick(View v) {
                 if (getContext() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-                    DatePickerDialog datePicker = new DatePickerDialog(getContext(),
-                            AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, datePickerListener,
+                    DatePickerDialog datePicker = new DatePickerDialog(
+                            new ContextThemeWrapper(getActivity(), android.R.style.Theme_Holo_Light_Dialog),
+                            datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),
                             cal.get(Calendar.DAY_OF_MONTH));

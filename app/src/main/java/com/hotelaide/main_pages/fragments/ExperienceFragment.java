@@ -1,6 +1,5 @@
 package com.hotelaide.main_pages.fragments;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -10,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.InflateException;
@@ -68,12 +68,16 @@ public class ExperienceFragment extends Fragment {
     // BOTTOM PANEL ================================================================================
     SlidingUpPanelLayout sliding_panel;
     private TextView
+            txt_no_results,
             txt_id,
             txt_title,
             txt_start_date,
             txt_end_date,
             btn_cancel,
-            btn_confirm;
+            btn_confirm,
+            et_name_label,
+            et_position_level_label,
+            et_responsibilities_field_label;
     private EditText
             et_name,
             et_position_level,
@@ -107,24 +111,25 @@ public class ExperienceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root_view == null && getActivity() != null) {
             try {
-                root_view = inflater.inflate(R.layout.fragment_work_experience, container, false);
                 helpers = new Helpers(getActivity());
                 db = new Database();
 
                 Bundle bundle = this.getArguments();
                 if (bundle != null) {
                     EXPERIENCE_TYPE = bundle.getString("EXPERIENCE_TYPE");
+
+                    root_view = inflater.inflate(R.layout.fragment_experience, container, false);
+
+                    AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
+                    findAllViews();
+
+                    setListeners();
+
+                    setDates();
+
+                    asyncGetAllWorkExperience();
                 }
-
-                AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-
-                findAllViews();
-
-                setListeners();
-
-                setDates();
-
-                asyncGetAllWorkExperience();
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -140,12 +145,7 @@ public class ExperienceFragment extends Fragment {
     private void findAllViews() {
         // TOP PANEL =============================================================
         no_list_items = root_view.findViewById(R.id.no_list_items);
-        TextView txt_no_results = root_view.findViewById(R.id.txt_no_results);
-        if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
-            txt_no_results.setText(getString(R.string.error_no_we));
-        } else {
-            txt_no_results.setText(getString(R.string.error_no_ee));
-        }
+        txt_no_results = root_view.findViewById(R.id.txt_no_results);
 
         swipe_refresh = root_view.findViewById(R.id.swipe_refresh);
         recycler_view = root_view.findViewById(R.id.recycler_view);
@@ -164,15 +164,46 @@ public class ExperienceFragment extends Fragment {
         txt_end_date = root_view.findViewById(R.id.txt_end_date);
         btn_cancel = root_view.findViewById(R.id.btn_cancel);
         btn_confirm = root_view.findViewById(R.id.btn_confirm);
-        et_name = root_view.findViewById(R.id.et_name);
-        et_position_level = root_view.findViewById(R.id.et_position_level);
-        et_responsibilities_field = root_view.findViewById(R.id.et_responsibilities_field);
         rl_end_date = root_view.findViewById(R.id.rl_end_date);
         radio_group = root_view.findViewById(R.id.radio_group);
+
+        et_name_label = root_view.findViewById(R.id.et_name_label);
+        et_name = root_view.findViewById(R.id.et_name);
+        et_position_level_label = root_view.findViewById(R.id.et_position_level_label);
+        et_position_level = root_view.findViewById(R.id.et_position_level);
+        et_responsibilities_field_label = root_view.findViewById(R.id.et_responsibilities_field_label);
+        et_responsibilities_field = root_view.findViewById(R.id.et_responsibilities_field);
         radio_btn_no = root_view.findViewById(R.id.radio_btn_no);
         radio_btn_yes = root_view.findViewById(R.id.radio_btn_yes);
 
+        setTextViews();
 
+    }
+
+    private void setTextViews() {
+        if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
+            txt_no_results.setText(getString(R.string.error_no_we));
+
+            et_name_label.setText(getString(R.string.txt_company_name));
+            et_position_level_label.setText(getString(R.string.txt_position_held));
+            et_responsibilities_field_label.setText(getString(R.string.txt_responsibilities));
+
+            et_name.setHint(getString(R.string.txt_company_name));
+            et_position_level.setHint(getString(R.string.txt_position_held));
+            et_responsibilities_field.setHint(getString(R.string.txt_responsibilities));
+
+
+        } else {
+            txt_no_results.setText(getString(R.string.error_no_ee));
+
+            et_name_label.setText(getString(R.string.txt_institution_name));
+            et_position_level_label.setText(getString(R.string.txt_education_level));
+            et_responsibilities_field_label.setText(getString(R.string.txt_field_study));
+
+            et_name.setHint(getString(R.string.txt_institution_name));
+            et_position_level.setHint(getString(R.string.txt_education_level));
+            et_responsibilities_field.setHint(getString(R.string.txt_field_study));
+        }
     }
 
     private void setListeners() {
@@ -329,8 +360,9 @@ public class ExperienceFragment extends Fragment {
         if (getActivity() != null) {
             STR_DATE_TYPE = type;
             Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-            DatePickerDialog datePicker = new DatePickerDialog(getActivity(),
-                    AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, datePickerListener,
+            DatePickerDialog datePicker = new DatePickerDialog(
+                    new ContextThemeWrapper(getActivity(), android.R.style.Theme_Holo_Light_Dialog),
+                    datePickerListener,
                     cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH),
                     cal.get(Calendar.DAY_OF_MONTH));
@@ -641,6 +673,7 @@ public class ExperienceFragment extends Fragment {
                     txt_start_date,
                     txt_end_date,
                     txt_current,
+                    txt_responsibilities_field_label,
                     txt_responsibilities_field;
             final ImageView btn_delete;
 
@@ -652,6 +685,7 @@ public class ExperienceFragment extends Fragment {
                 txt_start_date = v.findViewById(R.id.txt_start_date);
                 txt_end_date = v.findViewById(R.id.txt_end_date);
                 txt_current = v.findViewById(R.id.txt_current);
+                txt_responsibilities_field_label = v.findViewById(R.id.txt_responsibilities_field_label);
                 txt_responsibilities_field = v.findViewById(R.id.txt_responsibilities_field);
                 btn_delete = v.findViewById(R.id.btn_delete);
                 no_list_item = v.findViewById(R.id.no_list_items);
@@ -699,6 +733,12 @@ public class ExperienceFragment extends Fragment {
                 } else {
                     holder.txt_current.setVisibility(View.VISIBLE);
                     holder.txt_end_date.setVisibility(View.GONE);
+                }
+
+                if (experienceModel.type.equals(EXPERIENCE_TYPE_WORK)) {
+                    holder.txt_responsibilities_field_label.setText(R.string.txt_responsibilities);
+                } else {
+                    holder.txt_responsibilities_field_label.setText(R.string.txt_field_study);
                 }
 
                 holder.txt_responsibilities_field.setText(experienceModel.responsibilities_field);
