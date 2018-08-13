@@ -20,14 +20,29 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.models.CountyModel;
+import com.hotelaide.services.ExperienceService;
+import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.SharedPrefs.USER_COUNTY;
+import static com.hotelaide.utils.SharedPrefs.USER_FULL_ADDRESS;
+import static com.hotelaide.utils.SharedPrefs.USER_ID;
 import static com.hotelaide.utils.SharedPrefs.USER_LAT;
 import static com.hotelaide.utils.SharedPrefs.USER_LNG;
+import static com.hotelaide.utils.SharedPrefs.USER_POSTAL_CODE;
 
 
 public class AddressFragment extends Fragment implements OnMapReadyCallback {
@@ -76,6 +91,8 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
                 findAllViews();
 
+                setListeners();
+
                 setFromSharedPrefs();
 
 
@@ -106,6 +123,20 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        if (mMap != null && helpers.validateEmptyTextView(txt_latitude, "") && helpers.validateEmptyTextView(txt_longitude, "")) {
+            LatLng latLng = new LatLng(
+                    Double.parseDouble(txt_latitude.getText().toString()),
+                    Double.parseDouble(txt_longitude.getText().toString())
+            );
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+
+            mMap.clear();
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.addMarker(markerOptions);
+        }
+
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -144,7 +175,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    private void setListeners(){
+    private void setListeners() {
         btn_find_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,27 +186,98 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (helpers.validateEmptyEditText(et_full_address) && helpers.validateEmptyEditText(et_postcode)) {
+                    asyncUpdateAddress();
+                }
             }
         });
     }
 
     private void setFromSharedPrefs() {
 
-//        spinner_county.setSelection(getIndex(spinner_county, SharedPrefs.getInt(USER_COUNTY)));
-//        et_postcode.setText(SharedPrefs.getString(USER_POSTCODE));
+        spinner_county.setSelection(getIndex(spinner_county, db.getCountyNameByID(SharedPrefs.getInt(USER_COUNTY))));
+
+        et_postcode.setText(SharedPrefs.getString(USER_POSTAL_CODE));
+
+        et_full_address.setText(SharedPrefs.getString(USER_FULL_ADDRESS));
 
         txt_latitude.setText(String.valueOf(SharedPrefs.getDouble(USER_LAT)));
+
         txt_longitude.setText(String.valueOf(SharedPrefs.getDouble(USER_LNG)));
+
+        logAddress();
     }
 
     private int getIndex(Spinner spinner, String myString) {
         int index = 0;
         for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).equals(myString)) {
+            if (spinner.getItemAtPosition(i).toString().equals(myString)) {
                 index = i;
             }
         }
         return index;
     }
+
+    private void logAddress() {
+        Helpers.LogThis(TAG_LOG,
+                "COUNTY NAME: " + db.getCountyNameByID(SharedPrefs.getInt(USER_COUNTY)) +
+                        " POSTAL CODE: " + SharedPrefs.getString(USER_POSTAL_CODE) +
+                        " LNG: " + SharedPrefs.getDouble(USER_LNG) +
+                        " LAT: " + SharedPrefs.getDouble(USER_LAT) +
+                        " FULL ADDRESS: " + SharedPrefs.getString(USER_FULL_ADDRESS)
+        );
+    }
+
+
+    // ASYNC UPDATE ADDRESS ========================================================================
+
+    private void asyncUpdateAddress() {
+        UserService userService = UserService.retrofit.create(UserService.class);
+
+        final int county_id = db.getCountyIDByString(spinner_county.getSelectedItem().toString());
+
+        Call<JsonObject> call = userService.setUserAddress(
+                SharedPrefs.getInt(USER_ID),
+                county_id,
+                et_postcode.getText().toString(),
+                Double.parseDouble(txt_latitude.getText().toString()),
+                Double.parseDouble(txt_longitude.getText().toString()),
+                et_full_address.getText().toString()
+        );
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+                    Helpers.LogThis(TAG_LOG, main.toString());
+                    if (main.getBoolean("success")) {
+                        helpers.ToastMessage(getActivity(), main.getString("message"));
+                        SharedPrefs.setInt(USER_COUNTY, county_id);
+                        SharedPrefs.setString(USER_POSTAL_CODE, et_postcode.getText().toString());
+                        SharedPrefs.setDouble(USER_LAT, Double.parseDouble(txt_latitude.getText().toString()));
+                        SharedPrefs.setDouble(USER_LNG, Double.parseDouble(txt_longitude.getText().toString()));
+                        SharedPrefs.setString(USER_FULL_ADDRESS, et_full_address.getText().toString());
+                        logAddress();
+                    }
+                } catch (JSONException e) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                Helpers.LogThis(TAG_LOG, t.toString());
+                if (helpers.validateInternetConnection()) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                } else {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                }
+
+            }
+        });
+    }
+
+
 }

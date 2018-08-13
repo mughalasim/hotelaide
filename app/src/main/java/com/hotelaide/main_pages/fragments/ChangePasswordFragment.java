@@ -136,7 +136,7 @@ public class ChangePasswordFragment extends Fragment {
     }
 
     // ASYNC UPDATE PASSWORD =======================================================================
-    private void asyncUpdatePassword(){
+    private void asyncUpdatePassword() {
 
     }
 

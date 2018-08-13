@@ -42,6 +42,7 @@ public class SharedPrefs {
     public static final String USER_LNG = "USER_LNG";
     public static final String USER_POSTAL_CODE = "USER_POSTAL_CODE";
     public static final String USER_FULL_ADDRESS = "USER_FULL_ADDRESS";
+    public static final String USER_COUNTY = "USER_COUNTY";
 
     public static final String EXPERIENCE_TYPE_WORK = "WORK_EXPERIENCE";
     public static final String EXPERIENCE_TYPE_EDUCATION = "EDUCATION_EXPERIENCE";

@@ -98,6 +98,7 @@ public interface UserService {
             @Field("google_id") String google_id
     );
 
+    // IMAGE UPDATE ================================================================================
     @Multipart
     @POST("user/update-images/{user_id}")
     Call<JsonObject> setUserImages(
@@ -106,6 +107,19 @@ public interface UserService {
             @Part MultipartBody.Part banner
     );
 
+    // ADDRESS UPDATE ==============================================================================
+    @FormUrlEncoded
+    @POST("user/update-address/{user_id}")
+    Call<JsonObject> setUserAddress(
+            @Path("user_id") int user_id,
+            @Field("county_id") int county_id,
+            @Field("postal_code") String postal_code,
+            @Field("lat") double lat,
+            @Field("lng") double lng,
+            @Field("full_address") String full_address
+    );
+
+    // PASSWORD CHANGE =============================================================================
     @FormUrlEncoded
     @POST("user/{user_id}/password")
     Call<JsonObject> setUserPassword(

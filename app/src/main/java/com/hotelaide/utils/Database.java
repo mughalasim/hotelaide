@@ -418,4 +418,54 @@ public class Database extends SQLiteOpenHelper {
         return arrayList;
     }
 
+    public int getCountyIDByString(String county_name) {
+        int county_id = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String whereClause = COUNTY_NAME + " = ?";
+        String[] whereArgs = new String[]{county_name};
+        Cursor cursor = db.query(COUNTY_TABLE_NAME, null, whereClause, whereArgs,
+                null, null, null);
+
+        if (cursor != null) {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+                do {
+                    county_id = cursor.getInt(cursor.getColumnIndex(COUNTY_ID));
+                    cursor.moveToNext();
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        return county_id;
+    }
+
+
+    public String getCountyNameByID(int county_id) {
+        String county_name = "";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String whereClause = COUNTY_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(county_id)};
+        Cursor cursor = db.query(COUNTY_TABLE_NAME, null, whereClause, whereArgs,
+                null, null, null);
+
+        if (cursor != null) {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+                do {
+                    county_name = cursor.getString(cursor.getColumnIndex(COUNTY_NAME));
+                    cursor.moveToNext();
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        return county_name;
+    }
+
+
 }
