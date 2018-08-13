@@ -65,7 +65,7 @@
     <string name="drawer_messages">Messages</string>
     <string name="drawer_registration">Hotel Registration</string>
     <string name="drawer_subscription">Subscription Plan</string>
-    <string name="drawer_my_profile">My Profile</string>
+    <string name="drawer_my_profile_view">My Profile</string>
     <string name="drawer_settings">Settings</string>
     <string name="drawer_about_us">About Us</string>
     <string name="drawer_log_out">Log Out</string>

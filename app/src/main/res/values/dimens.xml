@@ -28,10 +28,10 @@
 
     <!--TEXT SIZES ==============================================================================-->
     <dimen name="text_size_x_large">22sp</dimen>
-    <dimen name="text_size_large">20sp</dimen>
-    <dimen name="text_size_medium">18sp</dimen>
-    <dimen name="text_size_normal">16sp</dimen>
-    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_large">19sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_normal">15sp</dimen>
+    <dimen name="text_size_small">13sp</dimen>
 
 
     <!--MARGINS AND SPACINGS ====================================================================-->

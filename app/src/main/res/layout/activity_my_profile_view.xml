@@ -130,9 +130,20 @@
                 android:paddingBottom="@dimen/padding_large"
                 android:orientation="vertical">
 
+                <TextView
+                    style="@style/Text_Title"
+                    android:layout_height="@dimen/height_button"
+                    android:background="@color/dark_grey"
+                    android:gravity="start|center_vertical"
+                    android:paddingEnd="@dimen/padding_small"
+                    android:paddingStart="@dimen/padding_small"
+                    android:layout_marginBottom="@dimen/padding_tiny"
+                    android:text="@string/nav_profile" />
+
                 <!-- BASIC INFO =================================================================-->
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
+                    app:cardCornerRadius="@dimen/radius_corner"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/padding_tiny">
 
@@ -259,6 +270,7 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/radius_corner"
                     android:layout_marginTop="@dimen/padding_tiny"
                     android:layout_margin="@dimen/padding_tiny">
 
@@ -332,6 +344,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/padding_tiny"
                             android:orientation="horizontal"
+                            android:layout_marginBottom="@dimen/padding_tiny"
                             android:paddingEnd="@dimen/padding_small"
                             android:paddingStart="@dimen/padding_small">
 
@@ -346,7 +359,6 @@
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:paddingBottom="@dimen/padding_tiny"
                                 android:text="immediate" />
 
                         </LinearLayout>
@@ -354,6 +366,34 @@
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
+
+
+                <!-- EDUCATION EXPERIENCE =======================================================-->
+                <TextView
+                    style="@style/Text_Title"
+                    android:layout_height="@dimen/height_button"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:background="@color/dark_grey"
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:gravity="start|center_vertical"
+                    android:onClick="profileEdit"
+                    android:paddingEnd="@dimen/padding_small"
+                    android:paddingStart="@dimen/padding_small"
+                    android:text="@string/nav_education" />
+
+
+                <!-- WORK EXPERIENCE ============================================================-->
+                <TextView
+                    style="@style/Text_Title"
+                    android:layout_height="@dimen/height_button"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:background="@color/dark_grey"
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:gravity="start|center_vertical"
+                    android:onClick="profileEdit"
+                    android:paddingEnd="@dimen/padding_small"
+                    android:paddingStart="@dimen/padding_small"
+                    android:text="@string/nav_work" />
 
             </LinearLayout>
 

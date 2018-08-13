@@ -43,7 +43,7 @@ import com.hotelaide.R;
 import com.hotelaide.main_pages.activities.AboutUsActivity;
 import com.hotelaide.main_pages.activities.DashboardActivity;
 import com.hotelaide.main_pages.activities.FindJobsActivity;
-import com.hotelaide.main_pages.activities.ProfileActivity;
+import com.hotelaide.main_pages.activities.ProfileViewActivity;
 import com.hotelaide.main_pages.activities.SettingsActivity;
 import com.hotelaide.main_pages.models.CountyModel;
 import com.hotelaide.services.UserService;
@@ -132,7 +132,7 @@ public class Helpers {
                 break;
 
             case R.id.drawer_my_profile:
-                context.startActivity(new Intent(context, ProfileActivity.class));
+                context.startActivity(new Intent(context, ProfileViewActivity.class));
                 break;
 
             case R.id.drawer_about_us:
