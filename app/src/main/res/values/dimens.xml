@@ -16,7 +16,7 @@
     <dimen name="img_size_large">130sp</dimen>
     <dimen name="img_size_medium">70sp</dimen>
     <dimen name="img_size_small">50sp</dimen>
-    <dimen name="img_size_tiny">20sp</dimen>
+    <dimen name="img_size_tiny">30sp</dimen>
 
 
     <!--PADDING =================================================================================-->
@@ -29,9 +29,9 @@
     <!--TEXT SIZES ==============================================================================-->
     <dimen name="text_size_x_large">22sp</dimen>
     <dimen name="text_size_large">20sp</dimen>
-    <dimen name="text_size_medium">16sp</dimen>
-    <dimen name="text_size_normal">14sp</dimen>
-    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
 
 
     <!--MARGINS AND SPACINGS ====================================================================-->

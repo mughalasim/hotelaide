@@ -76,7 +76,7 @@
     <string name="nav_sign_up">Sign Up</string>
     <string name="nav_forgot_pass">Forgot Password</string>
     <string name="nav_about_us">About Us</string>
-    <string name="nav_contact_us">Contact Us</string>
+    <string name="nav_contact_us">Contact Info</string>
 
     <!-- PROFILE NAVIGATION TEXT ================================================================-->
     <string name="nav_profile">Basic Info</string>
