@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    ext.kotlin_version = '1.2.50'
     repositories {
         google()
         jcenter()
@@ -45,9 +45,9 @@ ext {
     SupportLibrary = '27.1.1'
 
     // Debug the App
-    debugMode = true
+    debugMode = false
     minify = true
-    proguard = false
+    proguard = true
 
     // App Versioning
     versionCode = 5

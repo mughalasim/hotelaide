@@ -11,8 +11,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
@@ -23,6 +26,7 @@ import com.hotelaide.main_pages.fragments.DocumentsFragment;
 import com.hotelaide.main_pages.fragments.ExperienceFragment;
 import com.hotelaide.main_pages.fragments.ProfileUpdateFragment;
 import com.hotelaide.services.UserService;
+import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -51,7 +55,13 @@ import static com.hotelaide.utils.SharedPrefs.USER_ID;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
 
-public class ProfileActivity extends ParentActivity {
+public class ProfileActivity extends AppCompatActivity {
+   private Helpers helpers;
+
+   private Database db;
+
+   private Toolbar toolbar;
+   private TextView toolbar_text;
 
     private ImageView
             img_banner;
@@ -64,7 +74,7 @@ public class ProfileActivity extends ParentActivity {
             img_avatar;
 
     private final String
-            TAG_LOG = "MY PROFILE";
+            TAG_LOG = "EDIT PROFILE";
 
     private TabLayout tabLayout;
 
@@ -101,7 +111,10 @@ public class ProfileActivity extends ParentActivity {
 
         setContentView(R.layout.activity_my_profile);
 
-        initialize(R.id.drawer_my_profile, TAG_LOG);
+        helpers = new Helpers(ProfileActivity.this);
+        db = new Database();
+
+        setUpToolBarAndTabs();
 
         findAllViews();
 
@@ -163,6 +176,22 @@ public class ProfileActivity extends ParentActivity {
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager, true);
+    }
+
+    private void setUpToolBarAndTabs() {
+        toolbar = findViewById(R.id.toolbar);
+        toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void setFromSharedPrefs() {

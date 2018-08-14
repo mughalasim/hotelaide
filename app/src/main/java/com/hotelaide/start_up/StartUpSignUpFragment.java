@@ -397,7 +397,7 @@ public class StartUpSignUpFragment extends Fragment {
         UserModel userModel = new UserModel();
         userModel.first_name = et_user_first_name.getText().toString();
         userModel.last_name = et_user_last_name.getText().toString();
-        userModel.country_code = ccp_user_country_code.getDefaultCountryCodeAsInt();
+        userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
         userModel.phone = Integer.parseInt(et_user_phone.getText().toString());
         userModel.email = et_user_email.getText().toString();
         userModel.password = et_user_pass.getText().toString();
@@ -578,7 +578,7 @@ public class StartUpSignUpFragment extends Fragment {
 
             if (v instanceof TextView) {
                 TextView tv = (TextView) v;
-                tv.setText("SIGN UP WITH GOOGLE");
+                tv.setText(R.string.txt_sign_up_google);
                 return;
             }
         }
@@ -609,7 +609,7 @@ public class StartUpSignUpFragment extends Fragment {
     // REGISTER ASYNC FUNCTIONS ====================================================================
     private void asyncRegister(UserModel userModel) {
 
-        helpers.setProgressDialogMessage("Creating your account, please wait...");
+        helpers.setProgressDialogMessage(getString(R.string.progress_sign_up));
         helpers.progressDialog(true);
         logRegModel(userModel);
 

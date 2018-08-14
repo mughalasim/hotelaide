@@ -83,17 +83,17 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
     // FIRE BASE AUTHENTICATION
-    implementation 'com.google.firebase:firebase-auth:16.0.2'
-    implementation 'com.google.firebase:firebase-messaging:17.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    implementation 'com.google.firebase:firebase-messaging:17.3.0'
     implementation 'com.google.firebase:firebase-invites:16.0.1'
-    implementation 'com.google.firebase:firebase-perf:16.0.0'
+    implementation 'com.google.firebase:firebase-perf:16.1.0'
     implementation 'com.google.firebase:firebase-database:16.0.1'
 
     // GOOGLE
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.google.android.gms:play-services-places:15.0.1'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
-    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
     implementation('com.google.android.gms:play-services-analytics:15.0.0') {
         exclude module: 'play-services-ads'
     }

@@ -42,6 +42,7 @@
     <!--LOADING DIALOGS =========================================================================-->
     <string name="progress_fetch_fb_details">fetching your details from Facebook…please wait…</string>
     <string name="progress_loading_account_update">Updating your account. Please wait…</string>
+    <string name="progress_sign_up">Creating your account, please wait…</string>
 
 
     <!--EDIT TEXT HINTS =========================================================================-->
@@ -56,7 +57,7 @@
     <string name="et_hint_phone">Phone Number</string>
     <string name="et_hint_postcode">Postal Code</string>
     <string name="et_hint_country_code">Country</string>
-    <string name="et_hint_dob">Date Of Birth (DD-MM-YYYY)</string>
+    <string name="et_hint_dob">Date Of Birth&#160;</string>
 
 
     <!--ALL DRAWER TEXTS ========================================================================-->
@@ -161,6 +162,7 @@
     <string name="txt_education_level">Education Level</string>
     <string name="txt_institution_name">Institution Name</string>
     <string name="txt_present">Present</string>
+    <string name="txt_sign_up_google">SIGN UP WITH GOOGLE</string>
 
 
 </resources>

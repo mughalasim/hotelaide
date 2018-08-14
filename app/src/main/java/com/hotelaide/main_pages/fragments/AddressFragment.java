@@ -23,7 +23,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.main_pages.models.CountyModel;
-import com.hotelaide.services.ExperienceService;
 import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
@@ -36,7 +35,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.SharedPrefs.USER_COUNTY;
 import static com.hotelaide.utils.SharedPrefs.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;

@@ -127,25 +127,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/padding_large"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/Text_Title"
-                    android:layout_height="@dimen/height_button"
-                    android:background="@color/dark_grey"
-                    android:gravity="start|center_vertical"
-                    android:paddingEnd="@dimen/padding_small"
-                    android:paddingStart="@dimen/padding_small"
-                    android:layout_marginBottom="@dimen/padding_tiny"
-                    android:text="@string/nav_profile" />
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_large">
 
                 <!-- BASIC INFO =================================================================-->
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    app:cardCornerRadius="@dimen/radius_corner"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/padding_tiny">
+                    android:layout_margin="@dimen/padding_small"
+                    app:cardCornerRadius="@dimen/radius_corner">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -180,11 +170,6 @@
                                 android:text="Asim"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                style="@style/Text_Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:text=" " />
 
                             <TextView
                                 android:id="@+id/txt_user_l_name"
@@ -194,30 +179,24 @@
                                 android:text="Mughal"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                style="@style/Text_Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:text=" " />
 
                             <TextView
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text="(" />
+                                android:text="@string/txt_open_bracket" />
 
                             <TextView
                                 android:id="@+id/txt_user_age"
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:text="25" />
+                                android:layout_marginTop="0dp" />
 
                             <TextView
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text=" yrs)" />
+                                android:text="@string/txt_closed_bracket" />
 
 
                         </LinearLayout>
@@ -234,10 +213,10 @@
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text="Date Of Birth: " />
+                                android:text="@string/et_hint_dob" />
 
                             <TextView
-                                android:id="@+id/txt_l_name"
+                                android:id="@+id/txt_user_dob"
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
@@ -250,17 +229,15 @@
                             style="@style/Text_Normal"
                             android:layout_marginTop="@dimen/padding_tiny"
                             android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small"
-                            android:text="Ole Sangale Road" />
+                            android:paddingStart="@dimen/padding_small" />
 
                         <TextView
                             android:id="@+id/txt_user_county_name"
                             style="@style/Text_Normal"
                             android:layout_marginTop="@dimen/padding_tiny"
-                            android:paddingBottom="@dimen/padding_tiny"
+                            android:layout_marginBottom="@dimen/padding_tiny"
                             android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small"
-                            android:text="Nairobi" />
+                            android:paddingStart="@dimen/padding_small" />
 
                     </LinearLayout>
 
@@ -270,9 +247,9 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/radius_corner"
-                    android:layout_marginTop="@dimen/padding_tiny"
-                    android:layout_margin="@dimen/padding_tiny">
+                    android:layout_marginEnd="@dimen/padding_small"
+                    android:layout_marginStart="@dimen/padding_small"
+                    app:cardCornerRadius="@dimen/radius_corner">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -303,7 +280,9 @@
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text="Email: " />
+                                android:paddingEnd="@dimen/padding_tiny"
+                                android:paddingStart="0dp"
+                                android:text="@string/et_hint_email" />
 
 
                             <TextView
@@ -311,7 +290,6 @@
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text="asimkenya@gmail.com"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
@@ -328,23 +306,24 @@
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text="Tel: " />
+                                android:paddingEnd="@dimen/padding_tiny"
+                                android:paddingStart="0dp"
+                                android:text="@string/txt_address_mobile" />
 
                             <TextView
                                 android:id="@+id/txt_user_phone"
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:text="+254 716 140 603" />
+                                android:layout_marginTop="0dp" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/padding_tiny"
                             android:layout_marginTop="@dimen/padding_tiny"
                             android:orientation="horizontal"
-                            android:layout_marginBottom="@dimen/padding_tiny"
                             android:paddingEnd="@dimen/padding_small"
                             android:paddingStart="@dimen/padding_small">
 
@@ -381,6 +360,12 @@
                     android:paddingStart="@dimen/padding_small"
                     android:text="@string/nav_education" />
 
+                <LinearLayout
+                    android:id="@+id/ll_fragment_education"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
 
                 <!-- WORK EXPERIENCE ============================================================-->
                 <TextView
@@ -394,6 +379,13 @@
                     android:paddingEnd="@dimen/padding_small"
                     android:paddingStart="@dimen/padding_small"
                     android:text="@string/nav_work" />
+
+                <LinearLayout
+                    android:id="@+id/ll_fragment_work"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
 
             </LinearLayout>
 

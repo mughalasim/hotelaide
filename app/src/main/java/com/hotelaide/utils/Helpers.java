@@ -1,6 +1,7 @@
 package com.hotelaide.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.NotificationManager;
@@ -56,6 +57,10 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -451,6 +456,62 @@ public class Helpers {
             return newalloc.toString();
         }
 
+    }
+
+
+    public String formatDateDuration(String start, String end) {
+
+        Date dateStart = null;
+        Date dateEnd = null;
+
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            dateStart = sdf.parse(start);
+            dateEnd = sdf.parse(end);
+
+            Calendar startDate = Calendar.getInstance();
+            Calendar endDate = Calendar.getInstance();
+
+            startDate.setTime(dateStart);
+            endDate.setTime(dateEnd);
+
+            int years = endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR);
+            int months = endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH);
+
+            return String.valueOf(years) + " Year(s) " + String.valueOf(months) + " Month(s)";
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Wrong Date format";
+        }
+    }
+
+    public String formatAge(String dob) {
+
+        Date dateDOB = null;
+
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            dateDOB = sdf.parse(dob);
+
+            Calendar startDate = Calendar.getInstance();
+            Calendar endDate = Calendar.getInstance();
+
+            startDate.setTime(dateDOB);
+            endDate.getTime();
+
+            int years = endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR);
+
+            return String.valueOf(years) + " Yrs";
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "0 Yrs";
+        }
     }
 
     public void handleErrorMessage(final Context context, JSONObject data) {

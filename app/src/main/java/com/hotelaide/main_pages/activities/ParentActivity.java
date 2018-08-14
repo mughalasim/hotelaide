@@ -21,7 +21,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.algolia.search.saas.RequestOptions;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -131,7 +130,7 @@ public class ParentActivity extends AppCompatActivity implements
                 drawer.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        startActivity(new Intent(ParentActivity.this, ProfileActivity.class));
+                        startActivity(new Intent(ParentActivity.this, ProfileViewActivity.class));
                     }
                 }, 150);
             }
@@ -149,12 +148,12 @@ public class ParentActivity extends AppCompatActivity implements
 
 
         // FIND THE MENU ITEMS ==================================================================
-        MenuItem menu_dashboard = navigationView.getMenu().getItem(0);
-        MenuItem menu_find_jobs = navigationView.getMenu().getItem(1);
-        MenuItem menu_my_profile = navigationView.getMenu().getItem(2);
-        MenuItem menu_about_us = navigationView.getMenu().getItem(3);
-        MenuItem menu_settings = navigationView.getMenu().getItem(4);
-        MenuItem menu_log_out = navigationView.getMenu().getItem(5);
+//        MenuItem menu_dashboard = navigationView.getMenu().getItem(0);
+//        MenuItem menu_find_jobs = navigationView.getMenu().getItem(1);
+//        MenuItem menu_my_profile = navigationView.getMenu().getItem(2);
+//        MenuItem menu_about_us = navigationView.getMenu().getItem(3);
+//        MenuItem menu_settings = navigationView.getMenu().getItem(4);
+//        MenuItem menu_log_out = navigationView.getMenu().getItem(5);
 
     }
 
