@@ -7,7 +7,7 @@
     <!--META DATA ===============================================================================-->
     <string name="facebook_app_id">213335282601524</string>
     <string name="fb_login_protocol_scheme">fb213335282601524</string>
-    <string name="maps_api_key">AIzaSyCCc45P-R50C_Hy1Jw6A00CjNN4vrZAB3c"</string>
+    <string name="maps_api_key">AIzaSyA0ZgL9xLHGt7ZHWTcRrvsDIGH2yPxauLA"</string>
 
     <!--ERROR MESSAGES ==========================================================================-->
     <string name="error_field_required">This field is required</string>
@@ -105,7 +105,7 @@
     <string name="txt_loading_please_wait">Loading… please wait…</string>
     <string name="txt_update_details">UPDATE</string>
     <string name="txt_availability">Availability:&#160;</string>
-    <string name="txt_no_items_found">Oops! No results found</string>
+    <string name="txt_no_items_found">No results found</string>
     <string name="txt_open_bracket">(</string>
     <string name="txt_closed_bracket">)&#160;</string>
     <string name="txt_call">You are about to make a call. Are you sure you wish to proceed?</string>

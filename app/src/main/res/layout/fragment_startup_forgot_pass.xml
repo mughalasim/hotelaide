@@ -34,9 +34,12 @@
 
         <include layout="@layout/fragment_buttons" />
 
+
+        <include layout="@layout/horizontal_line"/>
+
         <TextView
             style="@style/Text_Small"
-            android:layout_gravity="center"
+            android:paddingTop="@dimen/padding_small"
             android:onClick="TERMS_CONDITIONS"
             android:text="@string/txt_terms_conditions" />
 

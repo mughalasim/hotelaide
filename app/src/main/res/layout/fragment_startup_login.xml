@@ -22,7 +22,6 @@
 
         <TextView
             style="@style/Text_Normal"
-            android:layout_gravity="center"
             android:text="@string/txt_welcome_login" />
 
         <EditText
@@ -58,22 +57,22 @@
 
         <include layout="@layout/fragment_buttons" />
 
+
+        <include layout="@layout/horizontal_line"/>
+
         <TextView
             style="@style/Text_Normal"
-            android:layout_gravity="center"
             android:onClick="SIGN_UP"
             android:paddingTop="@dimen/padding_small"
             android:text="@string/nav_sign_up" />
 
         <TextView
             style="@style/Text_Normal"
-            android:layout_gravity="center"
             android:onClick="FORGOT_PASS"
             android:text="@string/txt_forgot_password" />
 
         <TextView
-            style="@style/Text_Small"
-            android:layout_gravity="center"
+            style="@style/Text_Normal"
             android:onClick="TERMS_CONDITIONS"
             android:text="@string/txt_terms_conditions" />
 

@@ -110,6 +110,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/app_name"
+                    android:paddingStart="0dp"
                     android:paddingEnd="@dimen/padding_small" />
 
             </RelativeLayout>
@@ -124,16 +125,15 @@
 
             <include layout="@layout/fragment_buttons" />
 
-            <TextView
-                style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:onClick="LOGIN"
-                android:paddingTop="@dimen/padding_small"
-                android:text="OOps! I already have an account" />
+            <include layout="@layout/horizontal_line"/>
 
             <TextView
-                style="@style/Text_Small"
-                android:layout_gravity="center"
+                style="@style/Text_Normal"
+                android:onClick="LOGIN"
+                android:text="Already have an account" />
+
+            <TextView
+                style="@style/Text_Normal"
                 android:onClick="TERMS_CONDITIONS"
                 android:text="@string/txt_terms_conditions" />
 

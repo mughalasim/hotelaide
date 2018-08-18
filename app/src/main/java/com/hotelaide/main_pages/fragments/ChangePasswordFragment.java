@@ -13,8 +13,25 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.hotelaide.utils.SharedPrefs.USER_COUNTY;
+import static com.hotelaide.utils.SharedPrefs.USER_FULL_ADDRESS;
+import static com.hotelaide.utils.SharedPrefs.USER_ID;
+import static com.hotelaide.utils.SharedPrefs.USER_LAT;
+import static com.hotelaide.utils.SharedPrefs.USER_LNG;
+import static com.hotelaide.utils.SharedPrefs.USER_POSTAL_CODE;
 
 
 public class ChangePasswordFragment extends Fragment {
@@ -37,8 +54,7 @@ public class ChangePasswordFragment extends Fragment {
 
     private FloatingActionButton btn_update;
 
-    public ChangePasswordFragment() {
-    }
+    public ChangePasswordFragment() {}
 
 
     // OVERRIDE FUNCTIONS ==========================================================================
@@ -137,7 +153,41 @@ public class ChangePasswordFragment extends Fragment {
 
     // ASYNC UPDATE PASSWORD =======================================================================
     private void asyncUpdatePassword() {
+        UserService userService = UserService.retrofit.create(UserService.class);
 
+        Call<JsonObject> call = userService.updateUserPassword(
+                SharedPrefs.getInt(USER_ID),
+                et_user_pass_old.getText().toString(),
+                et_user_pass_new.getText().toString(),
+                et_user_pass_confirm.getText().toString()
+        );
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+                    Helpers.LogThis(TAG_LOG, main.toString());
+                    if (main.getBoolean("success")) {
+                        helpers.ToastMessage(getActivity(), main.getString("message"));
+                    }
+                } catch (JSONException e) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                Helpers.LogThis(TAG_LOG, t.toString());
+                if (helpers.validateInternetConnection()) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                } else {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                }
+
+            }
+        });
     }
 
 }

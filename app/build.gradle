@@ -88,6 +88,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-invites:16.0.1'
     implementation 'com.google.firebase:firebase-perf:16.1.0'
     implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.0'
 
     // GOOGLE
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
@@ -106,6 +107,8 @@ dependencies {
     // YOYO ANIMATIONS
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    // MORE FROM LOTTIE
+    implementation 'com.airbnb.android:lottie:2.6.0-beta19'
 
     // NOTIFICATION BADGES
     implementation 'me.leolin:ShortcutBadger:1.1.19@aar'

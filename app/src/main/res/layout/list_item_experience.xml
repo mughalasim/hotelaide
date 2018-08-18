@@ -12,6 +12,7 @@
         android:id="@+id/list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/top_panel"
             android:layout_width="match_parent"
@@ -85,13 +86,6 @@
 
             </LinearLayout>
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_thickness"
-                android:layout_marginTop="@dimen/text_margin"
-                android:background="@color/dark_grey" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -103,7 +97,7 @@
             <TextView
                 android:id="@+id/txt_responsibilities_field_label"
                 style="@style/Text_Normal"
-                android:layout_marginTop="@dimen/text_margin"
+                android:layout_marginTop="@dimen/padding_tiny"
                 android:text="@string/txt_responsibilities"
                 android:textColor="@color/colorPrimary" />
 
@@ -118,8 +112,8 @@
 
         <ImageView
             android:id="@+id/btn_delete"
-            android:layout_width="@dimen/img_size_tiny"
-            android:layout_height="@dimen/img_size_tiny"
+            android:layout_width="@dimen/padding_small"
+            android:layout_height="@dimen/padding_medium"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/app_name"
             app:srcCompat="@drawable/ic_cancel" />

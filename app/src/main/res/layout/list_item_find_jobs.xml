@@ -57,11 +57,11 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_small" />
 
-                <View
+                <include
+                    android:layout_marginTop="@dimen/padding_tiny"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/line_thickness"
-                    android:layout_marginTop="@dimen/padding_tiny"
-                    android:background="@color/dark_grey" />
+                    layout="@layout/horizontal_line"/>
 
                 <TextView
                     android:id="@+id/txt_location"

@@ -27,9 +27,10 @@
             android:id="@+id/app_version"
             style="@style/Text_Normal"
             android:layout_above="@+id/drawer_logo"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:paddingBottom="@dimen/padding_small"
             android:paddingEnd="@dimen/padding_small"
+            android:paddingStart="0dp"
             android:text="@string/app_name"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/text_size_small" />

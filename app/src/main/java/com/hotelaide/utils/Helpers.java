@@ -1,6 +1,7 @@
 package com.hotelaide.utils;
 
 import android.Manifest;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -17,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
@@ -32,6 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.AccessToken;
@@ -353,7 +356,7 @@ public class Helpers {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         if (editText.getText().toString().length() < 1) {
             editText.setError(context.getString(R.string.error_field_required));
-            animate_flash(editText);
+            animateFlash(editText);
             return false;
         } else if (!pattern.matcher(editText.getText().toString()).matches()) {
             editText.setError(context.getString(R.string.error_field_required));
@@ -403,7 +406,7 @@ public class Helpers {
     public boolean validateEmptyEditText(EditText editText) {
         if (editText.getText().toString().length() < 1) {
             editText.setError(context.getString(R.string.error_field_required));
-            animate_flash(editText);
+            animateFlash(editText);
             return false;
         } else {
             editText.setError(null);
@@ -415,7 +418,7 @@ public class Helpers {
     public boolean validateEmptyTextView(TextView textView, String errorMessage) {
         if (textView.getText().toString().length() < 1) {
             ToastMessage(context, errorMessage);
-            animate_flash(textView);
+            animateFlash(textView);
             return false;
         } else {
             return true;
@@ -553,7 +556,7 @@ public class Helpers {
                 .playOn(v);
     }
 
-    public void animate_flash(View v) {
+    public void animateFlash(View v) {
         YoYo.with(Techniques.Flash)
                 .duration(INT_ANIMATION_TIME)
                 .delay(0)
@@ -571,6 +574,25 @@ public class Helpers {
         YoYo.with(Techniques.FadeIn)
                 .duration(300)
                 .playOn(v);
+    }
+
+    public void animateFloatingActionButton(final FloatingActionButton floatingActionButton, final LottieAnimationView lottieAnimationView) {
+        floatingActionButton.setVisibility(View.GONE);
+        lottieAnimationView.setVisibility(View.VISIBLE);
+        final ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                lottieAnimationView.setProgress((Float) valueAnimator.getAnimatedValue());
+                if (lottieAnimationView.getProgress() == 1f) {
+                    floatingActionButton.setVisibility(View.VISIBLE);
+                    lottieAnimationView.setVisibility(View.GONE);
+                    animator.cancel();
+                    lottieAnimationView.cancelAnimation();
+                }
+            }
+        });
+        animator.start();
     }
 
     public static void animateRecyclerView(View view) {

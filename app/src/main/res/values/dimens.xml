@@ -1,12 +1,12 @@
 <resources>
-    <!--TOOLBAR AND NAVBAR HEIGHTS ==============================================================-->
+    <!--TOOLBAR AND NAVIGATION BAR HEIGHTS ======================================================-->
 
     <!-- BORDER CORNERS =========================================================================-->
     <dimen name="radius_corner">3sp</dimen>
 
 
     <!-- LINE THICKNESS =========================================================================-->
-    <dimen name="line_thickness">1dp</dimen>
+    <dimen name="line_thickness">1sp</dimen>
 
     <!--ANGLES ==================================================================================-->
     <dimen name="angle_color">315</dimen>
@@ -15,8 +15,8 @@
     <!--IMAGE DIMENS ============================================================================-->
     <dimen name="img_size_large">130sp</dimen>
     <dimen name="img_size_medium">70sp</dimen>
-    <dimen name="img_size_small">50sp</dimen>
-    <dimen name="img_size_tiny">30sp</dimen>
+    <dimen name="img_size_small">55sp</dimen>
+    <dimen name="img_size_tiny">40sp</dimen>
 
 
     <!--PADDING =================================================================================-->
@@ -44,8 +44,8 @@
     <dimen name="height_button">40sp</dimen>
     <dimen name="height_edit_text">39sp</dimen>
     <dimen name="height_panel">45sp</dimen>
-    <dimen name="height_nav_header">120dp</dimen>
-    <dimen name="height_collapsing_toolbar">220dp</dimen>
+    <dimen name="height_nav_header">120sp</dimen>
+    <dimen name="height_collapsing_toolbar">220sp</dimen>
 
 
 </resources>

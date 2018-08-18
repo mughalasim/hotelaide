@@ -20,33 +20,35 @@
 
             <include layout="@layout/toolbar" />
 
-            <Switch
-                android:id="@+id/switch_app_updates"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_button"
+                android:layout_height="wrap_content"
                 android:paddingEnd="@dimen/padding_small"
                 android:paddingStart="@dimen/padding_small"
-                android:text="Notify me on Updates"
-                android:textColor="@color/colorAccent" />
+                android:orientation="vertical">
 
-            <TextView
-                style="@style/Text_Normal"
-                android:paddingEnd="@dimen/padding_small"
-                android:layout_marginTop="0dp"
-                android:paddingStart="@dimen/padding_small"
-                android:text="Turning this on will allow the app to notify you if there is a new update available in the Play Store" />
+                <Switch
+                    android:id="@+id/switch_app_updates"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/padding_tiny"
+                    android:layout_height="@dimen/height_button"
+                    android:text="Notify me on Updates"
+                    android:textColor="@color/colorAccent" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/text_line_spacing"
-                android:layout_marginTop="@dimen/padding_small"
-                android:background="@color/dark_grey" />
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text="Turning this on will allow the app to notify you if there is a new update available in the Play Store" />
 
-            <TextView
-                android:id="@+id/delete_account"
-                style="@style/Text_Small"
-                android:layout_gravity="center"
-                android:text="Delete your account" />
+                <include layout="@layout/horizontal_line" />
+
+                <TextView
+                    android:id="@+id/delete_account"
+                    style="@style/Text_Small"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:text="Delete your account" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

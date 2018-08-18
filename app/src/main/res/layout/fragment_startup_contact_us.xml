@@ -19,8 +19,6 @@
 
         <TextView
             style="@style/Text_Normal"
-            android:layout_gravity="center"
-            android:gravity="center"
             android:text="@string/txt_address" />
 
         <include layout="@layout/horizontal_line" />
@@ -31,7 +29,6 @@
 
         <TextView
             style="@style/Text_Normal"
-            android:layout_gravity="center"
             android:text="asimkenya@gmail.com" />
 
         <include layout="@layout/horizontal_line" />
@@ -43,21 +40,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:gravity="center"
             android:layout_marginTop="@dimen/padding_small"
             android:layout_height="wrap_content">
 
             <TextView
                 style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_marginTop="0dp"
                 android:text="@string/txt_address_landline" />
 
             <TextView
                 style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:onClick="MAKE_CALL"
                 android:layout_marginTop="0dp"
                 android:text="(254)20 567 897" />
@@ -67,21 +59,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:gravity="center"
             android:layout_marginTop="@dimen/padding_small"
             android:layout_height="wrap_content">
 
             <TextView
                 style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_marginTop="0dp"
                 android:text="@string/txt_address_mobile" />
 
             <TextView
                 style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:onClick="MAKE_CALL"
                 android:layout_marginTop="0dp"
                 android:text="(254)716 140 603" />

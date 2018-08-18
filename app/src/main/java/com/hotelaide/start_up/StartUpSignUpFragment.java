@@ -333,7 +333,7 @@ public class StartUpSignUpFragment extends Fragment {
             setToModelFromFields();
         } else {
             final Dialog dialog = new Dialog(activity);
-            dialog.setContentView(R.layout.dialog_account_type);
+            dialog.setContentView(R.layout.dialog_account_password);
             dialog.setCancelable(false);
             final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
             final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
