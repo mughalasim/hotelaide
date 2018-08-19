@@ -21,15 +21,6 @@ public class LoginActivity extends AppCompatActivity {
     private Helpers
             helpers;
 
-    public TextView
-            btn_confirm,
-            btn_cancel;
-
-    private final String
-            TAG_LOG = "LOGIN";
-
-    private TabLayout tabLayout;
-
     private ViewPager viewPager;
 
     private int[] navLabels = {
@@ -64,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
         viewPager = findViewById(R.id.viewpager);
-        tabLayout = findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
 
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager, true);
@@ -92,22 +83,6 @@ public class LoginActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(5);
 
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -128,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

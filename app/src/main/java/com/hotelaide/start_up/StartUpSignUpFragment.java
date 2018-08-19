@@ -79,8 +79,7 @@ public class StartUpSignUpFragment extends Fragment {
             panel_title,
             txt_user_dob,
             btn_login_google2,
-            btn_confirm,
-            btn_cancel;
+            btn_confirm;
 
     private SlidingUpPanelLayout sliding_panel;
 
@@ -173,10 +172,8 @@ public class StartUpSignUpFragment extends Fragment {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        btn_cancel = rootview.findViewById(R.id.btn_cancel);
         btn_confirm = rootview.findViewById(R.id.btn_confirm);
 
-        btn_cancel.setVisibility(View.GONE);
         btn_confirm.setVisibility(View.VISIBLE);
 
         btn_confirm.setText(getString(R.string.nav_sign_up));

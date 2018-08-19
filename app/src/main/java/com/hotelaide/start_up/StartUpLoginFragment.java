@@ -39,8 +39,7 @@ public class StartUpLoginFragment extends Fragment {
     private View rootview;
 
     private TextView
-            btn_confirm,
-            btn_cancel;
+            btn_confirm;
 
     private EditText
             et_user_pass,
@@ -93,7 +92,6 @@ public class StartUpLoginFragment extends Fragment {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        btn_cancel = rootview.findViewById(R.id.btn_cancel);
         btn_confirm = rootview.findViewById(R.id.btn_confirm);
 
         img_user_pass_toggle = rootview.findViewById(R.id.img_user_pass_toggle);
@@ -107,8 +105,6 @@ public class StartUpLoginFragment extends Fragment {
     }
 
     private void setListeners() {
-        btn_cancel.setVisibility(View.GONE);
-        btn_confirm.setVisibility(View.VISIBLE);
         btn_confirm.setText(getString(R.string.nav_login));
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {

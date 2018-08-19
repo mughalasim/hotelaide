@@ -142,7 +142,7 @@
             android:maxLines="150"
             android:padding="@dimen/padding_small" />
 
-        <include layout="@layout/fragment_buttons" />
+        <include layout="@layout/layout_text_view_buttons" />
 
     </LinearLayout>
 

@@ -18,6 +18,8 @@
         android:contentDescription="@string/app_name"
         android:src="@drawable/main_logo_horizontal"/>
 
+    <include layout="@layout/horizontal_line" />
+
     <ProgressBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

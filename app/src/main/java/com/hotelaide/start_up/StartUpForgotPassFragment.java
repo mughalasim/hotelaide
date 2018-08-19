@@ -1,6 +1,5 @@
 package com.hotelaide.start_up;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -14,11 +13,8 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.activities.DashboardActivity;
-import com.hotelaide.main_pages.models.UserModel;
 import com.hotelaide.services.LoginService;
 import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,16 +23,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.Helpers.START_FIRST_TIME;
-
 
 public class StartUpForgotPassFragment extends Fragment {
 
     private View rootview;
 
     private TextView
-            btn_confirm,
-            btn_cancel;
+            btn_confirm;
 
     private EditText et_user_email;
 
@@ -77,11 +70,7 @@ public class StartUpForgotPassFragment extends Fragment {
 
     private void findAllViews() {
         et_user_email = rootview.findViewById(R.id.user_email);
-        btn_cancel = rootview.findViewById(R.id.btn_cancel);
         btn_confirm = rootview.findViewById(R.id.btn_confirm);
-
-        btn_cancel.setVisibility(View.GONE);
-        btn_confirm.setVisibility(View.VISIBLE);
         btn_confirm.setText(getString(R.string.txt_reset));
     }
 

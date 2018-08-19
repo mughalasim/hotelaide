@@ -461,41 +461,44 @@ public class ExperienceFragment extends Fragment {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                swipe_refresh.setRefreshing(false);
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, main.toString());
-                    if (main.getBoolean("success")) {
-                        db.deleteExperienceTableByType(EXPERIENCE_TYPE);
-                        JSONArray work_object = main.getJSONArray("data");
-                        int length = work_object.length();
-                        if (length > 0) {
-                            for (int i = 0; i < length; i++) {
-                                db.setExperienceFromJson(work_object.getJSONObject(i), EXPERIENCE_TYPE);
+                if (getActivity() != null) {
+                    swipe_refresh.setRefreshing(false);
+                    try {
+                        JSONObject main = new JSONObject(String.valueOf(response.body()));
+                        Helpers.LogThis(TAG_LOG, main.toString());
+                        if (main.getBoolean("success")) {
+                            db.deleteExperienceTableByType(EXPERIENCE_TYPE);
+                            JSONArray work_object = main.getJSONArray("data");
+                            int length = work_object.length();
+                            if (length > 0) {
+                                for (int i = 0; i < length; i++) {
+                                    db.setExperienceFromJson(work_object.getJSONObject(i), EXPERIENCE_TYPE);
+                                }
                             }
+                            populateExperienceFromDB();
+                        } else {
+                            helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                         }
-                        populateExperienceFromDB();
-                    } else {
-                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
-                    }
 
-                } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                swipe_refresh.setRefreshing(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
-                populateExperienceFromDB();
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                if (getActivity() != null) {
+                    swipe_refresh.setRefreshing(false);
+                    Helpers.LogThis(TAG_LOG, t.toString());
+                    populateExperienceFromDB();
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    } else {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    }
                 }
-
             }
         });
     }
@@ -567,37 +570,40 @@ public class ExperienceFragment extends Fragment {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, main.toString());
-                    if (main.getBoolean("success")) {
-                        if (db.setExperienceFromJson(main.getJSONObject("data"), EXPERIENCE_TYPE)) {
-                            helpers.ToastMessage(getActivity(), getString(R.string.txt_success));
-                            populateExperienceFromDB();
-                            sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                if (getActivity() != null) {
+                    helpers.progressDialog(false);
+                    try {
+                        JSONObject main = new JSONObject(String.valueOf(response.body()));
+                        Helpers.LogThis(TAG_LOG, main.toString());
+                        if (main.getBoolean("success")) {
+                            if (db.setExperienceFromJson(main.getJSONObject("data"), EXPERIENCE_TYPE)) {
+                                helpers.ToastMessage(getActivity(), getString(R.string.txt_success));
+                                populateExperienceFromDB();
+                                sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                            } else {
+                                helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                            }
                         } else {
-                            helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                            helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                         }
-                    } else {
-                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                    } catch (JSONException e) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                    e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                if (getActivity() != null) {
+                    helpers.progressDialog(false);
+                    Helpers.LogThis(TAG_LOG, t.toString());
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    } else {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    }
                 }
-
             }
         });
 
@@ -624,32 +630,35 @@ public class ExperienceFragment extends Fragment {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                swipe_refresh.setRefreshing(false);
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, main.toString());
-                    if (main.getBoolean("success")) {
-                        db.deleteExperienceByID(String.valueOf(experienceId), EXPERIENCE_TYPE);
-                        adapter.removeItem(position);
+                if (getActivity() != null) {
+                    swipe_refresh.setRefreshing(false);
+                    try {
+                        JSONObject main = new JSONObject(String.valueOf(response.body()));
+                        Helpers.LogThis(TAG_LOG, main.toString());
+                        if (main.getBoolean("success")) {
+                            db.deleteExperienceByID(String.valueOf(experienceId), EXPERIENCE_TYPE);
+                            adapter.removeItem(position);
+                        }
+                        populateExperienceFromDB();
+                    } catch (JSONException e) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        e.printStackTrace();
                     }
-                    populateExperienceFromDB();
-                } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                    e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                swipe_refresh.setRefreshing(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
-                populateExperienceFromDB();
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                if (getActivity() != null) {
+                    swipe_refresh.setRefreshing(false);
+                    Helpers.LogThis(TAG_LOG, t.toString());
+                    populateExperienceFromDB();
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    } else {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    }
                 }
-
             }
         });
     }

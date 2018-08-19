@@ -123,17 +123,17 @@
                 android:inputType="textPassword" />
 
 
-            <include layout="@layout/fragment_buttons" />
+            <include layout="@layout/layout_text_view_button" />
 
             <include layout="@layout/horizontal_line"/>
 
             <TextView
-                style="@style/Text_Normal"
+                style="@style/Text_Small"
                 android:onClick="LOGIN"
                 android:text="Already have an account" />
 
             <TextView
-                style="@style/Text_Normal"
+                style="@style/Text_Small"
                 android:onClick="TERMS_CONDITIONS"
                 android:text="@string/txt_terms_conditions" />
 

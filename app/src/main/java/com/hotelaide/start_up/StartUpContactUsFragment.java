@@ -10,16 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hotelaide.R;
-import com.hotelaide.utils.Helpers;
 
 
 public class StartUpContactUsFragment extends Fragment {
 
     private View rootview;
-
-    private Helpers helpers;
-
-    private final String TAG_LOG = "FRAGMENT LOGIN";
 
     public StartUpContactUsFragment() {
 
@@ -35,7 +30,6 @@ public class StartUpContactUsFragment extends Fragment {
         if (rootview == null && getActivity() != null) {
             try {
                 rootview = inflater.inflate(R.layout.fragment_startup_contact_us, container, false);
-                helpers = new Helpers(getActivity());
 
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 

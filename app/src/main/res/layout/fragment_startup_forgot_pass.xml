@@ -32,7 +32,7 @@
             android:inputType="textEmailAddress" />
 
 
-        <include layout="@layout/fragment_buttons" />
+        <include layout="@layout/layout_text_view_button" />
 
 
         <include layout="@layout/horizontal_line"/>
