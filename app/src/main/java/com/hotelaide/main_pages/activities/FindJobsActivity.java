@@ -136,6 +136,9 @@ public class FindJobsActivity extends ParentActivity {
         spinner_location = findViewById(R.id.spinner_location);
         spinner_category = findViewById(R.id.spinner_category);
         spinner_job_type = findViewById(R.id.spinner_job_type);
+        txt_filter_location = findViewById(R.id.txt_filter_location);
+        txt_filter_type = findViewById(R.id.txt_filter_type);
+        txt_filter_category = findViewById(R.id.txt_filter_category);
 
         ArrayAdapter<CountyModel> dataAdapter1 = new ArrayAdapter<>(
                 this,
@@ -143,6 +146,8 @@ public class FindJobsActivity extends ParentActivity {
                 db.getAllCounties()
         );
         spinner_location.setAdapter(dataAdapter1);
+        spinner_job_type.setAdapter(dataAdapter1);
+        spinner_category.setAdapter(dataAdapter1);
 
 
         // SEARCH FUNCTIONALITY ------------------------------
@@ -175,23 +180,6 @@ public class FindJobsActivity extends ParentActivity {
                 } else {
                     searchDatabase();
                 }
-            }
-        });
-
-        spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateFilterText(spinner_location, txt_filter_location);
-                if (helpers.validateInternetConnection()) {
-                    searchOnline();
-                } else {
-                    searchDatabase();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
@@ -246,14 +234,67 @@ public class FindJobsActivity extends ParentActivity {
             }
         });
 
+        spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                updateFilterText(spinner_location, txt_filter_location);
+                if (helpers.validateInternetConnection()) {
+                    searchOnline();
+                } else {
+                    searchDatabase();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinner_job_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                updateFilterText(spinner_job_type, txt_filter_type);
+                if (helpers.validateInternetConnection()) {
+                    searchOnline();
+                } else {
+                    searchDatabase();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        spinner_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                updateFilterText(spinner_category, txt_filter_category);
+                if (helpers.validateInternetConnection()) {
+                    searchOnline();
+                } else {
+                    searchDatabase();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         setListenerForFilter(txt_filter_location, spinner_location);
+        setListenerForFilter(txt_filter_type, spinner_job_type);
+        setListenerForFilter(txt_filter_category, spinner_category);
     }
 
     private void setListenerForFilter(TextView textView, final Spinner spinner){
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                spinner.setSelection(1);
+                spinner.setSelection(0);
             }
         });
     }
