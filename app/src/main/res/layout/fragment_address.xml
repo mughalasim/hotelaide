@@ -20,7 +20,7 @@
             android:textColor="@color/colorPrimary" />
 
         <Spinner
-            android:id="@+id/spinner_county"
+            android:id="@+id/spinner_location"
             style="@style/Edit_Text"
             android:gravity="end|center_vertical"
             android:padding="0dp" />

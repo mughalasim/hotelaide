@@ -152,7 +152,7 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/main_logo_icon" />
+            android:resource="@mipmap/ic_launcher" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
@@ -162,7 +162,10 @@
         <!--CLOUD MESSAGING SERVICES ============================================================-->
         <service
             android:name=".utils_external.MyFirebaseMessagingService"
-            android:stopWithTask="false">
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false"
+            android:permission="">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

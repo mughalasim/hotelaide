@@ -158,7 +158,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        spinner_county = rootview.findViewById(R.id.spinner_county);
+        spinner_county = rootview.findViewById(R.id.spinner_location);
         if (getActivity() != null) {
             ArrayAdapter<CountyModel> dataAdapter1 = new ArrayAdapter<>(getActivity(), R.layout.list_item_spinner, db.getAllCounties());
             spinner_county.setAdapter(dataAdapter1);

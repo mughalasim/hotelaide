@@ -2,7 +2,7 @@
     <!--TOOLBAR AND NAVIGATION BAR HEIGHTS ======================================================-->
 
     <!-- BORDER CORNERS =========================================================================-->
-    <dimen name="radius_corner">3sp</dimen>
+    <dimen name="radius_corner">5sp</dimen>
 
 
     <!-- LINE THICKNESS =========================================================================-->

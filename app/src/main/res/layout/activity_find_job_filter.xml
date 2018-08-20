@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/padding_small"
+    android:gravity="center"
+    android:paddingEnd="@dimen/padding_small"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/Text_Title"
+        android:text="Add Filters" />
+
+    <include layout="@layout/horizontal_line" />
+
+    <TextView
+        style="@style/Text_Normal"
+        android:text="Set location" />
+
+    <Spinner
+        android:id="@+id/spinner_location"
+        style="@style/Edit_Text"
+        android:drawableStart="@drawable/ic_location"
+        android:gravity="end|center_vertical"
+        android:padding="0dp" />
+
+    <TextView
+        style="@style/Text_Normal"
+        android:text="Set Category" />
+
+    <Spinner
+        android:id="@+id/spinner_category"
+        style="@style/Edit_Text"
+        android:drawableStart="@drawable/ic_location"
+        android:gravity="end|center_vertical"
+        android:padding="0dp" />
+
+    <TextView
+        style="@style/Text_Normal"
+        android:text="Set Job Type" />
+
+    <Spinner
+        android:id="@+id/spinner_job_type"
+        style="@style/Edit_Text"
+        android:drawableStart="@drawable/ic_location"
+        android:gravity="end|center_vertical"
+        android:layout_marginBottom="@dimen/padding_small"
+        android:padding="0dp" />
+
+
+    <include layout="@layout/horizontal_line" />
+
+    <include layout="@layout/layout_text_view_buttons"/>
+
+</LinearLayout>

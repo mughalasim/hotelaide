@@ -6,7 +6,6 @@ import com.hotelaide.R;
 import com.hotelaide.utils.SharedPrefs;
 
 import static com.hotelaide.utils.Helpers.START_FIRST_TIME;
-import static com.hotelaide.utils.Helpers.START_LAUNCH;
 import static com.hotelaide.utils.Helpers.START_RETURN;
 
 public class DashboardActivity extends ParentActivity {
@@ -22,8 +21,6 @@ public class DashboardActivity extends ParentActivity {
         setContentView(R.layout.activity_dashboard);
 
         initialize(R.id.drawer_dashboard, TAG_LOG);
-
-        findAllViews();
 
         handleExtraBundles();
 
@@ -41,11 +38,6 @@ public class DashboardActivity extends ParentActivity {
 
 
     // BASIC FUNCTIONS =============================================================================
-    private void findAllViews() {
-
-
-    }
-
     private void handleExtraBundles() {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getString(START_FIRST_TIME) != null) {

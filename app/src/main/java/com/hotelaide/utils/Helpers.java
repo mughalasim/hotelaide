@@ -9,7 +9,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -22,7 +21,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -58,8 +56,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -74,7 +70,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
-import static android.content.pm.PackageManager.GET_SIGNATURES;
 import static android.content.pm.PackageManager.NameNotFoundException;
 
 public class Helpers {
@@ -92,7 +87,6 @@ public class Helpers {
     public final static int INT_PERMISSIONS_CAMERA = 601;
 
     public final static String BroadcastValue = "com.hotelaide.ACTIONLOGOUT";
-    public final static String BroadcastValueAsyncCompleted = "com.hotelaide.COMPLETED";
 
     public final static String START_FIRST_TIME = "FIRSTTIMER";
     public final static String START_RETURN = "RETURN";
@@ -140,7 +134,9 @@ public class Helpers {
                 break;
 
             case R.id.drawer_my_profile:
-                context.startActivity(new Intent(context, ProfileViewActivity.class));
+                context.startActivity(new Intent(context, ProfileViewActivity.class)
+                        .putExtra("EDIT_MODE", "EDIT_MODE")
+                );
                 break;
 
             case R.id.drawer_about_us:
@@ -181,30 +177,30 @@ public class Helpers {
         }
     }
 
-    public void getShaCertificate() {
-        PackageInfo info;
-        try {
-
-            info = context.getPackageManager().getPackageInfo(
-                    "com.hotelaide", GET_SIGNATURES);
-
-            for (android.content.pm.Signature signature : info.signatures) {
-                MessageDigest md;
-                md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String something = new String(Base64.encode(md.digest(), 0));
-                Log.e("Hash key", something);
-                System.out.println("Hash key" + something);
-            }
-
-        } catch (NameNotFoundException e) {
-            LogThis(TAG_LOG, "name not found " + e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            LogThis(TAG_LOG, "no such algorithm " + e.toString());
-        } catch (Exception e) {
-            LogThis(TAG_LOG, "exception " + e.toString());
-        }
-    }
+//    public void getShaCertificate() {
+//        PackageInfo info;
+//        try {
+//
+//            info = context.getPackageManager().getPackageInfo(
+//                    "com.hotelaide", GET_SIGNATURES);
+//
+//            for (android.content.pm.Signature signature : info.signatures) {
+//                MessageDigest md;
+//                md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                String something = new String(Base64.encode(md.digest(), 0));
+//                Log.e("Hash key", something);
+//                System.out.println("Hash key" + something);
+//            }
+//
+//        } catch (NameNotFoundException e) {
+//            LogThis(TAG_LOG, "name not found " + e.toString());
+//        } catch (NoSuchAlgorithmException e) {
+//            LogThis(TAG_LOG, "no such algorithm " + e.toString());
+//        } catch (Exception e) {
+//            LogThis(TAG_LOG, "exception " + e.toString());
+//        }
+//    }
 
 
     // DIALOGS AND DISPLAYS ========================================================================
@@ -464,8 +460,8 @@ public class Helpers {
 
     public String formatDateDuration(String start, String end) {
 
-        Date dateStart = null;
-        Date dateEnd = null;
+        Date dateStart;
+        Date dateEnd;
 
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -493,7 +489,7 @@ public class Helpers {
 
     public String formatAge(String dob) {
 
-        Date dateDOB = null;
+        Date dateDOB;
 
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -638,8 +634,8 @@ public class Helpers {
     private int getNotificationIcon() {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
         return useWhiteIcon ?
-                R.drawable.main_logo_icon :
-                R.drawable.main_logo_icon;
+                R.mipmap.ic_launcher:
+                R.mipmap.ic_launcher;
     }
 
 

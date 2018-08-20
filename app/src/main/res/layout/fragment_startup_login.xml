@@ -17,7 +17,6 @@
             style="@style/Text_Title"
             android:text="@string/txt_welcome" />
 
-
         <include layout="@layout/horizontal_line" />
 
         <TextView
@@ -49,6 +48,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
+                android:paddingStart="@dimen/padding_small"
                 android:paddingEnd="@dimen/padding_small"
                 android:contentDescription="@string/app_name" />
 
@@ -56,7 +56,6 @@
 
 
         <include layout="@layout/layout_text_view_button" />
-
 
         <include layout="@layout/horizontal_line"/>
 

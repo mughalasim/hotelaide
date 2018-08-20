@@ -22,11 +22,10 @@
     <string name="error_no_jobs">Oops! No Jobs found for the search criteria above</string>
     <string name="error_pass">Oops! Your new and confirmed password do not match</string>
     <string name="error_same_date">Start date cannot be the same as the end date</string>
+    <string name="error_app_not_installed">This App is not installed on your device</string>
 
     <!--LOGGING =================================================================================-->
     <string name="log_exception">EXCEPTION:&#160;</string>
-    <string name="log_response">RESPONSE:&#160;</string>
-    <string name="log_response_length">RESPONSE LENGTH:&#160;</string>
 
 
     <!-- About Us ===============================================================================-->
@@ -41,7 +40,6 @@
 
     <!--LOADING DIALOGS =========================================================================-->
     <string name="progress_fetch_fb_details">fetching your details from Facebook…please wait…</string>
-    <string name="progress_loading_account_update">Updating your account. Please wait…</string>
     <string name="progress_sign_up">Creating your account, please wait…</string>
 
 
@@ -63,9 +61,6 @@
     <!--ALL DRAWER TEXTS ========================================================================-->
     <string name="drawer_dashboard">Dashboard</string>
     <string name="drawer_find_jobs">Find Jobs</string>
-    <string name="drawer_messages">Messages</string>
-    <string name="drawer_registration">Hotel Registration</string>
-    <string name="drawer_subscription">Subscription Plan</string>
     <string name="drawer_my_profile_view">My Profile</string>
     <string name="drawer_settings">Settings</string>
     <string name="drawer_about_us">About Us</string>
@@ -98,13 +93,12 @@
     </string-array>
 
     <!-- LAYOUT SET TEXT ========================================================================-->
+    <string name="txt_edit_profile">Edit Profile</string>
+    <string name="txt_share">Share</string>
     <string name="txt_cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="txt_ok">OK</string>
-    <string name="txt_back">BACK</string>
     <string name="txt_enable">ENABLE</string>
     <string name="txt_loading_please_wait">Loading… please wait…</string>
-    <string name="txt_update_details">UPDATE</string>
-    <string name="txt_availability">Availability:&#160;</string>
     <string name="txt_no_items_found">No results found</string>
     <string name="txt_open_bracket">(</string>
     <string name="txt_closed_bracket">)&#160;</string>
@@ -125,12 +119,8 @@
     <string name="txt_address_landline">Landline:&#160;</string>
     <string name="txt_address_mobile">Mobile:&#160;</string>
     <string name="txt_errors">Errors</string>
-    <string name="txt_set_image">You can set this image by selecting one from your gallery or opt to take a new picture from your camera</string>
-    <string name="txt_camera">CAMERA</string>
-    <string name="txt_gallery">GALLERY</string>
     <string name="txt_take_me_there">Take Me There</string>
     <string name="txt_alert">Alert!</string>
-    <string name="txt_update_password">UPDATE PASSWORD</string>
     <string name="txt_delete_account">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap OK to proceed or CANCEL to go back</string>
     <string name="txt_to">&#160;to&#160;</string>
     <string name="txt_from">from&#160;</string>
@@ -163,6 +153,7 @@
     <string name="txt_institution_name">Institution Name</string>
     <string name="txt_present">Present</string>
     <string name="txt_sign_up_google">SIGN UP WITH GOOGLE</string>
+    <string name="txt_profile_completion">Profile Completion&#160;</string>
 
 
 </resources>

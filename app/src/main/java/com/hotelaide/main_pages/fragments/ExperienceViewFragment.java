@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.InflateException;
@@ -203,10 +204,10 @@ public class ExperienceViewFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-            RelativeLayout
-                    no_list_item,
+            CardView
                     list_item;
-
+            RelativeLayout
+                    no_list_item;
             final TextView
                     txt_no_results,
                     txt_name,
@@ -216,11 +217,13 @@ public class ExperienceViewFragment extends Fragment {
                     txt_current,
                     txt_responsibilities_field_label,
                     txt_responsibilities_field;
+
             final ImageView btn_delete;
 
             ViewHolder(View v) {
                 super(v);
-                txt_no_results = v.findViewById(R.id.txt_no_results);
+                // LIST ITEM
+                list_item = v.findViewById(R.id.list_item);
                 txt_name = v.findViewById(R.id.txt_name);
                 txt_position_level = v.findViewById(R.id.txt_position_level);
                 txt_start_date = v.findViewById(R.id.txt_start_date);
@@ -229,8 +232,10 @@ public class ExperienceViewFragment extends Fragment {
                 txt_responsibilities_field_label = v.findViewById(R.id.txt_responsibilities_field_label);
                 txt_responsibilities_field = v.findViewById(R.id.txt_responsibilities_field);
                 btn_delete = v.findViewById(R.id.btn_delete);
+                // NO LIST ITEM
                 no_list_item = v.findViewById(R.id.no_list_items);
-                list_item = v.findViewById(R.id.list_item);
+                txt_no_results = v.findViewById(R.id.txt_no_results);
+
             }
 
         }

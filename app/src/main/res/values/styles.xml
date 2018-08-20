@@ -13,11 +13,11 @@
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowMinWidthMajor">98%</item>
         <item name="android:windowMinWidthMinor">98%</item>
+        <item name="android:itemBackground">@drawable/bckgrd_app</item>
     </style>
 
 
     <!-- DRAWER ARROW STYLE =====================================================================-->
-
     <style name="WhiteDrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@color/colorPrimary</item>
@@ -25,18 +25,25 @@
 
 
     <!-- TRANSITIONS ============================================================================-->
-
     <style name="customTransition">
         <item name="android:windowEnterAnimation">@anim/fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
 
-    <!-- SPINNER TEXT STYLES ====================================================================-->
+    <!-- CARD THEME =============================================================================-->
+    <style name="Card_Layout" parent="AppTheme">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginEnd">@dimen/padding_tiny</item>
+        <item name="android:layout_marginStart">@dimen/padding_tiny</item>
+        <item name="cardElevation">@dimen/padding_tiny</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardCornerRadius">@dimen/radius_corner</item>
+    </style>
 
 
     <!-- EDIT TEXT STYLES =======================================================================-->
-
     <style name="Edit_Text" parent="AppTheme">
         <item name="android:layout_height">@dimen/height_edit_text</item>
         <item name="android:layout_width">match_parent</item>
@@ -54,7 +61,6 @@
 
 
     <!--TEXT STYLES =============================================================================-->
-
     <style name="Text_Header" parent="AppTheme">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -101,20 +107,9 @@
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="Text_Left" parent="AppTheme">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:gravity">center_vertical|start</item>
-        <item name="android:lineSpacingMultiplier">@dimen/text_line_multiplier</item>
-        <item name="android:lineSpacingExtra">@dimen/text_line_spacing</item>
-        <item name="android:layout_marginTop">@dimen/padding_small</item>
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">@dimen/text_size_normal</item>
-    </style>
 
 
     <!-- BUTTON STYLES ==========================================================================-->
-
     <style name="Button_Yes" parent="AppTheme">
         <item name="android:layout_height">@dimen/height_button</item>
         <item name="android:layout_width">0dp</item>

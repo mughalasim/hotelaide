@@ -29,6 +29,7 @@ import com.hotelaide.R;
 import com.hotelaide.main_pages.models.CountyModel;
 import com.hotelaide.main_pages.models.JobModel;
 import com.hotelaide.utils.Helpers;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +46,28 @@ import static com.hotelaide.BuildConfig.ALGOLIA_SEARCH_API_KEY;
 public class FindJobsActivity extends ParentActivity {
 
     private final String TAG_LOG = "FIND JOBS";
+
+    // HEADER ITEMS -------------------------------------
+    private ImageView btn_add_filter;
     private EditText et_search;
+    TextView
+            txt_filter_location,
+            txt_filter_category,
+            txt_filter_type;
+
+
+    // SLIDING PANEL ------------------------------------
+    private SlidingUpPanelLayout sliding_panel;
+    private Spinner
+            spinner_location,
+            spinner_category,
+            spinner_job_type;
+
+    // FILTER ITEMS -------------------------------------
+    private TextView
+            btn_confirm,
+            btn_cancel;
+
 
     // SEARCH TOOLS -------------------------------------
     private Client client;
@@ -63,8 +85,7 @@ public class FindJobsActivity extends ParentActivity {
     private CompletionHandler completionHandler;
     private static final int HITS_PER_PAGE = 20;
 
-    private Spinner
-            spinner_county;
+
 
     // SEARCH FUNCTIONALITY ------------------------------
     private RecyclerView recycler_view;
@@ -89,6 +110,8 @@ public class FindJobsActivity extends ParentActivity {
 
         setUpTextWatcher();
 
+        setListeners();
+
         searchDatabase();
 
     }
@@ -101,7 +124,26 @@ public class FindJobsActivity extends ParentActivity {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
+        sliding_panel = findViewById(R.id.sliding_panel);
+
+        // HEADER ELEMENTS ----------------------------------
+        btn_add_filter = findViewById(R.id.btn_add_filter);
         et_search = findViewById(R.id.et_search);
+
+        // FILTER ELEMENTS ----------------------------------
+        btn_cancel = findViewById(R.id.btn_cancel);
+        btn_confirm = findViewById(R.id.btn_confirm);
+        spinner_location = findViewById(R.id.spinner_location);
+        spinner_category = findViewById(R.id.spinner_category);
+        spinner_job_type = findViewById(R.id.spinner_job_type);
+
+        ArrayAdapter<CountyModel> dataAdapter1 = new ArrayAdapter<>(
+                this,
+                R.layout.list_item_spinner,
+                db.getAllCounties()
+        );
+        spinner_location.setAdapter(dataAdapter1);
+
 
         // SEARCH FUNCTIONALITY ------------------------------
         recycler_view = findViewById(R.id.recycler_view);
@@ -110,14 +152,6 @@ public class FindJobsActivity extends ParentActivity {
         recycler_view.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(FindJobsActivity.this);
         recycler_view.setLayoutManager(layoutManager);
-
-        spinner_county = findViewById(R.id.spinner_county);
-        ArrayAdapter<CountyModel> dataAdapter1 = new ArrayAdapter<>(
-                this,
-                R.layout.list_item_spinner,
-                db.getAllCounties()
-        );
-        spinner_county.setAdapter(dataAdapter1);
 
 
     }
@@ -144,9 +178,10 @@ public class FindJobsActivity extends ParentActivity {
             }
         });
 
-        spinner_county.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                updateFilterText(spinner_location, txt_filter_location);
                 if (helpers.validateInternetConnection()) {
                     searchOnline();
                 } else {
@@ -157,6 +192,68 @@ public class FindJobsActivity extends ParentActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        setFilterTextWatcher(txt_filter_category);
+        setFilterTextWatcher(txt_filter_location);
+        setFilterTextWatcher(txt_filter_type);
+    }
+
+    private void setFilterTextWatcher(final TextView textView) {
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (textView.getText().toString().length() > 0) {
+                    textView.setVisibility(View.VISIBLE);
+                } else {
+                    textView.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void setListeners() {
+        btn_add_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearAllFilters();
+                sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            }
+        });
+
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            }
+        });
+
+        setListenerForFilter(txt_filter_location, spinner_location);
+    }
+
+    private void setListenerForFilter(TextView textView, final Spinner spinner){
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                spinner.setSelection(1);
             }
         });
     }
@@ -170,11 +267,11 @@ public class FindJobsActivity extends ParentActivity {
     }
 
     private void searchOnline() {
-        if (spinner_county.getSelectedItemPosition() == 0) {
+        if (spinner_location.getSelectedItemPosition() == 0) {
             query.setFilters("");
         } else {
             try {
-                query.setFilters("location.county_name:" + URLEncoder.encode(spinner_county.getSelectedItem().toString(), "UTF-8"));
+                query.setFilters("location.county_name:" + URLEncoder.encode(spinner_location.getSelectedItem().toString(), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
                 query.setFilters("");
@@ -285,6 +382,20 @@ public class FindJobsActivity extends ParentActivity {
         });
     }
 
+    private void clearAllFilters(){
+        spinner_location.setSelection(0);
+        spinner_job_type.setSelection(0);
+        spinner_category.setSelection(0);
+    }
+
+    private void updateFilterText(Spinner spinner, TextView textView) {
+        if (spinner.getSelectedItemPosition() == 0) {
+            textView.setText("");
+        } else {
+            txt_filter_location.setText(spinner.getSelectedItem().toString());
+        }
+    }
+
 
     //==============================================================================================
     //==============================================================================================
@@ -392,8 +503,8 @@ public class FindJobsActivity extends ParentActivity {
 
     private void searchDatabase() {
         model_list.clear();
-        if (spinner_county.getSelectedItemPosition() != 0) {
-            model_list = db.getAllJobModelsBySearch(fetchFromEditText(et_search), spinner_county.getSelectedItem().toString());
+        if (spinner_location.getSelectedItemPosition() != 0) {
+            model_list = db.getAllJobModelsBySearch(fetchFromEditText(et_search), spinner_location.getSelectedItem().toString());
         } else {
             model_list = db.getAllJobModelsBySearch(fetchFromEditText(et_search), "");
         }

@@ -26,12 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.SharedPrefs.USER_COUNTY;
-import static com.hotelaide.utils.SharedPrefs.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
-import static com.hotelaide.utils.SharedPrefs.USER_LAT;
-import static com.hotelaide.utils.SharedPrefs.USER_LNG;
-import static com.hotelaide.utils.SharedPrefs.USER_POSTAL_CODE;
 
 
 public class ChangePasswordFragment extends Fragment {

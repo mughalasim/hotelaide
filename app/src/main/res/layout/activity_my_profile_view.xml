@@ -19,7 +19,6 @@
             android:background="@color/transparent">
 
             <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentScrim="@color/dark_grey"
@@ -37,7 +36,6 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="@dimen/height_panel"
                         android:contentDescription="@string/app_name"
-                        android:paddingBottom="@dimen/padding_medium"
                         android:scaleType="centerCrop"
                         android:src="@drawable/bckgrd_transparent" />
 
@@ -45,56 +43,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="@dimen/height_panel"
-                        android:alpha="0.4"
+                        android:alpha="0.3"
                         android:contentDescription="@string/app_name"
-                        android:paddingBottom="@dimen/padding_medium"
                         android:scaleType="centerCrop"
                         android:src="@color/black" />
-
-                    <ImageView
-                        android:id="@+id/btn_share"
-                        android:layout_width="@dimen/img_size_tiny"
-                        android:layout_height="@dimen/img_size_tiny"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_margin="@dimen/padding_small"
-                        android:contentDescription="@string/app_name"
-                        app:srcCompat="@drawable/ic_share" />
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:orientation="horizontal">
-
-                        <SeekBar
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/padding_tiny"
-                            android:layout_alignBaseline="@+id/progress_label"
-                            android:background="@color/transparent"
-                            android:focusable="false"
-                            android:max="100"
-                            android:paddingEnd="0dp"
-                            android:paddingStart="0dp"
-                            android:progress="20"
-                            android:thumb="@drawable/bckgrd_button_yes" />
-
-                        <TextView
-                            android:id="@+id/progress_label"
-                            style="@style/Text_Small"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="0dp"
-                            android:text="Completion " />
-
-                        <TextView
-                            android:id="@+id/txt_profile_progress"
-                            style="@style/Text_Small"
-                            android:layout_marginTop="0dp"
-                            android:layout_toEndOf="@+id/progress_label"
-                            android:text="20%" />
-
-                    </RelativeLayout>
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/img_avatar"
@@ -102,7 +54,7 @@
                         android:layout_height="@dimen/img_size_large"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="@dimen/padding_medium"
+                        android:layout_marginBottom="@dimen/padding_tiny"
                         android:scaleType="centerCrop"
                         android:src="@color/light_grey"
                         app:riv_border_color="@color/colorAccentDark"
@@ -130,12 +82,47 @@
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/padding_large">
 
+                <!-- PROGRESS ===================================================================-->
+                <RelativeLayout
+                    android:id="@+id/rl_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_button"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seek_bar_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:progress="20"
+                        android:max="100"
+                        android:paddingStart="@dimen/padding_small"
+                        android:paddingEnd="@dimen/padding_small"
+                        android:thumb="@drawable/bckgrd_transparent"
+                        android:progressDrawable="@drawable/progress_background" />
+
+                    <TextView
+                        android:id="@+id/progress_label"
+                        style="@style/Text_Small"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="0dp"
+                        android:textStyle="bold"
+                        android:layout_centerInParent="true"
+                        android:text="@string/txt_profile_completion" />
+
+                    <TextView
+                        android:id="@+id/txt_progress"
+                        style="@style/Text_Small"
+                        android:textStyle="bold"
+                        android:layout_marginTop="0dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toEndOf="@+id/progress_label" />
+
+                </RelativeLayout>
+
                 <!-- BASIC INFO =================================================================-->
                 <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/padding_small"
-                    app:cardCornerRadius="@dimen/radius_corner">
+                    style="@style/Card_Layout">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -147,9 +134,7 @@
                             android:layout_height="@dimen/height_button"
                             android:layout_marginTop="0dp"
                             android:background="@color/light_grey"
-                            android:drawableEnd="@drawable/ic_edit"
                             android:gravity="start|center_vertical"
-                            android:onClick="profileEdit"
                             android:paddingEnd="@dimen/padding_small"
                             android:paddingStart="@dimen/padding_small"
                             android:text="@string/nav_profile" />
@@ -167,18 +152,14 @@
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text="Asim"
                                 android:textStyle="bold" />
-
 
                             <TextView
                                 android:id="@+id/txt_user_l_name"
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text="Mughal"
                                 android:textStyle="bold" />
-
 
                             <TextView
                                 style="@style/Text_Normal"
@@ -207,6 +188,7 @@
                             android:layout_marginTop="@dimen/padding_tiny"
                             android:orientation="horizontal"
                             android:paddingEnd="@dimen/padding_small"
+                            android:layout_marginBottom="@dimen/padding_tiny"
                             android:paddingStart="@dimen/padding_small">
 
                             <TextView
@@ -219,23 +201,25 @@
                                 android:id="@+id/txt_user_dob"
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:text="18-09-1992" />
+                                android:layout_marginTop="0dp" />
 
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/txt_user_full_address"
                             style="@style/Text_Normal"
-                            android:layout_marginTop="@dimen/padding_tiny"
+                            android:layout_marginTop="0dp"
+                            android:visibility="gone"
+                            android:layout_marginBottom="@dimen/padding_tiny"
                             android:paddingEnd="@dimen/padding_small"
                             android:paddingStart="@dimen/padding_small" />
 
                         <TextView
                             android:id="@+id/txt_user_county_name"
                             style="@style/Text_Normal"
-                            android:layout_marginTop="@dimen/padding_tiny"
+                            android:visibility="gone"
                             android:layout_marginBottom="@dimen/padding_tiny"
+                            android:layout_marginTop="0dp"
                             android:paddingEnd="@dimen/padding_small"
                             android:paddingStart="@dimen/padding_small" />
 
@@ -245,11 +229,7 @@
 
                 <!-- CONTACT INFO ===============================================================-->
                 <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/padding_small"
-                    android:layout_marginStart="@dimen/padding_small"
-                    app:cardCornerRadius="@dimen/radius_corner">
+                    style="@style/Card_Layout">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -261,9 +241,7 @@
                             android:layout_height="@dimen/height_button"
                             android:layout_marginTop="0dp"
                             android:background="@color/light_grey"
-                            android:drawableEnd="@drawable/ic_edit"
                             android:gravity="start|center_vertical"
-                            android:onClick="profileEdit"
                             android:paddingEnd="@dimen/padding_small"
                             android:paddingStart="@dimen/padding_small"
                             android:text="@string/nav_contact_us" />
@@ -353,9 +331,7 @@
                     android:layout_height="@dimen/height_button"
                     android:layout_marginTop="@dimen/padding_small"
                     android:background="@color/dark_grey"
-                    android:drawableEnd="@drawable/ic_edit"
                     android:gravity="start|center_vertical"
-                    android:onClick="profileEdit"
                     android:paddingEnd="@dimen/padding_small"
                     android:paddingStart="@dimen/padding_small"
                     android:text="@string/nav_education" />
@@ -373,9 +349,7 @@
                     android:layout_height="@dimen/height_button"
                     android:layout_marginTop="@dimen/padding_small"
                     android:background="@color/dark_grey"
-                    android:drawableEnd="@drawable/ic_edit"
                     android:gravity="start|center_vertical"
-                    android:onClick="profileEdit"
                     android:paddingEnd="@dimen/padding_small"
                     android:paddingStart="@dimen/padding_small"
                     android:text="@string/nav_work" />

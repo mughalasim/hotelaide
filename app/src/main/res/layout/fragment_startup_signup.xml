@@ -169,7 +169,8 @@
             android:paddingTop="@dimen/text_size_small"
             android:paddingBottom="@dimen/text_size_small"
             android:layout_width="match_parent"
-            android:paddingLeft="@dimen/padding_small"
+            android:paddingStart="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
             android:layout_height="@dimen/height_button"
             android:layout_marginTop="@dimen/padding_small"
             android:text="SIGN UP WITH FACEBOOK" />
@@ -187,12 +188,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="0dp"
             android:layout_marginTop="@dimen/padding_small"
-            android:layout_weight="0"
             android:paddingTop="@dimen/text_size_small"
             android:paddingBottom="@dimen/text_size_small"
             android:background="@drawable/bckgrd_text_fields"
-            android:drawableLeft="@drawable/googleg_standard_color_18"
+            android:drawableStart="@drawable/googleg_standard_color_18"
             android:paddingStart="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
             android:text="SIGN UP WITH GOOGLE"
             android:textColor="@color/colorPrimaryDark" />
 

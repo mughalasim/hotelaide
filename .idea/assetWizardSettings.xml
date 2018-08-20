@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/android-studio%203/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_share_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_format_list_bulleted_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_share" />
-                            <entry key="sourceFile" value="C:\Program Files\Android\android-studio 3\bin\C:\Users\Asim Mughal" />
+                            <entry key="outputName" value="ic_filter" />
+                            <entry key="sourceFile" value="$APPLICATION_HOME_DIR$/bin/C:\Program Files\Android\android-studio 3\bin\C:\Users\Asim Mughal" />
                           </map>
                         </option>
                       </PersistentState>

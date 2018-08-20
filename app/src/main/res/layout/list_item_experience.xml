@@ -3,122 +3,125 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bckgrd_text_fields"
-    android:orientation="vertical"
-    android:layout_marginTop="@dimen/padding_small"
-    android:padding="@dimen/padding_tiny">
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:id="@+id/list_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/Card_Layout">
 
-        <LinearLayout
-            android:id="@+id/top_panel"
+        <RelativeLayout
+            android:padding="@dimen/padding_tiny"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/top_panel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/txt_position_level"
-                    style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:maxLines="1"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:text="@string/txt_at"
-                    android:textColor="@color/colorPrimary" />
+                    <TextView
+                        android:id="@+id/txt_position_level"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:maxLines="1"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_name"
-                    style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:maxLines="1"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold" />
+                    <TextView
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/txt_at"
+                        android:textColor="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/txt_name"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:maxLines="1"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/txt_from"
+                        android:textColor="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/txt_start_date"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:maxLines="1" />
+
+                    <TextView
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/txt_to"
+                        android:textColor="@color/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/txt_end_date"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:maxLines="1" />
+
+                    <TextView
+                        android:id="@+id/txt_current"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/txt_present"
+                        android:textColor="@color/colorPrimary" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/text_margin"
-                android:orientation="horizontal">
+                android:layout_below="@+id/top_panel"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txt_responsibilities_field_label"
                     style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:text="@string/txt_from"
+                    android:layout_marginTop="@dimen/padding_tiny"
+                    android:text="@string/txt_responsibilities"
                     android:textColor="@color/colorPrimary" />
 
                 <TextView
-                    android:id="@+id/txt_start_date"
+                    android:id="@+id/txt_responsibilities_field"
                     style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:maxLines="1" />
-
-                <TextView
-                    style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:text="@string/txt_to"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/txt_end_date"
-                    style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:maxLines="1" />
-
-                <TextView
-                    android:id="@+id/txt_current"
-                    style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:text="@string/txt_present"
-                    android:textColor="@color/colorPrimary" />
+                    android:layout_marginTop="@dimen/text_margin"
+                    android:maxLines="3"
+                    android:text="@string/about1" />
 
             </LinearLayout>
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/btn_delete"
+                android:layout_width="@dimen/padding_small"
+                android:layout_height="@dimen/padding_medium"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/ic_cancel" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/top_panel"
-            android:orientation="vertical">
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/txt_responsibilities_field_label"
-                style="@style/Text_Normal"
-                android:layout_marginTop="@dimen/padding_tiny"
-                android:text="@string/txt_responsibilities"
-                android:textColor="@color/colorPrimary" />
-
-            <TextView
-                android:id="@+id/txt_responsibilities_field"
-                style="@style/Text_Normal"
-                android:layout_marginTop="@dimen/text_margin"
-                android:maxLines="3"
-                android:text="@string/about1" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/btn_delete"
-            android:layout_width="@dimen/padding_small"
-            android:layout_height="@dimen/padding_medium"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="@string/app_name"
-            app:srcCompat="@drawable/ic_cancel" />
-
-    </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
     <include layout="@layout/list_item_none"/>
 

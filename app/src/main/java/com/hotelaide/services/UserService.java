@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import com.hotelaide.BuildConfig;
-import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
