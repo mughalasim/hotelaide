@@ -396,7 +396,7 @@ public class Database extends SQLiteOpenHelper {
     public List<CountyModel> getAllCounties() {
         final List<CountyModel> arrayList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.query(COUNTY_TABLE_NAME, null, null, null, null, null, COUNTY_ID);
+        Cursor cursor = db.query(COUNTY_TABLE_NAME, null, null, null, null, null, COUNTY_NAME);
 
         CountyModel countyModelNull = new CountyModel();
         countyModelNull.id = 0;
@@ -441,7 +441,6 @@ public class Database extends SQLiteOpenHelper {
 
         return county_id;
     }
-
 
     public String getCountyNameByID(int county_id) {
         String county_name = "";

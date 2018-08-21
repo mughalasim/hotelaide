@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -46,7 +47,7 @@ import static com.hotelaide.utils.SharedPrefs.USER_PHONE;
 
 public class ProfileUpdateFragment extends Fragment {
 
-    private View rootview;
+    private View root_view;
 
     private Helpers helpers;
 
@@ -82,9 +83,9 @@ public class ProfileUpdateFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootview == null && getActivity() != null) {
+        if (root_view == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.fragment_profile_update, container, false);
+                root_view = inflater.inflate(R.layout.fragment_profile_update, container, false);
 
                 helpers = new Helpers(getActivity());
 
@@ -100,30 +101,36 @@ public class ProfileUpdateFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(rootview);
+            ((ViewGroup) container.getParent()).removeView(root_view);
         }
-        return rootview;
+        return root_view;
     }
 
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        txt_user_email = rootview.findViewById(R.id.txt_user_email);
-        txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
+        txt_user_email = root_view.findViewById(R.id.txt_user_email);
+        txt_user_dob = root_view.findViewById(R.id.txt_user_dob);
 
-        btn_update = rootview.findViewById(R.id.btn_update);
+        btn_update = root_view.findViewById(R.id.btn_update);
 
         setDates();
 
-        et_user_first_name = rootview.findViewById(R.id.et_user_first_name);
-        et_user_last_name = rootview.findViewById(R.id.et_user_last_name);
-        spinner_user_gender = rootview.findViewById(R.id.spinner_user_gender);
-        txt_user_email = rootview.findViewById(R.id.txt_user_email);
-        et_user_phone = rootview.findViewById(R.id.et_user_phone);
-        ccp_user_country_code = rootview.findViewById(R.id.ccp_user_country_code);
+        et_user_first_name = root_view.findViewById(R.id.et_user_first_name);
+        et_user_last_name = root_view.findViewById(R.id.et_user_last_name);
+        spinner_user_gender = root_view.findViewById(R.id.spinner_user_gender);
+        txt_user_email = root_view.findViewById(R.id.txt_user_email);
+        et_user_phone = root_view.findViewById(R.id.et_user_phone);
+        ccp_user_country_code = root_view.findViewById(R.id.ccp_user_country_code);
         ccp_user_country_code.registerPhoneNumberTextView(et_user_phone);
-        txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
+        txt_user_dob = root_view.findViewById(R.id.txt_user_dob);
 
+        if (getActivity() != null)
+            spinner_user_gender.setAdapter(new ArrayAdapter<>(
+                    getActivity(),
+                    R.layout.list_item_spinner,
+                    getResources().getStringArray(R.array.select_gender)
+            ));
 
     }
 

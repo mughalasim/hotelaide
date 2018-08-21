@@ -46,6 +46,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
@@ -250,6 +251,7 @@ public class ExperienceFragment extends Fragment {
                     rl_end_date.setVisibility(View.VISIBLE);
                 } else {
                     rl_end_date.setVisibility(View.GONE);
+                    txt_end_date.setText(getString(R.string.txt_select_date));
                 }
             }
         });
@@ -410,6 +412,12 @@ public class ExperienceFragment extends Fragment {
 
     private void openBottomPanel(ExperienceModel experienceModel, Boolean isUpdate) {
         sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+        if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_EDUCATION)) {
+            radio_btn_no.setText(R.string.txt_study_completed);
+            radio_btn_yes.setText(R.string.txt_study_incomplete);
+        }
+
         if (isUpdate) {
             txt_title.setText(R.string.txt_edit_exp);
             txt_id.setText(String.valueOf(experienceModel.experience_id));
@@ -417,11 +425,13 @@ public class ExperienceFragment extends Fragment {
             et_position_level.setText(experienceModel.position_level);
             txt_start_date.setText(experienceModel.start_date);
             txt_end_date.setText(experienceModel.end_date);
+
             if (experienceModel.current == 1) {
                 radio_btn_yes.setChecked(true);
             } else {
                 radio_btn_no.setChecked(true);
             }
+
             et_responsibilities_field.setText(experienceModel.responsibilities_field);
             btn_confirm.setText(R.string.txt_update);
 

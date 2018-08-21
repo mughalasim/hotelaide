@@ -51,11 +51,9 @@
         <Spinner
             android:id="@+id/spinner_user_gender"
             style="@style/Edit_Text"
-            android:entries="@array/select_gender"
+            android:drawableStart="@drawable/ic_location"
             android:gravity="end|center_vertical"
-            android:hint="@string/et_hint_last_name"
-            android:inputType="text"
-            android:textAlignment="textEnd" />
+            android:padding="0dp" />
 
 
         <!--EMAIL ===============================================================================-->

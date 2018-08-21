@@ -562,7 +562,7 @@ public class Helpers {
 
     public void animateSlide_in(View v) {
         YoYo.with(Techniques.SlideInRight)
-                .duration(INT_ANIMATION_TIME).delay(10)
+                .duration(INT_ANIMATION_TIME).delay(0)
                 .playOn(v);
     }
 
@@ -657,17 +657,17 @@ public class Helpers {
                     }
 
                 } catch (JSONException e) {
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
+                    LogThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
+                    LogThis(TAG_LOG, e.toString());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
+                LogThis(TAG_LOG, t.toString());
+                LogThis(TAG_LOG, call.toString());
             }
 
         });
@@ -698,17 +698,17 @@ public class Helpers {
                     }
 
                 } catch (JSONException e) {
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
+                    LogThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    LogThis(TAG_LOG, context.getString(R.string.log_exception) + e.toString());
+                    LogThis(TAG_LOG, e.toString());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + t.toString());
-                LogThis(TAG_LOG, context.getString(R.string.log_exception) + call.toString());
+                LogThis(TAG_LOG, t.toString());
+                LogThis(TAG_LOG, call.toString());
             }
 
         });

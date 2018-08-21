@@ -185,14 +185,15 @@ public class ExperienceViewFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.LogThis(TAG_LOG, t.toString());
-                populateExperienceFromDB();
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                if(getActivity()!=null) {
+                    Helpers.LogThis(TAG_LOG, t.toString());
+                    populateExperienceFromDB();
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    } else {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    }
                 }
-
             }
         });
     }

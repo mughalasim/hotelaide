@@ -17,16 +17,12 @@
     <string name="error_unknown">Oops! something went wrong, Please try again later</string>
     <string name="error_call_permissions">You have not granted permissions to this app to make calls</string>
     <string name="error_permissions">Dear user, App permissions have not been granted! The App cannot function without these permissions. Please grant them from the phone settings</string>
-    <string name="error_no_we">Oops! No work experience added</string>
-    <string name="error_no_ee">Oops! No educational experience added</string>
-    <string name="error_no_jobs">Oops! No Jobs found for the search criteria above</string>
-    <string name="error_pass">Oops! Your new and confirmed password do not match</string>
+    <string name="error_no_we">No work experience added</string>
+    <string name="error_no_ee">No educational experience added</string>
+    <string name="error_no_jobs">No Jobs found for the search criteria above</string>
+    <string name="error_pass">Your new and confirmed password do not match</string>
     <string name="error_same_date">Start date cannot be the same as the end date</string>
     <string name="error_app_not_installed">This App is not installed on your device</string>
-
-    <!--LOGGING =================================================================================-->
-    <string name="log_exception">EXCEPTION:&#160;</string>
-
 
     <!-- About Us ===============================================================================-->
     <string name="about1">Is a cloud based hotel management software that covers all hotel internal operations and becomes the hotel\'s direct gateway to all the online sales and marketing channels.HotelAide was planned not to be another PMS, but a solution that would be Cloud based to offer the ultimate remote accessibility for both hotel owners and management companies. In 2010 we decided to start the development of Cloudinn PMS, to offer hotels and resorts a fully integrated, accessible, flexible, affordable and dynamic solution</string>
@@ -154,6 +150,8 @@
     <string name="txt_present">Present</string>
     <string name="txt_sign_up_google">SIGN UP WITH GOOGLE</string>
     <string name="txt_profile_completion">Profile Completion&#160;</string>
+    <string name="txt_study_completed">Study completed</string>
+    <string name="txt_study_incomplete">Currently studying</string>
 
 
 </resources>

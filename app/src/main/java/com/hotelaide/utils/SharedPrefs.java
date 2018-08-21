@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-import com.hotelaide.R;
 import com.hotelaide.main_pages.models.UserModel;
 
 import org.json.JSONArray;
@@ -137,6 +136,11 @@ public class SharedPrefs {
             setString(USER_GOOGLE_ID, user.getString("google_id"));
             setString(USER_URL, user.getString("profile_url"));
 
+            JSONObject county_object = user.getJSONObject("county");
+            if(!county_object.isNull("id")){
+                setInt(USER_COUNTY, county_object.getInt("id"));
+            }
+
             if (!user.isNull("lat"))
                 setDouble(USER_LAT, user.getDouble("lat"));
 
@@ -191,10 +195,10 @@ public class SharedPrefs {
             response = true;
 
         } catch (JSONException e) {
-            Helpers.LogThis(SHARED_PREFS, context.getString(R.string.log_exception) + e.toString());
+            Helpers.LogThis(SHARED_PREFS,  e.toString());
             response = false;
         } catch (Exception e) {
-            Helpers.LogThis(SHARED_PREFS, context.getString(R.string.log_exception) + e.toString());
+            Helpers.LogThis(SHARED_PREFS,  e.toString());
             response = false;
         }
         return response;

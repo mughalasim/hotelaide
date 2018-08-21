@@ -319,6 +319,7 @@ public class ProfileViewActivity extends ParentActivity {
 
         if (SharedPrefs.getInt(USER_COUNTY) > 0) {
             txt_user_county_name.setText(db.getCountyNameByID(SharedPrefs.getInt(USER_COUNTY)));
+            txt_user_county_name.setVisibility(View.VISIBLE);
         } else {
             txt_user_county_name.setVisibility(View.GONE);
         }

@@ -40,7 +40,7 @@
         android:text="Set Job Type" />
 
     <Spinner
-        android:id="@+id/spinner_job_type"
+        android:id="@+id/spinner_type"
         style="@style/Edit_Text"
         android:drawableStart="@drawable/ic_location"
         android:gravity="end|center_vertical"

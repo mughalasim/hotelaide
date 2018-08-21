@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
 
         <!--0-->
         <item
             android:id="@+id/drawer_dashboard"
+            app:actionViewClass="android.widget.TextView"
             android:title="@string/drawer_dashboard" />
 
 
         <!--1-->
         <item
             android:id="@+id/drawer_find_jobs"
+            app:actionViewClass="android.widget.TextView"
             android:title="@string/drawer_find_jobs" />
 
 
         <!--2-->
         <item
             android:id="@+id/drawer_my_profile"
+            app:actionViewClass="android.widget.TextView"
             android:title="@string/drawer_my_profile_view" />
 
     </group>
@@ -27,11 +31,13 @@
         <!--3-->
         <item
             android:id="@+id/drawer_about_us"
+            app:actionViewClass="android.widget.TextView"
             android:title="@string/drawer_about_us" />
 
         <!--4-->
         <item
             android:id="@+id/drawer_settings"
+            app:actionViewClass="android.widget.TextView"
             android:title="@string/drawer_settings" />
 
     </group>
@@ -41,6 +47,7 @@
         <!--5-->
         <item
             android:id="@+id/drawer_log_out"
+            app:actionViewClass="android.widget.TextView"
             android:title="@string/drawer_log_out" />
 
     </group>

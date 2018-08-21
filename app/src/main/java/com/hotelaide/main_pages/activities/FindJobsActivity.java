@@ -26,7 +26,6 @@ import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
 import com.bumptech.glide.Glide;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.models.CountyModel;
 import com.hotelaide.main_pages.models.JobModel;
 import com.hotelaide.utils.Helpers;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -47,30 +46,31 @@ public class FindJobsActivity extends ParentActivity {
 
     private final String TAG_LOG = "FIND JOBS";
 
-    // HEADER ITEMS -------------------------------------
-    private ImageView btn_add_filter;
-    private EditText et_search;
+    // HEADER ITEMS --------------------------------------------------------------------------------
+    private ImageView
+            btn_add_filter;
+    private EditText
+            et_search;
     TextView
             txt_filter_location,
             txt_filter_category,
             txt_filter_type;
 
 
-    // SLIDING PANEL ------------------------------------
-    private SlidingUpPanelLayout sliding_panel;
+    // BOTTOM SLIDING PANEL ------------------------------------------------------------------------
+    private SlidingUpPanelLayout
+            sliding_panel;
     private Spinner
             spinner_location,
             spinner_category,
-            spinner_job_type;
-
-    // FILTER ITEMS -------------------------------------
+            spinner_type;
     private TextView
             btn_confirm,
             btn_cancel;
 
 
-    // SEARCH TOOLS -------------------------------------
-    private Client client;
+    // SEARCH TOOLS --------------------------------------------------------------------------------
+//    private Client client;
     private Index index;
     private Query query;
     private int
@@ -86,8 +86,7 @@ public class FindJobsActivity extends ParentActivity {
     private static final int HITS_PER_PAGE = 20;
 
 
-
-    // SEARCH FUNCTIONALITY ------------------------------
+    // SEARCH ADAPTER ITEMS ------------------------------------------------------------------------
     private RecyclerView recycler_view;
     private ArrayList<JobModel> model_list = new ArrayList<>();
     private FindJobAdapter adapter;
@@ -106,13 +105,15 @@ public class FindJobsActivity extends ParentActivity {
 
         initializeAlgolia();
 
-        setUpSearchListener();
-
-        setUpTextWatcher();
+        setSearchListener();
 
         setListeners();
 
+        setTextWatcher();
+
         searchDatabase();
+
+        clearAllFilters();
 
     }
 
@@ -126,31 +127,38 @@ public class FindJobsActivity extends ParentActivity {
     private void findAllViews() {
         sliding_panel = findViewById(R.id.sliding_panel);
 
-        // HEADER ELEMENTS ----------------------------------
+        // HEADER ELEMENTS -------------------------------------------------------------------------
         btn_add_filter = findViewById(R.id.btn_add_filter);
         et_search = findViewById(R.id.et_search);
-
-        // FILTER ELEMENTS ----------------------------------
-        btn_cancel = findViewById(R.id.btn_cancel);
-        btn_confirm = findViewById(R.id.btn_confirm);
-        spinner_location = findViewById(R.id.spinner_location);
-        spinner_category = findViewById(R.id.spinner_category);
-        spinner_job_type = findViewById(R.id.spinner_job_type);
         txt_filter_location = findViewById(R.id.txt_filter_location);
         txt_filter_type = findViewById(R.id.txt_filter_type);
         txt_filter_category = findViewById(R.id.txt_filter_category);
 
-        ArrayAdapter<CountyModel> dataAdapter1 = new ArrayAdapter<>(
+        // FILTER ELEMENTS -------------------------------------------------------------------------
+        btn_cancel = findViewById(R.id.btn_cancel);
+        btn_confirm = findViewById(R.id.btn_confirm);
+        spinner_location = findViewById(R.id.spinner_location);
+        spinner_category = findViewById(R.id.spinner_category);
+        spinner_type = findViewById(R.id.spinner_type);
+
+        spinner_location.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.list_item_spinner,
                 db.getAllCounties()
-        );
-        spinner_location.setAdapter(dataAdapter1);
-        spinner_job_type.setAdapter(dataAdapter1);
-        spinner_category.setAdapter(dataAdapter1);
+        ));
+        spinner_type.setAdapter(new ArrayAdapter<>(
+                this,
+                R.layout.list_item_spinner,
+                db.getAllCounties()
+        ));
+        spinner_category.setAdapter(new ArrayAdapter<>(
+                this,
+                R.layout.list_item_spinner,
+                db.getAllCounties()
+        ));
 
 
-        // SEARCH FUNCTIONALITY ------------------------------
+        // SEARCH FUNCTIONALITY --------------------------------------------------------------------
         recycler_view = findViewById(R.id.recycler_view);
         adapter = new FindJobAdapter(model_list);
         recycler_view.setAdapter(adapter);
@@ -161,7 +169,7 @@ public class FindJobsActivity extends ParentActivity {
 
     }
 
-    private void setUpTextWatcher() {
+    private void setTextWatcher() {
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -179,33 +187,6 @@ public class FindJobsActivity extends ParentActivity {
                     searchOnline();
                 } else {
                     searchDatabase();
-                }
-            }
-        });
-
-        setFilterTextWatcher(txt_filter_category);
-        setFilterTextWatcher(txt_filter_location);
-        setFilterTextWatcher(txt_filter_type);
-    }
-
-    private void setFilterTextWatcher(final TextView textView) {
-        textView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (textView.getText().toString().length() > 0) {
-                    textView.setVisibility(View.VISIBLE);
-                } else {
-                    textView.setVisibility(View.GONE);
                 }
             }
         });
@@ -234,71 +215,61 @@ public class FindJobsActivity extends ParentActivity {
             }
         });
 
-        spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateFilterText(spinner_location, txt_filter_location);
-                if (helpers.validateInternetConnection()) {
-                    searchOnline();
-                } else {
-                    searchDatabase();
-                }
-            }
+        setAllListenersForFilter(spinner_location, txt_filter_location);
+        setAllListenersForFilter(spinner_category, txt_filter_category);
+        setAllListenersForFilter(spinner_type, txt_filter_type);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
 
-            }
-        });
-
-        spinner_job_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateFilterText(spinner_job_type, txt_filter_type);
-                if (helpers.validateInternetConnection()) {
-                    searchOnline();
-                } else {
-                    searchDatabase();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        spinner_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateFilterText(spinner_category, txt_filter_category);
-                if (helpers.validateInternetConnection()) {
-                    searchOnline();
-                } else {
-                    searchDatabase();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        setListenerForFilter(txt_filter_location, spinner_location);
-        setListenerForFilter(txt_filter_type, spinner_job_type);
-        setListenerForFilter(txt_filter_category, spinner_category);
     }
 
-    private void setListenerForFilter(TextView textView, final Spinner spinner){
+    private void setAllListenersForFilter(final Spinner spinner, final TextView textView){
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                updateFilterText(spinner, textView);
+                if (helpers.validateInternetConnection()) {
+                    searchOnline();
+                } else {
+                    searchDatabase();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 spinner.setSelection(0);
             }
         });
+
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (textView.getText().toString().length() > 0) {
+                    textView.setVisibility(View.VISIBLE);
+                } else {
+                    textView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
+    // SEARCH FUNCTIONALITY ------------------------------------------------------------------------
     private void initializeAlgolia() {
         Client client = new Client(ALGOLIA_APP_ID, ALGOLIA_SEARCH_API_KEY);
         index = client.getIndex(ALGOLIA_INDEX_NAME);
@@ -326,7 +297,7 @@ public class FindJobsActivity extends ParentActivity {
         index.searchAsync(query, completionHandler);
     }
 
-    private void setUpSearchListener() {
+    private void setSearchListener() {
 
         completionHandler = new CompletionHandler() {
             @Override
@@ -423,9 +394,9 @@ public class FindJobsActivity extends ParentActivity {
         });
     }
 
-    private void clearAllFilters(){
+    private void clearAllFilters() {
         spinner_location.setSelection(0);
-        spinner_job_type.setSelection(0);
+        spinner_type.setSelection(0);
         spinner_category.setSelection(0);
     }
 
@@ -433,17 +404,15 @@ public class FindJobsActivity extends ParentActivity {
         if (spinner.getSelectedItemPosition() == 0) {
             textView.setText("");
         } else {
-            txt_filter_location.setText(spinner.getSelectedItem().toString());
+            textView.setText(spinner.getSelectedItem().toString());
         }
     }
 
 
-    //==============================================================================================
-    //==============================================================================================
     // ADAPTER CLASS ===============================================================================
     public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.ViewHolder> {
         private final ArrayList<JobModel> jobModels;
-        private final String TAG_LOG = "FIND JOB ADAPTER";
+//        private final String TAG_LOG = "FIND JOB ADAPTER";
         private Context context;
 
         class ViewHolder extends RecyclerView.ViewHolder {
@@ -473,7 +442,7 @@ public class FindJobsActivity extends ParentActivity {
 
         }
 
-        public FindJobAdapter(ArrayList<JobModel> jobModels) {
+        FindJobAdapter(ArrayList<JobModel> jobModels) {
             this.jobModels = jobModels;
         }
 
@@ -527,12 +496,6 @@ public class FindJobsActivity extends ParentActivity {
             return jobModels.size();
         }
 
-        public void removeItem(int position) {
-            jobModels.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, jobModels.size());
-        }
-
         public void updateData(ArrayList<JobModel> view_model) {
             jobModels.clear();
             jobModels.addAll(view_model);
@@ -540,7 +503,6 @@ public class FindJobsActivity extends ParentActivity {
         }
 
     }
-
 
     private void searchDatabase() {
         model_list.clear();

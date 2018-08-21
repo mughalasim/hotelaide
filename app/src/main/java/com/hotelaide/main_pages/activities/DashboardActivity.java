@@ -29,6 +29,7 @@ public class DashboardActivity extends ParentActivity {
         helpers.asyncGetCounties();
 
 
+
     }
 
     @Override
@@ -47,8 +48,11 @@ public class DashboardActivity extends ParentActivity {
                     + getString(R.string.app_name) +
                     ", You are on the Dashboard where you can easily navigate through the app.");
 
+            setCountOnTextView(menu_profile, "(Update Profile)");
+
         } else if (extras != null && extras.getString(START_RETURN) != null) {
             helpers.ToastMessage(DashboardActivity.this, "Welcome back " + SharedPrefs.getString(SharedPrefs.USER_F_NAME));
+            setCountOnTextView(menu_find_jobs, "(New)");
 
         }
     }

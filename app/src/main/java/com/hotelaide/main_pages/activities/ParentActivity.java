@@ -7,14 +7,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -64,7 +67,14 @@ public class ParentActivity extends AppCompatActivity implements
 
     private TextView nav_user_name, nav_user_email;
 
-    public TextView toolbar_text;
+    public TextView
+            menu_dashboard,
+            menu_find_jobs,
+            menu_profile,
+            menu_about_us,
+            menu_settings,
+            menu_log_out,
+            toolbar_text;
 
     private RoundedImageView nav_img_user_pic;
 
@@ -116,6 +126,24 @@ public class ParentActivity extends AppCompatActivity implements
         nav_img_user_pic = header.findViewById(R.id.nav_img_user_pic);
         nav_user_banner = header.findViewById(R.id.nav_user_banner);
 
+        navigationView.getMenu().findItem(drawer_id).setChecked(true);
+
+        TextView app_version = findViewById(R.id.app_version);
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            app_version.setText(getString(R.string.txt_version).concat(pInfo.versionName));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // FIND THE MENU ITEMS =====================================================================
+        menu_dashboard = (TextView) navigationView.getMenu().getItem(0).getActionView();
+        menu_find_jobs = (TextView) navigationView.getMenu().getItem(1).getActionView();
+        menu_profile = (TextView) navigationView.getMenu().getItem(2).getActionView();
+        menu_about_us = (TextView) navigationView.getMenu().getItem(3).getActionView();
+        menu_settings = (TextView) navigationView.getMenu().getItem(4).getActionView();
+        menu_log_out = (TextView) navigationView.getMenu().getItem(5).getActionView();
+
     }
 
     void updateDrawer() {
@@ -136,25 +164,41 @@ public class ParentActivity extends AppCompatActivity implements
             }
         });
 
-        navigationView.getMenu().findItem(drawer_id).setChecked(true);
+    }
 
-        TextView app_version = findViewById(R.id.app_version);
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            app_version.setText(getString(R.string.txt_version).concat(pInfo.versionName));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+    void setCountOnTextView(TextView textView, String count) {
+        textView.setGravity(Gravity.CENTER_VERTICAL);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(ContextCompat.getColor(this, R.color.red));
+        textView.setText(count);
+    }
+
+    private void deleteCountOnTextView(int drawer_id) {
+        switch (drawer_id) {
+            case R.id.drawer_dashboard:
+                menu_dashboard.setText("");
+                break;
+
+            case R.id.drawer_find_jobs:
+                menu_find_jobs.setText("");
+                break;
+
+            case R.id.drawer_my_profile:
+                menu_profile.setText("");
+                break;
+
+            case R.id.drawer_about_us:
+                menu_about_us.setText("");
+                break;
+
+            case R.id.drawer_settings:
+                menu_settings.setText("");
+                break;
+
+            case R.id.drawer_log_out:
+                menu_log_out.setText("");
+                break;
         }
-
-
-        // FIND THE MENU ITEMS ==================================================================
-//        MenuItem menu_dashboard = navigationView.getMenu().getItem(0);
-//        MenuItem menu_find_jobs = navigationView.getMenu().getItem(1);
-//        MenuItem menu_my_profile = navigationView.getMenu().getItem(2);
-//        MenuItem menu_about_us = navigationView.getMenu().getItem(3);
-//        MenuItem menu_settings = navigationView.getMenu().getItem(4);
-//        MenuItem menu_log_out = navigationView.getMenu().getItem(5);
-
     }
 
     private void listenExitBroadcast() {
@@ -174,6 +218,7 @@ public class ParentActivity extends AppCompatActivity implements
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         final int id = item.getItemId();
+        deleteCountOnTextView(id);
         drawer.closeDrawer(GravityCompat.START);
         drawer.postDelayed(new Runnable() {
             @Override

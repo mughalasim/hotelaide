@@ -4,8 +4,6 @@
     android:height="@dimen/height_edit_text"
     android:gravity="end|center_vertical"
     android:text="@string/app_name"
-    android:textStyle="bold"
     android:paddingEnd="@dimen/padding_small"
-    android:drawableStart="@drawable/ic_location"
     android:paddingStart="@dimen/padding_small"
     xmlns:android="http://schemas.android.com/apk/res/android" />

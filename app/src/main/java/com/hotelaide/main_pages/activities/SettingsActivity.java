@@ -57,7 +57,6 @@ public class SettingsActivity extends ParentActivity {
     }
 
 
-
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         switch_app_updates = findViewById(R.id.switch_app_updates);
@@ -125,11 +124,11 @@ public class SettingsActivity extends ParentActivity {
 
                 } catch (JSONException e) {
                     helpers.ToastMessage(SettingsActivity.this, getString(R.string.error_server));
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+                    Helpers.LogThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
                     helpers.ToastMessage(SettingsActivity.this, getString(R.string.error_server));
-                    Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + e.toString());
+                    Helpers.LogThis(TAG_LOG, e.toString());
                 }
                 helpers.progressDialog(false);
             }
@@ -137,8 +136,8 @@ public class SettingsActivity extends ParentActivity {
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + t.toString());
-                Helpers.LogThis(TAG_LOG, getString(R.string.log_exception) + call.toString());
+                Helpers.LogThis(TAG_LOG, t.toString());
+                Helpers.LogThis(TAG_LOG, call.toString());
             }
 
         });
