@@ -97,6 +97,7 @@ public class FindJobsActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setContentView(R.layout.activity_find_jobs);
 
         initialize(R.id.drawer_find_jobs, TAG_LOG);
@@ -137,6 +138,8 @@ public class FindJobsActivity extends ParentActivity {
         // FILTER ELEMENTS -------------------------------------------------------------------------
         btn_cancel = findViewById(R.id.btn_cancel);
         btn_confirm = findViewById(R.id.btn_confirm);
+        btn_cancel.setText(getString(R.string.txt_clear));
+        btn_confirm.setText(getString(R.string.txt_search));
         spinner_location = findViewById(R.id.spinner_location);
         spinner_category = findViewById(R.id.spinner_category);
         spinner_type = findViewById(R.id.spinner_type);
@@ -222,7 +225,7 @@ public class FindJobsActivity extends ParentActivity {
 
     }
 
-    private void setAllListenersForFilter(final Spinner spinner, final TextView textView){
+    private void setAllListenersForFilter(final Spinner spinner, final TextView textView) {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -412,7 +415,7 @@ public class FindJobsActivity extends ParentActivity {
     // ADAPTER CLASS ===============================================================================
     public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.ViewHolder> {
         private final ArrayList<JobModel> jobModels;
-//        private final String TAG_LOG = "FIND JOB ADAPTER";
+        //        private final String TAG_LOG = "FIND JOB ADAPTER";
         private Context context;
 
         class ViewHolder extends RecyclerView.ViewHolder {
@@ -483,8 +486,7 @@ public class FindJobsActivity extends ParentActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-
+                        helpers.animateWobble(holder.itemView);
                     }
                 });
 

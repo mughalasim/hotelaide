@@ -43,6 +43,7 @@ public class SharedPrefs {
     public static final String USER_FULL_ADDRESS = "USER_FULL_ADDRESS";
     public static final String USER_COUNTY = "USER_COUNTY";
     public static final String USER_URL = "USER_URL";
+    public static final String USER_PROFILE_COMPLETION = "USER_PROFILE_COMPLETION";
 
     public static final String EXPERIENCE_TYPE_WORK = "WORK_EXPERIENCE";
     public static final String EXPERIENCE_TYPE_EDUCATION = "EDUCATION_EXPERIENCE";
@@ -136,9 +137,13 @@ public class SharedPrefs {
             setString(USER_GOOGLE_ID, user.getString("google_id"));
             setString(USER_URL, user.getString("profile_url"));
 
-            JSONObject county_object = user.getJSONObject("county");
-            if(!county_object.isNull("id")){
+            if(!user.isNull("county")){
+                JSONObject county_object = user.getJSONObject("county");
                 setInt(USER_COUNTY, county_object.getInt("id"));
+            }
+
+            if(!user.isNull("profile_completion")){
+                setInt(USER_PROFILE_COMPLETION, user.getInt("profile_completion"));
             }
 
             if (!user.isNull("lat"))

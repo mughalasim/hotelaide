@@ -142,6 +142,8 @@
     <string name="txt_full_address">Full Address</string>
     <string name="txt_map_location">Location Map (Click to set Location)</string>
     <string name="txt_search_here">search here…</string>
+    <string name="txt_search">Search</string>
+    <string name="txt_clear">Clear</string>
     <string name="txt_delete_experience">Are you sure you wish to delete your experience at&#160;</string>
     <string name="txt_delete">Delete</string>
     <string name="txt_field_study">Field of Study</string>

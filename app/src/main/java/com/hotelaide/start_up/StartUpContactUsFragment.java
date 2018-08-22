@@ -3,7 +3,6 @@ package com.hotelaide.start_up;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,7 @@ public class StartUpContactUsFragment extends Fragment {
             try {
                 rootview = inflater.inflate(R.layout.fragment_startup_contact_us, container, false);
 
-                AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
 
             } catch (InflateException e) {
                 e.printStackTrace();

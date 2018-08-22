@@ -2,7 +2,6 @@ package com.hotelaide.services;
 
 import android.support.annotation.NonNull;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -23,11 +22,13 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
+//import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 public interface LoginService {
     String TAG_LOG = "SERVICE: LOGIN";
 
     OkHttpClient okClient = new OkHttpClient.Builder()
-            .addNetworkInterceptor(new StethoInterceptor())
+//            .addNetworkInterceptor(new StethoInterceptor())
             .addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(@NonNull Chain chain) throws IOException {

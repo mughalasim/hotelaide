@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.method.PasswordTransformationMethod;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -66,7 +65,7 @@ public class ChangePasswordFragment extends Fragment {
 
                 helpers = new Helpers(getActivity());
 
-                AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
 
                 findAllViews();
 

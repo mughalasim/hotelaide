@@ -9,7 +9,7 @@
     sothree:umanoPanelHeight="@dimen/height_panel"
     sothree:umanoShadowHeight="@dimen/line_thickness">
 
-    <com.southernbox.springscrollview.SpringScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -139,7 +139,7 @@
 
         </LinearLayout>
 
-    </com.southernbox.springscrollview.SpringScrollView>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

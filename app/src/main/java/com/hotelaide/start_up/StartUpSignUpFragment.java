@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.method.PasswordTransformationMethod;
 import android.util.TypedValue;
@@ -145,7 +144,7 @@ public class StartUpSignUpFragment extends Fragment {
 
                 initializeGoogle(getActivity());
 
-                AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
 
                 globalUserModel = new UserModel();
 

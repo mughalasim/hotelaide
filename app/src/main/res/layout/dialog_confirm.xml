@@ -17,7 +17,7 @@
 
     <include layout="@layout/horizontal_line"/>
 
-    <com.southernbox.springscrollview.SpringScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -39,6 +39,6 @@
 
         </LinearLayout>
 
-    </com.southernbox.springscrollview.SpringScrollView>
+    </ScrollView>
 
 </LinearLayout>

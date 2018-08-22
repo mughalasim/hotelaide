@@ -3,7 +3,6 @@ package com.hotelaide.main_pages.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +35,7 @@ public class DocumentsFragment extends Fragment {
 
                 helpers = new Helpers(getActivity());
 
-                AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
 
 
 

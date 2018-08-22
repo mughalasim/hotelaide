@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -122,7 +121,7 @@ public class ExperienceFragment extends Fragment {
 
                     root_view = inflater.inflate(R.layout.fragment_experience, container, false);
 
-                    AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
 
                     findAllViews();
 

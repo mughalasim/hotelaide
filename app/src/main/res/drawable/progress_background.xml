@@ -9,7 +9,7 @@
             android:tint="@color/light_grey">
             <corners android:radius="@dimen/radius_corner" />
             <size android:height="@dimen/height_button" />
-            <solid android:color="@color/light_grey" />
+            <solid android:color="@color/grey" />
         </shape>
     </item>
 

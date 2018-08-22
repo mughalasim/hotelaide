@@ -88,6 +88,9 @@ public class ParentActivity extends AppCompatActivity implements
 
 
     void initialize(int drawer_id, String toolbarTitle) {
+
+
+
         helpers = new Helpers(ParentActivity.this);
         db = new Database();
         this.drawer_id = drawer_id;

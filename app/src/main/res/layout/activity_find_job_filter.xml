@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:paddingStart="@dimen/padding_small"
-    android:gravity="center"
     android:paddingEnd="@dimen/padding_small"
-    android:layout_height="match_parent">
+    android:paddingBottom="@dimen/padding_large"
+    android:layout_height="wrap_content">
 
     <TextView
         style="@style/Text_Title"

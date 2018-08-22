@@ -34,15 +34,14 @@
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/btn_add"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/padding_large"
-                android:layout_below="@+id/recycler_view"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/padding_tiny"
+                android:layout_below="@+id/recycler_view"
+                android:layout_margin="@dimen/padding_small"
                 sothree:fabSize="mini"
-                sothree:srcCompat="@drawable/ic_add"
-                sothree:rippleColor="@color/white"/>
+                sothree:rippleColor="@color/white"
+                sothree:srcCompat="@drawable/ic_add" />
 
         </RelativeLayout>
 

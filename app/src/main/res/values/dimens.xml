@@ -13,39 +13,39 @@
 
 
     <!--IMAGE DIMENS ============================================================================-->
-    <dimen name="img_size_large">130sp</dimen>
-    <dimen name="img_size_medium">70sp</dimen>
-    <dimen name="img_size_small">55sp</dimen>
-    <dimen name="img_size_tiny">40sp</dimen>
+    <dimen name="img_size_large">110sp</dimen>
+    <dimen name="img_size_medium">60sp</dimen>
+    <dimen name="img_size_small">50sp</dimen>
+    <dimen name="img_size_tiny">35sp</dimen>
 
 
     <!--PADDING =================================================================================-->
-    <dimen name="padding_large">40dp</dimen>
-    <dimen name="padding_medium">30dp</dimen>
-    <dimen name="padding_small">20dp</dimen>
-    <dimen name="padding_tiny">10dp</dimen>
+    <dimen name="padding_large">35dp</dimen>
+    <dimen name="padding_medium">25dp</dimen>
+    <dimen name="padding_small">14dp</dimen>
+    <dimen name="padding_tiny">8dp</dimen>
 
 
     <!--TEXT SIZES ==============================================================================-->
     <dimen name="text_size_x_large">22sp</dimen>
-    <dimen name="text_size_large">19sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
-    <dimen name="text_size_normal">15sp</dimen>
-    <dimen name="text_size_small">13sp</dimen>
+    <dimen name="text_size_normal">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
 
 
     <!--MARGINS AND SPACINGS ====================================================================-->
-    <dimen name="text_margin">4sp</dimen>
+    <dimen name="text_margin">2sp</dimen>
     <dimen name="text_line_spacing">1sp</dimen>
     <dimen name="text_line_multiplier">1.2</dimen>
 
 
     <!--FIXED ITEM HEIGHTS ======================================================================-->
-    <dimen name="height_button">40sp</dimen>
-    <dimen name="height_edit_text">39sp</dimen>
-    <dimen name="height_panel">45sp</dimen>
-    <dimen name="height_nav_header">120sp</dimen>
-    <dimen name="height_collapsing_toolbar">220sp</dimen>
+    <dimen name="height_button">37sp</dimen>
+    <dimen name="height_edit_text">37sp</dimen>
+    <dimen name="height_panel">40sp</dimen>
+    <dimen name="height_nav_header">110sp</dimen>
+    <dimen name="height_collapsing_toolbar">200sp</dimen>
 
 
 </resources>

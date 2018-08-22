@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.method.PasswordTransformationMethod;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -76,7 +75,7 @@ public class StartUpLoginFragment extends Fragment {
 
                 setListeners();
 
-                AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
 
                 dropDownKeyboard(et_user_email);
 

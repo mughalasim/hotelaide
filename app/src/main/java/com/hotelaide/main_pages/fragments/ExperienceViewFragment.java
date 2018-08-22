@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -79,7 +78,7 @@ public class ExperienceViewFragment extends Fragment {
 
                     root_view = inflater.inflate(R.layout.fragment_experience_view, container, false);
 
-                    AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
 
                     findAllViews();
 

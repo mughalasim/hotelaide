@@ -130,15 +130,13 @@ dependencies {
     // COUNTRY CODE AND PHONE NUMBER SELECTOR
     implementation 'com.github.joielechong:countrycodepicker:2.1.5'
 
-    // SPRING SCROLL
-    implementation 'com.southernbox:SpringScrollView:1.0.0'
 
     // PERMISSIONS CHECKER LIBRARY
     implementation 'pub.devrel:easypermissions:1.2.0'
 
     // STETHO INSPECTOR BY FACEBOOK
-    implementation 'com.facebook.stetho:stetho:1.5.0'
-    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+//    implementation 'com.facebook.stetho:stetho:1.5.0'
+//    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
     // INSTANT SEARCH
     implementation 'com.algolia:algoliasearch-android:3.20.+'

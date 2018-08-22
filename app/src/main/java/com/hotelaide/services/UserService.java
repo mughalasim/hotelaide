@@ -2,17 +2,15 @@ package com.hotelaide.services;
 
 import android.support.annotation.NonNull;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import com.hotelaide.BuildConfig;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
@@ -31,11 +29,13 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
+//import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 public interface UserService {
     String TAG_LOG = "SERVICE: USER";
 
     OkHttpClient okClient = new OkHttpClient.Builder()
-            .addNetworkInterceptor(new StethoInterceptor())
+//            .addNetworkInterceptor(new StethoInterceptor())
             .addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(@NonNull Chain chain) throws IOException {

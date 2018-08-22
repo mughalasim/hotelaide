@@ -1,5 +1,6 @@
 package com.hotelaide.main_pages.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -35,6 +37,7 @@ import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
 import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
 import static com.hotelaide.utils.SharedPrefs.USER_PHONE;
+import static com.hotelaide.utils.SharedPrefs.USER_PROFILE_COMPLETION;
 import static com.hotelaide.utils.SharedPrefs.USER_URL;
 
 public class ProfileViewActivity extends ParentActivity {
@@ -237,22 +240,12 @@ public class ProfileViewActivity extends ParentActivity {
 
     }
 
-    private void setListeners(){
-        seek_bar_progress.setEnabled(false);
-        seek_bar_progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    @SuppressLint("ClickableViewAccessibility")
+    private void setListeners() {
+        seek_bar_progress.setOnTouchListener(new View.OnTouchListener(){
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                txt_progress.setText(String.valueOf(i).concat("%"));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
             }
         });
     }
@@ -333,8 +326,19 @@ public class ProfileViewActivity extends ParentActivity {
 
         txt_user_availability.setText("Immediate");
 
-        seek_bar_progress.setProgress(25);
+        updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
 
+        updateProfileSeekBar(55);
+    }
+
+    private void updateProfileSeekBar(int completion) {
+        if (completion == 100) {
+            rl_progress.setVisibility(View.GONE);
+        } else if(bool_edit_mode){
+            rl_progress.setVisibility(View.VISIBLE);
+            seek_bar_progress.setProgress(completion);
+            txt_progress.setText(String.valueOf(completion).concat("%"));
+        }
     }
 
 }
