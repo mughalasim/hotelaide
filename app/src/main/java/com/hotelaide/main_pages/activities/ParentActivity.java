@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -278,8 +279,8 @@ public class ParentActivity extends AppCompatActivity implements
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.setContentView(R.layout.dialog_confirm);
                             final TextView txt_message = dialog.findViewById(R.id.txt_message);
-                            final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
-                            final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                            final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
+                            final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
                             final TextView txt_title = dialog.findViewById(R.id.txt_title);
                             btn_cancel.setVisibility(View.VISIBLE);
                             txt_title.setText(R.string.txt_old_version_title);

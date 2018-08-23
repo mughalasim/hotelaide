@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
 import android.text.method.PasswordTransformationMethod;
 import android.view.InflateException;
@@ -14,7 +15,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
@@ -37,7 +37,7 @@ public class StartUpLoginFragment extends Fragment {
 
     private View rootview;
 
-    private TextView
+    private MaterialButton
             btn_confirm;
 
     private EditText
@@ -98,8 +98,8 @@ public class StartUpLoginFragment extends Fragment {
         img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
 
 
-        et_user_email = rootview.findViewById(R.id.et_useremail);
-        et_user_pass = rootview.findViewById(R.id.et_userpassword);
+        et_user_email = rootview.findViewById(R.id.et_user_email);
+        et_user_pass = rootview.findViewById(R.id.et_user_password);
 
     }
 

@@ -32,14 +32,13 @@
             android:inputType="textEmailAddress" />
 
 
-        <include layout="@layout/layout_text_view_button" />
+        <include layout="@layout/layout_button" />
 
 
         <include layout="@layout/horizontal_line"/>
 
-        <TextView
-            style="@style/Text_Small"
-            android:paddingTop="@dimen/padding_small"
+        <android.support.design.button.MaterialButton
+            style="@style/Material_Text"
             android:onClick="TERMS_CONDITIONS"
             android:text="@string/txt_terms_conditions" />
 

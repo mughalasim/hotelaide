@@ -3,6 +3,7 @@ package com.hotelaide.main_pages.activities;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.view.View;
 import android.view.Window;
 import android.widget.CompoundButton;
@@ -79,8 +80,8 @@ public class SettingsActivity extends ParentActivity {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_confirm);
                 final TextView txt_message = dialog.findViewById(R.id.txt_message);
-                final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
-                final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
+                final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
                 final TextView txt_title = dialog.findViewById(R.id.txt_title);
                 txt_title.setText(R.string.txt_alert);
                 txt_message.setText(R.string.txt_delete_account);

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -791,8 +792,8 @@ public class ExperienceFragment extends Fragment {
                             final Dialog dialog = new Dialog(getActivity());
                             dialog.setContentView(R.layout.dialog_confirm);
                             final TextView txt_message = dialog.findViewById(R.id.txt_message);
-                            final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
-                            final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                            final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
+                            final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
                             final TextView txt_title = dialog.findViewById(R.id.txt_title);
                             txt_title.setText(getString(R.string.txt_delete));
                             txt_message.setText(getString(R.string.txt_delete_experience).concat(experienceModel.name));

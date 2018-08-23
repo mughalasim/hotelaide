@@ -110,8 +110,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/app_name"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="@dimen/padding_small" />
+                    android:paddingEnd="@dimen/padding_small"
+                    android:paddingStart="0dp" />
 
             </RelativeLayout>
 
@@ -123,17 +123,17 @@
                 android:inputType="textPassword" />
 
 
-            <include layout="@layout/layout_text_view_button" />
+            <include layout="@layout/layout_button" />
 
-            <include layout="@layout/horizontal_line"/>
+            <include layout="@layout/horizontal_line" />
 
-            <TextView
-                style="@style/Text_Small"
+            <android.support.design.button.MaterialButton
+                style="@style/Material_Text"
                 android:onClick="LOGIN"
                 android:text="Already have an account" />
 
-            <TextView
-                style="@style/Text_Small"
+            <android.support.design.button.MaterialButton
+                style="@style/Material_Text"
                 android:onClick="TERMS_CONDITIONS"
                 android:text="@string/txt_terms_conditions" />
 
@@ -155,8 +155,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_panel"
             android:layout_marginTop="0dp"
-            android:textColor="@color/colorPrimary"
-            android:text="Sign up with social Media instead" />
+            android:text="Sign up with social Media instead"
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             style="@style/Text_Normal"
@@ -166,20 +166,20 @@
         <com.facebook.login.widget.LoginButton
             android:id="@+id/btn_login_facebook"
             style="@style/Button_Yes"
-            android:paddingTop="@dimen/text_size_small"
-            android:paddingBottom="@dimen/text_size_small"
             android:layout_width="match_parent"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingEnd="@dimen/padding_small"
             android:layout_height="@dimen/height_button"
             android:layout_marginTop="@dimen/padding_small"
+            android:paddingBottom="@dimen/text_size_small"
+            android:paddingEnd="@dimen/padding_small"
+            android:paddingStart="@dimen/padding_small"
+            android:paddingTop="@dimen/text_size_small"
             android:text="SIGN UP WITH FACEBOOK" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btn_login_google"
             android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/btn_login_google2"
@@ -188,12 +188,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="0dp"
             android:layout_marginTop="@dimen/padding_small"
-            android:paddingTop="@dimen/text_size_small"
-            android:paddingBottom="@dimen/text_size_small"
             android:background="@drawable/bckgrd_text_fields"
             android:drawableStart="@drawable/googleg_standard_color_18"
-            android:paddingStart="@dimen/padding_small"
+            android:paddingBottom="@dimen/text_size_small"
             android:paddingEnd="@dimen/padding_small"
+            android:paddingStart="@dimen/padding_small"
+            android:paddingTop="@dimen/text_size_small"
             android:text="SIGN UP WITH GOOGLE"
             android:textColor="@color/colorPrimaryDark" />
 

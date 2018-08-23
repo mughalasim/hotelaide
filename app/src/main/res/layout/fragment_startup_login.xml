@@ -24,7 +24,7 @@
             android:text="@string/txt_welcome_login" />
 
         <EditText
-            android:id="@+id/et_useremail"
+            android:id="@+id/et_user_email"
             style="@style/Edit_Text"
             android:hint="@string/et_hint_email"
             android:inputType="textEmailAddress" />
@@ -35,7 +35,7 @@
             android:layout_height="@dimen/height_edit_text">
 
             <EditText
-                android:id="@+id/et_userpassword"
+                android:id="@+id/et_user_password"
                 style="@style/Edit_Text"
                 android:paddingTop="0dp"
                 android:layout_marginTop="0dp"
@@ -55,23 +55,22 @@
         </RelativeLayout>
 
 
-        <include layout="@layout/layout_text_view_button" />
+        <include layout="@layout/layout_button" />
 
         <include layout="@layout/horizontal_line"/>
 
-        <TextView
-            style="@style/Text_Small"
+        <android.support.design.button.MaterialButton
+            style="@style/Material_Text"
             android:onClick="SIGN_UP"
-            android:paddingTop="@dimen/padding_small"
             android:text="@string/nav_sign_up" />
 
-        <TextView
-            style="@style/Text_Small"
+        <android.support.design.button.MaterialButton
+            style="@style/Material_Text"
             android:onClick="FORGOT_PASS"
             android:text="@string/txt_forgot_password" />
 
-        <TextView
-            style="@style/Text_Small"
+        <android.support.design.button.MaterialButton
+            style="@style/Material_Text"
             android:onClick="TERMS_CONDITIONS"
             android:text="@string/txt_terms_conditions" />
 

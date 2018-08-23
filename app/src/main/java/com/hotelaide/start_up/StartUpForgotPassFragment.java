@@ -2,13 +2,13 @@ package com.hotelaide.start_up;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
@@ -27,7 +27,7 @@ public class StartUpForgotPassFragment extends Fragment {
 
     private View rootview;
 
-    private TextView
+    private MaterialButton
             btn_confirm;
 
     private EditText et_user_email;

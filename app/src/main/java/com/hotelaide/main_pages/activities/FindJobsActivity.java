@@ -3,6 +3,7 @@ package com.hotelaide.main_pages.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.chip.Chip;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,7 +52,7 @@ public class FindJobsActivity extends ParentActivity {
             btn_add_filter;
     private EditText
             et_search;
-    TextView
+    private Chip
             txt_filter_location,
             txt_filter_category,
             txt_filter_type;
@@ -97,7 +98,6 @@ public class FindJobsActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_find_jobs);
 
         initialize(R.id.drawer_find_jobs, TAG_LOG);
@@ -119,10 +119,13 @@ public class FindJobsActivity extends ParentActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onBackPressed() {
+        if (sliding_panel.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else {
+            finish();
+        }
     }
-
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
@@ -225,11 +228,17 @@ public class FindJobsActivity extends ParentActivity {
 
     }
 
-    private void setAllListenersForFilter(final Spinner spinner, final TextView textView) {
+    private void setAllListenersForFilter(final Spinner spinner, final Chip chip) {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateFilterText(spinner, textView);
+                if (i == 0) {
+                    chip.setChipText("");
+                    chip.setVisibility(View.GONE);
+                } else {
+                    chip.setChipText(spinner.getSelectedItem().toString());
+                    chip.setVisibility(View.VISIBLE);
+                }
                 if (helpers.validateInternetConnection()) {
                     searchOnline();
                 } else {
@@ -243,33 +252,13 @@ public class FindJobsActivity extends ParentActivity {
             }
         });
 
-        textView.setOnClickListener(new View.OnClickListener() {
+        chip.setOnCloseIconClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 spinner.setSelection(0);
             }
         });
 
-        textView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (textView.getText().toString().length() > 0) {
-                    textView.setVisibility(View.VISIBLE);
-                } else {
-                    textView.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
     // SEARCH FUNCTIONALITY ------------------------------------------------------------------------
@@ -401,14 +390,6 @@ public class FindJobsActivity extends ParentActivity {
         spinner_location.setSelection(0);
         spinner_type.setSelection(0);
         spinner_category.setSelection(0);
-    }
-
-    private void updateFilterText(Spinner spinner, TextView textView) {
-        if (spinner.getSelectedItemPosition() == 0) {
-            textView.setText("");
-        } else {
-            textView.setText(spinner.getSelectedItem().toString());
-        }
     }
 
 

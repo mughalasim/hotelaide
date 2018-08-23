@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ContextThemeWrapper;
@@ -77,7 +78,9 @@ public class StartUpSignUpFragment extends Fragment {
     private TextView
             panel_title,
             txt_user_dob,
-            btn_login_google2,
+            btn_login_google2;
+
+    private MaterialButton
             btn_confirm;
 
     private SlidingUpPanelLayout sliding_panel;
@@ -331,8 +334,8 @@ public class StartUpSignUpFragment extends Fragment {
             final Dialog dialog = new Dialog(activity);
             dialog.setContentView(R.layout.dialog_account_password);
             dialog.setCancelable(false);
-            final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
-            final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+            final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
+            final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
             final EditText et_user_pass = dialog.findViewById(R.id.et_user_pass);
             final EditText et_user_pass_confirm = dialog.findViewById(R.id.et_user_pass_confirm);
             final ImageView img_user_pass_toggle = dialog.findViewById(R.id.img_user_pass_toggle);

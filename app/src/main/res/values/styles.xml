@@ -137,4 +137,45 @@
         <item name="android:layout_marginRight">@dimen/padding_small</item>
     </style>
 
+
+    <style name="Material_Button_Yes" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_height">@dimen/height_material_button</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="strokeWidth">@dimen/line_thickness</item>
+        <item name="cornerRadius">@dimen/radius_corner</item>
+        <item name="rippleColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+    </style>
+
+    <style name="Material_Button_No" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_height">@dimen/height_material_button</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="strokeColor">@color/colorAccent</item>
+        <item name="strokeWidth">@dimen/line_thickness</item>
+        <item name="cornerRadius">@dimen/radius_corner</item>
+        <item name="rippleColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+    </style>
+
+    <style name="Material_Text" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">@dimen/radius_corner</item>
+        <item name="rippleColor">@color/red</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+
 </resources>

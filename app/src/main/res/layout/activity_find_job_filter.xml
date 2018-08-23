@@ -50,6 +50,6 @@
 
     <include layout="@layout/horizontal_line" />
 
-    <include layout="@layout/layout_text_view_buttons"/>
+    <include layout="@layout/layout_buttons"/>
 
 </LinearLayout>
