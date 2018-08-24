@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.hotelaide.BuildConfig;
-import com.hotelaide.main_pages.models.CountyModel;
-import com.hotelaide.main_pages.models.ExperienceModel;
-import com.hotelaide.main_pages.models.JobModel;
+import com.hotelaide.main.models.CountyModel;
+import com.hotelaide.main.models.ExperienceModel;
+import com.hotelaide.main.models.JobModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;

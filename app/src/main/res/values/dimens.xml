@@ -16,7 +16,6 @@
     <dimen name="img_size_large">110sp</dimen>
     <dimen name="img_size_medium">60sp</dimen>
     <dimen name="img_size_small">50sp</dimen>
-    <dimen name="img_size_tiny">35sp</dimen>
 
 
     <!--PADDING =================================================================================-->

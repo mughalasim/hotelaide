@@ -32,13 +32,13 @@
                     android:layout_width="match_parent"
                     android:layout_marginTop="@dimen/padding_tiny"
                     android:layout_height="@dimen/height_button"
-                    android:text="Notify me on Updates"
+                    android:text="@string/txt_notify_me"
                     android:textColor="@color/colorAccent" />
 
                 <TextView
                     style="@style/Text_Normal"
                     android:layout_marginTop="0dp"
-                    android:text="Turning this on will allow the app to notify you if there is a new update available in the Play Store" />
+                    android:text="@string/txt_notify_me_desc" />
 
                 <include layout="@layout/horizontal_line" />
 
@@ -46,7 +46,7 @@
                     android:id="@+id/delete_account"
                     style="@style/Text_Small"
                     android:layout_marginTop="@dimen/padding_small"
-                    android:text="Delete your account" />
+                    android:text="@string/txt_delete_your_account" />
 
             </LinearLayout>
 

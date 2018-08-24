@@ -25,17 +25,17 @@
 
         <TextView
             style="@style/Text_Title"
-            android:text="EMAIL" />
+            android:text="@string/et_hint_email" />
 
         <TextView
             style="@style/Text_Normal"
-            android:text="asimkenya@gmail.com" />
+            android:text="@string/txt_email_address" />
 
         <include layout="@layout/horizontal_line" />
 
         <TextView
             style="@style/Text_Title"
-            android:text="TELEPHONE" />
+            android:text="@string/nav_contact_us" />
 
         <LinearLayout
             android:layout_width="match_parent"

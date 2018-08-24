@@ -9,13 +9,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/padding_large"
         android:orientation="vertical">
 
         <TextView
             style="@style/Text_Title"
-            android:text="LOCKED OUT?" />
+            android:text="@string/txt_locked_out" />
 
 
         <include layout="@layout/horizontal_line" />
@@ -23,7 +23,7 @@
         <TextView
             style="@style/Text_Normal"
             android:layout_gravity="center"
-            android:text="Don't worry, give us your email address that you used to sign up and well send you a reset link" />
+            android:text="@string/txt_locked_out_desc" />
 
         <EditText
             android:id="@+id/user_email"

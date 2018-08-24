@@ -309,14 +309,13 @@
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text="Availability: " />
+                                android:text="@string/txt_availability" />
 
                             <TextView
                                 android:id="@+id/txt_user_availability"
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:text="immediate" />
+                                android:layout_marginTop="0dp" />
 
                         </LinearLayout>
 

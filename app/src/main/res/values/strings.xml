@@ -154,6 +154,24 @@
     <string name="txt_profile_completion">Profile Completion&#160;</string>
     <string name="txt_study_completed">Study completed</string>
     <string name="txt_study_incomplete">Currently studying</string>
+    <string name="txt_email_address">info@hotelaide.com</string>
+    <string name="txt_sign_up_header">You could opt to give us some details about you so we can sign you up and get you started</string>
+    <string name="txt_have_account">Already have an account</string>
+    <string name="txt_sign_up_social">Sign up with social Media instead</string>
+    <string name="txt_sign_up_facebook">SIGN UP WITH FACEBOOK</string>
+    <string name="txt_sign_up_desc">Tap on one below and instantly sign up using either of your accounts on Facebook or Google+</string>
+    <string name="txt_locked_out">LOCKED OUT?</string>
+    <string name="txt_locked_out_desc">Don\'t worry, give us your email address that you used to sign up and well send you a reset link</string>
+    <string name="txt_new_account_password">Please set your new password</string>
+    <string name="txt_notify_me">Notify me on Updates</string>
+    <string name="txt_notify_me_desc">Turning this on will allow the app to notify you if there is a new update available in the Play Store</string>
+    <string name="txt_delete_your_account">Delete your account</string>
+    <string name="txt_availability">Availability:&#160;</string>
+    <string name="txt_add_filters">Add Filters</string>
+    <string name="txt_set_location">Set location</string>
+    <string name="txt_set_category">Set Category</string>
+    <string name="txt_set_job_type">Set Job Type</string>
+    <string name="txt_sign_up_social_title">SOCIAL MEDIA SIGN UP</string>
 
 
 </resources>

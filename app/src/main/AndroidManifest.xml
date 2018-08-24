@@ -36,7 +36,7 @@
         <!--START UP PAGES ======================================================================-->
 
         <activity
-            android:name=".start_up.SplashScreenActivity"
+            android:name=".startup.SplashScreenActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
@@ -69,7 +69,7 @@
         </activity>
 
         <activity
-            android:name=".start_up.LoginActivity"
+            android:name=".startup.LoginActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
@@ -77,34 +77,34 @@
 
         <!-- MAIN PAGES =========================================================================-->
 
-        <activity android:name=".main_pages.activities.ParentActivity" />
+        <activity android:name=".main.activities.ParentActivity" />
 
         <activity
-            android:name=".main_pages.activities.DashboardActivity"
+            android:name=".main.activities.DashboardActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".main_pages.activities.FindJobsActivity"
+            android:name=".main.activities.FindJobsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".main_pages.activities.AboutUsActivity"
+            android:name=".main.activities.AboutUsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".main_pages.activities.ProfileActivity"
+            android:name=".main.activities.ProfileActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".main_pages.activities.ProfileViewActivity"
+            android:name=".main.activities.ProfileViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -113,7 +113,7 @@
             android:theme="@style/Base.Theme.AppCompat"/>
 
         <activity
-            android:name=".main_pages.activities.SettingsActivity"
+            android:name=".main.activities.SettingsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -161,7 +161,7 @@
 
         <!--CLOUD MESSAGING SERVICES ============================================================-->
         <service
-            android:name=".utils_external.MyFirebaseMessagingService"
+            android:name=".utils.FireBaseMessagingService"
             android:enabled="true"
             android:exported="false"
             android:stopWithTask="false"

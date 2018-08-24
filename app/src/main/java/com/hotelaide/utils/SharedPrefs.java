@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
-import com.hotelaide.main_pages.models.UserModel;
+import com.hotelaide.main.models.UserModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

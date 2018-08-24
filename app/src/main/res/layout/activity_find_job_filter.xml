@@ -9,13 +9,13 @@
 
     <TextView
         style="@style/Text_Title"
-        android:text="Add Filters" />
+        android:text="@string/txt_add_filters" />
 
     <include layout="@layout/horizontal_line" />
 
     <TextView
         style="@style/Text_Normal"
-        android:text="Set location" />
+        android:text="@string/txt_set_location" />
 
     <Spinner
         android:id="@+id/spinner_location"
@@ -26,7 +26,7 @@
 
     <TextView
         style="@style/Text_Normal"
-        android:text="Set Category" />
+        android:text="@string/txt_set_category" />
 
     <Spinner
         android:id="@+id/spinner_category"
@@ -37,7 +37,7 @@
 
     <TextView
         style="@style/Text_Normal"
-        android:text="Set Job Type" />
+        android:text="@string/txt_set_job_type" />
 
     <Spinner
         android:id="@+id/spinner_type"

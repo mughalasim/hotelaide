@@ -1,7 +1,6 @@
 package com.hotelaide.utils;
 
 import android.Manifest;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -18,7 +17,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
@@ -33,7 +31,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.AccessToken;
@@ -43,15 +40,15 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.main_pages.activities.AboutUsActivity;
-import com.hotelaide.main_pages.activities.DashboardActivity;
-import com.hotelaide.main_pages.activities.FindJobsActivity;
-import com.hotelaide.main_pages.activities.ProfileViewActivity;
-import com.hotelaide.main_pages.activities.SettingsActivity;
-import com.hotelaide.main_pages.models.CountyModel;
+import com.hotelaide.main.activities.AboutUsActivity;
+import com.hotelaide.main.activities.DashboardActivity;
+import com.hotelaide.main.activities.FindJobsActivity;
+import com.hotelaide.main.activities.ProfileViewActivity;
+import com.hotelaide.main.activities.SettingsActivity;
+import com.hotelaide.main.models.CountyModel;
 import com.hotelaide.services.UserService;
-import com.hotelaide.start_up.LoginActivity;
-import com.hotelaide.start_up.SplashScreenActivity;
+import com.hotelaide.startup.LoginActivity;
+import com.hotelaide.startup.SplashScreenActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -571,25 +568,6 @@ public class Helpers {
         YoYo.with(Techniques.FadeIn)
                 .duration(300)
                 .playOn(v);
-    }
-
-    public void animateFloatingActionButton(final FloatingActionButton floatingActionButton, final LottieAnimationView lottieAnimationView) {
-        floatingActionButton.setVisibility(View.GONE);
-        lottieAnimationView.setVisibility(View.VISIBLE);
-        final ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                lottieAnimationView.setProgress((Float) valueAnimator.getAnimatedValue());
-                if (lottieAnimationView.getProgress() == 1f) {
-                    floatingActionButton.setVisibility(View.VISIBLE);
-                    lottieAnimationView.setVisibility(View.GONE);
-                    animator.cancel();
-                    lottieAnimationView.cancelAnimation();
-                }
-            }
-        });
-        animator.start();
     }
 
     public static void animateRecyclerView(View view) {
