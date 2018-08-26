@@ -76,10 +76,7 @@ public class ExperienceFragment extends Fragment {
             txt_start_date,
             txt_end_date,
             btn_cancel,
-            btn_confirm,
-            et_name_label,
-            et_position_level_label,
-            et_responsibilities_field_label;
+            btn_confirm;
     private EditText
             et_name,
             et_position_level,
@@ -163,11 +160,8 @@ public class ExperienceFragment extends Fragment {
         rl_end_date = root_view.findViewById(R.id.rl_end_date);
         radio_group = root_view.findViewById(R.id.radio_group);
 
-        et_name_label = root_view.findViewById(R.id.et_name_label);
         et_name = root_view.findViewById(R.id.et_name);
-        et_position_level_label = root_view.findViewById(R.id.et_position_level_label);
         et_position_level = root_view.findViewById(R.id.et_position_level);
-        et_responsibilities_field_label = root_view.findViewById(R.id.et_responsibilities_field_label);
         et_responsibilities_field = root_view.findViewById(R.id.et_responsibilities_field);
         radio_btn_no = root_view.findViewById(R.id.radio_btn_no);
         radio_btn_yes = root_view.findViewById(R.id.radio_btn_yes);
@@ -180,21 +174,12 @@ public class ExperienceFragment extends Fragment {
         if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
             txt_no_results.setText(getString(R.string.error_no_we));
 
-            et_name_label.setText(getString(R.string.txt_company_name));
-            et_position_level_label.setText(getString(R.string.txt_position_held));
-            et_responsibilities_field_label.setText(getString(R.string.txt_responsibilities));
-
             et_name.setHint(getString(R.string.txt_company_name));
             et_position_level.setHint(getString(R.string.txt_position_held));
             et_responsibilities_field.setHint(getString(R.string.txt_responsibilities));
 
-
         } else {
             txt_no_results.setText(getString(R.string.error_no_ee));
-
-            et_name_label.setText(getString(R.string.txt_institution_name));
-            et_position_level_label.setText(getString(R.string.txt_education_level));
-            et_responsibilities_field_label.setText(getString(R.string.txt_field_study));
 
             et_name.setHint(getString(R.string.txt_institution_name));
             et_position_level.setHint(getString(R.string.txt_education_level));
@@ -358,7 +343,7 @@ public class ExperienceFragment extends Fragment {
             STR_DATE_TYPE = type;
             Calendar cal = Calendar.getInstance(TimeZone.getDefault());
             DatePickerDialog datePicker = new DatePickerDialog(
-                    new ContextThemeWrapper(getActivity(), android.R.style.Theme_Holo_Light_Dialog),
+                    new ContextThemeWrapper(getActivity(), getActivity().getTheme()),
                     datePickerListener,
                     cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH),

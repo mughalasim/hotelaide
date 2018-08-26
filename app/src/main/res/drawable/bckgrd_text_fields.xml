@@ -53,7 +53,7 @@
     <item android:state_focused="false" android:state_pressed="false">
         <shape>
             <gradient android:angle="@dimen/angle_color"
-                android:centerColor="@color/light_grey"
+                android:centerColor="@color/white"
                 android:endColor="@color/white"
                 android:startColor="@color/white" />
             <stroke

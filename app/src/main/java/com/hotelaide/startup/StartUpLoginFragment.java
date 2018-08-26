@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
-import android.text.method.PasswordTransformationMethod;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
@@ -44,14 +42,10 @@ public class StartUpLoginFragment extends Fragment {
             et_user_pass,
             et_user_email;
 
-    private ImageView img_user_pass_toggle;
-
     private Helpers helpers;
 
     private final String
-            TAG_LOG = "FRAGMENT LOGIN",
-            TAG_PASS_HIDDEN = "0",
-            TAG_PASS_SHOWN = "1";
+            TAG_LOG = "FRAGMENT LOGIN";
 
     public StartUpLoginFragment() {
 
@@ -87,11 +81,6 @@ public class StartUpLoginFragment extends Fragment {
     private void findAllViews() {
         btn_confirm = rootview.findViewById(R.id.btn_confirm);
 
-        img_user_pass_toggle = rootview.findViewById(R.id.img_user_pass_toggle);
-        img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-
-
         et_user_email = rootview.findViewById(R.id.et_user_email);
         et_user_pass = rootview.findViewById(R.id.et_user_password);
 
@@ -112,21 +101,6 @@ public class StartUpLoginFragment extends Fragment {
             }
         });
 
-        img_user_pass_toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (img_user_pass_toggle.getTag().toString().equals(TAG_PASS_HIDDEN)) {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_show);
-                    img_user_pass_toggle.setTag(TAG_PASS_SHOWN);
-                    et_user_pass.setTransformationMethod(null);
-                } else {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-                    img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-                    et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
-                }
-                helpers.animateWobble(img_user_pass_toggle);
-            }
-        });
     }
 
     private void dropDownKeyboard(EditText editText) {

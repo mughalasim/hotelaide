@@ -3,6 +3,6 @@
     android:id="@+id/btn_confirm"
     style="@style/Material_Button_Yes"
     android:layout_width="match_parent"
-    android:layout_marginTop="@dimen/padding_large"
+    android:layout_marginTop="@dimen/padding_small"
     android:text="@string/txt_ok" />
 

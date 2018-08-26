@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_small"
+    android:paddingLeft="@dimen/padding_small"
+    android:paddingRight="@dimen/padding_small">
+
+    <TextView
+        android:id="@+id/panel_title"
+        style="@style/Text_Normal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_panel"
+        android:layout_marginTop="0dp"
+        android:text="@string/txt_sign_up_social"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        style="@style/Text_Normal"
+        android:text="@string/txt_sign_up_desc" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btn_login_facebook"
+        style="@style/Material_Text"
+        android:drawableStart="@drawable/com_facebook_button_icon"
+        android:text="@string/txt_sign_up_facebook"
+        android:visibility="gone"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_login_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <android.support.design.button.MaterialButton
+        style="@style/Material_Text"
+        android:layout_marginTop="@dimen/padding_small"
+        android:layout_marginBottom="@dimen/padding_small"
+        android:id="@+id/btn_login_facebook2"
+        android:drawableStart="@drawable/com_facebook_button_icon_blue"
+        android:text="@string/txt_sign_up_facebook" />
+
+    <android.support.design.button.MaterialButton
+        style="@style/Material_Text"
+        android:id="@+id/btn_login_google2"
+        android:drawableStart="@drawable/googleg_standard_color_18"
+        android:text="@string/txt_sign_up_google" />
+
+
+</LinearLayout>

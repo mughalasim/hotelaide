@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.text.method.PasswordTransformationMethod;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
@@ -35,11 +33,7 @@ public class ChangePasswordFragment extends Fragment {
     private Helpers helpers;
 
     private final String
-            TAG_LOG = "CHANGE PASSWORD",
-            TAG_PASS_HIDDEN = "0",
-            TAG_PASS_SHOWN = "1";
-
-    private ImageView img_user_pass_toggle;
+            TAG_LOG = "CHANGE PASSWORD";
 
     private EditText
             et_user_pass_old,
@@ -84,33 +78,9 @@ public class ChangePasswordFragment extends Fragment {
         et_user_pass_new = rootview.findViewById(R.id.et_user_pass_new);
         et_user_pass_confirm = rootview.findViewById(R.id.et_user_pass_confirm);
 
-        img_user_pass_toggle = rootview.findViewById(R.id.img_user_pass_toggle);
-        img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
     }
 
     private void setListeners() {
-        img_user_pass_toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (img_user_pass_toggle.getTag().toString().equals(TAG_PASS_HIDDEN)) {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_show);
-                    img_user_pass_toggle.setTag(TAG_PASS_SHOWN);
-                    et_user_pass_old.setTransformationMethod(null);
-                    et_user_pass_new.setTransformationMethod(null);
-                    et_user_pass_confirm.setTransformationMethod(null);
-                } else {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-                    img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-                    et_user_pass_old.setTransformationMethod(new PasswordTransformationMethod());
-                    et_user_pass_new.setTransformationMethod(new PasswordTransformationMethod());
-                    et_user_pass_confirm.setTransformationMethod(new PasswordTransformationMethod());
-                }
-                helpers.animateWobble(img_user_pass_toggle);
-            }
-        });
-
-
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

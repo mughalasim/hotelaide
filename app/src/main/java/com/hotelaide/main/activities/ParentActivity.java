@@ -162,7 +162,8 @@ public class ParentActivity extends AppCompatActivity implements
                 drawer.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        startActivity(new Intent(ParentActivity.this, ProfileViewActivity.class));
+                        startActivity(new Intent(ParentActivity.this, ProfileViewActivity.class)
+                                .putExtra("EDIT_MODE", "EDIT_MODE"));
                     }
                 }, 150);
             }

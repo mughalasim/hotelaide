@@ -14,11 +14,12 @@
     <ImageView
         android:id="@+id/main_logo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/img_size_small"
+        android:layout_height="@dimen/height_panel"
         android:layout_alignParentTop="true"
         android:padding="@dimen/text_margin"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
+        android:background="@drawable/bckgrd_app"
         android:src="@drawable/main_logo_horizontal" />
 
     <android.support.design.widget.TabLayout
@@ -40,7 +41,7 @@
         android:id="@+id/viewpager"
         android:layout_below="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 
     <include

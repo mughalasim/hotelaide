@@ -63,7 +63,7 @@ public class StartUpForgotPassFragment extends Fragment {
     }
 
     private void findAllViews() {
-        et_user_email = rootview.findViewById(R.id.user_email);
+        et_user_email = rootview.findViewById(R.id.et_user_email);
         btn_confirm = rootview.findViewById(R.id.btn_confirm);
         btn_confirm.setText(getString(R.string.txt_reset));
     }

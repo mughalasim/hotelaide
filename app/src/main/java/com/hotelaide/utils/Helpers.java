@@ -222,14 +222,12 @@ public class Helpers {
 
     public void myDialog(Context DialogContext, String Title, String Message) {
         final Dialog dialog = new Dialog(DialogContext);
-        dialog.setContentView(R.layout.dialog_confirm);
+        dialog.setContentView(R.layout.dialog_cancel);
         final TextView txt_message = dialog.findViewById(R.id.txt_message);
         final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
-        final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
         final TextView txt_title = dialog.findViewById(R.id.txt_title);
         txt_title.setText(Title);
         txt_message.setText(Message);
-        btn_cancel.setVisibility(View.GONE);
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -520,7 +518,7 @@ public class Helpers {
                     JSONArray message_array = new JSONArray(String.valueOf(data.get(key)));
                     String display_message = "";
                     for (int i = 0; i < message_array.length(); i++) {
-                        display_message = display_message.concat(String.valueOf(i + 1) + ". ").concat(message_array.getString(i)).concat("\n");
+                        display_message = display_message.concat(message_array.getString(i)).concat("\n");
                     }
                     myDialog(context, context.getString(R.string.txt_errors), display_message);
 

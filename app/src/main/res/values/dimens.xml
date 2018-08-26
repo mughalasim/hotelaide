@@ -21,8 +21,8 @@
     <!--PADDING =================================================================================-->
     <dimen name="padding_large">35dp</dimen>
     <dimen name="padding_medium">25dp</dimen>
-    <dimen name="padding_small">18dp</dimen>
-    <dimen name="padding_tiny">10dp</dimen>
+    <dimen name="padding_small">20dp</dimen>
+    <dimen name="padding_tiny">14dp</dimen>
 
 
     <!--TEXT SIZES ==============================================================================-->
@@ -40,10 +40,9 @@
 
 
     <!--FIXED ITEM HEIGHTS ======================================================================-->
-    <dimen name="height_button">37sp</dimen>
-    <dimen name="height_material_button">45sp</dimen>
-    <dimen name="height_edit_text">37sp</dimen>
-    <dimen name="height_panel">40sp</dimen>
+    <dimen name="height_button">45sp</dimen>
+    <dimen name="height_edit_text">45sp</dimen>
+    <dimen name="height_panel">55sp</dimen>
     <dimen name="height_nav_header">110sp</dimen>
     <dimen name="height_collapsing_toolbar">200sp</dimen>
 

@@ -1,6 +1,7 @@
 package com.hotelaide.startup;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -11,7 +12,6 @@ import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ContextThemeWrapper;
-import android.text.method.PasswordTransformationMethod;
 import android.util.TypedValue;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -61,6 +60,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -70,15 +70,13 @@ import retrofit2.Response;
 
 import static com.hotelaide.utils.Helpers.START_FIRST_TIME;
 
-
 public class StartUpSignUpFragment extends Fragment {
     private View rootview;
     private Helpers helpers;
 
     private TextView
             panel_title,
-            txt_user_dob,
-            btn_login_google2;
+            txt_user_dob;
 
     private MaterialButton
             btn_confirm;
@@ -87,7 +85,9 @@ public class StartUpSignUpFragment extends Fragment {
 
     private CountryCodePicker ccp_user_country_code;
 
-    private ImageView img_user_pass_toggle;
+    private MaterialButton
+            btn_login_facebook2,
+            btn_login_google2;
 
     private EditText
             et_user_first_name,
@@ -98,12 +98,9 @@ public class StartUpSignUpFragment extends Fragment {
             et_user_pass_confirm;
 
     private final String
-            TAG_LOG = "FRAGMENT SIGN UP",
-            LOGIN_REGISTER = "REGISTER",
-            LOGIN_FACEBOOK = "FACEBOOK",
-            LOGIN_GOOGLE = "GOOGLE",
-            TAG_PASS_HIDDEN = "0",
-            TAG_PASS_SHOWN = "1";
+            TAG_LOG = "FRAGMENT SIGN UP";
+    private final String LOGIN_REGISTER = "REGISTER";
+    private final String LOGIN_FACEBOOK = "FACEBOOK";
 
     // FACEBOOK STUFF
     private LoginButton btn_login_facebook;
@@ -186,10 +183,6 @@ public class StartUpSignUpFragment extends Fragment {
         et_user_pass_confirm = rootview.findViewById(R.id.et_user_pass_confirm);
         txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
 
-        img_user_pass_toggle = rootview.findViewById(R.id.img_user_pass_toggle);
-        img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-
         // SOCIAL MEDIA LOGIN ====================================================
         sliding_panel = rootview.findViewById(R.id.sliding_panel);
         panel_title = rootview.findViewById(R.id.panel_title);
@@ -197,6 +190,7 @@ public class StartUpSignUpFragment extends Fragment {
         btn_login_facebook = rootview.findViewById(R.id.btn_login_facebook);
         btn_login_google = rootview.findViewById(R.id.btn_login_google);
         btn_login_google2 = rootview.findViewById(R.id.btn_login_google2);
+        btn_login_facebook2 = rootview.findViewById(R.id.btn_login_facebook2);
         btn_login_facebook.setFragment(this);
 
         setDates();
@@ -226,25 +220,6 @@ public class StartUpSignUpFragment extends Fragment {
                         showDialogSetAccountPassword(getActivity(), LOGIN_REGISTER);
                     }
                 }
-            }
-        });
-
-
-        img_user_pass_toggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (img_user_pass_toggle.getTag().toString().equals(TAG_PASS_HIDDEN)) {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_show);
-                    img_user_pass_toggle.setTag(TAG_PASS_SHOWN);
-                    et_user_pass.setTransformationMethod(null);
-                    et_user_pass_confirm.setTransformationMethod(null);
-                } else {
-                    img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-                    img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-                    et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
-                    et_user_pass_confirm.setTransformationMethod(new PasswordTransformationMethod());
-                }
-                helpers.animateWobble(img_user_pass_toggle);
             }
         });
 
@@ -305,7 +280,7 @@ public class StartUpSignUpFragment extends Fragment {
                 if (getContext() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                     DatePickerDialog datePicker = new DatePickerDialog(
-                            new ContextThemeWrapper(getActivity(), android.R.style.Theme_Holo_Light_Dialog),
+                            new ContextThemeWrapper(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT),
                             datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),
@@ -332,26 +307,6 @@ public class StartUpSignUpFragment extends Fragment {
             final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
             final EditText et_user_pass = dialog.findViewById(R.id.et_user_pass);
             final EditText et_user_pass_confirm = dialog.findViewById(R.id.et_user_pass_confirm);
-            final ImageView img_user_pass_toggle = dialog.findViewById(R.id.img_user_pass_toggle);
-            img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-            img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-            img_user_pass_toggle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (img_user_pass_toggle.getTag().toString().equals(TAG_PASS_HIDDEN)) {
-                        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_show);
-                        img_user_pass_toggle.setTag(TAG_PASS_SHOWN);
-                        et_user_pass.setTransformationMethod(null);
-                        et_user_pass_confirm.setTransformationMethod(null);
-                    } else {
-                        img_user_pass_toggle.setImageResource(R.drawable.ic_pass_hide);
-                        img_user_pass_toggle.setTag(TAG_PASS_HIDDEN);
-                        et_user_pass.setTransformationMethod(new PasswordTransformationMethod());
-                        et_user_pass_confirm.setTransformationMethod(new PasswordTransformationMethod());
-                    }
-                    helpers.animateWobble(img_user_pass_toggle);
-                }
-            });
 
             btn_cancel.setVisibility(View.VISIBLE);
             btn_cancel.setText(getString(R.string.txt_cancel));
@@ -552,7 +507,7 @@ public class StartUpSignUpFragment extends Fragment {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
         btn_login_google.setSize(SignInButton.SIZE_STANDARD);
         setGooglePlusButtonText(btn_login_google);
         btn_login_google2.setOnClickListener(new View.OnClickListener() {
@@ -560,6 +515,14 @@ public class StartUpSignUpFragment extends Fragment {
             public void onClick(View v) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE);
+            }
+        });
+
+        btn_login_facebook2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getActivity()!=null)
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email", "public_profile"));
             }
         });
     }
@@ -590,6 +553,7 @@ public class StartUpSignUpFragment extends Fragment {
             globalUserModel.last_name = account.getFamilyName();
             if (account.getPhotoUrl() != null)
                 globalUserModel.img_avatar = account.getPhotoUrl().toString();
+            String LOGIN_GOOGLE = "GOOGLE";
             showDialogSetAccountPassword(getActivity(), LOGIN_GOOGLE);
             signOutGoogle();
 

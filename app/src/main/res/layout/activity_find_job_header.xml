@@ -22,16 +22,20 @@
             android:contentDescription="@string/app_name"
             app:srcCompat="@drawable/ic_filter" />
 
-        <EditText
-            android:id="@+id/et_search"
-            style="@style/Edit_Text"
-            android:layout_width="0dp"
+        <android.support.design.widget.TextInputLayout
             android:layout_marginTop="0dp"
+            android:layout_width="0dp"
             android:layout_weight="4"
-            android:gravity="end|center_vertical"
-            android:hint="@string/txt_search_here"
-            android:inputType="text"
-            android:maxLines="1" />
+            style="@style/Material_Edit_Text_Layout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_search"
+                style="@style/Material_Edit_Text"
+                android:hint="@string/txt_search_here"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 
