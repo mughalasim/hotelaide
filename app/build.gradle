@@ -36,7 +36,7 @@ android {
     productFlavors {
         prod {
             // MAIN INFO
-            buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.kiiya.co.ke/api/"'
+            buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.com/api/"'
 
             // APP TYPE
             buildConfigField 'String', 'ACCOUNT_TYPE', '"job_seeker"'
@@ -47,9 +47,13 @@ android {
             buildConfigField 'Boolean', 'LOGGING', "$rootProject.debugMode"
 
             // INSTANT SEARCH
-            buildConfigField 'String', 'ALGOLIA_APP_ID', '"735L7MFNU2"'
-            buildConfigField 'String', 'ALGOLIA_SEARCH_API_KEY', '"220c1cd06214197c4f5c7f44495ac29f"'
+            buildConfigField 'String', 'ALGOLIA_APP_ID', '"Q7ZOKDIRKG"'
+            buildConfigField 'String', 'ALGOLIA_SEARCH_API_KEY', '"99d661a5a5d6a17ff9ff4c4a996e6e59"'
             buildConfigField 'String', 'ALGOLIA_INDEX_NAME', '"job_vacancies"'
+            buildConfigField 'String', 'FILTER_COUNTY', '"location.county_name"'
+            buildConfigField 'String', 'FILTER_CATEGORY', '"category.name"'
+            buildConfigField 'String', 'FILTER_JOB_TYPE', '"job_type.name"'
+            buildConfigField 'String', 'FILTER_NAME', '"hotel.name"'
         }
     }
 }

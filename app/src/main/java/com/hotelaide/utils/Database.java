@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.hotelaide.BuildConfig;
-import com.hotelaide.main.models.CountyModel;
 import com.hotelaide.main.models.ExperienceModel;
 import com.hotelaide.main.models.JobModel;
+import com.hotelaide.main.models.SearchFilterModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,11 +46,12 @@ public class Database extends SQLiteOpenHelper {
     private static final String EXP_TYPE = "type";
 
 
-    // COUNTIES STORED IN THE DATABASE =============================================================
-    private static final String COUNTY_TABLE_NAME = "COUNTIES";
-    private static final String COUNTY_ID = "id";
-    private static final String COUNTY_NAME = "name";
-
+    // FILTERS STORED IN THE DATABASE =============================================================
+    public static final String COUNTY_TABLE_NAME = "COUNTIES";
+    public static final String JOB_TYPE_TABLE_NAME = "JOB_TYPE";
+    public static final String CATEGORIES_TABLE_NAME = "CATEGORIES";
+    public static final String FILTER_ID = "id";
+    public static final String FILTER_NAME = "name";
 
     public Database() {
         super(MyApplication.getAppContext(), DATABASE_NAME, null, BuildConfig.DATABASE_VERSION);
@@ -85,11 +86,27 @@ public class Database extends SQLiteOpenHelper {
                 ")"
         );
 
-        // REGION TABLE ========================================================================
+        // COUNTY TABLE ============================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + COUNTY_TABLE_NAME +
-                "(" + COUNTY_ID + " INTEGER PRIMARY KEY NOT NULL," +
-                COUNTY_NAME + " TEXT" +
+                "(" + FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                FILTER_NAME + " TEXT" +
+                ")"
+        );
+
+        // JOB TYPE TABLE ==========================================================================
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + JOB_TYPE_TABLE_NAME +
+                "(" + FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                FILTER_NAME + " TEXT" +
+                ")"
+        );
+
+        // CATEGORIES TABLE ========================================================================
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + CATEGORIES_TABLE_NAME +
+                "(" + FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                FILTER_NAME + " TEXT" +
                 ")"
         );
 
@@ -113,9 +130,21 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public void deleteRegionTable() {
+    public void deleteCountyTable() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
+
+    }
+
+    public void deleteJobTypeTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + JOB_TYPE_TABLE_NAME);
+
+    }
+
+    public void deleteCategoriesTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + CATEGORIES_TABLE_NAME);
 
     }
 
@@ -124,6 +153,8 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + EXP_TABLE_NAME);
         db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
         db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
+        db.execSQL("DELETE FROM " + CATEGORIES_TABLE_NAME);
+        db.execSQL("DELETE FROM " + JOB_TYPE_TABLE_NAME);
         onCreate(db);
     }
 
@@ -378,53 +409,54 @@ public class Database extends SQLiteOpenHelper {
 
 
     // COUNTY FUNCTIONS ============================================================================
-    public void setCounties(CountyModel countyModel) {
+    public void setFilter(String table_name, SearchFilterModel searchFilterModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COUNTY_ID, countyModel.id);
-        contentValues.put(COUNTY_NAME, countyModel.name);
+        contentValues.put(FILTER_ID, searchFilterModel.id);
+        contentValues.put(FILTER_NAME, searchFilterModel.name);
 
-        String whereClause = COUNTY_ID + " = ?";
-        String[] whereArgs = new String[]{String.valueOf(countyModel.id)};
-        int no_of_rows_affected = db.update(COUNTY_TABLE_NAME, contentValues, whereClause, whereArgs);
+        String whereClause = FILTER_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(searchFilterModel.id)};
+
+        int no_of_rows_affected = db.update(table_name, contentValues, whereClause, whereArgs);
 
         if (no_of_rows_affected == 0) {
-            db.insert(COUNTY_TABLE_NAME, null, contentValues);
+            db.insert(table_name, null, contentValues);
         }
     }
 
-    public List<CountyModel> getAllCounties() {
-        final List<CountyModel> arrayList = new ArrayList<>();
+    public List<SearchFilterModel> getAllFilterItems(String table_name) {
+        final List<SearchFilterModel> search_array_list = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.query(COUNTY_TABLE_NAME, null, null, null, null, null, COUNTY_NAME);
+        Cursor cursor = db.query(table_name, null, null, null, null, null, FILTER_NAME);
 
-        CountyModel countyModelNull = new CountyModel();
-        countyModelNull.id = 0;
-        countyModelNull.name = "ALL COUNTIES";
-        arrayList.add(countyModelNull);
+        SearchFilterModel searchFilterModelNull = new SearchFilterModel();
+        searchFilterModelNull.id = 0;
+        searchFilterModelNull.name = "All";
+        search_array_list.add(searchFilterModelNull);
 
         int count = cursor.getCount();
         if (count > 0) {
             cursor.moveToFirst();
             for (int i = 0; i < count; i++) {
-                CountyModel countyModel = new CountyModel();
-                countyModel.id = cursor.getInt(cursor.getColumnIndex(COUNTY_ID));
-                countyModel.name = cursor.getString(cursor.getColumnIndex(COUNTY_NAME));
-                arrayList.add(countyModel);
+                SearchFilterModel searchFilterModel = new SearchFilterModel();
+                searchFilterModel.id = cursor.getInt(cursor.getColumnIndex(FILTER_ID));
+                searchFilterModel.name = cursor.getString(cursor.getColumnIndex(FILTER_NAME));
+                search_array_list.add(searchFilterModel);
                 cursor.moveToNext();
             }
         }
         cursor.close();
-        return arrayList;
+        return search_array_list;
     }
 
-    public int getCountyIDByString(String county_name) {
-        int county_id = 0;
+    public int getFilterIDByString(String table_name, String county_name) {
+        int filter_id = 0;
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String whereClause = COUNTY_NAME + " = ?";
+        String whereClause = FILTER_NAME + " = ?";
         String[] whereArgs = new String[]{county_name};
-        Cursor cursor = db.query(COUNTY_TABLE_NAME, null, whereClause, whereArgs,
+        Cursor cursor = db.query(table_name, null, whereClause, whereArgs,
                 null, null, null);
 
         if (cursor != null) {
@@ -432,23 +464,23 @@ public class Database extends SQLiteOpenHelper {
             if (count > 0) {
                 cursor.moveToFirst();
                 do {
-                    county_id = cursor.getInt(cursor.getColumnIndex(COUNTY_ID));
+                    filter_id = cursor.getInt(cursor.getColumnIndex(FILTER_ID));
                     cursor.moveToNext();
                 } while (cursor.moveToNext());
             }
             cursor.close();
         }
 
-        return county_id;
+        return filter_id;
     }
 
-    public String getCountyNameByID(int county_id) {
-        String county_name = "";
+    public String getFilterNameByID(String table_name, int county_id) {
+        String filter_name = "";
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String whereClause = COUNTY_ID + " = ?";
+        String whereClause = FILTER_ID + " = ?";
         String[] whereArgs = new String[]{String.valueOf(county_id)};
-        Cursor cursor = db.query(COUNTY_TABLE_NAME, null, whereClause, whereArgs,
+        Cursor cursor = db.query(table_name, null, whereClause, whereArgs,
                 null, null, null);
 
         if (cursor != null) {
@@ -456,14 +488,14 @@ public class Database extends SQLiteOpenHelper {
             if (count > 0) {
                 cursor.moveToFirst();
                 do {
-                    county_name = cursor.getString(cursor.getColumnIndex(COUNTY_NAME));
+                    filter_name = cursor.getString(cursor.getColumnIndex(FILTER_NAME));
                     cursor.moveToNext();
                 } while (cursor.moveToNext());
             }
             cursor.close();
         }
 
-        return county_name;
+        return filter_name;
     }
 
 

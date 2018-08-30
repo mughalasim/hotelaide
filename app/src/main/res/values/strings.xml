@@ -78,6 +78,9 @@
     <string name="nav_documents">Documents</string>
     <string name="nav_pass">Change Password</string>
 
+    <!-- DASHBOARD NAVIGATION TEXT ==============================================================-->
+    <string name="nav_applied">Applied Jobs</string>
+    <string name="nav_messages">My Messages</string>
 
     <!--PERMISSION RATIONALS ====================================================================-->
     <string name="rationale_image">HotelAide needs to access your Camera and write to your external storage for Images that you would like to set. Please grant these permissions in order to use the feature</string>

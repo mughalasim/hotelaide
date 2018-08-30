@@ -1,9 +1,7 @@
 package com.hotelaide.main.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,19 +10,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareDialog;
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.ExperienceViewFragment;
 import com.hotelaide.utils.SharedPrefs;
 
+import static com.hotelaide.utils.Database.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.SharedPrefs.USER_COUNTRY_CODE;
@@ -115,95 +111,7 @@ public class ProfileViewActivity extends ParentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.share:
-                final Dialog dialog = new Dialog(ProfileViewActivity.this);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_share);
-                final ImageView share_facebook = dialog.findViewById(R.id.share_facebook);
-                final ImageView share_email = dialog.findViewById(R.id.share_email);
-                final ImageView share_messenger = dialog.findViewById(R.id.share_messenger);
-                final ImageView share_sms = dialog.findViewById(R.id.share_sms);
-                final ImageView share_whatsapp = dialog.findViewById(R.id.share_whatsapp);
-
-                share_facebook.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (helpers.validateAppIsInstalled("com.facebook.katana")) {
-                            ShareLinkContent content = new ShareLinkContent.Builder()
-                                    .setContentUrl(Uri.parse(STR_SHARE_LINK))
-                                    .build();
-                            ShareDialog.show(ProfileViewActivity.this, content);
-                            dialog.cancel();
-                        } else {
-                            helpers.ToastMessage(ProfileViewActivity.this, getString(R.string.error_app_not_installed));
-                        }
-                    }
-                });
-
-                share_email.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                            emailIntent.setType("text/html");
-                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                            emailIntent.putExtra(Intent.EXTRA_TEXT, STR_SHARE_LINK);
-                            startActivity(Intent.createChooser(emailIntent, "Send Email"));
-                            dialog.cancel();
-                        } catch (Exception e) {
-                            helpers.ToastMessage(ProfileViewActivity.this, getString(R.string.error_app_not_installed));
-                        }
-                    }
-                });
-
-                share_messenger.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (helpers.validateAppIsInstalled("com.facebook.orca")) {
-                            Intent messengerIntent = new Intent();
-                            messengerIntent.setAction(Intent.ACTION_SEND);
-                            messengerIntent.putExtra(Intent.EXTRA_TEXT, STR_SHARE_LINK);
-                            messengerIntent.setType("text/plain");
-                            messengerIntent.setPackage("com.facebook.orca");
-                            startActivity(messengerIntent);
-                        } else {
-                            helpers.ToastMessage(ProfileViewActivity.this, getString(R.string.error_app_not_installed));
-                        }
-                    }
-                });
-
-                share_sms.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                            smsIntent.putExtra("sms_body", STR_SHARE_LINK);
-                            smsIntent.setType("vnd.android-dir/mms-sms");
-                            startActivity(smsIntent);
-                            dialog.cancel();
-                        } catch (Exception e) {
-                            helpers.ToastMessage(ProfileViewActivity.this, getString(R.string.error_app_not_installed));
-                        }
-                    }
-                });
-
-                share_whatsapp.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (helpers.validateAppIsInstalled("com.whatsapp")) {
-                            Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                            whatsappIntent.setType("text/plain");
-                            whatsappIntent.setPackage("com.whatsapp");
-                            whatsappIntent.putExtra(Intent.EXTRA_TEXT, STR_SHARE_LINK);
-                            startActivity(whatsappIntent);
-                            dialog.cancel();
-                        } else {
-                            helpers.ToastMessage(ProfileViewActivity.this, getString(R.string.error_app_not_installed));
-                        }
-                    }
-                });
-
-                dialog.setCancelable(true);
-                dialog.show();
+                helpers.dialogShare(ProfileViewActivity.this, STR_SHARE_LINK);
                 break;
 
             case R.id.edit:
@@ -311,7 +219,7 @@ public class ProfileViewActivity extends ParentActivity {
         }
 
         if (SharedPrefs.getInt(USER_COUNTY) > 0) {
-            txt_user_county_name.setText(db.getCountyNameByID(SharedPrefs.getInt(USER_COUNTY)));
+            txt_user_county_name.setText(db.getFilterNameByID(COUNTY_TABLE_NAME, SharedPrefs.getInt(USER_COUNTY)));
             txt_user_county_name.setVisibility(View.VISIBLE);
         } else {
             txt_user_county_name.setVisibility(View.GONE);

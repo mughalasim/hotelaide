@@ -72,8 +72,6 @@ public class ExperienceViewFragment extends Fragment {
 
                     root_view = inflater.inflate(R.layout.fragment_experience_view, container, false);
 
-
-
                     findAllViews();
 
                     asyncGetAllWorkExperience();

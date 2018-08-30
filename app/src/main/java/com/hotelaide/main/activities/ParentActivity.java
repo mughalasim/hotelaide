@@ -55,19 +55,12 @@ public class ParentActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
     Helpers helpers;
-
     Database db;
-
     Toolbar toolbar;
-
     DrawerLayout drawer;
-
-    NavigationView navigationView;
-
+    NavigationView navigation_view;
     private BroadcastReceiver receiver;
-
     private TextView nav_user_name, nav_user_email;
-
     public TextView
             menu_dashboard,
             menu_find_jobs,
@@ -76,22 +69,14 @@ public class ParentActivity extends AppCompatActivity implements
             menu_settings,
             menu_log_out,
             toolbar_text;
-
     private RoundedImageView nav_img_user_pic;
-
     private ImageView nav_user_banner;
-
     private int drawer_id;
-
     private String toolbarTitle;
-
     private final String TAG_LOG = "PARENT";
 
 
     void initialize(int drawer_id, String toolbarTitle) {
-
-
-
         helpers = new Helpers(ParentActivity.this);
         db = new Database();
         this.drawer_id = drawer_id;
@@ -104,7 +89,7 @@ public class ParentActivity extends AppCompatActivity implements
         }
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
         drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        navigation_view = findViewById(R.id.nav_view);
 
         listenExitBroadcast();
 
@@ -115,7 +100,6 @@ public class ParentActivity extends AppCompatActivity implements
     }
 
     private void setUpToolBarAndDrawer() {
-
         toolbar_text.setText(toolbarTitle);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -123,14 +107,14 @@ public class ParentActivity extends AppCompatActivity implements
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView.setNavigationItemSelectedListener(this);
-        View header = navigationView.getHeaderView(0);
+        navigation_view.setNavigationItemSelectedListener(this);
+        View header = navigation_view.getHeaderView(0);
         nav_user_name = header.findViewById(R.id.nav_user_name);
         nav_user_email = header.findViewById(R.id.nav_user_email);
         nav_img_user_pic = header.findViewById(R.id.nav_img_user_pic);
         nav_user_banner = header.findViewById(R.id.nav_user_banner);
 
-        navigationView.getMenu().findItem(drawer_id).setChecked(true);
+        navigation_view.getMenu().findItem(drawer_id).setChecked(true);
 
         TextView app_version = findViewById(R.id.app_version);
         try {
@@ -141,12 +125,12 @@ public class ParentActivity extends AppCompatActivity implements
         }
 
         // FIND THE MENU ITEMS =====================================================================
-        menu_dashboard = (TextView) navigationView.getMenu().getItem(0).getActionView();
-        menu_find_jobs = (TextView) navigationView.getMenu().getItem(1).getActionView();
-        menu_profile = (TextView) navigationView.getMenu().getItem(2).getActionView();
-        menu_about_us = (TextView) navigationView.getMenu().getItem(3).getActionView();
-        menu_settings = (TextView) navigationView.getMenu().getItem(4).getActionView();
-        menu_log_out = (TextView) navigationView.getMenu().getItem(5).getActionView();
+        menu_dashboard = (TextView) navigation_view.getMenu().getItem(0).getActionView();
+        menu_find_jobs = (TextView) navigation_view.getMenu().getItem(1).getActionView();
+        menu_profile = (TextView) navigation_view.getMenu().getItem(2).getActionView();
+        menu_about_us = (TextView) navigation_view.getMenu().getItem(3).getActionView();
+        menu_settings = (TextView) navigation_view.getMenu().getItem(4).getActionView();
+        menu_log_out = (TextView) navigation_view.getMenu().getItem(5).getActionView();
 
     }
 
@@ -171,11 +155,11 @@ public class ParentActivity extends AppCompatActivity implements
 
     }
 
-    void setCountOnTextView(TextView textView, String count) {
-        textView.setGravity(Gravity.CENTER_VERTICAL);
-        textView.setTypeface(null, Typeface.BOLD);
-        textView.setTextColor(ContextCompat.getColor(this, R.color.red));
-        textView.setText(count);
+    void setCountOnDrawerItem(TextView drawer_text_view, String count) {
+        drawer_text_view.setGravity(Gravity.CENTER_VERTICAL);
+        drawer_text_view.setTypeface(null, Typeface.BOLD);
+        drawer_text_view.setTextColor(ContextCompat.getColor(this, R.color.red));
+        drawer_text_view.setText(count);
     }
 
     private void deleteCountOnTextView(int drawer_id) {
@@ -244,7 +228,7 @@ public class ParentActivity extends AppCompatActivity implements
     public void onResume() {
         super.onResume();
         updateDrawer();
-        navigationView.getMenu().findItem(drawer_id).setChecked(true);
+        navigation_view.getMenu().findItem(drawer_id).setChecked(true);
         if (SharedPrefs.getBool(ALLOW_UPDATE_APP)) {
             getAppVersionFromFirebase();
         }

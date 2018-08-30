@@ -19,6 +19,7 @@ import com.hotelaide.utils.SharedPrefs;
 
 import io.fabric.sdk.android.Fabric;
 
+import static com.hotelaide.utils.Helpers.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.Helpers.START_LAUNCH;
 import static com.hotelaide.utils.SharedPrefs.ACCESS_TOKEN;
 import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
@@ -88,7 +89,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
                 finish();
             }
-        }, 500);
+        }, INT_ANIMATION_TIME);
     }
 
 }

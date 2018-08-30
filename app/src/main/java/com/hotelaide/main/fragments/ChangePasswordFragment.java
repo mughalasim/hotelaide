@@ -28,18 +28,14 @@ import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
 public class ChangePasswordFragment extends Fragment {
 
-    private View rootview;
-
+    private View root_view;
     private Helpers helpers;
-
     private final String
             TAG_LOG = "CHANGE PASSWORD";
-
     private EditText
             et_user_pass_old,
             et_user_pass_new,
             et_user_pass_confirm;
-
     private FloatingActionButton btn_update;
 
     public ChangePasswordFragment() {}
@@ -47,9 +43,9 @@ public class ChangePasswordFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootview == null && getActivity() != null) {
+        if (root_view == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.fragment_change_password, container, false);
+                root_view = inflater.inflate(R.layout.fragment_change_password, container, false);
 
                 helpers = new Helpers(getActivity());
 
@@ -64,19 +60,19 @@ public class ChangePasswordFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(rootview);
+            ((ViewGroup) container.getParent()).removeView(root_view);
         }
-        return rootview;
+        return root_view;
     }
 
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        btn_update = rootview.findViewById(R.id.btn_update);
+        btn_update = root_view.findViewById(R.id.btn_update);
 
-        et_user_pass_old = rootview.findViewById(R.id.et_user_pass_old);
-        et_user_pass_new = rootview.findViewById(R.id.et_user_pass_new);
-        et_user_pass_confirm = rootview.findViewById(R.id.et_user_pass_confirm);
+        et_user_pass_old = root_view.findViewById(R.id.et_user_pass_old);
+        et_user_pass_new = root_view.findViewById(R.id.et_user_pass_new);
+        et_user_pass_confirm = root_view.findViewById(R.id.et_user_pass_confirm);
 
     }
 

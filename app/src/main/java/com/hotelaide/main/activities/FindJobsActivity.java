@@ -1,22 +1,17 @@
 package com.hotelaide.main.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.chip.Chip;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,8 +20,9 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
-import com.bumptech.glide.Glide;
+import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
+import com.hotelaide.main.adapters.FindJobsAdapter;
 import com.hotelaide.main.models.JobModel;
 import com.hotelaide.utils.Helpers;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -42,6 +38,9 @@ import java.util.ArrayList;
 import static com.hotelaide.BuildConfig.ALGOLIA_APP_ID;
 import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_NAME;
 import static com.hotelaide.BuildConfig.ALGOLIA_SEARCH_API_KEY;
+import static com.hotelaide.utils.Database.CATEGORIES_TABLE_NAME;
+import static com.hotelaide.utils.Database.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.Database.JOB_TYPE_TABLE_NAME;
 
 public class FindJobsActivity extends ParentActivity {
 
@@ -90,7 +89,7 @@ public class FindJobsActivity extends ParentActivity {
     // SEARCH ADAPTER ITEMS ------------------------------------------------------------------------
     private RecyclerView recycler_view;
     private ArrayList<JobModel> model_list = new ArrayList<>();
-    private FindJobAdapter adapter;
+    private FindJobsAdapter adapter;
 
 
     // OVERRIDE METHODS ============================================================================
@@ -150,23 +149,23 @@ public class FindJobsActivity extends ParentActivity {
         spinner_location.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.list_item_spinner,
-                db.getAllCounties()
+                db.getAllFilterItems(COUNTY_TABLE_NAME)
         ));
         spinner_type.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.list_item_spinner,
-                db.getAllCounties()
+                db.getAllFilterItems(JOB_TYPE_TABLE_NAME)
         ));
         spinner_category.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.list_item_spinner,
-                db.getAllCounties()
+                db.getAllFilterItems(CATEGORIES_TABLE_NAME)
         ));
 
 
         // SEARCH FUNCTIONALITY --------------------------------------------------------------------
         recycler_view = findViewById(R.id.recycler_view);
-        adapter = new FindJobAdapter(model_list);
+        adapter = new FindJobsAdapter(model_list);
         recycler_view.setAdapter(adapter);
         recycler_view.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(FindJobsActivity.this);
@@ -271,22 +270,31 @@ public class FindJobsActivity extends ParentActivity {
     }
 
     private void searchOnline() {
-        if (spinner_location.getSelectedItemPosition() == 0) {
-            query.setFilters("");
+        if (spinner_location.getSelectedItemPosition() != 0) {
+            setFilter(BuildConfig.FILTER_COUNTY, spinner_location);
+        } else if (spinner_category.getSelectedItemPosition() != 0) {
+            setFilter(BuildConfig.FILTER_CATEGORY, spinner_category);
+        } else if (spinner_type.getSelectedItemPosition() != 0) {
+            setFilter(BuildConfig.FILTER_JOB_TYPE, spinner_type);
         } else {
-            try {
-                query.setFilters("location.county_name:" + URLEncoder.encode(spinner_location.getSelectedItem().toString(), "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-                query.setFilters("");
-            }
+            query.setFilters("");
         }
+
         if (et_search.getText().toString().length() > 0) {
             query.setQuery(et_search.getText().toString());
         } else {
             query.setQuery("");
         }
         index.searchAsync(query, completionHandler);
+    }
+
+    private void setFilter(String filter_type, Spinner spinner) {
+        try {
+            query.setFilters(filter_type + URLEncoder.encode(spinner.getSelectedItem().toString(), "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            query.setFilters("");
+        }
     }
 
     private void setSearchListener() {
@@ -343,7 +351,6 @@ public class FindJobsActivity extends ParentActivity {
                             && continue_pagination
                             && (visibleItemCount + pastVisibleItems) >= totalItemCount
                             && LAST_PAGE != CURRENT_PAGE) {
-
 //                        loadMoreResults();
                         Helpers.LogThis(TAG_LOG, "Load more");
                         continue_pagination = false;
@@ -390,101 +397,6 @@ public class FindJobsActivity extends ParentActivity {
         spinner_location.setSelection(0);
         spinner_type.setSelection(0);
         spinner_category.setSelection(0);
-    }
-
-
-    // ADAPTER CLASS ===============================================================================
-    public class FindJobAdapter extends RecyclerView.Adapter<FindJobAdapter.ViewHolder> {
-        private final ArrayList<JobModel> jobModels;
-        //        private final String TAG_LOG = "FIND JOB ADAPTER";
-        private Context context;
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-
-            RelativeLayout
-                    no_list_item;
-            CardView
-                    list_item;
-            final TextView
-                    txt_no_results,
-                    txt_name,
-                    txt_location,
-                    txt_posted_on;
-            final ImageView
-                    img_image;
-
-            ViewHolder(View v) {
-                super(v);
-                txt_no_results = v.findViewById(R.id.txt_no_results);
-                txt_name = v.findViewById(R.id.txt_name);
-                txt_location = v.findViewById(R.id.txt_location);
-                txt_posted_on = v.findViewById(R.id.txt_posted_on);
-                img_image = v.findViewById(R.id.img_image);
-                no_list_item = v.findViewById(R.id.no_list_items);
-                list_item = v.findViewById(R.id.list_item);
-            }
-
-        }
-
-        FindJobAdapter(ArrayList<JobModel> jobModels) {
-            this.jobModels = jobModels;
-        }
-
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item_find_jobs, parent, false);
-            return new ViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-            context = holder.itemView.getContext();
-            helpers = new Helpers(context);
-
-            final JobModel jobModel = jobModels.get(position);
-
-            if (jobModel.id == 0) {
-                holder.no_list_item.setVisibility(View.VISIBLE);
-                holder.list_item.setVisibility(View.GONE);
-                if (helpers.validateInternetConnection()) {
-                    holder.txt_no_results.setText(R.string.error_no_jobs);
-                } else {
-                    holder.txt_no_results.setText(R.string.error_connection);
-                }
-
-            } else {
-                holder.no_list_item.setVisibility(View.GONE);
-                holder.list_item.setVisibility(View.VISIBLE);
-
-                holder.txt_name.setText(jobModel.name);
-                holder.txt_posted_on.setText(jobModel.posted_on);
-                holder.txt_location.setText(jobModel.hotel_location);
-                Glide.with(context).load(jobModel.hotel_image).into(holder.img_image);
-
-
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        helpers.animateWobble(holder.itemView);
-                    }
-                });
-
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return jobModels.size();
-        }
-
-        public void updateData(ArrayList<JobModel> view_model) {
-            jobModels.clear();
-            jobModels.addAll(view_model);
-            notifyDataSetChanged();
-        }
-
     }
 
     private void searchDatabase() {

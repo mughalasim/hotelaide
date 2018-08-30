@@ -139,5 +139,13 @@ public interface UserService {
     @GET("counties")
     Call<JsonObject> getCounties();
 
+    // GET ALL CATEGORIES ==========================================================================
+    @GET("job-categories")
+    Call<JsonObject> getCategories();
+
+    // GET ALL JOB TYPES ===========================================================================
+    @GET("jobtypes")
+    Call<JsonObject> getJobTypes();
+
 
 }

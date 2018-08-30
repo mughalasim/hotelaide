@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.main.models.CountyModel;
+import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
@@ -34,6 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.Database.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.SharedPrefs.USER_COUNTY;
 import static com.hotelaide.utils.SharedPrefs.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
@@ -160,7 +161,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
         spinner_county = rootview.findViewById(R.id.spinner_location);
         if (getActivity() != null) {
-            ArrayAdapter<CountyModel> dataAdapter1 = new ArrayAdapter<>(getActivity(), R.layout.list_item_spinner, db.getAllCounties());
+            ArrayAdapter<SearchFilterModel> dataAdapter1 = new ArrayAdapter<>(getActivity(), R.layout.list_item_spinner, db.getAllFilterItems(COUNTY_TABLE_NAME));
             spinner_county.setAdapter(dataAdapter1);
         }
 
@@ -193,7 +194,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     private void setFromSharedPrefs() {
 
-        spinner_county.setSelection(getIndex(spinner_county, db.getCountyNameByID(SharedPrefs.getInt(USER_COUNTY))));
+        spinner_county.setSelection(getIndex(spinner_county, db.getFilterNameByID(COUNTY_TABLE_NAME, SharedPrefs.getInt(USER_COUNTY))));
 
         et_postcode.setText(SharedPrefs.getString(USER_POSTAL_CODE));
 
@@ -218,7 +219,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     private void logAddress() {
         Helpers.LogThis(TAG_LOG,
-                "COUNTY NAME: " + db.getCountyNameByID(SharedPrefs.getInt(USER_COUNTY)) +
+                "COUNTY NAME: " + db.getFilterNameByID(COUNTY_TABLE_NAME, SharedPrefs.getInt(USER_COUNTY)) +
                         " POSTAL CODE: " + SharedPrefs.getString(USER_POSTAL_CODE) +
                         " LNG: " + SharedPrefs.getDouble(USER_LNG) +
                         " LAT: " + SharedPrefs.getDouble(USER_LAT) +
@@ -232,7 +233,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
     private void asyncUpdateAddress() {
         UserService userService = UserService.retrofit.create(UserService.class);
 
-        final int county_id = db.getCountyIDByString(spinner_county.getSelectedItem().toString());
+        final int county_id = db.getFilterIDByString(COUNTY_TABLE_NAME, spinner_county.getSelectedItem().toString());
 
         Call<JsonObject> call = userService.setUserAddress(
                 SharedPrefs.getInt(USER_ID),

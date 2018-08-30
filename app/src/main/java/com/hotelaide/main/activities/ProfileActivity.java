@@ -26,7 +26,6 @@ import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceFragment;
 import com.hotelaide.main.fragments.ProfileUpdateFragment;
 import com.hotelaide.services.UserService;
-import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -58,8 +57,6 @@ import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
 public class ProfileActivity extends AppCompatActivity {
    private Helpers helpers;
 
-   private Database db;
-
    private Toolbar toolbar;
    private TextView toolbar_text;
 
@@ -76,9 +73,9 @@ public class ProfileActivity extends AppCompatActivity {
     private final String
             TAG_LOG = "EDIT PROFILE";
 
-    private TabLayout tabLayout;
+    private TabLayout tab_layout;
 
-    private ViewPager viewPager;
+    private ViewPager view_pager;
 
     private final int
             RESULT_BANNER = 222,
@@ -112,7 +109,6 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_profile);
 
         helpers = new Helpers(ProfileActivity.this);
-        db = new Database();
 
         setUpToolBarAndTabs();
 
@@ -171,11 +167,11 @@ public class ProfileActivity extends AppCompatActivity {
         img_avatar = findViewById(R.id.img_avatar);
         img_banner = findViewById(R.id.img_banner);
 
-        viewPager = findViewById(R.id.viewpager);
-        tabLayout = findViewById(R.id.tabs);
+        view_pager = findViewById(R.id.view_pager);
+        tab_layout = findViewById(R.id.tabs);
 
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager, true);
+        setupViewPager(view_pager);
+        tab_layout.setupWithViewPager(view_pager, true);
     }
 
     private void setUpToolBarAndTabs() {
@@ -205,7 +201,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
                     isCollapsedToolbar = true;
-                    toolbar_text.setText(jobSeekerTitleList[viewPager.getCurrentItem()]);
+                    toolbar_text.setText(jobSeekerTitleList[view_pager.getCurrentItem()]);
                 } else if (verticalOffset == 0) {
                     isCollapsedToolbar = false;
                     toolbar_text.setText(TAG_LOG);

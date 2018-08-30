@@ -1,7 +1,7 @@
 package com.hotelaide.main.models;
 
 
-public class CountyModel {
+public class SearchFilterModel {
     public int id;
     public String name = "";
 

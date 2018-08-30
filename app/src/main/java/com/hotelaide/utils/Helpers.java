@@ -28,6 +28,7 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,8 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.JsonObject;
@@ -45,7 +48,7 @@ import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.activities.FindJobsActivity;
 import com.hotelaide.main.activities.ProfileViewActivity;
 import com.hotelaide.main.activities.SettingsActivity;
-import com.hotelaide.main.models.CountyModel;
+import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.services.UserService;
 import com.hotelaide.startup.LoginActivity;
 import com.hotelaide.startup.SplashScreenActivity;
@@ -69,11 +72,14 @@ import retrofit2.Response;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
 import static android.content.pm.PackageManager.NameNotFoundException;
+import static com.hotelaide.utils.Database.CATEGORIES_TABLE_NAME;
+import static com.hotelaide.utils.Database.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.Database.JOB_TYPE_TABLE_NAME;
 
 public class Helpers {
 
     public final static String TAG_LOG = "HELPER CLASS";
-    private final static int INT_ANIMATION_TIME = 800;
+    public final static int INT_ANIMATION_TIME = 800;
     //    private static Tracker sTracker;
 //    private static GoogleAnalytics sAnalytics;
     private final Context context;
@@ -296,6 +302,98 @@ public class Helpers {
         dialog.show();
     }
 
+    public void dialogShare(final Activity context, final String STR_SHARE_LINK){
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_share);
+        final ImageView share_facebook = dialog.findViewById(R.id.share_facebook);
+        final ImageView share_email = dialog.findViewById(R.id.share_email);
+        final ImageView share_messenger = dialog.findViewById(R.id.share_messenger);
+        final ImageView share_sms = dialog.findViewById(R.id.share_sms);
+        final ImageView share_whatsapp = dialog.findViewById(R.id.share_whatsapp);
+
+        share_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateAppIsInstalled("com.facebook.katana")) {
+                    ShareLinkContent content = new ShareLinkContent.Builder()
+                            .setContentUrl(Uri.parse(STR_SHARE_LINK))
+                            .build();
+                    ShareDialog.show(context, content);
+                    dialog.cancel();
+                } else {
+                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                }
+            }
+        });
+
+        share_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setType("text/html");
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name));
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, STR_SHARE_LINK);
+                    context.startActivity(Intent.createChooser(emailIntent, "Send Email"));
+                    dialog.cancel();
+                } catch (Exception e) {
+                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                }
+            }
+        });
+
+        share_messenger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateAppIsInstalled("com.facebook.orca")) {
+                    Intent messengerIntent = new Intent();
+                    messengerIntent.setAction(Intent.ACTION_SEND);
+                    messengerIntent.putExtra(Intent.EXTRA_TEXT, STR_SHARE_LINK);
+                    messengerIntent.setType("text/plain");
+                    messengerIntent.setPackage("com.facebook.orca");
+                    context.startActivity(messengerIntent);
+                } else {
+                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                }
+            }
+        });
+
+        share_sms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                    smsIntent.putExtra("sms_body", STR_SHARE_LINK);
+                    smsIntent.setType("vnd.android-dir/mms-sms");
+                    context.startActivity(smsIntent);
+                    dialog.cancel();
+                } catch (Exception e) {
+                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                }
+            }
+        });
+
+        share_whatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateAppIsInstalled("com.whatsapp")) {
+                    Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                    whatsappIntent.setType("text/plain");
+                    whatsappIntent.setPackage("com.whatsapp");
+                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, STR_SHARE_LINK);
+                    context.startActivity(whatsappIntent);
+                    dialog.cancel();
+                } else {
+                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                }
+            }
+        });
+
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
     public void dialogMakeCall(final Context context, final String phoneNumber) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -452,7 +550,6 @@ public class Helpers {
         }
 
     }
-
 
     public String formatDateDuration(String start, String end) {
 
@@ -667,10 +764,10 @@ public class Helpers {
                         int length = main_array.length();
                         for (int i = 0; i < length; i++) {
                             JSONObject object = main_array.getJSONObject(i);
-                            CountyModel countyModel = new CountyModel();
-                            countyModel.id = object.getInt("id");
-                            countyModel.name = object.getString("county_name");
-                            db.setCounties(countyModel);
+                            SearchFilterModel searchFilterModel = new SearchFilterModel();
+                            searchFilterModel.id = object.getInt("id");
+                            searchFilterModel.name = object.getString("county_name");
+                            db.setFilter(COUNTY_TABLE_NAME, searchFilterModel);
                         }
                     }
 
@@ -691,5 +788,87 @@ public class Helpers {
         });
     }
 
+
+    // GET COUNTIES ================================================================================
+    public void asyncGetJobTypes() {
+        UserService userService = UserService.retrofit.create(UserService.class);
+        final Call<JsonObject> call = userService.getJobTypes();
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                    LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        JSONArray main_array = main.getJSONArray("data");
+                        int length = main_array.length();
+                        for (int i = 0; i < length; i++) {
+                            JSONObject object = main_array.getJSONObject(i);
+                            SearchFilterModel searchFilterModel = new SearchFilterModel();
+                            searchFilterModel.id = object.getInt("id");
+                            searchFilterModel.name = object.getString("name");
+                            db.setFilter(JOB_TYPE_TABLE_NAME, searchFilterModel);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    LogThis(TAG_LOG, e.toString());
+
+                } catch (Exception e) {
+                    LogThis(TAG_LOG, e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                LogThis(TAG_LOG, t.toString());
+                LogThis(TAG_LOG, call.toString());
+            }
+
+        });
+    }
+
+    // GET CATEGORIES ==============================================================================
+    public void asyncGetCategories() {
+        UserService userService = UserService.retrofit.create(UserService.class);
+        final Call<JsonObject> call = userService.getCategories();
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                    LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        JSONArray main_array = main.getJSONArray("data");
+                        int length = main_array.length();
+                        for (int i = 0; i < length; i++) {
+                            JSONObject object = main_array.getJSONObject(i);
+                            SearchFilterModel searchFilterModel = new SearchFilterModel();
+                            searchFilterModel.id = object.getInt("id");
+                            searchFilterModel.name = object.getString("name");
+                            db.setFilter(CATEGORIES_TABLE_NAME, searchFilterModel);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    LogThis(TAG_LOG, e.toString());
+
+                } catch (Exception e) {
+                    LogThis(TAG_LOG, e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                LogThis(TAG_LOG, t.toString());
+                LogThis(TAG_LOG, call.toString());
+            }
+
+        });
+    }
 
 }

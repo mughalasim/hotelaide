@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        viewPager = findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tabs);
 
         setupViewPager(viewPager);
