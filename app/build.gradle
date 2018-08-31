@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     compileSdkVersion rootProject.compileSDK
@@ -14,6 +13,7 @@ android {
         versionName "$rootProject.versionName"
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -87,19 +87,18 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
     // FIRE BASE AUTHENTICATION
+    implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-messaging:17.3.0'
-    implementation 'com.google.firebase:firebase-invites:16.0.1'
-    implementation 'com.google.firebase:firebase-perf:16.1.0'
+//    implementation 'com.google.firebase:firebase-invites:16.0.3'
     implementation 'com.google.firebase:firebase-database:16.0.1'
     implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.1'
 
     // GOOGLE
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
-    implementation 'com.google.android.gms:play-services-places:15.0.1'
-    implementation 'com.google.android.gms:play-services-location:15.0.1'
+//    implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
-    implementation('com.google.android.gms:play-services-analytics:15.0.0') {
+    implementation('com.google.android.gms:play-services-analytics:16.0.3') {
         exclude module: 'play-services-ads'
     }
 

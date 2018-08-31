@@ -120,7 +120,6 @@ public class SharedPrefs {
     // USER FUNCTIONS ==============================================================================
     public static Boolean setUser(JSONObject user) {
         Helpers.LogThis(SHARED_PREFS, "USER SET");
-        Boolean response;
         Helpers.LogThis(SHARED_PREFS, user.toString());
         try {
             setInt(USER_ID, user.getInt("id"));
@@ -197,16 +196,15 @@ public class SharedPrefs {
                     getDouble(USER_LNG)
             );
 
-            response = true;
+            return true;
 
         } catch (JSONException e) {
             Helpers.LogThis(SHARED_PREFS,  e.toString());
-            response = false;
+            return false;
         } catch (Exception e) {
             Helpers.LogThis(SHARED_PREFS,  e.toString());
-            response = false;
+            return false;
         }
-        return response;
     }
 
     public static UserModel getUser() {

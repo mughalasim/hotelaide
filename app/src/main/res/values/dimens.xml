@@ -19,10 +19,10 @@
 
 
     <!--PADDING =================================================================================-->
-    <dimen name="padding_large">35dp</dimen>
-    <dimen name="padding_medium">25dp</dimen>
-    <dimen name="padding_small">20dp</dimen>
-    <dimen name="padding_tiny">14dp</dimen>
+    <dimen name="padding_large">30dp</dimen>
+    <dimen name="padding_medium">20dp</dimen>
+    <dimen name="padding_small">18dp</dimen>
+    <dimen name="padding_tiny">12dp</dimen>
 
 
     <!--TEXT SIZES ==============================================================================-->
@@ -44,7 +44,7 @@
     <dimen name="height_edit_text">45sp</dimen>
     <dimen name="height_panel">55sp</dimen>
     <dimen name="height_nav_header">110sp</dimen>
-    <dimen name="height_collapsing_toolbar">200sp</dimen>
+    <dimen name="height_collapsing_toolbar">250sp</dimen>
 
 
 </resources>

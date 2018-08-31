@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.hotelaide.R;
-import com.hotelaide.main.fragments.ListJobsFragment;
+import com.hotelaide.main.fragments.AppliedJobsFragment;
 import com.hotelaide.main.fragments.MessagesFragment;
 import com.hotelaide.utils.SharedPrefs;
 
@@ -26,7 +26,7 @@ public class DashboardActivity extends ParentActivity {
             R.string.nav_messages
     };
     private Fragment[] dashboardFragments = {
-            new ListJobsFragment(),
+            new AppliedJobsFragment(),
             new MessagesFragment(),
     };
     private TabLayout tab_layout;
@@ -82,7 +82,6 @@ public class DashboardActivity extends ParentActivity {
             setupViewPager(view_pager);
             tab_layout.setupWithViewPager(view_pager, true);
     }
-
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -151,6 +150,5 @@ public class DashboardActivity extends ParentActivity {
         }
 
     }
-
 
 }

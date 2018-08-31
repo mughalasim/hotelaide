@@ -25,7 +25,7 @@
     <string name="error_app_not_installed">This App is not installed on your device</string>
 
     <!-- About Us ===============================================================================-->
-    <string name="about1">Is a cloud based hotel management software that covers all hotel internal operations and becomes the hotel\'s direct gateway to all the online sales and marketing channels.HotelAide was planned not to be another PMS, but a solution that would be Cloud based to offer the ultimate remote accessibility for both hotel owners and management companies. In 2010 we decided to start the development of Cloudinn PMS, to offer hotels and resorts a fully integrated, accessible, flexible, affordable and dynamic solution</string>
+    <string name="about1">Is a cloud based hotel management software that covers all hotel internal operations and becomes the hotel\'s direct gateway to all the online sales and marketing channels.HotelAide was planned not to be another PMS</string>
     <string name="about2">Since launching in 2015, Yummy Card has become Nairobi’s largest dining club, with a current membership base of over 15,000 members. The program offers an unparalleled, one-of-a-kind marketing strategy for your restaurant; one that has helped restaurants fill seats and build loyalty. Our research shows that over 50% of our members choose to eat out at a Yummy Card restaurant at least once a week. Members have the option of using their physical cards or displaying a digital version on the EatOut App. Discounts apply on the entire bill and at all times, however cannot be used at the same time as another offer. Some restaurants may exclude holidays and celebration days. Order you card today by visiting www.joinyummy.com.</string>
     <string name="about3">Yummy Magazine is the region’s only lifestyle magazine focused on food and drink. With a print run of 12,000 distributed through over 15,000 copies publication launching in 2015, Yummy Card has become Nairobi’s largest dining club, with a current Yummy is Nairobi’s premier urban lifestyle magazine specifically for foodies with 12,000 copies are distributed monthly through over 100 locations (cafes, restaurants, shopping malls) in Nairobi, reaching a broad spectrum individuals with high disposable income, young professionals, corporate executives, decision makers, expats and tourists. Download back issues at www.yummymagaizne.com.</string>
 
@@ -143,7 +143,7 @@
     <string name="txt_longitude">Longitude</string>
     <string name="txt_latitude">Latitude</string>
     <string name="txt_full_address">Full Address</string>
-    <string name="txt_map_location">Location Map (Click to set Location)</string>
+    <string name="txt_map_location">Map Location</string>
     <string name="txt_search_here">search here…</string>
     <string name="txt_search">Search</string>
     <string name="txt_clear">Clear</string>
@@ -174,7 +174,14 @@
     <string name="txt_set_location">Set location</string>
     <string name="txt_set_category">Set Category</string>
     <string name="txt_set_job_type">Set Job Type</string>
+    <string name="txt_job_vacancies">Job Vacancies</string>
     <string name="txt_sign_up_social_title">SOCIAL MEDIA SIGN UP</string>
+    <string name="txt_apply">Apply Now</string>
+    <string name="txt_description">Description</string>
+    <string name="txt_requirements">Requirements</string>
+    <string name="txt_view_hotel">View Hotel</string>
+    <string name="txt_posted_till">&#160;Till:&#160;</string>
+    <string name="txt_posted_on">&#160;Posted:&#160;</string>
 
 
 </resources>

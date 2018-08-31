@@ -1,6 +1,5 @@
 package com.hotelaide.main.activities;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -20,10 +19,10 @@ import com.hotelaide.services.HotelService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,11 +32,14 @@ import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
 public class HotelActivity extends AppCompatActivity {
     private Helpers helpers;
     private Toolbar toolbar;
-    private TextView toolbar_text, txt_hotel_name;
+    private TextView
+            toolbar_text,
+            txt_hotel_name,
+            txt_hotel_description,
+            txt_hotel_email;
     private ImageView
             img_banner;
     private AppBarLayout app_bar_layout;
-    private Boolean isCollapsedToolbar = false;
     private String
             STR_PAGE_TITLE = "",
             STR_SHARE_LINK = "Please check out this Hotel on HotelAide ";
@@ -51,18 +53,18 @@ public class HotelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (handleExtraBundles()) {
-            setContentView(R.layout.activity_my_profile);
+        helpers = new Helpers(HotelActivity.this);
 
-            helpers = new Helpers(HotelActivity.this);
+        if (handleExtraBundles()) {
+            setContentView(R.layout.activity_hotel);
 
             setUpToolBarAndTabs();
 
             findAllViews();
 
-            setFromSharedPrefs();
-
             setListeners();
+
+            asyncFetchHotel();
 
         } else {
             helpers.ToastMessage(HotelActivity.this, getString(R.string.error_unknown));
@@ -70,6 +72,11 @@ public class HotelActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -108,6 +115,8 @@ public class HotelActivity extends AppCompatActivity {
 
         img_banner = findViewById(R.id.img_banner);
         txt_hotel_name = findViewById(R.id.txt_hotel_name);
+        txt_hotel_email = findViewById(R.id.txt_hotel_email);
+        txt_hotel_description = findViewById(R.id.txt_hotel_description);
 
     }
 
@@ -136,32 +145,27 @@ public class HotelActivity extends AppCompatActivity {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
-                    isCollapsedToolbar = true;
+                    toolbar.setBackground(getResources().getDrawable(R.drawable.bckgrd_toolbar));
                     toolbar_text.setText(STR_PAGE_TITLE);
                 } else if (verticalOffset == 0) {
-                    isCollapsedToolbar = false;
-                    toolbar_text.setText(TAG_LOG);
-                    txt_hotel_name.setText(STR_PAGE_TITLE);
+                    toolbar_text.setText("");
+                    toolbar.setBackground(null);
                 } else {
-                    isCollapsedToolbar = false;
-                    toolbar_text.setText(TAG_LOG);
-                    txt_hotel_name.setText(STR_PAGE_TITLE);
+                    toolbar_text.setText("");
+                    toolbar.setBackground(null);
                 }
             }
         });
 
-        final String[] perms = {
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE};
     }
 
     // GET HOTEL ASYNC FUNCTION ====================================================================
-    private void asyncFetchHotel(final MultipartBody.Part partFile, final int type) {
+    private void asyncFetchHotel() {
 
         HotelService userService = HotelService.retrofit.create(HotelService.class);
-
         Call<JsonObject> call = userService.getHotel(INT_HOTEL_ID);
+        helpers.setProgressDialogMessage("Loading Hotel details");
+        helpers.progressDialog(true);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -173,12 +177,36 @@ public class HotelActivity extends AppCompatActivity {
                     Helpers.LogThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
-                        if (SharedPrefs.setUser(main.getJSONObject("user"))) {
-                            helpers.ToastMessage(HotelActivity.this, "Image updated");
 
-                        } else {
-                            helpers.ToastMessage(HotelActivity.this, getString(R.string.error_server));
+                        JSONObject hotel_object = main.getJSONObject("data");
+                        STR_PAGE_TITLE = hotel_object.getString("hotel_name");
+                        txt_hotel_name.setText(STR_PAGE_TITLE);
+                        txt_hotel_description.setText(hotel_object.getString("hotel_description"));
+                        txt_hotel_email.setText(hotel_object.getString("hotel_email"));
+                        STR_SHARE_LINK = STR_SHARE_LINK.concat(hotel_object.getString("hotel_url"));
+
+                        // JOB VACANCIES
+                        JSONArray job_vacancies = hotel_object.getJSONArray("job_vacancies");
+                        if (job_vacancies != null && job_vacancies.length() > 0) {
+                            int array_length = job_vacancies.length();
+                            for (int i = 0; i < array_length; i++) {
+                                JSONObject vacancy_object = job_vacancies.getJSONObject(i);
+
+
+                            }
                         }
+
+                        // GALLERY
+                        JSONArray gallery = hotel_object.getJSONArray("gallery");
+                        if (gallery != null && gallery.length() > 0) {
+                            int array_length = gallery.length();
+                            for (int i = 0; i < array_length; i++) {
+                                String gallery_url = gallery.getString(i);
+                                Helpers.LogThis(TAG_LOG, "GALLERY URL: " + gallery_url);
+
+                            }
+                        }
+
                     } else {
                         helpers.handleErrorMessage(HotelActivity.this, main.getJSONObject("data"));
                     }
@@ -198,8 +226,10 @@ public class HotelActivity extends AppCompatActivity {
                 Helpers.LogThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(HotelActivity.this, getString(R.string.error_server));
+                    onBackPressed();
                 } else {
                     helpers.ToastMessage(HotelActivity.this, getString(R.string.error_connection));
+                    onBackPressed();
                 }
 
             }

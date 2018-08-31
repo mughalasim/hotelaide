@@ -81,12 +81,12 @@ public class FindJobsActivity extends ParentActivity {
             LAST_PAGE = 1;
     private boolean
             continue_pagination = true;
-    private LinearLayoutManager layoutManager;
     private CompletionHandler completionHandler;
     private static final int HITS_PER_PAGE = 20;
 
 
     // SEARCH ADAPTER ITEMS ------------------------------------------------------------------------
+    private LinearLayoutManager layoutManager;
     private RecyclerView recycler_view;
     private ArrayList<JobModel> model_list = new ArrayList<>();
     private FindJobsAdapter adapter;

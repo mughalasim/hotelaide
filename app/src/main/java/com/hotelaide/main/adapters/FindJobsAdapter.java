@@ -2,7 +2,6 @@ package com.hotelaide.main.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,13 +14,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hotelaide.R;
-import com.hotelaide.main.activities.HotelActivity;
+import com.hotelaide.main.activities.JobActivity;
 import com.hotelaide.main.models.JobModel;
 import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;
-
-import static com.hotelaide.utils.Helpers.INT_ANIMATION_TIME;
 
 public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHolder> {
     private final ArrayList<JobModel> jobModels;
@@ -96,15 +93,9 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    helpers.animateWobble(holder.itemView);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            context.startActivity(new Intent(context, HotelActivity.class)
-                            .putExtra("HOTEL_ID", jobModel.hotel_id)
-                            );
-                        }
-                    }, INT_ANIMATION_TIME);
+                    context.startActivity(new Intent(context, JobActivity.class)
+                            .putExtra("JOB_ID", jobModel.id)
+                    );
                 }
             });
         }

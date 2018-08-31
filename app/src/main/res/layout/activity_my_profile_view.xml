@@ -96,8 +96,8 @@
                         android:layout_centerInParent="true"
                         android:progress="15"
                         android:max="100"
-                        android:paddingStart="@dimen/padding_small"
-                        android:paddingEnd="@dimen/padding_small"
+                        android:paddingStart="@dimen/padding_tiny"
+                        android:paddingEnd="@dimen/padding_tiny"
                         android:thumb="@drawable/progress_thumb"
                         android:progressDrawable="@drawable/progress_background" />
 

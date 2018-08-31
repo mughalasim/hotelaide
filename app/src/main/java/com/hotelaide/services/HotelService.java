@@ -74,10 +74,16 @@ public interface HotelService {
             @Path("hotel_id") int hotel_id
     );
 
-    // GET JOB BY ID =============================================================================
-    @GET("job/{job_id}")
+    // GET JOB BY ID ===============================================================================
+    @GET("jobs/{job_id}")
     Call<JsonObject> getJob(
             @Path("job_id") int job_id
+    );
+
+    // GET APPLIED JOBS ============================================================================
+    @GET("jobs/{user_id}/applications")
+    Call<JsonObject> getAppliedJobs(
+            @Path("user_id") int user_id
     );
 
 }
