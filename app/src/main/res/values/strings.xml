@@ -19,7 +19,7 @@
     <string name="error_permissions">Dear user, App permissions have not been granted! The App cannot function without these permissions. Please grant them from the phone settings</string>
     <string name="error_no_we">No work experience added</string>
     <string name="error_no_ee">No educational experience added</string>
-    <string name="error_no_jobs">No Jobs found for the search criteria above</string>
+    <string name="error_no_jobs">No Jobs found!</string>
     <string name="error_pass">Your new and confirmed password do not match</string>
     <string name="error_same_date">Start date cannot be the same as the end date</string>
     <string name="error_app_not_installed">This App is not installed on your device</string>

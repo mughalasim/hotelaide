@@ -19,7 +19,10 @@ import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 //import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -78,6 +81,14 @@ public interface HotelService {
     @GET("jobs/{job_id}")
     Call<JsonObject> getJob(
             @Path("job_id") int job_id
+    );
+
+    // APPLY FOR JOB ===============================================================================
+    @FormUrlEncoded
+    @POST("jobs/apply")
+    Call<JsonObject> applyForJob(
+            @Field("user_id") int user_id,
+            @Field("jobvacancy_id") int jobvacancy_id
     );
 
     // GET APPLIED JOBS ============================================================================

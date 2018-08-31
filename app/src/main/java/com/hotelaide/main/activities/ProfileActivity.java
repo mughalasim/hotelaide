@@ -22,7 +22,6 @@ import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.AddressFragment;
 import com.hotelaide.main.fragments.ChangePasswordFragment;
-import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceFragment;
 import com.hotelaide.main.fragments.ProfileUpdateFragment;
 import com.hotelaide.services.UserService;
@@ -88,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
             R.string.nav_address,
             R.string.nav_education,
             R.string.nav_work,
-            R.string.nav_documents,
+//            R.string.nav_documents,
             R.string.nav_pass
     };
 
@@ -97,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
             new AddressFragment(),
             new ExperienceFragment(),
             new ExperienceFragment(),
-            new DocumentsFragment(),
+//            new DocumentsFragment(),
             new ChangePasswordFragment()
     };
 

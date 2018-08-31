@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.services.HotelService;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +28,8 @@ import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
 public class JobActivity extends AppCompatActivity {
     private Helpers helpers;
@@ -265,7 +268,7 @@ public class JobActivity extends AppCompatActivity {
     private void asyncApplyJob() {
 
         HotelService hotelService = HotelService.retrofit.create(HotelService.class);
-        Call<JsonObject> call = hotelService.getJob(INT_JOB_ID);
+        Call<JsonObject> call = hotelService.applyForJob(SharedPrefs.getInt(USER_ID), INT_JOB_ID);
         helpers.setProgressDialogMessage("Applying for this position");
         helpers.progressDialog(true);
 
@@ -278,11 +281,7 @@ public class JobActivity extends AppCompatActivity {
 
                     Helpers.LogThis(TAG_LOG, main.toString());
 
-                    if (main.getBoolean("success")) {
-                        helpers.ToastMessage(JobActivity.this, main.getString("message"));
-                    } else {
-                        helpers.handleErrorMessage(JobActivity.this, main.getJSONObject("data"));
-                    }
+                    helpers.ToastMessage(JobActivity.this, main.getString("message"));
 
                 } catch (JSONException e) {
                     helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));

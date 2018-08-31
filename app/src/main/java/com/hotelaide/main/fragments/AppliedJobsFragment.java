@@ -3,6 +3,7 @@ package com.hotelaide.main.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.InflateException;
@@ -41,13 +42,13 @@ public class AppliedJobsFragment extends Fragment {
     private Database db;
 
     // SEARCH ADAPTER ITEMS ------------------------------------------------------------------------
+    private SwipeRefreshLayout swipe_refresh;
     private LinearLayoutManager layoutManager;
     private RecyclerView recycler_view;
     private ArrayList<JobModel> model_list = new ArrayList<>();
     private FindJobsAdapter adapter;
 
-    public AppliedJobsFragment() {
-    }
+    public AppliedJobsFragment() { }
 
 
     @Override
@@ -61,6 +62,8 @@ public class AppliedJobsFragment extends Fragment {
                 db = new Database();
 
                 findAllViews();
+
+                setListeners();
 
                 asyncGetAppliedJobs();
 
@@ -78,6 +81,7 @@ public class AppliedJobsFragment extends Fragment {
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
         // SEARCH FUNCTIONALITY --------------------------------------------------------------------
+        swipe_refresh = root_view.findViewById(R.id.swipe_refresh);
         recycler_view = root_view.findViewById(R.id.recycler_view);
         adapter = new FindJobsAdapter(model_list);
         recycler_view.setAdapter(adapter);
@@ -85,6 +89,15 @@ public class AppliedJobsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recycler_view.setLayoutManager(layoutManager);
 
+    }
+
+    private void setListeners() {
+        swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                asyncGetAppliedJobs();
+            }
+        });
     }
 
     private void noListItems() {
@@ -98,49 +111,51 @@ public class AppliedJobsFragment extends Fragment {
     // ASYNC FETCH ALL APPLIED JOBS ================================================================
     private void asyncGetAppliedJobs() {
         HotelService hotelService = HotelService.retrofit.create(HotelService.class);
-
-        Call<JsonObject> call = hotelService.getAppliedJobs(
-                SharedPrefs.getInt(USER_ID)
-        );
+        Call<JsonObject> call = hotelService.getAppliedJobs(SharedPrefs.getInt(USER_ID));
+        swipe_refresh.setRefreshing(true);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                if (getActivity() != null) {
+                    swipe_refresh.setRefreshing(false);
+                    try {
+                        JSONObject main = new JSONObject(String.valueOf(response.body()));
+                        Helpers.LogThis(TAG_LOG, main.toString());
 
-                    model_list.clear();
+                        model_list.clear();
+                        JSONObject data = main.getJSONObject("data");
+                        JSONArray applications = data.getJSONArray("applications");
+                        for (int i = 0; i < applications.length(); i++) {
+                            JSONObject hit_object = applications.getJSONObject(i);
+                            model_list.add(db.setJobFromJson(hit_object));
+                        }
 
-                    JSONArray applications = main.getJSONArray("applications");
-                    for (int i = 0; i < applications.length(); i++) {
-                        JSONObject hit_object = applications.getJSONObject(i);
-                        model_list.add(db.setJobFromJson(hit_object));
+                        if (model_list.size() <= 0) {
+                            noListItems();
+                        }
+
+                        adapter.notifyDataSetChanged();
+
+
+                    } catch (JSONException e) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        e.printStackTrace();
                     }
-
-                    if (model_list.size() <= 0) {
-                        noListItems();
-                    }
-                    recycler_view.invalidate();
-                    adapter.updateData(model_list);
-                    adapter.notifyDataSetChanged();
-
-
-                } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                    e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.LogThis(TAG_LOG, t.toString());
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                if (getActivity() != null) {
+                    swipe_refresh.setRefreshing(false);
+                    Helpers.LogThis(TAG_LOG, t.toString());
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    } else {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    }
                 }
-
             }
         });
     }

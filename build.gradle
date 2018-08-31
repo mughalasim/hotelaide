@@ -43,9 +43,9 @@ ext {
     SupportLibrary = '28.0.0-rc01'
 
     // Debug the App
-    debugMode = true
-    minify = false
-    proguard = false
+    debugMode = false
+    minify = true
+    proguard = true
 
     // App Versioning
     versionCode = 7
