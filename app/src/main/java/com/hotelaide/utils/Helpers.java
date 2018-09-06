@@ -62,6 +62,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -127,7 +128,7 @@ public class Helpers {
 
 
     // DRAWER CLICKS ===============================================================================
-    public void Drawer_Item_Clicked(Context context, int id) {
+    public void drawerItemClicked(Context context, int id) {
         switch (id) {
             case R.id.drawer_dashboard:
                 context.startActivity(new Intent(context, DashboardActivity.class));
@@ -302,7 +303,7 @@ public class Helpers {
         dialog.show();
     }
 
-    public void dialogShare(final Activity context, final String STR_SHARE_LINK){
+    public void dialogShare(final Activity context, final String STR_SHARE_LINK) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_share);
@@ -517,7 +518,7 @@ public class Helpers {
     }
 
 
-    // FORMAT CURRENCY ==============================================================================
+    // FORMAT ======================================================================================
     public String formatNumbersCurrency(String amount) {
         String[] amount_array = amount.split("\\.");
         String[] savingarray = amount_array[0].split("");
@@ -551,36 +552,36 @@ public class Helpers {
 
     }
 
-    public String formatDateDuration(String start, String end) {
 
-        Date dateStart;
-        Date dateEnd;
+    public String formatDate(String string_date) {
+
+        Date date;
 
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         try {
-            dateStart = sdf.parse(start);
-            dateEnd = sdf.parse(end);
+            date = sdf.parse(string_date);
 
-            Calendar startDate = Calendar.getInstance();
-            Calendar endDate = Calendar.getInstance();
+            Calendar calendarDate = Calendar.getInstance();
 
-            startDate.setTime(dateStart);
-            endDate.setTime(dateEnd);
+            Locale locale = Locale.getDefault();
 
-            int years = endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR);
-            int months = endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH);
+            calendarDate.setTime(date);
 
-            return String.valueOf(years) + " Year(s) " + String.valueOf(months) + " Month(s)";
+            String month = calendarDate.getDisplayName(Calendar.MONTH, Calendar.SHORT, locale).concat(" ");
+            String day = String.valueOf(calendarDate.get(Calendar.DATE)).concat(", ");
+            String year = String.valueOf(calendarDate.get(Calendar.YEAR));
+
+            return month + day + year;
 
         } catch (ParseException e) {
             e.printStackTrace();
-            return "Wrong Date format";
+            return "";
         }
     }
 
-    public String formatAge(String dob) {
+    public String calculateAge(String dob) {
 
         Date dateDOB;
 
@@ -597,12 +598,62 @@ public class Helpers {
             endDate.getTime();
 
             int years = endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR);
+            int months = endDate.get(Calendar.MONTH) - startDate.get(Calendar.MONTH);
 
-            return String.valueOf(years) + " Yrs";
+            String str_years = "", str_months = "";
+
+            if (years > 0) {
+                str_years = String.valueOf(years) + "yrs ";
+            }
+
+            if (months > 0) {
+                str_months = String.valueOf(months) + "mth";
+            }
+
+            return str_years + str_months;
 
         } catch (ParseException e) {
             e.printStackTrace();
-            return "0 Yrs";
+            return "";
+        }
+    }
+
+    public String calculateDateInterval(String start_date, String end_date) {
+
+        Date starting_date;
+        Date ending_date;
+
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+            starting_date = sdf.parse(start_date);
+            ending_date = sdf.parse(end_date);
+
+            Calendar calendarStartDate = Calendar.getInstance();
+            Calendar calendarEndDate = Calendar.getInstance();
+
+            calendarStartDate.setTime(starting_date);
+            calendarEndDate.setTime(ending_date);
+
+            int years = calendarEndDate.get(Calendar.YEAR) - calendarStartDate.get(Calendar.YEAR);
+            int months = calendarEndDate.get(Calendar.MONTH) - calendarStartDate.get(Calendar.MONTH);
+
+            String str_years = "", str_months = "";
+
+            if (years > 0) {
+                str_years = String.valueOf(years) + "yrs ";
+            }
+
+            if (months > 0) {
+                str_months = String.valueOf(months) + "mth";
+            }
+
+            return str_years + str_months;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "";
         }
     }
 
@@ -708,7 +759,7 @@ public class Helpers {
     private int getNotificationIcon() {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
         return useWhiteIcon ?
-                R.mipmap.ic_launcher:
+                R.mipmap.ic_launcher :
                 R.mipmap.ic_launcher;
     }
 

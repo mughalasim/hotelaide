@@ -80,7 +80,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     // PICTURE LOADING
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     // ROUNDED IMAGE VIEW
@@ -108,13 +108,13 @@ dependencies {
     }
 
     // YOYO ANIMATIONS
-    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.easing:library:2.1@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     // MORE FROM LOTTIE
     implementation 'com.airbnb.android:lottie:2.6.0-beta19'
 
     // NOTIFICATION BADGES
-    implementation 'me.leolin:ShortcutBadger:1.1.19@aar'
+    implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
 
     // FACEBOOK DEPENDENCIES
     implementation 'com.facebook.android:notifications:1.0.2'

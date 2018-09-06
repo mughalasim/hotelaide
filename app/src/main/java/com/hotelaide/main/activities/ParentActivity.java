@@ -72,15 +72,16 @@ public class ParentActivity extends AppCompatActivity implements
     private RoundedImageView nav_img_user_pic;
     private ImageView nav_user_banner;
     private int drawer_id;
-    private String toolbarTitle;
+    private String toolbar_title;
     private final String TAG_LOG = "PARENT";
+    private final int INT_NAV_DRAWER_DELAY = 150;
 
 
     void initialize(int drawer_id, String toolbarTitle) {
         helpers = new Helpers(ParentActivity.this);
         db = new Database();
         this.drawer_id = drawer_id;
-        this.toolbarTitle = toolbarTitle;
+        this.toolbar_title = toolbarTitle;
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -100,7 +101,7 @@ public class ParentActivity extends AppCompatActivity implements
     }
 
     private void setUpToolBarAndDrawer() {
-        toolbar_text.setText(toolbarTitle);
+        toolbar_text.setText(toolbar_title);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -146,10 +147,22 @@ public class ParentActivity extends AppCompatActivity implements
                 drawer.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        startActivity(new Intent(ParentActivity.this, ProfileViewActivity.class)
-                                .putExtra("EDIT_MODE", "EDIT_MODE"));
+                        helpers.drawerItemClicked(ParentActivity.this, R.id.drawer_my_profile);
                     }
-                }, 150);
+                }, INT_NAV_DRAWER_DELAY);
+            }
+        });
+
+        nav_user_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                drawer.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        helpers.drawerItemClicked(ParentActivity.this, R.id.drawer_my_profile);
+                    }
+                }, INT_NAV_DRAWER_DELAY);
             }
         });
 
@@ -212,15 +225,42 @@ public class ParentActivity extends AppCompatActivity implements
         drawer.postDelayed(new Runnable() {
             @Override
             public void run() {
-                helpers.Drawer_Item_Clicked(ParentActivity.this, id);
+                helpers.drawerItemClicked(ParentActivity.this, id);
             }
-        }, 150);
+        }, INT_NAV_DRAWER_DELAY);
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        finish();
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (this.isTaskRoot()) {
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.dialog_confirm);
+            final TextView txt_message = dialog.findViewById(R.id.txt_message);
+            final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+            final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+            final TextView txt_title = dialog.findViewById(R.id.txt_title);
+            txt_title.setText(getString(R.string.txt_exit).concat(new String(Character.toChars(0x1F625))));
+            txt_message.setText(getString(R.string.txt_exit_desc));
+            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.cancel();
+                    finish();
+                }
+            });
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.cancel();
+                }
+            });
+            dialog.show();
+        } else {
+            finish();
+        }
     }
 
 

@@ -138,8 +138,6 @@ public class StartUpSignUpFragment extends Fragment {
 
                 initializeGoogle(getActivity());
 
-
-
                 globalUserModel = new UserModel();
 
             } catch (InflateException e) {
@@ -559,7 +557,7 @@ public class StartUpSignUpFragment extends Fragment {
 
         } catch (ApiException e) {
             Helpers.LogThis(TAG_LOG, "signInResult : CODE: " + e.getStatusCode());
-            helpers.ToastMessage(getActivity(), getResources().getString(R.string.error_unknown));
+            helpers.ToastMessage(getActivity(), getResources().getString(R.string.error_sign_in_cancelled));
         }
     }
 

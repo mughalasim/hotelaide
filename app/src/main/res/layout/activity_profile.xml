@@ -42,6 +42,14 @@
                     android:scaleType="centerCrop"
                     android:src="@color/black" />
 
+                <TextView
+                    style="@style/Text_Small"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="@dimen/padding_small"
+                    android:layout_alignParentEnd="true"
+                    android:textAllCaps="true"
+                    android:text="@string/txt_change_image"/>
+
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/img_avatar"
                     android:layout_alignParentBottom="true"

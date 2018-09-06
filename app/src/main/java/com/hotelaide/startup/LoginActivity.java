@@ -1,5 +1,6 @@
 package com.hotelaide.startup;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -50,6 +51,36 @@ public class LoginActivity extends AppCompatActivity {
             helpers.dismissProgressDialog();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (this.isTaskRoot()) {
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.dialog_confirm);
+            final TextView txt_message = dialog.findViewById(R.id.txt_message);
+            final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
+            final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
+            final TextView txt_title = dialog.findViewById(R.id.txt_title);
+            txt_title.setText(getString(R.string.txt_exit).concat(new String(Character.toChars(0x1F625))));
+            txt_message.setText(getString(R.string.txt_exit_desc));
+            btn_confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.cancel();
+                    finish();
+                }
+            });
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.cancel();
+                }
+            });
+            dialog.show();
+        } else {
+            finish();
+        }
     }
 
     // BASIC FUNCTIONS =============================================================================

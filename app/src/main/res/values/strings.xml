@@ -7,7 +7,7 @@
     <!--META DATA ===============================================================================-->
     <string name="facebook_app_id">213335282601524</string>
     <string name="fb_login_protocol_scheme">fb213335282601524</string>
-    <string name="maps_api_key">AIzaSyA0ZgL9xLHGt7ZHWTcRrvsDIGH2yPxauLA"</string>
+    <string name="maps_api_key">AIzaSyCTCaPUFjrQtJ15ATMTvQKxa9Chy4sSSV0"</string>
 
     <!--ERROR MESSAGES ==========================================================================-->
     <string name="error_field_required">This field is required</string>
@@ -23,6 +23,7 @@
     <string name="error_pass">Your new and confirmed password do not match</string>
     <string name="error_same_date">Start date cannot be the same as the end date</string>
     <string name="error_app_not_installed">This App is not installed on your device</string>
+    <string name="error_sign_in_cancelled">Sign in cancelled</string>
 
     <!-- About Us ===============================================================================-->
     <string name="about1">Is a cloud based hotel management software that covers all hotel internal operations and becomes the hotel\'s direct gateway to all the online sales and marketing channels.HotelAide was planned not to be another PMS</string>
@@ -42,7 +43,6 @@
     <!--EDIT TEXT HINTS =========================================================================-->
     <string name="et_hint_first_name">First Name</string>
     <string name="et_hint_last_name">Last Name</string>
-    <string name="et_hint_gender">Gender</string>
     <string name="et_hint_email">Email</string>
     <string name="et_hint_pass">Password</string>
     <string name="et_hint_pass_current">Current Password</string>
@@ -50,8 +50,7 @@
     <string name="et_hint_pass_confirm">Confirm Password</string>
     <string name="et_hint_phone">Phone Number</string>
     <string name="et_hint_postcode">Postal Code</string>
-    <string name="et_hint_country_code">Country</string>
-    <string name="et_hint_dob">Date Of Birth&#160;</string>
+    <string name="et_hint_dob">Date of birth:&#160;</string>
 
 
     <!--ALL DRAWER TEXTS ========================================================================-->
@@ -122,7 +121,7 @@
     <string name="txt_alert">Alert!</string>
     <string name="txt_delete_account">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap OK to proceed or CANCEL to go back</string>
     <string name="txt_to">&#160;to&#160;</string>
-    <string name="txt_from">from&#160;</string>
+    <string name="txt_from">From&#160;</string>
     <string name="txt_select_date">Select Date</string>
     <string name="txt_not_work_here">I do not work here</string>
     <string name="txt_not_set">Not Set</string>
@@ -139,9 +138,6 @@
     <string name="txt_add_exp">ADD NEW EXPERIENCE</string>
     <string name="txt_edit_exp">EDIT EXPERIENCE</string>
     <string name="txt_at">&#160;at&#160;</string>
-    <string name="txt_county">County</string>
-    <string name="txt_longitude">Longitude</string>
-    <string name="txt_latitude">Latitude</string>
     <string name="txt_full_address">Full Address</string>
     <string name="txt_map_location">Map Location</string>
     <string name="txt_search_here">search here…</string>
@@ -182,6 +178,8 @@
     <string name="txt_view_hotel">View Hotel</string>
     <string name="txt_posted_till">&#160;Till:&#160;</string>
     <string name="txt_posted_on">&#160;Posted:&#160;</string>
-
+    <string name="txt_exit_desc">Are you sure you wish to exit?</string>
+    <string name="txt_exit">Leaving&#160;</string>
+    <string name="txt_change_image">Update</string>
 
 </resources>

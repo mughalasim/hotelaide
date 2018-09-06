@@ -14,13 +14,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/top_panel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/panel_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -49,6 +50,9 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/panel_2"
+                    android:layout_toStartOf="@+id/txt_duration"
+                    android:layout_below="@+id/panel_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/text_margin"
@@ -87,7 +91,14 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/txt_duration"
+                    android:layout_below="@+id/panel_1"
+                    style="@style/Text_Normal"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

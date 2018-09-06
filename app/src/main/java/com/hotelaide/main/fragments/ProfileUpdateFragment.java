@@ -133,7 +133,8 @@ public class ProfileUpdateFragment extends Fragment {
         if (SharedPrefs.getString(USER_DOB).equals("null")) {
             txt_user_dob.setText(getString(R.string.txt_not_set));
         } else {
-            txt_user_dob.setText(SharedPrefs.getString(USER_DOB));
+            txt_user_dob.setText(helpers.formatDate(SharedPrefs.getString(USER_DOB)));
+            txt_user_dob.setTag(SharedPrefs.getString(USER_DOB));
         }
 
         // SET TO EDT TEXTS
@@ -160,7 +161,7 @@ public class ProfileUpdateFragment extends Fragment {
                     userModel.phone = Integer.parseInt(fetchFromEditText(et_user_phone));
 
                 if (!txt_user_dob.getText().toString().equals(getString(R.string.txt_not_set))) {
-                    userModel.dob = txt_user_dob.getText().toString();
+                    userModel.dob = txt_user_dob.getTag().toString();
                 }
                 asyncUpdateDetails(userModel);
             }
@@ -195,7 +196,9 @@ public class ProfileUpdateFragment extends Fragment {
                     day = String.valueOf(selectedDay);
                 }
 
-                txt_user_dob.setText(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
+                String date = helpers.formatDate(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
+                txt_user_dob.setText(date);
+                txt_user_dob.setTag(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
             }
         };
 

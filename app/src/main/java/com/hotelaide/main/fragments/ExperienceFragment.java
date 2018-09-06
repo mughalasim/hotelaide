@@ -113,8 +113,6 @@ public class ExperienceFragment extends Fragment {
 
                     root_view = inflater.inflate(R.layout.fragment_experience, container, false);
 
-
-
                     findAllViews();
 
                     setListeners();
@@ -671,6 +669,7 @@ public class ExperienceFragment extends Fragment {
                     txt_start_date,
                     txt_end_date,
                     txt_current,
+                    txt_duration,
                     txt_responsibilities_field_label,
                     txt_responsibilities_field;
 
@@ -685,6 +684,7 @@ public class ExperienceFragment extends Fragment {
                 txt_start_date = v.findViewById(R.id.txt_start_date);
                 txt_end_date = v.findViewById(R.id.txt_end_date);
                 txt_current = v.findViewById(R.id.txt_current);
+                txt_duration = v.findViewById(R.id.txt_duration);
                 txt_responsibilities_field_label = v.findViewById(R.id.txt_responsibilities_field_label);
                 txt_responsibilities_field = v.findViewById(R.id.txt_responsibilities_field);
                 btn_delete = v.findViewById(R.id.btn_delete);
@@ -719,7 +719,6 @@ public class ExperienceFragment extends Fragment {
             if (experienceModel.name.equals("")) {
                 holder.no_list_item.setVisibility(View.VISIBLE);
                 holder.list_item.setVisibility(View.GONE);
-                holder.txt_no_results.setText(R.string.error_no_we);
 
             } else {
                 holder.no_list_item.setVisibility(View.GONE);
@@ -733,9 +732,17 @@ public class ExperienceFragment extends Fragment {
                     holder.txt_current.setVisibility(View.GONE);
                     holder.txt_end_date.setVisibility(View.VISIBLE);
                     holder.txt_end_date.setText(experienceModel.end_date);
+                    holder.txt_duration.setText(helpers.calculateDateInterval(experienceModel.start_date, experienceModel.end_date));
                 } else {
                     holder.txt_current.setVisibility(View.VISIBLE);
                     holder.txt_end_date.setVisibility(View.GONE);
+                    holder.txt_duration.setText(helpers.calculateAge(experienceModel.start_date));
+                }
+
+                if (holder.txt_duration.getText().toString().length() < 1) {
+                    holder.txt_duration.setVisibility(View.GONE);
+                } else {
+                    holder.txt_duration.setVisibility(View.VISIBLE);
                 }
 
                 if (experienceModel.type.equals(EXPERIENCE_TYPE_WORK)) {

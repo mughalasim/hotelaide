@@ -150,7 +150,7 @@ public class ProfileViewActivity extends ParentActivity {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setListeners() {
-        seek_bar_progress.setOnTouchListener(new View.OnTouchListener(){
+        seek_bar_progress.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
@@ -207,9 +207,15 @@ public class ProfileViewActivity extends ParentActivity {
         txt_user_f_name.setText(SharedPrefs.getString(USER_F_NAME).concat(" "));
         txt_user_l_name.setText(SharedPrefs.getString(USER_L_NAME).concat(" "));
 
-        txt_user_age.setText(helpers.formatAge(SharedPrefs.getString(USER_DOB)));
+        String user_age = helpers.calculateAge(SharedPrefs.getString(USER_DOB));
+        if (user_age.equals("")) {
+            txt_user_age.setVisibility(View.GONE);
+        } else {
+            txt_user_age.setVisibility(View.VISIBLE);
+            txt_user_age.setText(user_age);
+        }
 
-        txt_user_dob.setText(SharedPrefs.getString(USER_DOB));
+        txt_user_dob.setText(helpers.formatDate(SharedPrefs.getString(USER_DOB)));
 
         if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
             txt_user_full_address.setVisibility(View.GONE);
@@ -242,7 +248,7 @@ public class ProfileViewActivity extends ParentActivity {
     private void updateProfileSeekBar(int completion) {
         if (completion == 100) {
             rl_progress.setVisibility(View.GONE);
-        } else if(bool_edit_mode){
+        } else if (bool_edit_mode) {
             rl_progress.setVisibility(View.VISIBLE);
             seek_bar_progress.setProgress(completion);
             txt_progress.setText(String.valueOf(completion).concat("%"));
