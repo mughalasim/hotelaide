@@ -148,7 +148,7 @@
                 android:paddingStart="@dimen/padding_small"
                 android:text="@string/txt_job_vacancies" />
 
-            <include layout="@layout/fragment_recycler_view"/>
+            <include layout="@layout/frag_recycler_view"/>
 
 
         </LinearLayout>

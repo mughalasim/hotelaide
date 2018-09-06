@@ -1,4 +1,4 @@
-package com.hotelaide.startup;
+package com.hotelaide.startup.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,7 +23,7 @@ public class StartUpAboutUsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootview == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.fragment_startup_about_us, container, false);
+                rootview = inflater.inflate(R.layout.frag_startup_about_us, container, false);
 
 
 

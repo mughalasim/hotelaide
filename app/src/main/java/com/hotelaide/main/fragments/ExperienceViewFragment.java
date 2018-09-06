@@ -70,7 +70,7 @@ public class ExperienceViewFragment extends Fragment {
                 if (bundle != null) {
                     EXPERIENCE_TYPE = bundle.getString("EXPERIENCE_TYPE");
 
-                    root_view = inflater.inflate(R.layout.fragment_experience_view, container, false);
+                    root_view = inflater.inflate(R.layout.frag_experience_view, container, false);
 
                     findAllViews();
 

@@ -45,7 +45,7 @@ public class ChangePasswordFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root_view == null && getActivity() != null) {
             try {
-                root_view = inflater.inflate(R.layout.fragment_change_password, container, false);
+                root_view = inflater.inflate(R.layout.frag_profile_change_password, container, false);
 
                 helpers = new Helpers(getActivity());
 

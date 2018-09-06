@@ -12,6 +12,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hotelaide.R;
+import com.hotelaide.startup.fragments.StartUpAboutUsFragment;
+import com.hotelaide.startup.fragments.StartUpContactUsFragment;
+import com.hotelaide.startup.fragments.StartUpForgotPassFragment;
+import com.hotelaide.startup.fragments.StartUpLoginFragment;
+import com.hotelaide.startup.fragments.StartUpSignUpFragment;
 import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;

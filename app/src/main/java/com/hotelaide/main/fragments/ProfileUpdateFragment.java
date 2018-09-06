@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.models.UserModel;
 import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
@@ -80,7 +81,7 @@ public class ProfileUpdateFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root_view == null && getActivity() != null) {
             try {
-                root_view = inflater.inflate(R.layout.fragment_profile_update, container, false);
+                root_view = inflater.inflate(R.layout.frag_profile_info, container, false);
 
                 helpers = new Helpers(getActivity());
 
@@ -270,7 +271,9 @@ public class ProfileUpdateFragment extends Fragment {
                     if (main.getBoolean("success")) {
                         if (SharedPrefs.setUser(main.getJSONObject("data"))) {
                             helpers.ToastMessage(getActivity(), main.getString("message"));
-
+                            if(getActivity()!=null){
+                                ((ProfileEditActivity)getActivity()).moveViewPagerNext();
+                            }
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                         }

@@ -55,7 +55,7 @@ public class AppliedJobsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root_view == null && getActivity() != null) {
             try {
-                root_view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+                root_view = inflater.inflate(R.layout.frag_recycler_view, container, false);
 
                 helpers = new Helpers(getActivity());
 

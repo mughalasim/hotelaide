@@ -1,104 +1,69 @@
 package com.hotelaide.main.activities;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.main.fragments.AddressFragment;
-import com.hotelaide.main.fragments.ChangePasswordFragment;
-import com.hotelaide.main.fragments.ExperienceFragment;
-import com.hotelaide.main.fragments.ProfileUpdateFragment;
-import com.hotelaide.services.UserService;
-import com.hotelaide.utils.Helpers;
+import com.hotelaide.main.fragments.ExperienceViewFragment;
 import com.hotelaide.utils.SharedPrefs;
-import com.makeramen.roundedimageview.RoundedImageView;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import pub.devrel.easypermissions.EasyPermissions;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.hotelaide.utils.Helpers.INT_PERMISSIONS_CAMERA;
+import static com.hotelaide.utils.Database.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
-import static com.hotelaide.utils.SharedPrefs.USER_ID;
+import static com.hotelaide.utils.SharedPrefs.USER_COUNTRY_CODE;
+import static com.hotelaide.utils.SharedPrefs.USER_COUNTY;
+import static com.hotelaide.utils.SharedPrefs.USER_DOB;
+import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
+import static com.hotelaide.utils.SharedPrefs.USER_FULL_ADDRESS;
+import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
+import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
+import static com.hotelaide.utils.SharedPrefs.USER_PHONE;
+import static com.hotelaide.utils.SharedPrefs.USER_PROFILE_COMPLETION;
+import static com.hotelaide.utils.SharedPrefs.USER_URL;
 
-public class ProfileActivity extends AppCompatActivity {
-   private Helpers helpers;
+public class ProfileActivity extends ParentActivity {
 
-   private Toolbar toolbar;
-   private TextView toolbar_text;
+    // PROGRESS --------------------------------------
+    private RelativeLayout rl_progress;
+    private SeekBar seek_bar_progress;
+    private TextView txt_progress;
 
+    // BANNER ----------------------------------------
     private ImageView
-            img_banner;
-
-    private AppBarLayout app_bar_layout;
-
-    private Boolean isCollapsedToolbar = false;
-
-    private RoundedImageView
+            img_banner,
             img_avatar;
 
-    private final String
-            TAG_LOG = "EDIT PROFILE";
 
-    private TabLayout tab_layout;
+    // INFO AND CONTACT ------------------------------
+    private TextView
+            txt_user_f_name,
+            txt_user_l_name,
+            txt_user_age,
+            txt_user_dob,
+            txt_user_full_address,
+            txt_user_county_name,
+            txt_user_email,
+            txt_user_phone,
+            txt_user_availability;
 
-    private ViewPager view_pager;
+    private String STR_SHARE_LINK =
+            "Hey! Kindly check out my CV on HotelAide by following this link: ";
 
-    private final int
-            RESULT_BANNER = 222,
-            RESULT_AVATAR = 333;
-    private int
-            RESULT_EXPECTED = 0;
-
-    private int[] jobSeekerTitleList = {
-            R.string.nav_profile,
-            R.string.nav_address,
-            R.string.nav_education,
-            R.string.nav_work,
-//            R.string.nav_documents,
-            R.string.nav_pass
-    };
-
-    private Fragment[] jobSeekerFragments = {
-            new ProfileUpdateFragment(),
-            new AddressFragment(),
-            new ExperienceFragment(),
-            new ExperienceFragment(),
-//            new DocumentsFragment(),
-            new ChangePasswordFragment()
-    };
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -107,286 +72,178 @@ public class ProfileActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_profile);
 
-        helpers = new Helpers(ProfileActivity.this);
+        String TAG_LOG = "MY PROFILE";
 
-        setUpToolBarAndTabs();
+        initialize(R.id.drawer_profile, TAG_LOG);
 
         findAllViews();
 
-        setFromSharedPrefs();
-
         setListeners();
 
-        helpers.asyncGetUser();
-
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch (requestCode) {
-            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
-                CropImage.ActivityResult result = CropImage.getActivityResult(imageReturnedIntent);
-                if (resultCode == RESULT_OK) {
-                    Uri resultUri = result.getUri();
-                    File file = new File(resultUri.getPath());
-
-                    if (RESULT_EXPECTED == RESULT_AVATAR) {
-                        Glide.with(this).load(resultUri).into(img_avatar);
-                        MultipartBody.Part partFile = MultipartBody.Part.createFormData("avatar",
-                                file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                        asyncUpdateImages(partFile, RESULT_EXPECTED);
-                    } else {
-                        Glide.with(this).load(resultUri).into(img_banner);
-                        MultipartBody.Part partFile = MultipartBody.Part.createFormData("banner",
-                                file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                        asyncUpdateImages(partFile, RESULT_EXPECTED);
-                    }
-
-
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    helpers.ToastMessage(ProfileActivity.this,
-                            getResources().getString(R.string.error_unknown));
-                }
-                break;
-        }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-        helpers.myPermissionsDialog(ProfileActivity.this, grantResults);
+    public void onResume() {
+        super.onResume();
+        setTextAndImages();
+        setupEducation();
+        setupWork();
     }
 
-    // BASIC FUNCTIONS =============================================================================
-    private void findAllViews() {
-        app_bar_layout = findViewById(R.id.app_bar_layout);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_share, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.share:
+                helpers.dialogShare(ProfileActivity.this, STR_SHARE_LINK);
+                break;
+
+            case R.id.edit:
+                startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    // BASIC METHODS ===============================================================================
+    private void findAllViews() {
+        STR_SHARE_LINK = STR_SHARE_LINK + SharedPrefs.getString(USER_URL);
+
+        rl_progress = findViewById(R.id.rl_progress);
+        seek_bar_progress = findViewById(R.id.seek_bar_progress);
+        txt_progress = findViewById(R.id.txt_progress);
+
+        // BANNER
         img_avatar = findViewById(R.id.img_avatar);
         img_banner = findViewById(R.id.img_banner);
 
-        view_pager = findViewById(R.id.view_pager);
-        tab_layout = findViewById(R.id.tabs);
+        // INFO AND CONTACT DETAILS
+        txt_user_f_name = findViewById(R.id.txt_user_f_name);
+        txt_user_l_name = findViewById(R.id.txt_user_l_name);
+        txt_user_age = findViewById(R.id.txt_user_age);
+        txt_user_dob = findViewById(R.id.txt_user_dob);
+        txt_user_full_address = findViewById(R.id.txt_user_full_address);
+        txt_user_county_name = findViewById(R.id.txt_user_county_name);
+        txt_user_email = findViewById(R.id.txt_user_email);
+        txt_user_phone = findViewById(R.id.txt_user_phone);
+        txt_user_availability = findViewById(R.id.txt_user_availability);
 
-        setupViewPager(view_pager);
-        tab_layout.setupWithViewPager(view_pager, true);
+
     }
 
-    private void setUpToolBarAndTabs() {
-        toolbar = findViewById(R.id.toolbar);
-        toolbar_text = toolbar.findViewById(R.id.toolbar_text);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+    @SuppressLint("ClickableViewAccessibility")
+    private void setListeners() {
+        seek_bar_progress.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
             }
         });
     }
 
-    private void setFromSharedPrefs() {
+    private void setupEducation() {
+        Fragment myFrag = new ExperienceViewFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("EXPERIENCE_TYPE", EXPERIENCE_TYPE_EDUCATION);
+        myFrag.setArguments(bundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.ll_fragment_education, myFrag)
+                .commit();
+    }
+
+    private void setupWork() {
+        Fragment myFrag = new ExperienceViewFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("EXPERIENCE_TYPE", EXPERIENCE_TYPE_WORK);
+        myFrag.setArguments(bundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.ll_fragment_work, myFrag)
+                .commit();
+    }
+
+    private void setTextAndImages() {
+        // BANNER IMAGES
         Glide.with(this).load(SharedPrefs.getString(USER_IMG_AVATAR)).into(img_avatar);
         Glide.with(this).load(SharedPrefs.getString(USER_IMG_BANNER)).into(img_banner);
-    }
 
-    private void setListeners() {
-        app_bar_layout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
-                    isCollapsedToolbar = true;
-                    toolbar_text.setText(jobSeekerTitleList[view_pager.getCurrentItem()]);
-                } else if (verticalOffset == 0) {
-                    isCollapsedToolbar = false;
-                    toolbar_text.setText(TAG_LOG);
-                } else {
-                    isCollapsedToolbar = false;
-                    toolbar_text.setText(TAG_LOG);
+        // INFO AND CONTACT DETAILS
+        txt_user_f_name.setText(SharedPrefs.getString(USER_F_NAME).concat(" "));
+        txt_user_l_name.setText(SharedPrefs.getString(USER_L_NAME).concat(" "));
 
-                }
-            }
-        });
-
-        final String[] perms = {
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE};
-
-        img_banner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (EasyPermissions.hasPermissions(ProfileActivity.this, perms)) {
-                    RESULT_EXPECTED = RESULT_BANNER;
-                    CropImage.activity()
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(ProfileActivity.this);
-
-                } else {
-                    EasyPermissions.requestPermissions(ProfileActivity.this, getString(R.string.rationale_image),
-                            INT_PERMISSIONS_CAMERA, perms);
-                }
-
-            }
-        });
-
-        img_avatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (EasyPermissions.hasPermissions(ProfileActivity.this, perms)) {
-                    RESULT_EXPECTED = RESULT_AVATAR;
-                    CropImage.activity()
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(ProfileActivity.this);
-                } else {
-                    EasyPermissions.requestPermissions(ProfileActivity.this, getString(R.string.rationale_image),
-                            INT_PERMISSIONS_CAMERA, perms);
-                }
-            }
-        });
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ProfileActivity.ViewPagerAdapter adapter = new ProfileActivity.ViewPagerAdapter(getSupportFragmentManager());
-
-        for (int i = 0; i <= jobSeekerTitleList.length - 1; i++) {
-            Fragment fragment = jobSeekerFragments[i];
-            if (i == 2) {
-                Bundle bundle = new Bundle();
-                bundle.putString("EXPERIENCE_TYPE", EXPERIENCE_TYPE_EDUCATION);
-                fragment.setArguments(bundle);
-            } else if (i == 3) {
-                Bundle bundle = new Bundle();
-                bundle.putString("EXPERIENCE_TYPE", EXPERIENCE_TYPE_WORK);
-                fragment.setArguments(bundle);
-            }
-            adapter.addFragment(fragment, getResources().getString(jobSeekerTitleList[i]));
-        }
-
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(5);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (isCollapsedToolbar) {
-                    toolbar_text.setText(jobSeekerTitleList[position]);
-                } else {
-                    toolbar_text.setText(TAG_LOG);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        private ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-
-    }
-
-
-    // LOGIN ASYNC FUNCTIONS =======================================================================
-    private void asyncUpdateImages(final MultipartBody.Part partFile, final int type) {
-
-        UserService userService = UserService.retrofit.create(UserService.class);
-
-        Call<JsonObject> call;
-
-        if (type == RESULT_AVATAR) {
-            call = userService.setUserImages(
-                    SharedPrefs.getInt(USER_ID),
-                    partFile,
-                    null
-            );
+        String user_age = helpers.calculateAge(SharedPrefs.getString(USER_DOB));
+        if (user_age.equals("")) {
+            txt_user_age.setVisibility(View.GONE);
         } else {
-            call = userService.setUserImages(
-                    SharedPrefs.getInt(USER_ID),
-                    null,
-                    partFile
-            );
+            txt_user_age.setVisibility(View.VISIBLE);
+            txt_user_age.setText(user_age);
         }
 
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+        txt_user_dob.setText(helpers.formatDate(SharedPrefs.getString(USER_DOB)));
 
-                    Helpers.LogThis(TAG_LOG, main.toString());
+        if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
+            txt_user_full_address.setVisibility(View.GONE);
+        } else {
+            txt_user_full_address.setText(SharedPrefs.getString(USER_FULL_ADDRESS));
+            txt_user_full_address.setVisibility(View.VISIBLE);
+        }
 
-                    if (main.getBoolean("success")) {
-                        if (SharedPrefs.setUser(main.getJSONObject("user"))) {
-                            helpers.ToastMessage(ProfileActivity.this, "Image updated");
+        if (SharedPrefs.getInt(USER_COUNTY) > 0) {
+            txt_user_county_name.setText(db.getFilterNameByID(COUNTY_TABLE_NAME, SharedPrefs.getInt(USER_COUNTY)));
+            txt_user_county_name.setVisibility(View.VISIBLE);
+        } else {
+            txt_user_county_name.setVisibility(View.GONE);
+        }
 
-                        } else {
-                            helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
-                        }
-                    } else {
-                        helpers.handleErrorMessage(ProfileActivity.this, main.getJSONObject("data"));
-                    }
+        txt_user_email.setText(SharedPrefs.getString(USER_EMAIL));
 
-                    setFromSharedPrefs();
+        String user_phone = String.valueOf(SharedPrefs.getInt(USER_COUNTRY_CODE)) + " "
+                + String.valueOf(SharedPrefs.getInt(USER_PHONE));
 
-                } catch (JSONException e) {
-                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
-                    e.printStackTrace();
-                    setFromSharedPrefs();
-                }
-            }
+        txt_user_phone.setText(user_phone);
 
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_server));
-                } else {
-                    helpers.ToastMessage(ProfileActivity.this, getString(R.string.error_connection));
-                }
+        txt_user_availability.setText("Immediate");
 
-            }
-        });
+        updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
 
+        updateProfileSeekBar(55);
     }
 
+    private void updateProfileSeekBar(int completion) {
+        if (completion == 100) {
+            rl_progress.setVisibility(View.GONE);
+        } else {
+            rl_progress.setVisibility(View.VISIBLE);
+            seek_bar_progress.setProgress(completion);
+            txt_progress.setText(String.valueOf(completion).concat("%"));
+        }
+    }
 
+    public void editProfile(View view) {
+        if (view.getId() == R.id.txt_basic_info) {
+            startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
+                    .putExtra("BASIC", "BASIC"));
+        } else if (view.getId() == R.id.txt_contact_info){
+            startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
+                    .putExtra("ADDRESS", "ADDRESS"));
+        }else if (view.getId() == R.id.txt_education_edit){
+            startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
+                    .putExtra("EDUCATION", "EDUCATION"));
+        }else if (view.getId() == R.id.txt_work_edit){
+            startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
+                    .putExtra("WORK", "WORK"));
+        }
+    }
 }

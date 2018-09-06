@@ -93,9 +93,11 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.startActivity(new Intent(context, JobActivity.class)
-                            .putExtra("JOB_ID", jobModel.id)
-                    );
+                    if(jobModel.id!=0){
+                        context.startActivity(new Intent(context, JobActivity.class)
+                                .putExtra("JOB_ID", jobModel.id)
+                        );
+                    }
                 }
             });
         }

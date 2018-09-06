@@ -147,7 +147,7 @@ public class ParentActivity extends AppCompatActivity implements
                 drawer.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        helpers.drawerItemClicked(ParentActivity.this, R.id.drawer_my_profile);
+                        helpers.drawerItemClicked(ParentActivity.this, R.id.drawer_profile);
                     }
                 }, INT_NAV_DRAWER_DELAY);
             }
@@ -160,7 +160,7 @@ public class ParentActivity extends AppCompatActivity implements
                 drawer.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        helpers.drawerItemClicked(ParentActivity.this, R.id.drawer_my_profile);
+                        helpers.drawerItemClicked(ParentActivity.this, R.id.drawer_profile);
                     }
                 }, INT_NAV_DRAWER_DELAY);
             }
@@ -185,7 +185,7 @@ public class ParentActivity extends AppCompatActivity implements
                 menu_find_jobs.setText("");
                 break;
 
-            case R.id.drawer_my_profile:
+            case R.id.drawer_profile:
                 menu_profile.setText("");
                 break;
 

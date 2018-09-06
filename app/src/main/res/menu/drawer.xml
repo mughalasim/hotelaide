@@ -19,7 +19,7 @@
 
         <!--2-->
         <item
-            android:id="@+id/drawer_my_profile"
+            android:id="@+id/drawer_profile"
             app:actionViewClass="android.widget.TextView"
             android:title="@string/drawer_my_profile_view" />
 

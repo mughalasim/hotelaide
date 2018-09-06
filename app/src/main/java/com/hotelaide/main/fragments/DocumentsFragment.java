@@ -26,7 +26,7 @@ public class DocumentsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootview == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.fragment_documents, container, false);
+                rootview = inflater.inflate(R.layout.frag_profile_documents, container, false);
 
                 helpers = new Helpers(getActivity());
 

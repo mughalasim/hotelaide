@@ -47,7 +47,7 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/fragment_add_experience" />
+    <include layout="@layout/frag_profile_experience_add" />
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 

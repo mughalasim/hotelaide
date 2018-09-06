@@ -79,7 +79,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         if (rootview == null && getActivity() != null) {
             try {
 
-                rootview = inflater.inflate(R.layout.fragment_address, container, false);
+                rootview = inflater.inflate(R.layout.frag_profile_address, container, false);
 
                 helpers = new Helpers(getActivity());
 

@@ -150,6 +150,6 @@
 
     </ScrollView>
 
-    <include layout="@layout/fragment_startup_signup_bottom" />
+    <include layout="@layout/frag_startup_signup_bottom" />
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

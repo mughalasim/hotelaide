@@ -46,7 +46,7 @@ import com.hotelaide.R;
 import com.hotelaide.main.activities.AboutUsActivity;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.activities.FindJobsActivity;
-import com.hotelaide.main.activities.ProfileViewActivity;
+import com.hotelaide.main.activities.ProfileActivity;
 import com.hotelaide.main.activities.SettingsActivity;
 import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.services.UserService;
@@ -138,10 +138,8 @@ public class Helpers {
                 context.startActivity(new Intent(context, FindJobsActivity.class));
                 break;
 
-            case R.id.drawer_my_profile:
-                context.startActivity(new Intent(context, ProfileViewActivity.class)
-                        .putExtra("EDIT_MODE", "EDIT_MODE")
-                );
+            case R.id.drawer_profile:
+                context.startActivity(new Intent(context, ProfileActivity.class));
                 break;
 
             case R.id.drawer_about_us:

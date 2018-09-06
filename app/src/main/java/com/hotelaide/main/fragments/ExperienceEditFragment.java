@@ -50,7 +50,7 @@ import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
-public class ExperienceFragment extends Fragment {
+public class ExperienceEditFragment extends Fragment {
 
     private View root_view;
     private Helpers helpers;
@@ -96,7 +96,7 @@ public class ExperienceFragment extends Fragment {
     DatePickerDialog.OnDateSetListener
             datePickerListener;
 
-    public ExperienceFragment() {
+    public ExperienceEditFragment() {
     }
 
 
@@ -111,7 +111,7 @@ public class ExperienceFragment extends Fragment {
                 if (bundle != null) {
                     EXPERIENCE_TYPE = bundle.getString("EXPERIENCE_TYPE");
 
-                    root_view = inflater.inflate(R.layout.fragment_experience, container, false);
+                    root_view = inflater.inflate(R.layout.frag_profile_experience_view, container, false);
 
                     findAllViews();
 
