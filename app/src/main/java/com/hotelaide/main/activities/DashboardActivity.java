@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.AppliedJobsFragment;
-import com.hotelaide.main.fragments.MessagesFragment;
+import com.hotelaide.main.fragments.MessageFragment;
 import com.hotelaide.utils.SharedPrefs;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class DashboardActivity extends ParentActivity {
     };
     private Fragment[] dashboardFragments = {
             new AppliedJobsFragment(),
-            new MessagesFragment(),
+            new MessageFragment(),
     };
     private TabLayout tab_layout;
     private ViewPager view_pager;

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/list_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_tiny">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_from_pic"
+            android:layout_width="@dimen/img_size_small"
+            android:layout_height="@dimen/img_size_small"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:src="@color/light_grey"
+            app:riv_corner_radius="@dimen/img_size_medium" />
+
+        <LinearLayout
+            android:id="@+id/top_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/padding_tiny"
+            android:layout_toStartOf="@+id/txt_message_counter"
+            android:layout_toEndOf="@+id/img_from_pic"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_from_name"
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp"
+                android:maxLines="1"
+                android:text="@string/app_name"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_last_message"
+                style="@style/Text_Normal"
+                android:layout_marginTop="@dimen/line_thickness"
+                android:maxLines="1"
+                android:text="@string/app_name"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+        <android.support.design.chip.Chip
+            android:id="@+id/txt_message_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="1"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/red" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/list_item_none" />
+
+</RelativeLayout>
+
+
+
