@@ -8,9 +8,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
 
 public class MessagesFragment extends Fragment {
@@ -21,7 +35,8 @@ public class MessagesFragment extends Fragment {
             TAG_LOG = "MESSAGES";
 
 
-    public MessagesFragment() {}
+    public MessagesFragment() {
+    }
 
 
     @Override
@@ -35,6 +50,8 @@ public class MessagesFragment extends Fragment {
                 findAllViews();
 
                 setListeners();
+
+                fetchMessageList();
 
 
             } catch (InflateException e) {
@@ -57,43 +74,42 @@ public class MessagesFragment extends Fragment {
 
     }
 
-    // ASYNC UPDATE PASSWORD =======================================================================
-    private void asyncUpdatePassword() {
-        UserService userService = UserService.retrofit.create(UserService.class);
+    private void fetchMessageList() {
+        FirebaseApp.initializeApp(getActivity());
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference();
+        DatabaseReference myRef = ref.child(BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list");
+        Helpers.LogThis(TAG_LOG, "FB URL: " + BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    Gson gson = new Gson();
+                    JSONArray ticket_array = new JSONArray(gson.toJson(dataSnapshot.getValue()));
 
-//        Call<JsonObject> call = userService.updateUserPassword(
-//                SharedPrefs.getInt(USER_ID),
-//                et_user_pass_old.getText().toString(),
-//                et_user_pass_new.getText().toString(),
-//                et_user_pass_confirm.getText().toString()
-//        );
+                    if (!ticket_array.isNull(0)) {
+                        int length = ticket_array.length();
+                        for (int i = 0; i < length; i++) {
+                            Object ticket_object = ticket_array.get(i);
+                            if (ticket_object instanceof JSONObject) {
+//                                db.setTicketsFromJson((JSONObject) ticket_object);
+                            }
+                        }
+                    }
 
-//        call.enqueue(new Callback<JsonObject>() {
-//            @Override
-//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-//                try {
-//                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-//                    Helpers.LogThis(TAG_LOG, main.toString());
-//                    if (main.getBoolean("success")) {
-//                        helpers.ToastMessage(getActivity(), main.getString("message"));
-//                    }
-//                } catch (JSONException e) {
-//                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-//                Helpers.LogThis(TAG_LOG, t.toString());
-//                if (helpers.validateInternetConnection()) {
-//                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-//                } else {
-//                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
-//                }
-//
-//            }
-//        });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Helpers.LogThis(TAG_LOG, "DATABASE ERROR:" + databaseError.toString());
+            }
+        });
     }
+
 
 }

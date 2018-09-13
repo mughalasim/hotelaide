@@ -37,6 +37,8 @@ android {
         prod {
             // MAIN INFO
             buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.com/api/"'
+            buildConfigField 'String', 'MESSAGE_URL', '"Messaging/userMessages/"'
+            buildConfigField 'String', 'CONVERSATION_URL', '"Messaging/userConversations/"'
 
             // APP TYPE
             buildConfigField 'String', 'ACCOUNT_TYPE', '"job_seeker"'
