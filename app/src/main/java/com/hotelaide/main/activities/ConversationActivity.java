@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -41,9 +42,12 @@ public class ConversationActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView toolbar_text;
+    private ImageView img_from_pic;
 
     private String
-            STR_PAGE_TITLE = "", STR_MESSAGE_URL = "";
+            STR_PAGE_TITLE = "",
+            STR_FROM_PIC_URL = "",
+            STR_MESSAGE_URL = "";
 
     private int INT_FROM_ID = 0;
 
@@ -98,6 +102,7 @@ public class ConversationActivity extends AppCompatActivity {
             INT_FROM_ID = extras.getInt("FROM_ID");
             STR_PAGE_TITLE = extras.getString("FROM_NAME");
             STR_MESSAGE_URL = extras.getString("MESSAGE_URL");
+            STR_FROM_PIC_URL = extras.getString("FROM_PIC_URL");
 
             Helpers.LogThis(TAG_LOG, "FROM ID: " + INT_FROM_ID);
             Helpers.LogThis(TAG_LOG, "MESSAGE URL: " + STR_MESSAGE_URL);
@@ -124,6 +129,9 @@ public class ConversationActivity extends AppCompatActivity {
 
     private void setUpToolBarAndTabs() {
         toolbar = findViewById(R.id.toolbar);
+        img_from_pic = findViewById(R.id.img_from_pic);
+        Glide.with(this).load(STR_FROM_PIC_URL).into(img_from_pic);
+
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

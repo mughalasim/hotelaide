@@ -35566,22 +35566,24 @@ com.hotelaide.BuildConfig -> b.b.a:
     java.lang.Integer DATABASE_VERSION -> c
 com.hotelaide.main.activities.AboutUsActivity -> com.hotelaide.main.activities.AboutUsActivity:
 com.hotelaide.main.activities.ConversationActivity -> com.hotelaide.main.activities.ConversationActivity:
-    android.support.v7.widget.LinearLayoutManager layoutManager -> y
-    android.support.v7.widget.RecyclerView recycler_view -> z
+    android.support.v7.widget.LinearLayoutManager layoutManager -> A
+    android.support.v7.widget.RecyclerView recycler_view -> B
     android.support.v7.widget.Toolbar toolbar -> p
-    android.widget.EditText et_message -> D
-    android.widget.ImageView btn_send -> C
+    android.widget.EditText et_message -> F
+    android.widget.ImageView btn_send -> E
+    android.widget.ImageView img_from_pic -> r
     android.widget.TextView toolbar_text -> q
-    com.google.firebase.database.DatabaseReference child_ref -> x
-    com.google.firebase.database.DatabaseReference parent_ref -> w
-    com.google.firebase.database.FirebaseDatabase database -> v
-    com.hotelaide.main.adapters.ConversationAdapter adapter -> B
+    com.google.firebase.database.DatabaseReference child_ref -> z
+    com.google.firebase.database.DatabaseReference parent_ref -> y
+    com.google.firebase.database.FirebaseDatabase database -> x
+    com.hotelaide.main.adapters.ConversationAdapter adapter -> D
     com.hotelaide.utils.Helpers helpers -> o
-    int INT_FROM_ID -> t
-    java.lang.String STR_MESSAGE_URL -> s
-    java.lang.String STR_PAGE_TITLE -> r
-    java.lang.String TAG_LOG -> u
-    java.util.ArrayList model_list -> A
+    int INT_FROM_ID -> v
+    java.lang.String STR_FROM_PIC_URL -> t
+    java.lang.String STR_MESSAGE_URL -> u
+    java.lang.String STR_PAGE_TITLE -> s
+    java.lang.String TAG_LOG -> w
+    java.util.ArrayList model_list -> C
     android.widget.EditText access$100(com.hotelaide.main.activities.ConversationActivity) -> a
     java.lang.Boolean handleExtraBundles() -> g
     void access$000(com.hotelaide.main.activities.ConversationActivity,com.google.firebase.database.DataSnapshot) -> a
@@ -50089,42 +50091,42 @@ retrofit2.http.QueryMap -> g.b.u:
 retrofit2.http.QueryName -> g.b.v:
 retrofit2.http.Streaming -> g.b.w:
 retrofit2.http.Url -> g.b.x:
+android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
 okhttp3.WebSocket -> okhttp3.P:
-android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
-android.support.compat.R -> a.b.a.a:
-com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
+com.makeramen.roundedimageview.R -> com.makeramen.roundedimageview.a:
+com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
+android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
+android.support.coordinatorlayout.R -> a.b.b.a:
+android.support.v7.recyclerview.R -> a.b.i.e.a:
+com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
+com.airbnb.lottie.R -> com.airbnb.lottie.I:
+android.support.v7.cardview.R -> a.b.i.b.a:
 android.support.customtabs.R -> a.b.c.c:
+android.support.compat.R -> a.b.a.a:
+android.support.design.R -> a.b.d.a:
+com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
+com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
+com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
+com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
+android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
+android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
 android.support.v7.util.SortedList -> a.b.i.g.b:
 io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
-pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
-com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
-com.rilixtech.R -> com.rilixtech.j:
-com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
-android.support.coordinatorlayout.R -> a.b.b.a:
-com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
-android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
-android.support.v4.util.Pools -> a.b.h.f.m:
-com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
-android.support.design.R -> a.b.d.a:
-android.support.transition.R -> a.b.g.y:
-com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
-com.google.android.gms.common.R -> com.google.android.gms.common.n:
-android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
-android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
-android.support.v7.recyclerview.R -> a.b.i.e.a:
-com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
-android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
-io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
-android.support.constraint.R -> android.support.constraint.h:
-com.google.android.gms.base.R -> b.a.a.a.b.a:
-com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
-com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
 io.michaelrocks.libphonenumber.android.Phonemetadata -> io.michaelrocks.libphonenumber.android.Phonemetadata:
+com.rilixtech.R -> com.rilixtech.j:
 com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:
-com.airbnb.lottie.R -> com.airbnb.lottie.I:
-com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
-android.support.v7.appcompat.R -> a.b.i.a.a:
-com.makeramen.roundedimageview.R -> com.makeramen.roundedimageview.a:
-android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
+android.support.constraint.R -> android.support.constraint.h:
+com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
+android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
+android.support.transition.R -> a.b.g.y:
+com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
+io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
+pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
+com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
+android.support.v4.util.Pools -> a.b.h.f.m:
 com.google.android.gms.maps.R -> com.google.android.gms.maps.f:
-android.support.v7.cardview.R -> a.b.i.b.a:
+com.google.android.gms.common.R -> com.google.android.gms.common.n:
+android.support.v7.appcompat.R -> a.b.i.a.a:
+com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
+android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
+com.google.android.gms.base.R -> b.a.a.a.b.a:

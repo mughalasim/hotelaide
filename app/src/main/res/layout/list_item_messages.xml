@@ -9,7 +9,10 @@
         android:id="@+id/list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_tiny">
+        android:layout_marginTop="@dimen/padding_mini"
+        android:layout_marginBottom="@dimen/padding_mini"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingStart="@dimen/padding_small">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/img_from_pic"

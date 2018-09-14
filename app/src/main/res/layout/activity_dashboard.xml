@@ -29,6 +29,8 @@
                 app:tabIndicatorColor="@color/colorPrimaryLight"
                 app:tabIndicatorHeight="@dimen/line_thickness"
                 app:tabMode="scrollable"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small"
                 app:tabSelectedTextColor="@color/colorPrimaryLight"
                 app:tabTextAppearance="@style/Text_Title"
                 app:tabTextColor="@color/colorAccent" />

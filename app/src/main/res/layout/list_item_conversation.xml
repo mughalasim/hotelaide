@@ -8,22 +8,25 @@
         android:id="@+id/list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_tiny">
+        android:paddingBottom="@dimen/text_margin"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingStart="@dimen/padding_small">
 
         <TextView
             android:id="@+id/txt_text_from"
             style="@style/Text_Normal"
             android:maxWidth="300dp"
-            android:background="@drawable/bckgrd_text_fields"
-            android:padding="@dimen/padding_tiny"
+            android:background="@drawable/bckgrd_text_from"
+            android:padding="@dimen/padding_mini"
             android:layout_marginTop="0dp" />
 
         <TextView
             android:id="@+id/txt_text_to"
             style="@style/Text_Normal"
             android:maxWidth="300dp"
-            android:background="@drawable/bckgrd_text_fields"
-            android:padding="@dimen/padding_tiny"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/bckgrd_text_to"
+            android:padding="@dimen/padding_mini"
             android:layout_marginTop="0dp"
             android:layout_alignParentEnd="true" />
 

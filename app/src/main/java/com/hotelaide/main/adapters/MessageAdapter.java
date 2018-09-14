@@ -119,6 +119,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         context.startActivity(new Intent(context, ConversationActivity.class)
                                 .putExtra("FROM_NAME", messageModel.from_name)
                                 .putExtra("FROM_ID", messageModel.from_id)
+                                .putExtra("FROM_PIC_URL", messageModel.from_pic_url)
                                 .putExtra("MESSAGE_URL", BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list/" + holder.getAdapterPosition() + "/last_message")
                         );
                     }

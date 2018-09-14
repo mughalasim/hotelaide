@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.InflateException;
@@ -93,6 +94,11 @@ public class MessageFragment extends Fragment {
         recycler_view.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(getActivity());
         recycler_view.setLayoutManager(layoutManager);
+        if (getActivity()!=null) {
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(),
+                    layoutManager.getOrientation());
+            recycler_view.addItemDecoration(dividerItemDecoration);
+        }
 
     }
 
