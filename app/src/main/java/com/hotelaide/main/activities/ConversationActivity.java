@@ -43,7 +43,7 @@ public class ConversationActivity extends AppCompatActivity {
     private TextView toolbar_text;
 
     private String
-            STR_PAGE_TITLE = "";
+            STR_PAGE_TITLE = "", STR_MESSAGE_URL = "";
 
     private int INT_FROM_ID = 0;
 
@@ -82,7 +82,7 @@ public class ConversationActivity extends AppCompatActivity {
 
             setListeners();
 
-            fetchConversationList();
+//            fetchConversationList();
 
         } else {
             onBackPressed();
@@ -97,7 +97,11 @@ public class ConversationActivity extends AppCompatActivity {
         if (extras != null && extras.getInt("FROM_ID") != 0) {
             INT_FROM_ID = extras.getInt("FROM_ID");
             STR_PAGE_TITLE = extras.getString("FROM_NAME");
+            STR_MESSAGE_URL = extras.getString("MESSAGE_URL");
+
             Helpers.LogThis(TAG_LOG, "FROM ID: " + INT_FROM_ID);
+            Helpers.LogThis(TAG_LOG, "MESSAGE URL: " + STR_MESSAGE_URL);
+
             return true;
         } else {
             return false;
@@ -139,12 +143,11 @@ public class ConversationActivity extends AppCompatActivity {
         child_ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                setFromDataSnapShotObject(dataSnapshot);
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                setFromDataSnapShotObject(dataSnapshot);
             }
 
             @Override
@@ -201,21 +204,17 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void sendMessage(final String message) {
-        HashMap<String, Integer> int_data = new HashMap<>();
-        int_data.put("from_id", INT_FROM_ID);
-
-        HashMap<String, String> string_data = new HashMap<>();
-        string_data.put("text", message);
+        HashMap<String, Object> hash_data = new HashMap<>();
+        hash_data.put("from_id", INT_FROM_ID);
+        hash_data.put("text", message);
 
         parent_ref
                 .child(BuildConfig.CONVERSATION_URL + SharedPrefs.getInt(USER_ID) + ":" + INT_FROM_ID + "/")
                 .push()
-                .setValue(int_data);
+                .setValue(hash_data);
 
-        parent_ref
-                .child(BuildConfig.CONVERSATION_URL + SharedPrefs.getInt(USER_ID) + ":" + INT_FROM_ID + "/")
-                .push()
-                .setValue(string_data);
+        recycler_view.scrollToPosition(model_list.size() - 1);
+
     }
 
     // PARSING METHODS =============================================================================
@@ -275,6 +274,14 @@ public class ConversationActivity extends AppCompatActivity {
             Helpers.LogThis(TAG_LOG, "TEXT: " + conversationModel.text);
 
             model_list.add(conversationModel);
+
+            adapter.notifyDataSetChanged();
+
+
+            Helpers.LogThis(TAG_LOG, STR_MESSAGE_URL);
+            parent_ref.child(STR_MESSAGE_URL).setValue(conversationModel.text);
+
+            recycler_view.scrollToPosition(model_list.size() - 1);
 
         } catch (JSONException e) {
             e.printStackTrace();

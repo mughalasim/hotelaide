@@ -35566,33 +35566,29 @@ com.hotelaide.BuildConfig -> b.b.a:
     java.lang.Integer DATABASE_VERSION -> c
 com.hotelaide.main.activities.AboutUsActivity -> com.hotelaide.main.activities.AboutUsActivity:
 com.hotelaide.main.activities.ConversationActivity -> com.hotelaide.main.activities.ConversationActivity:
-    android.support.v7.widget.LinearLayoutManager layoutManager -> x
-    android.support.v7.widget.RecyclerView recycler_view -> y
+    android.support.v7.widget.LinearLayoutManager layoutManager -> y
+    android.support.v7.widget.RecyclerView recycler_view -> z
     android.support.v7.widget.Toolbar toolbar -> p
-    android.widget.EditText et_message -> C
-    android.widget.ImageView btn_send -> B
+    android.widget.EditText et_message -> D
+    android.widget.ImageView btn_send -> C
     android.widget.TextView toolbar_text -> q
-    com.google.firebase.database.DatabaseReference child_ref -> w
-    com.google.firebase.database.DatabaseReference parent_ref -> v
-    com.google.firebase.database.FirebaseDatabase database -> u
-    com.hotelaide.main.adapters.ConversationAdapter adapter -> A
+    com.google.firebase.database.DatabaseReference child_ref -> x
+    com.google.firebase.database.DatabaseReference parent_ref -> w
+    com.google.firebase.database.FirebaseDatabase database -> v
+    com.hotelaide.main.adapters.ConversationAdapter adapter -> B
     com.hotelaide.utils.Helpers helpers -> o
-    int INT_FROM_ID -> s
+    int INT_FROM_ID -> t
+    java.lang.String STR_MESSAGE_URL -> s
     java.lang.String STR_PAGE_TITLE -> r
-    java.lang.String TAG_LOG -> t
-    java.util.ArrayList model_list -> z
+    java.lang.String TAG_LOG -> u
+    java.util.ArrayList model_list -> A
     android.widget.EditText access$100(com.hotelaide.main.activities.ConversationActivity) -> a
     java.lang.Boolean handleExtraBundles() -> g
     void access$000(com.hotelaide.main.activities.ConversationActivity,com.google.firebase.database.DataSnapshot) -> a
     void access$200(com.hotelaide.main.activities.ConversationActivity,java.lang.String) -> a
-    void access$300(com.hotelaide.main.activities.ConversationActivity,com.google.firebase.database.DataSnapshot) -> b
-    void access$400(com.hotelaide.main.activities.ConversationActivity) -> b
-    void fetchConversationList() -> l
     void findAllViews() -> h
-    void noListItems() -> m
     void sendMessage(java.lang.String) -> a
-    void setFromDataSnapShotArray(com.google.firebase.database.DataSnapshot) -> a
-    void setFromDataSnapShotObject(com.google.firebase.database.DataSnapshot) -> b
+    void setFromDataSnapShotObject(com.google.firebase.database.DataSnapshot) -> a
     void setListeners() -> j
     void setUpToolBarAndTabs() -> i
     void setupFireBase() -> k
@@ -35607,10 +35603,6 @@ com.hotelaide.main.activities.ConversationActivity$2 -> com.hotelaide.main.activ
     void onChildRemoved(com.google.firebase.database.DataSnapshot) -> a
 com.hotelaide.main.activities.ConversationActivity$3 -> com.hotelaide.main.activities.c:
     com.hotelaide.main.activities.ConversationActivity this$0 -> a
-com.hotelaide.main.activities.ConversationActivity$4 -> com.hotelaide.main.activities.d:
-    com.hotelaide.main.activities.ConversationActivity this$0 -> a
-    void onCancelled(com.google.firebase.database.DatabaseError) -> a
-    void onDataChange(com.google.firebase.database.DataSnapshot) -> a
 com.hotelaide.main.activities.DashboardActivity -> com.hotelaide.main.activities.DashboardActivity:
     android.support.design.widget.TabLayout tab_layout -> N
     android.support.v4.app.Fragment[] dashboardFragments -> M
@@ -35620,7 +35612,7 @@ com.hotelaide.main.activities.DashboardActivity -> com.hotelaide.main.activities
     void findAllViews() -> l
     void handleExtraBundles() -> k
     void setupViewPager(android.support.v4.view.ViewPager) -> a
-com.hotelaide.main.activities.DashboardActivity$1 -> com.hotelaide.main.activities.e:
+com.hotelaide.main.activities.DashboardActivity$1 -> com.hotelaide.main.activities.d:
     com.hotelaide.main.activities.DashboardActivity this$0 -> a
     void onPageScrollStateChanged(int) -> a
     void onPageScrolled(int,float,int) -> a
@@ -35690,25 +35682,25 @@ com.hotelaide.main.activities.FindJobsActivity -> com.hotelaide.main.activities.
     void setListeners() -> m
     void setSearchListener() -> p
     void setTextWatcher() -> l
-com.hotelaide.main.activities.FindJobsActivity$1 -> com.hotelaide.main.activities.f:
+com.hotelaide.main.activities.FindJobsActivity$1 -> com.hotelaide.main.activities.e:
     com.hotelaide.main.activities.FindJobsActivity this$0 -> a
-com.hotelaide.main.activities.FindJobsActivity$2 -> com.hotelaide.main.activities.g:
+com.hotelaide.main.activities.FindJobsActivity$2 -> com.hotelaide.main.activities.f:
     com.hotelaide.main.activities.FindJobsActivity this$0 -> a
-com.hotelaide.main.activities.FindJobsActivity$3 -> com.hotelaide.main.activities.h:
+com.hotelaide.main.activities.FindJobsActivity$3 -> com.hotelaide.main.activities.g:
     com.hotelaide.main.activities.FindJobsActivity this$0 -> a
-com.hotelaide.main.activities.FindJobsActivity$4 -> com.hotelaide.main.activities.i:
+com.hotelaide.main.activities.FindJobsActivity$4 -> com.hotelaide.main.activities.h:
     com.hotelaide.main.activities.FindJobsActivity this$0 -> a
-com.hotelaide.main.activities.FindJobsActivity$5 -> com.hotelaide.main.activities.j:
+com.hotelaide.main.activities.FindJobsActivity$5 -> com.hotelaide.main.activities.i:
     android.support.design.chip.Chip val$chip -> a
     android.widget.Spinner val$spinner -> b
     com.hotelaide.main.activities.FindJobsActivity this$0 -> c
-com.hotelaide.main.activities.FindJobsActivity$6 -> com.hotelaide.main.activities.k:
+com.hotelaide.main.activities.FindJobsActivity$6 -> com.hotelaide.main.activities.j:
     android.widget.Spinner val$spinner -> a
     com.hotelaide.main.activities.FindJobsActivity this$0 -> b
-com.hotelaide.main.activities.FindJobsActivity$7 -> com.hotelaide.main.activities.l:
+com.hotelaide.main.activities.FindJobsActivity$7 -> com.hotelaide.main.activities.k:
     com.hotelaide.main.activities.FindJobsActivity this$0 -> a
     void requestCompleted(org.json.JSONObject,com.algolia.search.saas.AlgoliaException) -> a
-com.hotelaide.main.activities.FindJobsActivity$8 -> com.hotelaide.main.activities.m:
+com.hotelaide.main.activities.FindJobsActivity$8 -> com.hotelaide.main.activities.l:
     com.hotelaide.main.activities.FindJobsActivity this$0 -> a
 com.hotelaide.main.activities.HotelActivity -> com.hotelaide.main.activities.HotelActivity:
     android.support.design.widget.AppBarLayout app_bar_layout -> v
@@ -35740,12 +35732,12 @@ com.hotelaide.main.activities.HotelActivity -> com.hotelaide.main.activities.Hot
     void setFromSharedPrefs() -> j
     void setListeners() -> k
     void setUpToolBarAndTabs() -> i
-com.hotelaide.main.activities.HotelActivity$1 -> com.hotelaide.main.activities.n:
+com.hotelaide.main.activities.HotelActivity$1 -> com.hotelaide.main.activities.m:
     com.hotelaide.main.activities.HotelActivity this$0 -> a
-com.hotelaide.main.activities.HotelActivity$2 -> com.hotelaide.main.activities.o:
+com.hotelaide.main.activities.HotelActivity$2 -> com.hotelaide.main.activities.n:
     com.hotelaide.main.activities.HotelActivity this$0 -> a
     void onOffsetChanged(android.support.design.widget.AppBarLayout,int) -> a
-com.hotelaide.main.activities.HotelActivity$3 -> com.hotelaide.main.activities.p:
+com.hotelaide.main.activities.HotelActivity$3 -> com.hotelaide.main.activities.o:
     com.hotelaide.main.activities.HotelActivity this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
@@ -35786,16 +35778,16 @@ com.hotelaide.main.activities.JobActivity -> com.hotelaide.main.activities.JobAc
     void findAllViews() -> h
     void setListeners() -> j
     void setUpToolBarAndTabs() -> i
-com.hotelaide.main.activities.JobActivity$1 -> com.hotelaide.main.activities.q:
+com.hotelaide.main.activities.JobActivity$1 -> com.hotelaide.main.activities.p:
     com.hotelaide.main.activities.JobActivity this$0 -> a
-com.hotelaide.main.activities.JobActivity$2 -> com.hotelaide.main.activities.r:
+com.hotelaide.main.activities.JobActivity$2 -> com.hotelaide.main.activities.q:
     com.hotelaide.main.activities.JobActivity this$0 -> a
     void onOffsetChanged(android.support.design.widget.AppBarLayout,int) -> a
-com.hotelaide.main.activities.JobActivity$3 -> com.hotelaide.main.activities.s:
+com.hotelaide.main.activities.JobActivity$3 -> com.hotelaide.main.activities.r:
     com.hotelaide.main.activities.JobActivity this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
-com.hotelaide.main.activities.JobActivity$4 -> com.hotelaide.main.activities.t:
+com.hotelaide.main.activities.JobActivity$4 -> com.hotelaide.main.activities.s:
     com.hotelaide.main.activities.JobActivity this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
@@ -35830,33 +35822,33 @@ com.hotelaide.main.activities.ParentActivity -> com.hotelaide.main.activities.Pa
     void initialize(int,java.lang.String) -> a
     void setCountOnDrawerItem(android.widget.TextView,java.lang.String) -> a
     void updateDrawer() -> g
-com.hotelaide.main.activities.ParentActivity$1 -> com.hotelaide.main.activities.v:
+com.hotelaide.main.activities.ParentActivity$1 -> com.hotelaide.main.activities.u:
     com.hotelaide.main.activities.ParentActivity this$0 -> a
-com.hotelaide.main.activities.ParentActivity$1$1 -> com.hotelaide.main.activities.u:
+com.hotelaide.main.activities.ParentActivity$1$1 -> com.hotelaide.main.activities.t:
     com.hotelaide.main.activities.ParentActivity$1 this$1 -> a
-com.hotelaide.main.activities.ParentActivity$2 -> com.hotelaide.main.activities.x:
+com.hotelaide.main.activities.ParentActivity$2 -> com.hotelaide.main.activities.w:
     com.hotelaide.main.activities.ParentActivity this$0 -> a
-com.hotelaide.main.activities.ParentActivity$2$1 -> com.hotelaide.main.activities.w:
+com.hotelaide.main.activities.ParentActivity$2$1 -> com.hotelaide.main.activities.v:
     com.hotelaide.main.activities.ParentActivity$2 this$1 -> a
-com.hotelaide.main.activities.ParentActivity$3 -> com.hotelaide.main.activities.y:
+com.hotelaide.main.activities.ParentActivity$3 -> com.hotelaide.main.activities.x:
     com.hotelaide.main.activities.ParentActivity this$0 -> a
-com.hotelaide.main.activities.ParentActivity$4 -> com.hotelaide.main.activities.z:
+com.hotelaide.main.activities.ParentActivity$4 -> com.hotelaide.main.activities.y:
     com.hotelaide.main.activities.ParentActivity this$0 -> b
     int val$id -> a
-com.hotelaide.main.activities.ParentActivity$5 -> com.hotelaide.main.activities.A:
+com.hotelaide.main.activities.ParentActivity$5 -> com.hotelaide.main.activities.z:
     android.app.Dialog val$dialog -> a
     com.hotelaide.main.activities.ParentActivity this$0 -> b
-com.hotelaide.main.activities.ParentActivity$6 -> com.hotelaide.main.activities.B:
+com.hotelaide.main.activities.ParentActivity$6 -> com.hotelaide.main.activities.A:
     android.app.Dialog val$dialog -> a
     com.hotelaide.main.activities.ParentActivity this$0 -> b
-com.hotelaide.main.activities.ParentActivity$7 -> com.hotelaide.main.activities.E:
+com.hotelaide.main.activities.ParentActivity$7 -> com.hotelaide.main.activities.D:
     com.hotelaide.main.activities.ParentActivity this$0 -> a
     void onCancelled(com.google.firebase.database.DatabaseError) -> a
     void onDataChange(com.google.firebase.database.DataSnapshot) -> a
-com.hotelaide.main.activities.ParentActivity$7$1 -> com.hotelaide.main.activities.C:
+com.hotelaide.main.activities.ParentActivity$7$1 -> com.hotelaide.main.activities.B:
     android.app.Dialog val$dialog -> a
     com.hotelaide.main.activities.ParentActivity$7 this$1 -> b
-com.hotelaide.main.activities.ParentActivity$7$2 -> com.hotelaide.main.activities.D:
+com.hotelaide.main.activities.ParentActivity$7$2 -> com.hotelaide.main.activities.C:
     android.app.Dialog val$dialog -> a
     com.hotelaide.main.activities.ParentActivity$7 this$1 -> b
 com.hotelaide.main.activities.ProfileActivity -> com.hotelaide.main.activities.ProfileActivity:
@@ -35881,7 +35873,7 @@ com.hotelaide.main.activities.ProfileActivity -> com.hotelaide.main.activities.P
     void setupEducation() -> m
     void setupWork() -> n
     void updateProfileSeekBar(int) -> c
-com.hotelaide.main.activities.ProfileActivity$1 -> com.hotelaide.main.activities.F:
+com.hotelaide.main.activities.ProfileActivity$1 -> com.hotelaide.main.activities.E:
     com.hotelaide.main.activities.ProfileActivity this$0 -> a
 com.hotelaide.main.activities.ProfileEditActivity -> com.hotelaide.main.activities.ProfileEditActivity:
     android.support.design.widget.AppBarLayout app_bar_layout -> s
@@ -35915,23 +35907,23 @@ com.hotelaide.main.activities.ProfileEditActivity -> com.hotelaide.main.activiti
     void setUpToolBarAndTabs() -> j
     void setupViewPager(android.support.v4.view.ViewPager) -> a
     void moveViewPagerNext() -> g
-com.hotelaide.main.activities.ProfileEditActivity$1 -> com.hotelaide.main.activities.G:
+com.hotelaide.main.activities.ProfileEditActivity$1 -> com.hotelaide.main.activities.F:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> a
-com.hotelaide.main.activities.ProfileEditActivity$2 -> com.hotelaide.main.activities.H:
+com.hotelaide.main.activities.ProfileEditActivity$2 -> com.hotelaide.main.activities.G:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> a
     void onOffsetChanged(android.support.design.widget.AppBarLayout,int) -> a
-com.hotelaide.main.activities.ProfileEditActivity$3 -> com.hotelaide.main.activities.I:
+com.hotelaide.main.activities.ProfileEditActivity$3 -> com.hotelaide.main.activities.H:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> b
     java.lang.String[] val$perms -> a
-com.hotelaide.main.activities.ProfileEditActivity$4 -> com.hotelaide.main.activities.J:
+com.hotelaide.main.activities.ProfileEditActivity$4 -> com.hotelaide.main.activities.I:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> b
     java.lang.String[] val$perms -> a
-com.hotelaide.main.activities.ProfileEditActivity$5 -> com.hotelaide.main.activities.K:
+com.hotelaide.main.activities.ProfileEditActivity$5 -> com.hotelaide.main.activities.J:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> a
     void onPageScrollStateChanged(int) -> a
     void onPageScrolled(int,float,int) -> a
     void onPageSelected(int) -> b
-com.hotelaide.main.activities.ProfileEditActivity$6 -> com.hotelaide.main.activities.L:
+com.hotelaide.main.activities.ProfileEditActivity$6 -> com.hotelaide.main.activities.K:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
@@ -35950,17 +35942,17 @@ com.hotelaide.main.activities.SettingsActivity -> com.hotelaide.main.activities.
     void findAllViews() -> i
     void setListeners() -> j
     void asyncDeleteUser() -> h
-com.hotelaide.main.activities.SettingsActivity$1 -> com.hotelaide.main.activities.M:
+com.hotelaide.main.activities.SettingsActivity$1 -> com.hotelaide.main.activities.L:
     com.hotelaide.main.activities.SettingsActivity this$0 -> a
-com.hotelaide.main.activities.SettingsActivity$2 -> com.hotelaide.main.activities.P:
+com.hotelaide.main.activities.SettingsActivity$2 -> com.hotelaide.main.activities.O:
     com.hotelaide.main.activities.SettingsActivity this$0 -> a
-com.hotelaide.main.activities.SettingsActivity$2$1 -> com.hotelaide.main.activities.N:
+com.hotelaide.main.activities.SettingsActivity$2$1 -> com.hotelaide.main.activities.M:
     android.app.Dialog val$dialog -> a
     com.hotelaide.main.activities.SettingsActivity$2 this$1 -> b
-com.hotelaide.main.activities.SettingsActivity$2$2 -> com.hotelaide.main.activities.O:
+com.hotelaide.main.activities.SettingsActivity$2$2 -> com.hotelaide.main.activities.N:
     android.app.Dialog val$dialog -> a
     com.hotelaide.main.activities.SettingsActivity$2 this$1 -> b
-com.hotelaide.main.activities.SettingsActivity$3 -> com.hotelaide.main.activities.Q:
+com.hotelaide.main.activities.SettingsActivity$3 -> com.hotelaide.main.activities.P:
     com.hotelaide.main.activities.SettingsActivity this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
@@ -50097,42 +50089,42 @@ retrofit2.http.QueryMap -> g.b.u:
 retrofit2.http.QueryName -> g.b.v:
 retrofit2.http.Streaming -> g.b.w:
 retrofit2.http.Url -> g.b.x:
-com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
 okhttp3.WebSocket -> okhttp3.P:
-com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
-com.google.android.gms.maps.R -> com.google.android.gms.maps.f:
-android.support.v7.cardview.R -> a.b.i.b.a:
 android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
-android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
+android.support.compat.R -> a.b.a.a:
+com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
 android.support.customtabs.R -> a.b.c.c:
+android.support.v7.util.SortedList -> a.b.i.g.b:
+io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
+pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
+com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
+com.rilixtech.R -> com.rilixtech.j:
+com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
+android.support.coordinatorlayout.R -> a.b.b.a:
+com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
+android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
+android.support.v4.util.Pools -> a.b.h.f.m:
+com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
+android.support.design.R -> a.b.d.a:
+android.support.transition.R -> a.b.g.y:
+com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
+com.google.android.gms.common.R -> com.google.android.gms.common.n:
+android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
 android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
 android.support.v7.recyclerview.R -> a.b.i.e.a:
+com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
 android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
 io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
-com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
 android.support.constraint.R -> android.support.constraint.h:
-android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
 com.google.android.gms.base.R -> b.a.a.a.b.a:
-com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
-android.support.v7.util.SortedList -> a.b.i.g.b:
-android.support.compat.R -> a.b.a.a:
-android.support.coordinatorlayout.R -> a.b.b.a:
-android.support.transition.R -> a.b.g.y:
-android.support.v7.appcompat.R -> a.b.i.a.a:
-com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:
-com.rilixtech.R -> com.rilixtech.j:
-com.google.android.gms.common.R -> com.google.android.gms.common.n:
-com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
-android.support.v4.util.Pools -> a.b.h.f.m:
-android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
-com.airbnb.lottie.R -> com.airbnb.lottie.I:
-com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
-io.michaelrocks.libphonenumber.android.Phonemetadata -> io.michaelrocks.libphonenumber.android.Phonemetadata:
-pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
-android.support.design.R -> a.b.d.a:
-com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
-com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
+com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
 com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
+io.michaelrocks.libphonenumber.android.Phonemetadata -> io.michaelrocks.libphonenumber.android.Phonemetadata:
+com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:
+com.airbnb.lottie.R -> com.airbnb.lottie.I:
+com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
+android.support.v7.appcompat.R -> a.b.i.a.a:
 com.makeramen.roundedimageview.R -> com.makeramen.roundedimageview.a:
-io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
-com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
+android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
+com.google.android.gms.maps.R -> com.google.android.gms.maps.f:
+android.support.v7.cardview.R -> a.b.i.b.a:
