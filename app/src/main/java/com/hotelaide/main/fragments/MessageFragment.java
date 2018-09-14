@@ -45,7 +45,7 @@ public class MessageFragment extends Fragment {
 
     // FIREBASE DB
     private FirebaseDatabase database;
-    private DatabaseReference ref, child_ref;
+    private DatabaseReference parent_ref, child_ref;
 
     // MESSAGE ADAPTER ITEMS -----------------------------------------------------------------------
     private LinearLayoutManager layoutManager;
@@ -53,10 +53,8 @@ public class MessageFragment extends Fragment {
     private ArrayList<MessageModel> model_list = new ArrayList<>();
     private MessageAdapter adapter;
 
-
     public MessageFragment() {
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,7 +100,6 @@ public class MessageFragment extends Fragment {
         swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipe_refresh.setRefreshing(true);
                 fetchMessageList();
             }
         });
@@ -115,7 +112,7 @@ public class MessageFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                setFromDataSnapShotObject(dataSnapshot);
+                setFromDataSnapShotObject(dataSnapshot);
             }
 
             @Override
@@ -135,6 +132,36 @@ public class MessageFragment extends Fragment {
         });
     }
 
+
+    // FIRE BASE METHODS ===========================================================================
+    private void setupFireBase() {
+        FirebaseApp.initializeApp(getActivity());
+        database = FirebaseDatabase.getInstance();
+        parent_ref = database.getReference();
+        child_ref = parent_ref.child(BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list");
+        Helpers.LogThis(TAG_LOG, "FB URL: " + BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list");
+
+    }
+
+    private void fetchMessageList() {
+        swipe_refresh.setRefreshing(true);
+        child_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                swipe_refresh.setRefreshing(false);
+                setFromDataSnapShotArray(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                swipe_refresh.setRefreshing(false);
+                Helpers.LogThis(TAG_LOG, "DATABASE ERROR:" + databaseError.toString());
+                noListItems();
+            }
+        });
+    }
+
+    // PARSING METHODS =============================================================================
     private void setFromDataSnapShotArray(DataSnapshot dataSnapshot) {
         try {
             Gson gson = new Gson();
@@ -155,6 +182,7 @@ public class MessageFragment extends Fragment {
                         messageModel.from_pic_url = message_object.getString("from_pic_url");
                         messageModel.last_message = message_object.getString("last_message");
                         messageModel.unread_messages = message_object.getInt("unread_messages");
+                        messageModel.pos = message_object.getInt("pos");
 
                         Helpers.LogThis(TAG_LOG, "MESSAGE FROM: " + messageModel.from_name);
 
@@ -184,7 +212,6 @@ public class MessageFragment extends Fragment {
     private void setFromDataSnapShotObject(DataSnapshot dataSnapshot) {
         try {
             Gson gson = new Gson();
-//                model_list.clear();
             JSONObject message_object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
             MessageModel messageModel = new MessageModel();
             messageModel.from_id = message_object.getInt("from_id");
@@ -192,50 +219,17 @@ public class MessageFragment extends Fragment {
             messageModel.from_pic_url = message_object.getString("from_pic_url");
             messageModel.last_message = message_object.getString("last_message");
             messageModel.unread_messages = message_object.getInt("unread_messages");
+            messageModel.pos = message_object.getInt("pos");
 
             Helpers.LogThis(TAG_LOG, "MESSAGE FROM: " + messageModel.from_name);
 
-            model_list.add(messageModel);
-
-//            if (model_list.size() <= 0) {
-//                noListItems();
-//            }
-
-            adapter.notifyDataSetChanged();
-
+            adapter.replaceMessage(model_list, messageModel, messageModel.pos);
 
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void setupFireBase() {
-        FirebaseApp.initializeApp(getActivity());
-        database = FirebaseDatabase.getInstance();
-        ref = database.getReference();
-        child_ref = ref.child(BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list");
-        Helpers.LogThis(TAG_LOG, "FB URL: " + BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list");
-
-    }
-
-    private void fetchMessageList() {
-        swipe_refresh.setRefreshing(true);
-        child_ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                swipe_refresh.setRefreshing(false);
-                setFromDataSnapShotArray(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                swipe_refresh.setRefreshing(false);
-                Helpers.LogThis(TAG_LOG, "DATABASE ERROR:" + databaseError.toString());
-                noListItems();
-            }
-        });
     }
 
     private void noListItems() {

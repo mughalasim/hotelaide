@@ -75,6 +75,7 @@ public class ParentActivity extends AppCompatActivity implements
     private String toolbar_title;
     private final String TAG_LOG = "PARENT";
     private final int INT_NAV_DRAWER_DELAY = 150;
+    private int INT_NAV_DRAWER_UPDATE_COUNTER = 0;
 
 
     void initialize(int drawer_id, String toolbarTitle) {
@@ -269,8 +270,8 @@ public class ParentActivity extends AppCompatActivity implements
         super.onResume();
         updateDrawer();
         navigation_view.getMenu().findItem(drawer_id).setChecked(true);
-        if (SharedPrefs.getBool(ALLOW_UPDATE_APP)) {
-            getAppVersionFromFirebase();
+        if (SharedPrefs.getBool(ALLOW_UPDATE_APP) && INT_NAV_DRAWER_UPDATE_COUNTER == 0) {
+            getAppVersionFromFireBase();
         }
     }
 
@@ -285,20 +286,20 @@ public class ParentActivity extends AppCompatActivity implements
     }
 
     // FIREBASE DATABASE VERSION CONTROL NOTIFICATION CHECKER ======================================
-    private void getAppVersionFromFirebase() {
+    private void getAppVersionFromFireBase() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("AppVersion");
-
-        myRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference parent_ref = database.getReference("AppVersion");
+        INT_NAV_DRAWER_UPDATE_COUNTER = 1;
+        parent_ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
                     Gson gson = new Gson();
                     JSONObject jsonObject = new JSONObject(gson.toJson(dataSnapshot.getValue()));
-                    Helpers.LogThis(TAG_LOG, "AFTER PARSING: " + jsonObject.toString());
+//                    Helpers.LogThis(TAG_LOG, "AFTER PARSING: " + jsonObject.toString());
 
                     if (!jsonObject.isNull("version")) {
-                        Long NEW_VERSION_CODE = jsonObject.getLong("version");
+                        long NEW_VERSION_CODE = jsonObject.getLong("version");
                         if (BuildConfig.VERSION_CODE < NEW_VERSION_CODE) {
                             final Dialog dialog = new Dialog(ParentActivity.this);
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -339,8 +340,7 @@ public class ParentActivity extends AppCompatActivity implements
                         } else {
                             ShortcutBadger.applyCount(ParentActivity.this, 0);
                         }
-
-                        Helpers.LogThis(TAG_LOG, "DATABASE VERSION: " + NEW_VERSION_CODE);
+//                        Helpers.LogThis(TAG_LOG, "DATABASE VERSION: " + NEW_VERSION_CODE);
                     }
 
                 } catch (JSONException e) {
@@ -351,8 +351,9 @@ public class ParentActivity extends AppCompatActivity implements
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Helpers.LogThis(TAG_LOG, "DATABASE:" + error.toString());
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Helpers.LogThis(TAG_LOG, "DATABASE:" + databaseError.toString());
+
             }
         });
 

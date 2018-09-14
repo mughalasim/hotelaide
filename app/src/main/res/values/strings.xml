@@ -181,5 +181,8 @@
     <string name="txt_exit_desc">Are you sure you wish to exit?</string>
     <string name="txt_exit">Leaving&#160;</string>
     <string name="txt_change_image">Update</string>
+    <string name="txt_yes">Yes</string>
+    <string name="et_hint_message">Say something…</string>
+    <string name="txt_delete_desc">Are you sure you wish to delete this message, this cannot be undone?</string>
 
 </resources>

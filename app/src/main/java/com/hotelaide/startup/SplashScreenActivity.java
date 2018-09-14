@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.hotelaide.BuildConfig;
@@ -36,9 +37,13 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FirebaseApp.initializeApp(SplashScreenActivity.this);
+
         Fabric.with(this, new Crashlytics());
+
         db = new Database();
-//        helpers = new Helpers(SplashScreenActivity.this);
+
+        // helpers = new Helpers(SplashScreenActivity.this);
 
         setDataBaseVersion();
 

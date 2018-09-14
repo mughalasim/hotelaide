@@ -13,12 +13,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.FirebaseDatabase;
+import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.main.activities.JobActivity;
+import com.hotelaide.main.activities.ConversationActivity;
 import com.hotelaide.main.models.MessageModel;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
 
 import java.util.ArrayList;
+
+import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     private final ArrayList<MessageModel> messageModels;
@@ -99,12 +105,68 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     if (messageModel.from_id != 0) {
-                        context.startActivity(new Intent(context, JobActivity.class)
-                                .putExtra("JOB_ID", messageModel.from_id)
+
+                        if (messageModel.unread_messages > 0) {
+                            FirebaseApp.initializeApp(context);
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            Helpers.LogThis("MESSAGE ADAPTER", messageModel.from_name + "  " + holder.getAdapterPosition());
+                            messageModel.unread_messages = 0;
+                            database.getReference()
+                                    .child(BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list/" + holder.getAdapterPosition() + "/unread_messages")
+                                    .setValue(0);
+                        }
+
+                        context.startActivity(new Intent(context, ConversationActivity.class)
+                                .putExtra("FROM_NAME", messageModel.from_name)
+                                .putExtra("FROM_ID", messageModel.from_id)
                         );
                     }
                 }
             });
+
+//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    if (messageModel.from_id != 0 && messageModel.pos > -1) {
+//                        final Dialog dialog = new Dialog(context);
+//                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                        dialog.setContentView(R.layout.dialog_confirm);
+//                        final TextView txt_message = dialog.findViewById(R.id.txt_message);
+//                        final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
+//                        final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
+//                        final TextView txt_title = dialog.findViewById(R.id.txt_title);
+//                        txt_title.setText(context.getString(R.string.txt_delete));
+//                        txt_message.setText(context.getString(R.string.txt_delete_desc));
+//                        btn_confirm.setText(context.getString(R.string.txt_yes));
+//                        btn_confirm.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                FirebaseApp.initializeApp(context);
+//                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                                Helpers.LogThis("MESSAGE ADAPTER", messageModel.from_name + "  " + holder.getAdapterPosition());
+//                                database.getReference()
+//                                        .child(BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list/" + messageModel.pos)
+//                                        .setValue(null);
+//                                messageModels.remove(holder.getAdapterPosition());
+//                                notifyItemRemoved(holder.getAdapterPosition());
+//                                notifyDataSetChanged();
+//                                dialog.cancel();
+//                            }
+//                        });
+//                        btn_cancel.setVisibility(View.VISIBLE);
+//                        btn_cancel.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                dialog.cancel();
+//                            }
+//                        });
+//                        dialog.show();
+//
+//                    }
+//                    return false;
+//
+//                }
+//            });
         }
     }
 
@@ -113,10 +175,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return messageModels.size();
     }
 
-    public void updateData(ArrayList<MessageModel> view_model) {
-        messageModels.clear();
-        messageModels.addAll(view_model);
-        notifyDataSetChanged();
+    public void replaceMessage(ArrayList<MessageModel> messageModels, MessageModel messageModel, int position) {
+        messageModels.remove(position);
+        messageModels.add(position, messageModel);
+        notifyItemChanged(position);
     }
 
 }
