@@ -37,8 +37,9 @@ android {
         prod {
             // MAIN INFO
             buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.com/api/"'
-            buildConfigField 'String', 'MESSAGE_URL', '"Messaging/userMessages/"'
-            buildConfigField 'String', 'CONVERSATION_URL', '"Messaging/userConversations/"'
+            buildConfigField 'String', 'USERS_URL', '"Users/"'
+            buildConfigField 'String', 'MESSAGE_URL', '"/messages"'
+            buildConfigField 'String', 'CONVERSATION_URL', '"/conversations/"'
 
             // APP TYPE
             buildConfigField 'String', 'ACCOUNT_TYPE', '"job_seeker"'
@@ -75,6 +76,7 @@ dependencies {
     implementation "com.android.support:animated-vector-drawable:$rootProject.SupportLibrary"
     implementation "com.android.support:exifinterface:$rootProject.SupportLibrary"
     implementation "com.android.support:customtabs:$rootProject.SupportLibrary"
+    implementation 'com.android.support:multidex:1.0.3'
 
     // RETROFIT DEPENDENCIES
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'

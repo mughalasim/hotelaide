@@ -76,11 +76,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             holder.list_item.setVisibility(View.VISIBLE);
 
             if (conversationModel.from_id == FROM_ID) {
-                holder.txt_text_to.setText(conversationModel.text);
-                holder.txt_text_from.setVisibility(View.GONE);
-            } else {
                 holder.txt_text_from.setText(conversationModel.text);
                 holder.txt_text_to.setVisibility(View.GONE);
+            } else {
+                holder.txt_text_to.setText(conversationModel.text);
+                holder.txt_text_from.setVisibility(View.GONE);
             }
         }
     }

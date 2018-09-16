@@ -19,7 +19,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
@@ -28,7 +27,6 @@ import com.hotelaide.main.models.ConversationModel;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,34 +36,25 @@ import java.util.HashMap;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
 public class ConversationActivity extends AppCompatActivity {
-    private Helpers helpers;
-
-    private Toolbar toolbar;
-    private TextView toolbar_text;
-    private ImageView img_from_pic;
-
     private String
             STR_PAGE_TITLE = "",
-            STR_FROM_PIC_URL = "",
-            STR_MESSAGE_URL = "";
+            STR_FROM_PIC_URL = "";
 
     private int INT_FROM_ID = 0;
 
     private final String
             TAG_LOG = "CONVERSATION";
 
-    // FIRE BASE DB
-    private FirebaseDatabase database;
     private DatabaseReference parent_ref, child_ref;
 
-    // MESSAGE ADAPTER ITEMS -----------------------------------------------------------------------
-    private LinearLayoutManager layoutManager;
     private RecyclerView recycler_view;
     private ArrayList<ConversationModel> model_list = new ArrayList<>();
     private ConversationAdapter adapter;
 
     private ImageView btn_send;
     private EditText et_message;
+
+    private boolean show_my_texts = true;
 
 
     // OVERRIDE METHODS ============================================================================
@@ -75,8 +64,6 @@ public class ConversationActivity extends AppCompatActivity {
 
         if (handleExtraBundles()) {
             setContentView(R.layout.activity_conversation);
-
-            helpers = new Helpers(ConversationActivity.this);
 
             setUpToolBarAndTabs();
 
@@ -101,11 +88,9 @@ public class ConversationActivity extends AppCompatActivity {
         if (extras != null && extras.getInt("FROM_ID") != 0) {
             INT_FROM_ID = extras.getInt("FROM_ID");
             STR_PAGE_TITLE = extras.getString("FROM_NAME");
-            STR_MESSAGE_URL = extras.getString("MESSAGE_URL");
             STR_FROM_PIC_URL = extras.getString("FROM_PIC_URL");
 
             Helpers.LogThis(TAG_LOG, "FROM ID: " + INT_FROM_ID);
-            Helpers.LogThis(TAG_LOG, "MESSAGE URL: " + STR_MESSAGE_URL);
 
             return true;
         } else {
@@ -119,7 +104,7 @@ public class ConversationActivity extends AppCompatActivity {
         adapter = new ConversationAdapter(model_list, INT_FROM_ID);
         recycler_view.setAdapter(adapter);
         recycler_view.setHasFixedSize(false);
-        layoutManager = new LinearLayoutManager(ConversationActivity.this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ConversationActivity.this);
         recycler_view.setLayoutManager(layoutManager);
 
         btn_send = findViewById(R.id.btn_send);
@@ -128,11 +113,11 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void setUpToolBarAndTabs() {
-        toolbar = findViewById(R.id.toolbar);
-        img_from_pic = findViewById(R.id.img_from_pic);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        ImageView img_from_pic = findViewById(R.id.img_from_pic);
         Glide.with(this).load(STR_FROM_PIC_URL).into(img_from_pic);
 
-        toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        TextView toolbar_text = toolbar.findViewById(R.id.toolbar_text);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -186,110 +171,124 @@ public class ConversationActivity extends AppCompatActivity {
 
     }
 
+    private void sendMessage(final String message) {
+        ConversationModel conversationModel = new ConversationModel();
+        conversationModel.from_id = SharedPrefs.getInt(USER_ID);
+        conversationModel.text = message;
+
+        model_list.add(conversationModel);
+        adapter.notifyDataSetChanged();
+        show_my_texts = false;
+
+
+        HashMap<String, Object> hash_data = new HashMap<>();
+        hash_data.put("from_id", conversationModel.from_id);
+        hash_data.put("text", message);
+
+        // TO YOUR CONVERSATION LIST AND UPDATE LAST MESSAGE
+        parent_ref
+                .child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.CONVERSATION_URL + INT_FROM_ID + "/")
+                .push()
+                .setValue(hash_data);
+        parent_ref
+                .child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL + "/" + INT_FROM_ID + "/last_message")
+                .setValue(message);
+
+        // TO YOUR SENDERS CONVERSATION LIST, LAST MESSAGE AND MESSAGE COUNTER
+        parent_ref
+                .child(BuildConfig.USERS_URL + INT_FROM_ID + BuildConfig.CONVERSATION_URL + SharedPrefs.getInt(USER_ID) + "/")
+                .push()
+                .setValue(hash_data);
+        parent_ref
+                .child(BuildConfig.USERS_URL + INT_FROM_ID + BuildConfig.MESSAGE_URL + "/" + SharedPrefs.getInt(USER_ID) + "/last_message")
+                .setValue(message);
+        parent_ref
+                .child(BuildConfig.USERS_URL + INT_FROM_ID + BuildConfig.MESSAGE_URL + "/" + SharedPrefs.getInt(USER_ID) + "/unread_messages")
+                .setValue(1);
+
+//        recycler_view.scrollToPosition(model_list.size() - 1);
+
+    }
+
     // FIRE BASE METHODS ===========================================================================
     private void setupFireBase() {
         FirebaseApp.initializeApp(ConversationActivity.this);
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         parent_ref = database.getReference();
-        child_ref = parent_ref.child(BuildConfig.CONVERSATION_URL + SharedPrefs.getInt(USER_ID) + ":" + INT_FROM_ID);
-        Helpers.LogThis(TAG_LOG, "FB URL: " + BuildConfig.CONVERSATION_URL + SharedPrefs.getInt(USER_ID) + ":" + INT_FROM_ID);
+        child_ref = parent_ref.child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.CONVERSATION_URL + INT_FROM_ID);
+        Helpers.LogThis(TAG_LOG, "FB URL: " + BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.CONVERSATION_URL + INT_FROM_ID);
 
     }
 
-    private void fetchConversationList() {
-        child_ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                setFromDataSnapShotArray(dataSnapshot);
-            }
+//    private void setFromDataSnapShotArray(DataSnapshot dataSnapshot) {
+//        try {
+//            Gson gson = new Gson();
+//            JSONArray message_array = new JSONArray(gson.toJson(dataSnapshot.getValue()));
+//
+//            Helpers.LogThis(TAG_LOG, "LENGTH: " + message_array.length());
+//
+//            if (!message_array.isNull(0)) {
+//                model_list.clear();
+//                int length = message_array.length();
+//                for (int i = 0; i < length; i++) {
+//                    Object object = message_array.get(i);
+//                    if (object instanceof JSONObject) {
+//                        JSONObject conversation_object = (JSONObject) object;
+//                        ConversationModel conversationModel = new ConversationModel();
+//                        conversationModel.from_id = conversation_object.getInt("from_id");
+//                        conversationModel.text = conversation_object.getString("text");
+//                        conversationModel.is_empty = false;
+//
+//                        Helpers.LogThis(TAG_LOG, "TEXT: " + conversationModel.text);
+//
+//                        model_list.add(conversationModel);
+//                    }
+//                }
+//
+//                if (model_list.size() <= 0) {
+//                    noListItems();
+//                }
+//
+//                adapter.notifyDataSetChanged();
+//
+//            } else {
+//                noListItems();
+//            }
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            noListItems();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            noListItems();
+//        }
+//    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Helpers.LogThis(TAG_LOG, "DATABASE ERROR:" + databaseError.toString());
-                noListItems();
-            }
-        });
-    }
-
-    private void sendMessage(final String message) {
-        HashMap<String, Object> hash_data = new HashMap<>();
-        hash_data.put("from_id", INT_FROM_ID);
-        hash_data.put("text", message);
-
-        parent_ref
-                .child(BuildConfig.CONVERSATION_URL + SharedPrefs.getInt(USER_ID) + ":" + INT_FROM_ID + "/")
-                .push()
-                .setValue(hash_data);
-
-        recycler_view.scrollToPosition(model_list.size() - 1);
-
-    }
 
     // PARSING METHODS =============================================================================
-    private void setFromDataSnapShotArray(DataSnapshot dataSnapshot) {
-        try {
-            Gson gson = new Gson();
-            JSONArray message_array = new JSONArray(gson.toJson(dataSnapshot.getValue()));
-
-            Helpers.LogThis(TAG_LOG, "LENGTH: " + message_array.length());
-
-            if (!message_array.isNull(0)) {
-                model_list.clear();
-                int length = message_array.length();
-                for (int i = 0; i < length; i++) {
-                    Object object = message_array.get(i);
-                    if (object instanceof JSONObject) {
-                        JSONObject conversation_object = (JSONObject) object;
-                        ConversationModel conversationModel = new ConversationModel();
-                        conversationModel.text = conversation_object.getString("text");
-                        conversationModel.from_id = conversation_object.getInt("from_id");
-                        conversationModel.is_empty = false;
-
-                        Helpers.LogThis(TAG_LOG, "TEXT: " + conversationModel.text);
-
-                        model_list.add(conversationModel);
-                    }
-                }
-
-                if (model_list.size() <= 0) {
-                    noListItems();
-                }
-
-                adapter.notifyDataSetChanged();
-
-            } else {
-                noListItems();
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            noListItems();
-        } catch (Exception e) {
-            e.printStackTrace();
-            noListItems();
-        }
-    }
-
     private void setFromDataSnapShotObject(DataSnapshot dataSnapshot) {
         try {
             Gson gson = new Gson();
             JSONObject object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
             ConversationModel conversationModel = new ConversationModel();
-            conversationModel.text = object.getString("text");
             conversationModel.from_id = object.getInt("from_id");
-            conversationModel.is_empty = false;
+            conversationModel.text = object.getString("text");
 
             Helpers.LogThis(TAG_LOG, "TEXT: " + conversationModel.text);
 
-            model_list.add(conversationModel);
+            if (conversationModel.from_id != SharedPrefs.getInt(USER_ID)) {
+                model_list.add(conversationModel);
+            } else if (show_my_texts) {
+                model_list.add(conversationModel);
+            }
 
             adapter.notifyDataSetChanged();
 
 
-            Helpers.LogThis(TAG_LOG, STR_MESSAGE_URL);
-            parent_ref.child(STR_MESSAGE_URL).setValue(conversationModel.text);
+//            Helpers.LogThis(TAG_LOG, STR_MESSAGE_URL);
+//            parent_ref.child(STR_MESSAGE_URL).setValue(conversationModel.text);
 
-            recycler_view.scrollToPosition(model_list.size() - 1);
+            recycler_view.scrollToPosition(model_list.size());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -298,13 +297,13 @@ public class ConversationActivity extends AppCompatActivity {
         }
     }
 
-    private void noListItems() {
-        recycler_view.invalidate();
-        model_list.clear();
-        ConversationModel conversationModel = new ConversationModel();
-        conversationModel.is_empty = true;
-        model_list.add(conversationModel);
-        adapter.notifyDataSetChanged();
-    }
+//    private void noListItems() {
+//        recycler_view.invalidate();
+//        model_list.clear();
+//        ConversationModel conversationModel = new ConversationModel();
+//        conversationModel.is_empty = true;
+//        model_list.add(conversationModel);
+//        adapter.notifyDataSetChanged();
+//    }
 
 }

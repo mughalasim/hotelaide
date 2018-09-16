@@ -112,7 +112,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                             Helpers.LogThis("MESSAGE ADAPTER", messageModel.from_name + "  " + holder.getAdapterPosition());
                             messageModel.unread_messages = 0;
                             database.getReference()
-                                    .child(BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list/" + holder.getAdapterPosition() + "/unread_messages")
+                                    .child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL + "/" + messageModel.from_id + "/unread_messages")
                                     .setValue(0);
                         }
 
@@ -120,7 +120,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                                 .putExtra("FROM_NAME", messageModel.from_name)
                                 .putExtra("FROM_ID", messageModel.from_id)
                                 .putExtra("FROM_PIC_URL", messageModel.from_pic_url)
-                                .putExtra("MESSAGE_URL", BuildConfig.MESSAGE_URL + SharedPrefs.getInt(USER_ID) + "/message_list/" + holder.getAdapterPosition() + "/last_message")
                         );
                     }
                 }
@@ -175,12 +174,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public int getItemCount() {
         return messageModels.size();
-    }
-
-    public void replaceMessage(ArrayList<MessageModel> messageModels, MessageModel messageModel, int position) {
-        messageModels.remove(position);
-        messageModels.add(position, messageModel);
-        notifyItemChanged(position);
     }
 
 }
