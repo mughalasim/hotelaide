@@ -24,16 +24,15 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
+                android:background="@drawable/bckgrd_transparent"
                 android:layout_height="@dimen/height_panel"
-                app:tabGravity="center"
-                app:tabIndicatorColor="@color/colorPrimaryLight"
-                app:tabIndicatorHeight="@dimen/line_thickness"
-                app:tabMode="scrollable"
-                android:paddingStart="@dimen/padding_small"
-                android:paddingEnd="@dimen/padding_small"
                 app:tabSelectedTextColor="@color/colorPrimaryLight"
+                app:tabTextColor="@color/white"
                 app:tabTextAppearance="@style/Text_Title"
-                app:tabTextColor="@color/colorAccent" />
+                app:tabIndicatorColor="@color/colorPrimaryLight"
+                app:tabMode="scrollable"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="@dimen/line_thickness"/>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/view_pager"

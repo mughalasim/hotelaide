@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/header"
+        style="@style/Text_Title"
+        android:textColor="@color/colorPrimary"
+        android:paddingStart="@dimen/padding_small"
+        android:paddingEnd="@dimen/padding_small"
+        android:text="Select a contact"
+        android:layout_marginBottom="@dimen/padding_small" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_contacts"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/header"
+        android:layout_above="@+id/btn_cancel"
+        android:layout_height="wrap_content" />
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/btn_cancel"
+        style="@style/Material_Button_No"
+        android:layout_marginStart="@dimen/padding_small"
+        android:layout_marginEnd="@dimen/padding_small"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/padding_large"
+        android:layout_marginTop="@dimen/padding_small"
+        android:text="@string/txt_cancel" />
+
+</RelativeLayout>

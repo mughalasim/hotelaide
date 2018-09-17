@@ -67,15 +67,15 @@
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tabs"
                     android:layout_alignParentBottom="true"
-                    android:layout_height="@dimen/height_panel"
                     android:layout_width="match_parent"
-                    app:tabGravity="center"
-                    app:tabIndicatorColor="@color/colorPrimaryLight"
-                    app:tabIndicatorHeight="@dimen/line_thickness"
-                    app:tabMode="scrollable"
+                    android:layout_height="@dimen/height_panel"
                     app:tabSelectedTextColor="@color/colorPrimaryLight"
+                    app:tabTextColor="@color/grey"
                     app:tabTextAppearance="@style/Text_Title"
-                    app:tabTextColor="@color/colorAccent" />
+                    app:tabIndicatorColor="@color/colorPrimaryLight"
+                    app:tabMode="scrollable"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="@dimen/line_thickness" />
 
             </RelativeLayout>
 

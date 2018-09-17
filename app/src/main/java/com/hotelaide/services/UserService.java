@@ -28,6 +28,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 //import com.facebook.stetho.okhttp3.StethoInterceptor;
 
@@ -75,7 +76,7 @@ public interface UserService {
             .build();
 
 
-    // GET USERS ===================================================================================
+    // GET USER ====================================================================================
     @GET("user")
     Call<JsonObject> getUser();
 
@@ -146,6 +147,14 @@ public interface UserService {
     // GET ALL JOB TYPES ===========================================================================
     @GET("jobtypes")
     Call<JsonObject> getJobTypes();
+
+
+    // GET ALL USERS ===============================================================================
+    @GET("users")
+    Call<JsonObject> getAllUsers(
+            @Query("page") int page_number
+    );
+
 
 
 }

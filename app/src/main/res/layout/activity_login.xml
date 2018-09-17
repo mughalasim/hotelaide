@@ -4,32 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bckgrd_app"
-        android:contentDescription="@string/app_name"
-        android:scaleType="fitCenter" />
 
-    <ImageView
-        android:id="@+id/main_logo"
+    <LinearLayout
+        android:id="@+id/ll_main_logo"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_panel"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:padding="@dimen/text_margin"
-        android:contentDescription="@string/app_name"
-        android:scaleType="fitCenter"
-        android:background="@drawable/bckgrd_app"
-        android:src="@drawable/main_logo_horizontal" />
+        android:background="@color/dark_grey"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/padding_tiny"
+        android:paddingBottom="@dimen/padding_tiny">
+
+        <ImageView
+            android:id="@+id/main_logo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_panel"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/text_margin"
+            android:scaleType="fitCenter"
+            android:src="@drawable/main_logo_horizontal" />
+
+    </LinearLayout>
+
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
-        android:layout_below="@+id/main_logo"
+        android:layout_below="@+id/ll_main_logo"
         android:layout_width="match_parent"
         android:background="@drawable/bckgrd_transparent"
         android:layout_height="@dimen/height_panel"
         app:tabSelectedTextColor="@color/colorPrimaryLight"
-        app:tabTextColor="@color/colorAccent"
+        app:tabTextColor="@color/white"
         app:tabTextAppearance="@style/Text_Title"
         app:tabIndicatorColor="@color/colorPrimaryLight"
         app:tabMode="scrollable"
@@ -39,16 +44,9 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
-        android:layout_below="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-
-    <include
-        android:layout_below="@+id/main_logo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/horizontal_line"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabs" />
 
 
 </RelativeLayout>

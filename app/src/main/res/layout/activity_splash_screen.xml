@@ -24,12 +24,14 @@
         layout="@layout/horizontal_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_thickness"
+        android:layout_marginTop="@dimen/padding_large"
         android:layout_below="@+id/main_logo" />
 
     <include
         layout="@layout/horizontal_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line_thickness"
+        android:layout_marginBottom="@dimen/padding_large"
         android:layout_above="@+id/main_logo" />
 
 

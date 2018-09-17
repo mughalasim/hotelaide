@@ -33,7 +33,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
+import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
+import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
 
 public class ConversationActivity extends AppCompatActivity {
     private String
@@ -206,7 +209,34 @@ public class ConversationActivity extends AppCompatActivity {
                 .child(BuildConfig.USERS_URL + INT_FROM_ID + BuildConfig.MESSAGE_URL + "/" + SharedPrefs.getInt(USER_ID) + "/unread_messages")
                 .setValue(1);
 
-//        recycler_view.scrollToPosition(model_list.size() - 1);
+        if (model_list.size() < 1) {
+            HashMap<String, Object> user1 = new HashMap<>();
+            user1.put("id", SharedPrefs.getInt(USER_ID));
+            user1.put("name", SharedPrefs.getString(USER_F_NAME) + " " + SharedPrefs.getString(USER_L_NAME));
+            user1.put("pic_url", SharedPrefs.getString(USER_IMG_AVATAR));
+
+            HashMap<String, Object> user2 = new HashMap<>();
+            user2.put("id", INT_FROM_ID);
+            user2.put("name", STR_PAGE_TITLE);
+            user2.put("pic_url", STR_FROM_PIC_URL);
+
+            HashMap<String, Object> users = new HashMap<>();
+            users.put("0", user1);
+            users.put("1", user2);
+
+            HashMap<String, Object> main_hash = new HashMap<>();
+            main_hash.put("last_message", conversationModel.from_id);
+            main_hash.put("unread_messages", 1);
+            main_hash.put("users", users);
+
+            parent_ref
+                    .child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL + "/" + INT_FROM_ID + "/")
+                    .setValue(main_hash);
+
+            parent_ref
+                    .child(BuildConfig.USERS_URL + INT_FROM_ID + BuildConfig.MESSAGE_URL + "/" + SharedPrefs.getInt(USER_ID) + "/")
+                    .setValue(main_hash);
+        }
 
     }
 

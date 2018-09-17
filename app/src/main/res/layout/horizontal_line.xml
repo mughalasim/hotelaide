@@ -4,7 +4,7 @@
     android:contentDescription="@string/app_name"
     android:layout_marginTop="@dimen/padding_small"
     android:layout_width="match_parent"
-    android:src="@color/colorPrimaryDark"
+    android:src="@color/dark_grey"
     android:layout_height="@dimen/line_thickness">
 
 </ImageView>

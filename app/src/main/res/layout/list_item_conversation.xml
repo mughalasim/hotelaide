@@ -24,7 +24,7 @@
             android:id="@+id/txt_text_to"
             style="@style/Text_Normal"
             android:maxWidth="300dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/white"
             android:background="@drawable/bckgrd_text_to"
             android:padding="@dimen/padding_mini"
             android:layout_marginTop="0dp"
