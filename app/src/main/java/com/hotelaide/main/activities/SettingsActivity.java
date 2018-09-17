@@ -23,6 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.SharedPrefs.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
@@ -32,7 +33,8 @@ public class SettingsActivity extends ParentActivity {
     String TAG_LOG = "SETTINGS";
 
     private Switch
-            switch_app_updates;
+            switch_app_updates,
+            switch_push_notifications;
 
     private TextView delete_account;
 
@@ -61,6 +63,7 @@ public class SettingsActivity extends ParentActivity {
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         switch_app_updates = findViewById(R.id.switch_app_updates);
+        switch_push_notifications = findViewById(R.id.switch_push_notifications);
         delete_account = findViewById(R.id.delete_account);
     }
 
@@ -70,6 +73,14 @@ public class SettingsActivity extends ParentActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPrefs.setBool(ALLOW_UPDATE_APP, isChecked);
+            }
+        });
+
+        switch_push_notifications.setChecked(SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
+        switch_push_notifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, isChecked);
             }
         });
 

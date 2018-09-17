@@ -17,6 +17,8 @@ import java.util.List;
 
 import static com.hotelaide.utils.Helpers.START_FIRST_TIME;
 import static com.hotelaide.utils.Helpers.START_RETURN;
+import static com.hotelaide.utils.SharedPrefs.ALLOW_MESSAGE_PUSH;
+import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
 
 public class DashboardActivity extends ParentActivity {
 
@@ -66,6 +68,8 @@ public class DashboardActivity extends ParentActivity {
                     + getString(R.string.app_name) +
                     ", You are on the Dashboard where you can easily navigate through the app.");
 
+            SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
+            SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, true);
             setCountOnDrawerItem(menu_profile, "(Update Profile)");
 
         } else if (extras != null && extras.getString(START_RETURN) != null) {

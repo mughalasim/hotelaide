@@ -51,6 +51,7 @@ public class SharedPrefs {
 
     // BOOLEAN VARIABLE NAMES ======================================================================
     public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
+    public static final String ALLOW_MESSAGE_PUSH = "ALLOW_MESSAGE_PUSH";
 
 
     // GENERIC GET AND SET INTEGER VARIABLES =======================================================

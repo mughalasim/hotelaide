@@ -14,6 +14,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main.activities.DashboardActivity;
+import com.hotelaide.services.MessagingService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -23,14 +24,13 @@ import io.fabric.sdk.android.Fabric;
 import static com.hotelaide.utils.Helpers.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.Helpers.START_LAUNCH;
 import static com.hotelaide.utils.SharedPrefs.ACCESS_TOKEN;
-import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.SharedPrefs.DATABASE_VERSION;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
     private Database db;
     private final String TAG_LOG = "SPLASH";
-//    private Helpers helpers;
+    private Helpers helpers;
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -43,7 +43,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         db = new Database();
 
-        // helpers = new Helpers(SplashScreenActivity.this);
+        helpers = new Helpers(SplashScreenActivity.this);
 
         setDataBaseVersion();
 
@@ -66,7 +66,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             db.deleteAllTables();
             SharedPrefs.deleteAllSharedPrefs();
             SharedPrefs.setInt(DATABASE_VERSION, BuildConfig.DATABASE_VERSION);
-            SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
         }
     }
 
@@ -83,6 +82,11 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void startUp() {
+        if (helpers.validateServiceRunning(MessagingService.class)) {
+            startService(new Intent(SplashScreenActivity.this, MessagingService.class));
+        }
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

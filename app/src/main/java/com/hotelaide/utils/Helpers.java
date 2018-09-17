@@ -3,6 +3,7 @@ package com.hotelaide.utils;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -87,7 +88,6 @@ public class Helpers {
     private static Toast mToast;
     private final TextView ProgressDialogMessage;
     private final Dialog dialog;
-
 
     public final static int INT_PERMISSIONS_CAMERA = 601;
 
@@ -515,6 +515,16 @@ public class Helpers {
 
     }
 
+    public boolean validateServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     // FORMAT ======================================================================================
     public String formatNumbersCurrency(String amount) {

@@ -162,8 +162,6 @@
     <string name="txt_locked_out">LOCKED OUT?</string>
     <string name="txt_locked_out_desc">Don\'t worry, give us your email address that you used to sign up and well send you a reset link</string>
     <string name="txt_new_account_password">Please set your new password</string>
-    <string name="txt_notify_me">Notify me on Updates</string>
-    <string name="txt_notify_me_desc">Turning this on will allow the app to notify you if there is a new update available in the Play Store</string>
     <string name="txt_delete_your_account">Delete your account</string>
     <string name="txt_availability">Availability:&#160;</string>
     <string name="txt_add_filters">Add Filters</string>
@@ -184,5 +182,12 @@
     <string name="txt_yes">Yes</string>
     <string name="et_hint_message">Say something…</string>
     <string name="txt_delete_desc">Are you sure you wish to delete this message, this cannot be undone?</string>
+
+    <string name="txt_notify_me">Notify me on updates</string>
+    <string name="txt_notify_me_desc">Turning this on will allow the app to notify you if there is a new update available in the Play Store</string>
+    <string name="txt_notify_push">Message notifications</string>
+    <string name="txt_notify_push_desc">Notify me when someone has sent me a new message</string>
+
+
 
 </resources>

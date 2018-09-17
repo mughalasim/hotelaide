@@ -366,12 +366,12 @@ public class MessageFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (userModel.id != 0) {
-
                             context.startActivity(new Intent(context, ConversationActivity.class)
                                     .putExtra("FROM_NAME", name)
                                     .putExtra("FROM_ID", userModel.id)
                                     .putExtra("FROM_PIC_URL", userModel.img_avatar)
                             );
+                            sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                         }
                     }
                 });

@@ -130,6 +130,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
+        <!--CUSTOM SERVICES =====================================================================-->
+
+        <service
+            android:name=".services.MessagingService"
+            android:process=":service" />
+
+
         <!-- FACEBOOK LOGIN =====================================================================-->
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"

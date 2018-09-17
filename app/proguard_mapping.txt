@@ -4802,12 +4802,19 @@ android.support.v4.app.FragmentTransitionImpl$3 -> android.support.v4.app.T:
     android.support.v4.app.FragmentTransitionImpl this$0 -> c
     java.util.ArrayList val$sharedElementsIn -> a
     java.util.Map val$nameOverrides -> b
-android.support.v4.app.LoaderManager -> android.support.v4.app.V:
+android.support.v4.app.INotificationSideChannel -> android.support.v4.app.V:
+    void notify(java.lang.String,int,java.lang.String,android.app.Notification) -> a
+android.support.v4.app.INotificationSideChannel$Stub -> android.support.v4.app.V$a:
+    android.support.v4.app.INotificationSideChannel asInterface(android.os.IBinder) -> a
+android.support.v4.app.INotificationSideChannel$Stub$Proxy -> android.support.v4.app.V$a$a:
+    android.os.IBinder mRemote -> a
+    void notify(java.lang.String,int,java.lang.String,android.app.Notification) -> a
+android.support.v4.app.LoaderManager -> android.support.v4.app.W:
     android.support.v4.app.LoaderManager getInstance(android.arch.lifecycle.LifecycleOwner) -> a
     android.support.v4.content.Loader initLoader(int,android.os.Bundle,android.support.v4.app.LoaderManager$LoaderCallbacks) -> a
     void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
     void markForRedelivery() -> a
-android.support.v4.app.LoaderManager$LoaderCallbacks -> android.support.v4.app.V$a:
+android.support.v4.app.LoaderManager$LoaderCallbacks -> android.support.v4.app.W$a:
     android.support.v4.content.Loader onCreateLoader(int,android.os.Bundle) -> a
     void onLoadFinished(android.support.v4.content.Loader,java.lang.Object) -> a
     void onLoaderReset(android.support.v4.content.Loader) -> a
@@ -4857,20 +4864,20 @@ android.support.v4.app.LoaderManagerImpl$LoaderViewModel -> android.support.v4.a
     void onCleared() -> a
     void putLoader(int,android.support.v4.app.LoaderManagerImpl$LoaderInfo) -> a
     void startCreatingLoader() -> b
-android.support.v4.app.LoaderManagerImpl$LoaderViewModel$1 -> android.support.v4.app.W:
+android.support.v4.app.LoaderManagerImpl$LoaderViewModel$1 -> android.support.v4.app.X:
     android.arch.lifecycle.ViewModel create(java.lang.Class) -> a
-android.support.v4.app.NavUtils -> android.support.v4.app.X:
+android.support.v4.app.NavUtils -> android.support.v4.app.Y:
     android.content.Intent getParentActivityIntent(android.app.Activity) -> a
     android.content.Intent getParentActivityIntent(android.content.Context,android.content.ComponentName) -> a
     boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     java.lang.String getParentActivityName(android.app.Activity) -> b
     java.lang.String getParentActivityName(android.content.Context,android.content.ComponentName) -> b
     void navigateUpTo(android.app.Activity,android.content.Intent) -> b
-android.support.v4.app.NotificationBuilderWithBuilderAccessor -> android.support.v4.app.Y:
+android.support.v4.app.NotificationBuilderWithBuilderAccessor -> android.support.v4.app.Z:
     android.app.Notification$Builder getBuilder() -> a
-android.support.v4.app.NotificationCompat -> android.support.v4.app.Z:
+android.support.v4.app.NotificationCompat -> android.support.v4.app.aa:
     android.os.Bundle getExtras(android.app.Notification) -> a
-android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.Z$a:
+android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.aa$a:
     android.app.PendingIntent actionIntent -> i
     android.os.Bundle mExtras -> a
     android.support.v4.app.RemoteInput[] mDataOnlyRemoteInputs -> c
@@ -4889,11 +4896,11 @@ android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.Z$a:
     int getIcon() -> a
     int getSemanticAction() -> g
     java.lang.CharSequence getTitle() -> b
-android.support.v4.app.NotificationCompat$BigTextStyle -> android.support.v4.app.Z$b:
+android.support.v4.app.NotificationCompat$BigTextStyle -> android.support.v4.app.aa$b:
     java.lang.CharSequence mBigText -> e
     android.support.v4.app.NotificationCompat$BigTextStyle bigText(java.lang.CharSequence) -> a
     void apply(android.support.v4.app.NotificationBuilderWithBuilderAccessor) -> a
-android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.Z$c:
+android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.aa$c:
     android.app.Notification mNotification -> N
     android.app.Notification mPublicVersion -> E
     android.app.PendingIntent mContentIntent -> f
@@ -4941,18 +4948,21 @@ android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.Z$c:
     android.os.Bundle getExtras() -> a
     android.support.v4.app.NotificationCompat$Builder setAutoCancel(boolean) -> a
     android.support.v4.app.NotificationCompat$Builder setChannelId(java.lang.String) -> a
-    android.support.v4.app.NotificationCompat$Builder setColor(int) -> b
+    android.support.v4.app.NotificationCompat$Builder setColor(int) -> c
     android.support.v4.app.NotificationCompat$Builder setContentIntent(android.app.PendingIntent) -> a
     android.support.v4.app.NotificationCompat$Builder setContentText(java.lang.CharSequence) -> c
     android.support.v4.app.NotificationCompat$Builder setContentTitle(java.lang.CharSequence) -> b
     android.support.v4.app.NotificationCompat$Builder setDeleteIntent(android.app.PendingIntent) -> b
+    android.support.v4.app.NotificationCompat$Builder setLights(int,int,int) -> a
     android.support.v4.app.NotificationCompat$Builder setLocalOnly(boolean) -> b
+    android.support.v4.app.NotificationCompat$Builder setPriority(int) -> b
     android.support.v4.app.NotificationCompat$Builder setSmallIcon(int) -> a
     android.support.v4.app.NotificationCompat$Builder setSound(android.net.Uri) -> a
     android.support.v4.app.NotificationCompat$Builder setStyle(android.support.v4.app.NotificationCompat$Style) -> a
     android.support.v4.app.NotificationCompat$Builder setTicker(java.lang.CharSequence) -> d
+    android.support.v4.app.NotificationCompat$Builder setVibrate(long[]) -> a
     android.support.v4.app.NotificationCompat$Builder setWhen(long) -> a
-android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.Z$d:
+android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.aa$d:
     android.support.v4.app.NotificationCompat$Builder mBuilder -> a
     boolean mSummaryTextSet -> d
     java.lang.CharSequence mBigContentTitle -> b
@@ -4963,7 +4973,7 @@ android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.Z$d:
     void addCompatExtras(android.os.Bundle) -> a
     void apply(android.support.v4.app.NotificationBuilderWithBuilderAccessor) -> a
     void setBuilder(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompatBuilder -> android.support.v4.app.aa:
+android.support.v4.app.NotificationCompatBuilder -> android.support.v4.app.ba:
     android.app.Notification$Builder mBuilder -> a
     android.os.Bundle mExtras -> f
     android.support.v4.app.NotificationCompat$Builder mBuilderCompat -> b
@@ -4977,7 +4987,7 @@ android.support.v4.app.NotificationCompatBuilder -> android.support.v4.app.aa:
     android.app.Notification build() -> b
     android.app.Notification buildInternal() -> c
     android.app.Notification$Builder getBuilder() -> a
-android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.ba:
+android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.ca:
     boolean sExtrasFieldAccessFailed -> c
     java.lang.Object sActionsLock -> d
     java.lang.Object sExtrasLock -> a
@@ -4988,17 +4998,64 @@ android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.ba:
     android.os.Bundle writeActionAndGetExtras(android.app.Notification$Builder,android.support.v4.app.NotificationCompat$Action) -> a
     android.os.Bundle[] toBundleArray(android.support.v4.app.RemoteInput[]) -> a
     android.util.SparseArray buildActionExtrasMap(java.util.List) -> a
-android.support.v4.app.OneShotPreDrawListener -> android.support.v4.app.ca:
+android.support.v4.app.NotificationManagerCompat -> android.support.v4.app.da:
+    android.app.NotificationManager mNotificationManager -> g
+    android.content.Context mContext -> f
+    android.support.v4.app.NotificationManagerCompat$SideChannelManager sSideChannelManager -> e
+    java.lang.Object sEnabledNotificationListenersLock -> a
+    java.lang.Object sLock -> d
+    java.lang.String sEnabledNotificationListeners -> b
+    java.util.Set sEnabledNotificationListenerPackages -> c
+    android.support.v4.app.NotificationManagerCompat from(android.content.Context) -> a
+    boolean useSideChannelForNotification(android.app.Notification) -> a
+    java.util.Set getEnabledListenerPackages(android.content.Context) -> b
+    void pushSideChannelQueue(android.support.v4.app.NotificationManagerCompat$Task) -> a
+    void notify(int,android.app.Notification) -> a
+    void notify(java.lang.String,int,android.app.Notification) -> a
+android.support.v4.app.NotificationManagerCompat$NotifyTask -> android.support.v4.app.da$a:
+    android.app.Notification notif -> d
+    int id -> b
+    java.lang.String packageName -> a
+    java.lang.String tag -> c
+    void send(android.support.v4.app.INotificationSideChannel) -> a
+android.support.v4.app.NotificationManagerCompat$ServiceConnectedEvent -> android.support.v4.app.da$b:
+    android.content.ComponentName componentName -> a
+    android.os.IBinder iBinder -> b
+android.support.v4.app.NotificationManagerCompat$SideChannelManager -> android.support.v4.app.da$c:
+    android.content.Context mContext -> a
+    android.os.Handler mHandler -> c
+    android.os.HandlerThread mHandlerThread -> b
+    java.util.Map mRecordMap -> d
+    java.util.Set mCachedEnabledPackages -> e
+    boolean ensureServiceBound(android.support.v4.app.NotificationManagerCompat$SideChannelManager$ListenerRecord) -> a
+    void ensureServiceUnbound(android.support.v4.app.NotificationManagerCompat$SideChannelManager$ListenerRecord) -> b
+    void handleQueueTask(android.support.v4.app.NotificationManagerCompat$Task) -> b
+    void handleRetryListenerQueue(android.content.ComponentName) -> b
+    void handleServiceConnected(android.content.ComponentName,android.os.IBinder) -> a
+    void handleServiceDisconnected(android.content.ComponentName) -> a
+    void processListenerQueue(android.support.v4.app.NotificationManagerCompat$SideChannelManager$ListenerRecord) -> d
+    void scheduleListenerRetry(android.support.v4.app.NotificationManagerCompat$SideChannelManager$ListenerRecord) -> c
+    void updateListenerMap() -> a
+    void queueTask(android.support.v4.app.NotificationManagerCompat$Task) -> a
+android.support.v4.app.NotificationManagerCompat$SideChannelManager$ListenerRecord -> android.support.v4.app.da$c$a:
+    android.content.ComponentName componentName -> a
+    android.support.v4.app.INotificationSideChannel service -> c
+    boolean bound -> b
+    int retryCount -> e
+    java.util.ArrayDeque taskQueue -> d
+android.support.v4.app.NotificationManagerCompat$Task -> android.support.v4.app.da$d:
+    void send(android.support.v4.app.INotificationSideChannel) -> a
+android.support.v4.app.OneShotPreDrawListener -> android.support.v4.app.ea:
     android.view.View mView -> a
     android.view.ViewTreeObserver mViewTreeObserver -> b
     java.lang.Runnable mRunnable -> c
     android.support.v4.app.OneShotPreDrawListener add(android.view.View,java.lang.Runnable) -> a
     void removeListener() -> a
-android.support.v4.app.RemoteInput -> android.support.v4.app.da:
+android.support.v4.app.RemoteInput -> android.support.v4.app.fa:
     android.app.RemoteInput fromCompat(android.support.v4.app.RemoteInput) -> a
     android.app.RemoteInput[] fromCompat(android.support.v4.app.RemoteInput[]) -> a
     java.lang.String getResultKey() -> a
-android.support.v4.app.SharedElementCallback -> android.support.v4.app.ea:
+android.support.v4.app.SharedElementCallback -> android.support.v4.app.ga:
     android.os.Parcelable onCaptureSharedElementSnapshot(android.view.View,android.graphics.Matrix,android.graphics.RectF) -> a
     android.view.View onCreateSnapshotView(android.content.Context,android.os.Parcelable) -> a
     void onMapSharedElements(java.util.List,java.util.Map) -> a
@@ -5006,13 +5063,13 @@ android.support.v4.app.SharedElementCallback -> android.support.v4.app.ea:
     void onSharedElementEnd(java.util.List,java.util.List,java.util.List) -> b
     void onSharedElementStart(java.util.List,java.util.List,java.util.List) -> a
     void onSharedElementsArrived(java.util.List,java.util.List,android.support.v4.app.SharedElementCallback$OnSharedElementsReadyListener) -> a
-android.support.v4.app.SharedElementCallback$OnSharedElementsReadyListener -> android.support.v4.app.ea$a:
+android.support.v4.app.SharedElementCallback$OnSharedElementsReadyListener -> android.support.v4.app.ga$a:
 android.support.v4.app.SuperNotCalledException -> android.support.v4.app.SuperNotCalledException:
-android.support.v4.app.SupportActivity -> android.support.v4.app.fa:
+android.support.v4.app.SupportActivity -> android.support.v4.app.ha:
     android.arch.lifecycle.LifecycleRegistry mLifecycleRegistry -> b
     android.support.v4.util.SimpleArrayMap mExtraDataMap -> a
-android.support.v4.app.SupportActivity$ExtraData -> android.support.v4.app.fa$a:
-android.support.v4.app.TaskStackBuilder -> android.support.v4.app.ga:
+android.support.v4.app.SupportActivity$ExtraData -> android.support.v4.app.ha$a:
+android.support.v4.app.TaskStackBuilder -> android.support.v4.app.ia:
     android.content.Context mSourceContext -> b
     java.util.ArrayList mIntents -> a
     android.support.v4.app.TaskStackBuilder create(android.content.Context) -> a
@@ -5021,7 +5078,7 @@ android.support.v4.app.TaskStackBuilder -> android.support.v4.app.ga:
     android.support.v4.app.TaskStackBuilder addParentStack(android.content.ComponentName) -> a
     void startActivities() -> a
     void startActivities(android.os.Bundle) -> a
-android.support.v4.app.TaskStackBuilder$SupportParentable -> android.support.v4.app.ga$a:
+android.support.v4.app.TaskStackBuilder$SupportParentable -> android.support.v4.app.ia$a:
     android.content.Intent getSupportParentActivityIntent() -> b
 android.support.v4.content.AsyncTaskLoader -> android.support.v4.content.a:
     android.os.Handler mHandler -> o
@@ -35934,22 +35991,25 @@ com.hotelaide.main.activities.ProfileEditActivity$ViewPagerAdapter -> com.hotela
     void addFragment(android.support.v4.app.Fragment,java.lang.String) -> a
 com.hotelaide.main.activities.SettingsActivity -> com.hotelaide.main.activities.SettingsActivity:
     android.widget.Switch switch_app_updates -> L
-    android.widget.TextView delete_account -> M
+    android.widget.Switch switch_push_notifications -> M
+    android.widget.TextView delete_account -> N
     java.lang.String TAG_LOG -> K
     void findAllViews() -> i
     void setListeners() -> j
     void asyncDeleteUser() -> h
 com.hotelaide.main.activities.SettingsActivity$1 -> com.hotelaide.main.activities.L:
     com.hotelaide.main.activities.SettingsActivity this$0 -> a
-com.hotelaide.main.activities.SettingsActivity$2 -> com.hotelaide.main.activities.O:
+com.hotelaide.main.activities.SettingsActivity$2 -> com.hotelaide.main.activities.M:
     com.hotelaide.main.activities.SettingsActivity this$0 -> a
-com.hotelaide.main.activities.SettingsActivity$2$1 -> com.hotelaide.main.activities.M:
-    android.app.Dialog val$dialog -> a
-    com.hotelaide.main.activities.SettingsActivity$2 this$1 -> b
-com.hotelaide.main.activities.SettingsActivity$2$2 -> com.hotelaide.main.activities.N:
-    android.app.Dialog val$dialog -> a
-    com.hotelaide.main.activities.SettingsActivity$2 this$1 -> b
 com.hotelaide.main.activities.SettingsActivity$3 -> com.hotelaide.main.activities.P:
+    com.hotelaide.main.activities.SettingsActivity this$0 -> a
+com.hotelaide.main.activities.SettingsActivity$3$1 -> com.hotelaide.main.activities.N:
+    android.app.Dialog val$dialog -> a
+    com.hotelaide.main.activities.SettingsActivity$3 this$1 -> b
+com.hotelaide.main.activities.SettingsActivity$3$2 -> com.hotelaide.main.activities.O:
+    android.app.Dialog val$dialog -> a
+    com.hotelaide.main.activities.SettingsActivity$3 this$1 -> b
+com.hotelaide.main.activities.SettingsActivity$4 -> com.hotelaide.main.activities.Q:
     com.hotelaide.main.activities.SettingsActivity this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
@@ -35985,17 +36045,28 @@ com.hotelaide.main.adapters.FindJobsAdapter$ViewHolder -> b.b.a.a.c$a:
     android.widget.TextView txt_no_results -> c
     android.widget.TextView txt_posted_on -> f
     com.hotelaide.main.adapters.FindJobsAdapter this$0 -> h
-com.hotelaide.main.adapters.MessageAdapter -> b.b.a.a.e:
+com.hotelaide.main.adapters.MessageAdapter -> b.b.a.a.h:
     android.content.Context context -> b
     com.hotelaide.utils.Helpers helpers -> c
     java.util.ArrayList messageModels -> a
     android.content.Context access$000(com.hotelaide.main.adapters.MessageAdapter) -> a
+    java.util.ArrayList access$100(com.hotelaide.main.adapters.MessageAdapter) -> b
     void onBindViewHolder(com.hotelaide.main.adapters.MessageAdapter$ViewHolder,int) -> a
 com.hotelaide.main.adapters.MessageAdapter$1 -> b.b.a.a.d:
     com.hotelaide.main.adapters.MessageAdapter this$0 -> c
     com.hotelaide.main.adapters.MessageAdapter$ViewHolder val$holder -> b
     com.hotelaide.main.models.MessageModel val$messageModel -> a
-com.hotelaide.main.adapters.MessageAdapter$ViewHolder -> b.b.a.a.e$a:
+com.hotelaide.main.adapters.MessageAdapter$2 -> b.b.a.a.g:
+    com.hotelaide.main.adapters.MessageAdapter this$0 -> c
+    com.hotelaide.main.adapters.MessageAdapter$ViewHolder val$holder -> b
+    com.hotelaide.main.models.MessageModel val$messageModel -> a
+com.hotelaide.main.adapters.MessageAdapter$2$1 -> b.b.a.a.e:
+    android.app.Dialog val$dialog -> a
+    com.hotelaide.main.adapters.MessageAdapter$2 this$1 -> b
+com.hotelaide.main.adapters.MessageAdapter$2$2 -> b.b.a.a.f:
+    android.app.Dialog val$dialog -> a
+    com.hotelaide.main.adapters.MessageAdapter$2 this$1 -> b
+com.hotelaide.main.adapters.MessageAdapter$ViewHolder -> b.b.a.a.h$a:
     android.support.design.chip.Chip txt_message_counter -> g
     android.widget.ImageView img_from_pic -> f
     android.widget.RelativeLayout list_item -> b
@@ -36429,7 +36500,7 @@ com.hotelaide.main.models.UserModel -> b.b.a.c.f:
     java.lang.String img_banner -> f
     java.lang.String last_name -> c
     java.lang.String password -> n
-com.hotelaide.services.ExperienceService -> b.b.b.b:
+com.hotelaide.services.ExperienceService -> com.hotelaide.services.b:
     com.google.gson.Gson gson -> b
     okhttp3.OkHttpClient okClient -> a
     retrofit2.Retrofit retrofit -> c
@@ -36441,9 +36512,9 @@ com.hotelaide.services.ExperienceService -> b.b.b.b:
     retrofit2.Call setWorkExperience(int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,int) -> a
     retrofit2.Call updateEducationExperience(int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,int) -> a
     retrofit2.Call updateWorkExperience(int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,int) -> b
-com.hotelaide.services.ExperienceService$1 -> b.b.b.a:
+com.hotelaide.services.ExperienceService$1 -> com.hotelaide.services.a:
     okhttp3.Response intercept(okhttp3.Interceptor$Chain) -> a
-com.hotelaide.services.HotelService -> b.b.b.d:
+com.hotelaide.services.HotelService -> com.hotelaide.services.d:
     com.google.gson.Gson gson -> b
     okhttp3.OkHttpClient okClient -> a
     retrofit2.Retrofit retrofit -> c
@@ -36451,18 +36522,31 @@ com.hotelaide.services.HotelService -> b.b.b.d:
     retrofit2.Call getAppliedJobs(int) -> a
     retrofit2.Call getHotel(int) -> c
     retrofit2.Call getJob(int) -> b
-com.hotelaide.services.HotelService$1 -> b.b.b.c:
+com.hotelaide.services.HotelService$1 -> com.hotelaide.services.c:
     okhttp3.Response intercept(okhttp3.Interceptor$Chain) -> a
-com.hotelaide.services.LoginService -> b.b.b.f:
+com.hotelaide.services.LoginService -> com.hotelaide.services.f:
     com.google.gson.Gson gson -> b
     okhttp3.OkHttpClient okClient -> a
     retrofit2.Retrofit retrofit -> c
     retrofit2.Call resetPassword(java.lang.String) -> a
     retrofit2.Call userLogin(java.lang.String,java.lang.String) -> a
     retrofit2.Call userRegister(java.lang.String,java.lang.String,int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String) -> a
-com.hotelaide.services.LoginService$1 -> b.b.b.e:
+com.hotelaide.services.LoginService$1 -> com.hotelaide.services.e:
     okhttp3.Response intercept(okhttp3.Interceptor$Chain) -> a
-com.hotelaide.services.UserService -> b.b.b.h:
+com.hotelaide.services.MessagingService -> com.hotelaide.services.MessagingService:
+    int getNotificationIcon() -> a
+    void access$000(com.hotelaide.services.MessagingService,com.google.firebase.database.DataSnapshot) -> a
+    void createNotificationChannel() -> b
+    void setDataSnapshotFromObject(com.google.firebase.database.DataSnapshot) -> a
+    void createNotification(android.content.Context,java.lang.String,java.lang.String) -> a
+com.hotelaide.services.MessagingService$1 -> com.hotelaide.services.g:
+    com.hotelaide.services.MessagingService this$0 -> a
+    void onCancelled(com.google.firebase.database.DatabaseError) -> a
+    void onChildAdded(com.google.firebase.database.DataSnapshot,java.lang.String) -> b
+    void onChildChanged(com.google.firebase.database.DataSnapshot,java.lang.String) -> a
+    void onChildMoved(com.google.firebase.database.DataSnapshot,java.lang.String) -> c
+    void onChildRemoved(com.google.firebase.database.DataSnapshot) -> a
+com.hotelaide.services.UserService -> com.hotelaide.services.i:
     com.google.gson.Gson gson -> b
     okhttp3.OkHttpClient okClient -> a
     retrofit2.Retrofit retrofit -> c
@@ -36476,7 +36560,7 @@ com.hotelaide.services.UserService -> b.b.b.h:
     retrofit2.Call setUserDetails(int,java.lang.String,java.lang.String,int,int,java.lang.String,double,double,java.lang.String,java.lang.String,java.lang.String) -> a
     retrofit2.Call setUserImages(int,okhttp3.MultipartBody$Part,okhttp3.MultipartBody$Part) -> a
     retrofit2.Call updateUserPassword(int,java.lang.String,java.lang.String,java.lang.String) -> a
-com.hotelaide.services.UserService$1 -> b.b.b.g:
+com.hotelaide.services.UserService$1 -> com.hotelaide.services.h:
     okhttp3.Response intercept(okhttp3.Interceptor$Chain) -> a
 com.hotelaide.startup.LoginActivity -> com.hotelaide.startup.LoginActivity:
     android.support.v4.view.ViewPager viewPager -> p
@@ -36500,6 +36584,7 @@ com.hotelaide.startup.LoginActivity$ViewPagerAdapter -> com.hotelaide.startup.Lo
     void addFragment(android.support.v4.app.Fragment,java.lang.String) -> a
 com.hotelaide.startup.SplashScreenActivity -> com.hotelaide.startup.SplashScreenActivity:
     com.hotelaide.utils.Database db -> o
+    com.hotelaide.utils.Helpers helpers -> q
     java.lang.String TAG_LOG -> p
     void handleFireBase() -> h
     void setDataBaseVersion() -> g
@@ -36683,6 +36768,7 @@ com.hotelaide.utils.Helpers -> com.hotelaide.utils.o:
     boolean validateEmptyTextView(android.widget.TextView,java.lang.String) -> a
     boolean validateGooglePlayServices(android.app.Activity) -> a
     boolean validateInternetConnection() -> c
+    boolean validateServiceRunning(java.lang.Class) -> a
     java.lang.String calculateAge(java.lang.String) -> d
     java.lang.String calculateDateInterval(java.lang.String,java.lang.String) -> b
     java.lang.String formatDate(java.lang.String) -> c
@@ -50110,42 +50196,42 @@ retrofit2.http.QueryMap -> g.b.u:
 retrofit2.http.QueryName -> g.b.v:
 retrofit2.http.Streaming -> g.b.w:
 retrofit2.http.Url -> g.b.x:
-com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
-com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
-io.michaelrocks.libphonenumber.android.Phonemetadata -> io.michaelrocks.libphonenumber.android.Phonemetadata:
-com.google.android.gms.base.R -> b.a.a.a.b.a:
-android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
-android.support.coordinatorlayout.R -> a.b.b.a:
-android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
-com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:
-android.support.design.R -> a.b.d.a:
-com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
-android.support.constraint.R -> android.support.constraint.h:
-com.rilixtech.R -> com.rilixtech.j:
-com.makeramen.roundedimageview.R -> com.makeramen.roundedimageview.a:
-com.google.android.gms.common.R -> com.google.android.gms.common.n:
+android.support.v7.cardview.R -> a.b.i.b.a:
 com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
-com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
-com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
-okhttp3.WebSocket -> okhttp3.P:
-pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
-com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
 com.airbnb.lottie.R -> com.airbnb.lottie.I:
-com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
-android.support.transition.R -> a.b.g.y:
-android.support.v7.util.SortedList -> a.b.i.g.b:
+com.google.android.gms.common.R -> com.google.android.gms.common.n:
+com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
+android.support.v7.appcompat.R -> a.b.i.a.a:
+com.google.android.gms.base.R -> b.a.a.a.b.a:
+android.support.constraint.R -> android.support.constraint.h:
+com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
 android.support.customtabs.R -> a.b.c.c:
+android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
+com.rilixtech.R -> com.rilixtech.j:
+android.support.transition.R -> a.b.g.y:
+pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
+android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
 android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
 android.support.compat.R -> a.b.a.a:
-android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
-com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
-android.support.v4.util.Pools -> a.b.h.f.m:
-com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
+com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
 com.google.android.gms.maps.R -> com.google.android.gms.maps.f:
-android.support.v7.recyclerview.R -> a.b.i.e.a:
-io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
-io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
-android.support.v7.cardview.R -> a.b.i.b.a:
-android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
-android.support.v7.appcompat.R -> a.b.i.a.a:
+com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
+android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
+com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
+com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
 android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
+com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:
+android.support.v7.util.SortedList -> a.b.i.g.b:
+com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
+okhttp3.WebSocket -> okhttp3.P:
+io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
+io.michaelrocks.libphonenumber.android.Phonemetadata -> io.michaelrocks.libphonenumber.android.Phonemetadata:
+android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
+android.support.v4.util.Pools -> a.b.h.f.m:
+com.makeramen.roundedimageview.R -> com.makeramen.roundedimageview.a:
+android.support.coordinatorlayout.R -> a.b.b.a:
+android.support.v7.recyclerview.R -> a.b.i.e.a:
+android.support.design.R -> a.b.d.a:
+io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
+com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
+com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:

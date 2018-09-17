@@ -42,6 +42,22 @@
 
                 <include layout="@layout/horizontal_line" />
 
+
+                <Switch
+                    android:id="@+id/switch_push_notifications"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/padding_tiny"
+                    android:layout_height="@dimen/height_button"
+                    android:text="@string/txt_notify_push"
+                    android:textColor="@color/colorAccent" />
+
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/txt_notify_push_desc" />
+
+                <include layout="@layout/horizontal_line" />
+
                 <TextView
                     android:id="@+id/delete_account"
                     style="@style/Text_Small"
