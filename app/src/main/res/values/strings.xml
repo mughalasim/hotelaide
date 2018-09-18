@@ -24,6 +24,7 @@
     <string name="error_same_date">Start date cannot be the same as the end date</string>
     <string name="error_app_not_installed">This App is not installed on your device</string>
     <string name="error_sign_in_cancelled">Sign in cancelled</string>
+    <string name="error_invalid_user">incorrect credentials for a job seeker account</string>
 
     <!-- About Us ===============================================================================-->
     <string name="about1">Is a cloud based hotel management software that covers all hotel internal operations and becomes the hotel\'s direct gateway to all the online sales and marketing channels.HotelAide was planned not to be another PMS</string>

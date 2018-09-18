@@ -45,6 +45,7 @@ import org.json.JSONObject;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.SharedPrefs.APP_IS_RUNNING;
 import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
 import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
 import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
@@ -74,7 +75,7 @@ public class ParentActivity extends AppCompatActivity implements
     private int drawer_id;
     private String toolbar_title;
     private final String TAG_LOG = "PARENT";
-    private final int INT_NAV_DRAWER_DELAY = 150;
+    private final int INT_NAV_DRAWER_DELAY = 180;
     private int INT_NAV_DRAWER_UPDATE_COUNTER = 0;
 
 
@@ -219,6 +220,12 @@ public class ParentActivity extends AppCompatActivity implements
 
     // BASIC OVERRIDE METHODS ======================================================================
     @Override
+    protected void onStart() {
+        SharedPrefs.setBool(APP_IS_RUNNING, true);
+        super.onStart();
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         final int id = item.getItemId();
         deleteCountOnTextView(id);
@@ -264,7 +271,6 @@ public class ParentActivity extends AppCompatActivity implements
         }
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -282,6 +288,7 @@ public class ParentActivity extends AppCompatActivity implements
             receiver = null;
         }
         helpers.dismissProgressDialog();
+        SharedPrefs.setBool(APP_IS_RUNNING, false);
         super.onDestroy();
     }
 

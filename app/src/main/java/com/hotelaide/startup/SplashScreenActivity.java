@@ -1,5 +1,7 @@
 package com.hotelaide.startup;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -86,6 +88,9 @@ public class SplashScreenActivity extends AppCompatActivity {
             startService(new Intent(SplashScreenActivity.this, MessagingService.class));
         }
 
+        // Clear all notification
+        NotificationManager notification_manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notification_manager.cancelAll();
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -50,6 +50,8 @@ import com.hotelaide.main.activities.FindJobsActivity;
 import com.hotelaide.main.activities.ProfileActivity;
 import com.hotelaide.main.activities.SettingsActivity;
 import com.hotelaide.main.models.SearchFilterModel;
+import com.hotelaide.services.BackgroundFetchService;
+import com.hotelaide.services.MessagingService;
 import com.hotelaide.services.UserService;
 import com.hotelaide.startup.LoginActivity;
 import com.hotelaide.startup.SplashScreenActivity;
@@ -167,8 +169,11 @@ public class Helpers {
         SharedPrefs.deleteAllSharedPrefs();
         Database db = new Database();
         db.deleteAllTables();
-        context.startActivity(new Intent(context, SplashScreenActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+        context.stopService(new Intent(context, MessagingService.class));
+        context.stopService(new Intent(context, BackgroundFetchService.class));
+
+        context.startActivity(new Intent(context, SplashScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         context.sendBroadcast(new Intent().setAction(BroadcastValue));
     }
 

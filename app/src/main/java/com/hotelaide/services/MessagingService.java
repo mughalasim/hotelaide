@@ -34,13 +34,14 @@ import org.json.JSONObject;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
+import static com.hotelaide.utils.SharedPrefs.ALLOW_MESSAGE_PUSH;
+import static com.hotelaide.utils.SharedPrefs.APP_IS_RUNNING;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
-
 public class MessagingService extends Service {
-    private static final String TAG_LOG = "NEW MESSAGE SERVICE";
-    private static final String
-            CHANNEL_ID = "PUSH_NOTIFICATIONS",
+    private static final String TAG_LOG = "MESSAGES";
+    private String
+            CHANNEL_ID = "",
             CHANNEL_NAME = "CHANNEL_NAME",
             CHANNEL_DESC = "CHANNEL_DESC";
 
@@ -64,16 +65,30 @@ public class MessagingService extends Service {
         FirebaseApp.initializeApp(MessagingService.this);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Get the reference to the DB
-        DatabaseReference child_ref = database.getReference().child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL + "/");
+        DatabaseReference child_ref = database.getReference().child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL);
         child_ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                setDataSnapshotFromObject(dataSnapshot);
+
+                Helpers.LogThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
+                Helpers.LogThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
+
+                if (SharedPrefs.getBool(ALLOW_MESSAGE_PUSH) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
+                    Helpers.LogThis(TAG_LOG, "FB DB CHILD ADDED");
+                    setDataSnapshotFromObject(dataSnapshot);
+                }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                setDataSnapshotFromObject(dataSnapshot);
+
+                Helpers.LogThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
+                Helpers.LogThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
+
+                if (SharedPrefs.getBool(ALLOW_MESSAGE_PUSH) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
+                    Helpers.LogThis(TAG_LOG, "FB DB CHILD CHANGED");
+                    setDataSnapshotFromObject(dataSnapshot);
+                }
             }
 
             @Override
@@ -105,7 +120,9 @@ public class MessagingService extends Service {
             Gson gson = new Gson();
             JSONObject message_object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
 
-            if (!message_object.isNull("unread_messages") && message_object.getInt("unread_messages") > 1) {
+            Helpers.LogThis(TAG_LOG, message_object.toString());
+
+            if (!message_object.isNull("unread_messages") && message_object.getInt("unread_messages") > 0) {
                 Helpers.LogThis(TAG_LOG, "UNREAD COUNT: " + message_object.getInt("unread_messages"));
                 MessageModel messageModel = new MessageModel();
                 messageModel.last_message = message_object.getString("last_message");
@@ -122,12 +139,20 @@ public class MessagingService extends Service {
                 }
 
                 Helpers.LogThis(TAG_LOG, "CREATE NOTIFICATION: " + messageModel.from_name + " : " + messageModel.last_message);
+
+                CHANNEL_ID = String.valueOf(messageModel.from_id);
+                CHANNEL_NAME = messageModel.from_name;
+                CHANNEL_DESC = messageModel.last_message;
+
                 createNotification(MessagingService.this, messageModel.from_name, messageModel.last_message);
+
             }
 
         } catch (JSONException e) {
+            Helpers.LogThis(TAG_LOG, e.toString());
             e.printStackTrace();
         } catch (Exception e) {
+            Helpers.LogThis(TAG_LOG, e.toString());
             e.printStackTrace();
         }
 

@@ -83,7 +83,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             holder.no_list_item.setVisibility(View.VISIBLE);
             holder.list_item.setVisibility(View.GONE);
             if (helpers.validateInternetConnection()) {
-                holder.txt_no_results.setText("No Messages received");
+                holder.txt_no_results.setText("No Messages");
             } else {
                 holder.txt_no_results.setText(R.string.error_connection);
             }

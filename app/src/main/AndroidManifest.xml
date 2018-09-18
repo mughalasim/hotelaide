@@ -136,6 +136,10 @@
             android:name=".services.MessagingService"
             android:process=":service" />
 
+        <service
+            android:name=".services.BackgroundFetchService"
+            android:process=":service" />
+
 
         <!-- FACEBOOK LOGIN =====================================================================-->
 

@@ -36500,6 +36500,7 @@ com.hotelaide.main.models.UserModel -> b.b.a.c.f:
     java.lang.String img_banner -> f
     java.lang.String last_name -> c
     java.lang.String password -> n
+com.hotelaide.services.BackgroundFetchService -> com.hotelaide.services.BackgroundFetchService:
 com.hotelaide.services.ExperienceService -> com.hotelaide.services.b:
     com.google.gson.Gson gson -> b
     okhttp3.OkHttpClient okClient -> a
@@ -36534,6 +36535,9 @@ com.hotelaide.services.LoginService -> com.hotelaide.services.f:
 com.hotelaide.services.LoginService$1 -> com.hotelaide.services.e:
     okhttp3.Response intercept(okhttp3.Interceptor$Chain) -> a
 com.hotelaide.services.MessagingService -> com.hotelaide.services.MessagingService:
+    java.lang.String CHANNEL_DESC -> c
+    java.lang.String CHANNEL_ID -> a
+    java.lang.String CHANNEL_NAME -> b
     int getNotificationIcon() -> a
     void access$000(com.hotelaide.services.MessagingService,com.google.firebase.database.DataSnapshot) -> a
     void createNotificationChannel() -> b
@@ -50196,42 +50200,42 @@ retrofit2.http.QueryMap -> g.b.u:
 retrofit2.http.QueryName -> g.b.v:
 retrofit2.http.Streaming -> g.b.w:
 retrofit2.http.Url -> g.b.x:
-android.support.v7.cardview.R -> a.b.i.b.a:
-com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
-com.airbnb.lottie.R -> com.airbnb.lottie.I:
-com.google.android.gms.common.R -> com.google.android.gms.common.n:
-com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
-android.support.v7.appcompat.R -> a.b.i.a.a:
-com.google.android.gms.base.R -> b.a.a.a.b.a:
-android.support.constraint.R -> android.support.constraint.h:
-com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
-android.support.customtabs.R -> a.b.c.c:
-android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
-com.rilixtech.R -> com.rilixtech.j:
-android.support.transition.R -> a.b.g.y:
-pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
-android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
-android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
-android.support.compat.R -> a.b.a.a:
-com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
-com.google.android.gms.maps.R -> com.google.android.gms.maps.f:
-com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
 android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
-com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
-com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
-android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
-com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:
-android.support.v7.util.SortedList -> a.b.i.g.b:
+android.support.v7.cardview.R -> a.b.i.b.a:
 com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
-okhttp3.WebSocket -> okhttp3.P:
+com.google.android.gms.base.R -> b.a.a.a.b.a:
+android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
+pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
+com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
+android.support.transition.R -> a.b.g.y:
 io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
+android.support.v7.appcompat.R -> a.b.i.a.a:
+android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
+android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
+com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
+com.google.android.gms.maps.R -> com.google.android.gms.maps.f:
+okhttp3.WebSocket -> okhttp3.P:
+com.rilixtech.R -> com.rilixtech.j:
+com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
+com.airbnb.lottie.R -> com.airbnb.lottie.I:
+android.support.constraint.R -> android.support.constraint.h:
+io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
+com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
 io.michaelrocks.libphonenumber.android.Phonemetadata -> io.michaelrocks.libphonenumber.android.Phonemetadata:
-android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
-android.support.v4.util.Pools -> a.b.h.f.m:
-com.makeramen.roundedimageview.R -> com.makeramen.roundedimageview.a:
+android.support.v7.util.SortedList -> a.b.i.g.b:
+android.support.compat.R -> a.b.a.a:
+com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
+android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
+com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
 android.support.coordinatorlayout.R -> a.b.b.a:
+com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
+android.support.customtabs.R -> a.b.c.c:
+android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
 android.support.v7.recyclerview.R -> a.b.i.e.a:
 android.support.design.R -> a.b.d.a:
-io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
-com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
 com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
+com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
+com.google.android.gms.common.R -> com.google.android.gms.common.n:
+android.support.v4.util.Pools -> a.b.h.f.m:
+com.makeramen.roundedimageview.R -> com.makeramen.roundedimageview.a:
+com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:

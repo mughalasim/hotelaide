@@ -142,7 +142,7 @@ public class StartUpLoginFragment extends Fragment {
                             startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(START_RETURN, START_RETURN));
                             getActivity().finish();
                         } else {
-                            helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                            helpers.ToastMessage(getActivity(), getString(R.string.error_invalid_user));
                         }
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));

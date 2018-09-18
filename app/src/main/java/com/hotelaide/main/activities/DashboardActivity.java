@@ -1,5 +1,6 @@
 package com.hotelaide.main.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.AppliedJobsFragment;
 import com.hotelaide.main.fragments.MessageFragment;
+import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.utils.SharedPrefs;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
 public class DashboardActivity extends ParentActivity {
 
     private final String TAG_LOG = "DASHBOARD";
+
     private int[] dashboardTitleList = {
             R.string.nav_applied,
             R.string.nav_messages
@@ -47,16 +50,11 @@ public class DashboardActivity extends ParentActivity {
 
         findAllViews();
 
-        helpers.asyncGetUser();
-
-        helpers.asyncGetCounties();
-
-        helpers.asyncGetJobTypes();
-
-        helpers.asyncGetCategories();
+        if (helpers.validateServiceRunning(BackgroundFetchService.class)) {
+            startService(new Intent(DashboardActivity.this, BackgroundFetchService.class));
+        }
 
     }
-
 
     // BASIC FUNCTIONS =============================================================================
     private void handleExtraBundles() {
@@ -65,8 +63,8 @@ public class DashboardActivity extends ParentActivity {
 
             helpers.myDialog(DashboardActivity.this,
                     "WELCOME", SharedPrefs.getString(SharedPrefs.USER_F_NAME) + ", thank you for joining "
-                    + getString(R.string.app_name) +
-                    ", You are on the Dashboard where you can easily navigate through the app.");
+                            + getString(R.string.app_name) +
+                            ", You are on the Dashboard where you can easily navigate through the app.");
 
             SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
             SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, true);
@@ -76,15 +74,18 @@ public class DashboardActivity extends ParentActivity {
             helpers.ToastMessage(DashboardActivity.this, "Welcome back " + SharedPrefs.getString(SharedPrefs.USER_F_NAME));
             setCountOnDrawerItem(menu_find_jobs, "(New)");
 
+            SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
+            SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, true);
+
         }
     }
 
-    private void findAllViews(){
-            view_pager = findViewById(R.id.view_pager);
-            tab_layout = findViewById(R.id.tabs);
+    private void findAllViews() {
+        view_pager = findViewById(R.id.view_pager);
+        tab_layout = findViewById(R.id.tabs);
 
-            setupViewPager(view_pager);
-            tab_layout.setupWithViewPager(view_pager, true);
+        setupViewPager(view_pager);
+        tab_layout.setupWithViewPager(view_pager, true);
     }
 
     private void setupViewPager(ViewPager viewPager) {

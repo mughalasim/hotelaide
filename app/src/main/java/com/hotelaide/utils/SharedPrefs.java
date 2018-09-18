@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.hotelaide.BuildConfig;
 import com.hotelaide.main.models.UserModel;
 
 import org.json.JSONArray;
@@ -52,6 +53,7 @@ public class SharedPrefs {
     // BOOLEAN VARIABLE NAMES ======================================================================
     public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
     public static final String ALLOW_MESSAGE_PUSH = "ALLOW_MESSAGE_PUSH";
+    public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
 
 
     // GENERIC GET AND SET INTEGER VARIABLES =======================================================
@@ -123,87 +125,91 @@ public class SharedPrefs {
         Helpers.LogThis(SHARED_PREFS, "USER SET");
         Helpers.LogThis(SHARED_PREFS, user.toString());
         try {
-            setInt(USER_ID, user.getInt("id"));
-            setString(USER_F_NAME, user.getString("first_name"));
-            setString(USER_L_NAME, user.getString("last_name"));
-            setString(USER_EMAIL, user.getString("email"));
-            setString(USER_IMG_AVATAR, user.getString("avatar"));
-            setString(USER_IMG_BANNER, user.getString("banner"));
-            setString(PROFILE_URL, user.getString("profile_url"));
-            setInt(USER_COUNTRY_CODE, user.getInt("country_code"));
-            setInt(USER_PHONE, user.getInt("phone_number"));
-            setString(USER_DOB, user.getString("dob"));
-            setString(USER_FB_ID, user.getString("facebook_id"));
-            setString(USER_GOOGLE_ID, user.getString("google_id"));
-            setString(USER_URL, user.getString("profile_url"));
+            if (user.getString("account_type").equals(BuildConfig.ACCOUNT_TYPE)) {
 
-            if(!user.isNull("county")){
-                JSONObject county_object = user.getJSONObject("county");
-                setInt(USER_COUNTY, county_object.getInt("id"));
-            }
+                setInt(USER_ID, user.getInt("id"));
+                setString(USER_F_NAME, user.getString("first_name"));
+                setString(USER_L_NAME, user.getString("last_name"));
+                setString(USER_EMAIL, user.getString("email"));
+                setString(USER_IMG_AVATAR, user.getString("avatar"));
+                setString(USER_IMG_BANNER, user.getString("banner"));
+                setString(PROFILE_URL, user.getString("profile_url"));
+                setInt(USER_COUNTRY_CODE, user.getInt("country_code"));
+                setInt(USER_PHONE, user.getInt("phone_number"));
+                setString(USER_DOB, user.getString("dob"));
+                setString(USER_FB_ID, user.getString("facebook_id"));
+                setString(USER_GOOGLE_ID, user.getString("google_id"));
+                setString(USER_URL, user.getString("profile_url"));
 
-            if(!user.isNull("profile_completion")){
-                setInt(USER_PROFILE_COMPLETION, user.getInt("profile_completion"));
-            }
-
-            if (!user.isNull("lat"))
-                setDouble(USER_LAT, user.getDouble("lat"));
-
-            if (!user.isNull("lng"))
-                setDouble(USER_LNG, user.getDouble("lng"));
-
-            if (!user.isNull("full_address"))
-                setString(USER_FULL_ADDRESS, user.getString("full_address"));
-
-            if (!user.isNull("postal_code"))
-                setString(USER_POSTAL_CODE, user.getString("postal_code"));
-
-            JSONArray work_experience = user.getJSONArray("work_experience");
-            if (work_experience != null && work_experience.length() > 0) {
-                Database db = new Database();
-
-                int array_length = work_experience.length();
-
-                for (int i = 0; i < array_length; i++) {
-                    db.setExperienceFromJson(work_experience.getJSONObject(i), EXPERIENCE_TYPE_WORK);
+                if (!user.isNull("county")) {
+                    JSONObject county_object = user.getJSONObject("county");
+                    setInt(USER_COUNTY, county_object.getInt("id"));
                 }
-            }
 
-            JSONArray education_experience = user.getJSONArray("education_experience");
-            if (education_experience != null && education_experience.length() > 0) {
-                Database db = new Database();
-
-                int array_length = education_experience.length();
-
-                for (int i = 0; i < array_length; i++) {
-                    db.setExperienceFromJson(education_experience.getJSONObject(i), EXPERIENCE_TYPE_EDUCATION);
+                if (!user.isNull("profile_completion")) {
+                    setInt(USER_PROFILE_COMPLETION, user.getInt("profile_completion"));
                 }
+
+                if (!user.isNull("lat"))
+                    setDouble(USER_LAT, user.getDouble("lat"));
+
+                if (!user.isNull("lng"))
+                    setDouble(USER_LNG, user.getDouble("lng"));
+
+                if (!user.isNull("full_address"))
+                    setString(USER_FULL_ADDRESS, user.getString("full_address"));
+
+                if (!user.isNull("postal_code"))
+                    setString(USER_POSTAL_CODE, user.getString("postal_code"));
+
+                JSONArray work_experience = user.getJSONArray("work_experience");
+                if (work_experience != null && work_experience.length() > 0) {
+                    Database db = new Database();
+
+                    int array_length = work_experience.length();
+
+                    for (int i = 0; i < array_length; i++) {
+                        db.setExperienceFromJson(work_experience.getJSONObject(i), EXPERIENCE_TYPE_WORK);
+                    }
+                }
+
+                JSONArray education_experience = user.getJSONArray("education_experience");
+                if (education_experience != null && education_experience.length() > 0) {
+                    Database db = new Database();
+
+                    int array_length = education_experience.length();
+
+                    for (int i = 0; i < array_length; i++) {
+                        db.setExperienceFromJson(education_experience.getJSONObject(i), EXPERIENCE_TYPE_EDUCATION);
+                    }
+                }
+
+
+                Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
+                        getInt(USER_ID) + " - " +
+                        getString(USER_F_NAME) + " - " +
+                        getString(USER_L_NAME) + " - " +
+                        getString(USER_EMAIL) + " - " +
+                        getString(USER_IMG_AVATAR) + " - " +
+                        getString(USER_IMG_BANNER) + " - " +
+                        getInt(USER_COUNTRY_CODE) + " - " +
+                        getInt(USER_PHONE) + " - " +
+                        getString(USER_DOB) + " - " +
+                        getString(USER_FB_ID) + " - " +
+                        getString(USER_GOOGLE_ID) + " - " +
+                        getDouble(USER_LAT) + " - " +
+                        getDouble(USER_LNG)
+                );
+
+                return true;
+            } else {
+                return false;
             }
-
-
-            Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
-                    getInt(USER_ID) + " - " +
-                    getString(USER_F_NAME) + " - " +
-                    getString(USER_L_NAME) + " - " +
-                    getString(USER_EMAIL) + " - " +
-                    getString(USER_IMG_AVATAR) + " - " +
-                    getString(USER_IMG_BANNER) + " - " +
-                    getInt(USER_COUNTRY_CODE) + " - " +
-                    getInt(USER_PHONE) + " - " +
-                    getString(USER_DOB) + " - " +
-                    getString(USER_FB_ID) + " - " +
-                    getString(USER_GOOGLE_ID) + " - " +
-                    getDouble(USER_LAT) + " - " +
-                    getDouble(USER_LNG)
-            );
-
-            return true;
-
         } catch (JSONException e) {
-            Helpers.LogThis(SHARED_PREFS,  e.toString());
+            Helpers.LogThis(SHARED_PREFS, e.toString());
             return false;
         } catch (Exception e) {
-            Helpers.LogThis(SHARED_PREFS,  e.toString());
+            Helpers.LogThis(SHARED_PREFS, e.toString());
             return false;
         }
     }
