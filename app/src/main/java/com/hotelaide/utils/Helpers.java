@@ -92,6 +92,7 @@ public class Helpers {
     private final Dialog dialog;
 
     public final static int INT_PERMISSIONS_CAMERA = 601;
+    public final static int INT_PERMISSIONS_LOCATIONS = 602;
 
     public final static String BroadcastValue = "com.hotelaide.ACTIONLOGOUT";
 
@@ -287,7 +288,7 @@ public class Helpers {
         final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
         final TextView txt_title = dialog.findViewById(R.id.txt_title);
         txt_title.setText(R.string.txt_location_title);
-        txt_message.setText(R.string.txt_locations_permission);
+        txt_message.setText(R.string.rationale_locations);
         btn_confirm.setText(context.getString(R.string.txt_enable));
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override

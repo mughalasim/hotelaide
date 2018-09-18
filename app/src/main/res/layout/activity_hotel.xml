@@ -116,7 +116,8 @@
                 style="@style/Text_Title"
                 android:layout_height="@dimen/height_button"
                 android:layout_marginTop="@dimen/padding_small"
-                android:background="@color/dark_grey"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/light_grey"
                 android:gravity="start|center_vertical"
                 android:paddingEnd="@dimen/padding_small"
                 android:paddingStart="@dimen/padding_small"
@@ -124,14 +125,14 @@
 
             <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/height_map"
                 android:layout_marginTop="@dimen/padding_small">
 
                 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_collapsing_toolbar"
+                    android:layout_height="match_parent"
                     tools:layout="@layout/activity_splash_screen" />
 
             </android.support.v4.widget.NestedScrollView>
@@ -142,7 +143,8 @@
                 style="@style/Text_Title"
                 android:layout_height="@dimen/height_button"
                 android:layout_marginTop="@dimen/padding_small"
-                android:background="@color/dark_grey"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/light_grey"
                 android:gravity="start|center_vertical"
                 android:paddingEnd="@dimen/padding_small"
                 android:paddingStart="@dimen/padding_small"

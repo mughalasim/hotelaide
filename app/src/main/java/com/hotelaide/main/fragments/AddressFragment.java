@@ -1,8 +1,14 @@
 package com.hotelaide.main.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -30,11 +36,13 @@ import com.hotelaide.utils.SharedPrefs;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.Database.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.Helpers.INT_PERMISSIONS_LOCATIONS;
 import static com.hotelaide.utils.SharedPrefs.USER_COUNTY;
 import static com.hotelaide.utils.SharedPrefs.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.SharedPrefs.USER_ID;
@@ -55,6 +63,8 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             txt_longitude,
             txt_latitude;
 
+    private MaterialButton btn_confirm;
+
     private Spinner
             spinner_county;
 
@@ -63,7 +73,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             et_postcode;
 
     private FloatingActionButton
-            btn_find_location,
             btn_update;
 
     public AddressFragment() {
@@ -84,7 +93,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 helpers = new Helpers(getActivity());
 
                 db = new Database();
-
 
 
                 findAllViews();
@@ -127,28 +135,37 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                     Double.parseDouble(txt_latitude.getText().toString()),
                     Double.parseDouble(txt_longitude.getText().toString())
             );
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(latLng);
-
-            mMap.clear();
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.addMarker(markerOptions);
+            updateMapAndCamera(latLng);
         }
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
+        if (getActivity() != null && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-                mMap.clear();
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                mMap.addMarker(markerOptions);
+            btn_confirm.setVisibility(View.VISIBLE);
 
-                txt_latitude.setText(String.valueOf(latLng.latitude));
-                txt_longitude.setText(String.valueOf(latLng.longitude));
-            }
-        });
+            mMap.setMyLocationEnabled(true);
+
+            mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    Helpers.LogThis(TAG_LOG, "MAP BUTTON CLICKED");
+                    Location location = mMap.getMyLocation();
+                    updateMapAndCamera(new LatLng(location.getLatitude(), location.getLongitude()));
+                    return false;
+                }
+            });
+        }
+    }
+
+    private void updateMapAndCamera(LatLng latLng) {
+        mMap.clear();
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+
+        mMap.clear();
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.addMarker(markerOptions);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
     }
 
 
@@ -170,15 +187,34 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         txt_longitude = rootview.findViewById(R.id.txt_longitude);
         txt_latitude = rootview.findViewById(R.id.txt_latitude);
         btn_update = rootview.findViewById(R.id.btn_update);
-        btn_find_location = rootview.findViewById(R.id.btn_find_location);
-
+        btn_confirm = rootview.findViewById(R.id.btn_confirm);
+        btn_confirm.setText("Find me");
+        btn_confirm.setVisibility(View.GONE);
     }
 
     private void setListeners() {
-        btn_find_location.setOnClickListener(new View.OnClickListener() {
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String[] perms = {
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION};
+                if (getActivity() != null && EasyPermissions.hasPermissions(getActivity(), perms)) {
+                    try {
+                        LocationManager locationManager = null;
+                        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                            helpers.dialogNoGPS(getActivity());
+                        } else {
 
+                        }
+                    } catch (NullPointerException e) {
+                        helpers.dialogNoGPS(getActivity());
+                    }
+
+                } else if (getActivity() != null) {
+                    EasyPermissions.requestPermissions(getActivity(), getString(R.string.rationale_locations),
+                            INT_PERMISSIONS_LOCATIONS, perms);
+                }
             }
         });
 

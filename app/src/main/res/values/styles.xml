@@ -46,10 +46,13 @@
     <style name="Card_Layout" parent="AppTheme">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginEnd">@dimen/padding_tiny</item>
-        <item name="android:layout_marginStart">@dimen/padding_tiny</item>
-        <item name="cardElevation">@dimen/padding_tiny</item>
+        <item name="android:layout_marginEnd">@dimen/padding_small</item>
+        <item name="android:layout_marginStart">@dimen/padding_small</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="cardElevation">@dimen/padding_mini</item>
         <item name="cardUseCompatPadding">true</item>
+        <item name="android:shadowColor">@color/colorAccent</item>
         <item name="cardCornerRadius">@dimen/radius_corner</item>
     </style>
 

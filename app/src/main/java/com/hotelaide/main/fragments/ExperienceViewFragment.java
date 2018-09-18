@@ -15,33 +15,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.main.models.ExperienceModel;
-import com.hotelaide.services.ExperienceService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.SharedPrefs;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
-import static com.hotelaide.utils.SharedPrefs.USER_ID;
 
 public class ExperienceViewFragment extends Fragment {
 
     private View root_view;
     private Helpers helpers;
     private Database db;
-    private final String TAG_LOG = "EXPERIENCE VIEW";
     private String EXPERIENCE_TYPE = "";
 
     // TOP PANEL ===================================================================================
@@ -74,7 +61,8 @@ public class ExperienceViewFragment extends Fragment {
 
                     findAllViews();
 
-                    asyncGetAllWorkExperience();
+                    populateExperienceFromDB();
+
                 }
 
             } catch (InflateException e) {
@@ -135,58 +123,6 @@ public class ExperienceViewFragment extends Fragment {
         ExperienceModel experienceModel = new ExperienceModel();
         model_list.add(experienceModel);
         adapter.notifyDataSetChanged();
-    }
-
-    // ASYNC GET ALL EXPERIENCES ===================================================================
-    private void asyncGetAllWorkExperience() {
-        ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
-
-        Call<JsonObject> call;
-        if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
-            call = experienceService.getAllWorkExperiences(SharedPrefs.getInt(USER_ID));
-        } else {
-            call = experienceService.getAllEducationExperiences(SharedPrefs.getInt(USER_ID));
-        }
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, main.toString());
-                    if (main.getBoolean("success")) {
-                        db.deleteExperienceTableByType(EXPERIENCE_TYPE);
-                        JSONArray work_object = main.getJSONArray("data");
-                        int length = work_object.length();
-                        if (length > 0) {
-                            for (int i = 0; i < length; i++) {
-                                db.setExperienceFromJson(work_object.getJSONObject(i), EXPERIENCE_TYPE);
-                            }
-                        }
-                        populateExperienceFromDB();
-                    } else {
-                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
-                    }
-
-                } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                if (getActivity() != null) {
-                    Helpers.LogThis(TAG_LOG, t.toString());
-                    populateExperienceFromDB();
-                    if (helpers.validateInternetConnection()) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                    } else {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
-                    }
-                }
-            }
-        });
     }
 
     // ADAPTER CLASS ===============================================================================

@@ -84,6 +84,7 @@
 
     <!--PERMISSION RATIONALS ====================================================================-->
     <string name="rationale_image">HotelAide needs to access your Camera and write to your external storage for Images that you would like to set. Please grant these permissions in order to use the feature</string>
+    <string name="rationale_locations">HotelAide needs to access your location but your GPS seems to be disabled. You must enable it to proceed</string>
 
     <!--ARRAY GENDER ============================================================================-->
     <string-array name="select_gender">
@@ -104,7 +105,6 @@
     <string name="txt_call">You are about to make a call. Are you sure you wish to proceed?</string>
     <string name="txt_call_title">MAKE A CALL</string>
     <string name="txt_location_title">LOCATION SERVICES</string>
-    <string name="txt_locations_permission">EatOut needs to access your location but your GPS seems to be disabled. You must enable it to proceed</string>
     <string name="txt_version">Version:&#160;</string>
     <string name="txt_old_version_title">Old Version</string>
     <string name="txt_old_version_desc">Seems like you are using an old version of the app, Please update the app from the playstore to get access to new features</string>

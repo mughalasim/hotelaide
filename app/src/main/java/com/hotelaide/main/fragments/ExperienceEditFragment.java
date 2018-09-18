@@ -437,6 +437,7 @@ public class ExperienceEditFragment extends Fragment {
 
     // ASYNC GET ALL EXPERIENCES ===================================================================
     private void asyncGetAllWorkExperience() {
+        swipe_refresh.setRefreshing(true);
         ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
 
         Call<JsonObject> call;

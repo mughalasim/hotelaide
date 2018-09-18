@@ -11,7 +11,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:padding="@dimen/padding_tiny"
+            android:padding="@dimen/padding_mini"
             android:layout_height="wrap_content">
 
             <com.makeramen.roundedimageview.RoundedImageView

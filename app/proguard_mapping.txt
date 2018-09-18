@@ -5637,7 +5637,7 @@ android.support.v4.media.session.IMediaControllerCallback -> android.support.v4.
     void onQueueTitleChanged(java.lang.CharSequence) -> a
     void onRepeatModeChanged(int) -> a
     void onSessionDestroyed() -> g
-    void onSessionReady() -> i
+    void onSessionReady() -> j
     void onShuffleModeChanged(int) -> b
     void onShuffleModeChangedRemoved(boolean) -> b
     void onVolumeInfoChanged(android.support.v4.media.session.ParcelableVolumeInfo) -> a
@@ -5684,7 +5684,7 @@ android.support.v4.media.session.MediaControllerCompat$Callback$StubCompat -> an
     void onQueueTitleChanged(java.lang.CharSequence) -> a
     void onRepeatModeChanged(int) -> a
     void onSessionDestroyed() -> g
-    void onSessionReady() -> i
+    void onSessionReady() -> j
     void onShuffleModeChanged(int) -> b
     void onShuffleModeChangedRemoved(boolean) -> b
     void onVolumeInfoChanged(android.support.v4.media.session.ParcelableVolumeInfo) -> a
@@ -16847,8 +16847,8 @@ com.google.android.gms.auth.api.signin.internal.zzp -> com.google.android.gms.au
     void clear() -> a
     void zzc(com.google.android.gms.auth.api.signin.GoogleSignInOptions,com.google.android.gms.auth.api.signin.GoogleSignInAccount) -> a
 com.google.android.gms.auth.api.signin.internal.zzq -> com.google.android.gms.auth.api.signin.internal.q:
-    void zzj() -> s
-    void zzk() -> j
+    void zzj() -> t
+    void zzk() -> k
 com.google.android.gms.auth.api.signin.internal.zzr -> com.google.android.gms.auth.api.signin.internal.r:
     boolean dispatchTransaction(int,android.os.Parcel,android.os.Parcel,int) -> a
 com.google.android.gms.auth.api.signin.internal.zzs -> com.google.android.gms.auth.api.signin.internal.s:
@@ -16865,9 +16865,9 @@ com.google.android.gms.auth.api.signin.internal.zzv -> com.google.android.gms.au
     void zze(com.google.android.gms.auth.api.signin.internal.zzs,com.google.android.gms.auth.api.signin.GoogleSignInOptions) -> b
 com.google.android.gms.auth.api.signin.internal.zzw -> com.google.android.gms.auth.api.signin.internal.w:
     android.content.Context mContext -> b
-    void zzl() -> t
-    void zzj() -> s
-    void zzk() -> j
+    void zzl() -> v
+    void zzj() -> t
+    void zzk() -> k
 com.google.android.gms.auth.api.signin.internal.zzx -> com.google.android.gms.auth.api.signin.internal.x:
 com.google.android.gms.auth.api.signin.internal.zzy -> com.google.android.gms.auth.api.signin.internal.y:
 com.google.android.gms.auth.api.signin.zza -> com.google.android.gms.auth.api.signin.g:
@@ -17057,9 +17057,9 @@ com.google.android.gms.common.GoogleCertificates -> com.google.android.gms.commo
 com.google.android.gms.common.GoogleCertificates$CertData -> com.google.android.gms.common.i$a:
     int zzbc -> b
     byte[] zzd(java.lang.String) -> d
-    byte[] getBytes() -> t
-    com.google.android.gms.dynamic.IObjectWrapper getBytesWrapped() -> n
-    int getHashCode() -> k
+    byte[] getBytes() -> v
+    com.google.android.gms.dynamic.IObjectWrapper getBytesWrapped() -> o
+    int getHashCode() -> l
 com.google.android.gms.common.GoogleCertificatesQuery -> com.google.android.gms.common.j:
     boolean zzbj -> c
     com.google.android.gms.common.GoogleCertificates$CertData zzbi -> b
@@ -17949,13 +17949,13 @@ com.google.android.gms.common.api.internal.zzby -> com.google.android.gms.common
     com.google.android.gms.common.api.internal.zzcb zza(com.google.android.gms.common.api.internal.zzby) -> a
     void zza(com.google.android.gms.common.api.internal.zzby,com.google.android.gms.signin.internal.SignInResponse) -> a
     void zzb(com.google.android.gms.signin.internal.SignInResponse) -> b
-    com.google.android.gms.signin.SignInClient zzbt() -> t
+    com.google.android.gms.signin.SignInClient zzbt() -> v
     void onConnected(android.os.Bundle) -> e
     void onConnectionFailed(com.google.android.gms.common.ConnectionResult) -> a
     void onConnectionSuspended(int) -> e
     void onSignInComplete(com.google.android.gms.signin.internal.SignInResponse) -> a
     void zza(com.google.android.gms.common.api.internal.zzcb) -> a
-    void zzbz() -> u
+    void zzbz() -> w
 com.google.android.gms.common.api.internal.zzbz -> com.google.android.gms.common.api.internal.oa:
     com.google.android.gms.common.api.internal.zzby zzlx -> a
 com.google.android.gms.common.api.internal.zzc -> com.google.android.gms.common.api.internal.pa:
@@ -18608,14 +18608,14 @@ com.google.android.gms.common.internal.IAccountAccessor$Stub$Proxy -> com.google
     android.accounts.Account getAccount() -> c
 com.google.android.gms.common.internal.ICancelToken -> com.google.android.gms.common.internal.s:
 com.google.android.gms.common.internal.ICertData -> com.google.android.gms.common.internal.t:
-    com.google.android.gms.dynamic.IObjectWrapper getBytesWrapped() -> n
-    int getHashCode() -> k
+    com.google.android.gms.dynamic.IObjectWrapper getBytesWrapped() -> o
+    int getHashCode() -> l
 com.google.android.gms.common.internal.ICertData$Stub -> com.google.android.gms.common.internal.t$a:
     com.google.android.gms.common.internal.ICertData asInterface(android.os.IBinder) -> a
     boolean dispatchTransaction(int,android.os.Parcel,android.os.Parcel,int) -> b
 com.google.android.gms.common.internal.ICertData$Stub$Proxy -> com.google.android.gms.common.internal.t$a$a:
-    com.google.android.gms.dynamic.IObjectWrapper getBytesWrapped() -> n
-    int getHashCode() -> k
+    com.google.android.gms.dynamic.IObjectWrapper getBytesWrapped() -> o
+    int getHashCode() -> l
 com.google.android.gms.common.internal.IGmsCallbacks -> com.google.android.gms.common.internal.u:
     void onAccountValidationComplete(int,android.os.Bundle) -> b
     void onPostInitComplete(int,android.os.IBinder,android.os.Bundle) -> a
@@ -19142,18 +19142,18 @@ com.google.android.gms.common.wrappers.Wrappers -> com.google.android.gms.common
     com.google.android.gms.common.wrappers.PackageManagerWrapper getPackageManagerWrapper(android.content.Context) -> b
 com.google.android.gms.common.zzb -> com.google.android.gms.common.p:
     byte[] zzbd -> c
-    byte[] getBytes() -> t
+    byte[] getBytes() -> v
 com.google.android.gms.common.zzc -> com.google.android.gms.common.q:
     java.lang.ref.WeakReference zzbe -> d
     java.lang.ref.WeakReference zzbf -> c
-    byte[] getBytes() -> t
-    byte[] zzf() -> u
+    byte[] getBytes() -> v
+    byte[] zzf() -> w
 com.google.android.gms.common.zzd -> com.google.android.gms.common.r:
     com.google.android.gms.common.GoogleCertificates$CertData[] zzbg -> a
 com.google.android.gms.common.zze -> com.google.android.gms.common.s:
-    byte[] zzf() -> u
+    byte[] zzf() -> w
 com.google.android.gms.common.zzf -> com.google.android.gms.common.t:
-    byte[] zzf() -> u
+    byte[] zzf() -> w
 com.google.android.gms.common.zzg -> com.google.android.gms.common.u:
     boolean zzbl -> b
     java.lang.String zzbm -> c
@@ -19417,7 +19417,7 @@ com.google.android.gms.flags.zza -> b.a.a.a.d.f:
 com.google.android.gms.internal.ads_identifier.zza -> b.a.a.a.e.a.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> t
+    android.os.Parcel obtainAndWriteInterfaceToken() -> v
     android.os.Parcel transactAndReadException(int,android.os.Parcel) -> a
 com.google.android.gms.internal.ads_identifier.zzb -> b.a.a.a.e.a.b:
     com.google.android.gms.internal.ads_identifier.zzd zzc -> a
@@ -19437,7 +19437,7 @@ com.google.android.gms.internal.ads_identifier.zzg -> b.a.a.a.e.a.g:
 com.google.android.gms.internal.auth-api.zzc -> b.a.a.a.e.b.a:
     android.os.IBinder zzc -> a
     java.lang.String zzd -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> t
+    android.os.Parcel obtainAndWriteInterfaceToken() -> v
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> a
 com.google.android.gms.internal.auth-api.zzd -> b.a.a.a.e.b.b:
     com.google.android.gms.internal.auth-api.zzf zze -> a
@@ -19475,7 +19475,7 @@ com.google.android.gms.internal.auth.zzar -> b.a.a.a.e.c.e:
 com.google.android.gms.internal.clearcut.zza -> com.google.android.gms.internal.clearcut.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> t
+    android.os.Parcel obtainAndWriteInterfaceToken() -> v
     void transactOneway(int,android.os.Parcel) -> a
 com.google.android.gms.internal.clearcut.zzaa -> com.google.android.gms.internal.clearcut.b:
     android.os.UserManager zzdc -> a
@@ -19502,7 +19502,7 @@ com.google.android.gms.internal.clearcut.zzab -> com.google.android.gms.internal
 com.google.android.gms.internal.clearcut.zzac -> com.google.android.gms.internal.clearcut.d:
     com.google.android.gms.internal.clearcut.zzab zzdm -> a
 com.google.android.gms.internal.clearcut.zzad -> com.google.android.gms.internal.clearcut.e:
-    void zzk() -> j
+    void zzk() -> k
 com.google.android.gms.internal.clearcut.zzae -> com.google.android.gms.internal.clearcut.f:
     android.content.SharedPreferences zzdx -> l
     com.google.android.gms.internal.clearcut.zzab zzdw -> k
@@ -21361,7 +21361,7 @@ com.google.android.gms.internal.clearcut.zzz -> com.google.android.gms.internal.
 com.google.android.gms.internal.firebase_auth.zza -> com.google.android.gms.internal.firebase_auth.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> t
+    android.os.Parcel obtainAndWriteInterfaceToken() -> v
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> a
 com.google.android.gms.internal.firebase_auth.zzak -> com.google.android.gms.internal.firebase_auth.b:
     boolean zzao -> k
@@ -21495,7 +21495,7 @@ com.google.android.gms.internal.firebase_messaging.zzh -> b.a.a.a.e.d.h:
 com.google.android.gms.internal.maps.zza -> b.a.a.a.e.e.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> t
+    android.os.Parcel obtainAndWriteInterfaceToken() -> v
     android.os.Parcel transactAndReadException(int,android.os.Parcel) -> a
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> b
 com.google.android.gms.internal.maps.zzb -> b.a.a.a.e.e.b:
@@ -21507,6 +21507,7 @@ com.google.android.gms.internal.maps.zzc -> b.a.a.a.e.e.c:
     boolean zza(android.os.Parcel) -> a
     void zza(android.os.Parcel,android.os.IInterface) -> a
     void zza(android.os.Parcel,android.os.Parcelable) -> a
+    void zza(android.os.Parcel,boolean) -> a
 com.google.android.gms.internal.maps.zzd -> b.a.a.a.e.e.d:
 com.google.android.gms.internal.maps.zze -> b.a.a.a.e.e.e:
 com.google.android.gms.internal.maps.zzf -> b.a.a.a.e.e.f:
@@ -21514,12 +21515,12 @@ com.google.android.gms.internal.maps.zzf -> b.a.a.a.e.e.f:
 com.google.android.gms.internal.maps.zzg -> b.a.a.a.e.e.g:
 com.google.android.gms.internal.maps.zzt -> b.a.a.a.e.e.h:
     boolean zzj(com.google.android.gms.internal.maps.zzt) -> a
-    int zzi() -> m
+    int zzi() -> n
 com.google.android.gms.internal.maps.zzu -> b.a.a.a.e.e.i:
     com.google.android.gms.internal.maps.zzt zzg(android.os.IBinder) -> a
 com.google.android.gms.internal.maps.zzv -> b.a.a.a.e.e.j:
     boolean zzj(com.google.android.gms.internal.maps.zzt) -> a
-    int zzi() -> m
+    int zzi() -> n
 com.google.android.gms.internal.measurement.zzaa -> com.google.android.gms.internal.measurement.a:
     java.util.Map zzue -> a
     java.util.Map zzav() -> a
@@ -22442,7 +22443,7 @@ com.google.android.gms.internal.measurement.zzgl -> com.google.android.gms.inter
 com.google.android.gms.internal.measurement.zzq -> com.google.android.gms.internal.measurement.Wa:
     android.os.IBinder zzqt -> a
     java.lang.String zzqu -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> t
+    android.os.Parcel obtainAndWriteInterfaceToken() -> v
     android.os.Parcel transactAndReadException(int,android.os.Parcel) -> a
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> b
 com.google.android.gms.internal.measurement.zzr -> com.google.android.gms.internal.measurement.Xa:
@@ -24306,7 +24307,7 @@ com.google.android.gms.internal.phenotype.zze -> b.a.a.a.e.f.e:
 com.google.android.gms.internal.stable.zza -> b.a.a.a.e.g.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> t
+    android.os.Parcel obtainAndWriteInterfaceToken() -> v
     android.os.Parcel transactAndReadException(int,android.os.Parcel) -> a
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> b
     void transactOneway(int,android.os.Parcel) -> c
@@ -24328,16 +24329,19 @@ com.google.android.gms.maps.CameraUpdate -> com.google.android.gms.maps.a:
 com.google.android.gms.maps.CameraUpdateFactory -> com.google.android.gms.maps.b:
     com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzf -> a
     com.google.android.gms.maps.CameraUpdate newLatLng(com.google.android.gms.maps.model.LatLng) -> a
+    com.google.android.gms.maps.CameraUpdate zoomTo(float) -> a
     com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzb() -> a
     void zza(com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate) -> a
 com.google.android.gms.maps.GoogleMap -> com.google.android.gms.maps.c:
     com.google.android.gms.maps.internal.IGoogleMapDelegate zzg -> a
+    android.location.Location getMyLocation() -> b
     com.google.android.gms.maps.model.Marker addMarker(com.google.android.gms.maps.model.MarkerOptions) -> a
     void animateCamera(com.google.android.gms.maps.CameraUpdate) -> a
     void clear() -> a
-    void setOnMapClickListener(com.google.android.gms.maps.GoogleMap$OnMapClickListener) -> a
-com.google.android.gms.maps.GoogleMap$OnMapClickListener -> com.google.android.gms.maps.c$a:
-    void onMapClick(com.google.android.gms.maps.model.LatLng) -> a
+    void setMyLocationEnabled(boolean) -> a
+    void setOnMyLocationButtonClickListener(com.google.android.gms.maps.GoogleMap$OnMyLocationButtonClickListener) -> a
+com.google.android.gms.maps.GoogleMap$OnMyLocationButtonClickListener -> com.google.android.gms.maps.c$a:
+    boolean onMyLocationButtonClick() -> i
 com.google.android.gms.maps.GoogleMapOptions -> com.google.android.gms.maps.GoogleMapOptions:
     com.google.android.gms.maps.model.CameraPosition zzal -> d
     com.google.android.gms.maps.model.LatLngBounds zzax -> p
@@ -24412,11 +24416,14 @@ com.google.android.gms.maps.SupportMapFragment$zzb -> com.google.android.gms.map
     void createDelegate(com.google.android.gms.dynamic.OnDelegateCreatedListener) -> a
     void getMapAsync(com.google.android.gms.maps.OnMapReadyCallback) -> a
 com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate -> com.google.android.gms.maps.a.a:
-    com.google.android.gms.dynamic.IObjectWrapper newLatLng(com.google.android.gms.maps.model.LatLng) -> b
+    com.google.android.gms.dynamic.IObjectWrapper newLatLng(com.google.android.gms.maps.model.LatLng) -> a
+    com.google.android.gms.dynamic.IObjectWrapper zoomTo(float) -> a
 com.google.android.gms.maps.internal.IGoogleMapDelegate -> com.google.android.gms.maps.a.b:
+    android.location.Location getMyLocation() -> u
     com.google.android.gms.internal.maps.zzt addMarker(com.google.android.gms.maps.model.MarkerOptions) -> a
     void animateCamera(com.google.android.gms.dynamic.IObjectWrapper) -> a
-    void setOnMapClickListener(com.google.android.gms.maps.internal.zzaj) -> a
+    void setMyLocationEnabled(boolean) -> d
+    void setOnMyLocationButtonClickListener(com.google.android.gms.maps.internal.zzav) -> a
 com.google.android.gms.maps.internal.IMapFragmentDelegate -> com.google.android.gms.maps.a.c:
     com.google.android.gms.dynamic.IObjectWrapper onCreateView(com.google.android.gms.dynamic.IObjectWrapper,com.google.android.gms.dynamic.IObjectWrapper,android.os.Bundle) -> a
     void getMapAsync(com.google.android.gms.maps.internal.zzap) -> a
@@ -24432,16 +24439,17 @@ com.google.android.gms.maps.internal.MapLifecycleDelegate -> com.google.android.
 com.google.android.gms.maps.internal.zza -> com.google.android.gms.maps.a.e:
     byte zza(java.lang.Boolean) -> a
     java.lang.Boolean zza(byte) -> a
-com.google.android.gms.maps.internal.zzaj -> com.google.android.gms.maps.a.f:
-    void onMapClick(com.google.android.gms.maps.model.LatLng) -> a
-com.google.android.gms.maps.internal.zzak -> com.google.android.gms.maps.a.g:
-    boolean dispatchTransaction(int,android.os.Parcel,android.os.Parcel,int) -> a
-com.google.android.gms.maps.internal.zzap -> com.google.android.gms.maps.a.h:
+com.google.android.gms.maps.internal.zzap -> com.google.android.gms.maps.a.f:
     void zza(com.google.android.gms.maps.internal.IGoogleMapDelegate) -> a
-com.google.android.gms.maps.internal.zzaq -> com.google.android.gms.maps.a.i:
+com.google.android.gms.maps.internal.zzaq -> com.google.android.gms.maps.a.g:
+    boolean dispatchTransaction(int,android.os.Parcel,android.os.Parcel,int) -> a
+com.google.android.gms.maps.internal.zzav -> com.google.android.gms.maps.a.h:
+    boolean onMyLocationButtonClick() -> i
+com.google.android.gms.maps.internal.zzaw -> com.google.android.gms.maps.a.i:
     boolean dispatchTransaction(int,android.os.Parcel,android.os.Parcel,int) -> a
 com.google.android.gms.maps.internal.zzb -> com.google.android.gms.maps.a.j:
-    com.google.android.gms.dynamic.IObjectWrapper newLatLng(com.google.android.gms.maps.model.LatLng) -> b
+    com.google.android.gms.dynamic.IObjectWrapper newLatLng(com.google.android.gms.maps.model.LatLng) -> a
+    com.google.android.gms.dynamic.IObjectWrapper zoomTo(float) -> a
 com.google.android.gms.maps.internal.zzby -> com.google.android.gms.maps.a.k:
     android.os.Parcelable zza(android.os.Bundle,java.lang.String) -> a
     void zza(android.os.Bundle,android.os.Bundle) -> a
@@ -24456,19 +24464,21 @@ com.google.android.gms.maps.internal.zzbz -> com.google.android.gms.maps.a.l:
     java.lang.Object zza(java.lang.Class) -> a
     java.lang.Object zza(java.lang.ClassLoader,java.lang.String) -> a
 com.google.android.gms.maps.internal.zze -> com.google.android.gms.maps.a.m:
-    com.google.android.gms.internal.maps.zze zze() -> r
-    com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzd() -> q
+    com.google.android.gms.internal.maps.zze zze() -> s
+    com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzd() -> r
     com.google.android.gms.maps.internal.IMapFragmentDelegate zzc(com.google.android.gms.dynamic.IObjectWrapper) -> b
     void zza(com.google.android.gms.dynamic.IObjectWrapper,int) -> a
 com.google.android.gms.maps.internal.zzf -> com.google.android.gms.maps.a.n:
-    com.google.android.gms.internal.maps.zze zze() -> r
-    com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzd() -> q
+    com.google.android.gms.internal.maps.zze zze() -> s
+    com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzd() -> r
     com.google.android.gms.maps.internal.IMapFragmentDelegate zzc(com.google.android.gms.dynamic.IObjectWrapper) -> b
     void zza(com.google.android.gms.dynamic.IObjectWrapper,int) -> a
 com.google.android.gms.maps.internal.zzg -> com.google.android.gms.maps.a.o:
+    android.location.Location getMyLocation() -> u
     com.google.android.gms.internal.maps.zzt addMarker(com.google.android.gms.maps.model.MarkerOptions) -> a
     void animateCamera(com.google.android.gms.dynamic.IObjectWrapper) -> a
-    void setOnMapClickListener(com.google.android.gms.maps.internal.zzaj) -> a
+    void setMyLocationEnabled(boolean) -> d
+    void setOnMyLocationButtonClickListener(com.google.android.gms.maps.internal.zzav) -> a
 com.google.android.gms.maps.internal.zzj -> com.google.android.gms.maps.a.p:
     com.google.android.gms.dynamic.IObjectWrapper onCreateView(com.google.android.gms.dynamic.IObjectWrapper,com.google.android.gms.dynamic.IObjectWrapper,android.os.Bundle) -> a
     void getMapAsync(com.google.android.gms.maps.internal.zzap) -> a
@@ -24547,9 +24557,9 @@ com.google.android.gms.maps.zzaa -> com.google.android.gms.maps.g:
 com.google.android.gms.maps.zzak -> com.google.android.gms.maps.h:
     com.google.android.gms.maps.OnMapReadyCallback zzbb -> b
     void zza(com.google.android.gms.maps.internal.IGoogleMapDelegate) -> a
-com.google.android.gms.maps.zzy -> com.google.android.gms.maps.i:
-    com.google.android.gms.maps.GoogleMap$OnMapClickListener zzag -> b
-    void onMapClick(com.google.android.gms.maps.model.LatLng) -> a
+com.google.android.gms.maps.zzi -> com.google.android.gms.maps.i:
+    com.google.android.gms.maps.GoogleMap$OnMyLocationButtonClickListener zzq -> b
+    boolean onMyLocationButtonClick() -> i
 com.google.android.gms.measurement.AppMeasurement -> com.google.android.gms.measurement.AppMeasurement:
     com.google.android.gms.measurement.internal.zzbt zzadj -> a
     void registerOnMeasurementEventListener(com.google.android.gms.measurement.AppMeasurement$OnEventListener) -> a
@@ -27949,9 +27959,9 @@ com.google.firebase.auth.api.internal.zzci -> com.google.firebase.auth.a.a.t:
     void zza(com.google.android.gms.internal.firebase_auth.zzap,com.google.android.gms.internal.firebase_auth.zzak) -> a
     void zza(com.google.android.gms.internal.firebase_auth.zzaw) -> a
     void zza(com.google.android.gms.internal.firebase_auth.zzy) -> a
-    void zzae() -> o
-    void zzaf() -> p
-    void zzag() -> l
+    void zzae() -> p
+    void zzaf() -> q
+    void zzag() -> m
     void zzb(com.google.android.gms.internal.firebase_auth.zzap) -> a
     void zzd(java.lang.String) -> b
     void zze(java.lang.String) -> a
@@ -28033,9 +28043,9 @@ com.google.firebase.auth.api.internal.zzdc -> com.google.firebase.auth.a.a.F:
     void zza(com.google.android.gms.internal.firebase_auth.zzap,com.google.android.gms.internal.firebase_auth.zzak) -> a
     void zza(com.google.android.gms.internal.firebase_auth.zzaw) -> a
     void zza(com.google.android.gms.internal.firebase_auth.zzy) -> a
-    void zzae() -> o
-    void zzaf() -> p
-    void zzag() -> l
+    void zzae() -> p
+    void zzaf() -> q
+    void zzag() -> m
     void zzb(com.google.android.gms.internal.firebase_auth.zzap) -> a
     void zzd(java.lang.String) -> b
     void zze(java.lang.String) -> a
@@ -36075,9 +36085,8 @@ com.hotelaide.main.adapters.MessageAdapter$ViewHolder -> b.b.a.a.h$a:
     android.widget.TextView txt_last_message -> e
     android.widget.TextView txt_no_results -> c
     com.hotelaide.main.adapters.MessageAdapter this$0 -> h
-com.hotelaide.main.fragments.AddressFragment -> b.b.a.b.e:
-    android.support.design.widget.FloatingActionButton btn_find_location -> ia
-    android.support.design.widget.FloatingActionButton btn_update -> ja
+com.hotelaide.main.fragments.AddressFragment -> b.b.a.b.d:
+    android.support.design.widget.FloatingActionButton btn_update -> ia
     android.view.View rootview -> Y
     android.widget.EditText et_full_address -> ga
     android.widget.EditText et_postcode -> ha
@@ -36088,34 +36097,34 @@ com.hotelaide.main.fragments.AddressFragment -> b.b.a.b.e:
     com.hotelaide.utils.Database db -> aa
     com.hotelaide.utils.Helpers helpers -> Z
     java.lang.String TAG_LOG -> ba
-    android.widget.EditText access$300(com.hotelaide.main.fragments.AddressFragment) -> d
-    android.widget.EditText access$500(com.hotelaide.main.fragments.AddressFragment) -> f
-    android.widget.TextView access$100(com.hotelaide.main.fragments.AddressFragment) -> b
-    android.widget.TextView access$200(com.hotelaide.main.fragments.AddressFragment) -> c
+    android.widget.EditText access$200(com.hotelaide.main.fragments.AddressFragment) -> b
+    android.widget.EditText access$400(com.hotelaide.main.fragments.AddressFragment) -> d
+    android.widget.TextView access$600(com.hotelaide.main.fragments.AddressFragment) -> f
+    android.widget.TextView access$700(com.hotelaide.main.fragments.AddressFragment) -> g
     com.google.android.gms.maps.GoogleMap access$000(com.hotelaide.main.fragments.AddressFragment) -> a
-    com.hotelaide.utils.Helpers access$400(com.hotelaide.main.fragments.AddressFragment) -> e
+    com.hotelaide.utils.Helpers access$300(com.hotelaide.main.fragments.AddressFragment) -> c
     int getIndex(android.widget.Spinner,java.lang.String) -> a
-    void access$600(com.hotelaide.main.fragments.AddressFragment) -> g
-    void access$700(com.hotelaide.main.fragments.AddressFragment) -> h
+    void access$100(com.hotelaide.main.fragments.AddressFragment,com.google.android.gms.maps.model.LatLng) -> a
+    void access$500(com.hotelaide.main.fragments.AddressFragment) -> e
+    void access$800(com.hotelaide.main.fragments.AddressFragment) -> h
     void asyncUpdateAddress() -> g
     void findAllViews() -> c
     void logAddress() -> f
     void setFromSharedPrefs() -> e
     void setListeners() -> d
+    void updateMapAndCamera(com.google.android.gms.maps.model.LatLng) -> a
     void onMapReady(com.google.android.gms.maps.GoogleMap) -> a
 com.hotelaide.main.fragments.AddressFragment$1 -> b.b.a.b.a:
     com.hotelaide.main.fragments.AddressFragment this$0 -> a
-    void onMapClick(com.google.android.gms.maps.model.LatLng) -> a
+    boolean onMyLocationButtonClick() -> i
 com.hotelaide.main.fragments.AddressFragment$2 -> b.b.a.b.b:
     com.hotelaide.main.fragments.AddressFragment this$0 -> a
 com.hotelaide.main.fragments.AddressFragment$3 -> b.b.a.b.c:
-    com.hotelaide.main.fragments.AddressFragment this$0 -> a
-com.hotelaide.main.fragments.AddressFragment$4 -> b.b.a.b.d:
     com.hotelaide.main.fragments.AddressFragment this$0 -> b
     int val$county_id -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
-com.hotelaide.main.fragments.AppliedJobsFragment -> b.b.a.b.h:
+com.hotelaide.main.fragments.AppliedJobsFragment -> b.b.a.b.g:
     android.support.v4.widget.SwipeRefreshLayout swipe_refresh -> ca
     android.support.v7.widget.LinearLayoutManager layoutManager -> da
     android.support.v7.widget.RecyclerView recycler_view -> ea
@@ -36136,14 +36145,14 @@ com.hotelaide.main.fragments.AppliedJobsFragment -> b.b.a.b.h:
     void findAllViews() -> c
     void noListItems() -> e
     void setListeners() -> d
-com.hotelaide.main.fragments.AppliedJobsFragment$1 -> b.b.a.b.f:
+com.hotelaide.main.fragments.AppliedJobsFragment$1 -> b.b.a.b.e:
     com.hotelaide.main.fragments.AppliedJobsFragment this$0 -> a
     void onRefresh() -> a
-com.hotelaide.main.fragments.AppliedJobsFragment$2 -> b.b.a.b.g:
+com.hotelaide.main.fragments.AppliedJobsFragment$2 -> b.b.a.b.f:
     com.hotelaide.main.fragments.AppliedJobsFragment this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
-com.hotelaide.main.fragments.ChangePasswordFragment -> b.b.a.b.k:
+com.hotelaide.main.fragments.ChangePasswordFragment -> b.b.a.b.j:
     android.support.design.widget.FloatingActionButton btn_update -> ea
     android.view.View root_view -> Y
     android.widget.EditText et_user_pass_confirm -> da
@@ -36159,13 +36168,13 @@ com.hotelaide.main.fragments.ChangePasswordFragment -> b.b.a.b.k:
     void asyncUpdatePassword() -> e
     void findAllViews() -> c
     void setListeners() -> d
-com.hotelaide.main.fragments.ChangePasswordFragment$1 -> b.b.a.b.i:
+com.hotelaide.main.fragments.ChangePasswordFragment$1 -> b.b.a.b.h:
     com.hotelaide.main.fragments.ChangePasswordFragment this$0 -> a
-com.hotelaide.main.fragments.ChangePasswordFragment$2 -> b.b.a.b.j:
+com.hotelaide.main.fragments.ChangePasswordFragment$2 -> b.b.a.b.i:
     com.hotelaide.main.fragments.ChangePasswordFragment this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
-com.hotelaide.main.fragments.ExperienceEditFragment -> b.b.a.b.C:
+com.hotelaide.main.fragments.ExperienceEditFragment -> b.b.a.b.B:
     android.app.DatePickerDialog$OnDateSetListener datePickerListener -> Ba
     android.support.design.widget.FloatingActionButton btn_add -> ea
     android.support.v4.widget.SwipeRefreshLayout swipe_refresh -> ha
@@ -36232,66 +36241,66 @@ com.hotelaide.main.fragments.ExperienceEditFragment -> b.b.a.b.C:
     void setListeners() -> e
     void setTextViews() -> d
     void showDatePicker(java.lang.String,java.lang.String) -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$1 -> b.b.a.b.o:
+com.hotelaide.main.fragments.ExperienceEditFragment$1 -> b.b.a.b.n:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
     void onRefresh() -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$10 -> b.b.a.b.l:
+com.hotelaide.main.fragments.ExperienceEditFragment$10 -> b.b.a.b.k:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$11 -> b.b.a.b.m:
+com.hotelaide.main.fragments.ExperienceEditFragment$11 -> b.b.a.b.l:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$12 -> b.b.a.b.n:
+com.hotelaide.main.fragments.ExperienceEditFragment$12 -> b.b.a.b.m:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> c
     int val$experienceId -> a
     int val$position -> b
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$2 -> b.b.a.b.p:
+com.hotelaide.main.fragments.ExperienceEditFragment$2 -> b.b.a.b.o:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$3 -> b.b.a.b.q:
+com.hotelaide.main.fragments.ExperienceEditFragment$3 -> b.b.a.b.p:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
     void onPanelSlide(android.view.View,float) -> a
     void onPanelStateChanged(android.view.View,com.sothree.slidinguppanel.SlidingUpPanelLayout$PanelState,com.sothree.slidinguppanel.SlidingUpPanelLayout$PanelState) -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$4 -> b.b.a.b.r:
+com.hotelaide.main.fragments.ExperienceEditFragment$4 -> b.b.a.b.q:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$5 -> b.b.a.b.s:
+com.hotelaide.main.fragments.ExperienceEditFragment$5 -> b.b.a.b.r:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$6 -> b.b.a.b.t:
+com.hotelaide.main.fragments.ExperienceEditFragment$6 -> b.b.a.b.s:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
     void generalChecks() -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$7 -> b.b.a.b.u:
+com.hotelaide.main.fragments.ExperienceEditFragment$7 -> b.b.a.b.t:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$8 -> b.b.a.b.v:
+com.hotelaide.main.fragments.ExperienceEditFragment$8 -> b.b.a.b.u:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$9 -> b.b.a.b.w:
+com.hotelaide.main.fragments.ExperienceEditFragment$9 -> b.b.a.b.v:
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter -> b.b.a.b.C$a:
+com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter -> b.b.a.b.B$a:
     android.content.Context context -> b
     com.hotelaide.main.fragments.ExperienceEditFragment this$0 -> c
     java.util.ArrayList experienceModels -> a
     void onBindViewHolder(com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$ViewHolder,int) -> a
     void removeItem(int) -> a
     void updateData(java.util.ArrayList) -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$1 -> b.b.a.b.x:
+com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$1 -> b.b.a.b.w:
     com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter this$1 -> b
     com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$ViewHolder val$holder -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$2 -> b.b.a.b.y:
+com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$2 -> b.b.a.b.x:
     com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter this$1 -> b
     com.hotelaide.main.models.ExperienceModel val$experienceModel -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$3 -> b.b.a.b.B:
+com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$3 -> b.b.a.b.A:
     com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter this$1 -> c
     com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$ViewHolder val$holder -> b
     com.hotelaide.main.models.ExperienceModel val$experienceModel -> a
-com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$3$1 -> b.b.a.b.z:
+com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$3$1 -> b.b.a.b.y:
     android.app.Dialog val$dialog -> a
     com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$3 this$2 -> b
-com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$3$2 -> b.b.a.b.A:
+com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$3$2 -> b.b.a.b.z:
     android.app.Dialog val$dialog -> a
     com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$3 this$2 -> b
-com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$ViewHolder -> b.b.a.b.C$a$a:
+com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$ViewHolder -> b.b.a.b.B$a$a:
     android.support.v7.widget.CardView list_item -> a
     android.widget.ImageView btn_delete -> l
     android.widget.RelativeLayout no_list_item -> b
@@ -36305,41 +36314,32 @@ com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter$ViewHolder
     android.widget.TextView txt_responsibilities_field_label -> j
     android.widget.TextView txt_start_date -> f
     com.hotelaide.main.fragments.ExperienceEditFragment$ExperienceAdapter this$1 -> m
-com.hotelaide.main.fragments.ExperienceViewFragment -> b.b.a.b.F:
-    android.support.v7.widget.RecyclerView recycler_view -> da
+com.hotelaide.main.fragments.ExperienceViewFragment -> b.b.a.b.D:
+    android.support.v7.widget.RecyclerView recycler_view -> ca
     android.view.View root_view -> Y
-    android.widget.RelativeLayout no_list_items -> ga
-    android.widget.TextView txt_no_results -> ha
-    com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter adapter -> fa
+    android.widget.RelativeLayout no_list_items -> fa
+    android.widget.TextView txt_no_results -> ga
+    com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter adapter -> ea
     com.hotelaide.utils.Database db -> aa
     com.hotelaide.utils.Helpers helpers -> Z
-    java.lang.String EXPERIENCE_TYPE -> ca
-    java.lang.String TAG_LOG -> ba
-    java.util.ArrayList model_list -> ea
-    com.hotelaide.utils.Database access$100(com.hotelaide.main.fragments.ExperienceViewFragment) -> b
-    com.hotelaide.utils.Helpers access$300(com.hotelaide.main.fragments.ExperienceViewFragment) -> d
-    com.hotelaide.utils.Helpers access$302(com.hotelaide.main.fragments.ExperienceViewFragment,com.hotelaide.utils.Helpers) -> a
-    java.lang.String access$000(com.hotelaide.main.fragments.ExperienceViewFragment) -> a
-    void access$200(com.hotelaide.main.fragments.ExperienceViewFragment) -> c
-    void asyncGetAllWorkExperience() -> g
+    java.lang.String EXPERIENCE_TYPE -> ba
+    java.util.ArrayList model_list -> da
+    com.hotelaide.utils.Helpers access$000(com.hotelaide.main.fragments.ExperienceViewFragment) -> a
+    com.hotelaide.utils.Helpers access$002(com.hotelaide.main.fragments.ExperienceViewFragment,com.hotelaide.utils.Helpers) -> a
     void findAllViews() -> c
     void noListItems() -> f
     void populateExperienceFromDB() -> e
     void setTextViews() -> d
-com.hotelaide.main.fragments.ExperienceViewFragment$1 -> b.b.a.b.D:
-    com.hotelaide.main.fragments.ExperienceViewFragment this$0 -> a
-    void onFailure(retrofit2.Call,java.lang.Throwable) -> a
-    void onResponse(retrofit2.Call,retrofit2.Response) -> a
-com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter -> b.b.a.b.F$a:
+com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter -> b.b.a.b.D$a:
     android.content.Context context -> b
     com.hotelaide.main.fragments.ExperienceViewFragment this$0 -> c
     java.util.ArrayList experienceModels -> a
     void onBindViewHolder(com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter$ViewHolder,int) -> a
     void updateData(java.util.ArrayList) -> a
-com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter$1 -> b.b.a.b.E:
+com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter$1 -> b.b.a.b.C:
     com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter this$1 -> b
     com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter$ViewHolder val$holder -> a
-com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter$ViewHolder -> b.b.a.b.F$a$a:
+com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter$ViewHolder -> b.b.a.b.D$a$a:
     android.support.v7.widget.CardView list_item -> a
     android.widget.ImageView btn_delete -> l
     android.widget.RelativeLayout no_list_item -> b
@@ -36353,7 +36353,7 @@ com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter$ViewHolder
     android.widget.TextView txt_responsibilities_field_label -> j
     android.widget.TextView txt_start_date -> f
     com.hotelaide.main.fragments.ExperienceViewFragment$ExperienceAdapter this$1 -> m
-com.hotelaide.main.fragments.MessageFragment -> b.b.a.b.M:
+com.hotelaide.main.fragments.MessageFragment -> b.b.a.b.K:
     android.support.design.button.MaterialButton btn_cancel -> ia
     android.support.design.widget.FloatingActionButton btn_add_message -> ga
     android.support.v4.widget.SwipeRefreshLayout swipe_refresh -> ba
@@ -36382,41 +36382,41 @@ com.hotelaide.main.fragments.MessageFragment -> b.b.a.b.M:
     void setFromDataSnapShotArray(com.google.firebase.database.DataSnapshot) -> a
     void setListeners() -> d
     void setupFireBase() -> e
-com.hotelaide.main.fragments.MessageFragment$1 -> b.b.a.b.G:
+com.hotelaide.main.fragments.MessageFragment$1 -> b.b.a.b.E:
     com.hotelaide.main.fragments.MessageFragment this$0 -> a
     void onRefresh() -> a
-com.hotelaide.main.fragments.MessageFragment$2 -> b.b.a.b.H:
+com.hotelaide.main.fragments.MessageFragment$2 -> b.b.a.b.F:
     com.hotelaide.main.fragments.MessageFragment this$0 -> a
-com.hotelaide.main.fragments.MessageFragment$3 -> b.b.a.b.I:
+com.hotelaide.main.fragments.MessageFragment$3 -> b.b.a.b.G:
     com.hotelaide.main.fragments.MessageFragment this$0 -> a
-com.hotelaide.main.fragments.MessageFragment$4 -> b.b.a.b.J:
+com.hotelaide.main.fragments.MessageFragment$4 -> b.b.a.b.H:
     com.hotelaide.main.fragments.MessageFragment this$0 -> a
     void onCancelled(com.google.firebase.database.DatabaseError) -> a
     void onDataChange(com.google.firebase.database.DataSnapshot) -> a
-com.hotelaide.main.fragments.MessageFragment$5 -> b.b.a.b.K:
+com.hotelaide.main.fragments.MessageFragment$5 -> b.b.a.b.I:
     com.hotelaide.main.fragments.MessageFragment this$0 -> b
     int val$page_number -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
-com.hotelaide.main.fragments.MessageFragment$ContactAdapter -> b.b.a.b.M$a:
+com.hotelaide.main.fragments.MessageFragment$ContactAdapter -> b.b.a.b.K$a:
     android.content.Context context -> b
     com.hotelaide.main.fragments.MessageFragment this$0 -> d
     com.hotelaide.utils.Helpers helpers -> c
     java.util.ArrayList userModels -> a
     android.content.Context access$700(com.hotelaide.main.fragments.MessageFragment$ContactAdapter) -> a
     void onBindViewHolder(com.hotelaide.main.fragments.MessageFragment$ContactAdapter$ViewHolder,int) -> a
-com.hotelaide.main.fragments.MessageFragment$ContactAdapter$1 -> b.b.a.b.L:
+com.hotelaide.main.fragments.MessageFragment$ContactAdapter$1 -> b.b.a.b.J:
     com.hotelaide.main.fragments.MessageFragment$ContactAdapter this$1 -> c
     com.hotelaide.main.models.UserModel val$userModel -> a
     java.lang.String val$name -> b
-com.hotelaide.main.fragments.MessageFragment$ContactAdapter$ViewHolder -> b.b.a.b.M$a$a:
+com.hotelaide.main.fragments.MessageFragment$ContactAdapter$ViewHolder -> b.b.a.b.K$a$a:
     android.widget.ImageView img_user -> e
     android.widget.RelativeLayout list_item -> b
     android.widget.RelativeLayout no_list_item -> a
     android.widget.TextView txt_name -> d
     android.widget.TextView txt_no_results -> c
     com.hotelaide.main.fragments.MessageFragment$ContactAdapter this$1 -> f
-com.hotelaide.main.fragments.ProfileUpdateFragment -> b.b.a.b.R:
+com.hotelaide.main.fragments.ProfileUpdateFragment -> b.b.a.b.P:
     android.support.design.widget.FloatingActionButton btn_update -> ha
     android.view.View root_view -> Y
     android.widget.EditText et_user_first_name -> ba
@@ -36445,14 +36445,14 @@ com.hotelaide.main.fragments.ProfileUpdateFragment -> b.b.a.b.R:
     void setDates() -> f
     void setFromSharedPrefs() -> d
     void setListeners() -> e
-com.hotelaide.main.fragments.ProfileUpdateFragment$1 -> b.b.a.b.N:
+com.hotelaide.main.fragments.ProfileUpdateFragment$1 -> b.b.a.b.L:
     com.hotelaide.main.fragments.ProfileUpdateFragment this$0 -> a
-com.hotelaide.main.fragments.ProfileUpdateFragment$2 -> b.b.a.b.O:
+com.hotelaide.main.fragments.ProfileUpdateFragment$2 -> b.b.a.b.M:
     com.hotelaide.main.fragments.ProfileUpdateFragment this$0 -> a
-com.hotelaide.main.fragments.ProfileUpdateFragment$3 -> b.b.a.b.P:
+com.hotelaide.main.fragments.ProfileUpdateFragment$3 -> b.b.a.b.N:
     android.app.DatePickerDialog$OnDateSetListener val$datePickerListener -> a
     com.hotelaide.main.fragments.ProfileUpdateFragment this$0 -> b
-com.hotelaide.main.fragments.ProfileUpdateFragment$4 -> b.b.a.b.Q:
+com.hotelaide.main.fragments.ProfileUpdateFragment$4 -> b.b.a.b.O:
     com.hotelaide.main.fragments.ProfileUpdateFragment this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
@@ -40346,7 +40346,7 @@ io.fabric.sdk.android.services.common.AdvertisingInfoServiceStrategy$Advertising
     android.os.IBinder getBinder() -> a
 io.fabric.sdk.android.services.common.AdvertisingInfoServiceStrategy$AdvertisingInterface -> io.fabric.sdk.android.services.common.g$b:
     android.os.IBinder binder -> a
-    boolean isLimitAdTrackingEnabled() -> t
+    boolean isLimitAdTrackingEnabled() -> v
 io.fabric.sdk.android.services.common.AdvertisingInfoStrategy -> io.fabric.sdk.android.services.common.h:
     io.fabric.sdk.android.services.common.AdvertisingInfo getAdvertisingInfo() -> a
 io.fabric.sdk.android.services.common.ApiKey -> io.fabric.sdk.android.services.common.i:
@@ -50200,42 +50200,42 @@ retrofit2.http.QueryMap -> g.b.u:
 retrofit2.http.QueryName -> g.b.v:
 retrofit2.http.Streaming -> g.b.w:
 retrofit2.http.Url -> g.b.x:
-android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
-android.support.v7.cardview.R -> a.b.i.b.a:
-com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
-com.google.android.gms.base.R -> b.a.a.a.b.a:
-android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
-pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
-com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
-android.support.transition.R -> a.b.g.y:
-io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
-android.support.v7.appcompat.R -> a.b.i.a.a:
-android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
-android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
+com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
+android.support.design.R -> a.b.d.a:
+com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
 com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
 com.google.android.gms.maps.R -> com.google.android.gms.maps.f:
-okhttp3.WebSocket -> okhttp3.P:
-com.rilixtech.R -> com.rilixtech.j:
-com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
-com.airbnb.lottie.R -> com.airbnb.lottie.I:
-android.support.constraint.R -> android.support.constraint.h:
 io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
-com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
-io.michaelrocks.libphonenumber.android.Phonemetadata -> io.michaelrocks.libphonenumber.android.Phonemetadata:
-android.support.v7.util.SortedList -> a.b.i.g.b:
-android.support.compat.R -> a.b.a.a:
-com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
-android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
-com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
-android.support.coordinatorlayout.R -> a.b.b.a:
-com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
-android.support.customtabs.R -> a.b.c.c:
-android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
-android.support.v7.recyclerview.R -> a.b.i.e.a:
-android.support.design.R -> a.b.d.a:
-com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
-com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
-com.google.android.gms.common.R -> com.google.android.gms.common.n:
-android.support.v4.util.Pools -> a.b.h.f.m:
+android.support.v7.appcompat.R -> a.b.i.a.a:
+android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
+io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
+pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
+com.airbnb.lottie.R -> com.airbnb.lottie.I:
+com.rilixtech.R -> com.rilixtech.j:
+android.support.v7.cardview.R -> a.b.i.b.a:
+com.google.android.gms.base.R -> b.a.a.a.b.a:
 com.makeramen.roundedimageview.R -> com.makeramen.roundedimageview.a:
+android.support.transition.R -> a.b.g.y:
+io.michaelrocks.libphonenumber.android.Phonemetadata -> io.michaelrocks.libphonenumber.android.Phonemetadata:
+com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
+com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
+android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
+android.support.coordinatorlayout.R -> a.b.b.a:
+com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
+com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
+okhttp3.WebSocket -> okhttp3.P:
+android.support.compat.R -> a.b.a.a:
+com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
+com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
 com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:
+android.support.v4.util.Pools -> a.b.h.f.m:
+android.support.v7.recyclerview.R -> a.b.i.e.a:
+android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
+android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
+android.support.customtabs.R -> a.b.c.c:
+com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
+android.support.v7.util.SortedList -> a.b.i.g.b:
+android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
+com.google.android.gms.common.R -> com.google.android.gms.common.n:
+android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
+android.support.constraint.R -> android.support.constraint.h:
