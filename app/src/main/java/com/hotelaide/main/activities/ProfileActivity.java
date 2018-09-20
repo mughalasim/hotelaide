@@ -20,21 +20,21 @@ import com.hotelaide.R;
 import com.hotelaide.main.fragments.ExperienceViewFragment;
 import com.hotelaide.utils.SharedPrefs;
 
-import static com.hotelaide.utils.Database.COUNTY_TABLE_NAME;
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_EDUCATION;
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
-import static com.hotelaide.utils.SharedPrefs.USER_COUNTRY_CODE;
-import static com.hotelaide.utils.SharedPrefs.USER_COUNTY;
-import static com.hotelaide.utils.SharedPrefs.USER_DOB;
-import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
-import static com.hotelaide.utils.SharedPrefs.USER_FULL_ADDRESS;
-import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
-import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
-import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
-import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
-import static com.hotelaide.utils.SharedPrefs.USER_PHONE;
-import static com.hotelaide.utils.SharedPrefs.USER_PROFILE_COMPLETION;
-import static com.hotelaide.utils.SharedPrefs.USER_URL;
+import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
+import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
+import static com.hotelaide.utils.StaticVariables.USER_DOB;
+import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
+import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
+import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_PHONE;
+import static com.hotelaide.utils.StaticVariables.USER_PROFILE_COMPLETION;
+import static com.hotelaide.utils.StaticVariables.USER_URL;
 
 public class ProfileActivity extends ParentActivity {
 

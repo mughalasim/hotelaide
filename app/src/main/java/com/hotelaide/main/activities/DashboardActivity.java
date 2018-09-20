@@ -17,10 +17,11 @@ import com.hotelaide.utils.SharedPrefs;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hotelaide.utils.Helpers.START_FIRST_TIME;
-import static com.hotelaide.utils.Helpers.START_RETURN;
-import static com.hotelaide.utils.SharedPrefs.ALLOW_MESSAGE_PUSH;
-import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
+import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.StaticVariables.START_FIRST_TIME;
+import static com.hotelaide.utils.StaticVariables.START_RETURN;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 public class DashboardActivity extends ParentActivity {
 
@@ -62,7 +63,7 @@ public class DashboardActivity extends ParentActivity {
         if (extras != null && extras.getString(START_FIRST_TIME) != null) {
 
             helpers.myDialog(DashboardActivity.this,
-                    "WELCOME", SharedPrefs.getString(SharedPrefs.USER_F_NAME) + ", thank you for joining "
+                    "WELCOME", SharedPrefs.getString(USER_F_NAME) + ", thank you for joining "
                             + getString(R.string.app_name) +
                             ", You are on the Dashboard where you can easily navigate through the app.");
 
@@ -71,7 +72,7 @@ public class DashboardActivity extends ParentActivity {
             setCountOnDrawerItem(menu_profile, "(Update Profile)");
 
         } else if (extras != null && extras.getString(START_RETURN) != null) {
-            helpers.ToastMessage(DashboardActivity.this, "Welcome back " + SharedPrefs.getString(SharedPrefs.USER_F_NAME));
+            helpers.ToastMessage(DashboardActivity.this, "Welcome back " + SharedPrefs.getString(USER_F_NAME));
             setCountOnDrawerItem(menu_find_jobs, "(New)");
 
             SharedPrefs.setBool(ALLOW_UPDATE_APP, true);

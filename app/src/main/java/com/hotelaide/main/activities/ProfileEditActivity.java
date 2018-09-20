@@ -46,12 +46,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.Helpers.INT_PERMISSIONS_CAMERA;
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_EDUCATION;
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
-import static com.hotelaide.utils.SharedPrefs.USER_ID;
-import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
-import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_CAMERA;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 
 public class ProfileEditActivity extends AppCompatActivity {
     private Helpers helpers;
@@ -123,39 +123,37 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch (requestCode) {
-            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
-                CropImage.ActivityResult result = CropImage.getActivityResult(imageReturnedIntent);
-                if (resultCode == RESULT_OK) {
-                    Uri resultUri = result.getUri();
-                    File file = new File(resultUri.getPath());
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_CANCELED)
+            switch (requestCode) {
+                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
+                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                    if (resultCode == RESULT_OK) {
+                        Uri resultUri = result.getUri();
+                        File file = new File(resultUri.getPath());
+                        if (RESULT_EXPECTED == RESULT_AVATAR) {
+                            Glide.with(this).load(resultUri).into(img_avatar);
+                            MultipartBody.Part partFile = MultipartBody.Part.createFormData("avatar",
+                                    file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            asyncUpdateImages(partFile, RESULT_EXPECTED);
+                        } else {
+                            Glide.with(this).load(resultUri).into(img_banner);
+                            MultipartBody.Part partFile = MultipartBody.Part.createFormData("banner",
+                                    file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            asyncUpdateImages(partFile, RESULT_EXPECTED);
+                        }
 
-                    if (RESULT_EXPECTED == RESULT_AVATAR) {
-                        Glide.with(this).load(resultUri).into(img_avatar);
-                        MultipartBody.Part partFile = MultipartBody.Part.createFormData("avatar",
-                                file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                        asyncUpdateImages(partFile, RESULT_EXPECTED);
-                    } else {
-                        Glide.with(this).load(resultUri).into(img_banner);
-                        MultipartBody.Part partFile = MultipartBody.Part.createFormData("banner",
-                                file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                        asyncUpdateImages(partFile, RESULT_EXPECTED);
+                    } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                        helpers.ToastMessage(ProfileEditActivity.this,
+                                getResources().getString(R.string.error_unknown));
                     }
-
-
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    helpers.ToastMessage(ProfileEditActivity.this,
-                            getResources().getString(R.string.error_unknown));
-                }
-                break;
-        }
+                    break;
+            }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
         helpers.myPermissionsDialog(ProfileEditActivity.this, grantResults);
@@ -314,8 +312,8 @@ public class ProfileEditActivity extends AppCompatActivity {
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+        private final List<Fragment> fragments = new ArrayList<>();
+        private final List<String> fragment_titles = new ArrayList<>();
 
         private ViewPagerAdapter(FragmentManager manager) {
             super(manager);
@@ -323,22 +321,22 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+            return fragments.get(position);
         }
 
         @Override
         public int getCount() {
-            return mFragmentList.size();
+            return fragments.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
+        void addFragment(Fragment fragment, String title) {
+            fragments.add(fragment);
+            fragment_titles.add(title);
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+            return fragment_titles.get(position);
         }
 
     }

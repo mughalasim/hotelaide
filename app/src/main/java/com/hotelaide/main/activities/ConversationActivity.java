@@ -33,10 +33,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
-import static com.hotelaide.utils.SharedPrefs.USER_ID;
-import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
-import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
+import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 
 public class ConversationActivity extends AppCompatActivity {
     private String

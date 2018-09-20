@@ -23,10 +23,10 @@ import com.hotelaide.utils.SharedPrefs;
 
 import io.fabric.sdk.android.Fabric;
 
-import static com.hotelaide.utils.Helpers.INT_ANIMATION_TIME;
-import static com.hotelaide.utils.Helpers.START_LAUNCH;
-import static com.hotelaide.utils.SharedPrefs.ACCESS_TOKEN;
-import static com.hotelaide.utils.SharedPrefs.DATABASE_VERSION;
+import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
+import static com.hotelaide.utils.StaticVariables.DATABASE_VERSION;
+import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
+import static com.hotelaide.utils.StaticVariables.START_LAUNCH;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -90,7 +90,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         // Clear all notification
         NotificationManager notification_manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notification_manager.cancelAll();
+        if (notification_manager != null)
+            notification_manager.cancelAll();
 
         new Handler().postDelayed(new Runnable() {
             @Override

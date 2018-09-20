@@ -16,42 +16,35 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_EDUCATION;
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.EXP_CURRENT;
+import static com.hotelaide.utils.StaticVariables.EXP_END_DATE;
+import static com.hotelaide.utils.StaticVariables.EXP_ID;
+import static com.hotelaide.utils.StaticVariables.EXP_NAME;
+import static com.hotelaide.utils.StaticVariables.EXP_POSITION_LEVEL;
+import static com.hotelaide.utils.StaticVariables.EXP_RESPONSIBILITIES_FIELD;
+import static com.hotelaide.utils.StaticVariables.EXP_START_DATE;
+import static com.hotelaide.utils.StaticVariables.EXP_TABLE_ID;
+import static com.hotelaide.utils.StaticVariables.EXP_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.EXP_TYPE;
+import static com.hotelaide.utils.StaticVariables.FILTER_ID;
+import static com.hotelaide.utils.StaticVariables.FILTER_NAME;
+import static com.hotelaide.utils.StaticVariables.JOB_HOTEL_ID;
+import static com.hotelaide.utils.StaticVariables.JOB_HOTEL_IMAGE;
+import static com.hotelaide.utils.StaticVariables.JOB_HOTEL_LOCATION;
+import static com.hotelaide.utils.StaticVariables.JOB_ID;
+import static com.hotelaide.utils.StaticVariables.JOB_NAME;
+import static com.hotelaide.utils.StaticVariables.JOB_POSTED_ON;
+import static com.hotelaide.utils.StaticVariables.JOB_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "HotelAide.db";
     private static final String TAG_LOG = "DATABASE";
 
-
-    // JOB SEARCHES IN THE DATABASE ======================================================
-    private static final String JOB_TABLE_NAME = "JOB_SEARCH";
-    private static final String JOB_ID = "id";
-    private static final String JOB_NAME = "job_name";
-    private static final String JOB_POSTED_ON = "posted_on";
-    private static final String JOB_HOTEL_ID = "hotel_id";
-    private static final String JOB_HOTEL_IMAGE = "hotel_image";
-    private static final String JOB_HOTEL_LOCATION = "hotel_loation";
-
-    // EXPERIENCE STORED IN THE DATABASE ======================================================
-    private static final String EXP_TABLE_NAME = "EXPERIENCE";
-    private static final String EXP_TABLE_ID = "id";
-    private static final String EXP_ID = "experience_id";
-    private static final String EXP_NAME = "name";
-    private static final String EXP_POSITION_LEVEL = "position_level";
-    private static final String EXP_START_DATE = "start_date";
-    private static final String EXP_END_DATE = "end_date";
-    private static final String EXP_RESPONSIBILITIES_FIELD = "responsibilities_field";
-    private static final String EXP_CURRENT = "current";
-    private static final String EXP_TYPE = "type";
-
-
-    // FILTERS STORED IN THE DATABASE =============================================================
-    public static final String COUNTY_TABLE_NAME = "COUNTIES";
-    public static final String JOB_TYPE_TABLE_NAME = "JOB_TYPE";
-    public static final String CATEGORIES_TABLE_NAME = "CATEGORIES";
-    public static final String FILTER_ID = "id";
-    public static final String FILTER_NAME = "name";
 
     public Database() {
         super(MyApplication.getAppContext(), DATABASE_NAME, null, BuildConfig.DATABASE_VERSION);

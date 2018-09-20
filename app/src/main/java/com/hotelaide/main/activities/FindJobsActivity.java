@@ -38,9 +38,9 @@ import java.util.ArrayList;
 import static com.hotelaide.BuildConfig.ALGOLIA_APP_ID;
 import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_NAME;
 import static com.hotelaide.BuildConfig.ALGOLIA_SEARCH_API_KEY;
-import static com.hotelaide.utils.Database.CATEGORIES_TABLE_NAME;
-import static com.hotelaide.utils.Database.COUNTY_TABLE_NAME;
-import static com.hotelaide.utils.Database.JOB_TYPE_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 
 public class FindJobsActivity extends ParentActivity {
 

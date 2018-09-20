@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.compileSDK
@@ -13,7 +15,7 @@ android {
         versionName "$rootProject.versionName"
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
-        multiDexEnabled true
+//        multiDexEnabled rootProject.multidex
     }
 
     buildTypes {
@@ -77,6 +79,7 @@ dependencies {
     implementation "com.android.support:exifinterface:$rootProject.SupportLibrary"
     implementation "com.android.support:customtabs:$rootProject.SupportLibrary"
     implementation 'com.android.support:multidex:1.0.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlin_version"
 
     // RETROFIT DEPENDENCIES
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -93,7 +96,7 @@ dependencies {
     // FIRE BASE AUTHENTICATION
     implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
-    implementation 'com.google.firebase:firebase-messaging:17.3.1'
+    implementation 'com.google.firebase:firebase-messaging:17.3.2'
 //    implementation 'com.google.firebase:firebase-invites:16.0.3'
     implementation 'com.google.firebase:firebase-database:16.0.2'
     implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.1'

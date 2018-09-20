@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 
 public class HotelActivity extends AppCompatActivity {
     private Helpers helpers;

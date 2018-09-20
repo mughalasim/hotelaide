@@ -23,9 +23,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.SharedPrefs.ALLOW_MESSAGE_PUSH;
-import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
-import static com.hotelaide.utils.SharedPrefs.USER_ID;
+import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
+import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class SettingsActivity extends ParentActivity {
 

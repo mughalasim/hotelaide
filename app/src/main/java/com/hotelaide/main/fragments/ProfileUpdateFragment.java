@@ -39,13 +39,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.SharedPrefs.USER_COUNTRY_CODE;
-import static com.hotelaide.utils.SharedPrefs.USER_DOB;
-import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
-import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
-import static com.hotelaide.utils.SharedPrefs.USER_ID;
-import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
-import static com.hotelaide.utils.SharedPrefs.USER_PHONE;
+import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
+import static com.hotelaide.utils.StaticVariables.USER_DOB;
+import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_PHONE;
 
 public class ProfileUpdateFragment extends Fragment {
 

@@ -27,6 +27,8 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
+
 //import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 public interface ExperienceService {
@@ -39,7 +41,7 @@ public interface ExperienceService {
                 public Response intercept(@NonNull Chain chain) throws IOException {
                     Request original = chain.request();
                     Request request = original.newBuilder()
-                            .addHeader("Authorization", "Bearer " + SharedPrefs.getString(SharedPrefs.ACCESS_TOKEN))
+                            .addHeader("Authorization", "Bearer " + SharedPrefs.getString(ACCESS_TOKEN))
                             .method(original.method(), original.body())
                             .build();
 

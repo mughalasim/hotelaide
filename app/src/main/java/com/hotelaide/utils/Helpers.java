@@ -76,29 +76,21 @@ import retrofit2.Response;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
 import static android.content.pm.PackageManager.NameNotFoundException;
-import static com.hotelaide.utils.Database.CATEGORIES_TABLE_NAME;
-import static com.hotelaide.utils.Database.COUNTY_TABLE_NAME;
-import static com.hotelaide.utils.Database.JOB_TYPE_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.BroadcastValue;
+import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
+import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 
 public class Helpers {
 
     public final static String TAG_LOG = "HELPER CLASS";
-    public final static int INT_ANIMATION_TIME = 800;
-    //    private static Tracker sTracker;
-//    private static GoogleAnalytics sAnalytics;
     private final Context context;
     private static Toast mToast;
     private final TextView ProgressDialogMessage;
     private final Dialog dialog;
 
-    public final static int INT_PERMISSIONS_CAMERA = 601;
-    public final static int INT_PERMISSIONS_LOCATIONS = 602;
 
-    public final static String BroadcastValue = "com.hotelaide.ACTIONLOGOUT";
-
-    public final static String START_FIRST_TIME = "FIRSTTIMER";
-    public final static String START_RETURN = "RETURN";
-    public final static String START_LAUNCH = "LAUNCH";
 
     private Database db;
 

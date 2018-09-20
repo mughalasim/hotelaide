@@ -27,7 +27,7 @@ import com.hotelaide.utils.SharedPrefs;
 
 import java.util.ArrayList;
 
-import static com.hotelaide.utils.SharedPrefs.USER_ID;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     private final ArrayList<MessageModel> messageModels;

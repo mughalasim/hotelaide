@@ -46,7 +46,7 @@
     <dimen name="height_panel">55sp</dimen>
     <dimen name="height_nav_header">110sp</dimen>
     <dimen name="height_collapsing_toolbar">250sp</dimen>
-    <dimen name="height_map">400dp</dimen>
+    <dimen name="height_map">300dp</dimen>
 
 
 </resources>

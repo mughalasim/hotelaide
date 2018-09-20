@@ -44,13 +44,14 @@ import org.json.JSONObject;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
-import static com.hotelaide.utils.SharedPrefs.ALLOW_UPDATE_APP;
-import static com.hotelaide.utils.SharedPrefs.APP_IS_RUNNING;
-import static com.hotelaide.utils.SharedPrefs.USER_EMAIL;
-import static com.hotelaide.utils.SharedPrefs.USER_F_NAME;
-import static com.hotelaide.utils.SharedPrefs.USER_IMG_AVATAR;
-import static com.hotelaide.utils.SharedPrefs.USER_IMG_BANNER;
-import static com.hotelaide.utils.SharedPrefs.USER_L_NAME;
+import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
+import static com.hotelaide.utils.StaticVariables.BroadcastValue;
+import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
+import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 
 public class ParentActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
@@ -75,7 +76,7 @@ public class ParentActivity extends AppCompatActivity implements
     private int drawer_id;
     private String toolbar_title;
     private final String TAG_LOG = "PARENT";
-    private final int INT_NAV_DRAWER_DELAY = 180;
+    private final int INT_NAV_DRAWER_DELAY = 220;
     private int INT_NAV_DRAWER_UPDATE_COUNTER = 0;
 
 
@@ -207,7 +208,7 @@ public class ParentActivity extends AppCompatActivity implements
 
     private void listenExitBroadcast() {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(Helpers.BroadcastValue);
+        filter.addAction(BroadcastValue);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

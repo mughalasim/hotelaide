@@ -68,7 +68,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.Helpers.START_FIRST_TIME;
+import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
+import static com.hotelaide.utils.StaticVariables.START_FIRST_TIME;
 
 public class StartUpSignUpFragment extends Fragment {
     private View rootview;
@@ -596,7 +597,7 @@ public class StartUpSignUpFragment extends Fragment {
                     if (main.getBoolean("success") && getActivity() != null) {
                         JSONObject data = main.getJSONObject("data");
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
-                            SharedPrefs.setString(SharedPrefs.ACCESS_TOKEN, data.getString("token"));
+                            SharedPrefs.setString(ACCESS_TOKEN, data.getString("token"));
                             startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(START_FIRST_TIME, START_FIRST_TIME));
                             getActivity().finish();
                         } else {

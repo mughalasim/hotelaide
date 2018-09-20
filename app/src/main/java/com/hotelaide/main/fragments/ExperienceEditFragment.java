@@ -46,9 +46,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_EDUCATION;
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
-import static com.hotelaide.utils.SharedPrefs.USER_ID;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class ExperienceEditFragment extends Fragment {
 
@@ -119,7 +119,8 @@ public class ExperienceEditFragment extends Fragment {
 
                     setDates();
 
-                    asyncGetAllWorkExperience();
+//                    asyncGetAllWorkExperience();
+                    populateExperienceFromDB();
                 }
 
             } catch (InflateException e) {

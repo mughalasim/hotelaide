@@ -22,7 +22,7 @@ import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;
 
-import static com.hotelaide.utils.SharedPrefs.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 
 public class ExperienceViewFragment extends Fragment {
 

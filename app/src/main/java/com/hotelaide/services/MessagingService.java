@@ -34,9 +34,9 @@ import org.json.JSONObject;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
-import static com.hotelaide.utils.SharedPrefs.ALLOW_MESSAGE_PUSH;
-import static com.hotelaide.utils.SharedPrefs.APP_IS_RUNNING;
-import static com.hotelaide.utils.SharedPrefs.USER_ID;
+import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
+import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class MessagingService extends Service {
     private static final String TAG_LOG = "MESSAGES";

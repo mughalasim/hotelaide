@@ -13,47 +13,33 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.PROFILE_URL;
+import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
+import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
+import static com.hotelaide.utils.StaticVariables.USER_DOB;
+import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
+import static com.hotelaide.utils.StaticVariables.USER_FB_ID;
+import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_GOOGLE_ID;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
+import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
+import static com.hotelaide.utils.StaticVariables.USER_LAT;
+import static com.hotelaide.utils.StaticVariables.USER_LNG;
+import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_PHONE;
+import static com.hotelaide.utils.StaticVariables.USER_POSTAL_CODE;
+import static com.hotelaide.utils.StaticVariables.USER_PROFILE_COMPLETION;
+import static com.hotelaide.utils.StaticVariables.USER_URL;
+
 public class SharedPrefs {
     @SuppressLint("StaticFieldLeak")
     private static final Context context = MyApplication.getAppContext();
     private static final String SHARED_PREFS = "SHARED_PREFS";
     private static final int MODE = Activity.MODE_PRIVATE;
-
-
-    // INTEGER VARIABLE NAMES ======================================================================
-    public static final String DATABASE_VERSION = "DATABASE_VERSION";
-    public static final String USER_ID = "USER_ID";
-
-    // STRING VARIABLE NAMES =======================================================================
-    public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
-
-    public static final String USER_F_NAME = "USER_F_NAME";
-    public static final String USER_L_NAME = "USER_L_NAME";
-    public static final String USER_EMAIL = "USER_EMAIL";
-    public static final String USER_IMG_AVATAR = "USER_IMG_AVATAR";
-    public static final String USER_IMG_BANNER = "USER_IMG_BANNER";
-    public static final String PROFILE_URL = "PROFILE_URL";
-    public static final String USER_COUNTRY_CODE = "USER_COUNTRY_CODE";
-    public static final String USER_PHONE = "USER_PHONE";
-    public static final String USER_DOB = "USER_DOB";
-    public static final String USER_FB_ID = "USER_FB_ID";
-    public static final String USER_GOOGLE_ID = "USER_GOOGLE_ID";
-    public static final String USER_LAT = "USER_LAT";
-    public static final String USER_LNG = "USER_LNG";
-    public static final String USER_POSTAL_CODE = "USER_POSTAL_CODE";
-    public static final String USER_FULL_ADDRESS = "USER_FULL_ADDRESS";
-    public static final String USER_COUNTY = "USER_COUNTY";
-    public static final String USER_URL = "USER_URL";
-    public static final String USER_PROFILE_COMPLETION = "USER_PROFILE_COMPLETION";
-
-    public static final String EXPERIENCE_TYPE_WORK = "WORK_EXPERIENCE";
-    public static final String EXPERIENCE_TYPE_EDUCATION = "EDUCATION_EXPERIENCE";
-
-
-    // BOOLEAN VARIABLE NAMES ======================================================================
-    public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
-    public static final String ALLOW_MESSAGE_PUSH = "ALLOW_MESSAGE_PUSH";
-    public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
 
 
     // GENERIC GET AND SET INTEGER VARIABLES =======================================================

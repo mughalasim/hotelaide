@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content">
 
                 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/map"
+                    android:id="@+id/fragment_map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_map"
@@ -73,7 +73,7 @@
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/btn_find_location"
-                    android:layout_alignBottom="@+id/map"
+                    android:layout_alignBottom="@+id/fragment_map"
                     android:layout_alignParentEnd="true"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
@@ -86,8 +86,6 @@
             </RelativeLayout>
 
         </android.support.v4.widget.NestedScrollView>
-
-        <include layout="@layout/layout_button"/>
 
         <TextView
             android:id="@+id/txt_latitude"
