@@ -12,24 +12,24 @@ android {
         versionCode rootProject.versionCode
         versionName "$rootProject.versionName"
         vectorDrawables.useSupportLibrary = true
-        resConfigs "en"
         multiDexEnabled rootProject.shrink
+        resConfigs "en"
     }
 
     buildTypes {
         release {
-            debuggable rootProject.shrink
+            debuggable rootProject.debugMode
             minifyEnabled rootProject.shrink
             useProguard rootProject.shrink
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             shrinkResources rootProject.shrink
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.shrink
             useProguard rootProject.shrink
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             shrinkResources rootProject.shrink
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
