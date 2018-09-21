@@ -1,6 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.2.70"
     repositories {
         google()
         jcenter()
@@ -14,8 +13,6 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.3.0-alpha11'
         classpath 'com.google.gms:google-services:4.0.1'
         classpath 'io.fabric.tools:gradle:1.25.4'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
     }
 }
 
@@ -47,13 +44,11 @@ ext {
 
     // Debug the App
     debugMode = true
-    minify = true
-    proguard = false
-    multidex = false
+    shrink = false
 
     // App Versioning
-    versionCode = 7
-    versionName = 0.7
+    versionCode = 8
+    versionName = 0.8
 }
 
 task clean(type: Delete) {

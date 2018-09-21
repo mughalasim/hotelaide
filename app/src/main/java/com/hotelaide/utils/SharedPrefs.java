@@ -108,8 +108,6 @@ public class SharedPrefs {
 
     // USER FUNCTIONS ==============================================================================
     public static Boolean setUser(JSONObject user) {
-        Helpers.LogThis(SHARED_PREFS, "USER SET");
-        Helpers.LogThis(SHARED_PREFS, user.toString());
         try {
             if (user.getString("account_type").equals(BuildConfig.ACCOUNT_TYPE)) {
 
@@ -171,21 +169,7 @@ public class SharedPrefs {
                 }
 
 
-                Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
-                        getInt(USER_ID) + " - " +
-                        getString(USER_F_NAME) + " - " +
-                        getString(USER_L_NAME) + " - " +
-                        getString(USER_EMAIL) + " - " +
-                        getString(USER_IMG_AVATAR) + " - " +
-                        getString(USER_IMG_BANNER) + " - " +
-                        getInt(USER_COUNTRY_CODE) + " - " +
-                        getInt(USER_PHONE) + " - " +
-                        getString(USER_DOB) + " - " +
-                        getString(USER_FB_ID) + " - " +
-                        getString(USER_GOOGLE_ID) + " - " +
-                        getDouble(USER_LAT) + " - " +
-                        getDouble(USER_LNG)
-                );
+                logUserModel();
 
                 return true;
             } else {
@@ -218,24 +202,27 @@ public class SharedPrefs {
         userModel.geo_lat = getDouble(USER_LAT);
         userModel.geo_lng = getDouble(USER_LNG);
 
-
-        Helpers.LogThis(SHARED_PREFS, "AFTER UPDATE " +
-                getInt(USER_ID) + " - " +
-                getString(USER_F_NAME) + " - " +
-                getString(USER_L_NAME) + " - " +
-                getString(USER_EMAIL) + " - " +
-                getString(USER_IMG_AVATAR) + " - " +
-                getString(USER_IMG_BANNER) + " - " +
-                getInt(USER_COUNTRY_CODE) + " - " +
-                getInt(USER_PHONE) + " - " +
-                getString(USER_DOB) + " - " +
-                getString(USER_FB_ID) + " - " +
-                getString(USER_GOOGLE_ID) + " - " +
-                getDouble(USER_LAT) + " - " +
-                getDouble(USER_LNG)
-        );
+        logUserModel();
 
         return userModel;
+    }
+
+    public static void logUserModel(){
+        Helpers.LogThis(SHARED_PREFS,
+                "\n UID: " + getInt(USER_ID)
+                        + "\n F NAME: " + getString(USER_F_NAME)
+                        + "\n L NAME: " + getString(USER_L_NAME)
+                        + "\n EMAIL: " + getString(USER_EMAIL)
+                        + "\n AVATAR: " + getString(USER_IMG_AVATAR)
+                        + "\n BANNER: " + getString(USER_IMG_BANNER)
+                        + "\n COUNTRY CODE: " + getInt(USER_COUNTRY_CODE)
+                        + "\n PHONE: " + getInt(USER_PHONE)
+                        + "\n DOB: " + getString(USER_DOB)
+                        + "\n FB ID: " + getString(USER_FB_ID)
+                        + "\n GOOGLE ID: " + getString(USER_GOOGLE_ID)
+                        + "\n LAT: " + getDouble(USER_LAT)
+                        + "\n LNG: " + getDouble(USER_LNG)
+        );
     }
 
 }

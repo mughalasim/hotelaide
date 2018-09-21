@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     sothree:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_height="match_parent">
@@ -55,21 +54,15 @@
             android:text="@string/txt_map_location"
             android:textColor="@color/colorPrimary" />
 
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_small">
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small">
 
-                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/fragment_map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/map_view"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_map"
-                    tools:layout="@layout/activity_splash_screen" />
+                    android:layout_height="@dimen/height_map" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/btn_find_location"
@@ -85,7 +78,6 @@
 
             </RelativeLayout>
 
-        </android.support.v4.widget.NestedScrollView>
 
         <TextView
             android:id="@+id/txt_latitude"

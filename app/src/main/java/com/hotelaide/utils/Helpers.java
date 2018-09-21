@@ -732,7 +732,7 @@ public class Helpers {
     }
 
 
-    // NOTIFICATION CREATER ========================================================================
+    // NOTIFICATION CREATOR ========================================================================
     public void createNotification(Context context, String MessageTitle, String messageBody, Bundle data) {
         Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -781,7 +781,7 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    LogThis(TAG_LOG, main.toString());
+//                    LogThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         SharedPrefs.setUser(main.getJSONObject("data"));
@@ -814,7 +814,7 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    LogThis(TAG_LOG, main.toString());
+//                    LogThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
@@ -856,7 +856,7 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    LogThis(TAG_LOG, main.toString());
+//                    LogThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
@@ -897,7 +897,7 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    LogThis(TAG_LOG, main.toString());
+//                    LogThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");

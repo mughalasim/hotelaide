@@ -26,6 +26,7 @@ import com.hotelaide.utils.SharedPrefs;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.hotelaide.utils.StaticVariables.INT_GOOGLE_MAP_ZOOM;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_LAT;
 import static com.hotelaide.utils.StaticVariables.USER_LNG;
@@ -37,17 +38,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private Toolbar toolbar;
 
-    private MaterialButton btn_confirm;
-
-    private double
-            LATITUDE = 0,
-            LONGITUDE = 0;
+    public static double
+            MAP_ACTIVITY_LATITUDE = 0.0,
+            MAP_ACTIVITY_LONGITUDE = 0.0;
 
     // OVERRIDE METHODS ============================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        MAP_ACTIVITY_LATITUDE = SharedPrefs.getDouble(USER_LAT);
+        MAP_ACTIVITY_LONGITUDE = SharedPrefs.getDouble(USER_LNG);
 
         helpers = new Helpers(MapActivity.this);
 
@@ -67,29 +69,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onBackPressed() {
-        sendBackResult();
-    }
-
-    @Override
     public void onMapReady(final GoogleMap google_map) {
         if (google_map != null) {
 
             google_map.clear();
 
-            if (LATITUDE != 0) {
-                LatLng location = new LatLng(LATITUDE, LONGITUDE);
+            if (MAP_ACTIVITY_LATITUDE != 0) {
+                LatLng location = new LatLng(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE);
 
                 google_map.moveCamera(CameraUpdateFactory.newLatLng(location));
-                google_map.animateCamera(CameraUpdateFactory.zoomTo(14f));
+                google_map.animateCamera(CameraUpdateFactory.zoomTo(INT_GOOGLE_MAP_ZOOM));
 
                 Marker my_marker = google_map.addMarker(new MarkerOptions().position(
-                        new LatLng(LATITUDE, LONGITUDE))
+                        new LatLng(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE))
                         .title(SharedPrefs.getString(USER_F_NAME)));
                 my_marker.setVisible(true);
                 my_marker.showInfoWindow();
                 my_marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-
             }
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
@@ -106,8 +102,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     my_marker.setVisible(true);
                     my_marker.showInfoWindow();
                     my_marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                    LATITUDE = latLng.latitude;
-                    LONGITUDE = latLng.latitude;
+                    MAP_ACTIVITY_LATITUDE = latLng.latitude;
+                    MAP_ACTIVITY_LONGITUDE = latLng.longitude;
                 }
             });
 
@@ -147,12 +143,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void findAllViews() {
         // Top Generic Relative Layout
         toolbar = findViewById(R.id.toolbar);
-        btn_confirm = findViewById(R.id.btn_confirm);
+        MaterialButton btn_confirm = findViewById(R.id.btn_confirm);
         btn_confirm.setText("SET NEW LOCATION");
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendBackResult();
+                onBackPressed();
             }
         });
 
@@ -160,19 +156,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void startUpMap() {
         if (helpers.validateGooglePlayServices(MapActivity.this)) {
-            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
             assert fm != null;
             fm.getMapAsync(this);
         } else {
             helpers.ToastMessage(MapActivity.this, getString(R.string.error_update_google_play));
             onBackPressed();
         }
-    }
-
-    private void sendBackResult() {
-        SharedPrefs.setDouble(USER_LAT, LATITUDE);
-        SharedPrefs.setDouble(USER_LNG, LONGITUDE);
-        finish();
     }
 
 }

@@ -152,10 +152,6 @@
             android:name=".services.BackgroundFetchService"
             android:process=":service" />
 
-        <service
-            android:name=".services.SingleLocationService"
-            android:process=":service" />
-
 
         <!-- FACEBOOK LOGIN =====================================================================-->
 

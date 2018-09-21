@@ -231,7 +231,7 @@ android.arch.lifecycle.ReportFragment -> android.arch.lifecycle.o:
     void dispatchStart(android.arch.lifecycle.ReportFragment$ActivityInitializationListener) -> b
     void injectIfNeededIn(android.app.Activity) -> a
 android.arch.lifecycle.ReportFragment$ActivityInitializationListener -> android.arch.lifecycle.o$a:
-    void onResume() -> d
+    void onResume() -> c
     void onStart() -> a
 android.arch.lifecycle.SingleGeneratedAdapterObserver -> android.arch.lifecycle.SingleGeneratedAdapterObserver:
     android.arch.lifecycle.GeneratedAdapter mGeneratedAdapter -> a
@@ -5630,13 +5630,13 @@ android.support.v4.media.RatingCompat$1 -> android.support.v4.media.j:
 android.support.v4.media.session.IMediaControllerCallback -> android.support.v4.media.session.a:
     void onCaptioningEnabledChanged(boolean) -> a
     void onEvent(java.lang.String,android.os.Bundle) -> a
-    void onExtrasChanged(android.os.Bundle) -> a
+    void onExtrasChanged(android.os.Bundle) -> c
     void onMetadataChanged(android.support.v4.media.MediaMetadataCompat) -> a
     void onPlaybackStateChanged(android.support.v4.media.session.PlaybackStateCompat) -> a
     void onQueueChanged(java.util.List) -> a
     void onQueueTitleChanged(java.lang.CharSequence) -> a
     void onRepeatModeChanged(int) -> a
-    void onSessionDestroyed() -> g
+    void onSessionDestroyed() -> h
     void onSessionReady() -> j
     void onShuffleModeChanged(int) -> b
     void onShuffleModeChangedRemoved(boolean) -> b
@@ -5666,24 +5666,24 @@ android.support.v4.media.session.MediaControllerCompat$Callback$MessageHandler -
 android.support.v4.media.session.MediaControllerCompat$Callback$StubApi21 -> android.support.v4.media.session.MediaControllerCompat$a$b:
     java.lang.ref.WeakReference mCallback -> a
     void onAudioInfoChanged(int,int,int,int,int) -> a
-    void onExtrasChanged(android.os.Bundle) -> a
+    void onExtrasChanged(android.os.Bundle) -> c
     void onMetadataChanged(java.lang.Object) -> a
     void onPlaybackStateChanged(java.lang.Object) -> b
     void onQueueChanged(java.util.List) -> a
     void onQueueTitleChanged(java.lang.CharSequence) -> a
-    void onSessionDestroyed() -> g
+    void onSessionDestroyed() -> h
     void onSessionEvent(java.lang.String,android.os.Bundle) -> a
 android.support.v4.media.session.MediaControllerCompat$Callback$StubCompat -> android.support.v4.media.session.MediaControllerCompat$a$c:
     java.lang.ref.WeakReference mCallback -> a
     void onCaptioningEnabledChanged(boolean) -> a
     void onEvent(java.lang.String,android.os.Bundle) -> a
-    void onExtrasChanged(android.os.Bundle) -> a
+    void onExtrasChanged(android.os.Bundle) -> c
     void onMetadataChanged(android.support.v4.media.MediaMetadataCompat) -> a
     void onPlaybackStateChanged(android.support.v4.media.session.PlaybackStateCompat) -> a
     void onQueueChanged(java.util.List) -> a
     void onQueueTitleChanged(java.lang.CharSequence) -> a
     void onRepeatModeChanged(int) -> a
-    void onSessionDestroyed() -> g
+    void onSessionDestroyed() -> h
     void onSessionReady() -> j
     void onShuffleModeChanged(int) -> b
     void onShuffleModeChangedRemoved(boolean) -> b
@@ -5698,11 +5698,11 @@ android.support.v4.media.session.MediaControllerCompat$MediaControllerImplApi21 
 android.support.v4.media.session.MediaControllerCompat$MediaControllerImplApi21$ExtraBinderRequestResultReceiver -> android.support.v4.media.session.MediaControllerCompat$MediaControllerImplApi21$ExtraBinderRequestResultReceiver:
     java.lang.ref.WeakReference mMediaControllerImpl -> a
 android.support.v4.media.session.MediaControllerCompat$MediaControllerImplApi21$ExtraCallback -> android.support.v4.media.session.MediaControllerCompat$MediaControllerImplApi21$a:
-    void onExtrasChanged(android.os.Bundle) -> a
+    void onExtrasChanged(android.os.Bundle) -> c
     void onMetadataChanged(android.support.v4.media.MediaMetadataCompat) -> a
     void onQueueChanged(java.util.List) -> a
     void onQueueTitleChanged(java.lang.CharSequence) -> a
-    void onSessionDestroyed() -> g
+    void onSessionDestroyed() -> h
     void onVolumeInfoChanged(android.support.v4.media.session.ParcelableVolumeInfo) -> a
 android.support.v4.media.session.MediaControllerCompat$PlaybackInfo -> android.support.v4.media.session.MediaControllerCompat$c:
     int mAudioStream -> b
@@ -5714,12 +5714,12 @@ android.support.v4.media.session.MediaControllerCompatApi21 -> android.support.v
     java.lang.Object createCallback(android.support.v4.media.session.MediaControllerCompatApi21$Callback) -> a
 android.support.v4.media.session.MediaControllerCompatApi21$Callback -> android.support.v4.media.session.c$a:
     void onAudioInfoChanged(int,int,int,int,int) -> a
-    void onExtrasChanged(android.os.Bundle) -> a
+    void onExtrasChanged(android.os.Bundle) -> c
     void onMetadataChanged(java.lang.Object) -> a
     void onPlaybackStateChanged(java.lang.Object) -> b
     void onQueueChanged(java.util.List) -> a
     void onQueueTitleChanged(java.lang.CharSequence) -> a
-    void onSessionDestroyed() -> g
+    void onSessionDestroyed() -> h
     void onSessionEvent(java.lang.String,android.os.Bundle) -> a
 android.support.v4.media.session.MediaControllerCompatApi21$CallbackProxy -> android.support.v4.media.session.c$b:
     android.support.v4.media.session.MediaControllerCompatApi21$Callback mCallback -> a
@@ -16847,7 +16847,7 @@ com.google.android.gms.auth.api.signin.internal.zzp -> com.google.android.gms.au
     void clear() -> a
     void zzc(com.google.android.gms.auth.api.signin.GoogleSignInOptions,com.google.android.gms.auth.api.signin.GoogleSignInAccount) -> a
 com.google.android.gms.auth.api.signin.internal.zzq -> com.google.android.gms.auth.api.signin.internal.q:
-    void zzj() -> u
+    void zzj() -> w
     void zzk() -> k
 com.google.android.gms.auth.api.signin.internal.zzr -> com.google.android.gms.auth.api.signin.internal.r:
     boolean dispatchTransaction(int,android.os.Parcel,android.os.Parcel,int) -> a
@@ -16865,8 +16865,8 @@ com.google.android.gms.auth.api.signin.internal.zzv -> com.google.android.gms.au
     void zze(com.google.android.gms.auth.api.signin.internal.zzs,com.google.android.gms.auth.api.signin.GoogleSignInOptions) -> b
 com.google.android.gms.auth.api.signin.internal.zzw -> com.google.android.gms.auth.api.signin.internal.w:
     android.content.Context mContext -> b
-    void zzl() -> v
-    void zzj() -> u
+    void zzl() -> x
+    void zzj() -> w
     void zzk() -> k
 com.google.android.gms.auth.api.signin.internal.zzx -> com.google.android.gms.auth.api.signin.internal.x:
 com.google.android.gms.auth.api.signin.internal.zzy -> com.google.android.gms.auth.api.signin.internal.y:
@@ -17057,7 +17057,7 @@ com.google.android.gms.common.GoogleCertificates -> com.google.android.gms.commo
 com.google.android.gms.common.GoogleCertificates$CertData -> com.google.android.gms.common.i$a:
     int zzbc -> b
     byte[] zzd(java.lang.String) -> d
-    byte[] getBytes() -> v
+    byte[] getBytes() -> x
     com.google.android.gms.dynamic.IObjectWrapper getBytesWrapped() -> p
     int getHashCode() -> l
 com.google.android.gms.common.GoogleCertificatesQuery -> com.google.android.gms.common.j:
@@ -17132,7 +17132,7 @@ com.google.android.gms.common.api.Api$AnyClient -> com.google.android.gms.common
 com.google.android.gms.common.api.Api$AnyClientKey -> com.google.android.gms.common.api.a$c:
 com.google.android.gms.common.api.Api$ApiOptions -> com.google.android.gms.common.api.a$d:
 com.google.android.gms.common.api.Api$ApiOptions$HasAccountOptions -> com.google.android.gms.common.api.a$d$a:
-    android.accounts.Account getAccount() -> c
+    android.accounts.Account getAccount() -> d
 com.google.android.gms.common.api.Api$ApiOptions$HasGoogleSignInAccountOptions -> com.google.android.gms.common.api.a$d$b:
     com.google.android.gms.auth.api.signin.GoogleSignInAccount getGoogleSignInAccount() -> a
 com.google.android.gms.common.api.Api$ApiOptions$HasOptions -> com.google.android.gms.common.api.a$d$c:
@@ -17949,13 +17949,13 @@ com.google.android.gms.common.api.internal.zzby -> com.google.android.gms.common
     com.google.android.gms.common.api.internal.zzcb zza(com.google.android.gms.common.api.internal.zzby) -> a
     void zza(com.google.android.gms.common.api.internal.zzby,com.google.android.gms.signin.internal.SignInResponse) -> a
     void zzb(com.google.android.gms.signin.internal.SignInResponse) -> b
-    com.google.android.gms.signin.SignInClient zzbt() -> v
+    com.google.android.gms.signin.SignInClient zzbt() -> x
     void onConnected(android.os.Bundle) -> e
     void onConnectionFailed(com.google.android.gms.common.ConnectionResult) -> a
     void onConnectionSuspended(int) -> e
     void onSignInComplete(com.google.android.gms.signin.internal.SignInResponse) -> a
     void zza(com.google.android.gms.common.api.internal.zzcb) -> a
-    void zzbz() -> w
+    void zzbz() -> y
 com.google.android.gms.common.api.internal.zzbz -> com.google.android.gms.common.api.internal.oa:
     com.google.android.gms.common.api.internal.zzby zzlx -> a
 com.google.android.gms.common.api.internal.zzc -> com.google.android.gms.common.api.internal.pa:
@@ -18601,11 +18601,11 @@ com.google.android.gms.common.internal.GoogleApiAvailabilityCache -> com.google.
     int getClientAvailability(android.content.Context,com.google.android.gms.common.api.Api$Client) -> a
     void flush() -> a
 com.google.android.gms.common.internal.IAccountAccessor -> com.google.android.gms.common.internal.r:
-    android.accounts.Account getAccount() -> c
+    android.accounts.Account getAccount() -> d
 com.google.android.gms.common.internal.IAccountAccessor$Stub -> com.google.android.gms.common.internal.r$a:
     com.google.android.gms.common.internal.IAccountAccessor asInterface(android.os.IBinder) -> a
 com.google.android.gms.common.internal.IAccountAccessor$Stub$Proxy -> com.google.android.gms.common.internal.r$a$a:
-    android.accounts.Account getAccount() -> c
+    android.accounts.Account getAccount() -> d
 com.google.android.gms.common.internal.ICancelToken -> com.google.android.gms.common.internal.s:
 com.google.android.gms.common.internal.ICertData -> com.google.android.gms.common.internal.t:
     com.google.android.gms.dynamic.IObjectWrapper getBytesWrapped() -> p
@@ -19142,18 +19142,18 @@ com.google.android.gms.common.wrappers.Wrappers -> com.google.android.gms.common
     com.google.android.gms.common.wrappers.PackageManagerWrapper getPackageManagerWrapper(android.content.Context) -> b
 com.google.android.gms.common.zzb -> com.google.android.gms.common.p:
     byte[] zzbd -> c
-    byte[] getBytes() -> v
+    byte[] getBytes() -> x
 com.google.android.gms.common.zzc -> com.google.android.gms.common.q:
     java.lang.ref.WeakReference zzbe -> d
     java.lang.ref.WeakReference zzbf -> c
-    byte[] getBytes() -> v
-    byte[] zzf() -> w
+    byte[] getBytes() -> x
+    byte[] zzf() -> y
 com.google.android.gms.common.zzd -> com.google.android.gms.common.r:
     com.google.android.gms.common.GoogleCertificates$CertData[] zzbg -> a
 com.google.android.gms.common.zze -> com.google.android.gms.common.s:
-    byte[] zzf() -> w
+    byte[] zzf() -> y
 com.google.android.gms.common.zzf -> com.google.android.gms.common.t:
-    byte[] zzf() -> w
+    byte[] zzf() -> y
 com.google.android.gms.common.zzg -> com.google.android.gms.common.u:
     boolean zzbl -> b
     java.lang.String zzbm -> c
@@ -19207,12 +19207,12 @@ com.google.android.gms.dynamic.IObjectWrapper$Stub -> com.google.android.gms.dyn
 com.google.android.gms.dynamic.IObjectWrapper$Stub$Proxy -> com.google.android.gms.dynamic.b$a$a:
 com.google.android.gms.dynamic.LifecycleDelegate -> com.google.android.gms.dynamic.c:
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    void onCreate(android.os.Bundle) -> c
-    void onDestroyView() -> h
+    void onCreate(android.os.Bundle) -> b
+    void onDestroyView() -> f
     void onInflate(android.app.Activity,android.os.Bundle,android.os.Bundle) -> a
-    void onPause() -> f
-    void onResume() -> d
-    void onSaveInstanceState(android.os.Bundle) -> b
+    void onPause() -> e
+    void onResume() -> c
+    void onSaveInstanceState(android.os.Bundle) -> a
     void onStart() -> a
     void onStop() -> b
 com.google.android.gms.dynamic.ObjectWrapper -> com.google.android.gms.dynamic.d:
@@ -19417,7 +19417,7 @@ com.google.android.gms.flags.zza -> b.a.a.a.d.f:
 com.google.android.gms.internal.ads_identifier.zza -> b.a.a.a.e.a.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> v
+    android.os.Parcel obtainAndWriteInterfaceToken() -> x
     android.os.Parcel transactAndReadException(int,android.os.Parcel) -> a
 com.google.android.gms.internal.ads_identifier.zzb -> b.a.a.a.e.a.b:
     com.google.android.gms.internal.ads_identifier.zzd zzc -> a
@@ -19428,16 +19428,16 @@ com.google.android.gms.internal.ads_identifier.zzc -> b.a.a.a.e.a.c:
 com.google.android.gms.internal.ads_identifier.zzd -> b.a.a.a.e.a.d:
 com.google.android.gms.internal.ads_identifier.zze -> b.a.a.a.e.a.e:
     boolean zzb(boolean) -> c
-    boolean zzc() -> e
+    boolean zzc() -> g
 com.google.android.gms.internal.ads_identifier.zzf -> b.a.a.a.e.a.f:
     com.google.android.gms.internal.ads_identifier.zze zza(android.os.IBinder) -> a
 com.google.android.gms.internal.ads_identifier.zzg -> b.a.a.a.e.a.g:
     boolean zzb(boolean) -> c
-    boolean zzc() -> e
+    boolean zzc() -> g
 com.google.android.gms.internal.auth-api.zzc -> b.a.a.a.e.b.a:
     android.os.IBinder zzc -> a
     java.lang.String zzd -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> v
+    android.os.Parcel obtainAndWriteInterfaceToken() -> x
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> a
 com.google.android.gms.internal.auth-api.zzd -> b.a.a.a.e.b.b:
     com.google.android.gms.internal.auth-api.zzf zze -> a
@@ -19475,7 +19475,7 @@ com.google.android.gms.internal.auth.zzar -> b.a.a.a.e.c.e:
 com.google.android.gms.internal.clearcut.zza -> com.google.android.gms.internal.clearcut.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> v
+    android.os.Parcel obtainAndWriteInterfaceToken() -> x
     void transactOneway(int,android.os.Parcel) -> a
 com.google.android.gms.internal.clearcut.zzaa -> com.google.android.gms.internal.clearcut.b:
     android.os.UserManager zzdc -> a
@@ -21361,7 +21361,7 @@ com.google.android.gms.internal.clearcut.zzz -> com.google.android.gms.internal.
 com.google.android.gms.internal.firebase_auth.zza -> com.google.android.gms.internal.firebase_auth.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> v
+    android.os.Parcel obtainAndWriteInterfaceToken() -> x
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> a
 com.google.android.gms.internal.firebase_auth.zzak -> com.google.android.gms.internal.firebase_auth.b:
     boolean zzao -> k
@@ -21495,7 +21495,7 @@ com.google.android.gms.internal.firebase_messaging.zzh -> b.a.a.a.e.d.h:
 com.google.android.gms.internal.maps.zza -> b.a.a.a.e.e.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> v
+    android.os.Parcel obtainAndWriteInterfaceToken() -> x
     android.os.Parcel transactAndReadException(int,android.os.Parcel) -> a
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> b
 com.google.android.gms.internal.maps.zzb -> b.a.a.a.e.e.b:
@@ -22451,7 +22451,7 @@ com.google.android.gms.internal.measurement.zzgl -> com.google.android.gms.inter
 com.google.android.gms.internal.measurement.zzq -> com.google.android.gms.internal.measurement.Wa:
     android.os.IBinder zzqt -> a
     java.lang.String zzqu -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> v
+    android.os.Parcel obtainAndWriteInterfaceToken() -> x
     android.os.Parcel transactAndReadException(int,android.os.Parcel) -> a
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> b
 com.google.android.gms.internal.measurement.zzr -> com.google.android.gms.internal.measurement.Xa:
@@ -24315,7 +24315,7 @@ com.google.android.gms.internal.phenotype.zze -> b.a.a.a.e.f.e:
 com.google.android.gms.internal.stable.zza -> b.a.a.a.e.g.a:
     android.os.IBinder zza -> a
     java.lang.String zzb -> b
-    android.os.Parcel obtainAndWriteInterfaceToken() -> v
+    android.os.Parcel obtainAndWriteInterfaceToken() -> x
     android.os.Parcel transactAndReadException(int,android.os.Parcel) -> a
     void transactAndReadExceptionReturnVoid(int,android.os.Parcel) -> b
     void transactOneway(int,android.os.Parcel) -> c
@@ -24341,7 +24341,9 @@ com.google.android.gms.maps.CameraUpdateFactory -> com.google.android.gms.maps.b
     com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzb() -> a
     void zza(com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate) -> a
 com.google.android.gms.maps.GoogleMap -> com.google.android.gms.maps.c:
+    com.google.android.gms.maps.UiSettings zzh -> b
     com.google.android.gms.maps.internal.IGoogleMapDelegate zzg -> a
+    com.google.android.gms.maps.UiSettings getUiSettings() -> b
     com.google.android.gms.maps.model.Marker addMarker(com.google.android.gms.maps.model.MarkerOptions) -> a
     void animateCamera(com.google.android.gms.maps.CameraUpdate) -> b
     void clear() -> a
@@ -24394,6 +24396,36 @@ com.google.android.gms.maps.GoogleMapOptions -> com.google.android.gms.maps.Goog
     int getMapType() -> U
     java.lang.Float getMaxZoomPreference() -> X
     java.lang.Float getMinZoomPreference() -> W
+com.google.android.gms.maps.MapView -> com.google.android.gms.maps.MapView:
+    com.google.android.gms.maps.MapView$zzb zzbf -> a
+    void getMapAsync(com.google.android.gms.maps.OnMapReadyCallback) -> a
+    void onCreate(android.os.Bundle) -> a
+    void onDestroy() -> c
+    void onLowMemory() -> d
+    void onPause() -> b
+    void onResume() -> a
+com.google.android.gms.maps.MapView$zza -> com.google.android.gms.maps.MapView$a:
+    android.view.View zzbh -> c
+    android.view.ViewGroup parent -> a
+    com.google.android.gms.maps.internal.IMapViewDelegate zzbg -> b
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    void getMapAsync(com.google.android.gms.maps.OnMapReadyCallback) -> a
+    void onCreate(android.os.Bundle) -> b
+    void onDestroyView() -> f
+    void onInflate(android.app.Activity,android.os.Bundle,android.os.Bundle) -> a
+    void onPause() -> e
+    void onResume() -> c
+    void onSaveInstanceState(android.os.Bundle) -> a
+    void onStart() -> a
+    void onStop() -> b
+com.google.android.gms.maps.MapView$zzb -> com.google.android.gms.maps.MapView$b:
+    android.content.Context zzbj -> f
+    android.view.ViewGroup zzbi -> e
+    com.google.android.gms.dynamic.OnDelegateCreatedListener zzbc -> g
+    com.google.android.gms.maps.GoogleMapOptions zzbk -> h
+    java.util.List zzbe -> i
+    void createDelegate(com.google.android.gms.dynamic.OnDelegateCreatedListener) -> a
+    void getMapAsync(com.google.android.gms.maps.OnMapReadyCallback) -> a
 com.google.android.gms.maps.MapsInitializer -> com.google.android.gms.maps.d:
     boolean zzbl -> a
     int initialize(android.content.Context) -> a
@@ -24408,12 +24440,12 @@ com.google.android.gms.maps.SupportMapFragment$zza -> com.google.android.gms.map
     com.google.android.gms.maps.internal.IMapFragmentDelegate zzba -> b
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
     void getMapAsync(com.google.android.gms.maps.OnMapReadyCallback) -> a
-    void onCreate(android.os.Bundle) -> c
-    void onDestroyView() -> h
+    void onCreate(android.os.Bundle) -> b
+    void onDestroyView() -> f
     void onInflate(android.app.Activity,android.os.Bundle,android.os.Bundle) -> a
-    void onPause() -> f
-    void onResume() -> d
-    void onSaveInstanceState(android.os.Bundle) -> b
+    void onPause() -> e
+    void onResume() -> c
+    void onSaveInstanceState(android.os.Bundle) -> a
     void onStart() -> a
     void onStop() -> b
 com.google.android.gms.maps.SupportMapFragment$zzb -> com.google.android.gms.maps.SupportMapFragment$b:
@@ -24426,51 +24458,68 @@ com.google.android.gms.maps.SupportMapFragment$zzb -> com.google.android.gms.map
     void zzc() -> i
     void createDelegate(com.google.android.gms.dynamic.OnDelegateCreatedListener) -> a
     void getMapAsync(com.google.android.gms.maps.OnMapReadyCallback) -> a
+com.google.android.gms.maps.UiSettings -> com.google.android.gms.maps.g:
+    com.google.android.gms.maps.internal.IUiSettingsDelegate zzci -> a
+    void setAllGesturesEnabled(boolean) -> a
 com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate -> com.google.android.gms.maps.a.a:
     com.google.android.gms.dynamic.IObjectWrapper newLatLng(com.google.android.gms.maps.model.LatLng) -> b
     com.google.android.gms.dynamic.IObjectWrapper zoomTo(float) -> b
 com.google.android.gms.maps.internal.IGoogleMapDelegate -> com.google.android.gms.maps.a.b:
     com.google.android.gms.internal.maps.zzt addMarker(com.google.android.gms.maps.model.MarkerOptions) -> a
+    com.google.android.gms.maps.internal.IUiSettingsDelegate getUiSettings() -> s
     void animateCamera(com.google.android.gms.dynamic.IObjectWrapper) -> c
     void moveCamera(com.google.android.gms.dynamic.IObjectWrapper) -> a
-    void setMyLocationEnabled(boolean) -> e
+    void setMyLocationEnabled(boolean) -> f
     void setOnMapClickListener(com.google.android.gms.maps.internal.zzaj) -> a
     void setOnMyLocationButtonClickListener(com.google.android.gms.maps.internal.zzav) -> a
 com.google.android.gms.maps.internal.IMapFragmentDelegate -> com.google.android.gms.maps.a.c:
     com.google.android.gms.dynamic.IObjectWrapper onCreateView(com.google.android.gms.dynamic.IObjectWrapper,com.google.android.gms.dynamic.IObjectWrapper,android.os.Bundle) -> a
     void getMapAsync(com.google.android.gms.maps.internal.zzap) -> a
-    void onCreate(android.os.Bundle) -> c
-    void onDestroyView() -> h
+    void onCreate(android.os.Bundle) -> b
+    void onDestroyView() -> f
     void onInflate(com.google.android.gms.dynamic.IObjectWrapper,com.google.android.gms.maps.GoogleMapOptions,android.os.Bundle) -> a
-    void onPause() -> f
-    void onResume() -> d
-    void onSaveInstanceState(android.os.Bundle) -> b
+    void onPause() -> e
+    void onResume() -> c
+    void onSaveInstanceState(android.os.Bundle) -> a
     void onStart() -> a
     void onStop() -> b
-com.google.android.gms.maps.internal.MapLifecycleDelegate -> com.google.android.gms.maps.a.d:
-com.google.android.gms.maps.internal.zza -> com.google.android.gms.maps.a.e:
+com.google.android.gms.maps.internal.IMapViewDelegate -> com.google.android.gms.maps.a.d:
+    com.google.android.gms.dynamic.IObjectWrapper getView() -> v
+    void getMapAsync(com.google.android.gms.maps.internal.zzap) -> a
+    void onCreate(android.os.Bundle) -> b
+    void onPause() -> e
+    void onResume() -> c
+    void onSaveInstanceState(android.os.Bundle) -> a
+    void onStart() -> a
+    void onStop() -> b
+com.google.android.gms.maps.internal.IUiSettingsDelegate -> com.google.android.gms.maps.a.e:
+    void setAllGesturesEnabled(boolean) -> e
+com.google.android.gms.maps.internal.MapLifecycleDelegate -> com.google.android.gms.maps.a.f:
+com.google.android.gms.maps.internal.zza -> com.google.android.gms.maps.a.g:
     byte zza(java.lang.Boolean) -> a
     java.lang.Boolean zza(byte) -> a
-com.google.android.gms.maps.internal.zzaj -> com.google.android.gms.maps.a.f:
+com.google.android.gms.maps.internal.zzaj -> com.google.android.gms.maps.a.h:
     void onMapClick(com.google.android.gms.maps.model.LatLng) -> a
-com.google.android.gms.maps.internal.zzak -> com.google.android.gms.maps.a.g:
+com.google.android.gms.maps.internal.zzak -> com.google.android.gms.maps.a.i:
     boolean dispatchTransaction(int,android.os.Parcel,android.os.Parcel,int) -> a
-com.google.android.gms.maps.internal.zzap -> com.google.android.gms.maps.a.h:
+com.google.android.gms.maps.internal.zzap -> com.google.android.gms.maps.a.j:
     void zza(com.google.android.gms.maps.internal.IGoogleMapDelegate) -> a
-com.google.android.gms.maps.internal.zzaq -> com.google.android.gms.maps.a.i:
+com.google.android.gms.maps.internal.zzaq -> com.google.android.gms.maps.a.k:
     boolean dispatchTransaction(int,android.os.Parcel,android.os.Parcel,int) -> a
-com.google.android.gms.maps.internal.zzav -> com.google.android.gms.maps.a.j:
+com.google.android.gms.maps.internal.zzav -> com.google.android.gms.maps.a.l:
     boolean onMyLocationButtonClick() -> i
-com.google.android.gms.maps.internal.zzaw -> com.google.android.gms.maps.a.k:
+com.google.android.gms.maps.internal.zzaw -> com.google.android.gms.maps.a.m:
     boolean dispatchTransaction(int,android.os.Parcel,android.os.Parcel,int) -> a
-com.google.android.gms.maps.internal.zzb -> com.google.android.gms.maps.a.l:
+com.google.android.gms.maps.internal.zzb -> com.google.android.gms.maps.a.n:
     com.google.android.gms.dynamic.IObjectWrapper newLatLng(com.google.android.gms.maps.model.LatLng) -> b
     com.google.android.gms.dynamic.IObjectWrapper zoomTo(float) -> b
-com.google.android.gms.maps.internal.zzby -> com.google.android.gms.maps.a.m:
+com.google.android.gms.maps.internal.zzbx -> com.google.android.gms.maps.a.o:
+    void setAllGesturesEnabled(boolean) -> e
+com.google.android.gms.maps.internal.zzby -> com.google.android.gms.maps.a.p:
     android.os.Parcelable zza(android.os.Bundle,java.lang.String) -> a
     void zza(android.os.Bundle,android.os.Bundle) -> a
     void zza(android.os.Bundle,java.lang.String,android.os.Parcelable) -> a
-com.google.android.gms.maps.internal.zzbz -> com.google.android.gms.maps.a.n:
+com.google.android.gms.maps.internal.zzbz -> com.google.android.gms.maps.a.q:
     android.content.Context zzcj -> b
     com.google.android.gms.maps.internal.zze zzck -> c
     java.lang.String TAG -> a
@@ -24479,32 +24528,44 @@ com.google.android.gms.maps.internal.zzbz -> com.google.android.gms.maps.a.n:
     com.google.android.gms.maps.internal.zze zza(android.content.Context) -> a
     java.lang.Object zza(java.lang.Class) -> a
     java.lang.Object zza(java.lang.ClassLoader,java.lang.String) -> a
-com.google.android.gms.maps.internal.zze -> com.google.android.gms.maps.a.o:
-    com.google.android.gms.internal.maps.zze zze() -> t
-    com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzd() -> s
+com.google.android.gms.maps.internal.zze -> com.google.android.gms.maps.a.r:
+    com.google.android.gms.internal.maps.zze zze() -> u
+    com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzd() -> t
     com.google.android.gms.maps.internal.IMapFragmentDelegate zzc(com.google.android.gms.dynamic.IObjectWrapper) -> d
+    com.google.android.gms.maps.internal.IMapViewDelegate zza(com.google.android.gms.dynamic.IObjectWrapper,com.google.android.gms.maps.GoogleMapOptions) -> a
     void zza(com.google.android.gms.dynamic.IObjectWrapper,int) -> a
-com.google.android.gms.maps.internal.zzf -> com.google.android.gms.maps.a.p:
-    com.google.android.gms.internal.maps.zze zze() -> t
-    com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzd() -> s
+com.google.android.gms.maps.internal.zzf -> com.google.android.gms.maps.a.s:
+    com.google.android.gms.internal.maps.zze zze() -> u
+    com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate zzd() -> t
     com.google.android.gms.maps.internal.IMapFragmentDelegate zzc(com.google.android.gms.dynamic.IObjectWrapper) -> d
+    com.google.android.gms.maps.internal.IMapViewDelegate zza(com.google.android.gms.dynamic.IObjectWrapper,com.google.android.gms.maps.GoogleMapOptions) -> a
     void zza(com.google.android.gms.dynamic.IObjectWrapper,int) -> a
-com.google.android.gms.maps.internal.zzg -> com.google.android.gms.maps.a.q:
+com.google.android.gms.maps.internal.zzg -> com.google.android.gms.maps.a.t:
     com.google.android.gms.internal.maps.zzt addMarker(com.google.android.gms.maps.model.MarkerOptions) -> a
+    com.google.android.gms.maps.internal.IUiSettingsDelegate getUiSettings() -> s
     void animateCamera(com.google.android.gms.dynamic.IObjectWrapper) -> c
     void moveCamera(com.google.android.gms.dynamic.IObjectWrapper) -> a
-    void setMyLocationEnabled(boolean) -> e
+    void setMyLocationEnabled(boolean) -> f
     void setOnMapClickListener(com.google.android.gms.maps.internal.zzaj) -> a
     void setOnMyLocationButtonClickListener(com.google.android.gms.maps.internal.zzav) -> a
-com.google.android.gms.maps.internal.zzj -> com.google.android.gms.maps.a.r:
+com.google.android.gms.maps.internal.zzj -> com.google.android.gms.maps.a.u:
     com.google.android.gms.dynamic.IObjectWrapper onCreateView(com.google.android.gms.dynamic.IObjectWrapper,com.google.android.gms.dynamic.IObjectWrapper,android.os.Bundle) -> a
     void getMapAsync(com.google.android.gms.maps.internal.zzap) -> a
-    void onCreate(android.os.Bundle) -> c
-    void onDestroyView() -> h
+    void onCreate(android.os.Bundle) -> b
+    void onDestroyView() -> f
     void onInflate(com.google.android.gms.dynamic.IObjectWrapper,com.google.android.gms.maps.GoogleMapOptions,android.os.Bundle) -> a
-    void onPause() -> f
-    void onResume() -> d
-    void onSaveInstanceState(android.os.Bundle) -> b
+    void onPause() -> e
+    void onResume() -> c
+    void onSaveInstanceState(android.os.Bundle) -> a
+    void onStart() -> a
+    void onStop() -> b
+com.google.android.gms.maps.internal.zzk -> com.google.android.gms.maps.a.v:
+    com.google.android.gms.dynamic.IObjectWrapper getView() -> v
+    void getMapAsync(com.google.android.gms.maps.internal.zzap) -> a
+    void onCreate(android.os.Bundle) -> b
+    void onPause() -> e
+    void onResume() -> c
+    void onSaveInstanceState(android.os.Bundle) -> a
     void onStart() -> a
     void onStop() -> b
 com.google.android.gms.maps.model.BitmapDescriptor -> com.google.android.gms.maps.model.a:
@@ -24560,8 +24621,6 @@ com.google.android.gms.maps.model.MarkerOptions -> com.google.android.gms.maps.m
     boolean isDraggable() -> Y
     boolean isFlat() -> aa
     boolean isVisible() -> Z
-    com.google.android.gms.maps.model.MarkerOptions alpha(float) -> a
-    com.google.android.gms.maps.model.MarkerOptions draggable(boolean) -> b
     com.google.android.gms.maps.model.MarkerOptions position(com.google.android.gms.maps.model.LatLng) -> a
     com.google.android.gms.maps.model.MarkerOptions title(java.lang.String) -> b
     float getAlpha() -> ea
@@ -24578,14 +24637,17 @@ com.google.android.gms.maps.model.zza -> com.google.android.gms.maps.model.e:
 com.google.android.gms.maps.model.zze -> com.google.android.gms.maps.model.f:
 com.google.android.gms.maps.model.zzf -> com.google.android.gms.maps.model.g:
 com.google.android.gms.maps.model.zzh -> com.google.android.gms.maps.model.h:
-com.google.android.gms.maps.zzaa -> com.google.android.gms.maps.g:
-com.google.android.gms.maps.zzak -> com.google.android.gms.maps.h:
+com.google.android.gms.maps.zzaa -> com.google.android.gms.maps.h:
+com.google.android.gms.maps.zzac -> com.google.android.gms.maps.i:
     com.google.android.gms.maps.OnMapReadyCallback zzbb -> b
     void zza(com.google.android.gms.maps.internal.IGoogleMapDelegate) -> a
-com.google.android.gms.maps.zzi -> com.google.android.gms.maps.i:
+com.google.android.gms.maps.zzak -> com.google.android.gms.maps.j:
+    com.google.android.gms.maps.OnMapReadyCallback zzbb -> b
+    void zza(com.google.android.gms.maps.internal.IGoogleMapDelegate) -> a
+com.google.android.gms.maps.zzi -> com.google.android.gms.maps.k:
     com.google.android.gms.maps.GoogleMap$OnMyLocationButtonClickListener zzq -> b
     boolean onMyLocationButtonClick() -> i
-com.google.android.gms.maps.zzy -> com.google.android.gms.maps.j:
+com.google.android.gms.maps.zzy -> com.google.android.gms.maps.l:
     com.google.android.gms.maps.GoogleMap$OnMapClickListener zzag -> b
     void onMapClick(com.google.android.gms.maps.model.LatLng) -> a
 com.google.android.gms.measurement.AppMeasurement -> com.google.android.gms.measurement.AppMeasurement:
@@ -29769,7 +29831,7 @@ com.google.firebase.database.obfuscated.zzcj -> com.google.firebase.database.obf
 com.google.firebase.database.obfuscated.zzck -> com.google.firebase.database.obfuscated.xb:
     com.google.firebase.database.obfuscated.zzdc zza -> b
     boolean zzb -> a
-    boolean zzc() -> e
+    boolean zzc() -> g
     com.google.firebase.database.obfuscated.zzcm zza() -> a
     com.google.firebase.database.obfuscated.zzdc zzb() -> b
     com.google.firebase.database.obfuscated.zzdd zza(com.google.firebase.database.obfuscated.zzdd,com.google.firebase.database.obfuscated.zzct,com.google.firebase.database.obfuscated.zzdi,com.google.firebase.database.obfuscated.zzz,com.google.firebase.database.obfuscated.zzcm$zza,com.google.firebase.database.obfuscated.zzcj) -> a
@@ -29781,14 +29843,14 @@ com.google.firebase.database.obfuscated.zzcl -> com.google.firebase.database.obf
     com.google.firebase.database.obfuscated.zzdc zzb -> c
     int zzc -> d
     boolean zze -> a
-    boolean zzc() -> e
+    boolean zzc() -> g
     com.google.firebase.database.obfuscated.zzcm zza() -> a
     com.google.firebase.database.obfuscated.zzdc zzb() -> b
     com.google.firebase.database.obfuscated.zzdd zza(com.google.firebase.database.obfuscated.zzdd,com.google.firebase.database.obfuscated.zzct,com.google.firebase.database.obfuscated.zzdi,com.google.firebase.database.obfuscated.zzz,com.google.firebase.database.obfuscated.zzcm$zza,com.google.firebase.database.obfuscated.zzcj) -> a
     com.google.firebase.database.obfuscated.zzdd zza(com.google.firebase.database.obfuscated.zzdd,com.google.firebase.database.obfuscated.zzdd,com.google.firebase.database.obfuscated.zzcj) -> a
     com.google.firebase.database.obfuscated.zzdd zza(com.google.firebase.database.obfuscated.zzdd,com.google.firebase.database.obfuscated.zzdi) -> a
 com.google.firebase.database.obfuscated.zzcm -> com.google.firebase.database.obfuscated.zb:
-    boolean zzc() -> e
+    boolean zzc() -> g
     com.google.firebase.database.obfuscated.zzcm zza() -> a
     com.google.firebase.database.obfuscated.zzdc zzb() -> b
     com.google.firebase.database.obfuscated.zzdd zza(com.google.firebase.database.obfuscated.zzdd,com.google.firebase.database.obfuscated.zzct,com.google.firebase.database.obfuscated.zzdi,com.google.firebase.database.obfuscated.zzz,com.google.firebase.database.obfuscated.zzcm$zza,com.google.firebase.database.obfuscated.zzcj) -> a
@@ -29803,7 +29865,7 @@ com.google.firebase.database.obfuscated.zzcn -> com.google.firebase.database.obf
     com.google.firebase.database.obfuscated.zzdh zzc -> c
     com.google.firebase.database.obfuscated.zzdh zzd -> d
     boolean zza(com.google.firebase.database.obfuscated.zzdh) -> a
-    boolean zzc() -> e
+    boolean zzc() -> g
     com.google.firebase.database.obfuscated.zzcm zza() -> a
     com.google.firebase.database.obfuscated.zzdc zzb() -> b
     com.google.firebase.database.obfuscated.zzdd zza(com.google.firebase.database.obfuscated.zzdd,com.google.firebase.database.obfuscated.zzct,com.google.firebase.database.obfuscated.zzdi,com.google.firebase.database.obfuscated.zzz,com.google.firebase.database.obfuscated.zzcm$zza,com.google.firebase.database.obfuscated.zzcj) -> a
@@ -35885,17 +35947,12 @@ com.hotelaide.main.activities.JobActivity$4 -> com.hotelaide.main.activities.s:
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
 com.hotelaide.main.activities.MapActivity -> com.hotelaide.main.activities.MapActivity:
-    android.support.design.button.MaterialButton btn_confirm -> q
-    android.support.v7.widget.Toolbar toolbar -> p
-    com.hotelaide.utils.Helpers helpers -> o
-    double LATITUDE -> r
-    double LONGITUDE -> s
-    com.hotelaide.utils.Helpers access$200(com.hotelaide.main.activities.MapActivity) -> a
-    double access$002(com.hotelaide.main.activities.MapActivity,double) -> a
-    double access$102(com.hotelaide.main.activities.MapActivity,double) -> b
-    void access$300(com.hotelaide.main.activities.MapActivity) -> b
+    android.support.v7.widget.Toolbar toolbar -> r
+    com.hotelaide.utils.Helpers helpers -> q
+    double MAP_ACTIVITY_LATITUDE -> o
+    double MAP_ACTIVITY_LONGITUDE -> p
+    com.hotelaide.utils.Helpers access$000(com.hotelaide.main.activities.MapActivity) -> a
     void findAllViews() -> h
-    void sendBackResult() -> j
     void setUpToolBar() -> g
     void startUpMap() -> i
     void onMapReady(com.google.android.gms.maps.GoogleMap) -> a
@@ -36149,10 +36206,9 @@ com.hotelaide.main.fragments.AddressFragment -> b.b.a.b.d:
     android.widget.TextView txt_latitude -> fa
     android.widget.TextView txt_longitude -> ea
     com.google.android.gms.maps.GoogleMap google_map -> ca
-    com.google.android.gms.maps.SupportMapFragment fragment_map -> da
+    com.google.android.gms.maps.MapView map_view -> da
     com.hotelaide.utils.Database db -> Z
     com.hotelaide.utils.Helpers helpers -> Y
-    int INT_MAP_REQUEST -> ka
     java.lang.String TAG_LOG -> ba
     android.widget.EditText access$100(com.hotelaide.main.fragments.AddressFragment) -> b
     android.widget.EditText access$300(com.hotelaide.main.fragments.AddressFragment) -> d
@@ -36165,6 +36221,7 @@ com.hotelaide.main.fragments.AddressFragment -> b.b.a.b.d:
     void access$700(com.hotelaide.main.fragments.AddressFragment) -> h
     void asyncUpdateAddress() -> g
     void findAllViews() -> c
+    void initializeMap(android.os.Bundle) -> a
     void logAddress() -> f
     void setFromSharedPrefs() -> e
     void setListeners() -> d
@@ -36943,6 +37000,7 @@ com.hotelaide.utils.SharedPrefs -> com.hotelaide.utils.r:
     java.lang.Double getDouble(java.lang.String) -> d
     java.lang.String getString(java.lang.String) -> b
     void deleteAllSharedPrefs() -> a
+    void logUserModel() -> b
     void setBool(java.lang.String,java.lang.Boolean) -> a
     void setDouble(java.lang.String,java.lang.Double) -> a
     void setInt(java.lang.String,int) -> a
@@ -40431,7 +40489,7 @@ io.fabric.sdk.android.services.common.AdvertisingInfoServiceStrategy$Advertising
     android.os.IBinder getBinder() -> a
 io.fabric.sdk.android.services.common.AdvertisingInfoServiceStrategy$AdvertisingInterface -> io.fabric.sdk.android.services.common.g$b:
     android.os.IBinder binder -> a
-    boolean isLimitAdTrackingEnabled() -> v
+    boolean isLimitAdTrackingEnabled() -> x
 io.fabric.sdk.android.services.common.AdvertisingInfoStrategy -> io.fabric.sdk.android.services.common.h:
     io.fabric.sdk.android.services.common.AdvertisingInfo getAdvertisingInfo() -> a
 io.fabric.sdk.android.services.common.ApiKey -> io.fabric.sdk.android.services.common.i:
@@ -50285,42 +50343,42 @@ retrofit2.http.QueryMap -> g.b.u:
 retrofit2.http.QueryName -> g.b.v:
 retrofit2.http.Streaming -> g.b.w:
 retrofit2.http.Url -> g.b.x:
-android.support.v4.util.Pools -> a.b.h.f.m:
-android.support.v7.recyclerview.R -> a.b.i.e.a:
-android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
-android.support.v7.cardview.R -> a.b.i.b.a:
-android.support.v7.appcompat.R -> a.b.i.a.a:
-com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
-android.support.coordinatorlayout.R -> a.b.b.a:
-com.airbnb.lottie.R -> com.airbnb.lottie.I:
-android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
-com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
-android.support.customtabs.R -> a.b.c.c:
-android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
-okhttp3.WebSocket -> okhttp3.P:
-android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
-com.google.android.gms.base.R -> b.a.a.a.b.a:
-android.support.constraint.R -> android.support.constraint.h:
 android.support.compat.R -> a.b.a.a:
-com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
+android.support.coordinatorlayout.R -> a.b.b.a:
+pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
+android.support.v7.util.SortedList -> a.b.i.g.b:
+android.support.v7.cardview.R -> a.b.i.b.a:
+com.google.android.gms.common.api.internal.BaseImplementation -> com.google.android.gms.common.api.internal.c:
+com.rilixtech.R -> com.rilixtech.j:
+com.google.firebase.inappmessaging.display.R -> com.google.firebase.inappmessaging.display.i:
 android.support.constraint.solver.Pools -> android.support.constraint.solver.g:
+com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
+android.support.constraint.R -> android.support.constraint.h:
+com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
+android.support.v4.media.MediaBrowserCompat -> android.support.v4.media.MediaBrowserCompat:
+android.support.design.R -> a.b.d.a:
+com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
+com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:
+android.support.v4.media.session.MediaControllerCompat -> android.support.v4.media.session.MediaControllerCompat:
+android.support.design.widget.BaseTransientBottomBar -> android.support.design.widget.BaseTransientBottomBar:
+com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
+com.google.android.gms.internal.clearcut.zzgw -> com.google.android.gms.internal.clearcut.Kb:
 com.makeramen.roundedimageview.R -> com.makeramen.roundedimageview.a:
 io.michaelrocks.libphonenumber.android.Phonemetadata -> io.michaelrocks.libphonenumber.android.Phonemetadata:
-com.google.android.gms.internal.clearcut.zzge$zzv -> com.google.android.gms.internal.clearcut.zzge$zzv:
-com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
-com.google.firebase.auth.PhoneAuthProvider -> com.google.firebase.auth.n:
-com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
-com.google.android.gms.maps.R -> com.google.android.gms.maps.f:
-android.support.v7.util.SortedList -> a.b.i.g.b:
-com.rilixtech.R -> com.rilixtech.j:
-com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
-android.support.design.R -> a.b.d.a:
-io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
-io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
-com.sothree.slidinguppanel.library.R -> com.sothree.slidinguppanel.a.a:
-android.support.transition.R -> a.b.g.y:
-pub.devrel.easypermissions.R -> pub.devrel.easypermissions.g:
-com.theartofdev.edmodo.cropper.R -> com.theartofdev.edmodo.cropper.n:
-android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
-com.google.firebase.messaging.R -> com.google.firebase.messaging.c:
+android.support.v7.appcompat.R -> a.b.i.a.a:
 com.google.android.gms.common.R -> com.google.android.gms.common.n:
+android.support.transition.R -> a.b.g.y:
+com.google.android.gms.base.R -> b.a.a.a.b.a:
+android.support.v7.recyclerview.R -> a.b.i.e.a:
+com.google.android.gms.internal.clearcut.zzge -> com.google.android.gms.internal.clearcut.zzge:
+android.support.v4.media.session.MediaSessionCompatApi21 -> android.support.v4.media.session.g:
+com.airbnb.lottie.R -> com.airbnb.lottie.I:
+android.support.design.widget.Snackbar -> android.support.design.widget.Snackbar:
+com.google.android.gms.internal.measurement.zzfq -> com.google.android.gms.internal.measurement.zzfq:
+io.reactivex.internal.operators.flowable.FlowableInternalHelper -> io.reactivex.internal.operators.flowable.FlowableInternalHelper:
+com.google.firebase.inappmessaging.model.zzd -> com.google.firebase.inappmessaging.model.e:
+android.support.v4.util.Pools -> a.b.h.f.m:
+okhttp3.WebSocket -> okhttp3.P:
+io.michaelrocks.libphonenumber.android.Phonenumber -> io.michaelrocks.libphonenumber.android.Phonenumber:
+com.google.android.gms.maps.R -> com.google.android.gms.maps.f:
+android.support.customtabs.R -> a.b.c.c:

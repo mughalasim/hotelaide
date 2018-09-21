@@ -24,6 +24,7 @@ import com.hotelaide.main.fragments.AddressFragment;
 import com.hotelaide.main.fragments.ChangePasswordFragment;
 import com.hotelaide.main.fragments.ExperienceEditFragment;
 import com.hotelaide.main.fragments.ProfileUpdateFragment;
+import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -117,7 +118,9 @@ public class ProfileEditActivity extends AppCompatActivity {
 
         setListeners();
 
-        helpers.asyncGetUser();
+        if (helpers.validateServiceRunning(BackgroundFetchService.class)) {
+            startService(new Intent(ProfileEditActivity.this, BackgroundFetchService.class));
+        }
 
         handleExtraBundles();
 

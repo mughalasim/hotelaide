@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.compileSDK
@@ -15,23 +13,23 @@ android {
         versionName "$rootProject.versionName"
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
-//        multiDexEnabled rootProject.multidex
+        multiDexEnabled rootProject.shrink
     }
 
     buildTypes {
         release {
-            debuggable rootProject.debugMode
-            minifyEnabled rootProject.minify
-            useProguard rootProject.proguard
+            debuggable rootProject.shrink
+            minifyEnabled rootProject.shrink
+            useProguard rootProject.shrink
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            shrinkResources rootProject.proguard
+            shrinkResources rootProject.shrink
         }
         debug {
             debuggable rootProject.debugMode
-            minifyEnabled rootProject.minify
-            useProguard rootProject.proguard
+            minifyEnabled rootProject.shrink
+            useProguard rootProject.shrink
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            shrinkResources rootProject.proguard
+            shrinkResources rootProject.shrink
         }
     }
 
@@ -79,11 +77,9 @@ dependencies {
     implementation "com.android.support:exifinterface:$rootProject.SupportLibrary"
     implementation "com.android.support:customtabs:$rootProject.SupportLibrary"
     implementation 'com.android.support:multidex:1.0.3'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.kotlin_version"
 
     // RETROFIT DEPENDENCIES
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-//    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
     // PICTURE LOADING
@@ -97,13 +93,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.3'
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-messaging:17.3.2'
-//    implementation 'com.google.firebase:firebase-invites:16.0.3'
     implementation 'com.google.firebase:firebase-database:16.0.2'
     implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.1'
 
     // GOOGLE
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
-//    implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
     implementation('com.google.android.gms:play-services-analytics:16.0.3') {
         exclude module: 'play-services-ads'

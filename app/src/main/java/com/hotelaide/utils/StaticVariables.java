@@ -33,7 +33,8 @@ public class StaticVariables {
     public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
     public static final String ALLOW_MESSAGE_PUSH = "ALLOW_MESSAGE_PUSH";
     public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
-
+    // FLOAT VARIABLES
+    public final static float INT_GOOGLE_MAP_ZOOM = 14f;
 
 // PERMISSION VARIABLES ============================================================================
     public final static int INT_PERMISSIONS_CAMERA = 601;

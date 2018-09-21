@@ -141,7 +141,7 @@
     <string name="txt_edit_exp">EDIT EXPERIENCE</string>
     <string name="txt_at">&#160;at&#160;</string>
     <string name="txt_full_address">Full Address</string>
-    <string name="txt_map_location">Map Location</string>
+    <string name="txt_map_location">Map (Tap to set your location)</string>
     <string name="txt_search_here">search here…</string>
     <string name="txt_search">Search</string>
     <string name="txt_clear">Clear</string>
@@ -189,7 +189,6 @@
     <string name="txt_notify_me_desc">Turning this on will allow the app to notify you if there is a new update available in the Play Store</string>
     <string name="txt_notify_push">Message notifications</string>
     <string name="txt_notify_push_desc">Notify me when someone has sent me a new message</string>
-    <string name="error_location_fetch">Unable to fetch your current location, please try toggling your GPS off and on again</string>
     <string name="error_update_google_play">Please update your google play services in order to use this feature</string>
     <string name="progress_loading_get_location">Fetching your current location, please wait...</string>
 

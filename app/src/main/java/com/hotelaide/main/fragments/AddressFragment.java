@@ -20,9 +20,12 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
@@ -31,6 +34,7 @@ import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
@@ -47,10 +51,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.Context.LOCATION_SERVICE;
+import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LATITUDE;
+import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LONGITUDE;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.INT_GOOGLE_MAP_ZOOM;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_LOCATIONS;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_LAT;
 import static com.hotelaide.utils.StaticVariables.USER_LNG;
@@ -65,7 +73,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
     private final String TAG_LOG = "ADDRESS";
 
     private GoogleMap google_map;
-    private SupportMapFragment fragment_map;
+    MapView map_view;
 
     private TextView
             txt_longitude,
@@ -80,8 +88,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     private FloatingActionButton
             btn_update;
-
-    private final int INT_MAP_REQUEST = 3450;
 
     public AddressFragment() {
     }
@@ -102,6 +108,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
                 db = new Database();
 
+                initializeMap(savedInstanceState);
 
                 findAllViews();
 
@@ -129,15 +136,46 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onResume() {
         super.onResume();
-        Helpers.LogThis(TAG_LOG, "ON RESUME, CHECK THE LOCATION");
-        onMapReady(google_map);
+        map_view.onResume();
+        if (MAP_ACTIVITY_LATITUDE != 0.0) {
+            Helpers.LogThis(TAG_LOG, "MAP LAT: " + MAP_ACTIVITY_LATITUDE);
+            Helpers.LogThis(TAG_LOG, "ON RESUME, CHECK THE LOCATION");
+            SharedPrefs.logUserModel();
+            onMapReady(google_map);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        map_view.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        map_view.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        map_view.onLowMemory();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        google_map = googleMap;
-        if (google_map != null) {
-            updateMapAndCamera(SharedPrefs.getDouble(USER_LAT), SharedPrefs.getDouble(USER_LNG));
+        if (googleMap != null) {
+
+            google_map = googleMap;
+
+            if (MAP_ACTIVITY_LATITUDE != 0.0) {
+                updateMapAndCamera(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE);
+            } else {
+                updateMapAndCamera(SharedPrefs.getDouble(USER_LAT), SharedPrefs.getDouble(USER_LNG));
+            }
+
+            google_map.getUiSettings().setAllGesturesEnabled(false);
 
             google_map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
@@ -170,24 +208,23 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     private void updateMapAndCamera(double latitude, double longitude) {
         google_map.clear();
-        LatLng latLng = new LatLng(latitude, longitude);
-        MarkerOptions marker_options = new MarkerOptions();
-        marker_options.position(latLng);
-        marker_options.title("My Location");
-        marker_options.alpha(0.8f);
-        marker_options.draggable(true);
+        LatLng location = new LatLng(latitude, longitude);
+        google_map.moveCamera(CameraUpdateFactory.newLatLng(location));
+        google_map.animateCamera(CameraUpdateFactory.zoomTo(INT_GOOGLE_MAP_ZOOM));
 
-        google_map.clear();
-        google_map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        google_map.addMarker(marker_options);
-        google_map.animateCamera(CameraUpdateFactory.zoomTo(15.5f));
+        Marker my_marker = google_map.addMarker(new MarkerOptions().position(
+                new LatLng(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE))
+                .title(SharedPrefs.getString(USER_F_NAME)));
+        my_marker.setVisible(true);
+        my_marker.showInfoWindow();
+        my_marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
         Geocoder geocoder;
         List<Address> addresses;
         geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
         try {
-            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
             String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             String city = addresses.get(0).getLocality();
@@ -200,7 +237,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
         } catch (IOException e) {
             Helpers.LogThis(TAG_LOG, e.toString());
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             Helpers.LogThis(TAG_LOG, e.toString());
         }
     }
@@ -208,10 +245,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
-        fragment_map = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.fragment_map);
-        assert fragment_map != null;
-        fragment_map.getMapAsync(this);
-
         spinner_county = root_view.findViewById(R.id.spinner_location);
         if (getActivity() != null) {
             ArrayAdapter<SearchFilterModel> dataAdapter1 = new ArrayAdapter<>(
@@ -226,6 +259,24 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         txt_longitude = root_view.findViewById(R.id.txt_longitude);
         txt_latitude = root_view.findViewById(R.id.txt_latitude);
         btn_update = root_view.findViewById(R.id.btn_update);
+
+    }
+
+
+    private void initializeMap(Bundle savedInstanceState) {
+        map_view = root_view.findViewById(R.id.map_view);
+
+        map_view.onCreate(savedInstanceState);
+
+        map_view.onResume(); // needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(MyApplication.getAppContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        map_view.getMapAsync(this);
 
     }
 
