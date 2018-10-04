@@ -279,7 +279,7 @@ public class StartUpSignUpFragment extends Fragment {
                 if (getContext() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                     DatePickerDialog datePicker = new DatePickerDialog(
-                            new ContextThemeWrapper(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT),
+                            new ContextThemeWrapper(getActivity(), AlertDialog.THEME_HOLO_LIGHT),
                             datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),

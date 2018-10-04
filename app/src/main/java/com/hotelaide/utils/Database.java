@@ -18,6 +18,7 @@ import java.util.List;
 
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.EXP_CURRENT;
@@ -32,9 +33,9 @@ import static com.hotelaide.utils.StaticVariables.EXP_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXP_TYPE;
 import static com.hotelaide.utils.StaticVariables.FILTER_ID;
 import static com.hotelaide.utils.StaticVariables.FILTER_NAME;
-import static com.hotelaide.utils.StaticVariables.JOB_HOTEL_ID;
-import static com.hotelaide.utils.StaticVariables.JOB_HOTEL_IMAGE;
-import static com.hotelaide.utils.StaticVariables.JOB_HOTEL_LOCATION;
+import static com.hotelaide.utils.StaticVariables.JOB_ESTABLISHMENT_ID;
+import static com.hotelaide.utils.StaticVariables.JOB_ESTABLISHMENT_IMAGE;
+import static com.hotelaide.utils.StaticVariables.JOB_ESTABLISHMENT_LOCATION;
 import static com.hotelaide.utils.StaticVariables.JOB_ID;
 import static com.hotelaide.utils.StaticVariables.JOB_NAME;
 import static com.hotelaide.utils.StaticVariables.JOB_POSTED_ON;
@@ -73,9 +74,9 @@ public class Database extends SQLiteOpenHelper {
                 "(" + JOB_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 JOB_NAME + " TEXT," +
                 JOB_POSTED_ON + " TEXT," +
-                JOB_HOTEL_ID + " INTEGER," +
-                JOB_HOTEL_IMAGE + " TEXT," +
-                JOB_HOTEL_LOCATION + " TEXT" +
+                JOB_ESTABLISHMENT_ID + " INTEGER," +
+                JOB_ESTABLISHMENT_IMAGE + " TEXT," +
+                JOB_ESTABLISHMENT_LOCATION + " TEXT" +
                 ")"
         );
 
@@ -98,6 +99,14 @@ public class Database extends SQLiteOpenHelper {
         // CATEGORIES TABLE ========================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + CATEGORIES_TABLE_NAME +
+                "(" + FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                FILTER_NAME + " TEXT" +
+                ")"
+        );
+
+        // EDUCATION LEVEL TABLE ===================================================================
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + EDUCATION_LEVEL_TABLE_NAME +
                 "(" + FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 FILTER_NAME + " TEXT" +
                 ")"
@@ -147,6 +156,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
         db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
         db.execSQL("DELETE FROM " + CATEGORIES_TABLE_NAME);
+        db.execSQL("DELETE FROM " + EDUCATION_LEVEL_TABLE_NAME);
         db.execSQL("DELETE FROM " + JOB_TYPE_TABLE_NAME);
         onCreate(db);
     }
@@ -159,7 +169,7 @@ public class Database extends SQLiteOpenHelper {
             if (type.equals(EXPERIENCE_TYPE_WORK)) {
                 experienceModel.experience_id = work_object.getInt("id");
                 experienceModel.name = work_object.getString("company_name");
-                experienceModel.position_level = work_object.getString("position");
+                experienceModel.position = work_object.getString("position");
                 experienceModel.start_date = work_object.getString("start_date");
                 experienceModel.end_date = work_object.getString("end_date");
                 experienceModel.responsibilities_field = work_object.getString("responsibilities");
@@ -171,13 +181,13 @@ public class Database extends SQLiteOpenHelper {
             } else {
                 experienceModel.experience_id = work_object.getInt("id");
                 experienceModel.name = work_object.getString("institution_name");
-                experienceModel.position_level = work_object.getString("education_level");
+                experienceModel.education_level = work_object.getInt("education_level");
                 experienceModel.start_date = work_object.getString("start_date");
                 experienceModel.end_date = work_object.getString("end_date");
                 experienceModel.responsibilities_field = work_object.getString("study_field");
-//                if (work_object.getBoolean("current")) {
-//                    experienceModel.current = 1;
-//                }
+                if (work_object.getBoolean("current")) {
+                    experienceModel.current = 1;
+                }
                 experienceModel.type = EXPERIENCE_TYPE_EDUCATION;
             }
 
@@ -186,7 +196,7 @@ public class Database extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put(EXP_ID, experienceModel.experience_id);
             contentValues.put(EXP_NAME, experienceModel.name);
-            contentValues.put(EXP_POSITION_LEVEL, experienceModel.position_level);
+            contentValues.put(EXP_POSITION_LEVEL, experienceModel.position);
             contentValues.put(EXP_START_DATE, experienceModel.start_date);
             contentValues.put(EXP_END_DATE, experienceModel.end_date);
             contentValues.put(EXP_RESPONSIBILITIES_FIELD, experienceModel.responsibilities_field);
@@ -235,7 +245,7 @@ public class Database extends SQLiteOpenHelper {
                     ExperienceModel experienceModel = new ExperienceModel();
                     experienceModel.experience_id = cursor.getInt(cursor.getColumnIndex(EXP_ID));
                     experienceModel.name = cursor.getString(cursor.getColumnIndex(EXP_NAME));
-                    experienceModel.position_level = cursor.getString(cursor.getColumnIndex(EXP_POSITION_LEVEL));
+                    experienceModel.position = cursor.getString(cursor.getColumnIndex(EXP_POSITION_LEVEL));
                     experienceModel.start_date = cursor.getString(cursor.getColumnIndex(EXP_START_DATE));
                     experienceModel.end_date = cursor.getString(cursor.getColumnIndex(EXP_END_DATE));
                     experienceModel.responsibilities_field = cursor.getString(cursor.getColumnIndex(EXP_RESPONSIBILITIES_FIELD));
@@ -270,7 +280,7 @@ public class Database extends SQLiteOpenHelper {
             jobModel.name = job_object.getString("title");
             jobModel.posted_on = job_object.getString("posted_on");
 
-            JSONObject hotel_object = job_object.getJSONObject("hotel");
+            JSONObject hotel_object = job_object.getJSONObject("establishment");
             jobModel.hotel_id = hotel_object.getInt("id");
             jobModel.hotel_image = hotel_object.getString("image");
             jobModel.hotel_location = hotel_object.getString("full_address");
@@ -280,9 +290,9 @@ public class Database extends SQLiteOpenHelper {
             contentValues.put(JOB_ID, jobModel.id);
             contentValues.put(JOB_NAME, jobModel.name);
             contentValues.put(JOB_POSTED_ON, jobModel.posted_on);
-            contentValues.put(JOB_HOTEL_ID, jobModel.hotel_id);
-            contentValues.put(JOB_HOTEL_IMAGE, jobModel.hotel_image);
-            contentValues.put(JOB_HOTEL_LOCATION, jobModel.hotel_location);
+            contentValues.put(JOB_ESTABLISHMENT_ID, jobModel.hotel_id);
+            contentValues.put(JOB_ESTABLISHMENT_IMAGE, jobModel.hotel_image);
+            contentValues.put(JOB_ESTABLISHMENT_LOCATION, jobModel.hotel_location);
 
             String whereClause = JOB_ID + " = ?";
             String[] whereArgs = new String[]{String.valueOf(jobModel.id)};
@@ -318,9 +328,9 @@ public class Database extends SQLiteOpenHelper {
                     jobModel.id = cursor.getInt(cursor.getColumnIndex(JOB_ID));
                     jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
                     jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
-                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_HOTEL_ID));
-                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_IMAGE));
-                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_LOCATION));
+                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
+                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
+                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -336,7 +346,7 @@ public class Database extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + JOB_TABLE_NAME
                         + " WHERE " + JOB_NAME + "  LIKE  '%" + search + "%' "
-                        + " AND " + JOB_HOTEL_LOCATION + "  LIKE  '%" + location + "%' "
+                        + " AND " + JOB_ESTABLISHMENT_LOCATION + "  LIKE  '%" + location + "%' "
                 , null);
 
         if (cursor != null) {
@@ -348,9 +358,9 @@ public class Database extends SQLiteOpenHelper {
                     jobModel.id = cursor.getInt(cursor.getColumnIndex(JOB_ID));
                     jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
                     jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
-                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_HOTEL_ID));
-                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_IMAGE));
-                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_LOCATION));
+                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
+                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
+                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
 
                     list.add(jobModel);
 
@@ -386,9 +396,9 @@ public class Database extends SQLiteOpenHelper {
                     jobModel.id = cursor.getInt(cursor.getColumnIndex(JOB_ID));
                     jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
                     jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
-                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_HOTEL_ID));
-                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_IMAGE));
-                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_HOTEL_LOCATION));
+                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
+                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
+                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
 
                     list.add(jobModel);
 

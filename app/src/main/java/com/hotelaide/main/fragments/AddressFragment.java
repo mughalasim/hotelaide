@@ -54,7 +54,7 @@ import static android.content.Context.LOCATION_SERVICE;
 import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LATITUDE;
 import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LONGITUDE;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
-import static com.hotelaide.utils.StaticVariables.INT_GOOGLE_MAP_ZOOM;
+import static com.hotelaide.utils.StaticVariables.FLOAT_GOOGLE_MAP_ZOOM;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_LOCATIONS;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
@@ -210,7 +210,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         google_map.clear();
         LatLng location = new LatLng(latitude, longitude);
         google_map.moveCamera(CameraUpdateFactory.newLatLng(location));
-        google_map.animateCamera(CameraUpdateFactory.zoomTo(INT_GOOGLE_MAP_ZOOM));
+        google_map.animateCamera(CameraUpdateFactory.zoomTo(FLOAT_GOOGLE_MAP_ZOOM));
 
         Marker my_marker = google_map.addMarker(new MarkerOptions().position(
                 new LatLng(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE))

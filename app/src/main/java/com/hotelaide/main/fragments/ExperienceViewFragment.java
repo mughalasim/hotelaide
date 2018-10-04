@@ -22,6 +22,7 @@ import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;
 
+import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 
 public class ExperienceViewFragment extends Fragment {
@@ -139,7 +140,7 @@ public class ExperienceViewFragment extends Fragment {
             final TextView
                     txt_no_results,
                     txt_name,
-                    txt_position_level,
+                    txt_position,
                     txt_start_date,
                     txt_end_date,
                     txt_current,
@@ -154,7 +155,7 @@ public class ExperienceViewFragment extends Fragment {
                 // LIST ITEM
                 list_item = v.findViewById(R.id.list_item);
                 txt_name = v.findViewById(R.id.txt_name);
-                txt_position_level = v.findViewById(R.id.txt_position_level);
+                txt_position = v.findViewById(R.id.txt_position);
                 txt_start_date = v.findViewById(R.id.txt_start_date);
                 txt_end_date = v.findViewById(R.id.txt_end_date);
                 txt_current = v.findViewById(R.id.txt_current);
@@ -199,7 +200,7 @@ public class ExperienceViewFragment extends Fragment {
                 holder.list_item.setVisibility(View.VISIBLE);
 
                 holder.txt_name.setText(experienceModel.name);
-                holder.txt_position_level.setText(experienceModel.position_level);
+                holder.txt_position.setText(experienceModel.position);
                 holder.txt_start_date.setText(helpers.formatDate(experienceModel.start_date));
 
                 if (experienceModel.current == 0) {
@@ -221,7 +222,9 @@ public class ExperienceViewFragment extends Fragment {
 
                 if (experienceModel.type.equals(EXPERIENCE_TYPE_WORK)) {
                     holder.txt_responsibilities_field_label.setText(R.string.txt_responsibilities);
+                    holder.txt_position.setText(experienceModel.position);
                 } else {
+                    holder.txt_position.setText(db.getFilterNameByID(EDUCATION_LEVEL_TABLE_NAME, experienceModel.education_level));
                     holder.txt_responsibilities_field_label.setText(R.string.txt_field_study);
                 }
 

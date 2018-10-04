@@ -3,10 +3,13 @@ package com.hotelaide.utils;
 public class StaticVariables {
 
 // SHARED PREFERENCE VARIABLES =====================================================================
+    public final static int INT_ANIMATION_TIME = 800;
+
     // INTEGER VARIABLE NAMES ======================================================================
     public static final String DATABASE_VERSION = "DATABASE_VERSION";
     public static final String USER_ID = "USER_ID";
-    public final static int INT_ANIMATION_TIME = 800;
+    public static final String USER_GENDER = "USER_GENDER";
+    public static final String USER_AVAILABILITY = "USER_AVAILABILITY";
     // STRING VARIABLE NAMES =======================================================================
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String USER_F_NAME = "USER_F_NAME";
@@ -34,7 +37,7 @@ public class StaticVariables {
     public static final String ALLOW_MESSAGE_PUSH = "ALLOW_MESSAGE_PUSH";
     public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
     // FLOAT VARIABLES
-    public final static float INT_GOOGLE_MAP_ZOOM = 14f;
+    public final static float FLOAT_GOOGLE_MAP_ZOOM = 14f;
 
 // PERMISSION VARIABLES ============================================================================
     public final static int INT_PERMISSIONS_CAMERA = 601;
@@ -58,15 +61,15 @@ public class StaticVariables {
     public static final String JOB_ID = "id";
     public static final String JOB_NAME = "job_name";
     public static final String JOB_POSTED_ON = "posted_on";
-    public static final String JOB_HOTEL_ID = "hotel_id";
-    public static final String JOB_HOTEL_IMAGE = "hotel_image";
-    public static final String JOB_HOTEL_LOCATION = "hotel_loation";
+    public static final String JOB_ESTABLISHMENT_ID = "establishment_id";
+    public static final String JOB_ESTABLISHMENT_IMAGE = "establishment_image";
+    public static final String JOB_ESTABLISHMENT_LOCATION = "establishment_location";
     // EXPERIENCE TABLE ============================================================================
     public static final String EXP_TABLE_NAME = "EXPERIENCE";
     public static final String EXP_TABLE_ID = "id";
     public static final String EXP_ID = "experience_id";
     public static final String EXP_NAME = "name";
-    public static final String EXP_POSITION_LEVEL = "position_level";
+    public static final String EXP_POSITION_LEVEL = "position";
     public static final String EXP_START_DATE = "start_date";
     public static final String EXP_END_DATE = "end_date";
     public static final String EXP_RESPONSIBILITIES_FIELD = "responsibilities_field";
@@ -76,6 +79,7 @@ public class StaticVariables {
     public static final String COUNTY_TABLE_NAME = "COUNTIES";
     public static final String JOB_TYPE_TABLE_NAME = "JOB_TYPE";
     public static final String CATEGORIES_TABLE_NAME = "CATEGORIES";
+    public static final String EDUCATION_LEVEL_TABLE_NAME = "EDUCATION_LEVEL";
     public static final String FILTER_ID = "id";
     public static final String FILTER_NAME = "name";
 

@@ -14,7 +14,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +25,7 @@ import com.hotelaide.R;
 import com.hotelaide.main.models.MessageModel;
 import com.hotelaide.startup.SplashScreenActivity;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONArray;
@@ -62,7 +62,7 @@ public class MessagingService extends Service {
     @Override
     public void onCreate() {
         Helpers.LogThis(TAG_LOG, "ON_CREATE");
-        FirebaseApp.initializeApp(MessagingService.this);
+        MyApplication.initFireBase();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Get the reference to the DB
         DatabaseReference child_ref = database.getReference().child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL);

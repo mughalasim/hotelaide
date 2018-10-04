@@ -26,6 +26,8 @@
                 android:layout_width="match_parent"
                 android:background="@drawable/bckgrd_transparent"
                 android:layout_height="@dimen/height_panel"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small"
                 app:tabSelectedTextColor="@color/colorPrimaryLight"
                 app:tabTextColor="@color/white"
                 app:tabTextAppearance="@style/Text_Title"

@@ -12,7 +12,7 @@ android {
         versionCode rootProject.versionCode
         versionName "$rootProject.versionName"
         vectorDrawables.useSupportLibrary = true
-        multiDexEnabled rootProject.shrink
+        multiDexEnabled true
         resConfigs "en"
     }
 
@@ -84,7 +84,7 @@ dependencies {
 
     // PICTURE LOADING
     implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     // ROUNDED IMAGE VIEW
     implementation 'com.makeramen:roundedimageview:2.3.0'
@@ -125,7 +125,6 @@ dependencies {
 //    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
     // IMAGE CROPPING AND ROTATING
-    //noinspection GradleDynamicVersion
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 
     // SLIDING UP PANEL
@@ -133,7 +132,6 @@ dependencies {
 
     // COUNTRY CODE AND PHONE NUMBER SELECTOR
     implementation 'com.github.joielechong:countrycodepicker:2.1.5'
-
 
     // PERMISSIONS CHECKER LIBRARY
     implementation 'pub.devrel:easypermissions:1.2.0'

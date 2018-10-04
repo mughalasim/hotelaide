@@ -86,7 +86,7 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
             holder.list_item.setVisibility(View.VISIBLE);
 
             holder.txt_name.setText(jobModel.name);
-            holder.txt_posted_on.setText(helpers.formatDate(jobModel.posted_on));
+            holder.txt_posted_on.setText(jobModel.posted_on);
             holder.txt_location.setText(jobModel.hotel_location);
             Glide.with(context).load(jobModel.hotel_image).into(holder.img_image);
 

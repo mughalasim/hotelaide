@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -39,10 +41,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_DOB;
 import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_GENDER;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
@@ -60,6 +64,9 @@ public class ProfileUpdateFragment extends Fragment {
             et_user_first_name,
             et_user_last_name,
             et_user_phone;
+
+    private Switch
+            switch_availability;
 
     private Spinner
             spinner_user_gender;
@@ -112,6 +119,7 @@ public class ProfileUpdateFragment extends Fragment {
 
         setDates();
 
+        switch_availability = root_view.findViewById(R.id.switch_availability);
         et_user_first_name = root_view.findViewById(R.id.et_user_first_name);
         et_user_last_name = root_view.findViewById(R.id.et_user_last_name);
         spinner_user_gender = root_view.findViewById(R.id.spinner_user_gender);
@@ -131,23 +139,38 @@ public class ProfileUpdateFragment extends Fragment {
     }
 
     private void setFromSharedPrefs() {
+        switch_availability.setChecked(SharedPrefs.getInt(USER_AVAILABILITY) == 1);
+        // SET TO EDIT TEXTS
+        et_user_first_name.setText(SharedPrefs.getString(USER_F_NAME));
+        et_user_last_name.setText(SharedPrefs.getString(USER_L_NAME));
+        txt_user_email.setText(SharedPrefs.getString(USER_EMAIL));
+        et_user_phone.setText(String.valueOf(SharedPrefs.getInt(USER_PHONE)));
+        ccp_user_country_code.setCountryForPhoneCode(SharedPrefs.getInt(USER_COUNTRY_CODE));
+        // DOB
         if (SharedPrefs.getString(USER_DOB).equals("null")) {
             txt_user_dob.setText(getString(R.string.txt_not_set));
         } else {
             txt_user_dob.setText(helpers.formatDate(SharedPrefs.getString(USER_DOB)));
             txt_user_dob.setTag(SharedPrefs.getString(USER_DOB));
         }
-
-        // SET TO EDT TEXTS
-        et_user_first_name.setText(SharedPrefs.getString(USER_F_NAME));
-        et_user_last_name.setText(SharedPrefs.getString(USER_L_NAME));
-        txt_user_email.setText(SharedPrefs.getString(USER_EMAIL));
-        et_user_phone.setText(String.valueOf(SharedPrefs.getInt(USER_PHONE)));
-        ccp_user_country_code.setCountryForPhoneCode(SharedPrefs.getInt(USER_COUNTRY_CODE));
+        // GENDER
+        spinner_user_gender.setSelection(SharedPrefs.getInt(USER_GENDER));
 
     }
 
     private void setListeners() {
+        switch_availability.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    SharedPrefs.setInt(USER_AVAILABILITY, 1);
+                } else {
+                    SharedPrefs.setInt(USER_AVAILABILITY, 0);
+                }
+                asyncUpdateUserAvailability();
+            }
+        });
+
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +180,7 @@ public class ProfileUpdateFragment extends Fragment {
                 userModel.last_name = fetchFromEditText(et_user_last_name);
                 userModel.email = txt_user_email.getText().toString();
                 userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
+                userModel.gender = spinner_user_gender.getSelectedItemPosition();
 
                 if (!fetchFromEditText(et_user_phone).equals(""))
                     userModel.phone = Integer.parseInt(fetchFromEditText(et_user_phone));
@@ -164,6 +188,9 @@ public class ProfileUpdateFragment extends Fragment {
                 if (!txt_user_dob.getText().toString().equals(getString(R.string.txt_not_set))) {
                     userModel.dob = txt_user_dob.getTag().toString();
                 }
+
+                userModel.availability = SharedPrefs.getInt(USER_AVAILABILITY);
+
                 asyncUpdateDetails(userModel);
             }
         });
@@ -210,7 +237,7 @@ public class ProfileUpdateFragment extends Fragment {
                 if (getActivity() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                     DatePickerDialog datePicker = new DatePickerDialog(
-                            new ContextThemeWrapper(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT),
+                            new ContextThemeWrapper(getActivity(), AlertDialog.THEME_HOLO_LIGHT),
                             datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),
@@ -241,7 +268,7 @@ public class ProfileUpdateFragment extends Fragment {
     // ASYNC UPDATE DETAILS ========================================================================
     private void asyncUpdateDetails(final UserModel userModel) {
 
-        helpers.setProgressDialogMessage("Updating profile, please wait...");
+        helpers.setProgressDialogMessage("Updating your profile, please wait...");
         helpers.progressDialog(true);
 
         UserService userService = UserService.retrofit.create(UserService.class);
@@ -256,7 +283,8 @@ public class ProfileUpdateFragment extends Fragment {
                 userModel.geo_lng,
                 userModel.dob,
                 userModel.fb_id,
-                userModel.google_id
+                userModel.google_id,
+                userModel.gender
         );
 
         call.enqueue(new Callback<JsonObject>() {
@@ -271,8 +299,8 @@ public class ProfileUpdateFragment extends Fragment {
                     if (main.getBoolean("success")) {
                         if (SharedPrefs.setUser(main.getJSONObject("data"))) {
                             helpers.ToastMessage(getActivity(), main.getString("message"));
-                            if(getActivity()!=null){
-                                ((ProfileEditActivity)getActivity()).moveViewPagerNext();
+                            if (getActivity() != null) {
+                                ((ProfileEditActivity) getActivity()).moveViewPagerNext();
                             }
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));
@@ -294,6 +322,49 @@ public class ProfileUpdateFragment extends Fragment {
                 helpers.progressDialog(false);
                 Helpers.LogThis(TAG_LOG, t.toString());
                 setFromSharedPrefs();
+                if (helpers.validateInternetConnection()) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                } else {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                }
+
+            }
+        });
+
+    }
+
+    private void asyncUpdateUserAvailability() {
+
+        UserService userService = UserService.retrofit.create(UserService.class);
+        final Call<JsonObject> call = userService.setUserAvailability(
+                SharedPrefs.getInt(USER_ID),
+                SharedPrefs.getInt(USER_AVAILABILITY));
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                helpers.progressDialog(false);
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                    Helpers.LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        helpers.ToastMessage(getActivity(), main.getString("message"));
+                    } else {
+                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                    }
+
+                } catch (JSONException e) {
+                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                helpers.progressDialog(false);
+                Helpers.LogThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                 } else {

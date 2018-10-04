@@ -95,10 +95,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <!-- HOTEL ID== =====================================================================-->
+            <!-- ESTABLISHMENT ID =======================================================================-->
 
             <TextView
-                android:id="@+id/txt_hotel_id"
+                android:id="@+id/txt_establishment_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
@@ -180,7 +180,7 @@
             <include layout="@layout/horizontal_line" />
 
             <TextView
-                android:id="@+id/txt_hotel_name"
+                android:id="@+id/txt_establishment_name"
                 style="@style/Text_Normal"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"

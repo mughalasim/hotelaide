@@ -23,6 +23,7 @@ import com.hotelaide.utils.SharedPrefs;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_DOB;
@@ -214,7 +215,13 @@ public class ProfileActivity extends ParentActivity {
 
         txt_user_phone.setText(user_phone);
 
-        txt_user_availability.setText("Immediate");
+        if (SharedPrefs.getInt(USER_AVAILABILITY) == 1) {
+            txt_user_availability.setText("Available");
+            txt_user_availability.setTextColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+            txt_user_availability.setText("Hidden");
+            txt_user_availability.setTextColor(getResources().getColor(R.color.red));
+        }
 
         updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
 
@@ -225,7 +232,7 @@ public class ProfileActivity extends ParentActivity {
         if (completion == 100) {
             rl_progress.setVisibility(View.GONE);
         } else {
-            rl_progress.setVisibility(View.VISIBLE);
+            rl_progress.setVisibility(View.GONE);
             seek_bar_progress.setProgress(completion);
             txt_progress.setText(String.valueOf(completion).concat("%"));
         }
@@ -235,13 +242,13 @@ public class ProfileActivity extends ParentActivity {
         if (view.getId() == R.id.txt_basic_info) {
             startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
                     .putExtra("BASIC", "BASIC"));
-        } else if (view.getId() == R.id.txt_contact_info){
+        } else if (view.getId() == R.id.txt_contact_info) {
             startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
                     .putExtra("ADDRESS", "ADDRESS"));
-        }else if (view.getId() == R.id.txt_education_edit){
+        } else if (view.getId() == R.id.txt_education_edit) {
             startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
                     .putExtra("EDUCATION", "EDUCATION"));
-        }else if (view.getId() == R.id.txt_work_edit){
+        } else if (view.getId() == R.id.txt_work_edit) {
             startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
                     .putExtra("WORK", "WORK"));
         }

@@ -17,12 +17,14 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -46,6 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
@@ -79,8 +82,10 @@ public class ExperienceEditFragment extends Fragment {
             btn_confirm;
     private EditText
             et_name,
-            et_position_level,
+            et_position,
             et_responsibilities_field;
+    private Spinner
+            spinner_education_level;
     private RelativeLayout
             rl_end_date;
     private RadioGroup
@@ -160,7 +165,14 @@ public class ExperienceEditFragment extends Fragment {
         radio_group = root_view.findViewById(R.id.radio_group);
 
         et_name = root_view.findViewById(R.id.et_name);
-        et_position_level = root_view.findViewById(R.id.et_position_level);
+        et_position = root_view.findViewById(R.id.et_position_level);
+        spinner_education_level = root_view.findViewById(R.id.spinner_education_level);
+        if (getActivity() != null)
+            spinner_education_level.setAdapter(new ArrayAdapter<>(
+                    getActivity(),
+                    R.layout.list_item_spinner,
+                    db.getAllFilterItems(EDUCATION_LEVEL_TABLE_NAME)
+            ));
         et_responsibilities_field = root_view.findViewById(R.id.et_responsibilities_field);
         radio_btn_no = root_view.findViewById(R.id.radio_btn_no);
         radio_btn_yes = root_view.findViewById(R.id.radio_btn_yes);
@@ -174,15 +186,18 @@ public class ExperienceEditFragment extends Fragment {
             txt_no_results.setText(getString(R.string.error_no_we));
 
             et_name.setHint(getString(R.string.txt_company_name));
-            et_position_level.setHint(getString(R.string.txt_position_held));
+            et_position.setHint(getString(R.string.txt_position_held));
             et_responsibilities_field.setHint(getString(R.string.txt_responsibilities));
+            et_position.setVisibility(View.VISIBLE);
+            spinner_education_level.setVisibility(View.GONE);
 
         } else {
             txt_no_results.setText(getString(R.string.error_no_ee));
 
             et_name.setHint(getString(R.string.txt_institution_name));
-            et_position_level.setHint(getString(R.string.txt_education_level));
             et_responsibilities_field.setHint(getString(R.string.txt_field_study));
+            et_position.setVisibility(View.GONE);
+            spinner_education_level.setVisibility(View.VISIBLE);
         }
     }
 
@@ -235,15 +250,28 @@ public class ExperienceEditFragment extends Fragment {
         });
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
+            ExperienceModel experienceModel = new ExperienceModel();
+
             @Override
             public void onClick(View v) {
+
                 if (rl_end_date.getVisibility() == View.VISIBLE) {
                     if (txt_end_date.getText().toString().equals(getString(R.string.txt_select_date))) {
                         helpers.ToastMessage(getActivity(), getString(R.string.txt_select_date));
                     } else {
-                        generalChecks();
+                        experienceTypeCheck();
                     }
                 } else {
+                    experienceTypeCheck();
+                }
+            }
+
+            private void experienceTypeCheck() {
+                if (spinner_education_level.getVisibility() == View.VISIBLE) {
+                    experienceModel.education_level = spinner_education_level.getSelectedItemPosition();
+                    generalChecks();
+                } else if (helpers.validateEmptyEditText(et_position)) {
+                    experienceModel.position = et_position.getText().toString();
                     generalChecks();
                 }
             }
@@ -254,13 +282,10 @@ public class ExperienceEditFragment extends Fragment {
                 } else if (txt_start_date.getText().toString().equals(txt_end_date.getText().toString())) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_same_date));
                 } else if (helpers.validateEmptyEditText(et_name) &&
-                        helpers.validateEmptyEditText(et_position_level) &&
                         helpers.validateEmptyEditText(et_responsibilities_field)) {
-                    ExperienceModel experienceModel = new ExperienceModel();
                     if (!txt_id.getText().toString().equals(""))
                         experienceModel.experience_id = Integer.valueOf(txt_id.getText().toString());
                     experienceModel.name = et_name.getText().toString();
-                    experienceModel.position_level = et_position_level.getText().toString();
                     experienceModel.responsibilities_field = et_responsibilities_field.getText().toString();
 
                     if (!txt_start_date.getText().toString().equals(getString(R.string.txt_select_date)))
@@ -275,7 +300,7 @@ public class ExperienceEditFragment extends Fragment {
                     if (radio_btn_yes.isChecked())
                         experienceModel.current = 1;
 
-                    asyncUpdateAddWE(experienceModel,
+                    asyncUpdateAdd(experienceModel,
                             btn_confirm.getText().toString().equals(getString(R.string.txt_update)));
 
                 }
@@ -381,7 +406,7 @@ public class ExperienceEditFragment extends Fragment {
         txt_id.setText("");
         txt_title.setText("");
         et_name.setText("");
-        et_position_level.setText("");
+        et_position.setText("");
         txt_start_date.setText(R.string.txt_select_date);
         txt_end_date.setText(R.string.txt_select_date);
         radio_btn_no.setChecked(true);
@@ -400,7 +425,10 @@ public class ExperienceEditFragment extends Fragment {
             txt_title.setText(R.string.txt_edit_exp);
             txt_id.setText(String.valueOf(experienceModel.experience_id));
             et_name.setText(experienceModel.name);
-            et_position_level.setText(experienceModel.position_level);
+
+            //et_position.setText(experienceModel.position);
+            setSpinnerAccordingToType(EXPERIENCE_TYPE, experienceModel.position);
+
             txt_start_date.setText(experienceModel.start_date);
             txt_end_date.setText(experienceModel.end_date);
 
@@ -420,11 +448,25 @@ public class ExperienceEditFragment extends Fragment {
 
     }
 
+    private void setSpinnerAccordingToType(String EXPERIENCE_TYPE, String position_level) {
+        if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_EDUCATION)) {
+            int index = 0;
+            for (int i = 0; i < spinner_education_level.getCount(); i++) {
+                if (spinner_education_level.getItemAtPosition(i).equals(position_level)) {
+                    index = i;
+                }
+            }
+            spinner_education_level.setSelection(index);
+        } else {
+            et_position.setText(position_level);
+        }
+    }
+
     private void logWorkExperienceModel(ExperienceModel experienceModel) {
         Helpers.LogThis(TAG_LOG,
                 experienceModel.experience_id + " - " +
                         experienceModel.name + " - " +
-                        experienceModel.position_level + " - " +
+                        experienceModel.position + " - " +
                         experienceModel.start_date + " - " +
                         experienceModel.end_date + " - " +
                         experienceModel.responsibilities_field + " - " +
@@ -495,7 +537,7 @@ public class ExperienceEditFragment extends Fragment {
 
 
     // ASYNC UPDATE / ADD EXPERIENCE ===============================================================
-    private void asyncUpdateAddWE(final ExperienceModel experienceModel, final Boolean isUpdate) {
+    private void asyncUpdateAdd(final ExperienceModel experienceModel, final Boolean isUpdate) {
 
         Call<JsonObject> call;
         logWorkExperienceModel(experienceModel);
@@ -509,7 +551,7 @@ public class ExperienceEditFragment extends Fragment {
                         SharedPrefs.getInt(USER_ID),
                         experienceModel.experience_id,
                         experienceModel.name,
-                        experienceModel.position_level,
+                        experienceModel.position,
                         experienceModel.start_date,
                         experienceModel.end_date,
                         experienceModel.responsibilities_field,
@@ -520,7 +562,7 @@ public class ExperienceEditFragment extends Fragment {
                         SharedPrefs.getInt(USER_ID),
                         experienceModel.experience_id,
                         experienceModel.name,
-                        experienceModel.position_level,
+                        experienceModel.education_level,
                         experienceModel.start_date,
                         experienceModel.end_date,
                         experienceModel.responsibilities_field,
@@ -536,7 +578,7 @@ public class ExperienceEditFragment extends Fragment {
                 call = experienceService.setWorkExperience(
                         SharedPrefs.getInt(USER_ID),
                         experienceModel.name,
-                        experienceModel.position_level,
+                        experienceModel.position,
                         experienceModel.start_date,
                         experienceModel.end_date,
                         experienceModel.responsibilities_field,
@@ -546,7 +588,7 @@ public class ExperienceEditFragment extends Fragment {
                 call = experienceService.setEducationExperience(
                         SharedPrefs.getInt(USER_ID),
                         experienceModel.name,
-                        experienceModel.position_level,
+                        experienceModel.education_level,
                         experienceModel.start_date,
                         experienceModel.end_date,
                         experienceModel.responsibilities_field,
@@ -682,7 +724,7 @@ public class ExperienceEditFragment extends Fragment {
                 // LIST ITEM
                 list_item = v.findViewById(R.id.list_item);
                 txt_name = v.findViewById(R.id.txt_name);
-                txt_position_level = v.findViewById(R.id.txt_position_level);
+                txt_position_level = v.findViewById(R.id.txt_position);
                 txt_start_date = v.findViewById(R.id.txt_start_date);
                 txt_end_date = v.findViewById(R.id.txt_end_date);
                 txt_current = v.findViewById(R.id.txt_current);
@@ -727,7 +769,6 @@ public class ExperienceEditFragment extends Fragment {
                 holder.list_item.setVisibility(View.VISIBLE);
 
                 holder.txt_name.setText(experienceModel.name);
-                holder.txt_position_level.setText(experienceModel.position_level);
                 holder.txt_start_date.setText(experienceModel.start_date);
 
                 if (experienceModel.current == 0) {
@@ -749,7 +790,9 @@ public class ExperienceEditFragment extends Fragment {
 
                 if (experienceModel.type.equals(EXPERIENCE_TYPE_WORK)) {
                     holder.txt_responsibilities_field_label.setText(R.string.txt_responsibilities);
+                    holder.txt_position_level.setText(experienceModel.position);
                 } else {
+                    holder.txt_position_level.setText(db.getFilterNameByID(EDUCATION_LEVEL_TABLE_NAME, experienceModel.education_level));
                     holder.txt_responsibilities_field_label.setText(R.string.txt_field_study);
                 }
 

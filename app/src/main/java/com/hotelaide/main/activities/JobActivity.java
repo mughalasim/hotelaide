@@ -44,8 +44,8 @@ public class JobActivity extends AppCompatActivity {
             txt_job_requirements,
             txt_job_post_date,
             txt_job_end_date,
-            txt_hotel_name,
-            txt_hotel_id;
+            txt_establishment_name,
+            txt_establishment_id;
 
     private ImageView
             img_banner;
@@ -54,7 +54,7 @@ public class JobActivity extends AppCompatActivity {
 
     private String
             STR_PAGE_TITLE = "",
-            STR_SHARE_LINK = "Please check out this Job Vacancy on HotelAide ";
+            STR_SHARE_LINK = "Please take a look at this Job Vacancy on HotelAide ";
 
     private int INT_JOB_ID = 0;
 
@@ -128,8 +128,8 @@ public class JobActivity extends AppCompatActivity {
         app_bar_layout = findViewById(R.id.app_bar_layout);
 
         img_banner = findViewById(R.id.img_banner);
-        txt_hotel_name = findViewById(R.id.txt_hotel_name);
-        txt_hotel_id = findViewById(R.id.txt_hotel_id);
+        txt_establishment_name = findViewById(R.id.txt_establishment_name);
+        txt_establishment_id = findViewById(R.id.txt_establishment_id);
 
         txt_job_name = findViewById(R.id.txt_job_name);
         txt_job_description = findViewById(R.id.txt_job_description);
@@ -180,13 +180,13 @@ public class JobActivity extends AppCompatActivity {
     }
 
     public void viewHotel(View view) {
-        startActivity(new Intent(JobActivity.this, HotelActivity.class)
-                .putExtra("HOTEL_ID", Integer.parseInt(txt_hotel_id.getText().toString()))
+        startActivity(new Intent(JobActivity.this, EstablishmentActivity.class)
+                .putExtra("ESTABLISHMENT_ID", Integer.parseInt(txt_establishment_id.getText().toString()))
         );
     }
 
 
-    // GET HOTEL ASYNC FUNCTION ====================================================================
+    // GET ESTABLISHMENT ASYNC FUNCTION ====================================================================
     private void asyncFetchHotel() {
 
         HotelService hotelService = HotelService.retrofit.create(HotelService.class);
@@ -227,11 +227,11 @@ public class JobActivity extends AppCompatActivity {
                         txt_job_end_date.setText(getString(R.string.txt_posted_till).concat(job_object.getString("end_date")));
 //                        STR_SHARE_LINK = STR_SHARE_LINK.concat(job_object.getString("hotel_url"));
 
-                        // HOTEL OBJECT
+                        // ESTABLISHMENT OBJECT
                         JSONObject hotel_object = job_object.getJSONObject("hotel");
                         if (hotel_object != null) {
-                            txt_hotel_id.setText(hotel_object.getString("id"));
-                            txt_hotel_name.setText(hotel_object.getString("name"));
+                            txt_establishment_id.setText(hotel_object.getString("id"));
+                            txt_establishment_name.setText(hotel_object.getString("name"));
                             Glide.with(JobActivity.this).load(hotel_object.getString("image")).into(img_banner);
                         }
 

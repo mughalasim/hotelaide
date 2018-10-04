@@ -97,7 +97,8 @@ public interface UserService {
             @Field("geo_lng") double geo_lng,
             @Field("dob") String dob,
             @Field("fb_id") String fb_id,
-            @Field("google_id") String google_id
+            @Field("google_id") String google_id,
+            @Field("gender") int gender
     );
 
     // IMAGE UPDATE ================================================================================
@@ -107,6 +108,14 @@ public interface UserService {
             @Path("user_id") int user_id,
             @Part MultipartBody.Part avatar,
             @Part MultipartBody.Part banner
+    );
+
+    // AVAILABILITY UPDATE =========================================================================
+    @FormUrlEncoded
+    @POST("user/{user_id}/availability")
+    Call<JsonObject> setUserAvailability(
+            @Path("user_id") int user_id,
+            @Field("availability") int availability
     );
 
     // ADDRESS UPDATE ==============================================================================
@@ -150,6 +159,9 @@ public interface UserService {
     @GET("jobtypes")
     Call<JsonObject> getJobTypes();
 
+    // GET ALL EDUCATIONAL LEVELS ==================================================================
+    @GET("education-levels")
+    Call<JsonObject> getEducationalLevels();
 
     // GET ALL USERS ===============================================================================
     @GET("users")

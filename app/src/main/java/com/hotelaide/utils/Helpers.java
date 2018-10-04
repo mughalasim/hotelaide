@@ -14,7 +14,6 @@ import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
@@ -79,6 +78,7 @@ import static android.content.pm.PackageManager.NameNotFoundException;
 import static com.hotelaide.utils.StaticVariables.BroadcastValue;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 
@@ -89,7 +89,6 @@ public class Helpers {
     private static Toast mToast;
     private final TextView ProgressDialogMessage;
     private final Dialog dialog;
-
 
 
     private Database db;
@@ -455,7 +454,7 @@ public class Helpers {
         }
     }
 
-    public boolean validateAppIsInstalled(String uri) {
+    private boolean validateAppIsInstalled(String uri) {
         PackageManager pm = context.getPackageManager();
         boolean app_installed;
         try {
@@ -733,19 +732,18 @@ public class Helpers {
 
 
     // NOTIFICATION CREATOR ========================================================================
-    public void createNotification(Context context, String MessageTitle, String messageBody, Bundle data) {
+    public void createNotification(Context context, String Message_title, String message_body) {
         Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("push", data);
-        intent.putExtra("notification_title", MessageTitle);
-        intent.putExtra("notification_body", messageBody);
+        intent.putExtra("notification_title", Message_title);
+        intent.putExtra("notification_body", message_body);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, MessageTitle)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, Message_title)
                 .setSmallIcon(getNotificationIcon())
-                .setContentTitle(MessageTitle)
-                .setContentText(messageBody)
+                .setContentTitle(Message_title)
+                .setContentText(message_body)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setLights(ContextCompat.getColor(context, R.color.colorPrimary), 1000, 1000)
@@ -845,8 +843,49 @@ public class Helpers {
         });
     }
 
+    // GET EDUCATIONAL LEVEL =======================================================================
+    public void asyncGetEducationalLevels() {
+        UserService userService = UserService.retrofit.create(UserService.class);
+        final Call<JsonObject> call = userService.getEducationalLevels();
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-    // GET COUNTIES ================================================================================
+//                    LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        JSONArray main_array = main.getJSONArray("data");
+                        int length = main_array.length();
+                        for (int i = 0; i < length; i++) {
+                            JSONObject object = main_array.getJSONObject(i);
+                            SearchFilterModel searchFilterModel = new SearchFilterModel();
+                            searchFilterModel.id = object.getInt("id");
+                            searchFilterModel.name = object.getString("name");
+                            db.setFilter(EDUCATION_LEVEL_TABLE_NAME, searchFilterModel);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    LogThis(TAG_LOG, e.toString());
+
+                } catch (Exception e) {
+                    LogThis(TAG_LOG, e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                LogThis(TAG_LOG, t.toString());
+                LogThis(TAG_LOG, call.toString());
+            }
+
+        });
+    }
+
+
+    // GET JOB TYPES ===============================================================================
     public void asyncGetJobTypes() {
         UserService userService = UserService.retrofit.create(UserService.class);
         final Call<JsonObject> call = userService.getJobTypes();

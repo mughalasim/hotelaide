@@ -132,7 +132,7 @@ public interface ExperienceService {
     Call<JsonObject> setEducationExperience(
             @Path("user_id") int user_id,
             @Field("institution_name") String institution_name,
-            @Field("education_level") String education_level,
+            @Field("education_level") int education_level,
             @Field("start_date") String start_date,
             @Field("end_date") String end_date,
             @Field("study_field") String study_field,
@@ -146,7 +146,7 @@ public interface ExperienceService {
             @Path("user_id") int user_id,
             @Path("education_experience_id") int education_experience_id,
             @Field("institution_name") String institution_name,
-            @Field("education_level") String education_level,
+            @Field("education_level") int education_level,
             @Field("start_date") String start_date,
             @Field("end_date") String end_date,
             @Field("study_field") String study_field,

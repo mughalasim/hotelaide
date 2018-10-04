@@ -31,6 +31,7 @@ public class BackgroundFetchService extends Service {
         helpers.asyncGetUser();
         helpers.asyncGetCategories();
         helpers.asyncGetJobTypes();
+        helpers.asyncGetEducationalLevels();
         helpers.asyncGetCounties();
         stopSelf();
     }

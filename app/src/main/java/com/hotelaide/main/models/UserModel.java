@@ -16,5 +16,7 @@ public class UserModel {
     public double geo_lat;
     public double geo_lng;
     public String password = "";
+    public int availability ;
+    public int gender ;
 
 }

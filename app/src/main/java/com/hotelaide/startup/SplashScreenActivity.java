@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.hotelaide.BuildConfig;
@@ -19,6 +18,7 @@ import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.services.MessagingService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
 import io.fabric.sdk.android.Fabric;
@@ -39,7 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FirebaseApp.initializeApp(SplashScreenActivity.this);
+        MyApplication.initFireBase();
 
         Fabric.with(this, new Crashlytics());
 

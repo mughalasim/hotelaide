@@ -124,6 +124,8 @@ public class SharedPrefs {
                 setString(USER_FB_ID, user.getString("facebook_id"));
                 setString(USER_GOOGLE_ID, user.getString("google_id"));
                 setString(USER_URL, user.getString("profile_url"));
+//                setInt(USER_AVAILABILITY, user.getInt("availability"));
+//                setInt(USER_GENDER, user.getInt("gender"));
 
                 if (!user.isNull("county")) {
                     JSONObject county_object = user.getJSONObject("county");

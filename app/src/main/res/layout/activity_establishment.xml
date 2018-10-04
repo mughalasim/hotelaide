@@ -39,7 +39,7 @@
                     android:src="@color/black" />
 
                 <TextView
-                    android:id="@+id/txt_hotel_name"
+                    android:id="@+id/txt_establishment_name"
                     style="@style/Text_Header"
                     android:layout_alignParentBottom="true"
                     android:gravity="start"
@@ -85,7 +85,7 @@
                         android:text="@string/nav_profile" />
 
                     <TextView
-                        android:id="@+id/txt_hotel_description"
+                        android:id="@+id/txt_establishment_description"
                         style="@style/Text_Normal"
                         android:paddingStart="@dimen/padding_small"
                         android:paddingTop="@dimen/padding_tiny"
@@ -95,7 +95,7 @@
                         android:textStyle="bold" />
 
                      <TextView
-                        android:id="@+id/txt_hotel_email"
+                        android:id="@+id/txt_establishment_email"
                         style="@style/Text_Normal"
                         android:paddingStart="@dimen/padding_small"
                         android:paddingTop="@dimen/padding_tiny"

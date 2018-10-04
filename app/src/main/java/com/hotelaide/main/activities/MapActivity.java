@@ -26,7 +26,7 @@ import com.hotelaide.utils.SharedPrefs;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static com.hotelaide.utils.StaticVariables.INT_GOOGLE_MAP_ZOOM;
+import static com.hotelaide.utils.StaticVariables.FLOAT_GOOGLE_MAP_ZOOM;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_LAT;
 import static com.hotelaide.utils.StaticVariables.USER_LNG;
@@ -78,7 +78,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 LatLng location = new LatLng(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE);
 
                 google_map.moveCamera(CameraUpdateFactory.newLatLng(location));
-                google_map.animateCamera(CameraUpdateFactory.zoomTo(INT_GOOGLE_MAP_ZOOM));
+                google_map.animateCamera(CameraUpdateFactory.zoomTo(FLOAT_GOOGLE_MAP_ZOOM));
 
                 Marker my_marker = google_map.addMarker(new MarkerOptions().position(
                         new LatLng(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE))

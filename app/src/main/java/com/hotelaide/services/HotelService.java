@@ -30,7 +30,7 @@ import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 //import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 public interface HotelService {
-    String TAG_LOG = "SERVICE: HOTEL";
+    String TAG_LOG = "SERVICE: ESTABLISHMENT";
 
     OkHttpClient okClient = new OkHttpClient.Builder()
 //            .addNetworkInterceptor(new StethoInterceptor())
@@ -73,10 +73,10 @@ public interface HotelService {
             .build();
 
 
-    // GET HOTEL BY ID =============================================================================
+    // GET ESTABLISHMENT BY ID =============================================================================
     @GET("hotel/{hotel_id}")
     Call<JsonObject> getHotel(
-            @Path("hotel_id") int hotel_id
+            @Path("hotel_id") int establishment_id
     );
 
     // GET JOB BY ID ===============================================================================

@@ -7,9 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/padding_small"
+        android:paddingStart="@dimen/padding_small"
         android:paddingEnd="@dimen/padding_small"
-        android:paddingStart="@dimen/padding_small">
+        android:paddingBottom="@dimen/padding_small">
 
         <TextView
             android:id="@+id/txt_title"
@@ -21,34 +21,30 @@
             style="@style/Text_Normal"
             android:visibility="gone" />
 
-        <android.support.design.widget.TextInputLayout
-            style="@style/Material_Edit_Text_Layout">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/et_name"
+            style="@style/Edit_Text"
+            android:inputType="textCapSentences" />
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_name"
-                style="@style/Material_Edit_Text"
-                android:inputType="textCapSentences" />
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/et_position_level"
+            style="@style/Edit_Text"
+            android:inputType="textCapSentences" />
 
-        </android.support.design.widget.TextInputLayout>
+        <Spinner
+            android:id="@+id/spinner_education_level"
+            style="@style/Edit_Text"
+            android:drawableStart="@drawable/ic_location"
+            android:gravity="end|center_vertical"
+            android:padding="0dp" />
 
-
-        <android.support.design.widget.TextInputLayout
-            style="@style/Material_Edit_Text_Layout">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_position_level"
-                style="@style/Material_Edit_Text"
-                android:inputType="textCapSentences" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <include layout="@layout/horizontal_line"/>
+        <include layout="@layout/horizontal_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -72,9 +68,9 @@
             <RelativeLayout
                 android:id="@+id/rl_end_date"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/padding_small"
-                android:layout_height="wrap_content">
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/txt_end_date_label"
@@ -119,23 +115,23 @@
         </RadioGroup>
 
 
-        <include layout="@layout/horizontal_line"/>
+        <include layout="@layout/horizontal_line" />
 
 
         <android.support.design.widget.TextInputLayout
+            style="@style/Material_Edit_Text_Layout"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/height_edit_text"
-            style="@style/Material_Edit_Text_Layout">
+            android:minHeight="@dimen/height_edit_text">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/et_responsibilities_field"
                 style="@style/Material_Edit_Text"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/height_edit_text"
                 android:inputType="textCapSentences|textMultiLine"
                 android:isScrollContainer="true"
                 android:maxLength="2000"
-                android:maxLines="150" />
+                android:maxLines="150"
+                android:minHeight="@dimen/height_edit_text" />
 
         </android.support.design.widget.TextInputLayout>
 

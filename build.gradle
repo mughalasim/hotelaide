@@ -7,11 +7,12 @@ buildscript {
         maven { url "https://jitpack.io" }
         maven { url "https://maven.google.com" }
         maven { url 'https://maven.fabric.io/public' }
+        flatDir { dirs 'libs' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha11'
-        classpath 'com.google.gms:google-services:4.0.1'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha13'
+        classpath 'com.google.gms:google-services:4.1.0'
         classpath 'io.fabric.tools:gradle:1.25.4'
     }
 }
@@ -24,6 +25,7 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url "https://maven.google.com" }
         maven { url 'https://maven.fabric.io/public' }
+        flatDir { dirs 'libs' }
     }
 
     tasks.withType(JavaCompile) {
@@ -35,16 +37,16 @@ allprojects {
 ext {
     // SDK and tools
     minSDK = 18
-    targetSDK = 28
+    targetSDK = 27
     compileSDK = 28
-    buildTools = '28.0.2'
+    buildTools = '28.0.3'
 
     // SUPPORT LIBRARY
-    SupportLibrary = '28.0.0-rc02'
+    SupportLibrary = '28.0.0'
 
     // Debug the App
-    debugMode = false
-    shrink = true
+    debugMode = true
+    shrink = false
 
     // App Versioning
     versionCode = 8

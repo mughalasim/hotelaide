@@ -29,23 +29,23 @@ import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 
-public class HotelActivity extends AppCompatActivity {
+public class EstablishmentActivity extends AppCompatActivity {
     private Helpers helpers;
     private Toolbar toolbar;
     private TextView
             toolbar_text,
-            txt_hotel_name,
-            txt_hotel_description,
-            txt_hotel_email;
+            txt_establishment_name,
+            txt_establishment_description,
+            txt_establishment_email;
     private ImageView
             img_banner;
     private AppBarLayout app_bar_layout;
     private String
             STR_PAGE_TITLE = "",
-            STR_SHARE_LINK = "Please check out this Hotel on HotelAide ";
-    private int INT_HOTEL_ID = 0;
+            STR_SHARE_LINK = "Please have a look at this establishment on HotelAide ";
+    private int INT_ESTABLISHMENT_ID = 0;
     private final String
-            TAG_LOG = "HOTEL";
+            TAG_LOG = "ESTABLISHMENT";
 
 
     // OVERRIDE METHODS ============================================================================
@@ -53,10 +53,10 @@ public class HotelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        helpers = new Helpers(HotelActivity.this);
+        helpers = new Helpers(EstablishmentActivity.this);
 
         if (handleExtraBundles()) {
-            setContentView(R.layout.activity_hotel);
+            setContentView(R.layout.activity_establishment);
 
             setUpToolBarAndTabs();
 
@@ -67,7 +67,7 @@ public class HotelActivity extends AppCompatActivity {
             asyncFetchHotel();
 
         } else {
-            helpers.ToastMessage(HotelActivity.this, getString(R.string.error_unknown));
+            helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_unknown));
             onBackPressed();
         }
 
@@ -92,7 +92,7 @@ public class HotelActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.share:
-                helpers.dialogShare(HotelActivity.this, STR_SHARE_LINK);
+                helpers.dialogShare(EstablishmentActivity.this, STR_SHARE_LINK);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -101,9 +101,9 @@ public class HotelActivity extends AppCompatActivity {
     // BASIC FUNCTIONS =============================================================================
     private Boolean handleExtraBundles() {
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getInt("HOTEL_ID") != 0) {
-            INT_HOTEL_ID = extras.getInt("HOTEL_ID");
-            Helpers.LogThis(TAG_LOG, "HOTEL ID: " + INT_HOTEL_ID);
+        if (extras != null && extras.getInt("ESTABLISHMENT_ID") != 0) {
+            INT_ESTABLISHMENT_ID = extras.getInt("ESTABLISHMENT_ID");
+            Helpers.LogThis(TAG_LOG, "ESTABLISHMENT ID: " + INT_ESTABLISHMENT_ID);
             return true;
         } else {
             return false;
@@ -114,9 +114,9 @@ public class HotelActivity extends AppCompatActivity {
         app_bar_layout = findViewById(R.id.app_bar_layout);
 
         img_banner = findViewById(R.id.img_banner);
-        txt_hotel_name = findViewById(R.id.txt_hotel_name);
-        txt_hotel_email = findViewById(R.id.txt_hotel_email);
-        txt_hotel_description = findViewById(R.id.txt_hotel_description);
+        txt_establishment_name = findViewById(R.id.txt_establishment_name);
+        txt_establishment_email = findViewById(R.id.txt_establishment_email);
+        txt_establishment_description = findViewById(R.id.txt_establishment_description);
 
     }
 
@@ -159,11 +159,11 @@ public class HotelActivity extends AppCompatActivity {
 
     }
 
-    // GET HOTEL ASYNC FUNCTION ====================================================================
+    // GET ESTABLISHMENT ASYNC FUNCTION ============================================================
     private void asyncFetchHotel() {
 
         HotelService userService = HotelService.retrofit.create(HotelService.class);
-        Call<JsonObject> call = userService.getHotel(INT_HOTEL_ID);
+        Call<JsonObject> call = userService.getHotel(INT_ESTABLISHMENT_ID);
         helpers.setProgressDialogMessage("Loading Hotel details");
         helpers.progressDialog(true);
 
@@ -180,9 +180,9 @@ public class HotelActivity extends AppCompatActivity {
 
                         JSONObject hotel_object = main.getJSONObject("data");
                         STR_PAGE_TITLE = hotel_object.getString("hotel_name");
-                        txt_hotel_name.setText(STR_PAGE_TITLE);
-                        txt_hotel_description.setText(hotel_object.getString("hotel_description"));
-                        txt_hotel_email.setText(hotel_object.getString("hotel_email"));
+                        txt_establishment_name.setText(STR_PAGE_TITLE);
+                        txt_establishment_description.setText(hotel_object.getString("hotel_description"));
+                        txt_establishment_email.setText(hotel_object.getString("hotel_email"));
                         STR_SHARE_LINK = STR_SHARE_LINK.concat(hotel_object.getString("hotel_url"));
 
                         // JOB VACANCIES
@@ -208,13 +208,13 @@ public class HotelActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        helpers.handleErrorMessage(HotelActivity.this, main.getJSONObject("data"));
+                        helpers.handleErrorMessage(EstablishmentActivity.this, main.getJSONObject("data"));
                     }
 
                     setFromSharedPrefs();
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(HotelActivity.this, getString(R.string.error_server));
+                    helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_server));
                     e.printStackTrace();
                     setFromSharedPrefs();
                 }
@@ -225,10 +225,10 @@ public class HotelActivity extends AppCompatActivity {
                 helpers.progressDialog(false);
                 Helpers.LogThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(HotelActivity.this, getString(R.string.error_server));
+                    helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_server));
                     onBackPressed();
                 } else {
-                    helpers.ToastMessage(HotelActivity.this, getString(R.string.error_connection));
+                    helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_connection));
                     onBackPressed();
                 }
 
