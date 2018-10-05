@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -50,6 +51,9 @@ public class JobActivity extends AppCompatActivity {
 
     private ImageView
             img_banner;
+
+    private MaterialButton
+            btn_apply;
 
     private AppBarLayout app_bar_layout;
 
@@ -131,6 +135,8 @@ public class JobActivity extends AppCompatActivity {
     private void findAllViews() {
         app_bar_layout = findViewById(R.id.app_bar_layout);
 
+        btn_apply = findViewById(R.id.btn_apply);
+
         img_banner = findViewById(R.id.img_banner);
         txt_establishment_name = findViewById(R.id.txt_establishment_name);
         txt_establishment_id = findViewById(R.id.txt_establishment_id);
@@ -180,7 +186,12 @@ public class JobActivity extends AppCompatActivity {
     }
 
     public void applyJob(View view) {
-        asyncApplyJob();
+        if (db.isAppliedJob(INT_JOB_ID)) {
+        helpers.ToastMessage(JobActivity.this, "Already applied for this position");
+        }else{
+            asyncApplyJob();
+
+        }
     }
 
     public void viewEstablishment(View view) {
@@ -191,6 +202,12 @@ public class JobActivity extends AppCompatActivity {
 
     private void checkJobApplied() {
         Helpers.LogThis(TAG_LOG, "IS APPLIED: " + db.isAppliedJob(INT_JOB_ID));
+        if (db.isAppliedJob(INT_JOB_ID)) {
+            btn_apply.setText("APPLIED");
+            btn_apply.setTextAppearance(JobActivity.this, R.style.Material_Text);
+            btn_apply.setBackground(null);
+            btn_apply.setClickable(false);
+        }
     }
 
 

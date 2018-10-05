@@ -17,7 +17,6 @@ import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.services.EstablishmentService;
 import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,8 +25,6 @@ import org.json.JSONObject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 
 public class EstablishmentActivity extends AppCompatActivity {
     private Helpers helpers;
@@ -70,7 +67,6 @@ public class EstablishmentActivity extends AppCompatActivity {
             helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_unknown));
             onBackPressed();
         }
-
 
     }
 
@@ -136,10 +132,6 @@ public class EstablishmentActivity extends AppCompatActivity {
         });
     }
 
-    private void setFromSharedPrefs() {
-        Glide.with(this).load(SharedPrefs.getString(USER_IMG_BANNER)).into(img_banner);
-    }
-
     private void setListeners() {
         app_bar_layout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -177,13 +169,25 @@ public class EstablishmentActivity extends AppCompatActivity {
                     Helpers.LogThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
+//{"data":
+// {
+// "id":3,
+// "employer_id":10,
+// "establishment_url":null,
+// "establishment_name":"Test Establishment",
+// "establishment_email":null,
+// "establishment_description":null,
+// "establishment_type":{"id":1,"name":"Hotel"},
+// "job_vacancies":[{"id":2,"title":"Cashier","posted":"25-09-2018","location":null,"description":"Short description","requirements":"Short requirements.","end_date":"17-06-2009","url":"https:\/\/hotelaide.com\/jobs\/cashier-test-establishment","establishment":{"id":3,"name":"Test Establishment","image":""}}],
+// "gallery":[]},"success":true}
 
                         JSONObject hotel_object = main.getJSONObject("data");
-                        STR_PAGE_TITLE = hotel_object.getString("hotel_name");
+                        STR_PAGE_TITLE = hotel_object.getString("establishment_name");
                         txt_establishment_name.setText(STR_PAGE_TITLE);
-                        txt_establishment_description.setText(hotel_object.getString("hotel_description"));
-                        txt_establishment_email.setText(hotel_object.getString("hotel_email"));
-                        STR_SHARE_LINK = STR_SHARE_LINK.concat(hotel_object.getString("hotel_url"));
+                        txt_establishment_description.setText(hotel_object.getString("establishment_description"));
+                        txt_establishment_email.setText(hotel_object.getString("establishment_email"));
+                        STR_SHARE_LINK = STR_SHARE_LINK.concat(hotel_object.getString("establishment_url"));
+                        Glide.with(EstablishmentActivity.this).load(hotel_object.getString("banner")).into(img_banner);
 
                         // JOB VACANCIES
                         JSONArray job_vacancies = hotel_object.getJSONArray("job_vacancies");
@@ -211,12 +215,9 @@ public class EstablishmentActivity extends AppCompatActivity {
                         helpers.handleErrorMessage(EstablishmentActivity.this, main.getJSONObject("data"));
                     }
 
-                    setFromSharedPrefs();
-
                 } catch (JSONException e) {
                     helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_server));
                     e.printStackTrace();
-                    setFromSharedPrefs();
                 }
             }
 
