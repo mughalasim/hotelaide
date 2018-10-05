@@ -265,7 +265,7 @@ public class FindJobsActivity extends ParentActivity {
         Client client = new Client(ALGOLIA_APP_ID, ALGOLIA_SEARCH_API_KEY);
         index = client.getIndex(ALGOLIA_INDEX_NAME);
         query = new Query();
-        query.setAttributesToRetrieve("id", "title", "posted_on", "hotel", "location");
+        query.setAttributesToRetrieve("id", "title", "posted_on", "establishment.id", "establishment.image", "establishment.full_address");
         query.setHitsPerPage(HITS_PER_PAGE);
     }
 
@@ -312,7 +312,7 @@ public class FindJobsActivity extends ParentActivity {
                             JSONArray hits_array = content.getJSONArray("hits");
                             for (int i = 0; i < hits_array.length(); i++) {
                                 JSONObject hit_object = hits_array.getJSONObject(i);
-                                model_list.add(db.setJobFromJson(hit_object));
+                                model_list.add(db.setJobFromJson(hit_object, false));
                             }
                         }
 

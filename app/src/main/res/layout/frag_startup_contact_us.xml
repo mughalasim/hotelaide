@@ -15,11 +15,11 @@
 
         <TextView
             style="@style/Text_Title"
-            android:text="ADDRESS" />
+            android:text="@string/nav_address" />
 
         <TextView
             style="@style/Text_Normal"
-            android:text="@string/txt_address" />
+            android:text="@string/about_address" />
 
         <include layout="@layout/horizontal_line" />
 
@@ -29,7 +29,7 @@
 
         <TextView
             style="@style/Text_Normal"
-            android:text="@string/txt_email_address" />
+            android:text="@string/about_email_address" />
 
         <include layout="@layout/horizontal_line" />
 
@@ -46,13 +46,13 @@
             <TextView
                 style="@style/Text_Normal"
                 android:layout_marginTop="0dp"
-                android:text="@string/txt_address_landline" />
+                android:text="@string/about_address_land_line" />
 
             <TextView
                 style="@style/Text_Normal"
-                android:onClick="MAKE_CALL"
+                android:onClick="makeCall"
                 android:layout_marginTop="0dp"
-                android:text="(254)20 567 897" />
+                android:text="@string/about_land_line" />
 
         </LinearLayout>
 
@@ -65,13 +65,13 @@
             <TextView
                 style="@style/Text_Normal"
                 android:layout_marginTop="0dp"
-                android:text="@string/txt_address_mobile" />
+                android:text="@string/about_address_mobile" />
 
             <TextView
                 style="@style/Text_Normal"
-                android:onClick="MAKE_CALL"
+                android:onClick="makeCall"
                 android:layout_marginTop="0dp"
-                android:text="(254)716 140 603" />
+                android:text="@string/about_phone" />
 
         </LinearLayout>
 

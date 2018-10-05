@@ -15,7 +15,7 @@
 
         <TextView
             style="@style/Text_Title"
-            android:text="WHO ARE WE" />
+            android:text="@string/about_title1" />
 
 
         <TextView
@@ -28,7 +28,7 @@
 
         <TextView
             style="@style/Text_Title"
-            android:text="WHAT WE DO" />
+            android:text="@string/app_name" />
 
         <TextView
             style="@style/Text_Normal"
@@ -40,7 +40,7 @@
 
         <TextView
             style="@style/Text_Title"
-            android:text="HOW WE HELP YOU" />
+            android:text="@string/about_title2" />
 
         <TextView
             style="@style/Text_Normal"

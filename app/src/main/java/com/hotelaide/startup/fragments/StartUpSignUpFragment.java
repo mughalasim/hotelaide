@@ -5,14 +5,11 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ContextThemeWrapper;
-import android.util.TypedValue;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,7 +73,6 @@ public class StartUpSignUpFragment extends Fragment {
     private Helpers helpers;
 
     private TextView
-            panel_title,
             txt_user_dob;
 
     private MaterialButton
@@ -87,6 +83,7 @@ public class StartUpSignUpFragment extends Fragment {
     private CountryCodePicker ccp_user_country_code;
 
     private MaterialButton
+            btn_open_social_media,
             btn_login_facebook2,
             btn_login_google2;
 
@@ -184,7 +181,7 @@ public class StartUpSignUpFragment extends Fragment {
 
         // SOCIAL MEDIA LOGIN ====================================================
         sliding_panel = rootview.findViewById(R.id.sliding_panel);
-        panel_title = rootview.findViewById(R.id.panel_title);
+        btn_open_social_media = rootview.findViewById(R.id.btn_open_social_media);
 
         btn_login_facebook = rootview.findViewById(R.id.btn_login_facebook);
         btn_login_google = rootview.findViewById(R.id.btn_login_google);
@@ -222,27 +219,10 @@ public class StartUpSignUpFragment extends Fragment {
             }
         });
 
-        sliding_panel.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+        btn_open_social_media.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPanelSlide(View panel, float slideOffset) {
-
-            }
-
-            @Override
-            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                if(getActivity()!=null){
-                    if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
-                        panel_title.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-                        panel_title.setText(R.string.txt_sign_up_social_title);
-                        panel_title.setTypeface(panel_title.getTypeface(), Typeface.BOLD);
-                        panel_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size_large));
-                    } else {
-                        panel_title.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                        panel_title.setText(getString(R.string.txt_sign_up_social));
-                        panel_title.setTypeface(panel_title.getTypeface(), Typeface.NORMAL);
-                        panel_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size_normal));
-                    }
-                }
+            public void onClick(View v) {
+                sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
         });
 

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.hotelaide.BuildConfig;
 
 import java.util.List;
 
@@ -29,10 +30,10 @@ public class MyApplication extends Application {
         }
     public static void initFireBase() {
         FirebaseOptions builder = new FirebaseOptions.Builder()
-                .setApplicationId("1:962090500242:android:427a10b5d10876f0\n")
-                .setApiKey("AIzaSyBoekDS7kvoOf7Z2EJOEkyvOwK08eiOwOg")
-                .setDatabaseUrl("https://hotel-aide-kenya.firebaseio.com")
-                .setStorageBucket("hotel-aide-kenya.appspot.com")
+                .setApplicationId(BuildConfig.FB_APP_ID)
+                .setApiKey(BuildConfig.FB_APP_KEY)
+                .setDatabaseUrl(BuildConfig.FB_DB_URL)
+                .setStorageBucket(BuildConfig.FB_STORE)
                 .build();
 
         List<FirebaseApp> fire_base_app_list = FirebaseApp.getApps(MyApplication.getAppContext());

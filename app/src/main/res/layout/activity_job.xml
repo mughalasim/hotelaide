@@ -53,7 +53,6 @@
                     android:layout_marginStart="@dimen/padding_small"
                     android:layout_marginTop="@dimen/padding_tiny"
                     android:drawableStart="@drawable/ic_calender"
-                    android:text="Posted On: 30/09/2018"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -63,7 +62,6 @@
                     android:layout_marginStart="@dimen/padding_small"
                     android:layout_marginTop="@dimen/padding_tiny"
                     android:drawableStart="@drawable/ic_calender"
-                    android:text="Available till: 21/05/2019"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -108,9 +106,9 @@
             <android.support.design.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
                 style="@style/Material_Button_Yes"
                 android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/padding_small"
+                android:layout_marginStart="@dimen/padding_large"
                 android:layout_marginTop="@dimen/padding_small"
-                android:layout_marginEnd="@dimen/padding_small"
+                android:layout_marginEnd="@dimen/padding_large"
                 android:onClick="applyJob"
                 android:text="@string/txt_apply" />
 
@@ -191,12 +189,12 @@
             <android.support.design.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
                 style="@style/Material_Button_Yes"
                 android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/padding_small"
+                android:layout_marginStart="@dimen/padding_large"
                 android:layout_marginTop="@dimen/padding_small"
-                android:layout_marginEnd="@dimen/padding_small"
-                android:onClick="viewHotel"
+                android:layout_marginEnd="@dimen/padding_large"
+                android:onClick="viewEstablishment"
                 android:layout_marginBottom="@dimen/padding_large"
-                android:text="@string/txt_view_hotel" />
+                android:text="@string/txt_view_establishment" />
 
 
         </LinearLayout>

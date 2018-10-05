@@ -18,7 +18,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.services.HotelService;
+import com.hotelaide.services.EstablishmentService;
+import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
@@ -60,6 +61,7 @@ public class JobActivity extends AppCompatActivity {
 
     private final String
             TAG_LOG = "JOB VACANCY";
+    private Database db;
 
 
     // OVERRIDE METHODS ============================================================================
@@ -71,6 +73,8 @@ public class JobActivity extends AppCompatActivity {
             setContentView(R.layout.activity_job);
 
             helpers = new Helpers(JobActivity.this);
+
+            db = new Database();
 
             setUpToolBarAndTabs();
 
@@ -179,18 +183,22 @@ public class JobActivity extends AppCompatActivity {
         asyncApplyJob();
     }
 
-    public void viewHotel(View view) {
+    public void viewEstablishment(View view) {
         startActivity(new Intent(JobActivity.this, EstablishmentActivity.class)
                 .putExtra("ESTABLISHMENT_ID", Integer.parseInt(txt_establishment_id.getText().toString()))
         );
+    }
+
+    private void checkJobApplied() {
+        Helpers.LogThis(TAG_LOG, "IS APPLIED: " + db.isAppliedJob(INT_JOB_ID));
     }
 
 
     // GET ESTABLISHMENT ASYNC FUNCTION ====================================================================
     private void asyncFetchHotel() {
 
-        HotelService hotelService = HotelService.retrofit.create(HotelService.class);
-        Call<JsonObject> call = hotelService.getJob(INT_JOB_ID);
+        EstablishmentService establishmentService = EstablishmentService.retrofit.create(EstablishmentService.class);
+        Call<JsonObject> call = establishmentService.getJob(INT_JOB_ID);
         helpers.setProgressDialogMessage("Loading Job details");
         helpers.progressDialog(true);
 
@@ -221,20 +229,20 @@ public class JobActivity extends AppCompatActivity {
                             txt_job_requirements.setText(Html.fromHtml(job_object.getString("requirements")));
                         }
 
-
 //                        txt_job_location.setText(job_object.getString("location"));
                         txt_job_post_date.setText(getString(R.string.txt_posted_on).concat(job_object.getString("posted")));
                         txt_job_end_date.setText(getString(R.string.txt_posted_till).concat(job_object.getString("end_date")));
-//                        STR_SHARE_LINK = STR_SHARE_LINK.concat(job_object.getString("hotel_url"));
+                        STR_SHARE_LINK = STR_SHARE_LINK.concat(job_object.getString("url"));
 
                         // ESTABLISHMENT OBJECT
-                        JSONObject hotel_object = job_object.getJSONObject("hotel");
+                        JSONObject hotel_object = job_object.getJSONObject("establishment");
                         if (hotel_object != null) {
                             txt_establishment_id.setText(hotel_object.getString("id"));
                             txt_establishment_name.setText(hotel_object.getString("name"));
                             Glide.with(JobActivity.this).load(hotel_object.getString("image")).into(img_banner);
                         }
 
+                        checkJobApplied();
 
                     } else {
                         helpers.handleErrorMessage(JobActivity.this, main.getJSONObject("data"));
@@ -267,8 +275,8 @@ public class JobActivity extends AppCompatActivity {
 
     private void asyncApplyJob() {
 
-        HotelService hotelService = HotelService.retrofit.create(HotelService.class);
-        Call<JsonObject> call = hotelService.applyForJob(SharedPrefs.getInt(USER_ID), INT_JOB_ID);
+        EstablishmentService establishmentService = EstablishmentService.retrofit.create(EstablishmentService.class);
+        Call<JsonObject> call = establishmentService.applyForJob(SharedPrefs.getInt(USER_ID), INT_JOB_ID);
         helpers.setProgressDialogMessage("Applying for this position");
         helpers.progressDialog(true);
 
@@ -282,6 +290,10 @@ public class JobActivity extends AppCompatActivity {
                     Helpers.LogThis(TAG_LOG, main.toString());
 
                     helpers.ToastMessage(JobActivity.this, main.getString("message"));
+
+                    db.setAppliedJob(INT_JOB_ID);
+
+                    checkJobApplied();
 
                 } catch (JSONException e) {
                     helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));

@@ -100,7 +100,7 @@
                         android:paddingStart="@dimen/padding_small"
                         android:paddingTop="@dimen/padding_tiny"
                         android:paddingEnd="@dimen/padding_small"
-                        android:text="@string/txt_email_address"
+                        android:text="@string/about_email_address"
                         android:layout_width="wrap_content"
                          android:paddingBottom="@dimen/padding_tiny"
                         android:layout_marginTop="0dp"

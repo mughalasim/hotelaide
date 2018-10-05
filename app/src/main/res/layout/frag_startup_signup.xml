@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="bottom"
     app:umanoFadeColor="@color/dim"
-    app:umanoPanelHeight="@dimen/height_panel"
+    app:umanoPanelHeight="0dp"
     app:umanoShadowHeight="@dimen/line_thickness">
 
     <ScrollView
@@ -27,7 +27,7 @@
             <TextView
                 style="@style/Text_Normal"
                 android:layout_gravity="center"
-                android:onClick="SIGN_UP"
+                android:onClick="navigateToSignUpScreen"
                 android:text="@string/txt_sign_up_header" />
 
             <android.support.design.widget.TextInputLayout
@@ -135,10 +135,16 @@
 
             <include layout="@layout/horizontal_line" />
 
+
             <android.support.design.button.MaterialButton
                 style="@style/Material_Text"
+                android:id="@+id/btn_open_social_media"
                 android:layout_marginTop="@dimen/padding_large"
-                android:onClick="LOGIN"
+                android:text="@string/txt_sign_up_social" />
+
+            <android.support.design.button.MaterialButton
+                style="@style/Material_Text"
+                android:onClick="navigateToLoginScreen"
                 android:text="@string/txt_have_account" />
 
             <android.support.design.button.MaterialButton

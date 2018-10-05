@@ -32,6 +32,10 @@
     <style name="actionOverflowMenu" parent="Widget.AppCompat.ListPopupWindow">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:background">@drawable/bckgrd_text_fields</item>
+        <item name="actionOverflowButtonStyle">@style/overflowButtonStyle</item>
+    </style>
+    <style name="overflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/white</item>
     </style>
 
 

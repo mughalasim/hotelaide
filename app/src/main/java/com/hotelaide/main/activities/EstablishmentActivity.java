@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.services.HotelService;
+import com.hotelaide.services.EstablishmentService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
@@ -162,8 +162,8 @@ public class EstablishmentActivity extends AppCompatActivity {
     // GET ESTABLISHMENT ASYNC FUNCTION ============================================================
     private void asyncFetchHotel() {
 
-        HotelService userService = HotelService.retrofit.create(HotelService.class);
-        Call<JsonObject> call = userService.getHotel(INT_ESTABLISHMENT_ID);
+        EstablishmentService userService = EstablishmentService.retrofit.create(EstablishmentService.class);
+        Call<JsonObject> call = userService.getEstablishment(INT_ESTABLISHMENT_ID);
         helpers.setProgressDialogMessage("Loading Hotel details");
         helpers.progressDialog(true);
 

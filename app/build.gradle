@@ -48,6 +48,12 @@ android {
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
             buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '35'
             buildConfigField 'Boolean', 'LOGGING', "$rootProject.debugMode"
+            
+            // FIRE BASE
+            buildConfigField 'String', 'FB_APP_ID', '"1:962090500242:android:427a10b5d10876f0"'
+            buildConfigField 'String', 'FB_APP_KEY', '"AIzaSyBoekDS7kvoOf7Z2EJOEkyvOwK08eiOwOg"'
+            buildConfigField 'String', 'FB_DB_URL', '"https://hotel-aide-kenya.firebaseio.com"'
+            buildConfigField 'String', 'FB_STORE', '"hotel-aide-kenya.appspot.com"'
 
             // INSTANT SEARCH
             buildConfigField 'String', 'ALGOLIA_APP_ID', '"Q7ZOKDIRKG"'
@@ -56,7 +62,7 @@ android {
             buildConfigField 'String', 'FILTER_COUNTY', '"location.county_name"'
             buildConfigField 'String', 'FILTER_CATEGORY', '"category.name"'
             buildConfigField 'String', 'FILTER_JOB_TYPE', '"job_type.name"'
-            buildConfigField 'String', 'FILTER_NAME', '"hotel.name"'
+            buildConfigField 'String', 'FILTER_NAME', '"establishment.name"'
         }
     }
 }

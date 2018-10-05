@@ -7,7 +7,6 @@
     <!--META DATA ===============================================================================-->
     <string name="facebook_app_id">213335282601524</string>
     <string name="fb_login_protocol_scheme">fb213335282601524</string>
-    <!--<string name="maps_api_key">AIzaSyCTCaPUFjrQtJ15ATMTvQKxa9Chy4sSSV0"</string>-->
     <string name="maps_api_key">AIzaSyCCc45P-R50C_Hy1Jw6A00CjNN4vrZAB3c"</string>
 
     <!--ERROR MESSAGES ==========================================================================-->
@@ -26,15 +25,20 @@
     <string name="error_app_not_installed">This App is not installed on your device</string>
     <string name="error_sign_in_cancelled">Sign in cancelled</string>
     <string name="error_invalid_user">incorrect credentials for a job seeker account</string>
+    <string name="error_update_google_play">Please update your google play services in order to use this feature</string>
 
-    <!-- About Us ===============================================================================-->
-    <string name="about1">Is a cloud based hotel management software that covers all hotel internal operations and becomes the hotel\'s direct gateway to all the online sales and marketing channels.HotelAide was planned not to be another PMS</string>
-    <string name="about2">Since launching in 2015, Yummy Card has become Nairobi’s largest dining club, with a current membership base of over 15,000 members. The program offers an unparalleled, one-of-a-kind marketing strategy for your restaurant; one that has helped restaurants fill seats and build loyalty. Our research shows that over 50% of our members choose to eat out at a Yummy Card restaurant at least once a week. Members have the option of using their physical cards or displaying a digital version on the EatOut App. Discounts apply on the entire bill and at all times, however cannot be used at the same time as another offer. Some restaurants may exclude holidays and celebration days. Order you card today by visiting www.joinyummy.com.</string>
-    <string name="about3">Yummy Magazine is the region’s only lifestyle magazine focused on food and drink. With a print run of 12,000 distributed through over 15,000 copies publication launching in 2015, Yummy Card has become Nairobi’s largest dining club, with a current Yummy is Nairobi’s premier urban lifestyle magazine specifically for foodies with 12,000 copies are distributed monthly through over 100 locations (cafes, restaurants, shopping malls) in Nairobi, reaching a broad spectrum individuals with high disposable income, young professionals, corporate executives, decision makers, expats and tourists. Download back issues at www.yummymagaizne.com.</string>
-
-
-    <!--Address =================================================================================-->
-    <string name="txt_address">Some Place Road,\n338125 – 00100,\nNairobi,\nKenya</string>
+    <!-- ABOUT US AND ADDRESS ===================================================================-->
+    <string name="about_title1">Objectives</string>
+    <string name="about1">Join the Hotelaide community to gain unlimited access to the hospitality industry in Kenya. Get hospitality Jobs and insights on the go, connect with all the major brands in the industry and meet all the captains of fathers industry in one place.Get verified. By both colleagues and hotels within the community.</string>
+    <string name="about2">We are a cloud based hospitality solutions provider with an eye to finding cost effective, efficient  and practical business solutions to the current local, regional and global challenges facing the hospitality sector in Africa.</string>
+    <string name="about_title2">Mobile Features</string>
+    <string name="about3">Profile builder, Job search, Hotelaide blog and connect with professionals and hotels within the community.</string>
+    <string name="about_email_address">info@hotelaide.com</string>
+    <string name="about_address_land_line">Land line:&#160;</string>
+    <string name="about_address_mobile">Mobile:&#160;</string>
+    <string name="about_address">Some Place Road,\n338125 – 00100,\nNairobi,\nKenya</string>
+    <string name="about_phone">(254) 716 140 603</string>
+    <string name="about_land_line">(254) 20 5674 890</string>
 
 
     <!--LOADING DIALOGS =========================================================================-->
@@ -86,6 +90,7 @@
     <!--PERMISSION RATIONALS ====================================================================-->
     <string name="rationale_image">HotelAide needs to access your Camera and write to your external storage for Images that you would like to set. Please grant these permissions in order to use the feature</string>
     <string name="rationale_locations">HotelAide needs to access your location but your GPS seems to be disabled. You must enable it to proceed</string>
+    <string name="rationale_call">HotelAide needs to access your phone dialer tools in order to call the selected number</string>
 
     <!--ARRAY GENDER ============================================================================-->
     <string-array name="select_gender">
@@ -94,51 +99,50 @@
     </string-array>
 
     <!-- LAYOUT SET TEXT ========================================================================-->
-    <string name="txt_edit_profile">Edit Profile</string>
+    <string name="txt_edit_profile">Edit profile</string>
     <string name="txt_share">Share</string>
     <string name="txt_cancel" tools:ignore="ButtonCase">CANCEL</string>
-    <string name="txt_ok">OK</string>
-    <string name="txt_enable">ENABLE</string>
+    <string name="txt_ok">Yes</string>
+    <string name="txt_enable">Enable</string>
     <string name="txt_loading_please_wait">Loading… please wait…</string>
     <string name="txt_no_items_found">No results found</string>
     <string name="txt_open_bracket">(</string>
     <string name="txt_closed_bracket">)&#160;</string>
     <string name="txt_call">You are about to make a call. Are you sure you wish to proceed?</string>
-    <string name="txt_call_title">MAKE A CALL</string>
-    <string name="txt_location_title">LOCATION SERVICES</string>
+    <string name="txt_call_title">Make a call</string>
+    <string name="txt_location_title">Location services</string>
     <string name="txt_version">Version:&#160;</string>
-    <string name="txt_old_version_title">Old Version</string>
-    <string name="txt_old_version_desc">Seems like you are using an old version of the app, Please update the app from the playstore to get access to new features</string>
-    <string name="txt_update_now">UPDATE NOW</string>
-    <string name="txt_later">LATER</string>
+    <string name="txt_old_version_title">Old version</string>
+    <string name="txt_old_version_desc">Seems like you are using an old version of the app, Please update the app from the Google Play Store to get access to new features</string>
+    <string name="txt_update_now">Update now</string>
+    <string name="txt_later">Later</string>
     <string name="txt_reset">Reset</string>
     <string name="txt_terms_conditions">Terms and conditions</string>
-    <string name="txt_forgot_password">Forgot Password</string>
+    <string name="txt_forgot_password">Forgot password</string>
     <string name="txt_welcome">Welcome</string>
     <string name="txt_welcome_login">Kindly enter your email and password to login</string>
-    <string name="txt_address_landline">Landline:&#160;</string>
-    <string name="txt_address_mobile">Mobile:&#160;</string>
+
     <string name="txt_errors">Errors</string>
-    <string name="txt_take_me_there">Take Me There</string>
+    <string name="txt_take_me_there">Take me there</string>
     <string name="txt_alert">Alert!</string>
-    <string name="txt_delete_account">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap OK to proceed or CANCEL to go back</string>
+    <string name="txt_delete_account">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap YES to proceed or CANCEL to go back</string>
     <string name="txt_to">&#160;to&#160;</string>
     <string name="txt_from">From&#160;</string>
-    <string name="txt_select_date">Select Date</string>
+    <string name="txt_select_date">Select date</string>
     <string name="txt_not_work_here">I do not work here</string>
-    <string name="txt_not_set">Not Set</string>
+    <string name="txt_not_set">Not set</string>
     <string name="txt_work_here">I currently work here</string>
-    <string name="txt_end_date">End Date</string>
-    <string name="txt_start_date">Start Date</string>
-    <string name="txt_position_held">Position Held</string>
-    <string name="txt_company_name">Company Name</string>
+    <string name="txt_end_date">End date</string>
+    <string name="txt_start_date">Start date</string>
+    <string name="txt_position_held">Position held</string>
+    <string name="txt_company_name">Company name</string>
     <string name="txt_responsibilities">Responsibilities</string>
     <string name="txt_success">Successfully updated</string>
-    <string name="txt_update">UPDATE</string>
-    <string name="txt_add">ADD</string>
+    <string name="txt_update">Update</string>
+    <string name="txt_add">Add</string>
     <string name="txt_date_separator">-</string>
-    <string name="txt_add_exp">ADD NEW EXPERIENCE</string>
-    <string name="txt_edit_exp">EDIT EXPERIENCE</string>
+    <string name="txt_add_exp">Add new experience</string>
+    <string name="txt_edit_exp">Edit experience</string>
     <string name="txt_at">&#160;at&#160;</string>
     <string name="txt_full_address">Full Address</string>
     <string name="txt_map_location">Map (Tap to set your location)</string>
@@ -148,20 +152,19 @@
     <string name="txt_delete_experience">Are you sure you wish to delete your experience at&#160;</string>
     <string name="txt_delete">Delete</string>
     <string name="txt_field_study">Field of Study</string>
-    <string name="txt_education_level">Education Level</string>
-    <string name="txt_institution_name">Institution Name</string>
+    <string name="txt_education_level">Education level</string>
+    <string name="txt_institution_name">Institution name</string>
     <string name="txt_present">Present</string>
-    <string name="txt_sign_up_google">SIGN UP WITH GOOGLE</string>
-    <string name="txt_profile_completion">Profile Completion&#160;</string>
+    <string name="txt_sign_up_google">Sign up with Google</string>
+    <string name="txt_profile_completion">Profile completion&#160;</string>
     <string name="txt_study_completed">Study completed</string>
     <string name="txt_study_incomplete">Currently studying</string>
-    <string name="txt_email_address">info@hotelaide.com</string>
     <string name="txt_sign_up_header">You could opt to give us some details about you so we can sign you up and get you started</string>
     <string name="txt_have_account">Already have an account</string>
     <string name="txt_sign_up_social">Sign up with social Media instead</string>
-    <string name="txt_sign_up_facebook">SIGN UP WITH FACEBOOK</string>
+    <string name="txt_sign_up_facebook">Sign up with facebook</string>
     <string name="txt_sign_up_desc">Tap on one below and instantly sign up using either of your accounts on Facebook or Google+</string>
-    <string name="txt_locked_out">LOCKED OUT?</string>
+    <string name="txt_locked_out">Locked out?</string>
     <string name="txt_locked_out_desc">Don\'t worry, give us your email address that you used to sign up and well send you a reset link</string>
     <string name="txt_new_account_password">Please set your new password</string>
     <string name="txt_delete_your_account">Delete your account</string>
@@ -171,26 +174,23 @@
     <string name="txt_set_category">Set Category</string>
     <string name="txt_set_job_type">Set Job Type</string>
     <string name="txt_job_vacancies">Job Vacancies</string>
-    <string name="txt_sign_up_social_title">SOCIAL MEDIA SIGN UP</string>
-    <string name="txt_apply">Apply Now</string>
+    <string name="txt_sign_up_social_title">Social Media sign up</string>
+    <string name="txt_apply">Apply now</string>
     <string name="txt_description">Description</string>
     <string name="txt_requirements">Requirements</string>
-    <string name="txt_view_hotel">View Hotel</string>
+    <string name="txt_view_establishment">View establishment</string>
     <string name="txt_posted_till">&#160;Till:&#160;</string>
     <string name="txt_posted_on">&#160;Posted:&#160;</string>
     <string name="txt_exit_desc">Are you sure you wish to exit?</string>
     <string name="txt_exit">Leaving&#160;</string>
     <string name="txt_change_image">Update</string>
     <string name="txt_yes">Yes</string>
-    <string name="et_hint_message">Say something…</string>
+    <string name="et_hint_message">Type message…</string>
     <string name="txt_delete_desc">Are you sure you wish to delete this message, this cannot be undone?</string>
-
     <string name="txt_notify_me">Notify me on updates</string>
     <string name="txt_notify_me_desc">Turning this on will allow the app to notify you if there is a new update available in the Play Store</string>
     <string name="txt_notify_push">Message notifications</string>
     <string name="txt_notify_push_desc">Notify me when someone has sent me a new message</string>
-    <string name="error_update_google_play">Please update your google play services in order to use this feature</string>
-    <string name="progress_loading_get_location">Fetching your current location, please wait...</string>
 
 
 </resources>

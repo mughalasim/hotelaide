@@ -16,6 +16,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hotelaide.utils.StaticVariables.APPLIED_JOBS_ID;
+import static com.hotelaide.utils.StaticVariables.APPLIED_JOBS_TABLE_ID;
+import static com.hotelaide.utils.StaticVariables.APPLIED_JOBS_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
@@ -24,8 +27,9 @@ import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.EXP_CURRENT;
 import static com.hotelaide.utils.StaticVariables.EXP_END_DATE;
 import static com.hotelaide.utils.StaticVariables.EXP_ID;
+import static com.hotelaide.utils.StaticVariables.EXP_LEVEL;
 import static com.hotelaide.utils.StaticVariables.EXP_NAME;
-import static com.hotelaide.utils.StaticVariables.EXP_POSITION_LEVEL;
+import static com.hotelaide.utils.StaticVariables.EXP_POSITION;
 import static com.hotelaide.utils.StaticVariables.EXP_RESPONSIBILITIES_FIELD;
 import static com.hotelaide.utils.StaticVariables.EXP_START_DATE;
 import static com.hotelaide.utils.StaticVariables.EXP_TABLE_ID;
@@ -59,7 +63,8 @@ public class Database extends SQLiteOpenHelper {
                 EXP_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 EXP_ID + " INTEGER," +
                 EXP_NAME + " TEXT," +
-                EXP_POSITION_LEVEL + " TEXT," +
+                EXP_POSITION + " TEXT," +
+                EXP_LEVEL + " TEXT," +
                 EXP_START_DATE + " TEXT," +
                 EXP_END_DATE + " TEXT," +
                 EXP_RESPONSIBILITIES_FIELD + " TEXT," +
@@ -77,6 +82,14 @@ public class Database extends SQLiteOpenHelper {
                 JOB_ESTABLISHMENT_ID + " INTEGER," +
                 JOB_ESTABLISHMENT_IMAGE + " TEXT," +
                 JOB_ESTABLISHMENT_LOCATION + " TEXT" +
+                ")"
+        );
+
+        // APPLIED JOBS TABLE ======================================================================
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + APPLIED_JOBS_TABLE_NAME +
+                "(" + APPLIED_JOBS_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                APPLIED_JOBS_ID + " INTEGER" +
                 ")"
         );
 
@@ -173,9 +186,7 @@ public class Database extends SQLiteOpenHelper {
                 experienceModel.start_date = work_object.getString("start_date");
                 experienceModel.end_date = work_object.getString("end_date");
                 experienceModel.responsibilities_field = work_object.getString("responsibilities");
-                if (work_object.getBoolean("current")) {
-                    experienceModel.current = 1;
-                }
+                experienceModel.current = work_object.getInt("current");
                 experienceModel.type = EXPERIENCE_TYPE_WORK;
 
             } else {
@@ -185,9 +196,8 @@ public class Database extends SQLiteOpenHelper {
                 experienceModel.start_date = work_object.getString("start_date");
                 experienceModel.end_date = work_object.getString("end_date");
                 experienceModel.responsibilities_field = work_object.getString("study_field");
-                if (work_object.getBoolean("current")) {
-                    experienceModel.current = 1;
-                }
+                experienceModel.current = work_object.getInt("current");
+
                 experienceModel.type = EXPERIENCE_TYPE_EDUCATION;
             }
 
@@ -196,7 +206,8 @@ public class Database extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put(EXP_ID, experienceModel.experience_id);
             contentValues.put(EXP_NAME, experienceModel.name);
-            contentValues.put(EXP_POSITION_LEVEL, experienceModel.position);
+            contentValues.put(EXP_POSITION, experienceModel.position);
+            contentValues.put(EXP_LEVEL, experienceModel.education_level);
             contentValues.put(EXP_START_DATE, experienceModel.start_date);
             contentValues.put(EXP_END_DATE, experienceModel.end_date);
             contentValues.put(EXP_RESPONSIBILITIES_FIELD, experienceModel.responsibilities_field);
@@ -204,7 +215,7 @@ public class Database extends SQLiteOpenHelper {
             contentValues.put(EXP_TYPE, experienceModel.type);
 
             String whereClause = EXP_ID + " = ? AND " + EXP_TYPE + " = ?";
-            String[] whereArgs = new String[]{String.valueOf(experienceModel.experience_id), experienceModel.type };
+            String[] whereArgs = new String[]{String.valueOf(experienceModel.experience_id), experienceModel.type};
             int no_of_rows_affected = db.update(EXP_TABLE_NAME, contentValues, whereClause,
                     whereArgs);
 
@@ -245,7 +256,8 @@ public class Database extends SQLiteOpenHelper {
                     ExperienceModel experienceModel = new ExperienceModel();
                     experienceModel.experience_id = cursor.getInt(cursor.getColumnIndex(EXP_ID));
                     experienceModel.name = cursor.getString(cursor.getColumnIndex(EXP_NAME));
-                    experienceModel.position = cursor.getString(cursor.getColumnIndex(EXP_POSITION_LEVEL));
+                    experienceModel.position = cursor.getString(cursor.getColumnIndex(EXP_POSITION));
+                    experienceModel.education_level = cursor.getInt(cursor.getColumnIndex(EXP_LEVEL));
                     experienceModel.start_date = cursor.getString(cursor.getColumnIndex(EXP_START_DATE));
                     experienceModel.end_date = cursor.getString(cursor.getColumnIndex(EXP_END_DATE));
                     experienceModel.responsibilities_field = cursor.getString(cursor.getColumnIndex(EXP_RESPONSIBILITIES_FIELD));
@@ -271,9 +283,9 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-
     // JOB SEARCH FUNCTIONS ========================================================================
-    public JobModel setJobFromJson(JSONObject job_object) {
+    public JobModel setJobFromJson(JSONObject job_object, Boolean is_applied) {
+//        Helpers.LogThis(TAG_LOG, job_object.toString());
         JobModel jobModel = new JobModel();
         try {
             jobModel.id = job_object.getInt("id");
@@ -281,26 +293,30 @@ public class Database extends SQLiteOpenHelper {
             jobModel.posted_on = job_object.getString("posted_on");
 
             JSONObject hotel_object = job_object.getJSONObject("establishment");
-            jobModel.hotel_id = hotel_object.getInt("id");
+            jobModel.establishment_id = hotel_object.getInt("id");
             jobModel.hotel_image = hotel_object.getString("image");
             jobModel.hotel_location = hotel_object.getString("full_address");
 
             SQLiteDatabase db = this.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(JOB_ID, jobModel.id);
-            contentValues.put(JOB_NAME, jobModel.name);
-            contentValues.put(JOB_POSTED_ON, jobModel.posted_on);
-            contentValues.put(JOB_ESTABLISHMENT_ID, jobModel.hotel_id);
-            contentValues.put(JOB_ESTABLISHMENT_IMAGE, jobModel.hotel_image);
-            contentValues.put(JOB_ESTABLISHMENT_LOCATION, jobModel.hotel_location);
+            ContentValues content_values1 = new ContentValues();
+            content_values1.put(JOB_ID, jobModel.id);
+            content_values1.put(JOB_NAME, jobModel.name);
+            content_values1.put(JOB_POSTED_ON, jobModel.posted_on);
+            content_values1.put(JOB_ESTABLISHMENT_ID, jobModel.establishment_id);
+            content_values1.put(JOB_ESTABLISHMENT_IMAGE, jobModel.hotel_image);
+            content_values1.put(JOB_ESTABLISHMENT_LOCATION, jobModel.hotel_location);
 
-            String whereClause = JOB_ID + " = ?";
-            String[] whereArgs = new String[]{String.valueOf(jobModel.id)};
-            int no_of_rows_affected = db.update(JOB_TABLE_NAME, contentValues, whereClause,
-                    whereArgs);
+            String where_clause1 = JOB_ID + " = ?";
+            String[] where_args1 = new String[]{String.valueOf(jobModel.id)};
+            int no_of_rows_affected = db.update(JOB_TABLE_NAME, content_values1, where_clause1,
+                    where_args1);
 
             if (no_of_rows_affected == 0) {
-                db.insert(JOB_TABLE_NAME, null, contentValues);
+                db.insert(JOB_TABLE_NAME, null, content_values1);
+            }
+
+            if (is_applied) {
+                setAppliedJob(jobModel.id);
             }
 
             return jobModel;
@@ -311,32 +327,40 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public JobModel getHotelIdByJobID(String job_id) {
+
+    public void setAppliedJob(int job_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues content_values2 = new ContentValues();
+        content_values2.put(APPLIED_JOBS_ID, job_id);
+        String where_clause2 = APPLIED_JOBS_ID + " = ?";
+        String[] where_args2 = new String[]{String.valueOf(job_id)};
+        int no_of_rows_affected2 = db.update(APPLIED_JOBS_TABLE_NAME, content_values2, where_clause2,
+                where_args2);
+        if (no_of_rows_affected2 == 0) {
+            db.insert(APPLIED_JOBS_TABLE_NAME, null, content_values2);
+        }
+    }
+
+    public Boolean isAppliedJob(int job_id) {
         JobModel jobModel = new JobModel();
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String whereClause = JOB_ID + " = ?";
-        String[] whereArgs = new String[]{job_id};
-        Cursor cursor = db.query(JOB_TABLE_NAME, null, whereClause, whereArgs,
+        String whereClause = APPLIED_JOBS_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(job_id)};
+        Cursor cursor = db.query(APPLIED_JOBS_TABLE_NAME, null, whereClause, whereArgs,
                 null, null, null);
 
         if (cursor != null) {
             int count = cursor.getCount();
             if (count > 0) {
-                cursor.moveToFirst();
-                do {
-                    jobModel.id = cursor.getInt(cursor.getColumnIndex(JOB_ID));
-                    jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
-                    jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
-                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
-                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
-                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
-                } while (cursor.moveToNext());
+                cursor.close();
+                return true;
+            } else {
+                return false;
             }
-            cursor.close();
+        } else {
+            return false;
         }
-
-        return jobModel;
     }
 
     public ArrayList<JobModel> getAllJobModelsBySearch(String search, String location) {
@@ -358,7 +382,7 @@ public class Database extends SQLiteOpenHelper {
                     jobModel.id = cursor.getInt(cursor.getColumnIndex(JOB_ID));
                     jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
                     jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
-                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
+                    jobModel.establishment_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
                     jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
                     jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
 
@@ -396,7 +420,7 @@ public class Database extends SQLiteOpenHelper {
                     jobModel.id = cursor.getInt(cursor.getColumnIndex(JOB_ID));
                     jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
                     jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
-                    jobModel.hotel_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
+                    jobModel.establishment_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
                     jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
                     jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
 

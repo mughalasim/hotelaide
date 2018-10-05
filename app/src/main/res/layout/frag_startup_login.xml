@@ -56,13 +56,13 @@
 
         <android.support.design.button.MaterialButton
             style="@style/Material_Text"
-            android:onClick="SIGN_UP"
+            android:onClick="navigateToSignUpScreen"
             android:layout_marginTop="@dimen/padding_large"
             android:text="@string/nav_sign_up" />
 
         <android.support.design.button.MaterialButton
             style="@style/Material_Text"
-            android:onClick="FORGOT_PASS"
+            android:onClick="navigateToForgotPassScreen"
             android:text="@string/txt_forgot_password" />
 
         <android.support.design.button.MaterialButton

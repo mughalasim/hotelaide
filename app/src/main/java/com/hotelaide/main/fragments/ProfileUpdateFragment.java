@@ -163,11 +163,10 @@ public class ProfileUpdateFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    SharedPrefs.setInt(USER_AVAILABILITY, 1);
+                    asyncUpdateUserAvailability(1);
                 } else {
-                    SharedPrefs.setInt(USER_AVAILABILITY, 0);
+                    asyncUpdateUserAvailability(0);
                 }
-                asyncUpdateUserAvailability();
             }
         });
 
@@ -333,44 +332,30 @@ public class ProfileUpdateFragment extends Fragment {
 
     }
 
-    private void asyncUpdateUserAvailability() {
-
+    // ASYNC UPDATE AVAILABILITY ===================================================================
+    private void asyncUpdateUserAvailability(final int availability) {
         UserService userService = UserService.retrofit.create(UserService.class);
         final Call<JsonObject> call = userService.setUserAvailability(
                 SharedPrefs.getInt(USER_ID),
-                SharedPrefs.getInt(USER_AVAILABILITY));
+                availability);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
-
-                    Helpers.LogThis(TAG_LOG, main.toString());
-
                     if (main.getBoolean("success")) {
-                        helpers.ToastMessage(getActivity(), main.getString("message"));
-                    } else {
-                        helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                        SharedPrefs.setInt(USER_AVAILABILITY, availability);
                     }
-
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                } else {
+                if (getActivity() != null) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
                 }
-
             }
         });
 

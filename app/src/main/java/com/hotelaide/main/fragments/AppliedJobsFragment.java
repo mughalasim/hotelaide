@@ -15,7 +15,7 @@ import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.main.adapters.FindJobsAdapter;
 import com.hotelaide.main.models.JobModel;
-import com.hotelaide.services.HotelService;
+import com.hotelaide.services.EstablishmentService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -110,8 +110,8 @@ public class AppliedJobsFragment extends Fragment {
 
     // ASYNC FETCH ALL APPLIED JOBS ================================================================
     private void asyncGetAppliedJobs() {
-        HotelService hotelService = HotelService.retrofit.create(HotelService.class);
-        Call<JsonObject> call = hotelService.getAppliedJobs(SharedPrefs.getInt(USER_ID));
+        EstablishmentService establishmentService = EstablishmentService.retrofit.create(EstablishmentService.class);
+        Call<JsonObject> call = establishmentService.getAppliedJobs(SharedPrefs.getInt(USER_ID));
         swipe_refresh.setRefreshing(true);
 
         call.enqueue(new Callback<JsonObject>() {
@@ -128,7 +128,7 @@ public class AppliedJobsFragment extends Fragment {
                         JSONArray applications = data.getJSONArray("applications");
                         for (int i = 0; i < applications.length(); i++) {
                             JSONObject hit_object = applications.getJSONObject(i);
-                            model_list.add(db.setJobFromJson(hit_object));
+                            model_list.add(db.setJobFromJson(hit_object, true));
                         }
 
                         if (model_list.size() <= 0) {

@@ -268,8 +268,14 @@ public class ExperienceEditFragment extends Fragment {
 
             private void experienceTypeCheck() {
                 if (spinner_education_level.getVisibility() == View.VISIBLE) {
-                    experienceModel.education_level = spinner_education_level.getSelectedItemPosition();
-                    generalChecks();
+                    if (spinner_education_level.getSelectedItemPosition() == 0) {
+                        helpers.ToastMessage(getActivity(), "Set the education level");
+                    } else {
+//                        Helpers.LogThis(TAG_LOG, spinner_education_level.getSelectedItem().toString());
+//                        Helpers.LogThis(TAG_LOG, "ID: " + db.getFilterIDByString(EDUCATION_LEVEL_TABLE_NAME, spinner_education_level.getSelectedItem().toString()));
+                        experienceModel.education_level = db.getFilterIDByString(EDUCATION_LEVEL_TABLE_NAME, spinner_education_level.getSelectedItem().toString());
+                        generalChecks();
+                    }
                 } else if (helpers.validateEmptyEditText(et_position)) {
                     experienceModel.position = et_position.getText().toString();
                     generalChecks();
@@ -467,6 +473,7 @@ public class ExperienceEditFragment extends Fragment {
                 experienceModel.experience_id + " - " +
                         experienceModel.name + " - " +
                         experienceModel.position + " - " +
+                        experienceModel.education_level + " - " +
                         experienceModel.start_date + " - " +
                         experienceModel.end_date + " - " +
                         experienceModel.responsibilities_field + " - " +

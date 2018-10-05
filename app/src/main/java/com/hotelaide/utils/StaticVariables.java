@@ -42,6 +42,7 @@ public class StaticVariables {
 // PERMISSION VARIABLES ============================================================================
     public final static int INT_PERMISSIONS_CAMERA = 601;
     public final static int INT_PERMISSIONS_LOCATIONS = 602;
+    public final static int INT_PERMISSIONS_CALL = 603;
 
 
 // BUNDLE EXTRA VARIABLES ==========================================================================
@@ -69,7 +70,8 @@ public class StaticVariables {
     public static final String EXP_TABLE_ID = "id";
     public static final String EXP_ID = "experience_id";
     public static final String EXP_NAME = "name";
-    public static final String EXP_POSITION_LEVEL = "position";
+    public static final String EXP_POSITION = "position";
+    public static final String EXP_LEVEL = "level";
     public static final String EXP_START_DATE = "start_date";
     public static final String EXP_END_DATE = "end_date";
     public static final String EXP_RESPONSIBILITIES_FIELD = "responsibilities_field";
@@ -82,5 +84,9 @@ public class StaticVariables {
     public static final String EDUCATION_LEVEL_TABLE_NAME = "EDUCATION_LEVEL";
     public static final String FILTER_ID = "id";
     public static final String FILTER_NAME = "name";
+    // APPLIED JOBS TABLE ==================================================================================
+    public static final String APPLIED_JOBS_TABLE_NAME = "APPLIED_JOBS";
+    public static final String APPLIED_JOBS_TABLE_ID = "id";
+    public static final String APPLIED_JOBS_ID = "job_id";
 
 }
