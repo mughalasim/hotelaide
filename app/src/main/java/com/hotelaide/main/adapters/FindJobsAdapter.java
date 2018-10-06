@@ -47,7 +47,7 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
             txt_location = v.findViewById(R.id.txt_location);
             txt_posted_on = v.findViewById(R.id.txt_posted_on);
             img_image = v.findViewById(R.id.img_image);
-            no_list_item = v.findViewById(R.id.no_list_items);
+            no_list_item = v.findViewById(R.id.rl_no_list_items);
             list_item = v.findViewById(R.id.list_item);
         }
 

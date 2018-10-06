@@ -54,7 +54,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             txt_from_name = v.findViewById(R.id.txt_from_name);
             txt_last_message = v.findViewById(R.id.txt_last_message);
             txt_message_counter = v.findViewById(R.id.txt_message_counter);
-            no_list_item = v.findViewById(R.id.no_list_items);
+            no_list_item = v.findViewById(R.id.rl_no_list_items);
             list_item = v.findViewById(R.id.list_item);
         }
 

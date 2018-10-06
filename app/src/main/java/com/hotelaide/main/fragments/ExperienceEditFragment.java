@@ -141,7 +141,7 @@ public class ExperienceEditFragment extends Fragment {
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         // TOP PANEL =============================================================
-        no_list_items = root_view.findViewById(R.id.no_list_items);
+        no_list_items = root_view.findViewById(R.id.rl_no_list_items);
         txt_no_results = root_view.findViewById(R.id.txt_no_results);
 
         swipe_refresh = root_view.findViewById(R.id.swipe_refresh);
@@ -740,7 +740,7 @@ public class ExperienceEditFragment extends Fragment {
                 txt_responsibilities_field = v.findViewById(R.id.txt_responsibilities_field);
                 btn_delete = v.findViewById(R.id.btn_delete);
                 // NO LIST ITEM
-                no_list_item = v.findViewById(R.id.no_list_items);
+                no_list_item = v.findViewById(R.id.rl_no_list_items);
                 txt_no_results = v.findViewById(R.id.txt_no_results);
 
             }

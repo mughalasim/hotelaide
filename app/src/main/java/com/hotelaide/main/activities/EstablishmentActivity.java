@@ -4,23 +4,30 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.main.adapters.GalleryAdapter;
+import com.hotelaide.main.models.GalleryModel;
 import com.hotelaide.services.EstablishmentService;
 import com.hotelaide.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,13 +44,20 @@ public class EstablishmentActivity extends AppCompatActivity {
     private ImageView
             img_banner;
     private AppBarLayout app_bar_layout;
-    private String
+    public static String
             STR_PAGE_TITLE = "",
             STR_SHARE_LINK = "Please have a look at this establishment on HotelAide ";
     private int INT_ESTABLISHMENT_ID = 0;
     private final String
             TAG_LOG = "ESTABLISHMENT";
 
+    private final ArrayList<GalleryModel>
+            gallery_list = new ArrayList<>();
+    private GalleryAdapter gallery_adapter;
+    private final LinearLayoutManager
+            gallery_layout_manager = new LinearLayoutManager(this);
+    private LinearLayout
+            ll_gallery;
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -114,6 +128,16 @@ public class EstablishmentActivity extends AppCompatActivity {
         txt_establishment_email = findViewById(R.id.txt_establishment_email);
         txt_establishment_description = findViewById(R.id.txt_establishment_description);
 
+
+        // GALLERY ITEMS
+        ll_gallery = findViewById(R.id.ll_gallery_small);
+        RecyclerView gallery_recyclerView = findViewById(R.id.gallery_recycler_small);
+        gallery_adapter = new GalleryAdapter(gallery_list);
+        gallery_recyclerView.setAdapter(gallery_adapter);
+        gallery_recyclerView.setHasFixedSize(true);
+        gallery_layout_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        gallery_recyclerView.setLayoutManager(gallery_layout_manager);
+
     }
 
     private void setUpToolBarAndTabs() {
@@ -181,34 +205,38 @@ public class EstablishmentActivity extends AppCompatActivity {
 // "job_vacancies":[{"id":2,"title":"Cashier","posted":"25-09-2018","location":null,"description":"Short description","requirements":"Short requirements.","end_date":"17-06-2009","url":"https:\/\/hotelaide.com\/jobs\/cashier-test-establishment","establishment":{"id":3,"name":"Test Establishment","image":""}}],
 // "gallery":[]},"success":true}
 
-                        JSONObject hotel_object = main.getJSONObject("data");
-                        STR_PAGE_TITLE = hotel_object.getString("establishment_name");
+                        JSONObject object = main.getJSONObject("data");
+                        STR_PAGE_TITLE = object.getString("establishment_name");
                         txt_establishment_name.setText(STR_PAGE_TITLE);
-                        txt_establishment_description.setText(hotel_object.getString("establishment_description"));
-                        txt_establishment_email.setText(hotel_object.getString("establishment_email"));
-                        STR_SHARE_LINK = STR_SHARE_LINK.concat(hotel_object.getString("establishment_url"));
-                        Glide.with(EstablishmentActivity.this).load(hotel_object.getString("banner")).into(img_banner);
+                        txt_establishment_description.setText(object.getString("establishment_description"));
+                        txt_establishment_email.setText(object.getString("establishment_email"));
+                        STR_SHARE_LINK = STR_SHARE_LINK.concat(object.getString("establishment_url"));
+                        Glide.with(EstablishmentActivity.this).load(object.getString("banner")).into(img_banner);
 
                         // JOB VACANCIES
-                        JSONArray job_vacancies = hotel_object.getJSONArray("job_vacancies");
+                        JSONArray job_vacancies = object.getJSONArray("job_vacancies");
                         if (job_vacancies != null && job_vacancies.length() > 0) {
                             int array_length = job_vacancies.length();
                             for (int i = 0; i < array_length; i++) {
                                 JSONObject vacancy_object = job_vacancies.getJSONObject(i);
 
-
                             }
                         }
 
                         // GALLERY
-                        JSONArray gallery = hotel_object.getJSONArray("gallery");
-                        if (gallery != null && gallery.length() > 0) {
-                            int array_length = gallery.length();
-                            for (int i = 0; i < array_length; i++) {
-                                String gallery_url = gallery.getString(i);
+                        gallery_list.clear();
+                        JSONArray galleryImageArrays = object.getJSONArray("gallery");
+                        if (!galleryImageArrays.isNull(0)) {
+                            ll_gallery.setVisibility(View.VISIBLE);
+                            for (int v = 0; v < galleryImageArrays.length(); v++) {
+                                String gallery_url = galleryImageArrays.getString(v);
                                 Helpers.LogThis(TAG_LOG, "GALLERY URL: " + gallery_url);
-
+                                GalleryModel galleryModel = new GalleryModel();
+                                galleryModel.image = galleryImageArrays.getString(v);
                             }
+                            gallery_adapter.notifyDataSetChanged();
+                        } else {
+                            ll_gallery.setVisibility(View.GONE);
                         }
 
                     } else {

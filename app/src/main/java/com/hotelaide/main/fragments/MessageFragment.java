@@ -319,7 +319,7 @@ public class MessageFragment extends Fragment {
                 img_user = v.findViewById(R.id.img_user);
                 txt_no_results = v.findViewById(R.id.txt_no_results);
                 txt_name = v.findViewById(R.id.txt_name);
-                no_list_item = v.findViewById(R.id.no_list_items);
+                no_list_item = v.findViewById(R.id.rl_no_list_items);
                 list_item = v.findViewById(R.id.list_item);
             }
 

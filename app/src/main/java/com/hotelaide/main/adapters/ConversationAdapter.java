@@ -36,7 +36,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             txt_no_results = v.findViewById(R.id.txt_no_results);
             txt_text_from = v.findViewById(R.id.txt_text_from);
             txt_text_to = v.findViewById(R.id.txt_text_to);
-            no_list_item = v.findViewById(R.id.no_list_items);
+            no_list_item = v.findViewById(R.id.rl_no_list_items);
             list_item = v.findViewById(R.id.list_item);
         }
 
