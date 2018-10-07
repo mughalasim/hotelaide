@@ -87,8 +87,8 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
 
             holder.txt_name.setText(jobModel.name);
             holder.txt_posted_on.setText(jobModel.posted_on);
-            holder.txt_location.setText(jobModel.hotel_location);
-            Glide.with(context).load(jobModel.hotel_image).into(holder.img_image);
+            holder.txt_location.setText(jobModel.establishment_location);
+            Glide.with(context).load(jobModel.establishment_image).into(holder.img_image);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -65,8 +65,6 @@ public class AppliedJobsFragment extends Fragment {
 
                 setListeners();
 
-                asyncGetAppliedJobs();
-
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -77,6 +75,11 @@ public class AppliedJobsFragment extends Fragment {
         return root_view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        asyncGetAppliedJobs();
+    }
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
@@ -106,6 +109,19 @@ public class AppliedJobsFragment extends Fragment {
         JobModel jobModel = new JobModel();
         model_list.add(jobModel);
         adapter.notifyDataSetChanged();
+    }
+
+    private void populateAppliedJobsFromDB() {
+        //TODO = OnResume, make inner join to fetch applied jobs only from jobs table
+//        no_list_items.setVisibility(View.GONE);
+//        model_list.clear();
+//        model_list = db.get(EXPERIENCE_TYPE);
+//        recycler_view.invalidate();
+//        adapter.updateData(model_list);
+//        adapter.notifyDataSetChanged();
+//        if (model_list.size() <= 0) {
+//            noListItems();
+//        }
     }
 
     // ASYNC FETCH ALL APPLIED JOBS ================================================================

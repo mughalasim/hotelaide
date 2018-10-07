@@ -31,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class JobActivity extends AppCompatActivity {
@@ -59,13 +60,15 @@ public class JobActivity extends AppCompatActivity {
 
     private String
             STR_PAGE_TITLE = "",
-            STR_SHARE_LINK = "Please take a look at this Job Vacancy on HotelAide ";
+            STR_BANNER_URL = "";
 
     private int INT_JOB_ID = 0;
 
     private final String
             TAG_LOG = "JOB VACANCY";
     private Database db;
+
+    private JSONObject globalJobObject;
 
 
     // OVERRIDE METHODS ============================================================================
@@ -100,8 +103,6 @@ public class JobActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_share, menu);
-        MenuItem menu_edit = menu.findItem(R.id.edit);
-        menu_edit.setVisible(false);
         return true;
     }
 
@@ -183,12 +184,19 @@ public class JobActivity extends AppCompatActivity {
             }
         });
 
+        img_banner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpers.openImageViewer(JobActivity.this, STR_BANNER_URL);
+            }
+        });
+
     }
 
     public void applyJob(View view) {
         if (db.isAppliedJob(INT_JOB_ID)) {
-        helpers.ToastMessage(JobActivity.this, "Already applied for this position");
-        }else{
+            helpers.ToastMessage(JobActivity.this, "Already applied for this position");
+        } else {
             asyncApplyJob();
 
         }
@@ -231,6 +239,9 @@ public class JobActivity extends AppCompatActivity {
                     if (main.getBoolean("success")) {
 
                         JSONObject job_object = main.getJSONObject("data");
+
+                        globalJobObject = job_object;
+
                         STR_PAGE_TITLE = job_object.getString("title");
                         txt_job_name.setText(STR_PAGE_TITLE);
 
@@ -246,17 +257,18 @@ public class JobActivity extends AppCompatActivity {
                             txt_job_requirements.setText(Html.fromHtml(job_object.getString("requirements")));
                         }
 
-//                        txt_job_location.setText(job_object.getString("location"));
+                        txt_job_location.setText(job_object.getString("location"));
                         txt_job_post_date.setText(getString(R.string.txt_posted_on).concat(job_object.getString("posted")));
                         txt_job_end_date.setText(getString(R.string.txt_posted_till).concat(job_object.getString("end_date")));
-                        STR_SHARE_LINK = STR_SHARE_LINK.concat(job_object.getString("url"));
+                        STR_SHARE_LINK = "Please take a look at this Job Vacancy on HotelAide ".concat(job_object.getString("url"));
 
                         // ESTABLISHMENT OBJECT
                         JSONObject hotel_object = job_object.getJSONObject("establishment");
                         if (hotel_object != null) {
                             txt_establishment_id.setText(hotel_object.getString("id"));
                             txt_establishment_name.setText(hotel_object.getString("name"));
-                            Glide.with(JobActivity.this).load(hotel_object.getString("image")).into(img_banner);
+                            STR_BANNER_URL = hotel_object.getString("image");
+                            Glide.with(JobActivity.this).load(STR_BANNER_URL).into(img_banner);
                         }
 
                         checkJobApplied();
@@ -306,9 +318,9 @@ public class JobActivity extends AppCompatActivity {
 
                     Helpers.LogThis(TAG_LOG, main.toString());
 
-                    helpers.ToastMessage(JobActivity.this, main.getString("message"));
+                    db.setJobFromJson(globalJobObject, true);
 
-                    db.setAppliedJob(INT_JOB_ID);
+                    helpers.ToastMessage(JobActivity.this, main.getString("message"));
 
                     checkJobApplied();
 

@@ -33,6 +33,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
+
 public class EstablishmentActivity extends AppCompatActivity {
     private Helpers helpers;
     private Toolbar toolbar;
@@ -40,13 +42,16 @@ public class EstablishmentActivity extends AppCompatActivity {
             toolbar_text,
             txt_establishment_name,
             txt_establishment_description,
+            txt_establishment_location,
+            txt_establishment_type,
             txt_establishment_email;
     private ImageView
             img_banner;
     private AppBarLayout app_bar_layout;
     public static String
-            STR_PAGE_TITLE = "",
-            STR_SHARE_LINK = "Please have a look at this establishment on HotelAide ";
+            STR_PAGE_TITLE = "";
+    private String
+            STR_BANNER_URL = "";
     private int INT_ESTABLISHMENT_ID = 0;
     private final String
             TAG_LOG = "ESTABLISHMENT";
@@ -85,16 +90,9 @@ public class EstablishmentActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_share, menu);
-        MenuItem menu_edit = menu.findItem(R.id.edit);
-        menu_edit.setVisible(false);
         return true;
     }
 
@@ -125,18 +123,20 @@ public class EstablishmentActivity extends AppCompatActivity {
 
         img_banner = findViewById(R.id.img_banner);
         txt_establishment_name = findViewById(R.id.txt_establishment_name);
+        txt_establishment_location = findViewById(R.id.txt_establishment_location);
+        txt_establishment_type = findViewById(R.id.txt_establishment_type);
         txt_establishment_email = findViewById(R.id.txt_establishment_email);
         txt_establishment_description = findViewById(R.id.txt_establishment_description);
 
 
         // GALLERY ITEMS
-        ll_gallery = findViewById(R.id.ll_gallery_small);
-        RecyclerView gallery_recyclerView = findViewById(R.id.gallery_recycler_small);
-        gallery_adapter = new GalleryAdapter(gallery_list);
-        gallery_recyclerView.setAdapter(gallery_adapter);
-        gallery_recyclerView.setHasFixedSize(true);
+        ll_gallery = findViewById(R.id.ll_gallery);
+        RecyclerView gallery_recycler = findViewById(R.id.gallery_recycler_small);
+        gallery_recycler.setHasFixedSize(true);
         gallery_layout_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        gallery_recyclerView.setLayoutManager(gallery_layout_manager);
+        gallery_recycler.setLayoutManager(gallery_layout_manager);
+        gallery_adapter = new GalleryAdapter(gallery_list);
+        gallery_recycler.setAdapter(gallery_adapter);
 
     }
 
@@ -170,6 +170,13 @@ public class EstablishmentActivity extends AppCompatActivity {
                     toolbar_text.setText("");
                     toolbar.setBackground(null);
                 }
+            }
+        });
+
+        img_banner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpers.openImageViewer(EstablishmentActivity.this, STR_BANNER_URL);
             }
         });
 
@@ -208,10 +215,14 @@ public class EstablishmentActivity extends AppCompatActivity {
                         JSONObject object = main.getJSONObject("data");
                         STR_PAGE_TITLE = object.getString("establishment_name");
                         txt_establishment_name.setText(STR_PAGE_TITLE);
+//                        txt_establishment_location.setText(object.getString("location"));
+                        JSONObject establishment_type_object = object.getJSONObject("establishment_type");
+                        txt_establishment_type.setText(establishment_type_object.getString("name"));
                         txt_establishment_description.setText(object.getString("establishment_description"));
                         txt_establishment_email.setText(object.getString("establishment_email"));
-                        STR_SHARE_LINK = STR_SHARE_LINK.concat(object.getString("establishment_url"));
-                        Glide.with(EstablishmentActivity.this).load(object.getString("banner")).into(img_banner);
+                        STR_SHARE_LINK = "Please have a look at this establishment on HotelAide ".concat(object.getString("establishment_url"));
+                        STR_BANNER_URL = object.getString("banner");
+                        Glide.with(EstablishmentActivity.this).load(STR_BANNER_URL).into(img_banner);
 
                         // JOB VACANCIES
                         JSONArray job_vacancies = object.getJSONArray("job_vacancies");

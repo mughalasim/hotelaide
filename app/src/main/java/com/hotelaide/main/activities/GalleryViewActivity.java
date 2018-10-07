@@ -28,7 +28,7 @@ import java.util.List;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.hotelaide.main.activities.EstablishmentActivity.STR_PAGE_TITLE;
-import static com.hotelaide.main.activities.EstablishmentActivity.STR_SHARE_LINK;
+import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 
 public class GalleryViewActivity extends AppCompatActivity {
     private Helpers helpers;

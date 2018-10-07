@@ -54,7 +54,8 @@ public class StaticVariables {
     public final static String BroadcastValue = "com.hotelaide.ACTIONLOGOUT";
     public static final String BROADCAST_GPS = "BROADCAST_GPS";
 
-
+// GLOBAL STATIC VARIABLES==========================================================================
+    public static String STR_SHARE_LINK = "";
 
 // DATABASE VARIABLES ==========================================================================
     // JOBS TABLE ==================================================================================

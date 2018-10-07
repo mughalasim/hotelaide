@@ -165,8 +165,9 @@ public class Database extends SQLiteOpenHelper {
 
     public void deleteAllTables() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + EXP_TABLE_NAME);
         db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
+        db.execSQL("DELETE FROM " + APPLIED_JOBS_TABLE_NAME);
+        db.execSQL("DELETE FROM " + EXP_TABLE_NAME);
         db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
         db.execSQL("DELETE FROM " + CATEGORIES_TABLE_NAME);
         db.execSQL("DELETE FROM " + EDUCATION_LEVEL_TABLE_NAME);
@@ -292,10 +293,10 @@ public class Database extends SQLiteOpenHelper {
             jobModel.name = job_object.getString("title");
             jobModel.posted_on = job_object.getString("posted_on");
 
-            JSONObject hotel_object = job_object.getJSONObject("establishment");
-            jobModel.establishment_id = hotel_object.getInt("id");
-            jobModel.hotel_image = hotel_object.getString("image");
-            jobModel.hotel_location = hotel_object.getString("full_address");
+            JSONObject establishment = job_object.getJSONObject("establishment");
+            jobModel.establishment_id = establishment.getInt("id");
+            jobModel.establishment_image = establishment.getString("image");
+            jobModel.establishment_location = establishment.getString("full_address");
 
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues content_values1 = new ContentValues();
@@ -303,8 +304,8 @@ public class Database extends SQLiteOpenHelper {
             content_values1.put(JOB_NAME, jobModel.name);
             content_values1.put(JOB_POSTED_ON, jobModel.posted_on);
             content_values1.put(JOB_ESTABLISHMENT_ID, jobModel.establishment_id);
-            content_values1.put(JOB_ESTABLISHMENT_IMAGE, jobModel.hotel_image);
-            content_values1.put(JOB_ESTABLISHMENT_LOCATION, jobModel.hotel_location);
+            content_values1.put(JOB_ESTABLISHMENT_IMAGE, jobModel.establishment_image);
+            content_values1.put(JOB_ESTABLISHMENT_LOCATION, jobModel.establishment_location);
 
             String where_clause1 = JOB_ID + " = ?";
             String[] where_args1 = new String[]{String.valueOf(jobModel.id)};
@@ -326,7 +327,6 @@ public class Database extends SQLiteOpenHelper {
             return jobModel;
         }
     }
-
 
     public void setAppliedJob(int job_id){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -383,8 +383,8 @@ public class Database extends SQLiteOpenHelper {
                     jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
                     jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
                     jobModel.establishment_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
-                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
-                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
+                    jobModel.establishment_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
+                    jobModel.establishment_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
 
                     list.add(jobModel);
 
@@ -421,8 +421,8 @@ public class Database extends SQLiteOpenHelper {
                     jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
                     jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
                     jobModel.establishment_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
-                    jobModel.hotel_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
-                    jobModel.hotel_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
+                    jobModel.establishment_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
+                    jobModel.establishment_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
 
                     list.add(jobModel);
 

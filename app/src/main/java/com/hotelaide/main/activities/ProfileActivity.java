@@ -23,6 +23,7 @@ import com.hotelaide.utils.SharedPrefs;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
@@ -61,9 +62,6 @@ public class ProfileActivity extends ParentActivity {
             txt_user_email,
             txt_user_phone,
             txt_user_availability;
-
-    private String STR_SHARE_LINK =
-            "Hey! Kindly check out my CV on HotelAide by following this link: ";
 
 
     // OVERRIDE METHODS ============================================================================
@@ -104,10 +102,6 @@ public class ProfileActivity extends ParentActivity {
             case R.id.share:
                 helpers.dialogShare(ProfileActivity.this, STR_SHARE_LINK);
                 break;
-
-            case R.id.edit:
-                startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class));
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -115,7 +109,7 @@ public class ProfileActivity extends ParentActivity {
 
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
-        STR_SHARE_LINK = STR_SHARE_LINK + SharedPrefs.getString(USER_URL);
+        STR_SHARE_LINK = "Hey! Kindly check out my CV on HotelAide by following this link: " + SharedPrefs.getString(USER_URL);
 
         rl_progress = findViewById(R.id.rl_progress);
         seek_bar_progress = findViewById(R.id.seek_bar_progress);
@@ -147,7 +141,23 @@ public class ProfileActivity extends ParentActivity {
                 return true;
             }
         });
+
+        img_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpers.openImageViewer(ProfileActivity.this, SharedPrefs.getString(USER_IMG_AVATAR));
+            }
+        });
+
+        img_banner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpers.openImageViewer(ProfileActivity.this, SharedPrefs.getString(USER_IMG_BANNER));
+            }
+        });
     }
+
+
 
     private void setupEducation() {
         Fragment myFrag = new ExperienceViewFragment();

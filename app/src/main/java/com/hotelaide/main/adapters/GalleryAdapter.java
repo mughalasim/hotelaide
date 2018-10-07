@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
-    private final ArrayList<GalleryModel> mDataset;
+    private final ArrayList<GalleryModel> gallery_models;
     private final String TAG_LOG = "GALLERY ADAPTER";
     private Context context;
     private Helpers helpers;
@@ -44,15 +44,14 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     }
 
-    public GalleryAdapter(ArrayList<GalleryModel> myDataset) {
-        mDataset = myDataset;
+    public GalleryAdapter(ArrayList<GalleryModel> gallery_models) {
+        this.gallery_models = gallery_models;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_gallery, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_gallery, parent, false);
         return new ViewHolder(v);
     }
 
@@ -61,9 +60,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         context = holder.itemView.getContext();
         helpers = new Helpers(context);
 
-        final GalleryModel galleryModel = mDataset.get(position);
+        final GalleryModel gallery_model = gallery_models.get(position);
 
-        if (galleryModel.image.equals("")) {
+        if (gallery_model.image.equals("")) {
             holder.no_list_item.setVisibility(View.VISIBLE);
             holder.list_item.setVisibility(View.GONE);
 
@@ -71,10 +70,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             holder.no_list_item.setVisibility(View.GONE);
             holder.list_item.setVisibility(View.VISIBLE);
 
-            final_position = mDataset.size();
+            final_position = gallery_models.size();
 
             Glide.with(context)
-                    .load(galleryModel.image)
+                    .load(gallery_model.image)
                     .into(holder.image);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +81,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                 public void onClick(View v) {
                     ArrayList<String> image_urls = new ArrayList<>();
                     for (int i = 0; i < final_position; i++) {
-                        GalleryModel galleryModel = mDataset.get(i);
+                        GalleryModel galleryModel = gallery_models.get(i);
                         image_urls.add(galleryModel.image);
                         Helpers.LogThis(TAG_LOG, image_urls.get(i));
-                        Helpers.LogThis(TAG_LOG, galleryModel.type);
                     }
 
                     if (helpers.validateInternetConnection()) {
@@ -105,7 +103,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return gallery_models.size();
     }
 
 }

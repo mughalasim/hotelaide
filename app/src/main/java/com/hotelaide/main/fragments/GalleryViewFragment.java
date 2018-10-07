@@ -23,7 +23,7 @@ import java.net.URL;
 public class GalleryViewFragment extends Fragment {
     private View root_view;
 
-    private String STRimage = "";
+    private String STR_IMAGE_URL = "";
 
     public GalleryViewFragment() {
     }
@@ -32,9 +32,10 @@ public class GalleryViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            STRimage = getArguments().getString("image_urls");
+            STR_IMAGE_URL = getArguments().getString("image_urls");
 
             Helpers.LogThis("GALLERY VIEW FRAGMENT: ", getArguments().toString());
+
 
         }
     }
@@ -44,14 +45,14 @@ public class GalleryViewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (root_view == null && getActivity() != null) {
-            root_view = inflater.inflate(R.layout.fragment_gallery_view, null);
+            root_view = inflater.inflate(R.layout.frag_gallery_view, null);
 
-            SubsamplingScaleImageView image = root_view.findViewById(R.id.image);
+            SubsamplingScaleImageView image = root_view.findViewById(R.id.frag_image);
             image.setMaxScale(20);
 
             String IMAGE_NOT_LOADED = "0";
             if (image.getTag().toString().equals(IMAGE_NOT_LOADED)) {
-                new DownLoadImageTask(image).execute(STRimage);
+                new DownLoadImageTask(image).execute(STR_IMAGE_URL);
                 String IMAGE_LOADED = "1";
                 image.setTag(IMAGE_LOADED);
             }
@@ -65,10 +66,10 @@ public class GalleryViewFragment extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     private class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
-        final SubsamplingScaleImageView imageView;
+        final SubsamplingScaleImageView image_view;
 
         DownLoadImageTask(SubsamplingScaleImageView imageView) {
-            this.imageView = imageView;
+            this.image_view = imageView;
         }
 
         protected Bitmap doInBackground(String... urls) {
@@ -85,7 +86,7 @@ public class GalleryViewFragment extends Fragment {
 
         protected void onPostExecute(Bitmap result) {
             try {
-                imageView.setImage(ImageSource.bitmap(result));
+                image_view.setImage(ImageSource.bitmap(result));
             } catch (Exception e) {
                 e.printStackTrace();
             }

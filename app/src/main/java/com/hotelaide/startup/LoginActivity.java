@@ -1,9 +1,7 @@
 package com.hotelaide.startup;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,11 +21,6 @@ import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_CALL;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -95,12 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-        helpers.myPermissionsDialog(LoginActivity.this, grantResults);
-    }
+
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
@@ -183,17 +171,7 @@ public class LoginActivity extends AppCompatActivity {
         viewPager.setCurrentItem(1);
     }
 
-    @AfterPermissionGranted(INT_PERMISSIONS_CALL)
-    public void makeCall(View view) {
-        final String[] perms = {Manifest.permission.CALL_PHONE};
-        if (EasyPermissions.hasPermissions(LoginActivity.this, perms)) {
-            TextView textView = (TextView) view;
-            helpers.dialogMakeCall(LoginActivity.this, textView.getText().toString());
-        } else {
-            EasyPermissions.requestPermissions(LoginActivity.this, getString(R.string.rationale_call),
-                    INT_PERMISSIONS_CALL, perms);
-        }
-    }
+
 
 }
 

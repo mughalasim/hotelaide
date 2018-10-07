@@ -49,8 +49,8 @@
                 android:text="@string/about_address_land_line" />
 
             <TextView
+                android:id="@+id/txt_land_line"
                 style="@style/Text_Normal"
-                android:onClick="makeCall"
                 android:layout_marginTop="0dp"
                 android:text="@string/about_land_line" />
 
@@ -68,8 +68,8 @@
                 android:text="@string/about_address_mobile" />
 
             <TextView
+                android:id="@+id/txt_mobile"
                 style="@style/Text_Normal"
-                android:onClick="makeCall"
                 android:layout_marginTop="0dp"
                 android:text="@string/about_phone" />
 

@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/edit"
-        android:title="@string/txt_edit_profile"
-        android:icon="@drawable/ic_edit"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/share"
         android:title="@string/txt_share"
         android:icon="@drawable/ic_share"

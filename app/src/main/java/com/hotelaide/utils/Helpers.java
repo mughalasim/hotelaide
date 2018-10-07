@@ -46,6 +46,7 @@ import com.hotelaide.R;
 import com.hotelaide.main.activities.AboutUsActivity;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.activities.FindJobsActivity;
+import com.hotelaide.main.activities.GalleryViewActivity;
 import com.hotelaide.main.activities.ProfileActivity;
 import com.hotelaide.main.activities.SettingsActivity;
 import com.hotelaide.main.models.SearchFilterModel;
@@ -61,6 +62,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -434,6 +436,20 @@ public class Helpers {
         mToast = Toast.makeText(MessageContext, Message, Toast.LENGTH_LONG);
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.show();
+    }
+
+    public void openImageViewer(final Activity activity,final String image_url){
+        if (!image_url.equals("")) {
+            ArrayList<String> image_urls = new ArrayList<>();
+            image_urls.add(image_url);
+            activity.startActivity(new Intent(activity, GalleryViewActivity.class)
+                    .putExtra("image_urls", image_urls)
+                    .putExtra("selected_position", 1)
+            );
+            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else{
+            ToastMessage(activity, "Image not set");
+        }
     }
 
 

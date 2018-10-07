@@ -42,6 +42,7 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -244,10 +245,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (EasyPermissions.hasPermissions(ProfileEditActivity.this, perms)) {
                     RESULT_EXPECTED = RESULT_BANNER;
-                    CropImage.activity()
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(ProfileEditActivity.this);
-
+                    startImageActivity();
                 } else {
                     EasyPermissions.requestPermissions(ProfileEditActivity.this, getString(R.string.rationale_image),
                             INT_PERMISSIONS_CAMERA, perms);
@@ -261,15 +259,20 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (EasyPermissions.hasPermissions(ProfileEditActivity.this, perms)) {
                     RESULT_EXPECTED = RESULT_AVATAR;
-                    CropImage.activity()
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .start(ProfileEditActivity.this);
+                    startImageActivity();
                 } else {
                     EasyPermissions.requestPermissions(ProfileEditActivity.this, getString(R.string.rationale_image),
                             INT_PERMISSIONS_CAMERA, perms);
                 }
             }
         });
+    }
+
+    @AfterPermissionGranted(INT_PERMISSIONS_CAMERA)
+    private void startImageActivity() {
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(ProfileEditActivity.this);
     }
 
     private void setupViewPager(ViewPager viewPager) {
