@@ -14,8 +14,10 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -28,12 +30,10 @@ import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -84,8 +84,8 @@ public class StartUpSignUpFragment extends Fragment {
 
     private MaterialButton
             btn_open_social_media,
-            btn_login_facebook2,
-            btn_login_google2;
+            btn_login_facebook,
+            btn_login_google;
 
     private EditText
             et_user_first_name,
@@ -95,20 +95,21 @@ public class StartUpSignUpFragment extends Fragment {
             et_user_pass,
             et_user_pass_confirm;
 
+    private Spinner
+            spinner_user_gender;
+
     private final String
             TAG_LOG = "FRAGMENT SIGN UP";
     private final String LOGIN_REGISTER = "REGISTER";
     private final String LOGIN_FACEBOOK = "FACEBOOK";
 
-    // FACEBOOK STUFF
-    private LoginButton btn_login_facebook;
-    private CallbackManager mCallbackManager;
-    private FirebaseAuth mAuth;
-    private UserModel globalUserModel;
+    // FACEBOOK
+    private CallbackManager callback_manager;
+    private FirebaseAuth fire_base_auth;
+    private UserModel global_user_model;
 
-    // GOOGLE STUFF
-    private SignInButton btn_login_google;
-    private GoogleSignInClient mGoogleSignInClient;
+    // GOOGLE
+    private GoogleSignInClient google_sign_in_client;
     private int GOOGLE_REQUEST_CODE = 999;
 
     public StartUpSignUpFragment() {
@@ -124,10 +125,6 @@ public class StartUpSignUpFragment extends Fragment {
 
                 helpers = new Helpers(getActivity());
 
-                mAuth = FirebaseAuth.getInstance();
-
-                mCallbackManager = CallbackManager.Factory.create();
-
                 findAllViews();
 
                 setListeners();
@@ -136,7 +133,7 @@ public class StartUpSignUpFragment extends Fragment {
 
                 initializeGoogle(getActivity());
 
-                globalUserModel = new UserModel();
+                global_user_model = new UserModel();
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -153,9 +150,9 @@ public class StartUpSignUpFragment extends Fragment {
         Helpers.LogThis(TAG_LOG, "ACTIVITY RESULT " + data.toString() + " : " + requestCode + " : " + resultCode);
         if (requestCode == GOOGLE_REQUEST_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
+            handleGoogleAccessToken(task);
         } else {
-            mCallbackManager.onActivityResult(requestCode, resultCode, data);
+            callback_manager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -178,16 +175,19 @@ public class StartUpSignUpFragment extends Fragment {
         et_user_pass = rootview.findViewById(R.id.et_user_pass);
         et_user_pass_confirm = rootview.findViewById(R.id.et_user_pass_confirm);
         txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
+        spinner_user_gender = rootview.findViewById(R.id.spinner_user_gender);
+        if (getActivity() != null)
+            spinner_user_gender.setAdapter(new ArrayAdapter<>(
+                    getActivity(),
+                    R.layout.list_item_spinner,
+                    getResources().getStringArray(R.array.select_gender)
+            ));
 
         // SOCIAL MEDIA LOGIN ====================================================
         sliding_panel = rootview.findViewById(R.id.sliding_panel);
         btn_open_social_media = rootview.findViewById(R.id.btn_open_social_media);
-
-        btn_login_facebook = rootview.findViewById(R.id.btn_login_facebook);
         btn_login_google = rootview.findViewById(R.id.btn_login_google);
-        btn_login_google2 = rootview.findViewById(R.id.btn_login_google2);
-        btn_login_facebook2 = rootview.findViewById(R.id.btn_login_facebook2);
-        btn_login_facebook.setFragment(this);
+        btn_login_facebook = rootview.findViewById(R.id.btn_login_facebook);
 
         setDates();
 
@@ -204,8 +204,7 @@ public class StartUpSignUpFragment extends Fragment {
                         helpers.validateEmptyEditText(et_user_pass) &&
                         helpers.validateEmptyEditText(et_user_pass_confirm) &&
                         helpers.validateEmptyTextView(txt_user_dob, "Enter your Date of Birth") &&
-                        helpers.validateEmptyEditText(et_user_phone)
-                        ) {
+                        helpers.validateEmptyEditText(et_user_phone)) {
                     if (!et_user_pass.getText().toString().equals(et_user_pass_confirm.getText().toString())) {
                         helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
                     } else if (et_user_pass.getText().toString().length() < 8) {
@@ -289,6 +288,7 @@ public class StartUpSignUpFragment extends Fragment {
 
             btn_cancel.setVisibility(View.VISIBLE);
             btn_cancel.setText(getString(R.string.txt_cancel));
+            btn_confirm.setText(getString(R.string.nav_sign_up));
 
             btn_confirm.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -299,8 +299,9 @@ public class StartUpSignUpFragment extends Fragment {
                         } else if (et_user_pass.getText().toString().length() < 8) {
                             helpers.ToastMessage(getContext(), "Password too short");
                         } else {
-                            globalUserModel.password = et_user_pass.getText().toString();
-                            asyncRegister(globalUserModel);
+                            global_user_model.password = et_user_pass.getText().toString();
+                            logRegModel(global_user_model);
+                            asyncRegister(global_user_model);
                         }
                     }
                 }
@@ -316,8 +317,6 @@ public class StartUpSignUpFragment extends Fragment {
             dialog.show();
         }
 
-
-
     }
 
     private void setToModelFromFields() {
@@ -331,6 +330,7 @@ public class StartUpSignUpFragment extends Fragment {
         userModel.dob = txt_user_dob.getText().toString();
         userModel.fb_id = "";
         userModel.google_id = "";
+        userModel.gender = spinner_user_gender.getSelectedItemPosition();
 
         logRegModel(userModel);
 
@@ -348,6 +348,7 @@ public class StartUpSignUpFragment extends Fragment {
                         + "\n DOB: " + userModel.dob
                         + "\n FB_ID: " + userModel.fb_id
                         + "\n G_ID: " + userModel.google_id
+                        + "\n GENDER: " + userModel.gender
         );
 
     }
@@ -356,13 +357,15 @@ public class StartUpSignUpFragment extends Fragment {
     // FACEBOOK SET UP =============================================================================
     private void initializeFacebook(final Activity activity) {
 
-        btn_login_facebook.setReadPermissions("email", "public_profile");
+        fire_base_auth = FirebaseAuth.getInstance();
 
-        btn_login_facebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        callback_manager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callback_manager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken(activity, loginResult.getAccessToken());
                 sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                handleFacebookAccessToken(activity, loginResult.getAccessToken());
             }
 
             @Override
@@ -371,8 +374,17 @@ public class StartUpSignUpFragment extends Fragment {
             }
 
             @Override
-            public void onError(FacebookException error) {
-                helpers.ToastMessage(activity, "Error " + error);
+            public void onError(FacebookException exception) {
+                helpers.ToastMessage(activity, "Error " + exception);
+            }
+        });
+
+        btn_login_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getActivity() != null) {
+                    LoginManager.getInstance().logInWithReadPermissions(StartUpSignUpFragment.this, Arrays.asList("email", "public_profile"));
+                }
             }
         });
     }
@@ -384,7 +396,7 @@ public class StartUpSignUpFragment extends Fragment {
 
         if (helpers.validateGooglePlayServices(activity)) {
             AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-            mAuth.signInWithCredential(credential)
+            fire_base_auth.signInWithCredential(credential)
                     .addOnFailureListener(activity, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -399,21 +411,23 @@ public class StartUpSignUpFragment extends Fragment {
 
                             if (task.isSuccessful()) {
                                 try {
-                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    FirebaseUser user = fire_base_auth.getCurrentUser();
                                     if (user != null) {
                                         Profile profile = Profile.getCurrentProfile();
                                         Helpers.LogThis(TAG_LOG, "FB USER ID: " + user.getUid());
                                         Helpers.LogThis(TAG_LOG, "FB PROFILE ID: " + profile.getId());
 
-                                        globalUserModel.fb_id = profile.getId();
+                                        global_user_model.fb_id = profile.getId();
+
+                                        global_user_model.gender = spinner_user_gender.getSelectedItemPosition();
 
                                         if (user.getDisplayName() != null) {
                                             if (user.getDisplayName().contains(" ")) {
                                                 String[] userFullName = user.getDisplayName().split(" ");
-                                                globalUserModel.first_name = userFullName[0];
-                                                globalUserModel.last_name = userFullName[1];
+                                                global_user_model.first_name = userFullName[0];
+                                                global_user_model.last_name = userFullName[1];
                                             } else {
-                                                globalUserModel.first_name = user.getDisplayName();
+                                                global_user_model.first_name = user.getDisplayName();
                                             }
                                         }
 
@@ -427,8 +441,8 @@ public class StartUpSignUpFragment extends Fragment {
                                                             try {
                                                                 JSONObject data = response.getJSONObject();
                                                                 if (data.has("picture")) {
-                                                                    globalUserModel.img_avatar = data.getJSONObject("picture").getJSONObject("data").getString("url");
-                                                                    Helpers.LogThis(TAG_LOG, "FB PROFILE IMAGE URL: " + globalUserModel.img_avatar);
+                                                                    global_user_model.img_avatar = data.getJSONObject("picture").getJSONObject("data").getString("url");
+                                                                    Helpers.LogThis(TAG_LOG, "FB PROFILE IMAGE URL: " + global_user_model.img_avatar);
                                                                 }
                                                             } catch (Exception e) {
                                                                 e.printStackTrace();
@@ -437,9 +451,9 @@ public class StartUpSignUpFragment extends Fragment {
                                                     }
                                                 }).executeAsync();
 
-                                        globalUserModel.email = user.getEmail();
+                                        global_user_model.email = user.getEmail();
 
-                                        logRegModel(globalUserModel);
+                                        logRegModel(global_user_model);
 
                                         showDialogSetAccountPassword(getActivity(), LOGIN_FACEBOOK);
 
@@ -475,7 +489,7 @@ public class StartUpSignUpFragment extends Fragment {
     }
 
     private void signOutFaceBook() {
-        mAuth.signOut();
+        fire_base_auth.signOut();
         LoginManager.getInstance().logOut();
     }
 
@@ -485,53 +499,26 @@ public class StartUpSignUpFragment extends Fragment {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
-        btn_login_google.setSize(SignInButton.SIZE_STANDARD);
-        setGooglePlusButtonText(btn_login_google);
-        btn_login_google2.setOnClickListener(new View.OnClickListener() {
+        google_sign_in_client = GoogleSignIn.getClient(activity, gso);
+        btn_login_google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                Intent signInIntent = google_sign_in_client.getSignInIntent();
                 startActivityForResult(signInIntent, GOOGLE_REQUEST_CODE);
             }
         });
-
-        btn_login_facebook2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(getActivity()!=null)
-                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email", "public_profile"));
-            }
-        });
     }
 
-    protected void setGooglePlusButtonText(SignInButton signInButton) {
-        // Find the TextView that is inside of the SignInButton and set its text
-        for (int i = 0; i < signInButton.getChildCount(); i++) {
-            View v = signInButton.getChildAt(i);
-
-            if (v instanceof TextView) {
-                TextView tv = (TextView) v;
-                tv.setText(R.string.txt_sign_up_google);
-                return;
-            }
-        }
-    }
-
-    private void signOutGoogle() {
-        mGoogleSignInClient.signOut();
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+    private void handleGoogleAccessToken(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            globalUserModel.google_id = account.getId();
-            globalUserModel.email = account.getEmail();
-            globalUserModel.first_name = account.getGivenName();
-            globalUserModel.last_name = account.getFamilyName();
+            global_user_model.google_id = account.getId();
+            global_user_model.email = account.getEmail();
+            global_user_model.first_name = account.getGivenName();
+            global_user_model.last_name = account.getFamilyName();
             if (account.getPhotoUrl() != null)
-                globalUserModel.img_avatar = account.getPhotoUrl().toString();
+                global_user_model.img_avatar = account.getPhotoUrl().toString();
+            global_user_model.gender = spinner_user_gender.getSelectedItemPosition();
             String LOGIN_GOOGLE = "GOOGLE";
             showDialogSetAccountPassword(getActivity(), LOGIN_GOOGLE);
             signOutGoogle();
@@ -540,6 +527,10 @@ public class StartUpSignUpFragment extends Fragment {
             Helpers.LogThis(TAG_LOG, "signInResult : CODE: " + e.getStatusCode());
             helpers.ToastMessage(getActivity(), getResources().getString(R.string.error_sign_in_cancelled));
         }
+    }
+
+    private void signOutGoogle() {
+        google_sign_in_client.signOut();
     }
 
     // REGISTER ASYNC FUNCTIONS ====================================================================
@@ -561,7 +552,8 @@ public class StartUpSignUpFragment extends Fragment {
                 userModel.dob,
                 userModel.fb_id,
                 userModel.google_id,
-                BuildConfig.ACCOUNT_TYPE
+                BuildConfig.ACCOUNT_TYPE,
+                userModel.gender
         );
 
         call.enqueue(new Callback<JsonObject>() {

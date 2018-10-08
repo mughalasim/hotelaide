@@ -54,7 +54,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         handleFireBase();
 
         // Uncomment Only when SHA Cert needed for Facebook API
-//         helpers.getShaCertificate();
+        // helpers.getShaCertificate();
 
         startUp();
 

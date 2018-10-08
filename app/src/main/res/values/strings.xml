@@ -102,7 +102,7 @@
     <string name="txt_edit_profile">Edit profile</string>
     <string name="txt_share">Share</string>
     <string name="txt_cancel" tools:ignore="ButtonCase">CANCEL</string>
-    <string name="txt_ok">Yes</string>
+    <string name="txt_ok">Okay</string>
     <string name="txt_enable">Enable</string>
     <string name="txt_loading_please_wait">Loading… please wait…</string>
     <string name="txt_no_items_found">No results found</string>
@@ -155,15 +155,15 @@
     <string name="txt_education_level">Education level</string>
     <string name="txt_institution_name">Institution name</string>
     <string name="txt_present">Present</string>
-    <string name="txt_sign_up_google">Sign up with Google</string>
+    <string name="txt_sign_up_google">Google</string>
     <string name="txt_profile_completion">Profile completion&#160;</string>
     <string name="txt_study_completed">Study completed</string>
     <string name="txt_study_incomplete">Currently studying</string>
     <string name="txt_sign_up_header">You could opt to give us some details about you so we can sign you up and get you started</string>
     <string name="txt_have_account">Already have an account</string>
     <string name="txt_sign_up_social">Sign up with social Media instead</string>
-    <string name="txt_sign_up_facebook">Sign up with facebook</string>
-    <string name="txt_sign_up_desc">Tap on one below and instantly sign up using either of your accounts on Facebook or Google+</string>
+    <string name="txt_sign_up_facebook">Facebook</string>
+    <string name="txt_social_media_desc">Tap on one of the options below and instantly log in/sign up using either of your accounts</string>
     <string name="txt_locked_out">Locked out?</string>
     <string name="txt_locked_out_desc">Don\'t worry, give us your email address that you used to sign up and well send you a reset link</string>
     <string name="txt_new_account_password">Please set your new password</string>
@@ -174,7 +174,7 @@
     <string name="txt_set_category">Set Category</string>
     <string name="txt_set_job_type">Set Job Type</string>
     <string name="txt_job_vacancies">Job Vacancies</string>
-    <string name="txt_sign_up_social_title">Social Media sign up</string>
+    <string name="txt_social_media_title">Social Media</string>
     <string name="txt_apply">Apply now</string>
     <string name="txt_description">Description</string>
     <string name="txt_requirements">Requirements</string>

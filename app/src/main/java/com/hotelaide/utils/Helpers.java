@@ -179,6 +179,7 @@ public class Helpers {
         }
     }
 
+//    @SuppressLint("PackageManagerGetSignatures")
 //    public void getShaCertificate() {
 //        PackageInfo info;
 //        try {

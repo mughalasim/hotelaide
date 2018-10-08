@@ -74,7 +74,9 @@ public interface LoginService {
     @POST("login")
     Call<JsonObject> userLogin(
             @Field("email") String email,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("fb_id") String fb_id,
+            @Field("google_id") String google_id
     );
 
 
@@ -92,7 +94,8 @@ public interface LoginService {
             @Field("dob") String dob,
             @Field("fb_id") String fb_id,
             @Field("google_id") String google_id,
-            @Field("account_type") String account_type
+            @Field("account_type") String account_type,
+            @Field("gender") int gender
     );
 
     // RESET PASSWORD =======================================================================

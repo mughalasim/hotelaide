@@ -31,6 +31,8 @@
         android:id="@+id/tabs"
         android:layout_below="@+id/ll_main_logo"
         android:layout_width="match_parent"
+        android:paddingStart="@dimen/padding_small"
+        android:paddingEnd="@dimen/padding_small"
         android:background="@drawable/bckgrd_transparent"
         android:layout_height="@dimen/height_panel"
         app:tabSelectedTextColor="@color/colorPrimaryLight"

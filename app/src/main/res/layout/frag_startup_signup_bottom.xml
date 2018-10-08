@@ -3,56 +3,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/padding_small"
-    android:paddingRight="@dimen/padding_small"
     android:paddingBottom="@dimen/padding_small">
 
     <TextView
         android:id="@+id/panel_title"
-        style="@style/Text_Normal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_panel"
+        style="@style/Text_Title"
         android:textAllCaps="true"
-        android:textStyle="bold"
-        android:layout_marginTop="0dp"
-        android:text="@string/txt_sign_up_social_title"
-        android:textColor="@color/colorPrimary" />
+        android:text="@string/txt_social_media_title" />
 
     <TextView
         style="@style/Text_Normal"
-        android:text="@string/txt_sign_up_desc" />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/btn_login_facebook"
-        style="@style/Material_Text"
-        android:text="@string/txt_sign_up_facebook"
-        android:visibility="gone" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btn_login_google"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:text="@string/txt_social_media_desc" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/padding_small"
+        android:layout_marginTop="@dimen/padding_small"
+        android:orientation="horizontal">
 
         <android.support.design.button.MaterialButton
-            android:id="@+id/btn_login_facebook2"
-            style="@style/Material_Button_Yes"
+            android:id="@+id/btn_login_facebook"
+            style="@style/Material_Button_No"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/padding_small"
-            android:layout_marginBottom="@dimen/padding_small"
+            app:icon="@drawable/ic_facebook"
             android:text="@string/txt_sign_up_facebook" />
 
+        <View
+            android:layout_width="@dimen/padding_small"
+            android:layout_height="match_parent"/>
+
         <android.support.design.button.MaterialButton
-            android:id="@+id/btn_login_google2"
-            style="@style/Material_Button_Yes"
+            android:id="@+id/btn_login_google"
+            style="@style/Material_Button_No"
             android:layout_width="match_parent"
+            app:icon="@drawable/ic_google"
             android:text="@string/txt_sign_up_google" />
 
     </LinearLayout>
