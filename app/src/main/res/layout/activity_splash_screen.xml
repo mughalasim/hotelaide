@@ -17,6 +17,6 @@
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
-        android:src="@drawable/main_logo_horizontal" />
+        android:src="@drawable/main_logo_vertical_white" />
 
 </RelativeLayout>

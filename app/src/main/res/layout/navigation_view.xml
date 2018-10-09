@@ -21,7 +21,8 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/bckgrd_transparent"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/main_logo_horizontal" />
+            android:padding="@dimen/padding_mini"
+            android:src="@drawable/main_logo_vertical_white" />
 
         <TextView
             android:id="@+id/app_version"
