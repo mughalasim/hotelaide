@@ -1,7 +1,6 @@
 package com.hotelaide.startup.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -258,7 +257,7 @@ public class StartUpSignUpFragment extends Fragment {
                 if (getContext() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                     DatePickerDialog datePicker = new DatePickerDialog(
-                            new ContextThemeWrapper(getActivity(), AlertDialog.THEME_HOLO_LIGHT),
+                            new ContextThemeWrapper(getActivity(), R.style.AppTheme),
                             datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),

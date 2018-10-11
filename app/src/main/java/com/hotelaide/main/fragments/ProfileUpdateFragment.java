@@ -1,6 +1,5 @@
 package com.hotelaide.main.fragments;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -236,7 +235,7 @@ public class ProfileUpdateFragment extends Fragment {
                 if (getActivity() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                     DatePickerDialog datePicker = new DatePickerDialog(
-                            new ContextThemeWrapper(getActivity(), AlertDialog.THEME_HOLO_LIGHT),
+                            new ContextThemeWrapper(getActivity(), R.style.AppTheme),
                             datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),

@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -177,7 +178,7 @@ public class MessagingService extends Service {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
-                .setLights(context.getResources().getColor(R.color.colorPrimary), 1000, 1000)
+                .setLights(ContextCompat.getColor(MessagingService.this, R.color.colorPrimary), 1000, 1000)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
 

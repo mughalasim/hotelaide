@@ -3,6 +3,7 @@ package com.hotelaide.main.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -161,7 +162,7 @@ public class EstablishmentActivity extends AppCompatActivity {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
-                    toolbar.setBackground(getResources().getDrawable(R.drawable.bckgrd_toolbar));
+                    toolbar.setBackground(ContextCompat.getDrawable(EstablishmentActivity.this, R.drawable.bckgrd_toolbar));
                     toolbar_text.setText(STR_PAGE_TITLE);
                 } else if (verticalOffset == 0) {
                     toolbar_text.setText("");

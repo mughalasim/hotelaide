@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -172,7 +173,7 @@ public class JobActivity extends AppCompatActivity {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
-                    toolbar.setBackground(getResources().getDrawable(R.drawable.bckgrd_toolbar));
+                    toolbar.setBackground(ContextCompat.getDrawable(JobActivity.this, R.drawable.bckgrd_toolbar));
                     toolbar_text.setText(STR_PAGE_TITLE);
                 } else if (verticalOffset == 0) {
                     toolbar_text.setText("");
@@ -219,7 +220,7 @@ public class JobActivity extends AppCompatActivity {
     }
 
 
-    // GET ESTABLISHMENT ASYNC FUNCTION ====================================================================
+    // GET ESTABLISHMENT ASYNC FUNCTION ============================================================
     private void asyncFetchHotel() {
 
         EstablishmentService establishmentService = EstablishmentService.retrofit.create(EstablishmentService.class);

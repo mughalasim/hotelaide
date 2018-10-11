@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -227,10 +228,10 @@ public class ProfileActivity extends ParentActivity {
 
         if (SharedPrefs.getInt(USER_AVAILABILITY) == 1) {
             txt_user_availability.setText("Available");
-            txt_user_availability.setTextColor(getResources().getColor(R.color.colorPrimary));
+            txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
         } else {
             txt_user_availability.setText("Hidden");
-            txt_user_availability.setTextColor(getResources().getColor(R.color.red));
+            txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.red));
         }
 
         updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
