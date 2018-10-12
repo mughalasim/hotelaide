@@ -44,7 +44,7 @@
         <android.support.design.button.MaterialButton
             style="@style/Material_Text"
             android:layout_marginTop="@dimen/padding_large"
-            android:onClick="TERMS_CONDITIONS"
+            android:onClick="openTermsAndConditions"
             android:text="@string/txt_terms_conditions" />
 
     </LinearLayout>

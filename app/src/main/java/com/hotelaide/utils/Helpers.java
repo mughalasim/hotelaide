@@ -734,7 +734,7 @@ public class Helpers {
 
     public void animateFadeIn(View v) {
         YoYo.with(Techniques.FadeIn)
-                .duration(300)
+                .duration(INT_ANIMATION_TIME)
                 .playOn(v);
     }
 

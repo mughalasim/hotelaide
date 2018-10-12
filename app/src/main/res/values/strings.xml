@@ -122,6 +122,7 @@
     <string name="txt_welcome">Welcome</string>
     <string name="txt_welcome_login">Kindly enter your email and password to login</string>
 
+    <string name="txt_continue">Continue</string>
     <string name="txt_errors">Errors</string>
     <string name="txt_take_me_there">Take me there</string>
     <string name="txt_alert">Alert!</string>

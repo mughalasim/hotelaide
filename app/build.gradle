@@ -145,6 +145,8 @@ dependencies {
     // STETHO INSPECTOR BY FACEBOOK
 //    implementation 'com.facebook.stetho:stetho:1.5.0'
 //    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    // VIEWPAGER TRANSFORMER
+    implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
     // INSTANT SEARCH
     implementation 'com.algolia:algoliasearch-android:3.20.+'

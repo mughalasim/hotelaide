@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape
-            android:innerRadius="3dp"
+            android:innerRadius="@dimen/radius_corner"
             android:shape="ring"
-            android:thickness="3dp"
+            android:thickness="@dimen/line_thickness"
             android:useLevel="false">
             <solid android:color="@color/colorPrimary"/>
         </shape>

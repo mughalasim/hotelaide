@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     // SET ON CLICKS ===============================================================================
-    public void TERMS_CONDITIONS(View view) {
+    public void openTermsAndConditions(View view) {
         helpers.ToastMessage(LoginActivity.this, "OPEN SOME TERMS AND CONDITIONS HERE");
     }
 

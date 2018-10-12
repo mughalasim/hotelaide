@@ -98,7 +98,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 Helpers.LogThis(TAG_LOG, "Start Up");
                 if (SharedPrefs.getString(ACCESS_TOKEN).equals("")) {
-                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                    startActivity(new Intent(SplashScreenActivity.this, IntroActivity.class));
                 } else {
                     startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class).putExtra(START_LAUNCH, START_LAUNCH));
                 }
