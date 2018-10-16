@@ -45,6 +45,21 @@
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
+    <!-- TAB TEXT STYLE =============================================================================-->
+    <style name="Tab_Text_Layout" parent="AppTheme">
+        <item name="android:layout_height">@dimen/height_panel</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingStart">@dimen/padding_small</item>
+        <item name="android:paddingEnd">@dimen/padding_small</item>
+        <item name="tabSelectedTextColor">@color/colorPrimaryLight</item>
+        <item name="tabTextColor">@color/grey</item>
+        <item name="tabIndicatorColor">@color/colorPrimaryLight</item>
+        <item name="tabTextAppearance">@style/Text_Title</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabGravity">center</item>
+        <item name="tabIndicatorHeight">@dimen/line_thickness</item>
+    </style>
+
 
     <!-- CARD STYLE =============================================================================-->
     <style name="Card_Layout" parent="AppTheme">

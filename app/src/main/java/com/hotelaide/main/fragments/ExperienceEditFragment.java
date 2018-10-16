@@ -68,7 +68,7 @@ public class ExperienceEditFragment extends Fragment {
     private ArrayList<ExperienceModel> model_list = new ArrayList<>();
     private ExperienceAdapter adapter;
     private SwipeRefreshLayout swipe_refresh;
-    private RelativeLayout no_list_items;
+    private RelativeLayout rl_no_list_items;
 
     // BOTTOM PANEL ================================================================================
     SlidingUpPanelLayout sliding_panel;
@@ -141,7 +141,7 @@ public class ExperienceEditFragment extends Fragment {
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         // TOP PANEL =============================================================
-        no_list_items = root_view.findViewById(R.id.rl_no_list_items);
+        rl_no_list_items = root_view.findViewById(R.id.rl_no_list_items);
         txt_no_results = root_view.findViewById(R.id.txt_no_results);
 
         swipe_refresh = root_view.findViewById(R.id.swipe_refresh);
@@ -387,7 +387,7 @@ public class ExperienceEditFragment extends Fragment {
     }
 
     private void populateExperienceFromDB() {
-        no_list_items.setVisibility(View.GONE);
+        rl_no_list_items.setVisibility(View.GONE);
         model_list.clear();
         model_list = db.getAllExperience(EXPERIENCE_TYPE);
         recycler_view.invalidate();
@@ -400,7 +400,7 @@ public class ExperienceEditFragment extends Fragment {
     }
 
     private void noListItems() {
-        no_list_items.setVisibility(View.VISIBLE);
+        rl_no_list_items.setVisibility(View.VISIBLE);
         recycler_view.invalidate();
         model_list.clear();
         ExperienceModel experienceModel = new ExperienceModel();

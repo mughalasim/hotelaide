@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -74,10 +73,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap google_map;
     MapView map_view;
-
-    private TextView
-            txt_longitude,
-            txt_latitude;
 
     private Spinner
             spinner_county;
@@ -171,6 +166,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
             if (MAP_ACTIVITY_LATITUDE != 0.0) {
                 updateMapAndCamera(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE);
+                asyncUpdateAddress(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE);
             } else {
                 updateMapAndCamera(SharedPrefs.getDouble(USER_LAT), SharedPrefs.getDouble(USER_LNG));
             }
@@ -213,7 +209,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         google_map.animateCamera(CameraUpdateFactory.zoomTo(FLOAT_GOOGLE_MAP_ZOOM));
 
         Marker my_marker = google_map.addMarker(new MarkerOptions().position(
-                new LatLng(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE))
+                new LatLng(latitude, longitude))
                 .title(SharedPrefs.getString(USER_F_NAME)));
         my_marker.setVisible(true);
         my_marker.showInfoWindow();
@@ -256,8 +252,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
         et_postcode = root_view.findViewById(R.id.et_postcode);
         et_full_address = root_view.findViewById(R.id.et_full_address);
-        txt_longitude = root_view.findViewById(R.id.txt_longitude);
-        txt_latitude = root_view.findViewById(R.id.txt_latitude);
         btn_update = root_view.findViewById(R.id.btn_update);
 
     }
@@ -285,7 +279,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 if (helpers.validateEmptyEditText(et_full_address) && helpers.validateEmptyEditText(et_postcode)) {
-                    asyncUpdateAddress();
+                    asyncUpdateAddress(SharedPrefs.getDouble(USER_LAT), SharedPrefs.getDouble(USER_LNG));
                 }
             }
         });
@@ -298,10 +292,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         et_postcode.setText(SharedPrefs.getString(USER_POSTAL_CODE));
 
         et_full_address.setText(SharedPrefs.getString(USER_FULL_ADDRESS));
-
-        txt_latitude.setText(String.valueOf(SharedPrefs.getDouble(USER_LAT)));
-
-        txt_longitude.setText(String.valueOf(SharedPrefs.getDouble(USER_LNG)));
 
         logAddress();
     }
@@ -328,7 +318,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
 
     // ASYNC UPDATE ADDRESS ========================================================================
-    private void asyncUpdateAddress() {
+    private void asyncUpdateAddress(final Double latitude, final Double longitude) {
         UserService userService = UserService.retrofit.create(UserService.class);
 
         final int county_id = db.getFilterIDByString(COUNTY_TABLE_NAME, spinner_county.getSelectedItem().toString());
@@ -337,8 +327,8 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 SharedPrefs.getInt(USER_ID),
                 county_id,
                 et_postcode.getText().toString(),
-                Double.parseDouble(txt_latitude.getText().toString()),
-                Double.parseDouble(txt_longitude.getText().toString()),
+                latitude,
+                longitude,
                 et_full_address.getText().toString()
         );
 
@@ -352,8 +342,8 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                         helpers.ToastMessage(getActivity(), main.getString("message"));
                         SharedPrefs.setInt(USER_COUNTY, county_id);
                         SharedPrefs.setString(USER_POSTAL_CODE, et_postcode.getText().toString());
-                        SharedPrefs.setDouble(USER_LAT, Double.parseDouble(txt_latitude.getText().toString()));
-                        SharedPrefs.setDouble(USER_LNG, Double.parseDouble(txt_longitude.getText().toString()));
+                        SharedPrefs.setDouble(USER_LAT, latitude);
+                        SharedPrefs.setDouble(USER_LNG, longitude);
                         SharedPrefs.setString(USER_FULL_ADDRESS, et_full_address.getText().toString());
                         logAddress();
                     }

@@ -100,6 +100,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.3'
     implementation 'com.google.firebase:firebase-messaging:17.3.2'
     implementation 'com.google.firebase:firebase-database:16.0.2'
+    implementation 'com.google.firebase:firebase-storage:16.0.2'
     implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.1'
 
     // GOOGLE

@@ -11,7 +11,7 @@
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:paddingBottom="@dimen/padding_medium"
-        android:src="@drawable/bckgrd_transparent"/>
+        android:src="@drawable/bckgrd_fade_to_transparent"/>
 
     <ImageView
         android:layout_width="match_parent"

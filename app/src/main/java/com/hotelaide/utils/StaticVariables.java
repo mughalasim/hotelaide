@@ -43,6 +43,7 @@ public class StaticVariables {
     public final static int INT_PERMISSIONS_CAMERA = 601;
     public final static int INT_PERMISSIONS_LOCATIONS = 602;
     public final static int INT_PERMISSIONS_CALL = 603;
+    public final static int INT_PERMISSIONS_STORAGE = 604;
 
 
 // BUNDLE EXTRA VARIABLES ==========================================================================

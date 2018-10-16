@@ -91,6 +91,7 @@
     <string name="rationale_image">HotelAide needs to access your Camera and write to your external storage for Images that you would like to set. Please grant these permissions in order to use the feature</string>
     <string name="rationale_locations">HotelAide needs to access your location but your GPS seems to be disabled. You must enable it to proceed</string>
     <string name="rationale_call">HotelAide needs to access your phone dialer tools in order to call the selected number</string>
+    <string name="rationale_storage">HotelAide needs to access files so that it may upload ONLY the selected file to our servers</string>
 
     <!--ARRAY GENDER ============================================================================-->
     <string-array name="select_gender">

@@ -37,7 +37,7 @@
                         android:layout_marginBottom="@dimen/height_panel"
                         android:contentDescription="@string/app_name"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/bckgrd_transparent" />
+                        android:src="@drawable/bckgrd_fade_to_transparent" />
 
                     <ImageView
                         android:layout_width="match_parent"

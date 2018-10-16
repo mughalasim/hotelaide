@@ -57,13 +57,11 @@ public class EstablishmentActivity extends AppCompatActivity {
     private final String
             TAG_LOG = "ESTABLISHMENT";
 
-    private final ArrayList<GalleryModel>
-            gallery_list = new ArrayList<>();
+    private LinearLayout ll_gallery;
+    private RecyclerView gallery_recycler;
+    private LinearLayoutManager gallery_layout_manager;
+    private ArrayList<GalleryModel> gallery_list = new ArrayList<>();
     private GalleryAdapter gallery_adapter;
-    private final LinearLayoutManager
-            gallery_layout_manager = new LinearLayoutManager(this);
-    private LinearLayout
-            ll_gallery;
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -132,12 +130,13 @@ public class EstablishmentActivity extends AppCompatActivity {
 
         // GALLERY ITEMS
         ll_gallery = findViewById(R.id.ll_gallery);
-        RecyclerView gallery_recycler = findViewById(R.id.gallery_recycler_small);
-        gallery_recycler.setHasFixedSize(true);
-        gallery_layout_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        gallery_recycler.setLayoutManager(gallery_layout_manager);
+        gallery_recycler = findViewById(R.id.gallery_recycler_small);
         gallery_adapter = new GalleryAdapter(gallery_list);
         gallery_recycler.setAdapter(gallery_adapter);
+        gallery_recycler.setHasFixedSize(true);
+        gallery_layout_manager = new LinearLayoutManager(EstablishmentActivity.this);
+        gallery_layout_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        gallery_recycler.setLayoutManager(gallery_layout_manager);
 
     }
 
@@ -188,7 +187,7 @@ public class EstablishmentActivity extends AppCompatActivity {
 
         EstablishmentService userService = EstablishmentService.retrofit.create(EstablishmentService.class);
         Call<JsonObject> call = userService.getEstablishment(INT_ESTABLISHMENT_ID);
-        helpers.setProgressDialogMessage("Loading Hotel details");
+        helpers.setProgressDialogMessage("Loading Establishment details");
         helpers.progressDialog(true);
 
         call.enqueue(new Callback<JsonObject>() {
@@ -241,10 +240,10 @@ public class EstablishmentActivity extends AppCompatActivity {
                         if (!galleryImageArrays.isNull(0)) {
                             ll_gallery.setVisibility(View.VISIBLE);
                             for (int v = 0; v < galleryImageArrays.length(); v++) {
-                                String gallery_url = galleryImageArrays.getString(v);
-                                Helpers.LogThis(TAG_LOG, "GALLERY URL: " + gallery_url);
                                 GalleryModel galleryModel = new GalleryModel();
+                                galleryModel.id = v+1;
                                 galleryModel.image = galleryImageArrays.getString(v);
+                                gallery_list.add(galleryModel);
                             }
                             gallery_adapter.notifyDataSetChanged();
                         } else {

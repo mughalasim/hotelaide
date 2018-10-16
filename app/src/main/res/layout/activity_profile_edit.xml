@@ -30,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:paddingBottom="@dimen/padding_medium"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bckgrd_transparent" />
+                    android:src="@drawable/bckgrd_fade_to_transparent" />
 
                 <ImageView
                     android:alpha="0.4"
@@ -67,15 +67,8 @@
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tabs"
                     android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_panel"
-                    app:tabSelectedTextColor="@color/colorPrimaryLight"
-                    app:tabTextColor="@color/grey"
-                    app:tabTextAppearance="@style/Text_Title"
-                    app:tabIndicatorColor="@color/colorPrimaryLight"
-                    app:tabMode="scrollable"
-                    app:tabGravity="center"
-                    app:tabIndicatorHeight="@dimen/line_thickness" />
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    style="@style/Tab_Text_Layout" />
 
             </RelativeLayout>
 

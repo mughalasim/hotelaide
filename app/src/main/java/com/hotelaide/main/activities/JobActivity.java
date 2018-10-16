@@ -258,18 +258,18 @@ public class JobActivity extends AppCompatActivity {
                             txt_job_requirements.setText(Html.fromHtml(job_object.getString("requirements")));
                         }
 
-                        txt_job_location.setText(job_object.getString("location"));
-                        txt_job_post_date.setText(getString(R.string.txt_posted_on).concat(job_object.getString("posted")));
+                        txt_job_post_date.setText(getString(R.string.txt_posted_on).concat(job_object.getString("posted_on")));
                         txt_job_end_date.setText(getString(R.string.txt_posted_till).concat(job_object.getString("end_date")));
                         STR_SHARE_LINK = "Please take a look at this Job Vacancy on HotelAide ".concat(job_object.getString("url"));
 
                         // ESTABLISHMENT OBJECT
-                        JSONObject hotel_object = job_object.getJSONObject("establishment");
-                        if (hotel_object != null) {
-                            txt_establishment_id.setText(hotel_object.getString("id"));
-                            txt_establishment_name.setText(hotel_object.getString("name"));
-                            STR_BANNER_URL = hotel_object.getString("image");
+                        JSONObject establishment_object = job_object.getJSONObject("establishment");
+                        if (establishment_object != null) {
+                            txt_establishment_id.setText(establishment_object.getString("id"));
+                            txt_establishment_name.setText(establishment_object.getString("name"));
+                            STR_BANNER_URL = establishment_object.getString("image");
                             Glide.with(JobActivity.this).load(STR_BANNER_URL).into(img_banner);
+                            txt_job_location.setText(establishment_object.getString("full_address"));
                         }
 
                         checkJobApplied();

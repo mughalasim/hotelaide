@@ -27,7 +27,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bckgrd_transparent" />
+                    android:src="@drawable/bckgrd_fade_to_transparent" />
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -162,6 +162,7 @@
                 android:layout_height="@dimen/height_button"
                 android:layout_gravity="center"
                 android:paddingEnd="@dimen/padding_medium"
+                android:visibility="gone"
                 android:paddingStart="@dimen/padding_medium"
                 android:text="Other job vacancies" />
 

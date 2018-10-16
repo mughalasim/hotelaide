@@ -62,7 +62,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         final GalleryModel gallery_model = gallery_models.get(position);
 
-        if (gallery_model.image.equals("")) {
+        if (gallery_model.id == 0) {
             holder.no_list_item.setVisibility(View.VISIBLE);
             holder.list_item.setVisibility(View.GONE);
 

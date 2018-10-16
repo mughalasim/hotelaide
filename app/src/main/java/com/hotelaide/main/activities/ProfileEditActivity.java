@@ -22,6 +22,7 @@ import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.AddressFragment;
 import com.hotelaide.main.fragments.ChangePasswordFragment;
+import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceEditFragment;
 import com.hotelaide.main.fragments.ProfileUpdateFragment;
 import com.hotelaide.services.BackgroundFetchService;
@@ -48,6 +49,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LATITUDE;
+import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LONGITUDE;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_CAMERA;
@@ -89,7 +92,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             R.string.nav_address,
             R.string.nav_education,
             R.string.nav_work,
-//            R.string.nav_documents,
+            R.string.nav_documents,
             R.string.nav_pass
     };
 
@@ -98,7 +101,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             new AddressFragment(),
             new ExperienceEditFragment(),
             new ExperienceEditFragment(),
-//            new DocumentsFragment(),
+            new DocumentsFragment(),
             new ChangePasswordFragment()
     };
 
@@ -128,6 +131,13 @@ public class ProfileEditActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        MAP_ACTIVITY_LATITUDE = 0.0;
+        MAP_ACTIVITY_LONGITUDE = 0.0;
+        super.onDestroy();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_CANCELED)
             switch (requestCode) {
@@ -154,6 +164,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     }
                     break;
             }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
