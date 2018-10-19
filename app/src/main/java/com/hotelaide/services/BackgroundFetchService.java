@@ -7,7 +7,6 @@ import android.os.IBinder;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 
-
 public class BackgroundFetchService extends Service {
     private static final String TAG_LOG = "BACKGROUND SERVICE";
 

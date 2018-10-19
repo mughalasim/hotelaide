@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.EstablishmentInterface;
 import com.hotelaide.main.adapters.FindJobsAdapter;
 import com.hotelaide.main.models.JobModel;
-import com.hotelaide.services.EstablishmentService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -126,8 +126,8 @@ public class AppliedJobsFragment extends Fragment {
 
     // ASYNC FETCH ALL APPLIED JOBS ================================================================
     private void asyncGetAppliedJobs() {
-        EstablishmentService establishmentService = EstablishmentService.retrofit.create(EstablishmentService.class);
-        Call<JsonObject> call = establishmentService.getAppliedJobs(SharedPrefs.getInt(USER_ID));
+        EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
+        Call<JsonObject> call = establishmentInterface.getAppliedJobs(SharedPrefs.getInt(USER_ID));
         swipe_refresh.setRefreshing(true);
 
         call.enqueue(new Callback<JsonObject>() {

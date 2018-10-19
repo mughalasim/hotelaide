@@ -43,6 +43,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.AboutUsActivity;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.activities.FindJobsActivity;
@@ -52,7 +53,6 @@ import com.hotelaide.main.activities.SettingsActivity;
 import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.services.MessagingService;
-import com.hotelaide.services.UserService;
 import com.hotelaide.startup.LoginActivity;
 import com.hotelaide.startup.SplashScreenActivity;
 
@@ -77,7 +77,7 @@ import retrofit2.Response;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
 import static android.content.pm.PackageManager.NameNotFoundException;
-import static com.hotelaide.utils.StaticVariables.BroadcastValue;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
@@ -151,7 +151,7 @@ public class Helpers {
                 AccessToken.setCurrentAccessToken(null);
                 LoginManager.getInstance().logOut();
                 context.startActivity(new Intent(context, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                context.sendBroadcast(new Intent().setAction(BroadcastValue));
+                context.sendBroadcast(new Intent().setAction(BROADCAST_LOG_OUT));
                 break;
         }
     }
@@ -168,7 +168,7 @@ public class Helpers {
         context.stopService(new Intent(context, BackgroundFetchService.class));
 
         context.startActivity(new Intent(context, SplashScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        context.sendBroadcast(new Intent().setAction(BroadcastValue));
+        context.sendBroadcast(new Intent().setAction(BROADCAST_LOG_OUT));
     }
 
 
@@ -788,8 +788,8 @@ public class Helpers {
     // COMMON ASYNC TASKS ==========================================================================
     // GET USER ====================================================================================
     public void asyncGetUser() {
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.getUser();
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.getUser();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -821,8 +821,8 @@ public class Helpers {
 
     // GET COUNTIES ================================================================================
     public void asyncGetCounties() {
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.getCounties();
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.getCounties();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -862,8 +862,8 @@ public class Helpers {
 
     // GET EDUCATIONAL LEVEL =======================================================================
     public void asyncGetEducationalLevels() {
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.getEducationalLevels();
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.getEducationalLevels();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -904,8 +904,8 @@ public class Helpers {
 
     // GET JOB TYPES ===============================================================================
     public void asyncGetJobTypes() {
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.getJobTypes();
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.getJobTypes();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -945,8 +945,8 @@ public class Helpers {
 
     // GET CATEGORIES ==============================================================================
     public void asyncGetCategories() {
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.getCategories();
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.getCategories();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {

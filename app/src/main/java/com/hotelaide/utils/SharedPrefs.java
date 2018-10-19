@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.PROFILE_URL;
+import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_DOB;
@@ -23,6 +24,7 @@ import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
 import static com.hotelaide.utils.StaticVariables.USER_FB_ID;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_GENDER;
 import static com.hotelaide.utils.StaticVariables.USER_GOOGLE_ID;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
@@ -124,16 +126,21 @@ public class SharedPrefs {
                 setString(USER_FB_ID, user.getString("facebook_id"));
                 setString(USER_GOOGLE_ID, user.getString("google_id"));
                 setString(USER_URL, user.getString("profile_url"));
-//                setInt(USER_AVAILABILITY, user.getInt("availability"));
-//                setInt(USER_GENDER, user.getInt("gender"));
+                setInt(USER_AVAILABILITY, user.getInt("availability"));
+
+                if (!user.isNull("gender")) {
+                    setInt(USER_GENDER, user.getInt("gender"));
+                } else {
+                    setInt(USER_GENDER, 0);
+                }
 
                 if (!user.isNull("county")) {
                     JSONObject county_object = user.getJSONObject("county");
                     setInt(USER_COUNTY, county_object.getInt("id"));
                 }
 
-                if (!user.isNull("profile_completion")) {
-                    setInt(USER_PROFILE_COMPLETION, user.getInt("profile_completion"));
+                if (!user.isNull("profile_progress")) {
+                    setInt(USER_PROFILE_COMPLETION, user.getInt("profile_progress"));
                 }
 
                 if (!user.isNull("lat"))
@@ -170,7 +177,6 @@ public class SharedPrefs {
                     }
                 }
 
-
                 logUserModel();
 
                 return true;
@@ -193,6 +199,7 @@ public class SharedPrefs {
         userModel.id = getInt(USER_ID);
         userModel.first_name = getString(USER_F_NAME);
         userModel.last_name = getString(USER_L_NAME);
+        userModel.gender = getInt(USER_GENDER);
         userModel.email = getString(USER_EMAIL);
         userModel.img_avatar = getString(USER_IMG_AVATAR);
         userModel.img_banner = getString(USER_IMG_BANNER);
@@ -209,11 +216,12 @@ public class SharedPrefs {
         return userModel;
     }
 
-    public static void logUserModel(){
+    public static void logUserModel() {
         Helpers.LogThis(SHARED_PREFS,
                 "\n UID: " + getInt(USER_ID)
                         + "\n F NAME: " + getString(USER_F_NAME)
                         + "\n L NAME: " + getString(USER_L_NAME)
+                        + "\n L GENDER: " + getInt(USER_GENDER)
                         + "\n EMAIL: " + getString(USER_EMAIL)
                         + "\n AVATAR: " + getString(USER_IMG_AVATAR)
                         + "\n BANNER: " + getString(USER_IMG_BANNER)
@@ -224,6 +232,7 @@ public class SharedPrefs {
                         + "\n GOOGLE ID: " + getString(USER_GOOGLE_ID)
                         + "\n LAT: " + getDouble(USER_LAT)
                         + "\n LNG: " + getDouble(USER_LNG)
+                        + "\n AVAILABILITY: " + getInt(USER_AVAILABILITY)
         );
     }
 

@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.services.UserService;
+import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
@@ -107,9 +107,9 @@ public class ChangePasswordFragment extends Fragment {
 
     // ASYNC UPDATE PASSWORD =======================================================================
     private void asyncUpdatePassword() {
-        UserService userService = UserService.retrofit.create(UserService.class);
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
 
-        Call<JsonObject> call = userService.updateUserPassword(
+        Call<JsonObject> call = userInterface.updateUserPassword(
                 SharedPrefs.getInt(USER_ID),
                 et_user_pass_old.getText().toString(),
                 et_user_pass_new.getText().toString(),

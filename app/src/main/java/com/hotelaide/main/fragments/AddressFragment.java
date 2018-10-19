@@ -28,9 +28,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.MapActivity;
 import com.hotelaide.main.models.SearchFilterModel;
-import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
@@ -319,11 +319,11 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     // ASYNC UPDATE ADDRESS ========================================================================
     private void asyncUpdateAddress(final Double latitude, final Double longitude) {
-        UserService userService = UserService.retrofit.create(UserService.class);
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
 
         final int county_id = db.getFilterIDByString(COUNTY_TABLE_NAME, spinner_county.getSelectedItem().toString());
 
-        Call<JsonObject> call = userService.setUserAddress(
+        Call<JsonObject> call = userInterface.setUserAddress(
                 SharedPrefs.getInt(USER_ID),
                 county_id,
                 et_postcode.getText().toString(),

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.services.UserService;
+import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
@@ -120,8 +120,8 @@ public class SettingsActivity extends ParentActivity {
         helpers.setProgressDialogMessage("Deleting Account, Please wait...");
         helpers.progressDialog(true);
 
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.deleteUser(SharedPrefs.getInt(USER_ID));
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.deleteUser(SharedPrefs.getInt(USER_ID));
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {

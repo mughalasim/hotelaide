@@ -20,13 +20,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.fragments.AddressFragment;
 import com.hotelaide.main.fragments.ChangePasswordFragment;
-import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceEditFragment;
 import com.hotelaide.main.fragments.ProfileUpdateFragment;
 import com.hotelaide.services.BackgroundFetchService;
-import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -92,7 +91,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             R.string.nav_address,
             R.string.nav_education,
             R.string.nav_work,
-            R.string.nav_documents,
+//            R.string.nav_documents,
             R.string.nav_pass
     };
 
@@ -101,7 +100,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             new AddressFragment(),
             new ExperienceEditFragment(),
             new ExperienceEditFragment(),
-            new DocumentsFragment(),
+//            new DocumentsFragment(),
             new ChangePasswordFragment()
     };
 
@@ -365,18 +364,18 @@ public class ProfileEditActivity extends AppCompatActivity {
     // LOGIN ASYNC FUNCTIONS =======================================================================
     private void asyncUpdateImages(final MultipartBody.Part partFile, final int type) {
 
-        UserService userService = UserService.retrofit.create(UserService.class);
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
 
         Call<JsonObject> call;
 
         if (type == RESULT_AVATAR) {
-            call = userService.setUserImages(
+            call = userInterface.setUserImages(
                     SharedPrefs.getInt(USER_ID),
                     partFile,
                     null
             );
         } else {
-            call = userService.setUserImages(
+            call = userInterface.setUserImages(
                     SharedPrefs.getInt(USER_ID),
                     null,
                     partFile

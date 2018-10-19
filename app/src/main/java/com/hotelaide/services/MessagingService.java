@@ -47,7 +47,7 @@ public class MessagingService extends Service {
             CHANNEL_DESC = "CHANNEL_DESC";
 
 
-    // BASIC OVERRIDE METHODS ======================================================================
+    // OVERRIDE METHODS ============================================================================
     @Override
     public IBinder onBind(Intent arg0) {
         return null;
@@ -116,6 +116,7 @@ public class MessagingService extends Service {
     }
 
 
+    // BASIC METHODS ===============================================================================
     private void setDataSnapshotFromObject(DataSnapshot dataSnapshot) {
         try {
             Gson gson = new Gson();

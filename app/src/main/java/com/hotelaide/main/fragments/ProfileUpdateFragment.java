@@ -23,9 +23,9 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.models.UserModel;
-import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.rilixtech.CountryCodePicker;
@@ -269,8 +269,8 @@ public class ProfileUpdateFragment extends Fragment {
         helpers.setProgressDialogMessage("Updating your profile, please wait...");
         helpers.progressDialog(true);
 
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.setUserDetails(
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.setUserDetails(
                 userModel.id,
                 userModel.first_name,
                 userModel.last_name,
@@ -333,8 +333,8 @@ public class ProfileUpdateFragment extends Fragment {
 
     // ASYNC UPDATE AVAILABILITY ===================================================================
     private void asyncUpdateUserAvailability(final int availability) {
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.setUserAvailability(
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.setUserAvailability(
                 SharedPrefs.getInt(USER_ID),
                 availability);
 

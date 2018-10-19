@@ -46,7 +46,7 @@ import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
-import static com.hotelaide.utils.StaticVariables.BroadcastValue;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
 import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
@@ -208,7 +208,7 @@ public class ParentActivity extends AppCompatActivity implements
 
     private void listenExitBroadcast() {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(BroadcastValue);
+        filter.addAction(BROADCAST_LOG_OUT);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

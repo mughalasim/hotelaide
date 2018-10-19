@@ -95,6 +95,7 @@
 
     <!--ARRAY GENDER ============================================================================-->
     <string-array name="select_gender">
+        <item>Not set</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>

@@ -28,12 +28,10 @@ import com.hotelaide.R;
 import com.hotelaide.main.adapters.DocumentAdapter;
 import com.hotelaide.main.models.DocumentModel;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -104,10 +102,13 @@ public class DocumentsFragment extends Fragment {
                 if (resultCode == RESULT_OK && data.getData() != null && getActivity() != null) {
                     // Get the Uri of the selected file
                     Uri uri = data.getData();
-                    String uriString = uri.toString();
-                    File file = new File(uriString);
 
-                    String file_path = file.getAbsolutePath();
+                    File file = new File(uri.getPath());
+
+                    String uriString = uri.toString();
+
+                    Helpers.LogThis(TAG_LOG, uri.toString());
+
                     String file_name = "";
 
                     if (uriString.startsWith("content://")) {
@@ -116,8 +117,10 @@ public class DocumentsFragment extends Fragment {
                             cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
                             if (cursor != null && cursor.moveToFirst()) {
                                 file_name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+
                                 Helpers.LogThis(TAG_LOG, file_name);
-                                Helpers.LogThis(TAG_LOG, file_path);
+
+                                uploadToFireBase(file_name, uri);
                             }
                         } catch (Exception e) {
                             Helpers.LogThis(TAG_LOG, e.toString());
@@ -127,8 +130,11 @@ public class DocumentsFragment extends Fragment {
                         }
                     } else if (uriString.startsWith("file://")) {
                         file_name = file.getName();
-                        Helpers.LogThis(TAG_LOG, file_name);
-                        Helpers.LogThis(TAG_LOG, file_path);
+                        Helpers.LogThis(TAG_LOG + " FAILED:", file_name);
+                        helpers.ToastMessage(getActivity(), "Invalid file selected");
+
+                    } else {
+                        helpers.ToastMessage(getActivity(), "Invalid file selected");
                     }
                 }
                 break;
@@ -178,27 +184,25 @@ public class DocumentsFragment extends Fragment {
         }
     }
 
-    private void uploadToFireBase(String file_name, String path) {
+    private void uploadToFireBase(String file_name, Uri uri) {
+        MyApplication.initFireBase();
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
-        // Points to the root reference
         StorageReference storageRef = storage.getReference();
 
-        // Points to "images"
-        StorageReference user_ref = storageRef.child(SharedPrefs.getInt(USER_ID) + "/documents");
+        StorageReference user_ref = storageRef.child(String.valueOf(SharedPrefs.getInt(USER_ID)));
 
-        // Points to "4/documents/document.pdf"
-        // Note that you can use variables to create child values
         StorageReference document_ref = user_ref.child(file_name);
 
 
-        InputStream stream = null;
         try {
-            stream = new FileInputStream(new File(path));
-            UploadTask uploadTask = document_ref.putStream(stream);
+            UploadTask uploadTask = document_ref.putFile(uri);
+
+            // Register observers to listen for when the download is done or if it fails
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
+                public void onFailure(@NonNull Exception exception) {
                     // Handle unsuccessful uploads
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -209,13 +213,10 @@ public class DocumentsFragment extends Fragment {
                 }
             });
 
-        } catch (FileNotFoundException e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
-            e.printStackTrace();
         } catch (Exception e) {
             Helpers.LogThis(TAG_LOG, e.toString());
+            helpers.ToastMessage(getActivity(), e.toString());
         }
-
     }
 
 }

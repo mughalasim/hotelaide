@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.services.LoginService;
+import com.hotelaide.interfaces.LoginInterface;
 import com.hotelaide.utils.Helpers;
 
 import org.json.JSONException;
@@ -87,8 +87,8 @@ public class StartUpForgotPassFragment extends Fragment {
         helpers.setProgressDialogMessage("Sending Reset link, please wait...");
         helpers.progressDialog(true);
 
-        LoginService loginService = LoginService.retrofit.create(LoginService.class);
-        final Call<JsonObject> call = loginService.resetPassword(email);
+        LoginInterface loginInterface = LoginInterface.retrofit.create(LoginInterface.class);
+        final Call<JsonObject> call = loginInterface.resetPassword(email);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override

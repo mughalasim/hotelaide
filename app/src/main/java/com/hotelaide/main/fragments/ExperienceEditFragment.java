@@ -29,8 +29,8 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.ExperienceInterface;
 import com.hotelaide.main.models.ExperienceModel;
-import com.hotelaide.services.ExperienceService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -303,8 +303,11 @@ public class ExperienceEditFragment extends Fragment {
                         experienceModel.end_date = txt_start_date.getText().toString();
                     }
 
-                    if (radio_btn_yes.isChecked())
+                    if (radio_btn_yes.isChecked()) {
                         experienceModel.current = 1;
+                    } else {
+                        experienceModel.current = 0;
+                    }
 
                     asyncUpdateAdd(experienceModel,
                             btn_confirm.getText().toString().equals(getString(R.string.txt_update)));
@@ -488,13 +491,13 @@ public class ExperienceEditFragment extends Fragment {
     // ASYNC GET ALL EXPERIENCES ===================================================================
     private void asyncGetAllWorkExperience() {
         swipe_refresh.setRefreshing(true);
-        ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
+        ExperienceInterface experienceInterface = ExperienceInterface.retrofit.create(ExperienceInterface.class);
 
         Call<JsonObject> call;
         if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
-            call = experienceService.getAllWorkExperiences(SharedPrefs.getInt(USER_ID));
+            call = experienceInterface.getAllWorkExperiences(SharedPrefs.getInt(USER_ID));
         } else {
-            call = experienceService.getAllEducationExperiences(SharedPrefs.getInt(USER_ID));
+            call = experienceInterface.getAllEducationExperiences(SharedPrefs.getInt(USER_ID));
         }
 
         call.enqueue(new Callback<JsonObject>() {
@@ -551,10 +554,10 @@ public class ExperienceEditFragment extends Fragment {
 
         if (isUpdate) {
             helpers.setProgressDialogMessage("Updating experience, please wait...");
-            ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
+            ExperienceInterface experienceInterface = ExperienceInterface.retrofit.create(ExperienceInterface.class);
 
             if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
-                call = experienceService.updateWorkExperience(
+                call = experienceInterface.updateWorkExperience(
                         SharedPrefs.getInt(USER_ID),
                         experienceModel.experience_id,
                         experienceModel.name,
@@ -565,7 +568,7 @@ public class ExperienceEditFragment extends Fragment {
                         experienceModel.current
                 );
             } else {
-                call = experienceService.updateEducationExperience(
+                call = experienceInterface.updateEducationExperience(
                         SharedPrefs.getInt(USER_ID),
                         experienceModel.experience_id,
                         experienceModel.name,
@@ -579,10 +582,10 @@ public class ExperienceEditFragment extends Fragment {
 
         } else {
             helpers.setProgressDialogMessage("Adding experience, please wait...");
-            ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
+            ExperienceInterface experienceInterface = ExperienceInterface.retrofit.create(ExperienceInterface.class);
 
             if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
-                call = experienceService.setWorkExperience(
+                call = experienceInterface.setWorkExperience(
                         SharedPrefs.getInt(USER_ID),
                         experienceModel.name,
                         experienceModel.position,
@@ -592,7 +595,7 @@ public class ExperienceEditFragment extends Fragment {
                         experienceModel.current
                 );
             } else {
-                call = experienceService.setEducationExperience(
+                call = experienceInterface.setEducationExperience(
                         SharedPrefs.getInt(USER_ID),
                         experienceModel.name,
                         experienceModel.education_level,
@@ -651,16 +654,16 @@ public class ExperienceEditFragment extends Fragment {
 
     // ASYNC DELETE WORK EXPERIENCE ================================================================
     private void deleteExperience(final int experienceId, final int position) {
-        ExperienceService experienceService = ExperienceService.retrofit.create(ExperienceService.class);
+        ExperienceInterface experienceInterface = ExperienceInterface.retrofit.create(ExperienceInterface.class);
 
         Call<JsonObject> call;
         if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
-            call = experienceService.deleteOneWorkExperience(
+            call = experienceInterface.deleteOneWorkExperience(
                     SharedPrefs.getInt(USER_ID),
                     experienceId
             );
         } else {
-            call = experienceService.deleteOneEducationExperience(
+            call = experienceInterface.deleteOneEducationExperience(
                     SharedPrefs.getInt(USER_ID),
                     experienceId
             );

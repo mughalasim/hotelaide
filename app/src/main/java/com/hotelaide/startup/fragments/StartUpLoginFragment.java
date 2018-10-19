@@ -37,8 +37,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.LoginInterface;
 import com.hotelaide.main.activities.DashboardActivity;
-import com.hotelaide.services.LoginService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
@@ -304,11 +304,16 @@ public class StartUpLoginFragment extends Fragment {
                             final String fb_id,
                             final String google_id) {
 
+        Helpers.LogThis(TAG_LOG, email);
+        Helpers.LogThis(TAG_LOG, password);
+        Helpers.LogThis(TAG_LOG, fb_id);
+        Helpers.LogThis(TAG_LOG, google_id);
+
         helpers.setProgressDialogMessage("Validating your credentials, please wait...");
         helpers.progressDialog(true);
 
-        LoginService loginService = LoginService.retrofit.create(LoginService.class);
-        final Call<JsonObject> call = loginService.userLogin(
+        LoginInterface loginInterface = LoginInterface.retrofit.create(LoginInterface.class);
+        final Call<JsonObject> call = loginInterface.userLogin(
                 email,
                 password,
                 fb_id,

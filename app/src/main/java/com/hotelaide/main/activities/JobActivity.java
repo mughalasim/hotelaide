@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.services.EstablishmentService;
+import com.hotelaide.interfaces.EstablishmentInterface;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -223,8 +223,8 @@ public class JobActivity extends AppCompatActivity {
     // GET ESTABLISHMENT ASYNC FUNCTION ============================================================
     private void asyncFetchHotel() {
 
-        EstablishmentService establishmentService = EstablishmentService.retrofit.create(EstablishmentService.class);
-        Call<JsonObject> call = establishmentService.getJob(INT_JOB_ID);
+        EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
+        Call<JsonObject> call = establishmentInterface.getJob(INT_JOB_ID);
         helpers.setProgressDialogMessage("Loading Job details");
         helpers.progressDialog(true);
 
@@ -305,8 +305,8 @@ public class JobActivity extends AppCompatActivity {
 
     private void asyncApplyJob() {
 
-        EstablishmentService establishmentService = EstablishmentService.retrofit.create(EstablishmentService.class);
-        Call<JsonObject> call = establishmentService.applyForJob(SharedPrefs.getInt(USER_ID), INT_JOB_ID);
+        EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
+        Call<JsonObject> call = establishmentInterface.applyForJob(SharedPrefs.getInt(USER_ID), INT_JOB_ID);
         helpers.setProgressDialogMessage("Applying for this position");
         helpers.progressDialog(true);
 

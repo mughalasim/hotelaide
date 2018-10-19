@@ -29,11 +29,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.ConversationActivity;
 import com.hotelaide.main.adapters.MessageAdapter;
 import com.hotelaide.main.models.MessageModel;
 import com.hotelaide.main.models.UserModel;
-import com.hotelaide.services.UserService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -243,8 +243,8 @@ public class MessageFragment extends Fragment {
     // CONTACT ASYNC FUNCTIONS =====================================================================
     private void asyncFetchContacts(final int page_number) {
         helpers.ToastMessage(getActivity(), "Loading... please wait...");
-        UserService userService = UserService.retrofit.create(UserService.class);
-        final Call<JsonObject> call = userService.getAllUsers(page_number);
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.getAllUsers(page_number);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {

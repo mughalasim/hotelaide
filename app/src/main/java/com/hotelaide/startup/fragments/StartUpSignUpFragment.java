@@ -45,9 +45,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.LoginInterface;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.models.UserModel;
-import com.hotelaide.services.LoginService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.rilixtech.CountryCodePicker;
@@ -539,8 +539,8 @@ public class StartUpSignUpFragment extends Fragment {
         helpers.progressDialog(true);
         logRegModel(userModel);
 
-        LoginService loginService = LoginService.retrofit.create(LoginService.class);
-        final Call<JsonObject> call = loginService.userRegister(
+        LoginInterface loginInterface = LoginInterface.retrofit.create(LoginInterface.class);
+        final Call<JsonObject> call = loginInterface.userRegister(
                 userModel.first_name,
                 userModel.last_name,
                 userModel.country_code,

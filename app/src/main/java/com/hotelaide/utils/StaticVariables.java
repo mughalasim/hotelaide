@@ -52,13 +52,13 @@ public class StaticVariables {
     public final static String START_LAUNCH = "LAUNCH";
 
 // BROADCAST VARIABLES =============================================================================
-    public final static String BroadcastValue = "com.hotelaide.ACTIONLOGOUT";
-    public static final String BROADCAST_GPS = "BROADCAST_GPS";
+    public final static String BROADCAST_LOG_OUT = "BROADCAST_LOG_OUT";
+    public final static String BROADCAST_UPLOAD_COMPLETE = "BROADCAST_UPLOAD_COMPLETE";
 
 // GLOBAL STATIC VARIABLES==========================================================================
     public static String STR_SHARE_LINK = "";
 
-// DATABASE VARIABLES ==========================================================================
+// DATABASE VARIABLES ==============================================================================
     // JOBS TABLE ==================================================================================
     public static final String JOB_TABLE_NAME = "JOB_SEARCH";
     public static final String JOB_ID = "id";
@@ -86,7 +86,7 @@ public class StaticVariables {
     public static final String EDUCATION_LEVEL_TABLE_NAME = "EDUCATION_LEVEL";
     public static final String FILTER_ID = "id";
     public static final String FILTER_NAME = "name";
-    // APPLIED JOBS TABLE ==================================================================================
+    // APPLIED JOBS TABLE ==========================================================================
     public static final String APPLIED_JOBS_TABLE_NAME = "APPLIED_JOBS";
     public static final String APPLIED_JOBS_TABLE_ID = "id";
     public static final String APPLIED_JOBS_ID = "job_id";
