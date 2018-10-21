@@ -19,8 +19,8 @@ import java.util.List;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
-import static com.hotelaide.utils.StaticVariables.START_FIRST_TIME;
-import static com.hotelaide.utils.StaticVariables.START_RETURN;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 public class DashboardActivity extends ParentActivity {
@@ -60,7 +60,7 @@ public class DashboardActivity extends ParentActivity {
     // BASIC FUNCTIONS =============================================================================
     private void handleExtraBundles() {
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getString(START_FIRST_TIME) != null) {
+        if (extras != null && extras.getString(EXTRA_START_FIRST_TIME) != null) {
 
             helpers.myDialog(DashboardActivity.this,
                     "WELCOME", SharedPrefs.getString(USER_F_NAME) + ", thank you for joining "
@@ -71,7 +71,7 @@ public class DashboardActivity extends ParentActivity {
             SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, true);
             setCountOnDrawerItem(menu_profile, "(Update Profile)");
 
-        } else if (extras != null && extras.getString(START_RETURN) != null) {
+        } else if (extras != null && extras.getString(EXTRA_START_RETURN) != null) {
             helpers.ToastMessage(DashboardActivity.this, "Welcome back " + SharedPrefs.getString(USER_F_NAME));
             setCountOnDrawerItem(menu_find_jobs, "(New)");
 

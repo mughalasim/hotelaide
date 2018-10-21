@@ -15,8 +15,8 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/img_user"
-            android:layout_width="@dimen/img_size_small"
-            android:layout_height="@dimen/img_size_small"
+            android:layout_width="@dimen/img_size_medium"
+            android:layout_height="@dimen/img_size_medium"
             android:layout_centerVertical="true"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"

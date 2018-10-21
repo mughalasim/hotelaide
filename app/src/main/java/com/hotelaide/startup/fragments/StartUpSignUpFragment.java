@@ -1,6 +1,7 @@
 package com.hotelaide.startup.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -8,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.view.ContextThemeWrapper;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +65,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
-import static com.hotelaide.utils.StaticVariables.START_FIRST_TIME;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 
 public class StartUpSignUpFragment extends Fragment {
     private View rootview;
@@ -254,10 +254,10 @@ public class StartUpSignUpFragment extends Fragment {
         txt_user_dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getContext() != null) {
+                if (getActivity() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                     DatePickerDialog datePicker = new DatePickerDialog(
-                            new ContextThemeWrapper(getActivity(), R.style.AppTheme),
+                            getActivity(), AlertDialog.THEME_HOLO_LIGHT,
                             datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),
@@ -569,7 +569,7 @@ public class StartUpSignUpFragment extends Fragment {
                         JSONObject data = main.getJSONObject("data");
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
                             SharedPrefs.setString(ACCESS_TOKEN, data.getString("token"));
-                            startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(START_FIRST_TIME, START_FIRST_TIME));
+                            startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
                             getActivity().finish();
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_server));

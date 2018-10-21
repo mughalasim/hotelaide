@@ -142,6 +142,7 @@
     <string name="txt_responsibilities">Responsibilities</string>
     <string name="txt_success">Successfully updated</string>
     <string name="txt_update">Update</string>
+    <string name="txt_gender">Gender:</string>
     <string name="txt_add">Add</string>
     <string name="txt_date_separator">-</string>
     <string name="txt_add_exp">Add new experience</string>
@@ -186,7 +187,7 @@
     <string name="txt_posted_on">&#160;Posted:&#160;</string>
     <string name="txt_exit_desc">Are you sure you wish to exit?</string>
     <string name="txt_exit">Leaving&#160;</string>
-    <string name="txt_change_image">Update</string>
+    <string name="txt_change_image">Set images</string>
     <string name="txt_yes">Yes</string>
     <string name="et_hint_message">Type message…</string>
     <string name="txt_delete_desc">Are you sure you wish to delete this message, this cannot be undone?</string>

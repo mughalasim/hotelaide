@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.hotelaide.BuildConfig;
+import com.hotelaide.main.models.DocumentModel;
 import com.hotelaide.main.models.ExperienceModel;
 import com.hotelaide.main.models.JobModel;
 import com.hotelaide.main.models.SearchFilterModel;
@@ -21,6 +22,13 @@ import static com.hotelaide.utils.StaticVariables.APPLIED_JOBS_TABLE_ID;
 import static com.hotelaide.utils.StaticVariables.APPLIED_JOBS_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.DOCUMENTS_DATE_UPLOADED;
+import static com.hotelaide.utils.StaticVariables.DOCUMENTS_FILE_TYPE;
+import static com.hotelaide.utils.StaticVariables.DOCUMENTS_FILE_URL;
+import static com.hotelaide.utils.StaticVariables.DOCUMENTS_ID;
+import static com.hotelaide.utils.StaticVariables.DOCUMENTS_IMAGE;
+import static com.hotelaide.utils.StaticVariables.DOCUMENTS_NAME;
+import static com.hotelaide.utils.StaticVariables.DOCUMENTS_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
@@ -76,7 +84,8 @@ public class Database extends SQLiteOpenHelper {
         // JOB SEARCH TABLE ========================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + JOB_TABLE_NAME +
-                "(" + JOB_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                "(" +
+                JOB_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 JOB_NAME + " TEXT," +
                 JOB_POSTED_ON + " TEXT," +
                 JOB_ESTABLISHMENT_ID + " INTEGER," +
@@ -88,7 +97,8 @@ public class Database extends SQLiteOpenHelper {
         // APPLIED JOBS TABLE ======================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + APPLIED_JOBS_TABLE_NAME +
-                "(" + APPLIED_JOBS_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                "(" +
+                APPLIED_JOBS_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 APPLIED_JOBS_ID + " INTEGER" +
                 ")"
         );
@@ -96,7 +106,8 @@ public class Database extends SQLiteOpenHelper {
         // COUNTY TABLE ============================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + COUNTY_TABLE_NAME +
-                "(" + FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                "(" +
+                FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 FILTER_NAME + " TEXT" +
                 ")"
         );
@@ -104,7 +115,8 @@ public class Database extends SQLiteOpenHelper {
         // JOB TYPE TABLE ==========================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + JOB_TYPE_TABLE_NAME +
-                "(" + FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                "(" +
+                FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 FILTER_NAME + " TEXT" +
                 ")"
         );
@@ -112,7 +124,8 @@ public class Database extends SQLiteOpenHelper {
         // CATEGORIES TABLE ========================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + CATEGORIES_TABLE_NAME +
-                "(" + FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                "(" +
+                FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 FILTER_NAME + " TEXT" +
                 ")"
         );
@@ -120,8 +133,22 @@ public class Database extends SQLiteOpenHelper {
         // EDUCATION LEVEL TABLE ===================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + EDUCATION_LEVEL_TABLE_NAME +
-                "(" + FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                "(" +
+                FILTER_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 FILTER_NAME + " TEXT" +
+                ")"
+        );
+
+        // DOCUMENTS TABLE =========================================================================
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + DOCUMENTS_TABLE_NAME +
+                "(" +
+                DOCUMENTS_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                DOCUMENTS_NAME + " TEXT," +
+                DOCUMENTS_IMAGE + " TEXT," +
+                DOCUMENTS_FILE_URL + " TEXT," +
+                DOCUMENTS_FILE_TYPE + " TEXT," +
+                DOCUMENTS_DATE_UPLOADED + " TEXT" +
                 ")"
         );
 
@@ -163,6 +190,12 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public void deleteDocumentsTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + DOCUMENTS_TABLE_NAME);
+
+    }
+
     public void deleteAllTables() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
@@ -172,6 +205,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + CATEGORIES_TABLE_NAME);
         db.execSQL("DELETE FROM " + EDUCATION_LEVEL_TABLE_NAME);
         db.execSQL("DELETE FROM " + JOB_TYPE_TABLE_NAME);
+        db.execSQL("DELETE FROM " + DOCUMENTS_TABLE_NAME);
         onCreate(db);
     }
 
@@ -434,6 +468,40 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
+    public ArrayList<JobModel> getAllAppliedJobs() {
+
+        ArrayList<JobModel> list = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(createInnerJoin(APPLIED_JOBS_TABLE_NAME, APPLIED_JOBS_ID, JOB_TABLE_NAME, JOB_ID), null);
+
+        if (cursor != null) {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+                do {
+                    JobModel jobModel = new JobModel();
+                    jobModel.id = cursor.getInt(cursor.getColumnIndex(JOB_ID));
+                    jobModel.name = cursor.getString(cursor.getColumnIndex(JOB_NAME));
+                    jobModel.posted_on = cursor.getString(cursor.getColumnIndex(JOB_POSTED_ON));
+                    jobModel.establishment_id = cursor.getInt(cursor.getColumnIndex(JOB_ESTABLISHMENT_ID));
+                    jobModel.establishment_image = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_IMAGE));
+                    jobModel.establishment_location = cursor.getString(cursor.getColumnIndex(JOB_ESTABLISHMENT_LOCATION));
+
+                    list.add(jobModel);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        return list;
+    }
+
+    private String createInnerJoin(String table_name1, String id_1, String table_name2, String id_2) {
+        return "SELECT * FROM " + table_name1 + " l INNER JOIN " + table_name2 + " a ON l." + id_1 + " = a." + id_2;
+    }
+
 
     // COUNTY FUNCTIONS ============================================================================
     public void setFilter(String table_name, SearchFilterModel searchFilterModel) {
@@ -523,6 +591,84 @@ public class Database extends SQLiteOpenHelper {
         }
 
         return filter_name;
+    }
+
+
+    // DOCUMENT FUNCTIONS ==========================================================================
+    public Boolean setDocumentFromJson(JSONObject document_object) {
+        try {
+
+            DocumentModel documentModel = new DocumentModel();
+            documentModel.id = document_object.getInt("id");
+            documentModel.name = document_object.getString("name");
+            documentModel.image = document_object.getString("image");
+            documentModel.file_url = document_object.getString("url");
+            documentModel.file_type = document_object.getString("type");
+            documentModel.date_uploaded = document_object.getString("date_uploaded");
+
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DOCUMENTS_ID, documentModel.id);
+            contentValues.put(DOCUMENTS_NAME, documentModel.name);
+            contentValues.put(DOCUMENTS_IMAGE, documentModel.image);
+            contentValues.put(DOCUMENTS_FILE_TYPE, documentModel.file_type);
+            contentValues.put(DOCUMENTS_FILE_URL, documentModel.file_url);
+            contentValues.put(DOCUMENTS_DATE_UPLOADED, documentModel.date_uploaded);
+
+
+            String whereClause = DOCUMENTS_ID + " = ?";
+            String[] whereArgs = new String[]{String.valueOf(documentModel.id)};
+            int no_of_rows_affected = db.update(DOCUMENTS_TABLE_NAME, contentValues, whereClause,
+                    whereArgs);
+
+            if (no_of_rows_affected == 0) {
+                db.insert(DOCUMENTS_TABLE_NAME, null, contentValues);
+            }
+
+            return true;
+        } catch (JSONException e) {
+            Helpers.LogThis(TAG_LOG, e.toString());
+            return false;
+        }
+    }
+
+    public void deleteDocumentByID(String document_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = DOCUMENTS_ID + " = ?";
+        String[] whereArgs = new String[]{document_id};
+        db.delete(DOCUMENTS_TABLE_NAME, whereClause, whereArgs);
+        db.close();
+    }
+
+    public ArrayList<DocumentModel> getAllDocuments() {
+
+        ArrayList<DocumentModel> list = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(DOCUMENTS_TABLE_NAME, null, null, null, null, null, null);
+
+        if (cursor != null) {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+                do {
+                    DocumentModel documentModel = new DocumentModel();
+                    documentModel.id = cursor.getInt(cursor.getColumnIndex(EXP_ID));
+                    documentModel.name = cursor.getString(cursor.getColumnIndex(EXP_NAME));
+                    documentModel.image = cursor.getString(cursor.getColumnIndex(EXP_POSITION));
+                    documentModel.file_url = cursor.getString(cursor.getColumnIndex(EXP_POSITION));
+                    documentModel.file_type = cursor.getString(cursor.getColumnIndex(EXP_POSITION));
+                    documentModel.date_uploaded = cursor.getString(cursor.getColumnIndex(EXP_POSITION));
+
+                    list.add(documentModel);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        return list;
     }
 
 

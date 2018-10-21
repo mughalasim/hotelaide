@@ -195,13 +195,14 @@ public class JobActivity extends AppCompatActivity {
     }
 
     public void applyJob(View view) {
-        if (db.isAppliedJob(INT_JOB_ID)) {
-            helpers.ToastMessage(JobActivity.this, "Already applied for this position");
-        } else {
-            asyncApplyJob();
-
+        if (!db.isAppliedJob(INT_JOB_ID)) {
+            if (helpers.validateJobApplication(JobActivity.this)) {
+                asyncApplyJob();
+            }
         }
     }
+
+
 
     public void viewEstablishment(View view) {
         startActivity(new Intent(JobActivity.this, EstablishmentActivity.class)
@@ -210,7 +211,6 @@ public class JobActivity extends AppCompatActivity {
     }
 
     private void checkJobApplied() {
-        Helpers.LogThis(TAG_LOG, "IS APPLIED: " + db.isAppliedJob(INT_JOB_ID));
         if (db.isAppliedJob(INT_JOB_ID)) {
             btn_apply.setText("APPLIED");
             btn_apply.setTextAppearance(JobActivity.this, R.style.Material_Text);

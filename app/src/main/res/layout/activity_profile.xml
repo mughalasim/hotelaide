@@ -62,6 +62,16 @@
                         app:riv_corner_radius="@dimen/img_size_large"
                         app:riv_oval="false" />
 
+                    <android.support.design.button.MaterialButton
+                        android:id="@+id/btn_update_image"
+                        style="@style/Material_Text"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:onClick="editProfile"
+                        android:text="@string/txt_change_image" />
+
 
                 </RelativeLayout>
 
@@ -195,7 +205,6 @@
                             android:layout_marginTop="@dimen/padding_tiny"
                             android:orientation="horizontal"
                             android:paddingEnd="@dimen/padding_small"
-                            android:layout_marginBottom="@dimen/padding_tiny"
                             android:paddingStart="@dimen/padding_small">
 
                             <TextView
@@ -212,45 +221,32 @@
 
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/txt_user_full_address"
-                            style="@style/Text_Normal"
-                            android:layout_marginTop="0dp"
-                            android:visibility="gone"
-                            android:layout_marginBottom="@dimen/padding_tiny"
-                            android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small" />
-
-                        <TextView
-                            android:id="@+id/txt_user_county_name"
-                            style="@style/Text_Normal"
-                            android:visibility="gone"
-                            android:layout_marginTop="0dp"
-                            android:layout_marginBottom="@dimen/padding_tiny"
-                            android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small" />
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/padding_tiny"
+                            android:layout_marginTop="@dimen/padding_tiny"
                             android:orientation="horizontal"
                             android:paddingEnd="@dimen/padding_small"
+                            android:layout_marginBottom="@dimen/padding_tiny"
                             android:paddingStart="@dimen/padding_small">
 
                             <TextView
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:text="@string/txt_availability" />
+                                android:paddingEnd="@dimen/padding_tiny"
+                                android:paddingStart="0dp"
+                                android:text="@string/txt_gender" />
 
                             <TextView
-                                android:id="@+id/txt_user_availability"
+                                android:id="@+id/txt_user_gender"
                                 style="@style/Text_Normal"
+                                android:text="Male"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp" />
 
                         </LinearLayout>
+
 
                     </LinearLayout>
 
@@ -278,6 +274,28 @@
                             android:drawableEnd="@drawable/ic_edit"
                             android:paddingStart="@dimen/padding_small"
                             android:text="@string/nav_contact_us" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/padding_tiny"
+                            android:paddingEnd="@dimen/padding_small"
+                            android:paddingStart="@dimen/padding_small">
+
+                            <TextView
+                                style="@style/Text_Normal"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:text="@string/txt_availability" />
+
+                            <TextView
+                                android:id="@+id/txt_user_availability"
+                                style="@style/Text_Normal"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="0dp" />
+
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -330,6 +348,26 @@
 
                         </LinearLayout>
 
+                        <TextView
+                            android:id="@+id/txt_user_full_address"
+                            style="@style/Text_Normal"
+                            android:layout_marginTop="0dp"
+                            android:visibility="gone"
+                            android:maxLines="1"
+                            android:layout_marginBottom="@dimen/padding_tiny"
+                            android:paddingEnd="@dimen/padding_small"
+                            android:paddingStart="@dimen/padding_small" />
+
+                        <TextView
+                            android:id="@+id/txt_user_county_name"
+                            style="@style/Text_Normal"
+                            android:visibility="gone"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginBottom="@dimen/padding_tiny"
+                            android:paddingEnd="@dimen/padding_small"
+                            android:paddingStart="@dimen/padding_small" />
+
+
 
                     </LinearLayout>
 
@@ -345,8 +383,8 @@
                     android:background="@color/light_grey"
                     android:textColor="@color/colorPrimary"
                     android:gravity="start|center_vertical"
-                    android:paddingEnd="@dimen/padding_small"
-                    android:paddingStart="@dimen/padding_small"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:paddingStart="@dimen/padding_large"
                     android:onClick="editProfile"
                     android:drawableEnd="@drawable/ic_edit"
                     android:text="@string/nav_education" />
@@ -367,8 +405,8 @@
                     android:background="@color/light_grey"
                     android:textColor="@color/colorPrimary"
                     android:gravity="start|center_vertical"
-                    android:paddingEnd="@dimen/padding_small"
-                    android:paddingStart="@dimen/padding_small"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:paddingStart="@dimen/padding_large"
                     android:onClick="editProfile"
                     android:drawableEnd="@drawable/ic_edit"
                     android:text="@string/nav_work" />
@@ -380,7 +418,38 @@
                     android:orientation="vertical" />
 
 
+                <!-- DOCUMENTS ==================================================================-->
+                <TextView
+                    android:id="@+id/txt_documents_edit"
+                    style="@style/Text_Title"
+                    android:layout_height="@dimen/height_button"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:background="@color/light_grey"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="start|center_vertical"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:paddingStart="@dimen/padding_large"
+                    android:onClick="editProfile"
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:text="@string/nav_documents" />
+
+                <LinearLayout
+                    android:id="@+id/ll_fragment_documents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/btn_change_password"
+                    style="@style/Material_Text"
+                    android:layout_marginTop="@dimen/padding_large"
+                    android:onClick="editProfile"
+                    android:text="@string/nav_pass" />
+
             </LinearLayout>
+
+
+
 
         </android.support.v4.widget.NestedScrollView>
 

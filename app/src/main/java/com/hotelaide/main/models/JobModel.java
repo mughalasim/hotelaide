@@ -7,6 +7,6 @@ public class JobModel {
     public String   posted_on = "";
 
     public int      establishment_id;
-    public String establishment_location = "";
-    public String establishment_image = "";
+    public String   establishment_location = "";
+    public String   establishment_image = "";
 }

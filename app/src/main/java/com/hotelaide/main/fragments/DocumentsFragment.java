@@ -1,15 +1,13 @@
 package com.hotelaide.main.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.InflateException;
@@ -19,27 +17,23 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.hotelaide.R;
 import com.hotelaide.main.adapters.DocumentAdapter;
 import com.hotelaide.main.models.DocumentModel;
+import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.MyApplication;
-import com.hotelaide.utils.SharedPrefs;
 
 import java.io.File;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_STORAGE;
-import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 
 public class DocumentsFragment extends Fragment {
@@ -50,37 +44,49 @@ public class DocumentsFragment extends Fragment {
     private final String
             TAG_LOG = "DOCUMENTS";
     private final int
-            INT_RESULT_CODE = 2323;
+            INT_REQUEST_CODE = 2323;
 
     private TextView
             txt_no_results;
     private RelativeLayout rl_no_list_items;
 
+    private Database db;
+
 
     private RecyclerView recycler_view;
     private ArrayList<DocumentModel> model_list = new ArrayList<>();
     private DocumentAdapter adapter;
-    private SwipeRefreshLayout swipe_refresh;
 
     public DocumentsFragment() {
     }
 
     // OVERRIDE METHODS ============================================================================
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root_view == null && getActivity() != null) {
             try {
                 root_view = inflater.inflate(R.layout.frag_profile_documents, container, false);
 
+                db = new Database();
+
                 helpers = new Helpers(getActivity());
 
                 findAllViews();
 
+                Bundle bundle = this.getArguments();
+                if (bundle != null) {
+                    Helpers.LogThis(TAG_LOG, "HAS BUNDLES");
+                    btn_upload.setVisibility(View.GONE);
+                }
+
                 setListeners();
+
+                populateDocumentsFromDB();
 
 
             } catch (InflateException e) {
-                e.printStackTrace();
+                Helpers.LogThis(TAG_LOG, e.toString());
             }
         } else {
             ((ViewGroup) container.getParent()).removeView(root_view);
@@ -98,44 +104,19 @@ public class DocumentsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case INT_RESULT_CODE:
+            case INT_REQUEST_CODE:
                 if (resultCode == RESULT_OK && data.getData() != null && getActivity() != null) {
-                    // Get the Uri of the selected file
-                    Uri uri = data.getData();
 
-                    File file = new File(uri.getPath());
+                    Uri resultUri = data.getData();
+                    File file = new File(resultUri.getPath());
 
-                    String uriString = uri.toString();
+                    MultipartBody.Part partFile = MultipartBody.Part.createFormData("document",
+                            file.getName(), RequestBody.create(MediaType.parse("application/pdf"), file));
 
-                    Helpers.LogThis(TAG_LOG, uri.toString());
+                    asyncUploadDocument(partFile);
 
-                    String file_name = "";
-
-                    if (uriString.startsWith("content://")) {
-                        Cursor cursor = null;
-                        try {
-                            cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-                            if (cursor != null && cursor.moveToFirst()) {
-                                file_name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-
-                                Helpers.LogThis(TAG_LOG, file_name);
-
-                                uploadToFireBase(file_name, uri);
-                            }
-                        } catch (Exception e) {
-                            Helpers.LogThis(TAG_LOG, e.toString());
-                        } finally {
-                            if (cursor != null)
-                                cursor.close();
-                        }
-                    } else if (uriString.startsWith("file://")) {
-                        file_name = file.getName();
-                        Helpers.LogThis(TAG_LOG + " FAILED:", file_name);
-                        helpers.ToastMessage(getActivity(), "Invalid file selected");
-
-                    } else {
-                        helpers.ToastMessage(getActivity(), "Invalid file selected");
-                    }
+                } else {
+                    helpers.ToastMessage(getActivity(), "Invalid file selected");
                 }
                 break;
         }
@@ -148,7 +129,6 @@ public class DocumentsFragment extends Fragment {
         rl_no_list_items = root_view.findViewById(R.id.rl_no_list_items);
         txt_no_results.setText("No Documents uploaded");
 
-        swipe_refresh = root_view.findViewById(R.id.swipe_refresh);
         recycler_view = root_view.findViewById(R.id.recycler_view);
         adapter = new DocumentAdapter(model_list);
         recycler_view.setAdapter(adapter);
@@ -170,6 +150,29 @@ public class DocumentsFragment extends Fragment {
 
     }
 
+    private void populateDocumentsFromDB() {
+        if (adapter.getItemCount() > 0)
+            adapter.removeLoadingItem();
+        rl_no_list_items.setVisibility(View.GONE);
+        model_list.clear();
+        model_list = db.getAllDocuments();
+        recycler_view.invalidate();
+        adapter.updateData(model_list);
+        adapter.notifyDataSetChanged();
+        if (model_list.size() <= 0) {
+            noListItems();
+        }
+    }
+
+    private void noListItems() {
+        rl_no_list_items.setVisibility(View.VISIBLE);
+        recycler_view.invalidate();
+        model_list.clear();
+        DocumentModel documentModel = new DocumentModel();
+        model_list.add(documentModel);
+        adapter.notifyDataSetChanged();
+    }
+
     @AfterPermissionGranted(INT_PERMISSIONS_STORAGE)
     private void openDocuments() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -177,46 +180,83 @@ public class DocumentsFragment extends Fragment {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_GET_CONTENT);
             intent.setType("application/pdf");
-            startActivityForResult(intent, INT_RESULT_CODE);
+            startActivityForResult(intent, INT_REQUEST_CODE);
         } else if (getActivity() != null) {
             EasyPermissions.requestPermissions(getActivity(), getString(R.string.rationale_storage),
                     INT_PERMISSIONS_STORAGE, perms);
         }
     }
 
-    private void uploadToFireBase(String file_name, Uri uri) {
-        MyApplication.initFireBase();
+    private void setLoadingItem() {
+        model_list.clear();
+        model_list = db.getAllDocuments();
+        rl_no_list_items.setVisibility(View.GONE);
+        DocumentModel documentModel = new DocumentModel();
+        documentModel.id = 0;
+        documentModel.name = "Loading...";
+        documentModel.file_url = "kwdvjedvedv";
+        documentModel.date_uploaded = "This may take a moment";
+//        documentModel.image = "https://cdn.pixabay.com/photo/2016/01/03/00/43/upload-1118929_960_720.png";
+        documentModel.image = "https://gifimage.net/wp-content/uploads/2018/06/upload-gif-13.gif";
+        model_list.add(documentModel);
+        adapter.updateData(model_list);
+    }
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
 
-        StorageReference storageRef = storage.getReference();
+    // UPLOAD DOCUMENT ASYNC FUNCTION ===============================================================
+    private void asyncUploadDocument(final MultipartBody.Part partFile) {
 
-        StorageReference user_ref = storageRef.child(String.valueOf(SharedPrefs.getInt(USER_ID)));
+//        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+//        Call<JsonObject> call = userInterface.setUserDocument(
+//                SharedPrefs.getInt(USER_ID),
+//                partFile
+//        );
 
-        StorageReference document_ref = user_ref.child(file_name);
+        setLoadingItem();
 
+//        call.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+//                if (getActivity() != null) {
+//                    helpers.progressDialog(false);
+//                    try {
+//                        JSONObject main = new JSONObject(String.valueOf(response.body()));
+//
+//                        Helpers.LogThis(TAG_LOG, main.toString());
+//
+//                        if (main.getBoolean("success")) {
+//                            if (SharedPrefs.setUser(main.getJSONObject("user"))) {
+//                                helpers.ToastMessage(getActivity(), "document uploading");
+//
+//                            } else {
+//                                helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+//                            }
+//                        } else {
+//                            helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+//                        }
+//
+//
+//                    } catch (JSONException e) {
+//                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+//                if (getActivity() != null) {
+//                    helpers.progressDialog(false);
+//                    Helpers.LogThis(TAG_LOG, t.toString());
+//                    if (helpers.validateInternetConnection()) {
+//                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+//                    } else {
+//                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+//                    }
+//                }
+//            }
+//        });
 
-        try {
-            UploadTask uploadTask = document_ref.putFile(uri);
-
-            // Register observers to listen for when the download is done or if it fails
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    // ...
-                }
-            });
-
-        } catch (Exception e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
-            helpers.ToastMessage(getActivity(), e.toString());
-        }
     }
 
 }

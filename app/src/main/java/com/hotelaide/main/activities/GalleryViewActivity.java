@@ -6,14 +6,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,9 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.hotelaide.main.activities.EstablishmentActivity.STR_PAGE_TITLE;
-import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 
 public class GalleryViewActivity extends AppCompatActivity {
     private Helpers helpers;
@@ -61,19 +56,6 @@ public class GalleryViewActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_share, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        helpers.dialogShare(GalleryViewActivity.this, STR_SHARE_LINK);
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         if (isFinishing()) {
@@ -92,6 +74,8 @@ public class GalleryViewActivity extends AppCompatActivity {
     private void findAllViews() {
         toolbar = findViewById(R.id.toolbar);
         TextView txt_no_results = findViewById(R.id.txt_no_results);
+        TextView toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        toolbar_text.setText("");
         txt_no_results.setText(getString(R.string.error_unknown));
 
         no_list_items = findViewById(R.id.rl_no_list_items);
@@ -142,9 +126,11 @@ public class GalleryViewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setTitle(STR_PAGE_TITLE);
+            getSupportActionBar().setTitle("");
+            getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(GalleryViewActivity.this, R.drawable.ic_cancel));
         }
-        toolbar.setTitle(STR_PAGE_TITLE);
+        toolbar.setTitle("");
+        toolbar.setBackground(null);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -220,11 +220,6 @@ public class ParentActivity extends AppCompatActivity implements
 
 
     // BASIC OVERRIDE METHODS ======================================================================
-    @Override
-    protected void onStart() {
-        SharedPrefs.setBool(APP_IS_RUNNING, true);
-        super.onStart();
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -274,12 +269,19 @@ public class ParentActivity extends AppCompatActivity implements
 
     @Override
     public void onResume() {
-        super.onResume();
+        SharedPrefs.setBool(APP_IS_RUNNING, true);
         updateDrawer();
         navigation_view.getMenu().findItem(drawer_id).setChecked(true);
         if (SharedPrefs.getBool(ALLOW_UPDATE_APP) && INT_NAV_DRAWER_UPDATE_COUNTER == 0) {
             getAppVersionFromFireBase();
         }
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        SharedPrefs.setBool(APP_IS_RUNNING, false);
+        super.onPause();
     }
 
     @Override
@@ -289,7 +291,6 @@ public class ParentActivity extends AppCompatActivity implements
             receiver = null;
         }
         helpers.dismissProgressDialog();
-        SharedPrefs.setBool(APP_IS_RUNNING, false);
         super.onDestroy();
     }
 

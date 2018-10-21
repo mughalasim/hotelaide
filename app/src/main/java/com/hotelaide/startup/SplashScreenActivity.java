@@ -25,8 +25,8 @@ import io.fabric.sdk.android.Fabric;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.DATABASE_VERSION;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_LAUNCH;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
-import static com.hotelaide.utils.StaticVariables.START_LAUNCH;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -84,9 +84,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void startUp() {
-        if (helpers.validateServiceRunning(MessagingService.class)) {
-            startService(new Intent(SplashScreenActivity.this, MessagingService.class));
-        }
 
         // Clear all notification
         NotificationManager notification_manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -100,7 +97,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                 if (SharedPrefs.getString(ACCESS_TOKEN).equals("")) {
                     startActivity(new Intent(SplashScreenActivity.this, IntroActivity.class));
                 } else {
-                    startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class).putExtra(START_LAUNCH, START_LAUNCH));
+                    if (helpers.validateServiceRunning(MessagingService.class)) {
+                        startService(new Intent(SplashScreenActivity.this, MessagingService.class));
+                    }
+                    startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class).putExtra(EXTRA_START_LAUNCH, EXTRA_START_LAUNCH));
                 }
                 finish();
             }

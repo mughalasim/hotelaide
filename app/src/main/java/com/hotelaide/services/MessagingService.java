@@ -1,19 +1,10 @@
 package com.hotelaide.services;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -22,9 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.hotelaide.BuildConfig;
-import com.hotelaide.R;
 import com.hotelaide.main.models.MessageModel;
-import com.hotelaide.startup.SplashScreenActivity;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
@@ -33,18 +22,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import me.leolin.shortcutbadger.ShortcutBadger;
-
 import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
+import static com.hotelaide.utils.StaticVariables.CHANNEL_DESC;
+import static com.hotelaide.utils.StaticVariables.CHANNEL_ID;
+import static com.hotelaide.utils.StaticVariables.CHANNEL_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class MessagingService extends Service {
+
     private static final String TAG_LOG = "MESSAGES";
-    private String
-            CHANNEL_ID = "",
-            CHANNEL_NAME = "CHANNEL_NAME",
-            CHANNEL_DESC = "CHANNEL_DESC";
+
+    private static DatabaseReference child_ref;
+
+    private static ChildEventListener childEventListener;
+
+    Helpers helpers;
 
 
     // OVERRIDE METHODS ============================================================================
@@ -64,13 +57,14 @@ public class MessagingService extends Service {
     public void onCreate() {
         Helpers.LogThis(TAG_LOG, "ON_CREATE");
         MyApplication.initFireBase();
+        helpers = new Helpers(MessagingService.this);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Get the reference to the DB
-        DatabaseReference child_ref = database.getReference().child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL);
-        child_ref.addChildEventListener(new ChildEventListener() {
+        child_ref = database.getReference().child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL);
+
+        childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 Helpers.LogThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
                 Helpers.LogThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
 
@@ -82,7 +76,6 @@ public class MessagingService extends Service {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 Helpers.LogThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
                 Helpers.LogThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
 
@@ -106,7 +99,14 @@ public class MessagingService extends Service {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+
+        child_ref.addChildEventListener(childEventListener);
+
+    }
+
+    public static void stopListeningForMessages() {
+        child_ref.removeEventListener(childEventListener);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class MessagingService extends Service {
                 CHANNEL_NAME = messageModel.from_name;
                 CHANNEL_DESC = messageModel.last_message;
 
-                createNotification(MessagingService.this, messageModel.from_name, messageModel.last_message);
+                helpers.createNotification(MessagingService.this, messageModel.from_name, messageModel.last_message);
 
             }
 
@@ -159,56 +159,5 @@ public class MessagingService extends Service {
         }
 
     }
-
-
-    // NOTIFICATION CREATOR ========================================================================
-    public void createNotification(Context context, String MessageTitle, String messageBody) {
-        Intent intent = new Intent(context, SplashScreenActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("notification_title", MessageTitle);
-        intent.putExtra("notification_body", messageBody);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        createNotificationChannel();
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(getNotificationIcon())
-                .setContentTitle(MessageTitle)
-                .setContentText(messageBody)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
-                .setLights(ContextCompat.getColor(MessagingService.this, R.color.colorPrimary), 1000, 1000)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-        // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(1, mBuilder.build());
-        ShortcutBadger.applyCount(context, 1);
-
-
-    }
-
-    private int getNotificationIcon() {
-        boolean useWhiteIcon = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ?
-                R.mipmap.ic_launcher :
-                R.mipmap.ic_launcher;
-    }
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
-            channel.setDescription(CHANNEL_DESC);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            if (notificationManager != null)
-                notificationManager.createNotificationChannel(channel);
-        }
-    }
-
 
 }

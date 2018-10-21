@@ -36,7 +36,7 @@ public class ExperienceViewFragment extends Fragment {
     private RecyclerView recycler_view;
     private ArrayList<ExperienceModel> model_list = new ArrayList<>();
     private ExperienceAdapter adapter;
-    private RelativeLayout no_list_items;
+    private RelativeLayout rl_no_list_items;
 
     // BOTTOM PANEL ================================================================================
     private TextView
@@ -79,7 +79,7 @@ public class ExperienceViewFragment extends Fragment {
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         // TOP PANEL =============================================================
-        no_list_items = root_view.findViewById(R.id.rl_no_list_items);
+        rl_no_list_items = root_view.findViewById(R.id.rl_no_list_items);
         txt_no_results = root_view.findViewById(R.id.txt_no_results);
 
         recycler_view = root_view.findViewById(R.id.recycler_view);
@@ -105,7 +105,7 @@ public class ExperienceViewFragment extends Fragment {
     }
 
     private void populateExperienceFromDB() {
-        no_list_items.setVisibility(View.GONE);
+        rl_no_list_items.setVisibility(View.GONE);
         model_list.clear();
         model_list = db.getAllExperience(EXPERIENCE_TYPE);
         recycler_view.invalidate();
@@ -118,7 +118,7 @@ public class ExperienceViewFragment extends Fragment {
     }
 
     private void noListItems() {
-        no_list_items.setVisibility(View.VISIBLE);
+        rl_no_list_items.setVisibility(View.VISIBLE);
         recycler_view.invalidate();
         model_list.clear();
         ExperienceModel experienceModel = new ExperienceModel();

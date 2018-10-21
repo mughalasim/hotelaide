@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -14,11 +15,13 @@ import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.Patterns;
@@ -43,15 +46,18 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.GeneralInterface;
 import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.AboutUsActivity;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.activities.FindJobsActivity;
 import com.hotelaide.main.activities.GalleryViewActivity;
 import com.hotelaide.main.activities.ProfileActivity;
+import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.activities.SettingsActivity;
 import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.services.BackgroundFetchService;
+import com.hotelaide.services.FileUploadService;
 import com.hotelaide.services.MessagingService;
 import com.hotelaide.startup.LoginActivity;
 import com.hotelaide.startup.SplashScreenActivity;
@@ -67,7 +73,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
@@ -77,12 +82,27 @@ import retrofit2.Response;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
 import static android.content.pm.PackageManager.NameNotFoundException;
+import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.CHANNEL_DESC;
+import static com.hotelaide.utils.StaticVariables.CHANNEL_ID;
+import static com.hotelaide.utils.StaticVariables.CHANNEL_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
+import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
+import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.USER_PHONE;
 
 public class Helpers {
 
@@ -164,8 +184,10 @@ public class Helpers {
         Database db = new Database();
         db.deleteAllTables();
 
+        MessagingService.stopListeningForMessages();
         context.stopService(new Intent(context, MessagingService.class));
         context.stopService(new Intent(context, BackgroundFetchService.class));
+        context.stopService(new Intent(context, FileUploadService.class));
 
         context.startActivity(new Intent(context, SplashScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         context.sendBroadcast(new Intent().setAction(BROADCAST_LOG_OUT));
@@ -254,7 +276,12 @@ public class Helpers {
                 txt_title.setText(R.string.txt_alert);
                 txt_message.setText(R.string.error_permissions);
                 btn_confirm.setText(R.string.txt_take_me_there);
-                btn_cancel.setVisibility(View.GONE);
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
                 btn_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -430,6 +457,34 @@ public class Helpers {
         dialog.show();
     }
 
+    private void dialogEditProfile(final Context dialogContext, String message, final String bundle_extra) {
+        final Dialog dialog = new Dialog(dialogContext);
+        dialog.setContentView(R.layout.dialog_confirm);
+        final TextView txt_message = dialog.findViewById(R.id.txt_message);
+        final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
+        final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        final TextView txt_title = dialog.findViewById(R.id.txt_title);
+        txt_title.setText(R.string.txt_update);
+        txt_message.setText("You cannot apply for this role just yet, It seems you have not setup your " + message + ", Set this now?");
+        btn_confirm.setText(R.string.txt_take_me_there);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogContext.startActivity(new Intent(dialogContext, ProfileEditActivity.class)
+                        .putExtra(bundle_extra, bundle_extra));
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+
+    }
+
     public void ToastMessage(Context MessageContext, String Message) {
         if (mToast != null) {
             mToast.cancel();
@@ -439,7 +494,7 @@ public class Helpers {
         mToast.show();
     }
 
-    public void openImageViewer(final Activity activity,final String image_url){
+    public void openImageViewer(final Activity activity, final String image_url) {
         if (!image_url.equals("")) {
             ArrayList<String> image_urls = new ArrayList<>();
             image_urls.add(image_url);
@@ -448,7 +503,7 @@ public class Helpers {
                     .putExtra("selected_position", 1)
             );
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        } else{
+        } else {
             ToastMessage(activity, "Image not set");
         }
     }
@@ -539,6 +594,44 @@ public class Helpers {
         }
         return true;
     }
+
+    public boolean validateJobApplication(Context context) {
+
+//        if (SharedPrefs.getInt(USER_PROFILE_COMPLETION) < 70) {
+//            dialogEditProfile(context, "profile", EXTRA_PROFILE_BASIC);
+//            return false;
+//
+//        } else
+
+        if (SharedPrefs.getInt(USER_AVAILABILITY) == 0) {
+            dialogEditProfile(context, "availability", EXTRA_PROFILE_BASIC);
+            return false;
+
+        } else if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
+            dialogEditProfile(context, "full address", EXTRA_PROFILE_ADDRESS);
+            return false;
+
+        } else if (SharedPrefs.getInt(USER_PHONE) == 0) {
+            dialogEditProfile(context, "phone", EXTRA_PROFILE_BASIC);
+            return false;
+
+        } else if (SharedPrefs.getInt(USER_COUNTY) == 0) {
+            dialogEditProfile(context, "county", EXTRA_PROFILE_ADDRESS);
+            return false;
+
+        } else if (db.getAllExperience(EXPERIENCE_TYPE_EDUCATION).size()<1) {
+            dialogEditProfile(context, "education history", EXTRA_PROFILE_EDUCATION);
+            return false;
+
+        }else if (db.getAllExperience(EXPERIENCE_TYPE_WORK).size()<1) {
+            dialogEditProfile(context, "employment history", EXTRA_PROFILE_WORK);
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
 
     // FORMAT ======================================================================================
     public String formatNumbersCurrency(String amount) {
@@ -749,39 +842,67 @@ public class Helpers {
 
 
     // NOTIFICATION CREATOR ========================================================================
-    public void createNotification(Context context, String Message_title, String message_body) {
+    public void createNotification(Context context, String MessageTitle, String messageBody) {
         Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("notification_title", Message_title);
-        intent.putExtra("notification_body", message_body);
+        intent.putExtra("notification_title", MessageTitle);
+        intent.putExtra("notification_body", messageBody);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, Message_title)
-                .setSmallIcon(getNotificationIcon())
-                .setContentTitle(Message_title)
-                .setContentText(message_body)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
-                .setLights(ContextCompat.getColor(context, R.color.colorPrimary), 1000, 1000)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent);
+        createNotificationChannel(context);
 
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder mBuilder;
 
-        if (notificationManager != null) {
-            notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
-            ShortcutBadger.applyCount(context, 1);
+        if (SharedPrefs.getBool(APP_IS_RUNNING)) {
+            mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(getNotificationIcon())
+                    .setContentTitle(MessageTitle)
+                    .setContentText(messageBody)
+                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setSound(null)
+                    .setVibrate(null)
+                    .setLights(ContextCompat.getColor(context, R.color.colorPrimary), 1000, 1000)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent);
+        } else {
+            mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(getNotificationIcon())
+                    .setContentTitle(MessageTitle)
+                    .setContentText(messageBody)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                    .setLights(ContextCompat.getColor(context, R.color.colorPrimary), 1000, 1000)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent);
         }
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(1, mBuilder.build());
+        ShortcutBadger.applyCount(context, 1);
+
 
     }
 
     private int getNotificationIcon() {
-        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
+        boolean useWhiteIcon = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
         return useWhiteIcon ?
-                R.mipmap.ic_launcher :
+                R.drawable.ic_logo :
                 R.mipmap.ic_launcher;
+    }
+
+    private void createNotificationChannel(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
+            channel.setDescription(CHANNEL_DESC);
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            if (notificationManager != null)
+                notificationManager.createNotificationChannel(channel);
+        }
     }
 
 
@@ -821,8 +942,8 @@ public class Helpers {
 
     // GET COUNTIES ================================================================================
     public void asyncGetCounties() {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.getCounties();
+        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
+        final Call<JsonObject> call = generalInterface.getCounties();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -862,8 +983,8 @@ public class Helpers {
 
     // GET EDUCATIONAL LEVEL =======================================================================
     public void asyncGetEducationalLevels() {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.getEducationalLevels();
+        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
+        final Call<JsonObject> call = generalInterface.getEducationalLevels();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -904,8 +1025,8 @@ public class Helpers {
 
     // GET JOB TYPES ===============================================================================
     public void asyncGetJobTypes() {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.getJobTypes();
+        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
+        final Call<JsonObject> call = generalInterface.getJobTypes();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -945,8 +1066,8 @@ public class Helpers {
 
     // GET CATEGORIES ==============================================================================
     public void asyncGetCategories() {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.getCategories();
+        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
+        final Call<JsonObject> call = generalInterface.getCategories();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
@@ -965,6 +1086,39 @@ public class Helpers {
                             searchFilterModel.name = object.getString("name");
                             db.setFilter(CATEGORIES_TABLE_NAME, searchFilterModel);
                         }
+                    }
+
+                } catch (JSONException e) {
+                    LogThis(TAG_LOG, e.toString());
+
+                } catch (Exception e) {
+                    LogThis(TAG_LOG, e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                LogThis(TAG_LOG, t.toString());
+                LogThis(TAG_LOG, call.toString());
+            }
+
+        });
+    }
+
+    // GET CATEGORIES ==============================================================================
+    public void asyncGetAllDocuments() {
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.getAllDocuments(SharedPrefs.getInt(USER_ID));
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                    LogThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        db.setDocumentFromJson(main);
                     }
 
                 } catch (JSONException e) {

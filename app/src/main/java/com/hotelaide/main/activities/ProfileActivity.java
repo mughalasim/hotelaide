@@ -18,12 +18,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hotelaide.R;
+import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceViewFragment;
 import com.hotelaide.utils.SharedPrefs;
 
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_DOCUMENTS;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_PASS;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
@@ -32,6 +39,7 @@ import static com.hotelaide.utils.StaticVariables.USER_DOB;
 import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_GENDER;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
@@ -56,6 +64,7 @@ public class ProfileActivity extends ParentActivity {
     private TextView
             txt_user_f_name,
             txt_user_l_name,
+            txt_user_gender,
             txt_user_age,
             txt_user_dob,
             txt_user_full_address,
@@ -88,6 +97,7 @@ public class ProfileActivity extends ParentActivity {
         setTextAndImages();
         setupEducation();
         setupWork();
+        setUpDocuments();
     }
 
     @Override
@@ -123,6 +133,7 @@ public class ProfileActivity extends ParentActivity {
         // INFO AND CONTACT DETAILS
         txt_user_f_name = findViewById(R.id.txt_user_f_name);
         txt_user_l_name = findViewById(R.id.txt_user_l_name);
+        txt_user_gender = findViewById(R.id.txt_user_gender);
         txt_user_age = findViewById(R.id.txt_user_age);
         txt_user_dob = findViewById(R.id.txt_user_dob);
         txt_user_full_address = findViewById(R.id.txt_user_full_address);
@@ -158,8 +169,6 @@ public class ProfileActivity extends ParentActivity {
         });
     }
 
-
-
     private void setupEducation() {
         Fragment myFrag = new ExperienceViewFragment();
 
@@ -186,6 +195,19 @@ public class ProfileActivity extends ParentActivity {
                 .commit();
     }
 
+    private void setUpDocuments() {
+        Fragment myFrag = new DocumentsFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("VIEW", "VIEW");
+        myFrag.setArguments(bundle);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.ll_fragment_documents, myFrag)
+                .commit();
+    }
+
     private void setTextAndImages() {
         // BANNER IMAGES
         Glide.with(this).load(SharedPrefs.getString(USER_IMG_AVATAR)).into(img_avatar);
@@ -194,6 +216,18 @@ public class ProfileActivity extends ParentActivity {
         // INFO AND CONTACT DETAILS
         txt_user_f_name.setText(SharedPrefs.getString(USER_F_NAME).concat(" "));
         txt_user_l_name.setText(SharedPrefs.getString(USER_L_NAME).concat(" "));
+
+        if (SharedPrefs.getInt(USER_GENDER) == 0) {
+            txt_user_gender.setText("Not set");
+            txt_user_gender.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.red));
+        } else if (SharedPrefs.getInt(USER_GENDER) == 1) {
+            txt_user_gender.setText("Male");
+            txt_user_gender.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.dark_grey));
+        } else {
+            txt_user_gender.setText("Female");
+            txt_user_gender.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.dark_grey));
+        }
+
 
         String user_age = helpers.calculateAge(SharedPrefs.getString(USER_DOB));
         if (user_age.equals("")) {
@@ -252,16 +286,24 @@ public class ProfileActivity extends ParentActivity {
     public void editProfile(View view) {
         if (view.getId() == R.id.txt_basic_info) {
             startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
-                    .putExtra("BASIC", "BASIC"));
+                    .putExtra(EXTRA_PROFILE_BASIC, EXTRA_PROFILE_BASIC));
         } else if (view.getId() == R.id.txt_contact_info) {
             startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
-                    .putExtra("ADDRESS", "ADDRESS"));
+                    .putExtra(EXTRA_PROFILE_ADDRESS, EXTRA_PROFILE_ADDRESS));
         } else if (view.getId() == R.id.txt_education_edit) {
             startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
-                    .putExtra("EDUCATION", "EDUCATION"));
+                    .putExtra(EXTRA_PROFILE_EDUCATION, EXTRA_PROFILE_EDUCATION));
         } else if (view.getId() == R.id.txt_work_edit) {
             startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
-                    .putExtra("WORK", "WORK"));
+                    .putExtra(EXTRA_PROFILE_WORK, EXTRA_PROFILE_WORK));
+        } else if (view.getId() == R.id.txt_documents_edit) {
+            startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
+                    .putExtra(EXTRA_PROFILE_DOCUMENTS, EXTRA_PROFILE_DOCUMENTS));
+        } else if (view.getId() == R.id.btn_change_password) {
+            startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class)
+                    .putExtra(EXTRA_PROFILE_PASS, EXTRA_PROFILE_PASS));
+        } else if (view.getId() == R.id.btn_update_image) {
+            startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class));
         }
     }
 }

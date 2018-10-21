@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:paddingTop="@dimen/padding_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:paddingTop="@dimen/padding_small"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+    <include
+        layout="@layout/list_item_none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_view" />
 
-        <include layout="@layout/list_item_none"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/recycler_view"
-            android:layout_width="match_parent" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recycler_view"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/padding_small"
+        app:fabSize="mini"
+        app:rippleColor="@color/white"
+        app:srcCompat="@drawable/ic_upload" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btn_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/recycler_view"
-            android:layout_margin="@dimen/padding_small"
-            app:fabSize="mini"
-            app:rippleColor="@color/white"
-            app:srcCompat="@drawable/ic_upload" />
-
-    </RelativeLayout>
-
-</android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

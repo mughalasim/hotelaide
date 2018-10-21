@@ -23,6 +23,7 @@ import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.fragments.AddressFragment;
 import com.hotelaide.main.fragments.ChangePasswordFragment;
+import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceEditFragment;
 import com.hotelaide.main.fragments.ProfileUpdateFragment;
 import com.hotelaide.services.BackgroundFetchService;
@@ -52,6 +53,12 @@ import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LATITUDE;
 import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LONGITUDE;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_DOCUMENTS;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_PASS;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_CAMERA;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
@@ -91,7 +98,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             R.string.nav_address,
             R.string.nav_education,
             R.string.nav_work,
-//            R.string.nav_documents,
+            R.string.nav_documents,
             R.string.nav_pass
     };
 
@@ -100,7 +107,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             new AddressFragment(),
             new ExperienceEditFragment(),
             new ExperienceEditFragment(),
-//            new DocumentsFragment(),
+            new DocumentsFragment(),
             new ChangePasswordFragment()
     };
 
@@ -189,17 +196,23 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     private void handleExtraBundles() {
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getString("BASIC") != null) {
+        if (extras != null && extras.getString(EXTRA_PROFILE_BASIC) != null) {
             view_pager.setCurrentItem(0);
             app_bar_layout.setExpanded(false);
-        } else if (extras != null && extras.getString("ADDRESS") != null) {
+        } else if (extras != null && extras.getString(EXTRA_PROFILE_ADDRESS) != null) {
             view_pager.setCurrentItem(1);
             app_bar_layout.setExpanded(false);
-        } else if (extras != null && extras.getString("EDUCATION") != null) {
+        } else if (extras != null && extras.getString(EXTRA_PROFILE_EDUCATION) != null) {
             view_pager.setCurrentItem(2);
             app_bar_layout.setExpanded(false);
-        } else if (extras != null && extras.getString("WORK") != null) {
+        } else if (extras != null && extras.getString(EXTRA_PROFILE_WORK) != null) {
             view_pager.setCurrentItem(3);
+            app_bar_layout.setExpanded(false);
+        } else if (extras != null && extras.getString(EXTRA_PROFILE_DOCUMENTS) != null) {
+            view_pager.setCurrentItem(4);
+            app_bar_layout.setExpanded(false);
+        } else if (extras != null && extras.getString(EXTRA_PROFILE_PASS) != null) {
+            view_pager.setCurrentItem(5);
             app_bar_layout.setExpanded(false);
         } else {
             app_bar_layout.setExpanded(true);
@@ -361,7 +374,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         view_pager.setCurrentItem(view_pager.getCurrentItem() + 1);
     }
 
-    // LOGIN ASYNC FUNCTIONS =======================================================================
+    // UPDATE AVATAR AND BANNER ASYNC FUNCTIONS ====================================================
     private void asyncUpdateImages(final MultipartBody.Part partFile, final int type) {
 
         UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);

@@ -52,7 +52,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
-import static com.hotelaide.utils.StaticVariables.START_RETURN;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 
 public class StartUpLoginFragment extends Fragment {
 
@@ -333,7 +333,7 @@ public class StartUpLoginFragment extends Fragment {
                         JSONObject data = main.getJSONObject("data");
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
                             SharedPrefs.setString(ACCESS_TOKEN, data.getString("token"));
-                            startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(START_RETURN, START_RETURN));
+                            startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_RETURN, EXTRA_START_RETURN));
                             getActivity().finish();
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_invalid_user));

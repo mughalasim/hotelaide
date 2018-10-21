@@ -2,10 +2,11 @@ package com.hotelaide.main.models;
 
 
 public class ExperienceModel {
-    public int      table_id;
+
     public int      experience_id;
     public int      education_level;
     public int      current;
+
     public String   name = "";
     public String   position = "";
     public String   start_date = "";

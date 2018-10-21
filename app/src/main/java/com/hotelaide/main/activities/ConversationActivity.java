@@ -53,6 +53,7 @@ public class ConversationActivity extends AppCompatActivity {
     private RecyclerView recycler_view;
     private ArrayList<ConversationModel> model_list = new ArrayList<>();
     private ConversationAdapter adapter;
+    private Helpers helpers;
 
     private ImageView btn_send;
     private EditText et_message;
@@ -67,6 +68,8 @@ public class ConversationActivity extends AppCompatActivity {
 
         if (handleExtraBundles()) {
             setContentView(R.layout.activity_conversation);
+
+            helpers = new Helpers(ConversationActivity.this);
 
             setUpToolBarAndTabs();
 
@@ -119,6 +122,12 @@ public class ConversationActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         ImageView img_from_pic = findViewById(R.id.img_from_pic);
         Glide.with(this).load(STR_FROM_PIC_URL).into(img_from_pic);
+        img_from_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpers.openImageViewer(ConversationActivity.this, STR_FROM_PIC_URL);
+            }
+        });
 
         TextView toolbar_text = toolbar.findViewById(R.id.toolbar_text);
         setSupportActionBar(toolbar);

@@ -1,12 +1,12 @@
 package com.hotelaide.main.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.view.ContextThemeWrapper;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -178,6 +178,7 @@ public class ProfileUpdateFragment extends Fragment {
                 userModel.last_name = fetchFromEditText(et_user_last_name);
                 userModel.email = txt_user_email.getText().toString();
                 userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
+                Helpers.LogThis(TAG_LOG, "GENDER POSITION: " + spinner_user_gender.getSelectedItemPosition());
                 userModel.gender = spinner_user_gender.getSelectedItemPosition();
 
                 if (!fetchFromEditText(et_user_phone).equals(""))
@@ -235,14 +236,13 @@ public class ProfileUpdateFragment extends Fragment {
                 if (getActivity() != null) {
                     Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                     DatePickerDialog datePicker = new DatePickerDialog(
-                            new ContextThemeWrapper(getActivity(), R.style.AppTheme),
+                            getActivity(), AlertDialog.THEME_HOLO_LIGHT,
                             datePickerListener,
                             cal.get(Calendar.YEAR),
                             cal.get(Calendar.MONTH),
                             cal.get(Calendar.DAY_OF_MONTH));
                     datePicker.setCancelable(false);
                     datePicker.setTitle("Set Date Of Birth");
-                    datePicker.show();
                     datePicker.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
                     datePicker.show();
                 }

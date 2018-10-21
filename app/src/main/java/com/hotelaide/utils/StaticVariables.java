@@ -47,9 +47,15 @@ public class StaticVariables {
 
 
 // BUNDLE EXTRA VARIABLES ==========================================================================
-    public final static String START_FIRST_TIME = "FIRST_TIMER";
-    public final static String START_RETURN = "RETURN";
-    public final static String START_LAUNCH = "LAUNCH";
+    public final static String EXTRA_START_FIRST_TIME = "FIRST_TIMER";
+    public final static String EXTRA_START_RETURN = "RETURN";
+    public final static String EXTRA_START_LAUNCH = "LAUNCH";
+    public final static String EXTRA_PROFILE_BASIC = "BASIC";
+    public final static String EXTRA_PROFILE_ADDRESS = "ADDRESS";
+    public final static String EXTRA_PROFILE_DOCUMENTS = "DOCUMENTS";
+    public final static String EXTRA_PROFILE_EDUCATION = "EDUCATION";
+    public final static String EXTRA_PROFILE_WORK = "WORK";
+    public final static String EXTRA_PROFILE_PASS = "PASSWORD";
 
 // BROADCAST VARIABLES =============================================================================
     public final static String BROADCAST_LOG_OUT = "BROADCAST_LOG_OUT";
@@ -57,6 +63,9 @@ public class StaticVariables {
 
 // GLOBAL STATIC VARIABLES==========================================================================
     public static String STR_SHARE_LINK = "";
+    public static String CHANNEL_ID = "CHANNEL_ID";
+    public static String CHANNEL_NAME = "CHANNEL_NAME";
+    public static String CHANNEL_DESC = "CHANNEL_DESC";
 
 // DATABASE VARIABLES ==============================================================================
     // JOBS TABLE ==================================================================================
@@ -90,5 +99,13 @@ public class StaticVariables {
     public static final String APPLIED_JOBS_TABLE_NAME = "APPLIED_JOBS";
     public static final String APPLIED_JOBS_TABLE_ID = "id";
     public static final String APPLIED_JOBS_ID = "job_id";
+    // DOCUMENTS TABLE =============================================================================
+    public static final String DOCUMENTS_TABLE_NAME = "DOCUMENTS";
+    public static final String DOCUMENTS_ID = "id";
+    public static final String DOCUMENTS_NAME = "name";
+    public static final String DOCUMENTS_IMAGE = "image";
+    public static final String DOCUMENTS_FILE_URL = "url";
+    public static final String DOCUMENTS_DATE_UPLOADED = "date_uploaded";
+    public static final String DOCUMENTS_FILE_TYPE = "file_type";
 
 }

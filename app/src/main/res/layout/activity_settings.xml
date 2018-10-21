@@ -61,7 +61,7 @@
                 <TextView
                     android:id="@+id/delete_account"
                     style="@style/Text_Small"
-                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginTop="@dimen/padding_large"
                     android:text="@string/txt_delete_your_account" />
 
             </LinearLayout>

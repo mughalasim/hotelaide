@@ -20,6 +20,7 @@ import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -142,26 +143,10 @@ public interface UserInterface {
 
 
     // DELETE USER =================================================================================
-    @GET("user/delete/{user_id}")
+    @DELETE("user/delete/{user_id}")
     Call<JsonObject> deleteUser(
             @Path("user_id") int user_id
     );
-
-    // GET ALL COUNTIES ============================================================================
-    @GET("counties")
-    Call<JsonObject> getCounties();
-
-    // GET ALL CATEGORIES ==========================================================================
-    @GET("job-categories")
-    Call<JsonObject> getCategories();
-
-    // GET ALL JOB TYPES ===========================================================================
-    @GET("jobtypes")
-    Call<JsonObject> getJobTypes();
-
-    // GET ALL EDUCATIONAL LEVELS ==================================================================
-    @GET("education-levels")
-    Call<JsonObject> getEducationalLevels();
 
     // GET ALL USERS ===============================================================================
     @GET("users")
@@ -169,6 +154,26 @@ public interface UserInterface {
             @Query("page") int page_number
     );
 
+    // GET ALL DOCUMENTS ===========================================================================
+    @GET("user/{user_id}/documents")
+    Call<JsonObject> getAllDocuments(
+            @Path("user_id") int user_id
+    );
+
+    // DOCUMENT UPDATE =============================================================================
+    @Multipart
+    @POST("user/update-documents/{user_id}")
+    Call<JsonObject> setUserDocument(
+            @Path("user_id") int user_id,
+            @Part MultipartBody.Part file
+    );
+
+    // DELETE DOCUMENT =============================================================================
+    @DELETE("user/update-documents/{user_id}/delete/{document_id}")
+    Call<JsonObject> deleteDocument(
+            @Path("user_id") int user_id,
+            @Path("document_id") int document_id
+    );
 
 
 }

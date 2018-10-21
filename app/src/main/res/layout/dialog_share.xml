@@ -21,7 +21,7 @@
         <ImageView
             android:id="@+id/share_facebook"
             android:layout_width="0dp"
-            android:layout_height="@dimen/img_size_small"
+            android:layout_height="@dimen/img_size_medium"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
@@ -30,7 +30,7 @@
         <ImageView
             android:id="@+id/share_whatsapp"
             android:layout_width="0dp"
-            android:layout_height="@dimen/img_size_small"
+            android:layout_height="@dimen/img_size_medium"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
@@ -39,7 +39,7 @@
         <ImageView
             android:id="@+id/share_messenger"
             android:layout_width="0dp"
-            android:layout_height="@dimen/img_size_small"
+            android:layout_height="@dimen/img_size_medium"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
@@ -49,7 +49,7 @@
         <ImageView
             android:id="@+id/share_email"
             android:layout_width="0dp"
-            android:layout_height="@dimen/img_size_small"
+            android:layout_height="@dimen/img_size_medium"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
@@ -58,7 +58,7 @@
         <ImageView
             android:id="@+id/share_sms"
             android:layout_width="0dp"
-            android:layout_height="@dimen/img_size_small"
+            android:layout_height="@dimen/img_size_medium"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
             android:padding="5dp"
