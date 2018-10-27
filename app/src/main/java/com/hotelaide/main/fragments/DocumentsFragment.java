@@ -17,11 +17,18 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.adapters.DocumentAdapter;
 import com.hotelaide.main.models.DocumentModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,9 +38,13 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_STORAGE;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 
 public class DocumentsFragment extends Fragment {
@@ -203,59 +214,113 @@ public class DocumentsFragment extends Fragment {
     }
 
 
-    // UPLOAD DOCUMENT ASYNC FUNCTION ===============================================================
+    // UPLOAD DOCUMENT ASYNC FUNCTION ==============================================================
     private void asyncUploadDocument(final MultipartBody.Part partFile) {
 
-//        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-//        Call<JsonObject> call = userInterface.setUserDocument(
-//                SharedPrefs.getInt(USER_ID),
-//                partFile
-//        );
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        Call<JsonObject> call = userInterface.setUserDocument(
+                SharedPrefs.getInt(USER_ID),
+                partFile
+        );
 
         setLoadingItem();
 
-//        call.enqueue(new Callback<JsonObject>() {
-//            @Override
-//            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-//                if (getActivity() != null) {
-//                    helpers.progressDialog(false);
-//                    try {
-//                        JSONObject main = new JSONObject(String.valueOf(response.body()));
-//
-//                        Helpers.LogThis(TAG_LOG, main.toString());
-//
-//                        if (main.getBoolean("success")) {
-//                            if (SharedPrefs.setUser(main.getJSONObject("user"))) {
-//                                helpers.ToastMessage(getActivity(), "document uploading");
-//
-//                            } else {
-//                                helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-//                            }
-//                        } else {
-//                            helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
-//                        }
-//
-//
-//                    } catch (JSONException e) {
-//                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-//                if (getActivity() != null) {
-//                    helpers.progressDialog(false);
-//                    Helpers.LogThis(TAG_LOG, t.toString());
-//                    if (helpers.validateInternetConnection()) {
-//                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-//                    } else {
-//                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
-//                    }
-//                }
-//            }
-//        });
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                if (getActivity() != null) {
+                    helpers.progressDialog(false);
+                    try {
+                        JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                        Helpers.LogThis(TAG_LOG, main.toString());
+
+                        if (main.getBoolean("success")) {
+
+                            asyncFetchAllDocuments();
+
+                        } else {
+                            helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                        }
+
+
+                    } catch (JSONException e) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                if (getActivity() != null) {
+                    helpers.progressDialog(false);
+                    Helpers.LogThis(TAG_LOG, t.toString());
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    } else {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    }
+                }
+            }
+        });
+
+    }
+
+    // FETCH ALL DOCUMENTS ASYNC FUNCTION ==========================================================
+    private void asyncFetchAllDocuments() {
+
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        Call<JsonObject> call = userInterface.getAllDocuments(
+                SharedPrefs.getInt(USER_ID)
+        );
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                if (getActivity() != null) {
+                    helpers.progressDialog(false);
+                    try {
+                        JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+                        Helpers.LogThis(TAG_LOG, main.toString());
+
+                        if (main.getBoolean("success")) {
+                            JSONObject data_object = main.getJSONObject("data");
+                            JSONArray document_array = data_object.getJSONArray("documents");
+
+                            if (document_array != null && document_array.length() > 0) {
+                                int length = document_array.length();
+                                for (int i = 0; i < length; i++) {
+                                    JSONObject document_object = document_array.getJSONObject(i);
+                                    db.setDocumentFromJson(document_object);
+                                }
+                                populateDocumentsFromDB();
+                            }
+                        } else {
+                            helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
+                        }
+
+                    } catch (JSONException e) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                if (getActivity() != null) {
+                    helpers.progressDialog(false);
+                    Helpers.LogThis(TAG_LOG, t.toString());
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    } else {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    }
+                }
+            }
+        });
 
     }
 

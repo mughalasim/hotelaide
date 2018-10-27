@@ -5,6 +5,7 @@ android {
     compileSdkVersion rootProject.compileSDK
     buildToolsVersion rootProject.buildTools
     flavorDimensions "versionCode"
+
     defaultConfig {
         applicationId "com.hotelaide"
         minSdkVersion rootProject.minSDK
@@ -14,6 +15,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         resConfigs "en"
+        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
 
     buildTypes {
@@ -22,14 +24,12 @@ android {
             minifyEnabled rootProject.shrink
             useProguard rootProject.shrink
             shrinkResources rootProject.shrink
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.shrink
             useProguard rootProject.shrink
             shrinkResources rootProject.shrink
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -64,6 +64,10 @@ android {
             buildConfigField 'String', 'FILTER_JOB_TYPE', '"job_type.name"'
             buildConfigField 'String', 'FILTER_NAME', '"establishment.name"'
         }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
     }
 }
 
@@ -119,14 +123,14 @@ dependencies {
     implementation 'com.daimajia.easing:library:2.1@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     // MORE FROM LOTTIE
-    implementation 'com.airbnb.android:lottie:2.6.0-beta19'
+    implementation 'com.airbnb.android:lottie:2.8.0'
 
     // NOTIFICATION BADGES
     implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
 
     // FACEBOOK DEPENDENCIES
     implementation 'com.facebook.android:notifications:1.0.2'
-    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
+    implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
 
     // IMAGE SCALING
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'

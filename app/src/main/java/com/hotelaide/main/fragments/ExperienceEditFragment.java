@@ -1,5 +1,6 @@
 package com.hotelaide.main.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,7 +10,6 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -376,7 +376,7 @@ public class ExperienceEditFragment extends Fragment {
             STR_DATE_TYPE = type;
             Calendar cal = Calendar.getInstance(TimeZone.getDefault());
             DatePickerDialog datePicker = new DatePickerDialog(
-                    new ContextThemeWrapper(getActivity(), getActivity().getTheme()),
+                    getActivity(), AlertDialog.THEME_HOLO_LIGHT,
                     datePickerListener,
                     cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH),

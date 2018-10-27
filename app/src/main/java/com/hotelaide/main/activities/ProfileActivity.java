@@ -270,14 +270,13 @@ public class ProfileActivity extends ParentActivity {
 
         updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
 
-        updateProfileSeekBar(55);
     }
 
     private void updateProfileSeekBar(int completion) {
         if (completion == 100) {
             rl_progress.setVisibility(View.GONE);
         } else {
-            rl_progress.setVisibility(View.GONE);
+            rl_progress.setVisibility(View.VISIBLE);
             seek_bar_progress.setProgress(completion);
             txt_progress.setText(String.valueOf(completion).concat("%"));
         }
