@@ -1,11 +1,6 @@
 package com.hotelaide.main.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +21,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -142,6 +142,10 @@ public class AppliedJobsFragment extends Fragment {
                         model_list.clear();
                         JSONObject data = main.getJSONObject("data");
                         JSONArray applications = data.getJSONArray("applications");
+
+                        db.deleteAppliedJobTable();
+                        db.deleteJobTable();
+
                         for (int i = 0; i < applications.length(); i++) {
                             JSONObject hit_object = applications.getJSONObject(i);
                             model_list.add(db.setJobFromJson(hit_object, true));

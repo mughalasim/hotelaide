@@ -4,12 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,10 +14,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.button.MaterialButton;
 import com.hotelaide.R;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.hotelaide.utils.StaticVariables.FLOAT_GOOGLE_MAP_ZOOM;

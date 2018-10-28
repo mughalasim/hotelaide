@@ -1,15 +1,13 @@
 package com.hotelaide.main.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
@@ -19,6 +17,8 @@ import com.hotelaide.utils.SharedPrefs;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

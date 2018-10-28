@@ -12,14 +12,14 @@
         android:text="Select a contact"
         android:layout_marginBottom="@dimen/padding_small" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_contacts"
         android:layout_width="match_parent"
         android:layout_below="@+id/header"
         android:layout_above="@+id/btn_cancel"
         android:layout_height="wrap_content" />
 
-    <android.support.design.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_cancel"
         style="@style/Material_Button_No"
         android:layout_marginStart="@dimen/padding_small"

@@ -1168,25 +1168,25 @@ android.support.design.bottomappbar.BottomAppBar -> android.support.design.botto
     int fabOffsetEndMode -> a
     android.animation.Animator access$002(android.support.design.bottomappbar.BottomAppBar,android.animation.Animator) -> a
     android.animation.Animator access$302(android.support.design.bottomappbar.BottomAppBar,android.animation.Animator) -> b
-    android.support.design.widget.FloatingActionButton access$1100(android.support.design.bottomappbar.BottomAppBar) -> a
-    android.support.design.widget.FloatingActionButton findDependentFab() -> b
+    com.google.android.material.floatingactionbutton.FloatingActionButton access$1100(android.support.design.bottomappbar.BottomAppBar) -> a
+    com.google.android.material.floatingactionbutton.FloatingActionButton findDependentFab() -> b
     boolean access$1200(android.support.design.bottomappbar.BottomAppBar) -> b
     boolean isAnimationRunning() -> c
     boolean isVisibleFab() -> d
     float access$1400(android.support.design.bottomappbar.BottomAppBar) -> d
     float getFabTranslationY(boolean) -> a
     int getFabTranslationX(int) -> a
-    void access$1000(android.support.design.bottomappbar.BottomAppBar,android.support.design.widget.FloatingActionButton) -> a
+    void access$1000(android.support.design.bottomappbar.BottomAppBar,com.google.android.material.floatingactionbutton.FloatingActionButton) -> a
     void access$1300(android.support.design.bottomappbar.BottomAppBar) -> c
     void access$400(android.support.design.bottomappbar.BottomAppBar,android.support.v7.widget.ActionMenuView,int,boolean) -> a
-    void addFabAnimationListeners(android.support.design.widget.FloatingActionButton) -> a
+    void addFabAnimationListeners(com.google.android.material.floatingactionbutton.FloatingActionButton) -> a
     void cancelAnimations() -> a
     void createCradleTranslationAnimation(int,java.util.List) -> a
     void createFabTranslationXAnimation(int,java.util.List) -> b
     void createMenuViewTranslationAnimation(int,boolean,java.util.List) -> a
     void maybeAnimateMenuView(int,boolean) -> a
     void maybeAnimateModeChange(int) -> b
-    void removeFabAnimationListeners(android.support.design.widget.FloatingActionButton) -> b
+    void removeFabAnimationListeners(com.google.android.material.floatingactionbutton.FloatingActionButton) -> b
     void setCutoutState() -> e
     void translateActionMenuView(android.support.v7.widget.ActionMenuView,int,boolean) -> a
 android.support.design.bottomappbar.BottomAppBar$1 -> android.support.design.bottomappbar.a:
@@ -1201,7 +1201,7 @@ android.support.design.bottomappbar.BottomAppBar$4 -> android.support.design.bot
     int val$targetMode -> c
 android.support.design.bottomappbar.BottomAppBar$Behavior -> android.support.design.bottomappbar.BottomAppBar$Behavior:
     android.graphics.Rect fabContentRect -> d
-    boolean updateFabPositionAndVisibility(android.support.design.widget.FloatingActionButton,android.support.design.bottomappbar.BottomAppBar) -> a
+    boolean updateFabPositionAndVisibility(com.google.android.material.floatingactionbutton.FloatingActionButton,android.support.design.bottomappbar.BottomAppBar) -> a
     boolean onLayoutChild(android.support.design.widget.CoordinatorLayout,android.support.design.bottomappbar.BottomAppBar,int) -> a
     boolean onLayoutChild(android.support.design.widget.CoordinatorLayout,android.view.View,int) -> a
     boolean onStartNestedScroll(android.support.design.widget.CoordinatorLayout,android.support.design.bottomappbar.BottomAppBar,android.view.View,android.view.View,int,int) -> a
@@ -2467,7 +2467,7 @@ android.support.design.widget.DrawableUtils -> android.support.design.widget.v:
     java.lang.reflect.Method setConstantStateMethod -> a
     boolean setContainerConstantState(android.graphics.drawable.DrawableContainer,android.graphics.drawable.Drawable$ConstantState) -> a
     boolean setContainerConstantStateV9(android.graphics.drawable.DrawableContainer,android.graphics.drawable.Drawable$ConstantState) -> b
-android.support.design.widget.FloatingActionButton -> android.support.design.widget.FloatingActionButton:
+com.google.android.material.floatingactionbutton.FloatingActionButton -> com.google.android.material.floatingactionbutton.FloatingActionButton:
     android.content.res.ColorStateList backgroundTint -> b
     android.content.res.ColorStateList imageTint -> d
     android.content.res.ColorStateList rippleColor -> g
@@ -2476,7 +2476,7 @@ android.support.design.widget.FloatingActionButton -> android.support.design.wid
     android.graphics.Rect shadowPadding -> m
     android.graphics.Rect touchArea -> n
     android.support.design.expandable.ExpandableWidgetHelper expandableWidgetHelper -> p
-    android.support.design.widget.FloatingActionButtonImpl impl -> q
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl impl -> q
     android.support.v7.widget.AppCompatImageHelper imageHelper -> o
     boolean compatPadding -> l
     int borderWidth -> f
@@ -2484,12 +2484,12 @@ android.support.design.widget.FloatingActionButton -> android.support.design.wid
     int imagePadding -> j
     int maxImageSize -> k
     int size -> h
-    android.support.design.widget.FloatingActionButtonImpl createImpl() -> c
-    android.support.design.widget.FloatingActionButtonImpl$InternalVisibilityChangedListener wrapOnVisibilityChangedListener(android.support.design.widget.FloatingActionButton$OnVisibilityChangedListener) -> a
-    int access$000(android.support.design.widget.FloatingActionButton) -> a
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl createImpl() -> c
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$InternalVisibilityChangedListener wrapOnVisibilityChangedListener(com.google.android.material.floatingactionbutton.FloatingActionButton$OnVisibilityChangedListener) -> a
+    int access$000(com.google.android.material.floatingactionbutton.FloatingActionButton) -> a
     int getSizeDimension(int) -> a
     int resolveAdjustedSize(int,int) -> a
-    void access$101(android.support.design.widget.FloatingActionButton,android.graphics.drawable.Drawable) -> a
+    void access$101(com.google.android.material.floatingactionbutton.FloatingActionButton,android.graphics.drawable.Drawable) -> a
     void offsetRectWithShadow(android.graphics.Rect) -> c
     void onApplySupportImageTint() -> d
     boolean getContentRect(android.graphics.Rect) -> a
@@ -2498,44 +2498,44 @@ android.support.design.widget.FloatingActionButton -> android.support.design.wid
     void addOnHideAnimationListener(android.animation.Animator$AnimatorListener) -> a
     void addOnShowAnimationListener(android.animation.Animator$AnimatorListener) -> b
     void getMeasuredContentRect(android.graphics.Rect) -> b
-    void hide(android.support.design.widget.FloatingActionButton$OnVisibilityChangedListener,boolean) -> a
+    void hide(com.google.android.material.floatingactionbutton.FloatingActionButton$OnVisibilityChangedListener,boolean) -> a
     void removeOnHideAnimationListener(android.animation.Animator$AnimatorListener) -> c
     void removeOnShowAnimationListener(android.animation.Animator$AnimatorListener) -> d
-    void show(android.support.design.widget.FloatingActionButton$OnVisibilityChangedListener,boolean) -> b
-android.support.design.widget.FloatingActionButton$1 -> android.support.design.widget.w:
-    android.support.design.widget.FloatingActionButton this$0 -> b
-    android.support.design.widget.FloatingActionButton$OnVisibilityChangedListener val$listener -> a
+    void show(com.google.android.material.floatingactionbutton.FloatingActionButton$OnVisibilityChangedListener,boolean) -> b
+com.google.android.material.floatingactionbutton.FloatingActionButton$1 -> android.support.design.widget.w:
+    com.google.android.material.floatingactionbutton.FloatingActionButton this$0 -> b
+    com.google.android.material.floatingactionbutton.FloatingActionButton$OnVisibilityChangedListener val$listener -> a
     void onHidden() -> b
     void onShown() -> a
-android.support.design.widget.FloatingActionButton$BaseBehavior -> android.support.design.widget.FloatingActionButton$BaseBehavior:
+com.google.android.material.floatingactionbutton.FloatingActionButton$BaseBehavior -> com.google.android.material.floatingactionbutton.FloatingActionButton$BaseBehavior:
     android.graphics.Rect tmpRect -> a
-    android.support.design.widget.FloatingActionButton$OnVisibilityChangedListener internalAutoHideListener -> b
+    com.google.android.material.floatingactionbutton.FloatingActionButton$OnVisibilityChangedListener internalAutoHideListener -> b
     boolean autoHideEnabled -> c
     boolean isBottomSheet(android.view.View) -> a
-    boolean shouldUpdateVisibility(android.view.View,android.support.design.widget.FloatingActionButton) -> a
-    boolean updateFabVisibilityForAppBarLayout(android.support.design.widget.CoordinatorLayout,android.support.design.widget.AppBarLayout,android.support.design.widget.FloatingActionButton) -> a
-    boolean updateFabVisibilityForBottomSheet(android.view.View,android.support.design.widget.FloatingActionButton) -> b
-    void offsetIfNeeded(android.support.design.widget.CoordinatorLayout,android.support.design.widget.FloatingActionButton) -> a
-    boolean getInsetDodgeRect(android.support.design.widget.CoordinatorLayout,android.support.design.widget.FloatingActionButton,android.graphics.Rect) -> a
+    boolean shouldUpdateVisibility(android.view.View,com.google.android.material.floatingactionbutton.FloatingActionButton) -> a
+    boolean updateFabVisibilityForAppBarLayout(android.support.design.widget.CoordinatorLayout,android.support.design.widget.AppBarLayout,com.google.android.material.floatingactionbutton.FloatingActionButton) -> a
+    boolean updateFabVisibilityForBottomSheet(android.view.View,com.google.android.material.floatingactionbutton.FloatingActionButton) -> b
+    void offsetIfNeeded(android.support.design.widget.CoordinatorLayout,com.google.android.material.floatingactionbutton.FloatingActionButton) -> a
+    boolean getInsetDodgeRect(android.support.design.widget.CoordinatorLayout,com.google.android.material.floatingactionbutton.FloatingActionButton,android.graphics.Rect) -> a
     boolean getInsetDodgeRect(android.support.design.widget.CoordinatorLayout,android.view.View,android.graphics.Rect) -> a
-    boolean onDependentViewChanged(android.support.design.widget.CoordinatorLayout,android.support.design.widget.FloatingActionButton,android.view.View) -> a
+    boolean onDependentViewChanged(android.support.design.widget.CoordinatorLayout,com.google.android.material.floatingactionbutton.FloatingActionButton,android.view.View) -> a
     boolean onDependentViewChanged(android.support.design.widget.CoordinatorLayout,android.view.View,android.view.View) -> b
-    boolean onLayoutChild(android.support.design.widget.CoordinatorLayout,android.support.design.widget.FloatingActionButton,int) -> a
+    boolean onLayoutChild(android.support.design.widget.CoordinatorLayout,com.google.android.material.floatingactionbutton.FloatingActionButton,int) -> a
     boolean onLayoutChild(android.support.design.widget.CoordinatorLayout,android.view.View,int) -> a
     void onAttachedToLayoutParams(android.support.design.widget.CoordinatorLayout$LayoutParams) -> a
-android.support.design.widget.FloatingActionButton$Behavior -> android.support.design.widget.FloatingActionButton$Behavior:
-    boolean getInsetDodgeRect(android.support.design.widget.CoordinatorLayout,android.support.design.widget.FloatingActionButton,android.graphics.Rect) -> a
-    boolean onDependentViewChanged(android.support.design.widget.CoordinatorLayout,android.support.design.widget.FloatingActionButton,android.view.View) -> a
-    boolean onLayoutChild(android.support.design.widget.CoordinatorLayout,android.support.design.widget.FloatingActionButton,int) -> a
+com.google.android.material.floatingactionbutton.FloatingActionButton$Behavior -> com.google.android.material.floatingactionbutton.FloatingActionButton$Behavior:
+    boolean getInsetDodgeRect(android.support.design.widget.CoordinatorLayout,com.google.android.material.floatingactionbutton.FloatingActionButton,android.graphics.Rect) -> a
+    boolean onDependentViewChanged(android.support.design.widget.CoordinatorLayout,com.google.android.material.floatingactionbutton.FloatingActionButton,android.view.View) -> a
+    boolean onLayoutChild(android.support.design.widget.CoordinatorLayout,com.google.android.material.floatingactionbutton.FloatingActionButton,int) -> a
     void onAttachedToLayoutParams(android.support.design.widget.CoordinatorLayout$LayoutParams) -> a
-android.support.design.widget.FloatingActionButton$OnVisibilityChangedListener -> android.support.design.widget.FloatingActionButton$a:
-    void onHidden(android.support.design.widget.FloatingActionButton) -> a
-    void onShown(android.support.design.widget.FloatingActionButton) -> b
-android.support.design.widget.FloatingActionButton$ShadowDelegateImpl -> android.support.design.widget.FloatingActionButton$b:
-    android.support.design.widget.FloatingActionButton this$0 -> a
+com.google.android.material.floatingactionbutton.FloatingActionButton$OnVisibilityChangedListener -> com.google.android.material.floatingactionbutton.FloatingActionButton$a:
+    void onHidden(com.google.android.material.floatingactionbutton.FloatingActionButton) -> a
+    void onShown(com.google.android.material.floatingactionbutton.FloatingActionButton) -> b
+com.google.android.material.floatingactionbutton.FloatingActionButton$ShadowDelegateImpl -> com.google.android.material.floatingactionbutton.FloatingActionButton$b:
+    com.google.android.material.floatingactionbutton.FloatingActionButton this$0 -> a
     boolean isCompatPaddingEnabled() -> a
     float getRadius() -> b
-android.support.design.widget.FloatingActionButtonImpl -> android.support.design.widget.A:
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl -> android.support.design.widget.A:
     android.animation.Animator currentAnimator -> i
     android.graphics.Matrix tmpMatrix -> G
     android.graphics.Rect tmpRect -> D
@@ -2571,7 +2571,7 @@ android.support.design.widget.FloatingActionButtonImpl -> android.support.design
     int[] HOVERED_FOCUSED_ENABLED_STATE_SET -> c
     int[] PRESSED_ENABLED_STATE_SET -> b
     android.animation.AnimatorSet createAnimator(android.support.design.animation.MotionSpec,float,float,float) -> a
-    android.animation.ValueAnimator createElevationAnimator(android.support.design.widget.FloatingActionButtonImpl$ShadowAnimatorImpl) -> a
+    android.animation.ValueAnimator createElevationAnimator(com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$ShadowAnimatorImpl) -> a
     android.support.design.animation.MotionSpec getDefaultHideMotionSpec() -> u
     android.support.design.animation.MotionSpec getDefaultShowMotionSpec() -> v
     boolean shouldAnimateVisibilityChange() -> w
@@ -2594,7 +2594,7 @@ android.support.design.widget.FloatingActionButtonImpl -> android.support.design
     void addOnHideAnimationListener(android.animation.Animator$AnimatorListener) -> a
     void addOnShowAnimationListener(android.animation.Animator$AnimatorListener) -> b
     void getPadding(android.graphics.Rect) -> a
-    void hide(android.support.design.widget.FloatingActionButtonImpl$InternalVisibilityChangedListener,boolean) -> a
+    void hide(com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$InternalVisibilityChangedListener,boolean) -> a
     void jumpDrawableToCurrentState() -> j
     void onAttachedToWindow() -> m
     void onCompatShadowChanged() -> n
@@ -2616,42 +2616,42 @@ android.support.design.widget.FloatingActionButtonImpl -> android.support.design
     void setPressedTranslationZ(float) -> d
     void setRippleColor(android.content.res.ColorStateList) -> b
     void setShowMotionSpec(android.support.design.animation.MotionSpec) -> b
-    void show(android.support.design.widget.FloatingActionButtonImpl$InternalVisibilityChangedListener,boolean) -> b
+    void show(com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$InternalVisibilityChangedListener,boolean) -> b
     void updateImageMatrixScale() -> r
     void updatePadding() -> s
-android.support.design.widget.FloatingActionButtonImpl$1 -> android.support.design.widget.x:
-    android.support.design.widget.FloatingActionButtonImpl this$0 -> d
-    android.support.design.widget.FloatingActionButtonImpl$InternalVisibilityChangedListener val$listener -> c
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$1 -> android.support.design.widget.x:
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl this$0 -> d
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$InternalVisibilityChangedListener val$listener -> c
     boolean cancelled -> a
     boolean val$fromUser -> b
-android.support.design.widget.FloatingActionButtonImpl$2 -> android.support.design.widget.y:
-    android.support.design.widget.FloatingActionButtonImpl this$0 -> c
-    android.support.design.widget.FloatingActionButtonImpl$InternalVisibilityChangedListener val$listener -> b
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$2 -> android.support.design.widget.y:
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl this$0 -> c
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$InternalVisibilityChangedListener val$listener -> b
     boolean val$fromUser -> a
-android.support.design.widget.FloatingActionButtonImpl$3 -> android.support.design.widget.z:
-    android.support.design.widget.FloatingActionButtonImpl this$0 -> a
-android.support.design.widget.FloatingActionButtonImpl$DisabledElevationAnimation -> android.support.design.widget.A$a:
-    android.support.design.widget.FloatingActionButtonImpl this$0 -> e
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$3 -> android.support.design.widget.z:
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl this$0 -> a
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$DisabledElevationAnimation -> android.support.design.widget.A$a:
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl this$0 -> e
     float getTargetShadowSize() -> a
-android.support.design.widget.FloatingActionButtonImpl$ElevateToHoveredFocusedTranslationZAnimation -> android.support.design.widget.A$b:
-    android.support.design.widget.FloatingActionButtonImpl this$0 -> e
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$ElevateToHoveredFocusedTranslationZAnimation -> android.support.design.widget.A$b:
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl this$0 -> e
     float getTargetShadowSize() -> a
-android.support.design.widget.FloatingActionButtonImpl$ElevateToPressedTranslationZAnimation -> android.support.design.widget.A$c:
-    android.support.design.widget.FloatingActionButtonImpl this$0 -> e
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$ElevateToPressedTranslationZAnimation -> android.support.design.widget.A$c:
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl this$0 -> e
     float getTargetShadowSize() -> a
-android.support.design.widget.FloatingActionButtonImpl$InternalVisibilityChangedListener -> android.support.design.widget.A$d:
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$InternalVisibilityChangedListener -> android.support.design.widget.A$d:
     void onHidden() -> b
     void onShown() -> a
-android.support.design.widget.FloatingActionButtonImpl$ResetElevationAnimation -> android.support.design.widget.A$e:
-    android.support.design.widget.FloatingActionButtonImpl this$0 -> e
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$ResetElevationAnimation -> android.support.design.widget.A$e:
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl this$0 -> e
     float getTargetShadowSize() -> a
-android.support.design.widget.FloatingActionButtonImpl$ShadowAnimatorImpl -> android.support.design.widget.A$f:
-    android.support.design.widget.FloatingActionButtonImpl this$0 -> d
+com.google.android.material.floatingactionbutton.FloatingActionButtonImpl$ShadowAnimatorImpl -> android.support.design.widget.A$f:
+    com.google.android.material.floatingactionbutton.FloatingActionButtonImpl this$0 -> d
     boolean validValues -> a
     float shadowSizeEnd -> c
     float shadowSizeStart -> b
     float getTargetShadowSize() -> a
-android.support.design.widget.FloatingActionButtonImplLollipop -> android.support.design.widget.B:
+com.google.android.material.floatingactionbutton.FloatingActionButtonImplLollipop -> android.support.design.widget.B:
     android.graphics.drawable.InsetDrawable insetDrawable -> I
     android.animation.Animator createElevationAnimator(float,float) -> a
     android.graphics.drawable.GradientDrawable newGradientDrawableForShape() -> l
@@ -2666,7 +2666,7 @@ android.support.design.widget.FloatingActionButtonImplLollipop -> android.suppor
     void onPaddingUpdated(android.graphics.Rect) -> b
     void setBackgroundDrawable(android.content.res.ColorStateList,android.graphics.PorterDuff$Mode,android.content.res.ColorStateList,int) -> a
     void setRippleColor(android.content.res.ColorStateList) -> b
-android.support.design.widget.FloatingActionButtonImplLollipop$AlwaysStatefulGradientDrawable -> android.support.design.widget.B$a:
+com.google.android.material.floatingactionbutton.FloatingActionButtonImplLollipop$AlwaysStatefulGradientDrawable -> android.support.design.widget.B$a:
 android.support.design.widget.HeaderBehavior -> android.support.design.widget.C:
     android.view.VelocityTracker velocityTracker -> j
     android.widget.OverScroller scroller -> e
@@ -2710,7 +2710,7 @@ android.support.design.widget.IndicatorViewController -> android.support.design.
     android.animation.Animator captionAnimator -> g
     android.content.Context context -> a
     android.graphics.Typeface typeface -> s
-    android.support.design.widget.TextInputLayout textInputView -> b
+    com.google.android.material.textfield.TextInputLayout textInputView -> b
     android.widget.FrameLayout captionArea -> e
     android.widget.LinearLayout indicatorArea -> c
     android.widget.TextView errorView -> m
@@ -3099,8 +3099,8 @@ android.support.design.widget.TabLayout$ViewPagerOnTabSelectedListener -> androi
     void onTabReselected(android.support.design.widget.TabLayout$Tab) -> a
     void onTabSelected(android.support.design.widget.TabLayout$Tab) -> c
     void onTabUnselected(android.support.design.widget.TabLayout$Tab) -> b
-android.support.design.widget.TextInputEditText -> android.support.design.widget.TextInputEditText:
-android.support.design.widget.TextInputLayout -> android.support.design.widget.TextInputLayout:
+com.google.android.material.textfield.TextInputEditText -> com.google.android.material.textfield.TextInputEditText:
+com.google.android.material.textfield.TextInputLayout -> com.google.android.material.textfield.TextInputLayout:
     android.animation.ValueAnimator animator -> ca
     android.content.res.ColorStateList defaultHintTextColor -> Q
     android.content.res.ColorStateList focusedTextColor -> R
@@ -3156,7 +3156,7 @@ android.support.design.widget.TextInputLayout -> android.support.design.widget.T
     java.lang.CharSequence hint -> l
     java.lang.CharSequence originalHint -> c
     java.lang.CharSequence passwordToggleContentDesc -> H
-    boolean access$000(android.support.design.widget.TextInputLayout) -> a
+    boolean access$000(com.google.android.material.textfield.TextInputLayout) -> a
     boolean cutoutEnabled() -> l
     boolean hasPasswordTransformation() -> n
     boolean shouldShowPasswordIcon() -> r
@@ -3189,18 +3189,18 @@ android.support.design.widget.TextInputLayout -> android.support.design.widget.T
     void updateEditTextBackground() -> c
     void updateLabelState(boolean) -> b
     void updateTextInputBoxState() -> d
-android.support.design.widget.TextInputLayout$1 -> android.support.design.widget.U:
-    android.support.design.widget.TextInputLayout this$0 -> a
-android.support.design.widget.TextInputLayout$2 -> android.support.design.widget.V:
-    android.support.design.widget.TextInputLayout this$0 -> a
-android.support.design.widget.TextInputLayout$3 -> android.support.design.widget.W:
-    android.support.design.widget.TextInputLayout this$0 -> a
-android.support.design.widget.TextInputLayout$AccessibilityDelegate -> android.support.design.widget.TextInputLayout$a:
-    android.support.design.widget.TextInputLayout layout -> c
-android.support.design.widget.TextInputLayout$SavedState -> android.support.design.widget.TextInputLayout$b:
+com.google.android.material.textfield.TextInputLayout$1 -> android.support.design.widget.U:
+    com.google.android.material.textfield.TextInputLayout this$0 -> a
+com.google.android.material.textfield.TextInputLayout$2 -> android.support.design.widget.V:
+    com.google.android.material.textfield.TextInputLayout this$0 -> a
+com.google.android.material.textfield.TextInputLayout$3 -> android.support.design.widget.W:
+    com.google.android.material.textfield.TextInputLayout this$0 -> a
+com.google.android.material.textfield.TextInputLayout$AccessibilityDelegate -> com.google.android.material.textfield.TextInputLayout$a:
+    com.google.android.material.textfield.TextInputLayout layout -> c
+com.google.android.material.textfield.TextInputLayout$SavedState -> com.google.android.material.textfield.TextInputLayout$b:
     boolean isPasswordToggledVisible -> b
     java.lang.CharSequence error -> a
-android.support.design.widget.TextInputLayout$SavedState$1 -> android.support.design.widget.X:
+com.google.android.material.textfield.TextInputLayout$SavedState$1 -> android.support.design.widget.X:
 android.support.design.widget.ViewOffsetBehavior -> android.support.design.widget.Y:
     android.support.design.widget.ViewOffsetHelper viewOffsetHelper -> a
     int tempLeftRightOffset -> c
@@ -37207,7 +37207,7 @@ com.hotelaide.main.adapters.MessageAdapter$ViewHolder -> b.c.b.a.k$a:
     android.widget.TextView txt_no_results -> c
     com.hotelaide.main.adapters.MessageAdapter this$0 -> h
 com.hotelaide.main.fragments.AddressFragment -> b.c.b.b.d:
-    android.support.design.widget.FloatingActionButton btn_update -> ha
+    com.google.android.material.floatingactionbutton.FloatingActionButton btn_update -> ha
     android.view.View root_view -> aa
     android.widget.EditText et_full_address -> fa
     android.widget.EditText et_postcode -> ga
@@ -37274,7 +37274,7 @@ com.hotelaide.main.fragments.AppliedJobsFragment$2 -> b.c.b.b.f:
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
 com.hotelaide.main.fragments.ChangePasswordFragment -> b.c.b.b.j:
-    android.support.design.widget.FloatingActionButton btn_update -> ea
+    com.google.android.material.floatingactionbutton.FloatingActionButton btn_update -> ea
     android.view.View root_view -> Y
     android.widget.EditText et_user_pass_confirm -> da
     android.widget.EditText et_user_pass_new -> ca
@@ -37296,7 +37296,7 @@ com.hotelaide.main.fragments.ChangePasswordFragment$2 -> b.c.b.b.i:
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
 com.hotelaide.main.fragments.DocumentsFragment -> b.c.b.b.l:
-    android.support.design.widget.FloatingActionButton btn_upload -> Z
+    com.google.android.material.floatingactionbutton.FloatingActionButton btn_upload -> Z
     android.support.v7.widget.RecyclerView recycler_view -> ga
     android.view.View root_view -> Y
     android.widget.RelativeLayout rl_no_list_items -> ea
@@ -37318,7 +37318,7 @@ com.hotelaide.main.fragments.DocumentsFragment$1 -> b.c.b.b.k:
     com.hotelaide.main.fragments.DocumentsFragment this$0 -> a
 com.hotelaide.main.fragments.ExperienceEditFragment -> b.c.b.b.D:
     android.app.DatePickerDialog$OnDateSetListener datePickerListener -> Ca
-    android.support.design.widget.FloatingActionButton btn_add -> ea
+    com.google.android.material.floatingactionbutton.FloatingActionButton btn_add -> ea
     android.support.v4.widget.SwipeRefreshLayout swipe_refresh -> ha
     android.support.v7.widget.RecyclerView recycler_view -> da
     android.view.View root_view -> Y
@@ -37511,7 +37511,7 @@ com.hotelaide.main.fragments.GalleryViewFragment$DownLoadImageTask -> b.c.b.b.G$
     void onPostExecute(android.graphics.Bitmap) -> a
 com.hotelaide.main.fragments.MessageFragment -> b.c.b.b.N:
     android.support.design.button.MaterialButton btn_cancel -> ia
-    android.support.design.widget.FloatingActionButton btn_add_message -> ga
+    com.google.android.material.floatingactionbutton.FloatingActionButton btn_add_message -> ga
     android.support.v4.widget.SwipeRefreshLayout swipe_refresh -> ba
     android.support.v7.widget.RecyclerView recycler_view -> da
     android.support.v7.widget.RecyclerView recycler_view_contacts -> ja
@@ -37573,7 +37573,7 @@ com.hotelaide.main.fragments.MessageFragment$ContactAdapter$ViewHolder -> b.c.b.
     android.widget.TextView txt_no_results -> c
     com.hotelaide.main.fragments.MessageFragment$ContactAdapter this$1 -> f
 com.hotelaide.main.fragments.ProfileUpdateFragment -> b.c.b.b.U:
-    android.support.design.widget.FloatingActionButton btn_update -> ia
+    com.google.android.material.floatingactionbutton.FloatingActionButton btn_update -> ia
     android.view.View root_view -> Y
     android.widget.EditText et_user_first_name -> ba
     android.widget.EditText et_user_last_name -> ca

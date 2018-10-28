@@ -6,9 +6,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +23,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
@@ -43,6 +41,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
@@ -167,6 +167,8 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             if (MAP_ACTIVITY_LATITUDE != 0.0) {
                 updateMapAndCamera(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE);
                 asyncUpdateAddress(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE);
+                MAP_ACTIVITY_LATITUDE = 0.0;
+                MAP_ACTIVITY_LONGITUDE = 0.0;
             } else {
                 updateMapAndCamera(SharedPrefs.getDouble(USER_LAT), SharedPrefs.getDouble(USER_LNG));
             }
@@ -186,12 +188,16 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                                 INT_PERMISSIONS_LOCATIONS, perms);
                     }
                 }
+
+                @AfterPermissionGranted(INT_PERMISSIONS_LOCATIONS)
+                private void startMapActivity(){
+                    startSetLocationActivity();
+                }
             });
         }
     }
 
-    @AfterPermissionGranted(INT_PERMISSIONS_LOCATIONS)
-    private void startMapActivity() {
+    private void startSetLocationActivity() {
         if (getActivity() != null) {
             LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
             if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -201,6 +207,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             }
         }
     }
+
 
     private void updateMapAndCamera(double latitude, double longitude) {
         google_map.clear();

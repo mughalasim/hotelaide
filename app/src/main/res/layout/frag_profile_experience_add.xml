@@ -21,12 +21,12 @@
             style="@style/Text_Normal"
             android:visibility="gone" />
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_name"
             style="@style/Edit_Text"
             android:inputType="textCapSentences" />
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_position_level"
             style="@style/Edit_Text"
             android:inputType="textCapSentences" />
@@ -118,12 +118,12 @@
         <include layout="@layout/horizontal_line" />
 
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             style="@style/Material_Edit_Text_Layout"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/height_edit_text">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_responsibilities_field"
                 style="@style/Material_Edit_Text"
                 android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                 android:maxLines="150"
                 android:minHeight="@dimen/height_edit_text" />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <include layout="@layout/layout_buttons" />
 

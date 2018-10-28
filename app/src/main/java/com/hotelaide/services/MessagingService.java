@@ -3,8 +3,6 @@ package com.hotelaide.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +19,9 @@ import com.hotelaide.utils.SharedPrefs;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;

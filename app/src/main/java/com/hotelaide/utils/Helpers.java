@@ -17,12 +17,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -43,6 +37,7 @@ import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
@@ -75,6 +70,11 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import me.leolin.shortcutbadger.ShortcutBadger;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,6 +103,8 @@ import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
+
+;
 
 public class Helpers {
 
@@ -996,6 +998,7 @@ public class Helpers {
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
                         int length = main_array.length();
+                        db.deleteEducationLevelsTable();
                         for (int i = 0; i < length; i++) {
                             JSONObject object = main_array.getJSONObject(i);
                             SearchFilterModel searchFilterModel = new SearchFilterModel();
@@ -1022,7 +1025,6 @@ public class Helpers {
         });
     }
 
-
     // GET JOB TYPES ===============================================================================
     public void asyncGetJobTypes() {
         GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
@@ -1038,6 +1040,7 @@ public class Helpers {
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
                         int length = main_array.length();
+                        db.deleteJobTypeTable();
                         for (int i = 0; i < length; i++) {
                             JSONObject object = main_array.getJSONObject(i);
                             SearchFilterModel searchFilterModel = new SearchFilterModel();
@@ -1078,6 +1081,7 @@ public class Helpers {
 
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
+                        db.deleteCategoriesTable();
                         int length = main_array.length();
                         for (int i = 0; i < length; i++) {
                             JSONObject object = main_array.getJSONObject(i);

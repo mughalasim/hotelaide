@@ -9,7 +9,7 @@
     sothree:umanoPanelHeight="0dp"
     sothree:umanoShadowHeight="0dp">
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/tools"
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:paddingTop="@dimen/padding_small"
@@ -33,7 +33,7 @@
                 android:layout_below="@+id/recycler_view"
                 android:layout_width="match_parent" />
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
 
         </RelativeLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/frag_profile_experience_add" />
 

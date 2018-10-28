@@ -3,7 +3,6 @@ package com.hotelaide.utils;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
-import android.support.v7.app.AppCompatDelegate;
 
 import com.facebook.stetho.Stetho;
 import com.google.firebase.FirebaseApp;
@@ -11,6 +10,8 @@ import com.google.firebase.FirebaseOptions;
 import com.hotelaide.BuildConfig;
 
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class MyApplication extends Application {
 

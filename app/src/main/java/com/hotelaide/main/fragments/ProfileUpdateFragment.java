@@ -4,9 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
@@ -36,6 +34,8 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/btn_confirm"
     style="@style/Material_Button_Yes"
     android:layout_width="match_parent"

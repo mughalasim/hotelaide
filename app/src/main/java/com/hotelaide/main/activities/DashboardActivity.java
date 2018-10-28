@@ -2,12 +2,8 @@ package com.hotelaide.main.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.AppliedJobsFragment;
 import com.hotelaide.main.fragments.MessageFragment;
@@ -16,6 +12,11 @@ import com.hotelaide.utils.SharedPrefs;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;

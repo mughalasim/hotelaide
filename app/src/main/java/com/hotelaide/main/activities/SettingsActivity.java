@@ -2,14 +2,13 @@ package com.hotelaide.main.activities;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
 import android.view.View;
 import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
@@ -19,6 +18,7 @@ import com.hotelaide.utils.SharedPrefs;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +26,8 @@ import retrofit2.Response;
 import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+
+;
 
 public class SettingsActivity extends ParentActivity {
 

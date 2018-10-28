@@ -2,16 +2,11 @@ package com.hotelaide.startup;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.button.MaterialButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.eftimoff.viewpagertransformers.DrawFromBackTransformer;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.tabs.TabLayout;
 import com.hotelaide.R;
 import com.hotelaide.startup.fragments.StartUpIntroFragment;
 import com.hotelaide.utils.Helpers;
@@ -19,8 +14,14 @@ import com.hotelaide.utils.Helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-public class IntroActivity extends AppCompatActivity {
+
+public class IntroActivity extends FragmentActivity {
 
     public final static String
             EXTRA_IMAGE = "IMAGE_ID",

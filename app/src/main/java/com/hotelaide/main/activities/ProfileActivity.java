@@ -3,9 +3,6 @@ package com.hotelaide.main.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +18,10 @@ import com.hotelaide.R;
 import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceViewFragment;
 import com.hotelaide.utils.SharedPrefs;
+
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;

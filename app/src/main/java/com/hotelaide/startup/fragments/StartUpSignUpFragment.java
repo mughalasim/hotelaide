@@ -6,9 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
-import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +34,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -60,12 +58,16 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
+
+;
 
 public class StartUpSignUpFragment extends Fragment {
     private View rootview;
@@ -382,7 +384,7 @@ public class StartUpSignUpFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (getActivity() != null) {
-                    LoginManager.getInstance().logInWithReadPermissions(StartUpSignUpFragment.this, Arrays.asList("email", "public_profile"));
+                    LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email", "public_profile"));
                 }
             }
         });

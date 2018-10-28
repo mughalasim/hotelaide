@@ -1,14 +1,15 @@
 package com.hotelaide.startup.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hotelaide.R;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 
 public class StartUpAboutUsFragment extends Fragment {

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 
 import com.hotelaide.BuildConfig;
 import com.hotelaide.main.models.UserModel;
@@ -12,6 +11,8 @@ import com.hotelaide.main.models.UserModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import androidx.annotation.NonNull;
 
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;

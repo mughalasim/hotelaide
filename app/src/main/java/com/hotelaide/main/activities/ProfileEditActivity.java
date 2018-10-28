@@ -4,20 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
@@ -40,6 +33,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -64,7 +64,7 @@ import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 
-public class ProfileEditActivity extends AppCompatActivity {
+public class ProfileEditActivity extends FragmentActivity {
     private Helpers helpers;
 
     private Toolbar toolbar;
@@ -222,11 +222,11 @@ public class ProfileEditActivity extends AppCompatActivity {
     private void setUpToolBarAndTabs() {
         toolbar = findViewById(R.id.toolbar);
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+//        setSupportActionBar(toolbar);
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,7 +299,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ProfileEditActivity.ViewPagerAdapter adapter = new ProfileEditActivity.ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         for (int i = 0; i <= jobSeekerTitleList.length - 1; i++) {
             Fragment fragment = jobSeekerFragments[i];

@@ -9,15 +9,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +35,13 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentActivity;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
@@ -53,7 +53,7 @@ import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 
-public class ParentActivity extends AppCompatActivity implements
+public class ParentActivity extends FragmentActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
     Helpers helpers;
@@ -87,10 +87,10 @@ public class ParentActivity extends AppCompatActivity implements
         this.toolbar_title = toolbarTitle;
 
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
+//        setSupportActionBar(toolbar);
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        }
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
         drawer = findViewById(R.id.drawer_layout);
         navigation_view = findViewById(R.id.nav_view);

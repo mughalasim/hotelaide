@@ -1,7 +1,5 @@
 package com.hotelaide.interfaces;
 
-import android.support.annotation.NonNull;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -11,6 +9,7 @@ import com.hotelaide.utils.Helpers;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

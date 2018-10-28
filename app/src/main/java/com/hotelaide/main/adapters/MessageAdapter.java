@@ -3,10 +3,6 @@ package com.hotelaide.main.adapters;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
-import android.support.design.chip.Chip;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hotelaide.BuildConfig;
@@ -26,6 +24,9 @@ import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 

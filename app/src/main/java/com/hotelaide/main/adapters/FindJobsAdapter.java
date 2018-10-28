@@ -2,9 +2,6 @@ package com.hotelaide.main.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +16,10 @@ import com.hotelaide.main.models.JobModel;
 import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHolder> {
     private final ArrayList<JobModel> jobModels;

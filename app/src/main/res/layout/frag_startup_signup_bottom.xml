@@ -25,7 +25,7 @@
         android:layout_marginTop="@dimen/padding_small"
         android:orientation="horizontal">
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login_facebook"
             style="@style/Material_Button_No"
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             android:layout_width="@dimen/padding_small"
             android:layout_height="match_parent"/>
 
-        <android.support.design.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login_google"
             style="@style/Material_Button_No"
             android:layout_width="match_parent"

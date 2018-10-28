@@ -1,9 +1,6 @@
 package com.hotelaide.main.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +14,10 @@ import com.hotelaide.utils.Helpers;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHolder> {

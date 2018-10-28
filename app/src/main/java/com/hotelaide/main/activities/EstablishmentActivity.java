@@ -1,13 +1,6 @@
 package com.hotelaide.main.activities;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.EstablishmentInterface;
@@ -30,6 +24,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,8 +44,7 @@ public class EstablishmentActivity extends AppCompatActivity {
             txt_establishment_name,
             txt_establishment_description,
             txt_establishment_location,
-            txt_establishment_type,
-            txt_establishment_email;
+            txt_establishment_type;
     private ImageView
             img_banner;
     private AppBarLayout app_bar_layout;
@@ -124,7 +123,6 @@ public class EstablishmentActivity extends AppCompatActivity {
         txt_establishment_name = findViewById(R.id.txt_establishment_name);
         txt_establishment_location = findViewById(R.id.txt_establishment_location);
         txt_establishment_type = findViewById(R.id.txt_establishment_type);
-        txt_establishment_email = findViewById(R.id.txt_establishment_email);
         txt_establishment_description = findViewById(R.id.txt_establishment_description);
 
 
@@ -219,7 +217,6 @@ public class EstablishmentActivity extends AppCompatActivity {
                         JSONObject establishment_type_object = object.getJSONObject("establishment_type");
                         txt_establishment_type.setText(establishment_type_object.getString("name"));
                         txt_establishment_description.setText(object.getString("establishment_description"));
-                        txt_establishment_email.setText(object.getString("establishment_email"));
                         STR_SHARE_LINK = "Please have a look at this establishment on HotelAide ".concat(object.getString("establishment_url"));
                         STR_BANNER_URL = object.getString("banner");
                         Glide.with(EstablishmentActivity.this).load(STR_BANNER_URL).into(img_banner);

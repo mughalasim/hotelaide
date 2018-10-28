@@ -76,17 +76,15 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // ANDROID DEPENDENCIES
-    implementation "com.android.support:appcompat-v7:$rootProject.SupportLibrary"
-    implementation "com.android.support:support-media-compat:$rootProject.SupportLibrary"
-    implementation "com.android.support:support-v4:$rootProject.SupportLibrary"
-    implementation "com.android.support:design:$rootProject.SupportLibrary"
-    implementation "com.android.support:cardview-v7:$rootProject.SupportLibrary"
-    implementation "com.android.support:recyclerview-v7:$rootProject.SupportLibrary"
-    implementation "com.android.support:support-dynamic-animation:$rootProject.SupportLibrary"
-    implementation "com.android.support:animated-vector-drawable:$rootProject.SupportLibrary"
-    implementation "com.android.support:exifinterface:$rootProject.SupportLibrary"
-    implementation "com.android.support:customtabs:$rootProject.SupportLibrary"
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation "androidx.appcompat:appcompat:$rootProject.SupportLibrary"
+    implementation "androidx.media:media:$rootProject.SupportLibrary"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.SupportLibrary"
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation "androidx.cardview:cardview:$rootProject.SupportLibrary"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.SupportLibrary"
+    implementation "androidx.dynamicanimation:dynamicanimation:$rootProject.SupportLibrary"
+    implementation "androidx.vectordrawable:vectordrawable-animated:$rootProject.SupportLibrary"
+    implementation 'androidx.multidex:multidex:2.0.0'
 
     // RETROFIT DEPENDENCIES
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -103,9 +101,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
-    implementation 'com.google.firebase:firebase-database:16.0.3'
-    implementation 'com.google.firebase:firebase-storage:16.0.3'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.2'
+    implementation 'com.google.firebase:firebase-database:16.0.4'
+    implementation 'com.google.firebase:firebase-storage:16.0.4'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.3'
 
     // GOOGLE
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
@@ -130,13 +128,13 @@ dependencies {
 
     // FACEBOOK DEPENDENCIES
     implementation 'com.facebook.android:notifications:1.0.2'
-    implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
+    implementation 'com.facebook.android:facebook-android-sdk:4.38.0'
 
     // IMAGE SCALING
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
     // IMAGE CROPPING AND ROTATING
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
     // SLIDING UP PANEL
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
@@ -154,7 +152,7 @@ dependencies {
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
     // INSTANT SEARCH
-    implementation 'com.algolia:algoliasearch-android:3.20.+'
+    implementation 'com.algolia:algoliasearch-android:3.26.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
 
 

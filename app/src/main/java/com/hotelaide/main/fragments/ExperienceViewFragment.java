@@ -2,11 +2,6 @@ package com.hotelaide.main.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +16,12 @@ import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;

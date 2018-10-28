@@ -160,40 +160,44 @@ public class Database extends SQLiteOpenHelper {
 
 
     // DELETE ALL FUNCTIONS ========================================================================
-    public void deleteExperienceTable() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + EXP_TABLE_NAME);
-
-    }
-
     public void deleteJobTable() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
-
     }
 
-    public void deleteCountyTable() {
+    public void deleteAppliedJobTable() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
-
+        db.execSQL("DELETE FROM " + APPLIED_JOBS_TABLE_NAME);
     }
 
-    public void deleteJobTypeTable() {
+    public void deleteExperienceTable() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + JOB_TYPE_TABLE_NAME);
-
-    }
-
-    public void deleteCategoriesTable() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + CATEGORIES_TABLE_NAME);
-
+        db.execSQL("DELETE FROM " + EXP_TABLE_NAME);
     }
 
     public void deleteDocumentsTable() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + DOCUMENTS_TABLE_NAME);
+    }
 
+    public void deleteCountyTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
+    }
+
+    public void deleteJobTypeTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + JOB_TYPE_TABLE_NAME);
+    }
+
+    public void deleteCategoriesTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + CATEGORIES_TABLE_NAME);
+    }
+
+    public void deleteEducationLevelsTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + EDUCATION_LEVEL_TABLE_NAME);
     }
 
     public void deleteAllTables() {
@@ -430,11 +434,19 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    public void deleteJobByID(String work_exp_id) {
+    public void deleteJobByID(String job_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String whereClause = JOB_ID + " = ?";
-        String[] whereArgs = new String[]{String.valueOf(work_exp_id)};
+        String[] whereArgs = new String[]{String.valueOf(job_id)};
         db.delete(JOB_TABLE_NAME, whereClause, whereArgs);
+        db.close();
+    }
+
+    public void deleteAppliedJobByJobId(int job_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = APPLIED_JOBS_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(job_id)};
+        db.delete(APPLIED_JOBS_TABLE_NAME, whereClause, whereArgs);
         db.close();
     }
 

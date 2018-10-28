@@ -2,15 +2,10 @@ package com.hotelaide.startup;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.hotelaide.R;
 import com.hotelaide.startup.fragments.StartUpAboutUsFragment;
 import com.hotelaide.startup.fragments.StartUpContactUsFragment;
@@ -22,19 +17,33 @@ import com.hotelaide.utils.Helpers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivity extends AppCompatActivity {
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+public class LoginActivity extends FragmentActivity {
 
     private Helpers
             helpers;
 
     private ViewPager viewPager;
 
-    private int[] navLabels = {
+    private int[] fragment_titles = {
             R.string.nav_login,
             R.string.nav_sign_up,
             R.string.nav_forgot_pass,
             R.string.nav_about_us,
             R.string.nav_contact_us
+    };
+
+    private Fragment[] fragments = {
+            new StartUpLoginFragment(),
+            new StartUpSignUpFragment(),
+            new StartUpForgotPassFragment(),
+            new StartUpAboutUsFragment(),
+            new StartUpContactUsFragment()
     };
 
 
@@ -98,64 +107,17 @@ public class LoginActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager, true);
 
     }
-//    private static float MIN_SCALE = 0.25f;
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        int frag_number = fragment_titles.length;
 
-        Fragment fragment1 = new StartUpLoginFragment();
-        adapter.addFragment(fragment1, getResources().getString(navLabels[0]));
-
-        Fragment fragment2 = new StartUpSignUpFragment();
-        adapter.addFragment(fragment2, getResources().getString(navLabels[1]));
-
-        Fragment fragment3 = new StartUpForgotPassFragment();
-        adapter.addFragment(fragment3, getResources().getString(navLabels[2]));
-
-        Fragment fragment4 = new StartUpAboutUsFragment();
-        adapter.addFragment(fragment4, getResources().getString(navLabels[3]));
-
-        Fragment fragment5 = new StartUpContactUsFragment();
-        adapter.addFragment(fragment5, getResources().getString(navLabels[4]));
+        for(int i=0; i<frag_number; i++){
+            adapter.addFragment(fragments[i], getResources().getString(fragment_titles[i]));
+        }
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(5);
-
-// WHEN ADDING YOUR START UP PAGE...
-//        viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
-//            public void transformPage(@NonNull View view, float position) {
-//                int pageWidth = view.getWidth();
-//
-//                if (position < -1) { // [-Infinity,-1)
-//                    // This page is way off-screen to the left.
-//                    view.setAlpha(0);
-//
-//                } else if (position <= 0) { // [-1,0]
-//                    // Use the default slide transition when moving to the left page
-//                    view.setAlpha(1);
-//                    view.setTranslationX(0);
-//                    view.setScaleX(1);
-//                    view.setScaleY(1);
-//
-//                } else if (position <= 1) { // (0,1]
-//                    // Fade the page out.
-//                    view.setAlpha(1 - position);
-//
-//                    // Counteract the default slide transition
-//                    view.setTranslationX(pageWidth * -position);
-//
-//                    // Scale the page down (between MIN_SCALE and 1)
-//                    float scaleFactor = MIN_SCALE
-//                            + (1 - MIN_SCALE) * (1 - Math.abs(position));
-//                    view.setScaleX(scaleFactor);
-//                    view.setScaleY(scaleFactor);
-//
-//                } else { // (1,+Infinity]
-//                    // This page is way off-screen to the right.
-//                    view.setAlpha(0);
-//                }
-//            }
-//        });
 
     }
 

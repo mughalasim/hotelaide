@@ -1,21 +1,11 @@
 package com.hotelaide.main.activities;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.GalleryViewFragment;
 import com.hotelaide.utils.Helpers;
@@ -23,9 +13,17 @@ import com.hotelaide.utils.Helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class GalleryViewActivity extends AppCompatActivity {
+public class GalleryViewActivity extends FragmentActivity {
     private Helpers helpers;
 
     private Toolbar toolbar;
@@ -123,12 +121,12 @@ public class GalleryViewActivity extends AppCompatActivity {
     }
 
     private void setUpToolBar() {
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setTitle("");
-            getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(GalleryViewActivity.this, R.drawable.ic_cancel));
-        }
+//        setSupportActionBar(toolbar);
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            getSupportActionBar().setTitle("");
+//            getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(GalleryViewActivity.this, R.drawable.ic_cancel));
+//        }
         toolbar.setTitle("");
         toolbar.setBackground(null);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -137,9 +135,8 @@ public class GalleryViewActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     // VIEWPAGER ADAPTER ===========================================================================

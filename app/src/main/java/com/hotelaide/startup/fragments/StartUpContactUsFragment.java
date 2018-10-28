@@ -2,8 +2,6 @@ package com.hotelaide.startup.fragments;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +11,8 @@ import android.widget.TextView;
 import com.hotelaide.R;
 import com.hotelaide.utils.Helpers;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 

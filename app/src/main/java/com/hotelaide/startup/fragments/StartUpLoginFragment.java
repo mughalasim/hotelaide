@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
-import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +27,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -47,12 +45,16 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
+
+;
 
 public class StartUpLoginFragment extends Fragment {
 
@@ -284,7 +286,11 @@ public class StartUpLoginFragment extends Fragment {
     private void handleGoogleAccessToken(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            asyncLogin(account.getEmail(), "", "", account.getId());
+            if (account != null) {
+                asyncLogin(account.getEmail(), "", "", account.getId());
+            } else {
+                helpers.ToastMessage(getActivity(), getResources().getString(R.string.error_unknown));
+            }
             signOutGoogle();
 
         } catch (ApiException e) {

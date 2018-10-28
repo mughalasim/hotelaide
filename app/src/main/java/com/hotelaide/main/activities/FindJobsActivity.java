@@ -1,10 +1,6 @@
 package com.hotelaide.main.activities;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.chip.Chip;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -20,6 +16,7 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
+import com.google.android.material.chip.Chip;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main.adapters.FindJobsAdapter;
@@ -34,6 +31,10 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.hotelaide.BuildConfig.ALGOLIA_APP_ID;
 import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_NAME;

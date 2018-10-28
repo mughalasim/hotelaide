@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:paddingTop="@dimen/padding_small"
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/recycler_view" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_upload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

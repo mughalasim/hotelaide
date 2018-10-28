@@ -36,13 +36,13 @@
     </RelativeLayout>
 
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         style="@style/Tab_Text_Layout"
         android:layout_below="@+id/ll_main_logo" />
 
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

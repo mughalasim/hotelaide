@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.appevents.AppEventsLogger;
@@ -21,6 +20,7 @@ import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
+import androidx.appcompat.app.AppCompatActivity;
 import io.fabric.sdk.android.Fabric;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;

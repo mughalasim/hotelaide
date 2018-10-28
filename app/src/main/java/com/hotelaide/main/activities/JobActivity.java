@@ -3,12 +3,6 @@ package com.hotelaide.main.activities;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.EstablishmentInterface;
@@ -28,12 +24,18 @@ import com.hotelaide.utils.SharedPrefs;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+
+;
 
 public class JobActivity extends AppCompatActivity {
     private Helpers helpers;
@@ -275,6 +277,7 @@ public class JobActivity extends AppCompatActivity {
                         checkJobApplied();
 
                     } else {
+                        db.deleteAppliedJobByJobId(INT_JOB_ID);
                         helpers.handleErrorMessage(JobActivity.this, main.getJSONObject("data"));
                     }
 
