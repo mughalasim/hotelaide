@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ACTIVITY ANIMATION TIME ================================================================-->
+    <integer name="anim_time">600</integer>
+
+</resources>

@@ -15,7 +15,6 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         resConfigs "en"
-        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
 
     buildTypes {
@@ -24,12 +23,14 @@ android {
             minifyEnabled rootProject.shrink
             useProguard rootProject.shrink
             shrinkResources rootProject.shrink
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.shrink
             useProguard rootProject.shrink
             shrinkResources rootProject.shrink
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 

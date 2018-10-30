@@ -20,6 +20,7 @@ import com.hotelaide.main.fragments.ExperienceViewFragment;
 import com.hotelaide.utils.SharedPrefs;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -76,6 +77,10 @@ public class ProfileActivity extends ParentActivity {
             txt_user_phone,
             txt_user_availability;
 
+    // BACKGROUND ------------------------------------
+    private NestedScrollView ns_scroll_view;
+    private RelativeLayout rl_header;
+
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -124,6 +129,9 @@ public class ProfileActivity extends ParentActivity {
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         STR_SHARE_LINK = "Hey! Kindly check out my CV on HotelAide by following this link: " + SharedPrefs.getString(USER_URL);
+
+        rl_header = findViewById(R.id.rl_header);
+        ns_scroll_view = findViewById(R.id.ns_scroll_view);
 
         rl_progress = findViewById(R.id.rl_progress);
         seek_bar_progress = findViewById(R.id.seek_bar_progress);
@@ -251,6 +259,7 @@ public class ProfileActivity extends ParentActivity {
 
         txt_user_dob.setText(helpers.formatDate(SharedPrefs.getString(USER_DOB)));
 
+        // FULL ADDRESS
         if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
             txt_user_full_address.setVisibility(View.GONE);
         } else {
@@ -280,9 +289,17 @@ public class ProfileActivity extends ParentActivity {
         if (SharedPrefs.getInt(USER_AVAILABILITY) == 1) {
             txt_user_availability.setText("Available");
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
+
+            rl_header.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.white));
+            ns_scroll_view.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.white));
+
         } else {
             txt_user_availability.setText("Hidden");
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.red));
+
+            rl_header.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.grey));
+            ns_scroll_view.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.grey));
+
         }
 
         // PROFILE PROGRESS

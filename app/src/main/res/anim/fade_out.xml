@@ -3,8 +3,9 @@
     android:shareInterpolator="true" >
 
     <alpha
-        android:duration="100"
+        android:duration="@integer/anim_time"
         android:fromAlpha="1.0"
         android:toAlpha="0.0" />
+
 
 </set>

@@ -30,15 +30,15 @@
                 android:id="@+id/toolbar_text"
                 style="@style/Text_Header"
                 android:layout_height="match_parent"
-                android:layout_marginTop="0dp"
                 android:layout_marginStart="@dimen/text_margin"
+                android:layout_marginTop="0dp"
                 android:layout_toEndOf="@+id/img_from_pic"
                 android:gravity="start|center"
-                android:textAllCaps="false"
                 android:maxLines="1"
-                android:paddingEnd="0dp"
                 android:paddingStart="0dp"
+                android:paddingEnd="0dp"
                 android:text="@string/app_name"
+                android:textAllCaps="false"
                 android:textColor="@color/white" />
 
         </RelativeLayout>
@@ -73,11 +73,14 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_message"
                     style="@style/Material_Edit_Text"
-                    android:paddingTop="@dimen/line_thickness"
-                    android:paddingBottom="@dimen/line_thickness"
                     android:layout_height="wrap_content"
                     android:hint="@string/et_hint_message"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:paddingBottom="@dimen/padding_tiny"
+                    android:paddingTop="@dimen/padding_tiny"
                     android:inputType="textCapSentences|textMultiLine"
+                    android:maxHeight="200sp"
                     android:maxLength="500"
                     android:maxLines="10"
                     android:minHeight="@dimen/height_edit_text" />
@@ -86,9 +89,9 @@
 
             <ImageView
                 android:id="@+id/btn_send"
-                android:layout_centerVertical="true"
                 android:layout_width="@dimen/img_size_small"
                 android:layout_height="@dimen/img_size_small"
+                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/padding_tiny"
                 android:contentDescription="@string/app_name"

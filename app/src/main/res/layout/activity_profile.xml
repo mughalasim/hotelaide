@@ -26,6 +26,7 @@
                 app:titleEnabled="false">
 
                 <RelativeLayout
+                    android:id="@+id/rl_header"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_collapsing_toolbar"
                     android:layout_marginTop="?android:attr/actionBarSize">
@@ -83,8 +84,11 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/ns_scroll_view"
             android:layout_width="match_parent"
-            android:focusable="false"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            android:background="@color/dark_grey"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -132,6 +136,8 @@
 
                 </RelativeLayout>
 
+
+                <!-- ABOUT ME ===================================================================-->
                 <TextView
                     android:id="@+id/txt_user_about"
                     style="@style/Text_Normal"
