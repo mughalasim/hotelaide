@@ -15,6 +15,7 @@ public class StaticVariables {
     public static final String USER_F_NAME = "USER_F_NAME";
     public static final String USER_L_NAME = "USER_L_NAME";
     public static final String USER_EMAIL = "USER_EMAIL";
+    public static final String USER_ABOUT = "USER_ABOUT";
     public static final String USER_IMG_AVATAR = "USER_IMG_AVATAR";
     public static final String USER_IMG_BANNER = "USER_IMG_BANNER";
     public static final String PROFILE_URL = "PROFILE_URL";
@@ -44,6 +45,7 @@ public class StaticVariables {
     public final static int INT_PERMISSIONS_LOCATIONS = 602;
     public final static int INT_PERMISSIONS_CALL = 603;
     public final static int INT_PERMISSIONS_STORAGE = 604;
+    public final static int INT_PERMISSIONS_STORAGE_WRITE = 605;
 
 
 // BUNDLE EXTRA VARIABLES ==========================================================================
@@ -56,6 +58,8 @@ public class StaticVariables {
     public final static String EXTRA_PROFILE_EDUCATION = "EDUCATION";
     public final static String EXTRA_PROFILE_WORK = "WORK";
     public final static String EXTRA_PROFILE_PASS = "PASSWORD";
+    public final static String EXTRA_UPLOAD_FAILED = "FAILED";
+    public final static String EXTRA_UPLOAD_PASSED = "PASSED";
 
 // BROADCAST VARIABLES =============================================================================
     public final static String BROADCAST_LOG_OUT = "BROADCAST_LOG_OUT";
@@ -107,5 +111,6 @@ public class StaticVariables {
     public static final String DOCUMENTS_FILE_URL = "url";
     public static final String DOCUMENTS_DATE_UPLOADED = "date_uploaded";
     public static final String DOCUMENTS_FILE_TYPE = "file_type";
+    public static final String DOCUMENTS_IS_DIRTY = "is_dirty";
 
 }

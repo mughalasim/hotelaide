@@ -145,6 +145,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".main.activities.PdfViewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
 
         <!--CUSTOM SERVICES =====================================================================-->
         <service

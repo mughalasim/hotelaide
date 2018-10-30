@@ -76,6 +76,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import me.leolin.shortcutbadger.ShortcutBadger;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,6 +85,7 @@ import static android.content.pm.PackageManager.GET_ACTIVITIES;
 import static android.content.pm.PackageManager.NameNotFoundException;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_UPLOAD_COMPLETE;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_DESC;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_ID;
@@ -96,6 +98,8 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
+import static com.hotelaide.utils.StaticVariables.EXTRA_UPLOAD_FAILED;
+import static com.hotelaide.utils.StaticVariables.EXTRA_UPLOAD_PASSED;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
@@ -621,11 +625,11 @@ public class Helpers {
             dialogEditProfile(context, "county", EXTRA_PROFILE_ADDRESS);
             return false;
 
-        } else if (db.getAllExperience(EXPERIENCE_TYPE_EDUCATION).size()<1) {
+        } else if (db.getAllExperience(EXPERIENCE_TYPE_EDUCATION).size() < 1) {
             dialogEditProfile(context, "education history", EXTRA_PROFILE_EDUCATION);
             return false;
 
-        }else if (db.getAllExperience(EXPERIENCE_TYPE_WORK).size()<1) {
+        } else if (db.getAllExperience(EXPERIENCE_TYPE_WORK).size() < 1) {
             dialogEditProfile(context, "employment history", EXTRA_PROFILE_WORK);
             return false;
 
@@ -1109,7 +1113,7 @@ public class Helpers {
         });
     }
 
-    // GET CATEGORIES ==============================================================================
+    // GET DOCUMENTS ===============================================================================
     public void asyncGetAllDocuments() {
         UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
         final Call<JsonObject> call = userInterface.getAllDocuments(SharedPrefs.getInt(USER_ID));
@@ -1122,8 +1126,20 @@ public class Helpers {
                     LogThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
-                        db.setDocumentFromJson(main);
+                        JSONObject data_object = main.getJSONObject("data");
+                        JSONArray document_array = data_object.getJSONArray("documents");
+
+                        db.deleteDocumentsTable();
+
+                        if (document_array != null && document_array.length() > 0) {
+                            int length = document_array.length();
+                            for (int i = 0; i < length; i++) {
+                                JSONObject document_object = document_array.getJSONObject(i);
+                                db.setDocumentFromJson(document_object);
+                            }
+                        }
                     }
+                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE));
 
                 } catch (JSONException e) {
                     LogThis(TAG_LOG, e.toString());
@@ -1137,6 +1153,93 @@ public class Helpers {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 LogThis(TAG_LOG, t.toString());
                 LogThis(TAG_LOG, call.toString());
+                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE));
+            }
+
+        });
+    }
+
+    // UPLOAD DOCUMENTS ============================================================================
+    public void asyncUploadDocument(final MultipartBody.Part partFile) {
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        Call<JsonObject> call = userInterface.setUserDocument(
+                SharedPrefs.getInt(USER_ID),
+                partFile
+        );
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    db.deleteDirtyDocuments();
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+                    Helpers.LogThis(TAG_LOG, main.toString());
+                    if (main.getBoolean("success")) {
+                        db.deleteDirtyDocuments();
+                        JSONObject data_object = main.getJSONObject("data");
+                        db.setDocumentFromJson(data_object.getJSONObject("document"));
+
+                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_PASSED, EXTRA_UPLOAD_PASSED));
+                    } else {
+                        createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_unknown));
+                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                    }
+                } catch (JSONException e) {
+                    createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
+                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                Helpers.LogThis(TAG_LOG, t.toString());
+                db.deleteDirtyDocuments();
+                if (validateInternetConnection()) {
+                    createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
+                } else {
+                    createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_connection));
+                }
+                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+            }
+        });
+
+    }
+
+    // GET DOCUMENTS ===============================================================================
+    public void asyncDeleteDocument(final int id) {
+        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+        final Call<JsonObject> call = userInterface.deleteDocument(
+                SharedPrefs.getInt(USER_ID),
+                id
+        );
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+                    LogThis(TAG_LOG, main.toString());
+                    if (main.getBoolean("success")) {
+                        db.deleteDocumentByID(String.valueOf(id));
+                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_PASSED, EXTRA_UPLOAD_PASSED));
+                    } else{
+                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                    }
+                } catch (JSONException e) {
+                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                    LogThis(TAG_LOG, e.toString());
+
+                } catch (Exception e) {
+                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                    LogThis(TAG_LOG, e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                LogThis(TAG_LOG, t.toString());
+                LogThis(TAG_LOG, call.toString());
+                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
             }
 
         });

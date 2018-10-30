@@ -90,6 +90,7 @@ public interface UserInterface {
             @Path("user_id") int user_id,
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
+            @Field("about_me") String about_me,
             @Field("country_code") int country_code,
             @Field("phone_number") int phone_number,
             @Field("email") String email,

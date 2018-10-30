@@ -101,7 +101,8 @@ public class SettingsActivity extends ParentActivity {
                 btn_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        asyncDeleteUser();
+                        helpers.ToastMessage(SettingsActivity.this, "Coming soon :)");
+//                        asyncDeleteUser();
                         dialog.cancel();
                     }
                 });

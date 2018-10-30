@@ -1,6 +1,9 @@
 package com.hotelaide.startup;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -154,7 +157,14 @@ public class LoginActivity extends FragmentActivity {
 
     // SET ON CLICKS ===============================================================================
     public void openTermsAndConditions(View view) {
-        helpers.ToastMessage(LoginActivity.this, "OPEN SOME TERMS AND CONDITIONS HERE");
+        try {
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://hotelaide.com/terms"));
+            startActivity(myIntent);
+        } catch (ActivityNotFoundException e) {
+            helpers.ToastMessage(LoginActivity.this, "No application can handle this request."
+                    + " Please install a web browser");
+            e.printStackTrace();
+        }
     }
 
     public void navigateToLoginScreen(View view) {

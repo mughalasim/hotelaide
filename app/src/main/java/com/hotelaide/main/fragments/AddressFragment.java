@@ -28,6 +28,7 @@ import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.MapActivity;
+import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
@@ -190,7 +191,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 }
 
                 @AfterPermissionGranted(INT_PERMISSIONS_LOCATIONS)
-                private void startMapActivity(){
+                private void startMapActivity() {
                     startSetLocationActivity();
                 }
             });
@@ -342,33 +343,38 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, main.toString());
-                    if (main.getBoolean("success")) {
-                        helpers.ToastMessage(getActivity(), main.getString("message"));
-                        SharedPrefs.setInt(USER_COUNTY, county_id);
-                        SharedPrefs.setString(USER_POSTAL_CODE, et_postcode.getText().toString());
-                        SharedPrefs.setDouble(USER_LAT, latitude);
-                        SharedPrefs.setDouble(USER_LNG, longitude);
-                        SharedPrefs.setString(USER_FULL_ADDRESS, et_full_address.getText().toString());
-                        logAddress();
+                if (getActivity() != null) {
+                    try {
+                        JSONObject main = new JSONObject(String.valueOf(response.body()));
+                        Helpers.LogThis(TAG_LOG, main.toString());
+                        if (main.getBoolean("success")) {
+                            helpers.ToastMessage(getActivity(), main.getString("message"));
+                            SharedPrefs.setInt(USER_COUNTY, county_id);
+                            SharedPrefs.setString(USER_POSTAL_CODE, et_postcode.getText().toString());
+                            SharedPrefs.setDouble(USER_LAT, latitude);
+                            SharedPrefs.setDouble(USER_LNG, longitude);
+                            SharedPrefs.setString(USER_FULL_ADDRESS, et_full_address.getText().toString());
+                            logAddress();
+
+                            ((ProfileEditActivity) getActivity()).moveViewPagerNext();
+                        }
+                    } catch (JSONException e) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                    e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.LogThis(TAG_LOG, t.toString());
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
-                } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                if (getActivity() != null) {
+                    Helpers.LogThis(TAG_LOG, t.toString());
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    } else {
+                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    }
                 }
-
             }
         });
     }

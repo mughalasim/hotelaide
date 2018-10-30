@@ -37,7 +37,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.hotelaide.BuildConfig.ALGOLIA_APP_ID;
-import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_NAME;
+import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_JOB;
 import static com.hotelaide.BuildConfig.ALGOLIA_SEARCH_API_KEY;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
@@ -264,7 +264,7 @@ public class FindJobsActivity extends ParentActivity {
     // SEARCH FUNCTIONALITY ------------------------------------------------------------------------
     private void initializeAlgolia() {
         Client client = new Client(ALGOLIA_APP_ID, ALGOLIA_SEARCH_API_KEY);
-        index = client.getIndex(ALGOLIA_INDEX_NAME);
+        index = client.getIndex(ALGOLIA_INDEX_JOB);
         query = new Query();
         query.setAttributesToRetrieve("id", "title", "posted_on", "establishment.id", "establishment.image", "establishment.full_address");
         query.setHitsPerPage(HITS_PER_PAGE);

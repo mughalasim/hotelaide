@@ -3,28 +3,54 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    sothree:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    sothree:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/padding_small"
+        android:paddingStart="@dimen/padding_small"
         android:paddingEnd="@dimen/padding_small"
-        android:paddingStart="@dimen/padding_small">
+        android:paddingBottom="@dimen/padding_small">
 
+        <!--AVAILABILITY ========================================================================-->
         <Switch
             android:id="@+id/switch_availability"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/padding_tiny"
             android:layout_height="@dimen/height_button"
+            android:background="@drawable/bckgrd_text_fields"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:paddingStart="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
             android:text="@string/txt_availability"
             android:textColor="@color/colorAccent" />
+
+        <!--ABOUT ME ============================================================================-->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Material_Edit_Text_Layout"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/height_edit_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_about"
+                style="@style/Material_Edit_Text"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_large"
+                android:paddingBottom="@dimen/padding_tiny"
+                android:inputType="textCapSentences|textMultiLine"
+                android:isScrollContainer="true"
+                android:maxLength="2000"
+                android:maxLines="150"
+                android:hint="@string/et_hint_about_me"
+                android:minHeight="@dimen/height_edit_text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <!--FIRST NAME ==========================================================================-->
         <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="0dp"
             style="@style/Material_Edit_Text_Layout">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -37,8 +63,7 @@
 
 
         <!--LAST NAME ===========================================================================-->
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Material_Edit_Text_Layout">
+        <com.google.android.material.textfield.TextInputLayout style="@style/Material_Edit_Text_Layout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_user_last_name"
@@ -81,8 +106,8 @@
                 android:layout_marginEnd="@dimen/padding_small"
                 android:background="@drawable/bckgrd_text_fields"
                 android:gravity="center"
-                android:paddingEnd="@dimen/padding_small"
                 android:paddingStart="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small"
                 sothree:ccp_defaultCode="254"
                 sothree:ccp_textColor="@color/colorAccent"
                 sothree:ccp_textSize="@dimen/text_size_normal" />
@@ -119,9 +144,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginBottom="@dimen/padding_small"
-            android:layout_marginEnd="@dimen/padding_tiny"
             android:layout_marginTop="@dimen/padding_large"
+            android:layout_marginEnd="@dimen/padding_tiny"
+            android:layout_marginBottom="@dimen/padding_small"
             sothree:fabSize="mini"
             sothree:rippleColor="@color/white"
             sothree:srcCompat="@drawable/ic_done" />

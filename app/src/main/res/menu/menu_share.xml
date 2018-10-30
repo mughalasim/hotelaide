@@ -6,6 +6,6 @@
         android:id="@+id/share"
         android:title="@string/txt_share"
         android:icon="@drawable/ic_share"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
 </menu>

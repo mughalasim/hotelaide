@@ -27,6 +27,7 @@ import static com.hotelaide.utils.StaticVariables.DOCUMENTS_FILE_TYPE;
 import static com.hotelaide.utils.StaticVariables.DOCUMENTS_FILE_URL;
 import static com.hotelaide.utils.StaticVariables.DOCUMENTS_ID;
 import static com.hotelaide.utils.StaticVariables.DOCUMENTS_IMAGE;
+import static com.hotelaide.utils.StaticVariables.DOCUMENTS_IS_DIRTY;
 import static com.hotelaide.utils.StaticVariables.DOCUMENTS_NAME;
 import static com.hotelaide.utils.StaticVariables.DOCUMENTS_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
@@ -148,7 +149,8 @@ public class Database extends SQLiteOpenHelper {
                 DOCUMENTS_IMAGE + " TEXT," +
                 DOCUMENTS_FILE_URL + " TEXT," +
                 DOCUMENTS_FILE_TYPE + " TEXT," +
-                DOCUMENTS_DATE_UPLOADED + " TEXT" +
+                DOCUMENTS_DATE_UPLOADED + " TEXT," +
+                DOCUMENTS_IS_DIRTY + " INTEGER" +
                 ")"
         );
 
@@ -366,7 +368,7 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public void setAppliedJob(int job_id){
+    public void setAppliedJob(int job_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content_values2 = new ContentValues();
         content_values2.put(APPLIED_JOBS_ID, job_id);
@@ -607,15 +609,14 @@ public class Database extends SQLiteOpenHelper {
 
 
     // DOCUMENT FUNCTIONS ==========================================================================
-    public Boolean setDocumentFromJson(JSONObject document_object) {
+    public void setDocumentFromJson(JSONObject document_object) {
         try {
-
             DocumentModel documentModel = new DocumentModel();
             documentModel.id = document_object.getInt("id");
             documentModel.name = document_object.getString("name");
             documentModel.image = document_object.getString("image");
-            documentModel.file_url = document_object.getString("url");
-            documentModel.file_type = document_object.getString("type");
+            documentModel.file_url = document_object.getString("file_url");
+            documentModel.file_type = document_object.getString("file_type");
             documentModel.date_uploaded = document_object.getString("date_uploaded");
 
 
@@ -627,6 +628,7 @@ public class Database extends SQLiteOpenHelper {
             contentValues.put(DOCUMENTS_FILE_TYPE, documentModel.file_type);
             contentValues.put(DOCUMENTS_FILE_URL, documentModel.file_url);
             contentValues.put(DOCUMENTS_DATE_UPLOADED, documentModel.date_uploaded);
+            contentValues.put(DOCUMENTS_IS_DIRTY, 0);
 
 
             String whereClause = DOCUMENTS_ID + " = ?";
@@ -638,17 +640,54 @@ public class Database extends SQLiteOpenHelper {
                 db.insert(DOCUMENTS_TABLE_NAME, null, contentValues);
             }
 
-            return true;
         } catch (JSONException e) {
             Helpers.LogThis(TAG_LOG, e.toString());
-            return false;
         }
+    }
+
+    public void setDirtyDocument() {
+        DocumentModel documentModel = new DocumentModel();
+        documentModel.id = 0;
+        documentModel.name = "Loading...";
+        documentModel.is_dirty = 1;
+        documentModel.file_type = "application/pdf";
+        documentModel.date_uploaded = "This may take a moment";
+        documentModel.image = "https://cdn.pixabay.com/photo/2016/01/03/00/43/upload-1118929_960_720.png";
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DOCUMENTS_ID, documentModel.id);
+        contentValues.put(DOCUMENTS_NAME, documentModel.name);
+        contentValues.put(DOCUMENTS_IMAGE, documentModel.image);
+        contentValues.put(DOCUMENTS_FILE_TYPE, documentModel.file_type);
+        contentValues.put(DOCUMENTS_FILE_URL, documentModel.file_url);
+        contentValues.put(DOCUMENTS_DATE_UPLOADED, documentModel.date_uploaded);
+        contentValues.put(DOCUMENTS_IS_DIRTY, documentModel.is_dirty);
+
+        String whereClause = DOCUMENTS_ID + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(documentModel.id)};
+        int no_of_rows_affected = db.update(DOCUMENTS_TABLE_NAME, contentValues, whereClause,
+                whereArgs);
+
+        if (no_of_rows_affected == 0) {
+            db.insert(DOCUMENTS_TABLE_NAME, null, contentValues);
+        }
+
     }
 
     public void deleteDocumentByID(String document_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String whereClause = DOCUMENTS_ID + " = ?";
         String[] whereArgs = new String[]{document_id};
+        db.delete(DOCUMENTS_TABLE_NAME, whereClause, whereArgs);
+        db.close();
+    }
+
+    public void deleteDirtyDocuments() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = DOCUMENTS_IS_DIRTY + " = ?";
+        String[] whereArgs = new String[]{"1"};
         db.delete(DOCUMENTS_TABLE_NAME, whereClause, whereArgs);
         db.close();
     }
@@ -666,12 +705,12 @@ public class Database extends SQLiteOpenHelper {
                 cursor.moveToFirst();
                 do {
                     DocumentModel documentModel = new DocumentModel();
-                    documentModel.id = cursor.getInt(cursor.getColumnIndex(EXP_ID));
-                    documentModel.name = cursor.getString(cursor.getColumnIndex(EXP_NAME));
-                    documentModel.image = cursor.getString(cursor.getColumnIndex(EXP_POSITION));
-                    documentModel.file_url = cursor.getString(cursor.getColumnIndex(EXP_POSITION));
-                    documentModel.file_type = cursor.getString(cursor.getColumnIndex(EXP_POSITION));
-                    documentModel.date_uploaded = cursor.getString(cursor.getColumnIndex(EXP_POSITION));
+                    documentModel.id = cursor.getInt(cursor.getColumnIndex(DOCUMENTS_ID));
+                    documentModel.name = cursor.getString(cursor.getColumnIndex(DOCUMENTS_NAME));
+                    documentModel.image = cursor.getString(cursor.getColumnIndex(DOCUMENTS_IMAGE));
+                    documentModel.file_url = cursor.getString(cursor.getColumnIndex(DOCUMENTS_FILE_URL));
+                    documentModel.file_type = cursor.getString(cursor.getColumnIndex(DOCUMENTS_FILE_TYPE));
+                    documentModel.date_uploaded = cursor.getString(cursor.getColumnIndex(DOCUMENTS_DATE_UPLOADED));
 
                     list.add(documentModel);
 

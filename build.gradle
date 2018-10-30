@@ -7,6 +7,7 @@ buildscript {
         maven { url "https://jitpack.io" }
         maven { url "https://maven.google.com" }
         maven { url 'https://maven.fabric.io/public' }
+        maven { url "http://dl.bintray.com/lukaville/maven" }
         flatDir { dirs 'libs' }
     }
 
@@ -25,6 +26,7 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url "https://maven.google.com" }
         maven { url 'https://maven.fabric.io/public' }
+        maven { url "http://dl.bintray.com/lukaville/maven" }
         flatDir { dirs 'libs' }
     }
 

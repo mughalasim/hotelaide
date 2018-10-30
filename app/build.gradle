@@ -35,8 +35,9 @@ android {
 
     productFlavors {
         prod {
-            // MAIN INFO
+            // MAIN URL'S
             buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.com/api/"'
+            buildConfigField 'String', 'TERMS_URL', '"https://hotelaide.com/terms"'
             buildConfigField 'String', 'USERS_URL', '"Users/"'
             buildConfigField 'String', 'MESSAGE_URL', '"/messages"'
             buildConfigField 'String', 'CONVERSATION_URL', '"/conversations/"'
@@ -46,19 +47,19 @@ android {
 
             // DATABASE INFO
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
-            buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '35'
+            buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '15'
             buildConfigField 'Boolean', 'LOGGING', "$rootProject.debugMode"
             
-            // FIRE BASE
+            // FIREBASE
             buildConfigField 'String', 'FB_APP_ID', '"1:962090500242:android:427a10b5d10876f0"'
             buildConfigField 'String', 'FB_APP_KEY', '"AIzaSyBoekDS7kvoOf7Z2EJOEkyvOwK08eiOwOg"'
             buildConfigField 'String', 'FB_DB_URL', '"https://hotel-aide-kenya.firebaseio.com"'
             buildConfigField 'String', 'FB_STORE', '"hotel-aide-kenya.appspot.com"'
 
-            // INSTANT SEARCH
+            // ALGOLIA SEARCH
             buildConfigField 'String', 'ALGOLIA_APP_ID', '"Q7ZOKDIRKG"'
             buildConfigField 'String', 'ALGOLIA_SEARCH_API_KEY', '"99d661a5a5d6a17ff9ff4c4a996e6e59"'
-            buildConfigField 'String', 'ALGOLIA_INDEX_NAME', '"job_vacancies"'
+            buildConfigField 'String', 'ALGOLIA_INDEX_JOB', '"job_vacancies"'
             buildConfigField 'String', 'FILTER_COUNTY', '"location.county_name"'
             buildConfigField 'String', 'FILTER_CATEGORY', '"category.name"'
             buildConfigField 'String', 'FILTER_JOB_TYPE', '"job_type.name"'
@@ -155,6 +156,11 @@ dependencies {
     implementation 'com.algolia:algoliasearch-android:3.26.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
 
+    // FILE PICKER
+    implementation 'com.nbsp:library:1.8'
+
+    // PDF VIEWER
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        tools:ignore="UnknownIdInLayout"
+        android:layout_margin="@dimen/padding_mini"
+        style="@style/Material_Edit_Text_Layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_file_name"
+            style="@style/Material_Edit_Text"
+            android:hint="@string/et_file_name"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/pdf_view"
+            android:layout_above="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey" />
+
+        <include
+            android:id="@+id/bottom"
+            layout="@layout/layout_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/padding_mini"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
+

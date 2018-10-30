@@ -33,6 +33,7 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_PASS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
+import static com.hotelaide.utils.StaticVariables.USER_ABOUT;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
@@ -65,6 +66,7 @@ public class ProfileActivity extends ParentActivity {
     private TextView
             txt_user_f_name,
             txt_user_l_name,
+            txt_user_about,
             txt_user_gender,
             txt_user_age,
             txt_user_dob,
@@ -134,6 +136,7 @@ public class ProfileActivity extends ParentActivity {
         // INFO AND CONTACT DETAILS
         txt_user_f_name = findViewById(R.id.txt_user_f_name);
         txt_user_l_name = findViewById(R.id.txt_user_l_name);
+        txt_user_about = findViewById(R.id.txt_user_about);
         txt_user_gender = findViewById(R.id.txt_user_gender);
         txt_user_age = findViewById(R.id.txt_user_age);
         txt_user_dob = findViewById(R.id.txt_user_dob);
@@ -218,6 +221,14 @@ public class ProfileActivity extends ParentActivity {
         txt_user_f_name.setText(SharedPrefs.getString(USER_F_NAME).concat(" "));
         txt_user_l_name.setText(SharedPrefs.getString(USER_L_NAME).concat(" "));
 
+        if (SharedPrefs.getString(USER_ABOUT).equals("")) {
+            txt_user_about.setVisibility(View.GONE);
+        } else {
+            txt_user_about.setVisibility(View.VISIBLE);
+            txt_user_about.setText(SharedPrefs.getString(USER_ABOUT));
+        }
+
+        // GENDER
         if (SharedPrefs.getInt(USER_GENDER) == 0) {
             txt_user_gender.setText("Not set");
             txt_user_gender.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.red));
@@ -229,7 +240,7 @@ public class ProfileActivity extends ParentActivity {
             txt_user_gender.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.dark_grey));
         }
 
-
+        // DOB
         String user_age = helpers.calculateAge(SharedPrefs.getString(USER_DOB));
         if (user_age.equals("")) {
             txt_user_age.setVisibility(View.GONE);
@@ -247,6 +258,7 @@ public class ProfileActivity extends ParentActivity {
             txt_user_full_address.setVisibility(View.VISIBLE);
         }
 
+        // COUNTRY
         if (SharedPrefs.getInt(USER_COUNTY) > 0) {
             txt_user_county_name.setText(db.getFilterNameByID(COUNTY_TABLE_NAME, SharedPrefs.getInt(USER_COUNTY)));
             txt_user_county_name.setVisibility(View.VISIBLE);
@@ -254,13 +266,17 @@ public class ProfileActivity extends ParentActivity {
             txt_user_county_name.setVisibility(View.GONE);
         }
 
+        // EMAIL
         txt_user_email.setText(SharedPrefs.getString(USER_EMAIL));
 
+        // COUNTRY
         String user_phone = String.valueOf(SharedPrefs.getInt(USER_COUNTRY_CODE)) + " "
                 + String.valueOf(SharedPrefs.getInt(USER_PHONE));
 
+        // PHONE
         txt_user_phone.setText(user_phone);
 
+        // AVAILABILITY
         if (SharedPrefs.getInt(USER_AVAILABILITY) == 1) {
             txt_user_availability.setText("Available");
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
@@ -269,6 +285,7 @@ public class ProfileActivity extends ParentActivity {
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.red));
         }
 
+        // PROFILE PROGRESS
         updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
 
     }
@@ -277,7 +294,7 @@ public class ProfileActivity extends ParentActivity {
         if (completion == 100) {
             rl_progress.setVisibility(View.GONE);
         } else {
-            rl_progress.setVisibility(View.VISIBLE);
+            rl_progress.setVisibility(View.GONE);
             seek_bar_progress.setProgress(completion);
             txt_progress.setText(String.valueOf(completion).concat("%"));
         }

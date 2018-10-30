@@ -52,6 +52,9 @@
    *;
 }
 
+#For PDF viewer
+-keep class com.shockwave.**
+
 
 #For FireBase Database Models
 -keepattributes Signature

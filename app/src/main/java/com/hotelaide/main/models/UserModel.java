@@ -5,6 +5,7 @@ public class UserModel {
 
     public String   first_name = "";
     public String   last_name = "";
+    public String   about = "";
     public String   email = "";
     public String   img_avatar = "";
     public String   img_banner = "";

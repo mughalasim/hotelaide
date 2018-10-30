@@ -47,6 +47,7 @@
 
 
     <!--EDIT TEXT HINTS =========================================================================-->
+    <string name="et_hint_about_me">About Me</string>
     <string name="et_hint_first_name">First Name</string>
     <string name="et_hint_last_name">Last Name</string>
     <string name="et_hint_email">Email</string>
@@ -56,6 +57,7 @@
     <string name="et_hint_pass_confirm">Confirm Password</string>
     <string name="et_hint_phone">Phone Number</string>
     <string name="et_hint_postcode">Postal Code</string>
+    <string name="et_file_name">File name</string>
     <string name="et_hint_dob">Date of birth:&#160;</string>
 
 
@@ -117,17 +119,19 @@
     <string name="txt_old_version_title">Old version</string>
     <string name="txt_old_version_desc">Seems like you are using an old version of the app, Please update the app from the Google Play Store to get access to new features</string>
     <string name="txt_update_now">Update now</string>
+    <string name="txt_upload">Upload file</string>
+    <string name="txt_back">Back</string>
     <string name="txt_later">Later</string>
     <string name="txt_reset">Reset</string>
     <string name="txt_terms_conditions">Terms and conditions</string>
     <string name="txt_forgot_password">Forgot password</string>
     <string name="txt_welcome">Welcome</string>
     <string name="txt_welcome_login">Kindly enter your email and password to login</string>
-
     <string name="txt_continue">Continue</string>
     <string name="txt_errors">Errors</string>
     <string name="txt_take_me_there">Take me there</string>
     <string name="txt_alert">Alert!</string>
+    <string name="txt_upload_failed">Upload failed</string>
     <string name="txt_delete_account">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap YES to proceed or CANCEL to go back</string>
     <string name="txt_to">&#160;to&#160;</string>
     <string name="txt_from">From&#160;</string>
@@ -189,6 +193,7 @@
     <string name="txt_exit">Leaving&#160;</string>
     <string name="txt_change_image">Set images</string>
     <string name="txt_yes">Yes</string>
+    <string name="txt_refresh">Refresh</string>
     <string name="et_hint_message">Type message…</string>
     <string name="txt_delete_desc">Are you sure you wish to delete this message, this cannot be undone?</string>
     <string name="txt_notify_me">Notify me on updates</string>

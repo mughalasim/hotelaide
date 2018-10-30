@@ -40,6 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.USER_ABOUT;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_DOB;
@@ -62,6 +63,7 @@ public class ProfileUpdateFragment extends Fragment {
     private EditText
             et_user_first_name,
             et_user_last_name,
+            et_user_about,
             et_user_phone;
 
     private Switch
@@ -121,6 +123,7 @@ public class ProfileUpdateFragment extends Fragment {
         switch_availability = root_view.findViewById(R.id.switch_availability);
         et_user_first_name = root_view.findViewById(R.id.et_user_first_name);
         et_user_last_name = root_view.findViewById(R.id.et_user_last_name);
+        et_user_about = root_view.findViewById(R.id.et_user_about);
         spinner_user_gender = root_view.findViewById(R.id.spinner_user_gender);
         txt_user_email = root_view.findViewById(R.id.txt_user_email);
         et_user_phone = root_view.findViewById(R.id.et_user_phone);
@@ -142,6 +145,7 @@ public class ProfileUpdateFragment extends Fragment {
         // SET TO EDIT TEXTS
         et_user_first_name.setText(SharedPrefs.getString(USER_F_NAME));
         et_user_last_name.setText(SharedPrefs.getString(USER_L_NAME));
+        et_user_about.setText(SharedPrefs.getString(USER_ABOUT));
         txt_user_email.setText(SharedPrefs.getString(USER_EMAIL));
         et_user_phone.setText(String.valueOf(SharedPrefs.getInt(USER_PHONE)));
         ccp_user_country_code.setCountryForPhoneCode(SharedPrefs.getInt(USER_COUNTRY_CODE));
@@ -176,6 +180,7 @@ public class ProfileUpdateFragment extends Fragment {
                 userModel.id = SharedPrefs.getInt(USER_ID);
                 userModel.first_name = fetchFromEditText(et_user_first_name);
                 userModel.last_name = fetchFromEditText(et_user_last_name);
+                userModel.about = fetchFromEditText(et_user_about);
                 userModel.email = txt_user_email.getText().toString();
                 userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
                 Helpers.LogThis(TAG_LOG, "GENDER POSITION: " + spinner_user_gender.getSelectedItemPosition());
@@ -274,6 +279,7 @@ public class ProfileUpdateFragment extends Fragment {
                 userModel.id,
                 userModel.first_name,
                 userModel.last_name,
+                userModel.about,
                 userModel.country_code,
                 userModel.phone,
                 userModel.email,

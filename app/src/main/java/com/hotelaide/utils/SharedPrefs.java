@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.PROFILE_URL;
+import static com.hotelaide.utils.StaticVariables.USER_ABOUT;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
@@ -117,6 +118,7 @@ public class SharedPrefs {
                 setInt(USER_ID, user.getInt("id"));
                 setString(USER_F_NAME, user.getString("first_name"));
                 setString(USER_L_NAME, user.getString("last_name"));
+                setString(USER_ABOUT, user.getString("about_me"));
                 setString(USER_EMAIL, user.getString("email"));
                 setString(USER_IMG_AVATAR, user.getString("avatar"));
                 setString(USER_IMG_BANNER, user.getString("banner"));
@@ -220,17 +222,18 @@ public class SharedPrefs {
     public static void logUserModel() {
         Helpers.LogThis(SHARED_PREFS,
                 "\n UID: " + getInt(USER_ID)
-                        + "\n F NAME: " + getString(USER_F_NAME)
-                        + "\n L NAME: " + getString(USER_L_NAME)
-                        + "\n L GENDER: " + getInt(USER_GENDER)
+                        + "\n F_NAME: " + getString(USER_F_NAME)
+                        + "\n L_NAME: " + getString(USER_L_NAME)
+                        + "\n ABOUT: " + getString(USER_ABOUT)
+                        + "\n GENDER: " + getInt(USER_GENDER)
                         + "\n EMAIL: " + getString(USER_EMAIL)
                         + "\n AVATAR: " + getString(USER_IMG_AVATAR)
                         + "\n BANNER: " + getString(USER_IMG_BANNER)
                         + "\n COUNTRY CODE: " + getInt(USER_COUNTRY_CODE)
                         + "\n PHONE: " + getInt(USER_PHONE)
                         + "\n DOB: " + getString(USER_DOB)
-                        + "\n FB ID: " + getString(USER_FB_ID)
-                        + "\n GOOGLE ID: " + getString(USER_GOOGLE_ID)
+                        + "\n FB_ID: " + getString(USER_FB_ID)
+                        + "\n GOOGLE_ID: " + getString(USER_GOOGLE_ID)
                         + "\n LAT: " + getDouble(USER_LAT)
                         + "\n LNG: " + getDouble(USER_LNG)
                         + "\n AVAILABILITY: " + getInt(USER_AVAILABILITY)

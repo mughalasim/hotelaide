@@ -222,11 +222,6 @@ public class ProfileEditActivity extends FragmentActivity {
     private void setUpToolBarAndTabs() {
         toolbar = findViewById(R.id.toolbar);
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
-//        setSupportActionBar(toolbar);
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().setDisplayShowTitleEnabled(false);
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

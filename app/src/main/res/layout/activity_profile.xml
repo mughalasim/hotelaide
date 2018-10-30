@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentScrim="@color/dark_grey"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 app:titleEnabled="false">
 
                 <RelativeLayout
@@ -67,10 +67,10 @@
                         style="@style/Material_Text"
                         android:layout_width="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
                         android:onClick="editProfile"
                         android:text="@string/txt_change_image"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
                         tools:ignore="RelativeOverlap" />
 
 
@@ -83,8 +83,8 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/view_pager"
             android:layout_width="match_parent"
+            android:focusable="false"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -99,43 +99,52 @@
                     android:id="@+id/rl_progress"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_button"
+                    android:orientation="horizontal"
                     android:paddingStart="@dimen/padding_tiny"
-                    android:paddingEnd="@dimen/padding_tiny"
-                    android:orientation="horizontal">
+                    android:paddingEnd="@dimen/padding_tiny">
 
                     <SeekBar
                         android:id="@+id/seek_bar_progress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
-                        android:progress="15"
                         android:max="100"
-                        android:thumb="@drawable/progress_thumb"
-                        android:progressDrawable="@drawable/progress_background" />
+                        android:progress="15"
+                        android:progressDrawable="@drawable/progress_background"
+                        android:thumb="@drawable/progress_thumb" />
 
                     <TextView
                         android:id="@+id/progress_label"
                         style="@style/Text_Small"
+                        android:layout_centerInParent="true"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="0dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:layout_centerInParent="true"
-                        android:text="@string/txt_profile_completion" />
+                        android:text="@string/txt_profile_completion"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txt_progress"
                         style="@style/Text_Small"
-                        android:textStyle="bold"
-                        android:layout_marginTop="0dp"
                         android:layout_centerInParent="true"
-                        android:layout_toEndOf="@+id/progress_label" />
+                        android:layout_marginTop="0dp"
+                        android:layout_toEndOf="@+id/progress_label"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
+                <TextView
+                    android:id="@+id/txt_user_about"
+                    style="@style/Text_Normal"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginBottom="@dimen/padding_tiny"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/padding_large"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:textStyle="bold" />
+
                 <!-- BASIC INFO =================================================================-->
-                <androidx.cardview.widget.CardView
-                    style="@style/Card_Layout">
+                <androidx.cardview.widget.CardView style="@style/Card_Layout">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -148,21 +157,21 @@
                             android:layout_height="@dimen/height_button"
                             android:layout_marginTop="0dp"
                             android:background="@color/light_grey"
-                            android:textColor="@color/colorPrimary"
+                            android:drawableEnd="@drawable/ic_edit"
                             android:gravity="start|center_vertical"
-                            android:paddingEnd="@dimen/padding_small"
                             android:onClick="editProfile"
                             android:paddingStart="@dimen/padding_small"
-                            android:drawableEnd="@drawable/ic_edit"
-                            android:text="@string/nav_profile" />
+                            android:paddingEnd="@dimen/padding_small"
+                            android:text="@string/nav_profile"
+                            android:textColor="@color/colorPrimary" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/padding_tiny"
                             android:orientation="horizontal"
-                            android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small">
+                            android:paddingStart="@dimen/padding_small"
+                            android:paddingEnd="@dimen/padding_small">
 
                             <TextView
                                 android:id="@+id/txt_user_f_name"
@@ -204,8 +213,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/padding_tiny"
                             android:orientation="horizontal"
-                            android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small">
+                            android:paddingStart="@dimen/padding_small"
+                            android:paddingEnd="@dimen/padding_small">
 
                             <TextView
                                 style="@style/Text_Normal"
@@ -225,17 +234,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/padding_tiny"
-                            android:orientation="horizontal"
-                            android:paddingEnd="@dimen/padding_small"
                             android:layout_marginBottom="@dimen/padding_tiny"
-                            android:paddingStart="@dimen/padding_small">
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/padding_small"
+                            android:paddingEnd="@dimen/padding_small">
 
                             <TextView
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:paddingEnd="@dimen/padding_tiny"
                                 android:paddingStart="0dp"
+                                android:paddingEnd="@dimen/padding_tiny"
                                 android:text="@string/txt_gender" />
 
                             <TextView
@@ -246,41 +255,13 @@
 
                         </LinearLayout>
 
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <!-- CONTACT INFO ===============================================================-->
-                <androidx.cardview.widget.CardView
-                    style="@style/Card_Layout">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txt_contact_info"
-                            style="@style/Text_Title"
-                            android:layout_height="@dimen/height_button"
-                            android:layout_marginTop="0dp"
-                            android:textColor="@color/colorPrimary"
-                            android:background="@color/light_grey"
-                            android:gravity="start|center_vertical"
-                            android:paddingEnd="@dimen/padding_small"
-                            android:onClick="editProfile"
-                            android:drawableEnd="@drawable/ic_edit"
-                            android:paddingStart="@dimen/padding_small"
-                            android:text="@string/nav_contact_us" />
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/padding_tiny"
                             android:orientation="horizontal"
-                            android:layout_marginTop="@dimen/padding_tiny"
-                            android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small">
+                            android:paddingStart="@dimen/padding_small"
+                            android:paddingEnd="@dimen/padding_small">
 
                             <TextView
                                 style="@style/Text_Normal"
@@ -296,20 +277,48 @@
 
                         </LinearLayout>
 
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- CONTACT INFO ===============================================================-->
+                <androidx.cardview.widget.CardView style="@style/Card_Layout">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_contact_info"
+                            style="@style/Text_Title"
+                            android:layout_height="@dimen/height_button"
+                            android:layout_marginTop="0dp"
+                            android:background="@color/light_grey"
+                            android:drawableEnd="@drawable/ic_edit"
+                            android:gravity="start|center_vertical"
+                            android:onClick="editProfile"
+                            android:paddingStart="@dimen/padding_small"
+                            android:paddingEnd="@dimen/padding_small"
+                            android:text="@string/nav_contact_us"
+                            android:textColor="@color/colorPrimary" />
+
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/padding_tiny"
                             android:orientation="horizontal"
-                            android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small">
+                            android:paddingStart="@dimen/padding_small"
+                            android:paddingEnd="@dimen/padding_small">
 
                             <TextView
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:paddingEnd="@dimen/padding_tiny"
                                 android:paddingStart="0dp"
+                                android:paddingEnd="@dimen/padding_tiny"
                                 android:text="@string/et_hint_email" />
 
 
@@ -326,17 +335,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/padding_tiny"
-                            android:orientation="horizontal"
-                            android:paddingEnd="@dimen/padding_small"
                             android:layout_marginBottom="@dimen/padding_tiny"
-                            android:paddingStart="@dimen/padding_small">
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/padding_small"
+                            android:paddingEnd="@dimen/padding_small">
 
                             <TextView
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
-                                android:paddingEnd="@dimen/padding_tiny"
                                 android:paddingStart="0dp"
+                                android:paddingEnd="@dimen/padding_tiny"
                                 android:text="@string/about_address_mobile" />
 
                             <TextView
@@ -351,21 +360,20 @@
                             android:id="@+id/txt_user_full_address"
                             style="@style/Text_Normal"
                             android:layout_marginTop="0dp"
-                            android:visibility="gone"
-                            android:maxLines="1"
                             android:layout_marginBottom="@dimen/padding_tiny"
+                            android:maxLines="1"
+                            android:paddingStart="@dimen/padding_small"
                             android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small" />
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/txt_user_county_name"
                             style="@style/Text_Normal"
-                            android:visibility="gone"
                             android:layout_marginTop="0dp"
                             android:layout_marginBottom="@dimen/padding_tiny"
+                            android:paddingStart="@dimen/padding_small"
                             android:paddingEnd="@dimen/padding_small"
-                            android:paddingStart="@dimen/padding_small" />
-
+                            android:visibility="gone" />
 
 
                     </LinearLayout>
@@ -380,13 +388,13 @@
                     android:layout_height="@dimen/height_button"
                     android:layout_marginTop="@dimen/padding_small"
                     android:background="@color/light_grey"
-                    android:textColor="@color/colorPrimary"
-                    android:gravity="start|center_vertical"
-                    android:paddingEnd="@dimen/padding_large"
-                    android:paddingStart="@dimen/padding_large"
-                    android:onClick="editProfile"
                     android:drawableEnd="@drawable/ic_edit"
-                    android:text="@string/nav_education" />
+                    android:gravity="start|center_vertical"
+                    android:onClick="editProfile"
+                    android:paddingStart="@dimen/padding_large"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:text="@string/nav_education"
+                    android:textColor="@color/colorPrimary" />
 
                 <LinearLayout
                     android:id="@+id/ll_fragment_education"
@@ -402,13 +410,13 @@
                     android:layout_height="@dimen/height_button"
                     android:layout_marginTop="@dimen/padding_small"
                     android:background="@color/light_grey"
-                    android:textColor="@color/colorPrimary"
-                    android:gravity="start|center_vertical"
-                    android:paddingEnd="@dimen/padding_large"
-                    android:paddingStart="@dimen/padding_large"
-                    android:onClick="editProfile"
                     android:drawableEnd="@drawable/ic_edit"
-                    android:text="@string/nav_work" />
+                    android:gravity="start|center_vertical"
+                    android:onClick="editProfile"
+                    android:paddingStart="@dimen/padding_large"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:text="@string/nav_work"
+                    android:textColor="@color/colorPrimary" />
 
                 <LinearLayout
                     android:id="@+id/ll_fragment_work"
@@ -424,13 +432,13 @@
                     android:layout_height="@dimen/height_button"
                     android:layout_marginTop="@dimen/padding_small"
                     android:background="@color/light_grey"
-                    android:textColor="@color/colorPrimary"
-                    android:gravity="start|center_vertical"
-                    android:paddingEnd="@dimen/padding_large"
-                    android:paddingStart="@dimen/padding_large"
-                    android:onClick="editProfile"
                     android:drawableEnd="@drawable/ic_edit"
-                    android:text="@string/nav_documents" />
+                    android:gravity="start|center_vertical"
+                    android:onClick="editProfile"
+                    android:paddingStart="@dimen/padding_large"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:text="@string/nav_documents"
+                    android:textColor="@color/colorPrimary" />
 
                 <LinearLayout
                     android:id="@+id/ll_fragment_documents"
@@ -446,8 +454,6 @@
                     android:text="@string/nav_pass" />
 
             </LinearLayout>
-
-
 
 
         </androidx.core.widget.NestedScrollView>
