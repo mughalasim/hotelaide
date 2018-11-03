@@ -113,7 +113,7 @@
                         android:paddingEnd="@dimen/padding_small"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
-                        android:layout_marginBottom="@dimen/padding_mini"
+                        android:layout_marginBottom="@dimen/padding_small"
                         android:textStyle="bold" />
 
                 </LinearLayout>

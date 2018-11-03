@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/Applications/Android%20Studio%203.3%20Preview.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_delete_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/android%20studio%203.3/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_list_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,8 +33,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_delete" />
-                            <entry key="sourceFile" value="$APPLICATION_HOME_DIR$/bin/G:\Downloads\main_icon3.svg" />
+                            <entry key="outputName" value="ic_filter" />
+                            <entry key="sourceFile" value="C:\Program Files\Android\android studio 3.3\bin\G:\Downloads\main_icon3.svg" />
                           </map>
                         </option>
                       </PersistentState>

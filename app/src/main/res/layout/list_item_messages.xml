@@ -11,14 +11,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/padding_mini"
         android:paddingEnd="@dimen/padding_small"
+        android:layout_marginStart="@dimen/padding_small"
+        android:layout_marginEnd="@dimen/padding_small"
+        android:background="@drawable/bckgrd_text_fields"
         android:paddingStart="@dimen/padding_small">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/img_from_pic"
-            android:layout_width="@dimen/img_size_small"
-            android:layout_height="@dimen/img_size_small"
+            android:layout_width="@dimen/img_size_medium"
+            android:layout_height="@dimen/img_size_medium"
             android:layout_centerVertical="true"
             android:contentDescription="@string/app_name"
+            android:layout_marginTop="@dimen/padding_tiny"
             android:scaleType="centerCrop"
             android:src="@color/light_grey"
             app:riv_corner_radius="@dimen/img_size_medium" />
@@ -60,13 +64,6 @@
             android:textSize="@dimen/text_size_small"
             android:textColor="@color/white"
             app:chipBackgroundColor="@color/red" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line_thickness"
-            android:background="@color/grey"
-            android:layout_marginTop="@dimen/padding_small"
-            android:layout_below="@+id/img_from_pic"/>
 
     </RelativeLayout>
 

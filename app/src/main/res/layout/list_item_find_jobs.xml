@@ -16,11 +16,13 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/img_image"
-                android:layout_width="@dimen/img_size_medium"
-                android:layout_height="@dimen/img_size_medium"
+                android:layout_width="@dimen/img_size_medium_large"
+                android:layout_height="@dimen/img_size_medium_large"
                 android:scaleType="centerCrop"
+                app:riv_border_color="@color/dark_grey"
+                app:riv_border_width="@dimen/line_thickness"
                 android:layout_centerVertical="true"
-                app:riv_corner_radius="@dimen/img_size_medium"
+                app:riv_corner_radius="@dimen/radius_corner"
                 android:src="@color/light_grey"
                 android:contentDescription="@string/app_name" />
 

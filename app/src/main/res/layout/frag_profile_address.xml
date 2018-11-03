@@ -54,30 +54,12 @@
             android:text="@string/txt_map_location"
             android:textColor="@color/colorPrimary" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_small">
-
-                <com.google.android.gms.maps.MapView
-                    android:id="@+id/map_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_map" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btn_find_location"
-                    android:layout_alignBottom="@+id/fragment_map"
-                    android:layout_alignParentEnd="true"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_margin="@dimen/padding_tiny"
-                    sothree:fabSize="mini"
-                    sothree:srcCompat="@drawable/ic_location"
-                    sothree:rippleColor="@color/white"/>
-
-            </RelativeLayout>
-
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
+            android:layout_marginTop="@dimen/padding_small"
+            android:background="@drawable/bckgrd_text_fields"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_map" />
 
 
         <!-- UPDATE PROFILE =====================================================================-->

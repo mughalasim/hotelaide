@@ -141,11 +141,7 @@ public class EstablishmentActivity extends AppCompatActivity {
     private void setUpToolBarAndTabs() {
         toolbar = findViewById(R.id.toolbar);
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(EstablishmentActivity.this, R.drawable.ic_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

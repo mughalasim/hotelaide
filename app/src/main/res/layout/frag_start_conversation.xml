@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/light_grey"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/header"
         style="@style/Text_Title"
-        android:textColor="@color/colorPrimary"
         android:paddingStart="@dimen/padding_small"
         android:paddingEnd="@dimen/padding_small"
         android:text="Select a contact"
         android:layout_marginBottom="@dimen/padding_small" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_thickness"
+        android:layout_below="@+id/header"
+        layout="@layout/horizontal_line"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_contacts"
@@ -18,6 +24,13 @@
         android:layout_below="@+id/header"
         android:layout_above="@+id/btn_cancel"
         android:layout_height="wrap_content" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_thickness"
+        android:layout_below="@+id/recycler_view_contacts"
+        layout="@layout/horizontal_line"/>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_cancel"

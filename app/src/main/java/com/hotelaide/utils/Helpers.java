@@ -10,6 +10,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -17,6 +18,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -61,6 +63,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,6 +86,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
+import static android.content.pm.PackageManager.GET_SIGNATURES;
 import static android.content.pm.PackageManager.NameNotFoundException;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
@@ -207,31 +212,31 @@ public class Helpers {
         }
     }
 
-//    @SuppressLint("PackageManagerGetSignatures")
-//    public void getShaCertificate() {
-//        PackageInfo info;
-//        try {
-//
-//            info = context.getPackageManager().getPackageInfo(
-//                    "com.hotelaide", GET_SIGNATURES);
-//
-//            for (android.content.pm.Signature signature : info.signatures) {
-//                MessageDigest md;
-//                md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                String something = new String(Base64.encode(md.digest(), 0));
-//                Log.e("Hash key", something);
-//                System.out.println("Hash key" + something);
-//            }
-//
-//        } catch (NameNotFoundException e) {
-//            LogThis(TAG_LOG, "name not found " + e.toString());
-//        } catch (NoSuchAlgorithmException e) {
-//            LogThis(TAG_LOG, "no such algorithm " + e.toString());
-//        } catch (Exception e) {
-//            LogThis(TAG_LOG, "exception " + e.toString());
-//        }
-//    }
+    @SuppressLint("PackageManagerGetSignatures")
+    public void getShaCertificate() {
+        PackageInfo info;
+        try {
+
+            info = context.getPackageManager().getPackageInfo(
+                    "com.hotelaide", GET_SIGNATURES);
+
+            for (android.content.pm.Signature signature : info.signatures) {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String something = new String(Base64.encode(md.digest(), 0));
+                Log.e("Hash key", something);
+                System.out.println("Hash key" + something);
+            }
+
+        } catch (NameNotFoundException e) {
+            LogThis(TAG_LOG, "name not found " + e.toString());
+        } catch (NoSuchAlgorithmException e) {
+            LogThis(TAG_LOG, "no such algorithm " + e.toString());
+        } catch (Exception e) {
+            LogThis(TAG_LOG, "exception " + e.toString());
+        }
+    }
 
 
     // DIALOGS AND DISPLAYS ========================================================================

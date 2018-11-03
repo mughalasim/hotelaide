@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.eftimoff.viewpagertransformers.DrawFromBackTransformer;
+import com.eftimoff.viewpagertransformers.ForegroundToBackgroundTransformer;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.hotelaide.R;
@@ -43,11 +43,11 @@ public class IntroActivity extends FragmentActivity {
             tab_layout;
 
     int[] images = {
-            R.drawable.img_scroll_1,
-            R.drawable.img_scroll_2,
-            R.drawable.img_scroll_3,
-            R.drawable.img_scroll_5,
-            R.drawable.img_scroll_6
+            R.drawable.img_scroll1,
+            R.drawable.img_scroll2,
+            R.drawable.img_scroll3,
+            R.drawable.img_scroll4,
+            R.drawable.img_scroll5
     };
 
     String[] descriptions = {
@@ -118,7 +118,7 @@ public class IntroActivity extends FragmentActivity {
             }
         });
 
-        view_pager.setPageTransformer(true, new DrawFromBackTransformer());
+        view_pager.setPageTransformer(true, new ForegroundToBackgroundTransformer());
 
     }
 

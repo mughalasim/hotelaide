@@ -28,7 +28,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="@dimen/height_panel"
                     android:layout_width="match_parent"
-                    android:paddingBottom="@dimen/padding_medium"
                     android:scaleType="centerCrop"
                     android:src="@drawable/bckgrd_fade_to_transparent" />
 
@@ -38,7 +37,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="@dimen/height_panel"
                     android:layout_width="match_parent"
-                    android:paddingBottom="@dimen/padding_medium"
                     android:scaleType="centerCrop"
                     android:src="@color/black" />
 
@@ -52,16 +50,14 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/img_avatar"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
                     android:layout_height="@dimen/img_size_large"
-                    android:layout_marginBottom="@dimen/height_panel"
                     android:layout_width="@dimen/img_size_large"
                     android:scaleType="centerCrop"
+                    android:layout_centerInParent="true"
                     android:src="@color/light_grey"
                     app:riv_border_color="@color/colorAccentDark"
                     app:riv_border_width="@dimen/line_thickness"
-                    app:riv_corner_radius="@dimen/img_size_large"
+                    app:riv_corner_radius="@dimen/radius_corner"
                     app:riv_oval="false" />
 
                 <com.google.android.material.tabs.TabLayout

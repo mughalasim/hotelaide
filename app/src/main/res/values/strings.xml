@@ -7,7 +7,8 @@
     <!--META DATA ===============================================================================-->
     <string name="facebook_app_id">213335282601524</string>
     <string name="fb_login_protocol_scheme">fb213335282601524</string>
-    <string name="maps_api_key">AIzaSyCCc45P-R50C_Hy1Jw6A00CjNN4vrZAB3c"</string>
+    <!--<string name="maps_api_key">AIzaSyCCc45P-R50C_Hy1Jw6A00CjNN4vrZAB3c"</string>-->
+    <string name="maps_api_key">AIzaSyA0ZgL9xLHGt7ZHWTcRrvsDIGH2yPxauLA"</string>
 
     <!--ERROR MESSAGES ==========================================================================-->
     <string name="error_field_required">This field is required</string>

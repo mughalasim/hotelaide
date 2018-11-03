@@ -6,7 +6,6 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -149,8 +148,6 @@ public class ExperienceViewFragment extends Fragment {
                     txt_responsibilities_field_label,
                     txt_responsibilities_field;
 
-            final ImageView btn_delete;
-
             ViewHolder(View v) {
                 super(v);
                 // LIST ITEM
@@ -163,7 +160,6 @@ public class ExperienceViewFragment extends Fragment {
                 txt_duration = v.findViewById(R.id.txt_duration);
                 txt_responsibilities_field_label = v.findViewById(R.id.txt_responsibilities_field_label);
                 txt_responsibilities_field = v.findViewById(R.id.txt_responsibilities_field);
-                btn_delete = v.findViewById(R.id.btn_delete);
                 // NO LIST ITEM
                 no_list_item = v.findViewById(R.id.rl_no_list_items);
                 txt_no_results = v.findViewById(R.id.txt_no_results);
@@ -241,8 +237,6 @@ public class ExperienceViewFragment extends Fragment {
                         }
                     }
                 });
-
-                holder.btn_delete.setVisibility(View.GONE);
 
             }
         }

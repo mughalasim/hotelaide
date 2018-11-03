@@ -76,7 +76,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/et_hint_message"
                     android:layout_marginTop="0dp"
-                    android:layout_marginBottom="0dp"
                     android:paddingBottom="@dimen/padding_tiny"
                     android:paddingTop="@dimen/padding_tiny"
                     android:inputType="textCapSentences|textMultiLine"

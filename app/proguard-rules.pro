@@ -18,9 +18,9 @@
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-renamesourcefileattribute SourceFile
 
-#For file mapping
+# FILE MAPPING======================================================================================
 -printmapping proguard_mapping.txt
 -verbose
 
@@ -29,11 +29,10 @@
 -dontwarn retrofit2.Platform$Java8
 -keep class retrofit.** { *; }
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
-
 -dontwarn javax.annotation.**
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 
-# For Glide
+# GILDE ============================================================================================
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public class * extends com.bumptech.glide.module.AppGlideModule
 -keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
@@ -41,39 +40,29 @@
   public *;
 }
 
-
-#For the search Bar
--keep class android.support.v7.widget.SearchView { *; }
-
-
-#For Facebook
+# FACEBOOK =========================================================================================
 -keepattributes *Annotation*
 -keep class com.facebook.** {
    *;
 }
 
-#For PDF viewer
+# PDF VIEWER =======================================================================================
 -keep class com.shockwave.**
 
 
-#For FireBase Database Models
+# FIREBASE DATABASE MODELS =========================================================================
 -keepattributes Signature
 -keepclassmembers class com.hotelaide.models.** {
   *;
 }
 
-
-# For the Image Cropping Library
--keep class android.support.v7.widget.** { *; }
-
-
-# Google play ads
+# GOOGLE ADS =======================================================================================
 -dontwarn com.google.android.gms.**
 
--ignorewarnings
+# IGNORE ALL WARNING ===============================================================================
+#-ignorewarnings
 
-
-#For the Animation Classes
+# YOYO ANIMATION ===================================================================================
 -keep class com.daimajia.* { *; }
 -keep interface com.daimajia.* { *; }
 -keep public class com.daimajia.* { *; }

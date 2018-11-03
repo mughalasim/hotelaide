@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="drawerArrowStyle">@style/drawerArrowStyle</item>
-        <item name="android:windowBackground">@drawable/bckgrd_app</item>
+        <item name="android:windowBackground">@drawable/background_app</item>
         <item name="actionOverflowMenuStyle">@style/actionOverflowMenu</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowMinWidthMajor">98%</item>
@@ -51,13 +51,14 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingStart">@dimen/padding_small</item>
         <item name="android:paddingEnd">@dimen/padding_small</item>
-        <item name="tabSelectedTextColor">@color/colorPrimaryLight</item>
+        <item name="tabSelectedTextColor">@color/white</item>
         <item name="tabTextColor">@color/grey</item>
-        <item name="tabIndicatorColor">@color/colorPrimaryLight</item>
+        <item name="android:background">@color/dark_grey</item>
+        <item name="tabIndicatorColor">@color/white</item>
         <item name="tabTextAppearance">@style/Text_Title</item>
         <item name="tabMode">scrollable</item>
         <item name="tabGravity">center</item>
-        <item name="tabIndicatorHeight">@dimen/line_thickness</item>
+        <item name="tabIndicatorHeight">@dimen/text_margin</item>
     </style>
 
 
@@ -88,16 +89,19 @@
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textColorHint">@color/grey</item>
-        <item name="android:layout_marginTop">@dimen/padding_small</item>
+        <item name="android:layout_marginTop">@dimen/padding_medium</item>
+        <item name="android:layout_marginBottom">@dimen/text_margin</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
     <style name="Material_Edit_Text_Layout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:layout_height">@dimen/height_edit_text</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">0dp</item>
+        <item name="boxBackgroundColor">@color/white</item>
         <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:layout_width">match_parent</item>
         <item name="boxStrokeColor">@color/colorAccent</item>
@@ -105,11 +109,11 @@
     </style>
 
     <style name="Material_Edit_Text" parent="AppTheme">
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingLeft">@dimen/padding_tiny</item>
         <item name="android:paddingRight">@dimen/padding_tiny</item>
-        <item name="android:layout_margin">0dp</item>
+        <item name="android:layout_marginBottom">-12sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:textColorHint">@color/grey</item>
@@ -168,7 +172,7 @@
 
     <!-- BUTTON STYLES ==========================================================================-->
     <style name="Material_Button_Yes" parent="Widget.MaterialComponents.Button.Icon">
-        <item name="android:layout_height">@dimen/height_button</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/white</item>
@@ -196,7 +200,7 @@
     </style>
 
     <style name="Material_Text" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="android:layout_height">@dimen/height_edit_text</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textColor">@color/grey</item>
         <item name="strokeWidth">1sp</item>

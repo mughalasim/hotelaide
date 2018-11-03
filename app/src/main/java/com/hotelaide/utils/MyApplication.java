@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
-import com.facebook.stetho.Stetho;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.hotelaide.BuildConfig;
@@ -12,6 +11,8 @@ import com.hotelaide.BuildConfig;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatDelegate;
+
+//import com.facebook.stetho.Stetho;
 
 public class MyApplication extends Application {
 
@@ -23,9 +24,9 @@ public class MyApplication extends Application {
         MyApplication.context = getApplicationContext();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         // then open this link in chrome -> chrome://inspect/#devices
-        if (BuildConfig.LOGGING) {
-            Stetho.initializeWithDefaults(this);
-        }
+//        if (BuildConfig.LOGGING) {
+//            Stetho.initializeWithDefaults(this);
+//        }
     }
 
     public static void initFireBase() {

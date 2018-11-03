@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -729,8 +728,6 @@ public class ExperienceEditFragment extends Fragment {
                     txt_responsibilities_field_label,
                     txt_responsibilities_field;
 
-            final ImageView btn_delete;
-
             ViewHolder(View v) {
                 super(v);
                 // LIST ITEM
@@ -743,7 +740,6 @@ public class ExperienceEditFragment extends Fragment {
                 txt_duration = v.findViewById(R.id.txt_duration);
                 txt_responsibilities_field_label = v.findViewById(R.id.txt_responsibilities_field_label);
                 txt_responsibilities_field = v.findViewById(R.id.txt_responsibilities_field);
-                btn_delete = v.findViewById(R.id.btn_delete);
                 // NO LIST ITEM
                 no_list_item = v.findViewById(R.id.rl_no_list_items);
                 txt_no_results = v.findViewById(R.id.txt_no_results);
@@ -828,9 +824,9 @@ public class ExperienceEditFragment extends Fragment {
                     }
                 });
 
-                holder.btn_delete.setOnClickListener(new View.OnClickListener() {
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public boolean onLongClick(View v) {
                         if (getActivity() != null) {
                             final Dialog dialog = new Dialog(getActivity());
                             dialog.setContentView(R.layout.dialog_confirm);
@@ -856,6 +852,7 @@ public class ExperienceEditFragment extends Fragment {
                             });
                             dialog.show();
                         }
+                        return false;
                     }
                 });
 

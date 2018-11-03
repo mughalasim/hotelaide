@@ -35,6 +35,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -222,6 +223,7 @@ public class ProfileEditActivity extends FragmentActivity {
     private void setUpToolBarAndTabs() {
         toolbar = findViewById(R.id.toolbar);
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(ProfileEditActivity.this, R.drawable.ic_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

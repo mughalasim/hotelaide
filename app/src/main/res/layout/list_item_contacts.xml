@@ -9,7 +9,6 @@
         android:id="@+id/list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_mini"
         android:paddingEnd="@dimen/padding_small"
         android:paddingStart="@dimen/padding_small">
 
@@ -18,6 +17,7 @@
             android:layout_width="@dimen/img_size_medium"
             android:layout_height="@dimen/img_size_medium"
             android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/padding_small"
             android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
             android:src="@color/light_grey"
@@ -33,13 +33,6 @@
             android:layout_toEndOf="@+id/img_user"
             android:text="@string/app_name"
             android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line_thickness"
-            android:background="@color/grey"
-            android:layout_marginTop="@dimen/padding_small"
-            android:layout_below="@+id/img_user"/>
 
     </RelativeLayout>
 

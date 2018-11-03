@@ -290,8 +290,8 @@ public class ProfileActivity extends ParentActivity {
             txt_user_availability.setText("Available");
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
 
-            rl_header.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.white));
-            ns_scroll_view.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.white));
+            rl_header.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.background_app));
+            ns_scroll_view.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.background_app));
 
         } else {
             txt_user_availability.setText("Hidden");
