@@ -1,7 +1,10 @@
 package com.hotelaide.main.activities;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,16 +20,20 @@ import com.bumptech.glide.Glide;
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceViewFragment;
+import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER_COMPLETE;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_DOCUMENTS;
@@ -56,6 +63,7 @@ public class ProfileActivity extends ParentActivity {
     private RelativeLayout rl_progress;
     private SeekBar seek_bar_progress;
     private TextView txt_progress;
+    private final String TAG_LOG = "PROFILE VIEW";
 
     // BANNER ----------------------------------------
     private ImageView
@@ -77,8 +85,11 @@ public class ProfileActivity extends ParentActivity {
             txt_user_phone,
             txt_user_availability;
 
+
+    private BroadcastReceiver receiver;
+
     // BACKGROUND ------------------------------------
-    private NestedScrollView ns_scroll_view;
+    private SwipeRefreshLayout swipe_refresh;
     private RelativeLayout rl_header;
 
 
@@ -97,6 +108,7 @@ public class ProfileActivity extends ParentActivity {
 
         setListeners();
 
+
     }
 
     @Override
@@ -106,6 +118,18 @@ public class ProfileActivity extends ParentActivity {
         setupEducation();
         setupWork();
         setUpDocuments();
+        if (receiver == null) {
+            listenSetUserBroadcast();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (receiver != null) {
+            unregisterReceiver(receiver);
+            receiver = null;
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -131,7 +155,7 @@ public class ProfileActivity extends ParentActivity {
         STR_SHARE_LINK = "Hey! Kindly check out my CV on HotelAide by following this link: " + SharedPrefs.getString(USER_URL);
 
         rl_header = findViewById(R.id.rl_header);
-        ns_scroll_view = findViewById(R.id.ns_scroll_view);
+        swipe_refresh = findViewById(R.id.swipe_refresh);
 
         rl_progress = findViewById(R.id.rl_progress);
         seek_bar_progress = findViewById(R.id.seek_bar_progress);
@@ -177,6 +201,14 @@ public class ProfileActivity extends ParentActivity {
             @Override
             public void onClick(View v) {
                 helpers.openImageViewer(ProfileActivity.this, SharedPrefs.getString(USER_IMG_BANNER));
+            }
+        });
+
+        swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe_refresh.setRefreshing(false);
+                helpers.asyncGetUser();
             }
         });
     }
@@ -291,14 +323,14 @@ public class ProfileActivity extends ParentActivity {
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
 
             rl_header.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.background_app));
-            ns_scroll_view.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.background_app));
+            swipe_refresh.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.background_app));
 
         } else {
             txt_user_availability.setText("Hidden");
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.red));
 
             rl_header.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.grey));
-            ns_scroll_view.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.grey));
+            swipe_refresh.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.grey));
 
         }
 
@@ -339,5 +371,26 @@ public class ProfileActivity extends ParentActivity {
         } else if (view.getId() == R.id.btn_update_image) {
             startActivity(new Intent(ProfileActivity.this, ProfileEditActivity.class));
         }
+    }
+
+    private void listenSetUserBroadcast() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BROADCAST_SET_USER_COMPLETE);
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getExtras() != null) {
+                    if (intent.getExtras().getString(EXTRA_PASSED) != null) {
+                        Helpers.LogThis(TAG_LOG, "PASSED");
+                        helpers.ToastMessage(ProfileActivity.this, "Update successful");
+                        setTextAndImages();
+                    } else if (intent.getExtras().getString(EXTRA_FAILED) != null) {
+                        Helpers.LogThis(TAG_LOG, "FAILED");
+                        helpers.ToastMessage(ProfileActivity.this, "Update failed, please try again later");
+                    }
+                }
+            }
+        };
+        registerReceiver(receiver, filter);
     }
 }

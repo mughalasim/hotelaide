@@ -52,7 +52,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 ;
 
@@ -329,17 +331,20 @@ public class StartUpLoginFragment extends Fragment {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
                 try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+                    Helpers.LogThis(TAG_LOG, response.toString());
 
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
 
                     if (main.getBoolean("success") && getActivity() != null) {
                         JSONObject data = main.getJSONObject("data");
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
                             SharedPrefs.setString(ACCESS_TOKEN, data.getString("token"));
-                            startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_RETURN, EXTRA_START_RETURN));
+                            if (SharedPrefs.getString(USER_F_NAME).equals("")) {
+                                startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
+                            } else {
+                                startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_RETURN, EXTRA_START_RETURN));
+                            }
                             getActivity().finish();
                         } else {
                             helpers.ToastMessage(getActivity(), getString(R.string.error_invalid_user));
@@ -347,6 +352,8 @@ public class StartUpLoginFragment extends Fragment {
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
+
+                    helpers.progressDialog(false);
 
                 } catch (JSONException e) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));

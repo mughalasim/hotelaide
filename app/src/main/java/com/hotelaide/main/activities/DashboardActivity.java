@@ -20,6 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
@@ -62,11 +63,16 @@ public class DashboardActivity extends ParentActivity {
     private void handleExtraBundles() {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getString(EXTRA_START_FIRST_TIME) != null) {
+            if (SharedPrefs.getString(USER_F_NAME).equals("")) {
+                startActivity(new Intent(DashboardActivity.this, ProfileEditActivity.class)
+                        .putExtra(EXTRA_PROFILE_BASIC, EXTRA_PROFILE_BASIC));
 
-            helpers.myDialog(DashboardActivity.this,
-                    "WELCOME", SharedPrefs.getString(USER_F_NAME) + ", thank you for joining "
-                            + getString(R.string.app_name) +
-                            ", You are on the Dashboard where you can easily navigate through the app.");
+            } else {
+                helpers.myDialog(DashboardActivity.this,
+                        "WELCOME", SharedPrefs.getString(USER_F_NAME) + ", thank you for joining "
+                                + getString(R.string.app_name) +
+                                ", You are on the Dashboard where you can easily navigate through the app.");
+            }
 
             SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
             SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, true);

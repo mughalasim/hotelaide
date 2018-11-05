@@ -18,6 +18,7 @@ android {
     }
 
     buildTypes {
+
         release {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.shrink
@@ -25,6 +26,7 @@ android {
             shrinkResources rootProject.shrink
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
         debug {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.shrink
@@ -35,6 +37,7 @@ android {
     }
 
     productFlavors {
+
         prod {
             // MAIN URL'S
             buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.com/api/"'
@@ -61,12 +64,12 @@ android {
             buildConfigField 'String', 'FILTER_NAME', '"establishment.name"'
         }
     }
+
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
 }
-
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -116,6 +119,7 @@ dependencies {
     // YOYO ANIMATIONS
     implementation 'com.daimajia.easing:library:2.1@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
     // MORE FROM LOTTIE
     implementation 'com.airbnb.android:lottie:2.8.0'
 
@@ -142,8 +146,9 @@ dependencies {
     implementation 'pub.devrel:easypermissions:1.2.0'
 
     // STETHO INSPECTOR BY FACEBOOK
-//    implementation 'com.facebook.stetho:stetho:1.5.0'
-//    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    //    implementation 'com.facebook.stetho:stetho:1.5.0'
+    //    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
     // VIEWPAGER TRANSFORMER
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
@@ -156,6 +161,6 @@ dependencies {
 
     // PDF VIEWER
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
-
 }
+
 apply plugin: 'com.google.gms.google-services'

@@ -90,6 +90,7 @@ import static android.content.pm.PackageManager.GET_SIGNATURES;
 import static android.content.pm.PackageManager.NameNotFoundException;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER_COMPLETE;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_UPLOAD_COMPLETE;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_DESC;
@@ -103,14 +104,18 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
-import static com.hotelaide.utils.StaticVariables.EXTRA_UPLOAD_FAILED;
-import static com.hotelaide.utils.StaticVariables.EXTRA_UPLOAD_PASSED;
+import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
+import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
+import static com.hotelaide.utils.StaticVariables.USER_DOB;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
 
 ;
@@ -608,12 +613,6 @@ public class Helpers {
 
     public boolean validateJobApplication(Context context) {
 
-//        if (SharedPrefs.getInt(USER_PROFILE_COMPLETION) < 70) {
-//            dialogEditProfile(context, "profile", EXTRA_PROFILE_BASIC);
-//            return false;
-//
-//        } else
-
         if (SharedPrefs.getInt(USER_AVAILABILITY) == 0) {
             dialogEditProfile(context, "availability", EXTRA_PROFILE_BASIC);
             return false;
@@ -636,6 +635,38 @@ public class Helpers {
 
         } else if (db.getAllExperience(EXPERIENCE_TYPE_WORK).size() < 1) {
             dialogEditProfile(context, "employment history", EXTRA_PROFILE_WORK);
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validateProfileCompletion(Context context) {
+
+        if (SharedPrefs.getString(USER_F_NAME).equals("")) {
+            ToastMessage(context, "You have not set your first name");
+            return false;
+
+        } else if (SharedPrefs.getString(USER_L_NAME).equals("")) {
+            ToastMessage(context, "You have not set your last name");
+            return false;
+
+        }
+        if (SharedPrefs.getString(USER_DOB).equals("")) {
+            ToastMessage(context, "You have not set your date of birth");
+            return false;
+
+        }else if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
+            ToastMessage(context, "You have not set your address");
+            return false;
+
+        } else if (SharedPrefs.getInt(USER_PHONE) == 0) {
+            ToastMessage(context, "You have not set your phone number");
+            return false;
+
+        } else if (SharedPrefs.getInt(USER_COUNTY) == 0) {
+            ToastMessage(context, "You have not set your county");
             return false;
 
         } else {
@@ -677,7 +708,6 @@ public class Helpers {
         }
 
     }
-
 
     public String formatDate(String string_date) {
 
@@ -936,9 +966,11 @@ public class Helpers {
 
                 } catch (JSONException e) {
                     LogThis(TAG_LOG, e.toString());
+                    context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
 
                 } catch (Exception e) {
                     LogThis(TAG_LOG, e.toString());
+                    context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                 }
             }
 
@@ -946,6 +978,7 @@ public class Helpers {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 LogThis(TAG_LOG, t.toString());
                 LogThis(TAG_LOG, call.toString());
+                context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             }
 
         });
@@ -1184,14 +1217,14 @@ public class Helpers {
                         JSONObject data_object = main.getJSONObject("data");
                         db.setDocumentFromJson(data_object.getJSONObject("document"));
 
-                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_PASSED, EXTRA_UPLOAD_PASSED));
+                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
                     } else {
                         createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_unknown));
-                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     }
                 } catch (JSONException e) {
                     createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
-                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     e.printStackTrace();
                 }
             }
@@ -1205,7 +1238,7 @@ public class Helpers {
                 } else {
                     createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_connection));
                 }
-                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             }
         });
 
@@ -1226,16 +1259,16 @@ public class Helpers {
                     LogThis(TAG_LOG, main.toString());
                     if (main.getBoolean("success")) {
                         db.deleteDocumentByID(String.valueOf(id));
-                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_PASSED, EXTRA_UPLOAD_PASSED));
+                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
                     } else{
-                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     }
                 } catch (JSONException e) {
-                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     LogThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     LogThis(TAG_LOG, e.toString());
                 }
             }
@@ -1244,7 +1277,7 @@ public class Helpers {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 LogThis(TAG_LOG, t.toString());
                 LogThis(TAG_LOG, call.toString());
-                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_UPLOAD_FAILED, EXTRA_UPLOAD_FAILED));
+                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             }
 
         });

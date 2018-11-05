@@ -61,6 +61,7 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_PASS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_CAMERA;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
@@ -142,6 +143,13 @@ public class ProfileEditActivity extends FragmentActivity {
         MAP_ACTIVITY_LATITUDE = 0.0;
         MAP_ACTIVITY_LONGITUDE = 0.0;
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (helpers.validateProfileCompletion(ProfileEditActivity.this)) {
+            super.onBackPressed();
+        }
     }
 
     @Override

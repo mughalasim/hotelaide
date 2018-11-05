@@ -25,8 +25,11 @@ import io.fabric.sdk.android.Fabric;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.DATABASE_VERSION;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_LAUNCH;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -100,7 +103,11 @@ public class SplashScreenActivity extends AppCompatActivity {
                     if (helpers.validateServiceRunning(MessagingService.class)) {
                         startService(new Intent(SplashScreenActivity.this, MessagingService.class));
                     }
-                    startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class).putExtra(EXTRA_START_LAUNCH, EXTRA_START_LAUNCH));
+                    if (SharedPrefs.getString(USER_F_NAME).equals("")) {
+                        startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class).putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
+                    } else {
+                        startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class).putExtra(EXTRA_START_LAUNCH, EXTRA_START_LAUNCH));
+                    }
                 }
                 finish();
             }

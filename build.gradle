@@ -1,5 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 buildscript {
+
     repositories {
         google()
         jcenter()
@@ -22,12 +24,14 @@ buildscript {
 
 apply plugin: 'com.gradle.build-scan'
 apply plugin: 'java'
+
 buildScan {
     licenseAgreementUrl = 'https://gradle.com/terms-of-service'
     licenseAgree = 'yes'
 }
 
 allprojects {
+
     repositories {
         google()
         jcenter()
@@ -53,8 +57,8 @@ ext {
     SupportLibrary = '1.0.0'
 
     // Debug the App
-    debugMode = false
-    shrink = true
+    debugMode = true
+    shrink = false
 
     // App Versioning
     versionCode = 16

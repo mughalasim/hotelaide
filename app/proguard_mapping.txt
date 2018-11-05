@@ -40203,36 +40203,46 @@ com.hotelaide.main.activities.PdfViewActivity$3 -> com.hotelaide.main.activities
 com.hotelaide.main.activities.PdfViewActivity$4 -> com.hotelaide.main.activities.P:
     com.hotelaide.main.activities.PdfViewActivity this$0 -> a
 com.hotelaide.main.activities.ProfileActivity -> com.hotelaide.main.activities.ProfileActivity:
-    android.widget.TextView txt_user_about -> O
+    android.widget.TextView txt_user_l_name -> O
     android.widget.RelativeLayout rl_progress -> H
-    android.widget.TextView txt_user_l_name -> N
-    android.widget.TextView txt_user_age -> Q
-    android.widget.TextView txt_user_gender -> P
-    android.widget.TextView txt_user_full_address -> S
-    android.widget.TextView txt_user_dob -> R
+    android.widget.TextView txt_user_f_name -> N
+    android.widget.TextView txt_user_gender -> Q
+    android.widget.TextView txt_user_about -> P
+    java.lang.String TAG_LOG -> K
+    android.widget.TextView txt_user_dob -> S
+    android.widget.TextView txt_user_age -> R
     android.widget.SeekBar seek_bar_progress -> I
-    android.widget.TextView txt_user_email -> U
-    android.widget.TextView txt_user_county_name -> T
-    android.widget.TextView txt_user_availability -> W
-    android.widget.TextView txt_user_phone -> V
-    android.widget.RelativeLayout rl_header -> Y
-    android.widget.ImageView img_avatar -> L
-    android.widget.ImageView img_banner -> K
+    android.widget.TextView txt_user_county_name -> U
+    android.widget.TextView txt_user_full_address -> T
+    android.widget.TextView txt_user_phone -> W
+    android.widget.TextView txt_user_email -> V
+    android.widget.TextView txt_user_availability -> X
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout swipe_refresh -> Z
+    android.content.BroadcastReceiver receiver -> Y
+    android.widget.ImageView img_banner -> L
+    android.widget.ImageView img_avatar -> M
+    android.widget.RelativeLayout rl_header -> aa
     android.widget.TextView txt_progress -> J
-    androidx.core.widget.NestedScrollView ns_scroll_view -> X
-    android.widget.TextView txt_user_f_name -> M
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout access$000(com.hotelaide.main.activities.ProfileActivity) -> a
+    void access$100(com.hotelaide.main.activities.ProfileActivity) -> b
     void updateProfileSeekBar(int) -> d
     void findAllViews() -> g
-    void setListeners() -> h
-    void setTextAndImages() -> i
-    void setUpDocuments() -> j
-    void setupEducation() -> k
-    void setupWork() -> l
+    void listenSetUserBroadcast() -> h
+    void setListeners() -> i
+    void setTextAndImages() -> j
+    void setUpDocuments() -> k
+    void setupEducation() -> l
+    void setupWork() -> m
 com.hotelaide.main.activities.ProfileActivity$1 -> com.hotelaide.main.activities.Q:
     com.hotelaide.main.activities.ProfileActivity this$0 -> a
 com.hotelaide.main.activities.ProfileActivity$2 -> com.hotelaide.main.activities.R:
     com.hotelaide.main.activities.ProfileActivity this$0 -> a
 com.hotelaide.main.activities.ProfileActivity$3 -> com.hotelaide.main.activities.S:
+    com.hotelaide.main.activities.ProfileActivity this$0 -> a
+com.hotelaide.main.activities.ProfileActivity$4 -> com.hotelaide.main.activities.T:
+    com.hotelaide.main.activities.ProfileActivity this$0 -> a
+    void onRefresh() -> a
+com.hotelaide.main.activities.ProfileActivity$5 -> com.hotelaide.main.activities.U:
     com.hotelaide.main.activities.ProfileActivity this$0 -> a
 com.hotelaide.main.activities.ProfileEditActivity -> com.hotelaide.main.activities.ProfileEditActivity:
     android.widget.TextView toolbar_text -> n
@@ -40267,23 +40277,23 @@ com.hotelaide.main.activities.ProfileEditActivity -> com.hotelaide.main.activiti
     void access$800(com.hotelaide.main.activities.ProfileEditActivity) -> g
     void setListeners() -> g
     void setUpToolBarAndTabs() -> h
-com.hotelaide.main.activities.ProfileEditActivity$1 -> com.hotelaide.main.activities.T:
+com.hotelaide.main.activities.ProfileEditActivity$1 -> com.hotelaide.main.activities.V:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> a
-com.hotelaide.main.activities.ProfileEditActivity$2 -> com.hotelaide.main.activities.U:
+com.hotelaide.main.activities.ProfileEditActivity$2 -> com.hotelaide.main.activities.W:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> a
     void onOffsetChanged(com.google.android.material.appbar.AppBarLayout,int) -> a
-com.hotelaide.main.activities.ProfileEditActivity$3 -> com.hotelaide.main.activities.V:
+com.hotelaide.main.activities.ProfileEditActivity$3 -> com.hotelaide.main.activities.X:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> b
     java.lang.String[] val$perms -> a
-com.hotelaide.main.activities.ProfileEditActivity$4 -> com.hotelaide.main.activities.W:
+com.hotelaide.main.activities.ProfileEditActivity$4 -> com.hotelaide.main.activities.Y:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> b
     java.lang.String[] val$perms -> a
-com.hotelaide.main.activities.ProfileEditActivity$5 -> com.hotelaide.main.activities.X:
+com.hotelaide.main.activities.ProfileEditActivity$5 -> com.hotelaide.main.activities.Z:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> a
     void onPageScrollStateChanged(int) -> a
     void onPageScrolled(int,float,int) -> a
     void onPageSelected(int) -> b
-com.hotelaide.main.activities.ProfileEditActivity$6 -> com.hotelaide.main.activities.Y:
+com.hotelaide.main.activities.ProfileEditActivity$6 -> com.hotelaide.main.activities.aa:
     com.hotelaide.main.activities.ProfileEditActivity this$0 -> a
     void onFailure(retrofit2.Call,java.lang.Throwable) -> a
     void onResponse(retrofit2.Call,retrofit2.Response) -> a
@@ -40302,16 +40312,16 @@ com.hotelaide.main.activities.SettingsActivity -> com.hotelaide.main.activities.
     android.widget.TextView delete_account -> K
     void findAllViews() -> g
     void setListeners() -> h
-com.hotelaide.main.activities.SettingsActivity$1 -> com.hotelaide.main.activities.Z:
+com.hotelaide.main.activities.SettingsActivity$1 -> com.hotelaide.main.activities.ba:
     com.hotelaide.main.activities.SettingsActivity this$0 -> a
-com.hotelaide.main.activities.SettingsActivity$2 -> com.hotelaide.main.activities.aa:
+com.hotelaide.main.activities.SettingsActivity$2 -> com.hotelaide.main.activities.ca:
     com.hotelaide.main.activities.SettingsActivity this$0 -> a
-com.hotelaide.main.activities.SettingsActivity$3 -> com.hotelaide.main.activities.da:
+com.hotelaide.main.activities.SettingsActivity$3 -> com.hotelaide.main.activities.fa:
     com.hotelaide.main.activities.SettingsActivity this$0 -> a
-com.hotelaide.main.activities.SettingsActivity$3$1 -> com.hotelaide.main.activities.ba:
+com.hotelaide.main.activities.SettingsActivity$3$1 -> com.hotelaide.main.activities.da:
     com.hotelaide.main.activities.SettingsActivity$3 this$1 -> b
     android.app.Dialog val$dialog -> a
-com.hotelaide.main.activities.SettingsActivity$3$2 -> com.hotelaide.main.activities.ca:
+com.hotelaide.main.activities.SettingsActivity$3$2 -> com.hotelaide.main.activities.ea:
     com.hotelaide.main.activities.SettingsActivity$3 this$1 -> b
     android.app.Dialog val$dialog -> a
 com.hotelaide.main.adapters.ConversationAdapter -> e.e.b.a.a:
@@ -41263,7 +41273,7 @@ com.hotelaide.utils.Helpers -> com.hotelaide.utils.x:
     void LogThis(java.lang.String,java.lang.String) -> a
     void ToastMessage(android.content.Context,java.lang.String) -> a
     boolean access$000(com.hotelaide.utils.Helpers,java.lang.String) -> a
-    com.hotelaide.utils.Database access$100(com.hotelaide.utils.Helpers) -> a
+    android.content.Context access$100(com.hotelaide.utils.Helpers) -> a
     void animateFadeIn(android.view.View) -> a
     void asyncDeleteDocument(int) -> a
     void asyncGetAllDocuments() -> a
@@ -41280,7 +41290,7 @@ com.hotelaide.utils.Helpers -> com.hotelaide.utils.x:
     boolean validateEmptyTextView(android.widget.TextView,java.lang.String) -> a
     boolean validateGooglePlayServices(android.app.Activity) -> a
     boolean validateServiceRunning(java.lang.Class) -> a
-    android.content.Context access$200(com.hotelaide.utils.Helpers) -> b
+    com.hotelaide.utils.Database access$200(com.hotelaide.utils.Helpers) -> b
     void animateFlash(android.view.View) -> b
     void asyncGetCategories() -> b
     java.lang.String calculateDateInterval(java.lang.String,java.lang.String) -> b
@@ -41292,10 +41302,11 @@ com.hotelaide.utils.Helpers -> com.hotelaide.utils.x:
     boolean validateJobApplication(android.content.Context) -> b
     void animateWobble(android.view.View) -> c
     void asyncGetCounties() -> c
-    void createNotificationChannel(android.content.Context) -> c
     void dialogEditProfile(android.content.Context,java.lang.String,java.lang.String) -> c
     void setProgressDialogMessage(java.lang.String) -> c
+    boolean validateProfileCompletion(android.content.Context) -> c
     void asyncGetEducationalLevels() -> d
+    void createNotificationChannel(android.content.Context) -> d
     boolean validateAppIsInstalled(java.lang.String) -> d
     void asyncGetJobTypes() -> e
     void asyncGetUser() -> f

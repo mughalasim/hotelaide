@@ -3,6 +3,7 @@ package com.hotelaide.utils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.hotelaide.BuildConfig;
@@ -14,8 +15,11 @@ import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
 
+import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER_COMPLETE;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.PROFILE_URL;
 import static com.hotelaide.utils.StaticVariables.USER_ABOUT;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
@@ -180,6 +184,8 @@ public class SharedPrefs {
                     }
                 }
 
+                context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
+
                 logUserModel();
 
                 return true;
@@ -188,9 +194,11 @@ public class SharedPrefs {
             }
         } catch (JSONException e) {
             Helpers.LogThis(SHARED_PREFS, e.toString());
+            context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             return false;
         } catch (Exception e) {
             Helpers.LogThis(SHARED_PREFS, e.toString());
+            context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             return false;
         }
     }

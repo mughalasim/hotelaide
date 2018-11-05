@@ -46,8 +46,8 @@ public class IntroActivity extends FragmentActivity {
             R.drawable.img_scroll1,
             R.drawable.img_scroll2,
             R.drawable.img_scroll3,
-            R.drawable.img_scroll4,
-            R.drawable.img_scroll5
+            R.drawable.img_scroll5,
+            R.drawable.img_scroll4
     };
 
     String[] descriptions = {

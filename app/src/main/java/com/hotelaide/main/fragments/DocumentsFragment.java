@@ -37,8 +37,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_UPLOAD_COMPLETE;
-import static com.hotelaide.utils.StaticVariables.EXTRA_UPLOAD_FAILED;
-import static com.hotelaide.utils.StaticVariables.EXTRA_UPLOAD_PASSED;
+import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_STORAGE;
 
 
@@ -233,10 +233,10 @@ public class DocumentsFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getExtras() != null && getActivity() != null) {
-                    if (intent.getExtras().getString(EXTRA_UPLOAD_PASSED) != null) {
+                    if (intent.getExtras().getString(EXTRA_PASSED) != null) {
                         Helpers.LogThis(TAG_LOG, "PASSED");
                         helpers.ToastMessage(getActivity(), "Update successful");
-                    } else if (intent.getExtras().getString(EXTRA_UPLOAD_FAILED) != null) {
+                    } else if (intent.getExtras().getString(EXTRA_FAILED) != null) {
                         Helpers.LogThis(TAG_LOG, "FAILED");
                         helpers.ToastMessage(getActivity(), "Update failed, please try again later");
                     }

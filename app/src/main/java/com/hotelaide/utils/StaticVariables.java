@@ -58,12 +58,13 @@ public class StaticVariables {
     public final static String EXTRA_PROFILE_EDUCATION = "EDUCATION";
     public final static String EXTRA_PROFILE_WORK = "WORK";
     public final static String EXTRA_PROFILE_PASS = "PASSWORD";
-    public final static String EXTRA_UPLOAD_FAILED = "FAILED";
-    public final static String EXTRA_UPLOAD_PASSED = "PASSED";
+    public final static String EXTRA_FAILED = "FAILED";
+    public final static String EXTRA_PASSED = "PASSED";
 
 // BROADCAST VARIABLES =============================================================================
     public final static String BROADCAST_LOG_OUT = "BROADCAST_LOG_OUT";
     public final static String BROADCAST_UPLOAD_COMPLETE = "BROADCAST_UPLOAD_COMPLETE";
+    public final static String BROADCAST_SET_USER_COMPLETE = "BROADCAST_SET_USER_COMPLETE";
 
 // GLOBAL STATIC VARIABLES==========================================================================
     public static String STR_SHARE_LINK = "";

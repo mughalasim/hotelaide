@@ -7,7 +7,14 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/background_app"
+        android:contentDescription="@string/app_name" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.2"
+        android:background="@drawable/bckgrd_fade_to_transparent"
         android:contentDescription="@string/app_name" />
 
     <ImageView
@@ -17,6 +24,6 @@
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
-        android:src="@drawable/main_logo_vertical_white" />
+        android:src="@drawable/main_logo_vertical" />
 
 </RelativeLayout>
