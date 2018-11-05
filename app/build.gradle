@@ -2,10 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
+    signingConfigs {
+    }
     compileSdkVersion rootProject.compileSDK
     buildToolsVersion rootProject.buildTools
     flavorDimensions "versionCode"
-
     defaultConfig {
         applicationId "com.hotelaide"
         minSdkVersion rootProject.minSDK
@@ -16,9 +17,7 @@ android {
         multiDexEnabled true
         resConfigs "en"
     }
-
     buildTypes {
-
         release {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.shrink
@@ -26,7 +25,6 @@ android {
             shrinkResources rootProject.shrink
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
         debug {
             debuggable rootProject.debugMode
             minifyEnabled rootProject.shrink
@@ -35,7 +33,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     productFlavors {
 
         prod {
@@ -64,7 +61,6 @@ android {
             buildConfigField 'String', 'FILTER_NAME', '"establishment.name"'
         }
     }
-
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
@@ -146,7 +142,9 @@ dependencies {
     implementation 'pub.devrel:easypermissions:1.2.0'
 
     // STETHO INSPECTOR BY FACEBOOK
+
     //    implementation 'com.facebook.stetho:stetho:1.5.0'
+
     //    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
     // VIEWPAGER TRANSFORMER

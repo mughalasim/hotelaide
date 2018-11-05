@@ -48,7 +48,8 @@ public class AppliedJobsFragment extends Fragment {
     private ArrayList<JobModel> model_list = new ArrayList<>();
     private FindJobsAdapter adapter;
 
-    public AppliedJobsFragment() { }
+    public AppliedJobsFragment() {
+    }
 
 
     @Override
@@ -144,7 +145,6 @@ public class AppliedJobsFragment extends Fragment {
                         JSONArray applications = data.getJSONArray("applications");
 
                         db.deleteAppliedJobTable();
-                        db.deleteJobTable();
 
                         for (int i = 0; i < applications.length(); i++) {
                             JSONObject hit_object = applications.getJSONObject(i);
@@ -155,8 +155,9 @@ public class AppliedJobsFragment extends Fragment {
                             noListItems();
                         }
 
+                        recycler_view.invalidate();
                         adapter.updateData(model_list);
-
+                        adapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         helpers.ToastMessage(getActivity(), getString(R.string.error_server));

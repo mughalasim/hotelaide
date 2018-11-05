@@ -40527,10 +40527,11 @@ com.hotelaide.main.fragments.AppliedJobsFragment -> e.e.b.b.g:
     void findAllViews() -> d
     void access$400(com.hotelaide.main.fragments.AppliedJobsFragment) -> e
     void noListItems() -> e
-    com.hotelaide.main.adapters.FindJobsAdapter access$500(com.hotelaide.main.fragments.AppliedJobsFragment) -> f
+    androidx.recyclerview.widget.RecyclerView access$500(com.hotelaide.main.fragments.AppliedJobsFragment) -> f
     void populateAppliedJobsFromDB() -> f
-    com.hotelaide.utils.Helpers access$600(com.hotelaide.main.fragments.AppliedJobsFragment) -> g
+    com.hotelaide.main.adapters.FindJobsAdapter access$600(com.hotelaide.main.fragments.AppliedJobsFragment) -> g
     void setListeners() -> g
+    com.hotelaide.utils.Helpers access$700(com.hotelaide.main.fragments.AppliedJobsFragment) -> h
 com.hotelaide.main.fragments.AppliedJobsFragment$1 -> e.e.b.b.e:
     com.hotelaide.main.fragments.AppliedJobsFragment this$0 -> a
     void onRefresh() -> a
@@ -41256,11 +41257,10 @@ com.hotelaide.utils.Database -> com.hotelaide.utils.a:
     java.util.List getAllFilterItems(java.lang.String) -> d
     void deleteDocumentsTable() -> e
     void deleteEducationLevelsTable() -> f
-    void deleteJobTable() -> g
-    void deleteJobTypeTable() -> h
-    java.util.ArrayList getAllAppliedJobs() -> i
-    java.util.ArrayList getAllDocuments() -> j
-    void setDirtyDocument() -> k
+    void deleteJobTypeTable() -> g
+    java.util.ArrayList getAllAppliedJobs() -> h
+    java.util.ArrayList getAllDocuments() -> i
+    void setDirtyDocument() -> j
 com.hotelaide.utils.FireBaseMessagingService -> com.hotelaide.utils.FireBaseMessagingService:
     void onMessageReceived(com.google.firebase.messaging.RemoteMessage) -> a
     void onNewToken(java.lang.String) -> b

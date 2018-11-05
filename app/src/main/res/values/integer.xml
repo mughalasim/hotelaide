@@ -2,6 +2,6 @@
 <resources>
 
     <!-- ACTIVITY ANIMATION TIME ================================================================-->
-    <integer name="anim_time">600</integer>
+    <integer name="anim_time">200</integer>
 
 </resources>

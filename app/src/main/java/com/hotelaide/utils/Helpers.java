@@ -56,7 +56,6 @@ import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.services.FileUploadService;
 import com.hotelaide.services.MessagingService;
-import com.hotelaide.startup.LoginActivity;
 import com.hotelaide.startup.SplashScreenActivity;
 
 import org.json.JSONArray;
@@ -100,16 +99,15 @@ import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
-import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
-import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
-import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_DOB;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
@@ -183,11 +181,7 @@ public class Helpers {
                 break;
 
             case R.id.drawer_log_out:
-                SharedPrefs.deleteAllSharedPrefs();
-                AccessToken.setCurrentAccessToken(null);
-                LoginManager.getInstance().logOut();
-                context.startActivity(new Intent(context, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                context.sendBroadcast(new Intent().setAction(BROADCAST_LOG_OUT));
+                sessionExpiryBroadcast();
                 break;
         }
     }
@@ -197,6 +191,10 @@ public class Helpers {
     public static void sessionExpiryBroadcast() {
         Context context = MyApplication.getAppContext();
         SharedPrefs.deleteAllSharedPrefs();
+
+        AccessToken.setCurrentAccessToken(null);
+        LoginManager.getInstance().logOut();
+
         Database db = new Database();
         db.deleteAllTables();
 
@@ -205,8 +203,8 @@ public class Helpers {
         context.stopService(new Intent(context, BackgroundFetchService.class));
         context.stopService(new Intent(context, FileUploadService.class));
 
-        context.startActivity(new Intent(context, SplashScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         context.sendBroadcast(new Intent().setAction(BROADCAST_LOG_OUT));
+        context.startActivity(new Intent(context, SplashScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
 

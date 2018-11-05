@@ -124,12 +124,12 @@ public class ProfileActivity extends ParentActivity {
     }
 
     @Override
-    public void onDestroy() {
+    protected void onPause() {
         if (receiver != null) {
             unregisterReceiver(receiver);
             receiver = null;
         }
-        super.onDestroy();
+        super.onPause();
     }
 
     @Override
