@@ -198,8 +198,6 @@ public class JobActivity extends AppCompatActivity {
         }
     }
 
-
-
     public void viewEstablishment(View view) {
         startActivity(new Intent(JobActivity.this, EstablishmentActivity.class)
                 .putExtra("ESTABLISHMENT_ID", Integer.parseInt(txt_establishment_id.getText().toString()))

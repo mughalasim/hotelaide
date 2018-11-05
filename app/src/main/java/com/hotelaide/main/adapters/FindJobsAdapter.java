@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHolder> {
     private final ArrayList<JobModel> jobModels;
-    //        private final String TAG_LOG = "FIND JOB ADAPTER";
     private Context context;
     private Helpers helpers;
 
@@ -94,7 +93,7 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(jobModel.id!=0){
+                    if(jobModel.id!=0 && !jobModel.name.equals("")){
                         context.startActivity(new Intent(context, JobActivity.class)
                                 .putExtra("JOB_ID", jobModel.id)
                         );

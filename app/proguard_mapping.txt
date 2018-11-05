@@ -41622,24 +41622,17 @@ com.rilixtech.Country -> com.rilixtech.a:
     boolean isEligibleForQuery(java.lang.String) -> a
     java.lang.String getName() -> b
     java.lang.String getPhoneCode() -> c
-com.rilixtech.CountryCodeAdapter -> com.rilixtech.c:
+com.rilixtech.CountryCodeAdapter -> com.rilixtech.b:
+    com.rilixtech.CountryCodeDialog$ItemRecyclerViewClickListener mListener -> e
     java.util.List mCountries -> c
-    com.rilixtech.CountryCodeAdapter$Callback mCallback -> e
     com.rilixtech.CountryCodePicker mCountryCodePicker -> d
-    java.util.List access$100(com.rilixtech.CountryCodeAdapter) -> a
+    com.rilixtech.CountryCodePicker access$100(com.rilixtech.CountryCodeAdapter) -> a
     int getItemCount() -> a
     void onBindViewHolder(com.rilixtech.CountryCodeAdapter$CountryCodeViewHolder,int) -> a
-    com.rilixtech.CountryCodeAdapter$Callback access$200(com.rilixtech.CountryCodeAdapter) -> b
     void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int) -> b
     androidx.recyclerview.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> b
     com.rilixtech.CountryCodeAdapter$CountryCodeViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> b
-    com.rilixtech.CountryCodePicker access$300(com.rilixtech.CountryCodeAdapter) -> c
-com.rilixtech.CountryCodeAdapter$1 -> com.rilixtech.b:
-    com.rilixtech.CountryCodeAdapter this$0 -> b
-    int val$position -> a
-com.rilixtech.CountryCodeAdapter$Callback -> com.rilixtech.c$a:
-    void onItemCountrySelected(com.rilixtech.Country) -> a
-com.rilixtech.CountryCodeAdapter$CountryCodeViewHolder -> com.rilixtech.c$b:
+com.rilixtech.CountryCodeAdapter$CountryCodeViewHolder -> com.rilixtech.b$a:
     android.view.View viewDivider -> y
     androidx.appcompat.widget.AppCompatImageView imvFlag -> w
     com.rilixtech.CountryCodeAdapter this$0 -> z
@@ -41649,7 +41642,7 @@ com.rilixtech.CountryCodeAdapter$CountryCodeViewHolder -> com.rilixtech.c$b:
     androidx.appcompat.widget.AppCompatTextView tvCode -> v
     void access$000(com.rilixtech.CountryCodeAdapter$CountryCodeViewHolder,com.rilixtech.Country) -> a
     void setCountry(com.rilixtech.Country) -> a
-com.rilixtech.CountryCodeDialog -> com.rilixtech.f:
+com.rilixtech.CountryCodeDialog -> com.rilixtech.d:
     androidx.appcompat.widget.AppCompatTextView mTvNoResult -> b
     androidx.appcompat.widget.AppCompatTextView mTvTitle -> c
     android.widget.RelativeLayout mRlyDialog -> f
@@ -41661,22 +41654,23 @@ com.rilixtech.CountryCodeDialog -> com.rilixtech.f:
     java.util.List mFilteredCountries -> h
     java.util.List masterCountries -> g
     java.util.List mTempCountries -> k
-    com.rilixtech.CountryCodePicker access$000(com.rilixtech.CountryCodeDialog) -> a
-    void access$300(com.rilixtech.CountryCodeDialog,java.lang.String) -> a
+    void access$000(com.rilixtech.CountryCodeDialog,java.lang.String) -> a
+    androidx.recyclerview.widget.RecyclerView access$100(com.rilixtech.CountryCodeDialog) -> a
     int adjustAlpha(int,float) -> a
     void applyQuery(java.lang.String) -> a
     java.util.List getFilteredCountries() -> a
-    androidx.appcompat.widget.AppCompatEditText access$100(com.rilixtech.CountryCodeDialog) -> b
+    java.util.List access$200(com.rilixtech.CountryCodeDialog) -> b
     java.util.List getFilteredCountries(java.lang.String) -> b
     void setSearchBar() -> b
-    android.view.inputmethod.InputMethodManager access$200(com.rilixtech.CountryCodeDialog) -> c
+    com.rilixtech.CountryCodePicker access$300(com.rilixtech.CountryCodeDialog) -> c
     void setTextWatcher() -> c
+    androidx.appcompat.widget.AppCompatEditText access$400(com.rilixtech.CountryCodeDialog) -> d
     void setupData() -> d
+    android.view.inputmethod.InputMethodManager access$500(com.rilixtech.CountryCodeDialog) -> e
     void setupUI() -> e
-com.rilixtech.CountryCodeDialog$1 -> com.rilixtech.d:
+com.rilixtech.CountryCodeDialog$1 -> com.rilixtech.c:
     com.rilixtech.CountryCodeDialog this$0 -> a
-    void onItemCountrySelected(com.rilixtech.Country) -> a
-com.rilixtech.CountryCodeDialog$2 -> com.rilixtech.e:
+com.rilixtech.CountryCodeDialog$ItemRecyclerViewClickListener -> com.rilixtech.d$a:
     com.rilixtech.CountryCodeDialog this$0 -> a
 com.rilixtech.CountryCodePicker -> com.rilixtech.CountryCodePicker:
     io.michaelrocks.libphonenumber.android.PhoneNumberUtil mPhoneUtil -> f
@@ -41720,12 +41714,15 @@ com.rilixtech.CountryCodePicker -> com.rilixtech.CountryCodePicker:
     com.rilixtech.CountryCodeDialog access$000(com.rilixtech.CountryCodePicker) -> a
     com.rilixtech.CountryCodeDialog access$002(com.rilixtech.CountryCodePicker,com.rilixtech.CountryCodeDialog) -> a
     void applyCustomProperty(android.util.AttributeSet) -> a
+    void applyCustomPropertyOfColor(android.content.res.TypedArray) -> a
     java.lang.String detectCarrierNumber(java.lang.String,com.rilixtech.Country) -> a
     void enableSetCountryByTimeZone(boolean) -> a
     boolean isAlreadyInList(com.rilixtech.Country,java.util.List) -> a
     boolean isHidePhoneCode() -> a
     void registerPhoneNumberTextView(android.widget.TextView) -> a
+    void setRegisteredPhoneNumberTextView(android.widget.TextView,java.lang.String) -> a
     com.rilixtech.Country access$100(com.rilixtech.CountryCodePicker) -> b
+    void applyCustomPropertyOfDefaultCountryNameCode(android.content.res.TypedArray) -> b
     void init(android.util.AttributeSet) -> b
     boolean isKeyboardAutoPopOnSearch() -> b
     void showFlag(boolean) -> b
@@ -41738,7 +41735,7 @@ com.rilixtech.CountryCodePicker -> com.rilixtech.CountryCodePicker:
     void setDefaultCountryFlagAndCode() -> g
     void setEmptyDefault() -> h
     void setPhoneNumberHint() -> i
-com.rilixtech.CountryCodePicker$1 -> com.rilixtech.g:
+com.rilixtech.CountryCodePicker$1 -> com.rilixtech.e:
     com.rilixtech.CountryCodePicker this$0 -> a
 com.rilixtech.CountryCodePicker$OnCountryChangeListener -> com.rilixtech.CountryCodePicker$a:
     void onCountrySelected(com.rilixtech.Country) -> a
@@ -41746,8 +41743,10 @@ com.rilixtech.CountryCodePicker$PhoneNumberInputValidityListener -> com.rilixtec
     void onFinish(com.rilixtech.CountryCodePicker,boolean) -> a
 com.rilixtech.CountryCodePicker$PhoneNumberWatcher -> com.rilixtech.CountryCodePicker$c:
     boolean lastValidity -> a
-    com.rilixtech.CountryCodePicker this$0 -> b
-com.rilixtech.CountryUtils -> com.rilixtech.i:
+    java.lang.String previousCountryCode -> b
+    com.rilixtech.CountryCodePicker this$0 -> c
+    java.lang.String getPreviousCountryCode() -> a
+com.rilixtech.CountryUtils -> com.rilixtech.g:
     java.util.List countries -> a
     java.util.Map timeZoneAndCountryISOs -> b
     java.util.List getAllCountries(android.content.Context) -> a
@@ -41759,15 +41758,15 @@ com.rilixtech.CountryUtils -> com.rilixtech.i:
     java.util.List getCountryIsoByTimeZone(android.content.Context,java.lang.String) -> b
     java.util.Map getTimeZoneAndCountryISOs(android.content.Context) -> b
     com.rilixtech.Country getByCode(android.content.Context,java.util.List,java.lang.String) -> c
-com.rilixtech.CountryUtils$1 -> com.rilixtech.h:
+com.rilixtech.CountryUtils$1 -> com.rilixtech.f:
     int compare(com.rilixtech.Country,com.rilixtech.Country) -> a
-com.rilixtech.R$color -> com.rilixtech.j:
-com.rilixtech.R$drawable -> com.rilixtech.k:
-com.rilixtech.R$id -> com.rilixtech.l:
-com.rilixtech.R$layout -> com.rilixtech.m:
-com.rilixtech.R$raw -> com.rilixtech.n:
-com.rilixtech.R$string -> com.rilixtech.o:
-com.rilixtech.R$styleable -> com.rilixtech.p:
+com.rilixtech.R$color -> com.rilixtech.h:
+com.rilixtech.R$drawable -> com.rilixtech.i:
+com.rilixtech.R$id -> com.rilixtech.j:
+com.rilixtech.R$layout -> com.rilixtech.k:
+com.rilixtech.R$raw -> com.rilixtech.l:
+com.rilixtech.R$string -> com.rilixtech.m:
+com.rilixtech.R$styleable -> com.rilixtech.n:
 com.shockwave.pdfium.BuildConfig -> com.shockwave.pdfium.BuildConfig:
 com.shockwave.pdfium.PdfDocument -> com.shockwave.pdfium.PdfDocument:
     android.os.ParcelFileDescriptor parcelFileDescriptor -> b
@@ -49744,20 +49743,19 @@ io.michaelrocks.libphonenumber.android.NumberParseException$ErrorType -> h.c.a.a
     io.michaelrocks.libphonenumber.android.NumberParseException$ErrorType[] $VALUES -> f
 io.michaelrocks.libphonenumber.android.PhoneNumberUtil -> h.c.a.a.j:
     java.util.regex.Pattern NON_DIGITS_PATTERN -> w
-    java.util.regex.Pattern NP_PATTERN -> y
+    java.util.regex.Pattern FIRST_GROUP_ONLY_PREFIX_PATTERN -> y
     java.lang.String VALID_ALPHA -> j
     java.util.regex.Pattern EXTN_PATTERN -> u
+    io.michaelrocks.libphonenumber.android.internal.MatcherApi matcherApi -> B
     java.util.regex.Pattern SECOND_NUMBER_START_PATTERN -> o
     java.util.regex.Pattern VALID_ALPHA_PHONE_PATTERN -> q
     java.util.regex.Pattern PLUS_CHARS_PATTERN -> k
     java.lang.String VALID_PHONE_NUMBER -> r
     java.util.regex.Pattern CAPTURING_DIGIT_PATTERN -> m
     java.lang.String EXTN_PATTERNS_FOR_MATCHING -> t
-    java.util.Set countryCodesForNonGeographicalRegion -> H
-    java.util.Map countryCallingCodeToRegionCodeMap -> D
+    io.michaelrocks.libphonenumber.android.MetadataSource metadataSource -> z
     java.util.Set GEO_MOBILE_COUNTRIES_WITHOUT_MOBILE_AREA_CODES -> c
-    io.michaelrocks.libphonenumber.android.RegexCache regexCache -> F
-    java.util.regex.Pattern CC_PATTERN -> A
+    java.util.Set countryCodesForNonGeographicalRegion -> F
     java.util.Map DIALLABLE_CHAR_MAPPINGS -> e
     java.util.Map ALPHA_PHONE_MAPPINGS -> g
     java.util.regex.Pattern VALID_PHONE_NUMBER_PATTERN -> v
@@ -49766,16 +49764,15 @@ io.michaelrocks.libphonenumber.android.PhoneNumberUtil -> h.c.a.a.j:
     java.util.regex.Pattern UNWANTED_END_CHAR_PATTERN -> p
     java.lang.String EXTN_PATTERNS_FOR_PARSING -> s
     java.util.logging.Logger logger -> a
+    io.michaelrocks.libphonenumber.android.internal.RegexCache regexCache -> D
     java.util.regex.Pattern SEPARATOR_PATTERN -> l
-    java.util.Set supportedRegions -> G
+    java.util.Map countryCallingCodeToRegionCodeMap -> A
     java.util.Map MOBILE_TOKEN_MAPPINGS -> b
-    java.util.regex.Pattern UNIQUE_INTERNATIONAL_PREFIX -> i
+    java.util.regex.Pattern SINGLE_INTERNATIONAL_PREFIX -> i
+    java.util.Set nanpaRegions -> C
     java.util.Set GEO_MOBILE_COUNTRIES -> d
-    java.util.regex.Pattern FIRST_GROUP_ONLY_PREFIX_PATTERN -> B
-    java.util.Set nanpaRegions -> E
-    io.michaelrocks.libphonenumber.android.MetadataSource metadataSource -> C
+    java.util.Set supportedRegions -> E
     java.util.Map ALPHA_MAPPINGS -> f
-    java.util.regex.Pattern FG_PATTERN -> z
     java.util.Map ALL_PLUS_NUMBER_GROUPING_SYMBOLS -> h
     void buildNationalNumberForParsing(java.lang.String,java.lang.StringBuilder) -> a
     io.michaelrocks.libphonenumber.android.Phonemetadata$NumberFormat chooseFormattingPatternForNumber(java.util.List,java.lang.String) -> a
@@ -49784,14 +49781,15 @@ io.michaelrocks.libphonenumber.android.PhoneNumberUtil -> h.c.a.a.j:
     io.michaelrocks.libphonenumber.android.PhoneNumberUtil createInstance(io.michaelrocks.libphonenumber.android.MetadataSource) -> a
     boolean descHasPossibleNumberData(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> a
     int extractCountryCode(java.lang.StringBuilder,java.lang.StringBuilder) -> a
-    java.lang.String extractPossibleNumber(java.lang.String) -> a
+    java.lang.CharSequence extractPossibleNumber(java.lang.CharSequence) -> a
     java.lang.String format(io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberFormat) -> a
     void format(io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberFormat,java.lang.StringBuilder) -> a
     java.lang.String formatNsn(java.lang.String,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberFormat) -> a
-    java.lang.String formatNsn(java.lang.String,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberFormat,java.lang.String) -> a
-    java.lang.String formatNsnUsingPattern(java.lang.String,io.michaelrocks.libphonenumber.android.Phonemetadata$NumberFormat,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberFormat,java.lang.String) -> a
+    java.lang.String formatNsn(java.lang.String,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberFormat,java.lang.CharSequence) -> a
+    java.lang.String formatNsnUsingPattern(java.lang.String,io.michaelrocks.libphonenumber.android.Phonemetadata$NumberFormat,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberFormat,java.lang.CharSequence) -> a
     io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber getExampleNumberForType(java.lang.String,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberType) -> a
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata getMetadataForNonGeographicalRegion(int) -> a
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata getMetadataForRegion(java.lang.String) -> a
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata getMetadataForRegionOrCallingCode(int,java.lang.String) -> a
     java.lang.String getNationalSignificantNumber(io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> a
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getNumberDescByType(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberType) -> a
@@ -49800,33 +49798,31 @@ io.michaelrocks.libphonenumber.android.PhoneNumberUtil -> h.c.a.a.j:
     boolean isNumberMatchingDesc(java.lang.String,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> a
     boolean isValidNumberForRegion(io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber,java.lang.String) -> a
     void maybeAppendFormattedExtension(io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberFormat,java.lang.StringBuilder) -> a
-    int maybeExtractCountryCode(java.lang.String,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,java.lang.StringBuilder,boolean,io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> a
+    int maybeExtractCountryCode(java.lang.CharSequence,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,java.lang.StringBuilder,boolean,io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> a
     java.lang.String maybeStripExtension(java.lang.StringBuilder) -> a
     io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber$CountryCodeSource maybeStripInternationalPrefixAndNormalize(java.lang.StringBuilder,java.lang.String) -> a
     boolean maybeStripNationalPrefixAndCarrierCode(java.lang.StringBuilder,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,java.lang.StringBuilder) -> a
-    java.lang.StringBuilder normalizeDigits(java.lang.String,boolean) -> a
-    java.lang.String normalizeHelper(java.lang.String,java.util.Map,boolean) -> a
-    io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber parse(java.lang.String,java.lang.String) -> a
-    void parse(java.lang.String,java.lang.String,io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> a
-    void parseHelper(java.lang.String,java.lang.String,boolean,boolean,io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> a
+    java.lang.StringBuilder normalizeDigits(java.lang.CharSequence,boolean) -> a
+    java.lang.String normalizeHelper(java.lang.CharSequence,java.util.Map,boolean) -> a
+    io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber parse(java.lang.CharSequence,java.lang.String) -> a
+    void parse(java.lang.CharSequence,java.lang.String,io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> a
+    void parseHelper(java.lang.CharSequence,java.lang.String,boolean,boolean,io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> a
     boolean parsePrefixAsIdd(java.util.regex.Pattern,java.lang.StringBuilder) -> a
     void prefixNumberWithCountryCallingCode(int,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberFormat,java.lang.StringBuilder) -> a
-    void setItalianLeadingZerosForPhoneNumber(java.lang.String,io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> a
-    io.michaelrocks.libphonenumber.android.PhoneNumberUtil$ValidationResult testNumberLength(java.lang.String,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberType) -> a
-    boolean checkRegionForParsing(java.lang.String,java.lang.String) -> b
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata getMetadataForRegion(java.lang.String) -> b
+    void setItalianLeadingZerosForPhoneNumber(java.lang.CharSequence,io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> a
+    io.michaelrocks.libphonenumber.android.PhoneNumberUtil$ValidationResult testNumberLength(java.lang.CharSequence,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata) -> a
+    io.michaelrocks.libphonenumber.android.PhoneNumberUtil$ValidationResult testNumberLength(java.lang.CharSequence,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata,io.michaelrocks.libphonenumber.android.PhoneNumberUtil$PhoneNumberType) -> a
+    boolean checkRegionForParsing(java.lang.CharSequence,java.lang.String) -> b
+    java.lang.String createExtnPattern(java.lang.String) -> b
     java.lang.String getRegionCodeForCountryCode(int) -> b
     java.lang.String getRegionCodeForNumber(io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> b
-    void normalize(java.lang.StringBuilder) -> b
-    io.michaelrocks.libphonenumber.android.PhoneNumberUtil$ValidationResult testNumberLength(java.lang.String,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata) -> b
+    boolean isViablePhoneNumber(java.lang.CharSequence) -> b
+    java.lang.StringBuilder normalize(java.lang.StringBuilder) -> b
+    int getCountryCodeForValidRegion(java.lang.String) -> c
     boolean hasValidCountryCallingCode(int) -> c
     boolean isValidNumber(io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber) -> c
-    boolean isViablePhoneNumber(java.lang.String) -> c
-    java.lang.String normalize(java.lang.String) -> d
-    java.lang.String normalizeDigitsOnly(java.lang.String) -> e
-    java.lang.String createExtnPattern(java.lang.String) -> f
-    int getCountryCodeForValidRegion(java.lang.String) -> g
-    boolean isValidRegionCode(java.lang.String) -> h
+    java.lang.String normalizeDigitsOnly(java.lang.CharSequence) -> c
+    boolean isValidRegionCode(java.lang.String) -> d
 io.michaelrocks.libphonenumber.android.PhoneNumberUtil$2 -> h.c.a.a.i:
     int[] $SwitchMap$io$michaelrocks$libphonenumber$android$PhoneNumberUtil$PhoneNumberFormat -> b
     int[] $SwitchMap$io$michaelrocks$libphonenumber$android$PhoneNumberUtil$PhoneNumberType -> c
@@ -49887,30 +49883,30 @@ io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata -> h.c.a.a.l:
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc generalDesc_ -> b
     boolean hasPremiumRate -> i
     boolean hasEmergency -> u
-    boolean sameMobileAndFixedLinePattern_ -> X
     boolean hasPager -> q
-    boolean leadingZeroPossible_ -> fa
-    boolean mobileNumberPortableRegion_ -> ha
+    boolean mobileNumberPortableRegion_ -> ja
+    java.util.List intlNumberFormat_ -> ba
+    boolean leadingZeroPossible_ -> ha
     boolean hasShortCode -> y
-    boolean mainCountryForCode_ -> ba
-    boolean hasId -> G
+    boolean mainCountryForCode_ -> da
+    boolean hasNoInternationalDialling -> G
     boolean hasCarrierSpecific -> C
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc noInternationalDialling_ -> F
-    boolean hasPreferredInternationalPrefix -> M
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc smsServices_ -> F
+    boolean hasInternationalPrefix -> M
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc carrierSpecific_ -> D
-    java.lang.String id_ -> H
-    boolean hasCountryCode -> I
-    java.lang.String internationalPrefix_ -> L
-    boolean hasNationalPrefixTransformRule -> U
-    java.util.List intlNumberFormat_ -> Z
+    int countryCode_ -> L
+    boolean hasId -> I
+    boolean hasNationalPrefixForParsing -> U
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc shortCode_ -> z
-    java.lang.String nationalPrefix_ -> P
-    boolean hasPreferredExtnPrefix -> Q
+    java.lang.String preferredInternationalPrefix_ -> P
+    boolean hasNationalPrefix -> Q
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc emergency_ -> v
-    java.lang.String nationalPrefixForParsing_ -> T
+    java.lang.String preferredExtnPrefix_ -> T
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc pager_ -> r
+    java.lang.String nationalPrefixTransformRule_ -> X
+    boolean hasSameMobileAndFixedLinePattern -> Y
+    java.lang.String leadingDigits_ -> fa
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc personalNumber_ -> n
-    java.lang.String leadingDigits_ -> da
     boolean hasMobile -> e
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc premiumRate_ -> j
     boolean hasGeneralDesc -> a
@@ -49918,26 +49914,28 @@ io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata -> h.c.a.a.l:
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc fixedLine_ -> d
     boolean hasVoip -> o
     boolean hasSharedCost -> k
-    java.util.List numberFormat_ -> Y
     boolean hasVoicemail -> w
+    boolean hasMobileNumberPortableRegion -> ia
     boolean hasUan -> s
-    boolean hasLeadingZeroPossible -> ea
-    boolean hasMobileNumberPortableRegion -> ga
-    boolean hasMainCountryForCode -> aa
-    boolean hasLeadingDigits -> ca
-    boolean hasNoInternationalDialling -> E
+    boolean hasLeadingDigits -> ea
+    boolean hasLeadingZeroPossible -> ga
+    java.util.List numberFormat_ -> aa
+    boolean sameMobileAndFixedLinePattern_ -> Z
+    boolean hasMainCountryForCode -> ca
+    boolean hasSmsServices -> E
     boolean hasStandardRate -> A
-    boolean hasNationalPrefix -> O
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc noInternationalDialling_ -> H
+    boolean hasPreferredInternationalPrefix -> O
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc standardRate_ -> B
-    int countryCode_ -> J
-    boolean hasInternationalPrefix -> K
-    java.lang.String preferredInternationalPrefix_ -> N
-    boolean hasSameMobileAndFixedLinePattern -> W
+    java.lang.String id_ -> J
+    boolean hasCountryCode -> K
+    java.lang.String internationalPrefix_ -> N
+    boolean hasNationalPrefixTransformRule -> W
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc voicemail_ -> x
-    java.lang.String preferredExtnPrefix_ -> R
-    boolean hasNationalPrefixForParsing -> S
+    java.lang.String nationalPrefix_ -> R
+    boolean hasPreferredExtnPrefix -> S
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc uan_ -> t
-    java.lang.String nationalPrefixTransformRule_ -> V
+    java.lang.String nationalPrefixForParsing_ -> V
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc voip_ -> p
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc sharedCost_ -> l
     boolean hasTollFree -> g
@@ -49979,21 +49977,22 @@ io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata -> h.c.a.a.l:
     java.lang.String getPreferredExtnPrefix() -> k
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setShortCode(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> k
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getPremiumRate() -> l
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setStandardRate(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> l
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getSharedCost() -> m
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setTollFree(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> m
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getTollFree() -> n
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setUan(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> n
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getUan() -> o
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setVoicemail(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> o
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getVoicemail() -> p
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setVoip(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> p
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getVoip() -> q
-    boolean hasLeadingDigits() -> r
-    boolean hasPreferredExtnPrefix() -> s
-    int intlNumberFormatSize() -> t
-    java.util.List intlNumberFormats() -> u
-    boolean isSameMobileAndFixedLinePattern() -> v
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setSmsServices(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> l
+    boolean getSameMobileAndFixedLinePattern() -> m
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setStandardRate(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> m
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getSharedCost() -> n
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setTollFree(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> n
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getTollFree() -> o
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setUan(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> o
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getUan() -> p
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setVoicemail(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> p
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getVoicemail() -> q
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadata setVoip(io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc) -> q
+    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc getVoip() -> r
+    boolean hasLeadingDigits() -> s
+    boolean hasPreferredExtnPrefix() -> t
+    int intlNumberFormatSize() -> u
+    java.util.List intlNumberFormats() -> v
     int numberFormatSize() -> w
     java.util.List numberFormats() -> x
 io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadataCollection -> h.c.a.a.m:
@@ -50001,21 +50000,18 @@ io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneMetadataCollection -> 
     int getMetadataCount() -> a
     java.util.List getMetadataList() -> b
 io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc -> h.c.a.a.n:
-    java.lang.String exampleNumber_ -> h
-    java.util.List possibleLengthLocalOnly_ -> f
-    java.util.List possibleLength_ -> e
-    boolean hasExampleNumber -> g
+    java.lang.String exampleNumber_ -> f
+    java.util.List possibleLengthLocalOnly_ -> d
+    java.util.List possibleLength_ -> c
+    boolean hasExampleNumber -> e
     boolean hasNationalNumberPattern -> a
     java.lang.String nationalNumberPattern_ -> b
-    boolean hasPossibleNumberPattern -> c
-    java.lang.String possibleNumberPattern_ -> d
     java.lang.String getExampleNumber() -> a
     int getPossibleLength(int) -> a
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc setExampleNumber(java.lang.String) -> a
     java.lang.String getNationalNumberPattern() -> b
     io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc setNationalNumberPattern(java.lang.String) -> b
     int getPossibleLengthCount() -> c
-    io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc setPossibleNumberPattern(java.lang.String) -> c
     java.util.List getPossibleLengthList() -> d
     int getPossibleLengthLocalOnlyCount() -> e
     java.util.List getPossibleLengthLocalOnlyList() -> f
@@ -50062,24 +50058,32 @@ io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber -> h.c.a.a.o:
     boolean hasRawInput() -> n
     boolean isItalianLeadingZero() -> o
 io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber$CountryCodeSource -> h.c.a.a.o$a:
-    io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber$CountryCodeSource[] $VALUES -> e
+    io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber$CountryCodeSource[] $VALUES -> f
     io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber$CountryCodeSource FROM_DEFAULT_COUNTRY -> d
     io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber$CountryCodeSource FROM_NUMBER_WITHOUT_PLUS_SIGN -> c
     io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber$CountryCodeSource FROM_NUMBER_WITH_IDD -> b
     io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber$CountryCodeSource FROM_NUMBER_WITH_PLUS_SIGN -> a
-io.michaelrocks.libphonenumber.android.RegexCache -> h.c.a.a.q:
-    io.michaelrocks.libphonenumber.android.RegexCache$LRUCache cache -> a
+    io.michaelrocks.libphonenumber.android.Phonenumber$PhoneNumber$CountryCodeSource UNSPECIFIED -> e
+io.michaelrocks.libphonenumber.android.ShortNumbersRegionCodeSet -> h.c.a.a.p:
+    java.util.Set getRegionCodeSet() -> a
+io.michaelrocks.libphonenumber.android.internal.MatcherApi -> h.c.a.a.a.a:
+    boolean matchNationalNumber(java.lang.CharSequence,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc,boolean) -> a
+io.michaelrocks.libphonenumber.android.internal.RegexBasedMatcher -> h.c.a.a.a.b:
+    io.michaelrocks.libphonenumber.android.internal.RegexCache regexCache -> a
+    io.michaelrocks.libphonenumber.android.internal.MatcherApi create() -> a
+    boolean match(java.lang.CharSequence,java.util.regex.Pattern,boolean) -> a
+    boolean matchNationalNumber(java.lang.CharSequence,io.michaelrocks.libphonenumber.android.Phonemetadata$PhoneNumberDesc,boolean) -> a
+io.michaelrocks.libphonenumber.android.internal.RegexCache -> h.c.a.a.a.d:
+    io.michaelrocks.libphonenumber.android.internal.RegexCache$LRUCache cache -> a
     java.util.regex.Pattern getPatternForRegex(java.lang.String) -> a
-io.michaelrocks.libphonenumber.android.RegexCache$LRUCache -> h.c.a.a.q$a:
+io.michaelrocks.libphonenumber.android.internal.RegexCache$LRUCache -> h.c.a.a.a.d$a:
     java.util.LinkedHashMap map -> a
     int size -> b
-    int access$000(io.michaelrocks.libphonenumber.android.RegexCache$LRUCache) -> a
+    int access$000(io.michaelrocks.libphonenumber.android.internal.RegexCache$LRUCache) -> a
     java.lang.Object get(java.lang.Object) -> a
     void put(java.lang.Object,java.lang.Object) -> a
-io.michaelrocks.libphonenumber.android.RegexCache$LRUCache$1 -> h.c.a.a.p:
-    io.michaelrocks.libphonenumber.android.RegexCache$LRUCache this$0 -> a
-io.michaelrocks.libphonenumber.android.ShortNumbersRegionCodeSet -> h.c.a.a.r:
-    java.util.Set getRegionCodeSet() -> a
+io.michaelrocks.libphonenumber.android.internal.RegexCache$LRUCache$1 -> h.c.a.a.a.c:
+    io.michaelrocks.libphonenumber.android.internal.RegexCache$LRUCache this$0 -> a
 io.opencensus.common.AutoValue_Timestamp -> h.d.a.a:
     long seconds -> b
     int nanos -> c

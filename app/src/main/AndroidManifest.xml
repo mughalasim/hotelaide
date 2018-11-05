@@ -169,7 +169,7 @@
         <!-- FACEBOOK LOGIN =====================================================================-->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/FACEBOOK_APP_ID" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -189,7 +189,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+                <data android:scheme="@string/FACEBOOK_PROTOCOL_SCHEME" />
             </intent-filter>
         </activity>
 
@@ -197,7 +197,7 @@
         <!--META DATA ===========================================================================-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/maps_api_key" />
+            android:value="@string/FB_API_KEY" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

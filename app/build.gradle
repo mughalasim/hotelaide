@@ -50,12 +50,6 @@ android {
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
             buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '15'
             buildConfigField 'Boolean', 'LOGGING', "$rootProject.debugMode"
-            
-            // FIREBASE
-            buildConfigField 'String', 'FB_APP_ID', '"1:962090500242:android:427a10b5d10876f0"'
-            buildConfigField 'String', 'FB_APP_KEY', '"AIzaSyBoekDS7kvoOf7Z2EJOEkyvOwK08eiOwOg"'
-            buildConfigField 'String', 'FB_DB_URL', '"https://hotel-aide-kenya.firebaseio.com"'
-            buildConfigField 'String', 'FB_STORE', '"hotel-aide-kenya.appspot.com"'
 
             // ALGOLIA SEARCH
             buildConfigField 'String', 'ALGOLIA_APP_ID', '"Q7ZOKDIRKG"'
@@ -142,7 +136,7 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
     // COUNTRY CODE AND PHONE NUMBER SELECTOR
-    implementation 'com.github.joielechong:countrycodepicker:2.1.5'
+    implementation 'com.github.joielechong:countrycodepicker:2.1.8'
 
     // PERMISSIONS CHECKER LIBRARY
     implementation 'pub.devrel:easypermissions:1.2.0'
