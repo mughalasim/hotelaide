@@ -50,6 +50,7 @@ public class StartUpIntroFragment extends Fragment {
             try {
                 root_view = inflater.inflate(R.layout.frag_startup_intro, container, false);
 
+
                 AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
                 TextView description = root_view.findViewById(R.id.txt_desc);
@@ -57,6 +58,7 @@ public class StartUpIntroFragment extends Fragment {
 
                 description.setText(desc);
                 image.setImageResource(imageID);
+
 
             } catch (InflateException e) {
                 e.printStackTrace();

@@ -27,7 +27,6 @@ import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.DATABASE_VERSION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_LAUNCH;
-import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 

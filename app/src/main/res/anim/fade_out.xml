@@ -3,7 +3,7 @@
     android:shareInterpolator="true" >
 
     <alpha
-        android:duration="@integer/anim_time"
+        android:duration="@integer/page_anim_time"
         android:fromAlpha="1.0"
         android:toAlpha="0.0" />
 

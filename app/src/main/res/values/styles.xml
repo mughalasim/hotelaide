@@ -87,7 +87,7 @@
         <item name="android:paddingLeft">@dimen/padding_tiny</item>
         <item name="android:paddingRight">@dimen/padding_tiny</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textColorHint">@color/grey</item>
         <item name="android:layout_marginTop">@dimen/padding_medium</item>
         <item name="android:layout_marginBottom">@dimen/text_margin</item>
@@ -115,7 +115,7 @@
         <item name="android:paddingRight">@dimen/padding_tiny</item>
         <item name="android:layout_marginBottom">-12sp</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textColorHint">@color/grey</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
@@ -129,7 +129,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:textSize">@dimen/text_size_x_large</item>
     </style>

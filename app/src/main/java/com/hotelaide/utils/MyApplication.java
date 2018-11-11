@@ -32,10 +32,10 @@ public class MyApplication extends Application {
 
     public static void initFireBase() {
         FirebaseOptions builder = new FirebaseOptions.Builder()
-                .setApplicationId(getAppContext().getString(R.string.FB_APP_ID))
+                .setApplicationId(BuildConfig.FB_APP_ID)
                 .setApiKey(getAppContext().getString(R.string.FB_API_KEY))
-                .setDatabaseUrl(getAppContext().getString(R.string.FB_DB_URL))
-                .setStorageBucket(getAppContext().getString(R.string.FB_STORE))
+                .setDatabaseUrl(BuildConfig.FB_DB_URL)
+                .setStorageBucket(BuildConfig.FB_STORE)
                 .build();
 
         List<FirebaseApp> fire_base_app_list = FirebaseApp.getApps(MyApplication.getAppContext());

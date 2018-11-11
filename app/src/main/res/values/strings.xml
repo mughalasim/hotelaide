@@ -4,14 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!--META DATA ===============================================================================-->
-    <string name="FACEBOOK_APP_ID">213335282601524</string>
-    <string name="FACEBOOK_PROTOCOL_SCHEME">fb213335282601524</string>
-    <string name="FB_API_KEY">AIzaSyA0ZgL9xLHGt7ZHWTcRrvsDIGH2yPxauLA"</string>
-    <string name="FB_APP_ID">1:962090500242:android:427a10b5d10876f0"</string>
-    <string name="FB_DB_URL">https://hotel-aide-kenya.firebaseio.com"</string>
-    <string name="FB_STORE">hotel-aide-kenya.appspot.com"</string>
-
     <!--ERROR MESSAGES ==========================================================================-->
     <string name="error_field_required">This field is required</string>
     <string name="error_field_length">This field is too short</string>

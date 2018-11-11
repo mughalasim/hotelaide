@@ -33,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_filter" />
-                            <entry key="sourceFile" value="C:\Program Files\Android\android studio 3.3\bin\G:\Downloads\main_icon3.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="img_selected" />
+                            <entry key="sourceFile" value="G:\Downloads\undraw_select_13cv.svg" />
                           </map>
                         </option>
                       </PersistentState>

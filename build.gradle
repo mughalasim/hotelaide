@@ -61,8 +61,8 @@ ext {
     shrink = true
 
     // App Versioning
-    versionCode = 16
-    versionName = 1.6
+    versionCode = 17
+    versionName = 1.7
 }
 
 task clean_app(type: Delete) {

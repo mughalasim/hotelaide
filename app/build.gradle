@@ -37,28 +37,40 @@ android {
 
         prod {
             // MAIN URL'S
-            buildConfigField 'String', 'MAIN_URL', '"https://hotelaide.com/api/"'
-            buildConfigField 'String', 'TERMS_URL', '"https://hotelaide.com/terms"'
-            buildConfigField 'String', 'USERS_URL', '"Users/"'
-            buildConfigField 'String', 'MESSAGE_URL', '"/messages"'
-            buildConfigField 'String', 'CONVERSATION_URL', '"/conversations/"'
+            buildConfigField 'String', 'MAIN_URL', MAIN_URL
+            buildConfigField 'String', 'TERMS_URL', TERMS_URL
 
             // APP TYPE
-            buildConfigField 'String', 'ACCOUNT_TYPE', '"job_seeker"'
+            buildConfigField 'String', 'ACCOUNT_TYPE', ACCOUNT_TYPE
 
             // DATABASE INFO
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
             buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '15'
             buildConfigField 'Boolean', 'LOGGING', "$rootProject.debugMode"
 
+            // FIREBASE INIT
+            resValue "string", "FB_API_KEY", FB_API_KEY
+            buildConfigField 'String', 'FB_APP_ID', FB_APP_ID
+            buildConfigField 'String', 'FB_STORE', FB_STORE
+
+            // FIREBASE PATHS
+            buildConfigField 'String', 'FB_DB_URL', FB_DB_URL
+            buildConfigField 'String', 'USERS_URL', USERS_URL
+            buildConfigField 'String', 'MESSAGE_URL', MESSAGE_URL
+            buildConfigField 'String', 'CONVERSATION_URL', CONVERSATION_URL
+
             // ALGOLIA SEARCH
-            buildConfigField 'String', 'ALGOLIA_APP_ID', '"Q7ZOKDIRKG"'
-            buildConfigField 'String', 'ALGOLIA_SEARCH_API_KEY', '"99d661a5a5d6a17ff9ff4c4a996e6e59"'
-            buildConfigField 'String', 'ALGOLIA_INDEX_JOB', '"job_vacancies"'
-            buildConfigField 'String', 'FILTER_COUNTY', '"location.county_name"'
-            buildConfigField 'String', 'FILTER_CATEGORY', '"category.name"'
-            buildConfigField 'String', 'FILTER_JOB_TYPE', '"job_type.name"'
-            buildConfigField 'String', 'FILTER_NAME', '"establishment.name"'
+            buildConfigField 'String', 'ALGOLIA_APP_ID', ALGOLIA_APP_ID
+            buildConfigField 'String', 'ALGOLIA_SEARCH_API_KEY', ALGOLIA_SEARCH_API_KEY
+            buildConfigField 'String', 'ALGOLIA_INDEX_JOB', ALGOLIA_INDEX_JOB
+            buildConfigField 'String', 'FILTER_COUNTY', FILTER_COUNTY
+            buildConfigField 'String', 'FILTER_CATEGORY', FILTER_CATEGORY
+            buildConfigField 'String', 'FILTER_JOB_TYPE', FILTER_JOB_TYPE
+            buildConfigField 'String', 'FILTER_NAME', FILTER_NAME
+
+            // FACEBOOK APP ID
+            resValue "string", "FACEBOOK_APP_ID", FACEBOOK_APP_ID
+            resValue "string", "FACEBOOK_PROTOCOL_SCHEME", FACEBOOK_PROTOCOL_SCHEME
         }
     }
     compileOptions {

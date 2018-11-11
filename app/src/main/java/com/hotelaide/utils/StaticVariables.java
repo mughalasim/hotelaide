@@ -3,7 +3,7 @@ package com.hotelaide.utils;
 public class StaticVariables {
 
 // SHARED PREFERENCE VARIABLES =====================================================================
-    public final static int INT_ANIMATION_TIME = 800;
+    public final static int INT_ANIMATION_TIME = 1000;
 
     // INTEGER VARIABLE NAMES ======================================================================
     public static final String DATABASE_VERSION = "DATABASE_VERSION";

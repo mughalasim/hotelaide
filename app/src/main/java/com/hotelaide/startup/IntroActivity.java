@@ -43,19 +43,19 @@ public class IntroActivity extends FragmentActivity {
             tab_layout;
 
     int[] images = {
-            R.drawable.img_scroll1,
-            R.drawable.img_scroll2,
-            R.drawable.img_scroll3,
-            R.drawable.img_scroll5,
-            R.drawable.img_scroll4
+            R.drawable.img_emploeyed,
+            R.drawable.img_resume,
+            R.drawable.img_emails,
+            R.drawable.img_selected,
+            R.drawable.img_office
     };
 
     String[] descriptions = {
-            "Welcome to HotelAide",
-            "Looking to get hired quick?",
-            "The best employment App in kenya",
-            "Message your future employer directly",
-            "Sign up today and get started..."
+            "Hey there!\nWelcome to HotelAide",
+            "why don't you easily sign up with us and...",
+            "Send out your CV to the top employers in Kenya.",
+            "Get shortlisted instantly and ...",
+            "Start your new position today!"
     };
 
     private Helpers helpers;
