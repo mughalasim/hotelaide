@@ -41,6 +41,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonObject;
+import com.hbb20.CountryCodePicker;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.LoginInterface;
@@ -48,7 +49,6 @@ import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.models.UserModel;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
-import com.rilixtech.CountryCodePicker;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.json.JSONException;
@@ -171,7 +171,7 @@ public class StartUpSignUpFragment extends Fragment {
 
         et_user_phone = rootview.findViewById(R.id.et_user_phone);
         ccp_user_country_code = rootview.findViewById(R.id.ccp_user_country_code);
-        ccp_user_country_code.registerPhoneNumberTextView(et_user_phone);
+        ccp_user_country_code.registerCarrierNumberEditText(et_user_phone);
 
         et_user_pass = rootview.findViewById(R.id.et_user_pass);
         et_user_pass_confirm = rootview.findViewById(R.id.et_user_pass_confirm);
@@ -210,7 +210,7 @@ public class StartUpSignUpFragment extends Fragment {
                         helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
                     } else if (et_user_pass.getText().toString().length() < 8) {
                         helpers.ToastMessage(getContext(), "Password too short");
-                    } else if (!ccp_user_country_code.isValid()) {
+                    } else if (!ccp_user_country_code.isValidFullNumber()) {
                         helpers.ToastMessage(getContext(), "Phone number is invalid");
                     } else {
                         showDialogSetAccountPassword(getActivity(), LOGIN_REGISTER);

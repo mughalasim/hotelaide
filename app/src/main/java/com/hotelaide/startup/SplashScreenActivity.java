@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.crashlytics.android.Crashlytics;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -21,7 +20,6 @@ import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
 import androidx.appcompat.app.AppCompatActivity;
-import io.fabric.sdk.android.Fabric;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.DATABASE_VERSION;
@@ -29,7 +27,6 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_LAUNCH;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
-
 
 public class SplashScreenActivity extends AppCompatActivity {
     private Database db;
@@ -42,8 +39,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         MyApplication.initFireBase();
-
-        Fabric.with(this, new Crashlytics());
 
         db = new Database();
 

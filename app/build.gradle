@@ -1,9 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 
 android {
-    signingConfigs {
-    }
     compileSdkVersion rootProject.compileSDK
     buildToolsVersion rootProject.buildTools
     flavorDimensions "versionCode"
@@ -119,11 +116,6 @@ dependencies {
         exclude module: 'play-services-ads'
     }
 
-    // FABRIC CRASH TOOLS
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
-        transitive = true
-    }
-
     // YOYO ANIMATIONS
     implementation 'com.daimajia.easing:library:2.1@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
@@ -148,16 +140,14 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
     // COUNTRY CODE AND PHONE NUMBER SELECTOR
-    implementation 'com.github.joielechong:countrycodepicker:2.1.8'
+    implementation 'com.hbb20:ccp:2.2.3'
 
     // PERMISSIONS CHECKER LIBRARY
     implementation 'pub.devrel:easypermissions:1.2.0'
 
     // STETHO INSPECTOR BY FACEBOOK
-
-    //    implementation 'com.facebook.stetho:stetho:1.5.0'
-
-    //    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    // implementation 'com.facebook.stetho:stetho:1.5.0'
+    // implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
     // VIEWPAGER TRANSFORMER
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'

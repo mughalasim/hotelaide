@@ -100,7 +100,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.rilixtech.CountryCodePicker
+            <com.hbb20.CountryCodePicker
                 android:id="@+id/ccp_user_country_code"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/height_edit_text"
@@ -109,8 +109,10 @@
                 android:gravity="center"
                 android:paddingStart="@dimen/padding_small"
                 android:paddingEnd="@dimen/padding_small"
-                sothree:ccp_defaultCode="254"
-                sothree:ccp_textColor="@color/colorAccent"
+                sothree:ccp_defaultPhoneCode="254"
+                sothree:ccp_showNameCode="false"
+                sothree:ccp_showArrow="false"
+                sothree:ccpDialog_textColor="@color/colorPrimaryDark"
                 sothree:ccp_textSize="@dimen/text_size_normal" />
 
             <com.google.android.material.textfield.TextInputLayout

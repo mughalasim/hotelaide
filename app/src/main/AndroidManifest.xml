@@ -30,7 +30,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:node="merge">
+        tools:node="merge"
+        tools:replace="android:allowBackup">
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -198,10 +199,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/FB_API_KEY" />
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="76a785997335084c719caa8f1efe8d81a87fc97e" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

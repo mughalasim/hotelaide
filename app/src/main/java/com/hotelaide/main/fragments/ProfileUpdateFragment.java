@@ -20,13 +20,13 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
+import com.hbb20.CountryCodePicker;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.models.UserModel;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
-import com.rilixtech.CountryCodePicker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -128,7 +128,7 @@ public class ProfileUpdateFragment extends Fragment {
         txt_user_email = root_view.findViewById(R.id.txt_user_email);
         et_user_phone = root_view.findViewById(R.id.et_user_phone);
         ccp_user_country_code = root_view.findViewById(R.id.ccp_user_country_code);
-        ccp_user_country_code.registerPhoneNumberTextView(et_user_phone);
+        ccp_user_country_code.registerCarrierNumberEditText(et_user_phone);
         txt_user_dob = root_view.findViewById(R.id.txt_user_dob);
 
         if (getActivity() != null)
