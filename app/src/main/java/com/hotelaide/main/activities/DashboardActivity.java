@@ -3,20 +3,12 @@ package com.hotelaide.main.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.tabs.TabLayout;
 import com.hotelaide.R;
-import com.hotelaide.main.fragments.AppliedJobsFragment;
-import com.hotelaide.main.fragments.MessageFragment;
+import com.hotelaide.main.fragments.NewsFeedFragment;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.utils.SharedPrefs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
@@ -27,18 +19,27 @@ import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 public class DashboardActivity extends ParentActivity {
 
-    private final String TAG_LOG = "DASHBOARD";
+    private final String[] fragment_extras = {
+            "https://www.hotelmanagement.net/rss/xml",
+            "https://www.hotelmanagement.net/rss/tech/xml",
+            "https://www.hotelmanagement.net/rss/design/xml",
+            "https://www.hotelmanagement.net/rss/operate/xml"
+    };
 
-    private int[] dashboardTitleList = {
-            R.string.nav_applied,
-            R.string.nav_messages
+    private int[] fragment_title_list = {
+            R.string.nav_news_feed_latest,
+            R.string.nav_news_feed_tech,
+            R.string.nav_news_feed_design,
+            R.string.nav_news_feed_operations
     };
-    private Fragment[] dashboardFragments = {
-            new AppliedJobsFragment(),
-            new MessageFragment(),
+
+    private Fragment[] fragment_list = {
+            new NewsFeedFragment(),
+            new NewsFeedFragment(),
+            new NewsFeedFragment(),
+            new NewsFeedFragment()
     };
-    private TabLayout tab_layout;
-    private ViewPager view_pager;
+
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -47,11 +48,11 @@ public class DashboardActivity extends ParentActivity {
 
         setContentView(R.layout.activity_dashboard);
 
-        initialize(R.id.drawer_dashboard, TAG_LOG);
+        initialize(R.id.drawer_dashboard, getString(R.string.drawer_dashboard));
 
         handleExtraBundles();
 
-        findAllViews();
+        setupViewPager(fragment_list, fragment_title_list, fragment_extras);
 
         if (helpers.validateServiceRunning(BackgroundFetchService.class)) {
             startService(new Intent(DashboardActivity.this, BackgroundFetchService.class));
@@ -86,82 +87,6 @@ public class DashboardActivity extends ParentActivity {
             SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, true);
 
         }
-    }
-
-    private void findAllViews() {
-        view_pager = findViewById(R.id.view_pager);
-        tab_layout = findViewById(R.id.tabs);
-
-        setupViewPager(view_pager);
-        tab_layout.setupWithViewPager(view_pager, true);
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        for (int i = 0; i <= dashboardTitleList.length - 1; i++) {
-            Fragment fragment = dashboardFragments[i];
-//            if (i == 2) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("EXPERIENCE_TYPE", EXPERIENCE_TYPE_EDUCATION);
-//                fragment.setArguments(bundle);
-//            } else if (i == 3) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString("EXPERIENCE_TYPE", EXPERIENCE_TYPE_WORK);
-//                fragment.setArguments(bundle);
-//            }
-            adapter.addFragment(fragment, getResources().getString(dashboardTitleList[i]));
-        }
-
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(5);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        private ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-
     }
 
 }

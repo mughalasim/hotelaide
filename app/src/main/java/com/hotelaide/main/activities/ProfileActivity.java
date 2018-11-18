@@ -102,7 +102,7 @@ public class ProfileActivity extends ParentActivity {
 
         String TAG_LOG = "MY PROFILE";
 
-        initialize(R.id.drawer_profile, TAG_LOG);
+        initialize(R.id.drawer_profile, getString(R.string.drawer_my_profile_view));
 
         findAllViews();
 

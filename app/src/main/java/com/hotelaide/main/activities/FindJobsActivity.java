@@ -100,7 +100,7 @@ public class FindJobsActivity extends ParentActivity {
 
         setContentView(R.layout.activity_find_jobs);
 
-        initialize(R.id.drawer_find_jobs, TAG_LOG);
+        initialize(R.id.drawer_find_jobs, getString(R.string.drawer_find_jobs));
 
         findAllViews();
 

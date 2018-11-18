@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/list_item"
+        style="@style/Card_Layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_tiny">
+
+            <TextView
+                android:id="@+id/txt_title"
+                style="@style/Text_Title"
+                android:layout_marginTop="0dp"
+                android:maxLines="1"
+                android:text="@string/app_name"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_desc"
+                style="@style/Text_Normal"
+                android:layout_marginTop="@dimen/line_thickness"
+                android:maxLines="2"
+                android:text="@string/app_name"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_content"
+                style="@style/Text_Normal"
+                android:layout_marginTop="@dimen/line_thickness"
+                android:maxLines="3"
+                android:text="@string/app_name" />
+
+            <TextView
+                android:id="@+id/txt_id"
+                style="@style/Text_Normal"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_link"
+                style="@style/Text_Normal"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="@dimen/line_thickness"
+                    android:maxLines="3"
+                    android:textStyle="italic"
+                    android:text="Published on: " />
+
+                <TextView
+                    android:id="@+id/txt_pub_date"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="@dimen/line_thickness"
+                    android:maxLines="3"
+                    android:textStyle="italic"
+                    android:text="@string/app_name" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <include layout="@layout/list_item_none" />
+
+
+</RelativeLayout>
+
+
+

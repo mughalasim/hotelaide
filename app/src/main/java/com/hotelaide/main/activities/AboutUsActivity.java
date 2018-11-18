@@ -13,7 +13,7 @@ public class AboutUsActivity extends ParentActivity {
         setContentView(R.layout.activity_about_us);
 
         String TAG_LOG = "ABOUT US";
-        initialize(R.id.drawer_about_us, TAG_LOG);
+        initialize(R.id.drawer_about_us, getString(R.string.drawer_about_us));
 
 //        helper.setTracker(TAG_LOG);
 

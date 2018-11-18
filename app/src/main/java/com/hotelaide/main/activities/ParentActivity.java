@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,13 +37,20 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
@@ -79,6 +88,8 @@ public class ParentActivity extends FragmentActivity implements
     private final int INT_NAV_DRAWER_DELAY = 220;
     private int INT_NAV_DRAWER_UPDATE_COUNTER = 0;
 
+    public TabLayout tab_layout;
+    public ViewPager view_pager;
 
     void initialize(int drawer_id, String toolbarTitle) {
         helpers = new Helpers(ParentActivity.this);
@@ -218,6 +229,58 @@ public class ParentActivity extends FragmentActivity implements
         registerReceiver(receiver, filter);
     }
 
+
+    // VIEW PAGER FUNCTIONS ========================================================================
+    public void setupViewPager(Fragment[] fragment_list, int[] fragment_title_list, String[] fragment_extras ) {
+        view_pager = findViewById(R.id.view_pager);
+        tab_layout = findViewById(R.id.tabs);
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        for (int i = 0; i < fragment_title_list.length; i++) {
+            Bundle bundle = new Bundle();
+            bundle.putString("NEWS_FEED_URL", fragment_extras[i]);
+
+            Fragment fragment = fragment_list[i];
+            fragment.setArguments(bundle);
+            adapter.addFragment(fragment, getString(fragment_title_list[i]));
+        }
+
+        view_pager.setAdapter(adapter);
+
+        tab_layout.setupWithViewPager(view_pager, true);
+
+    }
+
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> fragment_list = new ArrayList<>();
+        private final List<String> fragment_titles = new ArrayList<>();
+
+        private ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragment_list.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragment_list.size();
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            fragment_list.add(fragment);
+            fragment_titles.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragment_titles.get(position);
+        }
+
+    }
 
     // BASIC OVERRIDE METHODS ======================================================================
 

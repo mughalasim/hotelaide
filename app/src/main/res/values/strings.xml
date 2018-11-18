@@ -1,8 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Hotelaide</string>
 
+
+    <!--NAVIGATION DRAWER =======================================================================-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
 
     <!--ERROR MESSAGES ==========================================================================-->
     <string name="error_field_required">This field is required</string>
@@ -13,6 +16,7 @@
     <string name="error_call_permissions">You have not granted permissions to this app to make calls</string>
     <string name="error_permissions">Dear user, App permissions have not been granted! The App cannot function without these permissions. Please grant them from the phone settings</string>
     <string name="error_no_we">No work experience added</string>
+    <string name="error_no_news">No latest updates</string>
     <string name="error_no_ee">No educational experience added</string>
     <string name="error_no_jobs">No Jobs found!</string>
     <string name="error_pass">Your new and confirmed password do not match</string>
@@ -21,6 +25,7 @@
     <string name="error_sign_in_cancelled">Sign in cancelled</string>
     <string name="error_invalid_user">incorrect credentials for a job seeker account</string>
     <string name="error_update_google_play">Please update your google play services in order to use this feature</string>
+
 
     <!-- ABOUT US AND ADDRESS ===================================================================-->
     <string name="about_title1">Objectives</string>
@@ -59,6 +64,9 @@
     <!--ALL DRAWER TEXTS ========================================================================-->
     <string name="drawer_dashboard">Dashboard</string>
     <string name="drawer_find_jobs">Find Jobs</string>
+    <string name="drawer_my_jobs">My Jobs</string>
+    <string name="drawer_my_messages">My Messages</string>
+    <string name="drawer_find_members">Find Members</string>
     <string name="drawer_my_profile_view">My Profile</string>
     <string name="drawer_settings">Settings</string>
     <string name="drawer_about_us">About Us</string>
@@ -72,6 +80,7 @@
     <string name="nav_about_us">About Us</string>
     <string name="nav_contact_us">Contact Info</string>
 
+
     <!-- PROFILE NAVIGATION TEXT ================================================================-->
     <string name="nav_profile">Basic Info</string>
     <string name="nav_address">Address</string>
@@ -80,9 +89,21 @@
     <string name="nav_documents">Documents</string>
     <string name="nav_pass">Change Password</string>
 
+
     <!-- DASHBOARD NAVIGATION TEXT ==============================================================-->
+    <string name="nav_news_feed_latest">Latest</string>
+    <string name="nav_news_feed_tech">Tech</string>
+    <string name="nav_news_feed_design">Design</string>
+    <string name="nav_news_feed_operations">Operations</string>
+
     <string name="nav_applied">Applied Jobs</string>
-    <string name="nav_messages">My Messages</string>
+    <string name="nav_inbox">Inbox</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_saved">Saved</string>
+    <string name="nav_shortlisted">Shortlisted</string>
+    <string name="nav_invites">Invites</string>
+    <string name="nav_interviews">Interviews</string>
+
 
     <!--PERMISSION RATIONALS ====================================================================-->
     <string name="rationale_image">HotelAide needs to access your Camera and write to your external storage for Images that you would like to set. Please grant these permissions in order to use the feature</string>
@@ -90,12 +111,14 @@
     <string name="rationale_call">HotelAide needs to access your phone dialer tools in order to call the selected number</string>
     <string name="rationale_storage">HotelAide needs to access files so that it may upload ONLY the selected file to our servers</string>
 
+
     <!--ARRAY GENDER ============================================================================-->
     <string-array name="select_gender">
         <item>Not set</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
 
     <!-- LAYOUT SET TEXT ========================================================================-->
     <string name="txt_edit_profile">Edit profile</string>
@@ -195,6 +218,5 @@
     <string name="txt_notify_me_desc">Turning this on will allow the app to notify you if there is a new update available in the Play Store</string>
     <string name="txt_notify_push">Message notifications</string>
     <string name="txt_notify_push_desc">Notify me when someone has sent me a new message</string>
-
 
 </resources>

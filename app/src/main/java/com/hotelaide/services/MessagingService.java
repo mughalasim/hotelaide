@@ -107,7 +107,8 @@ public class MessagingService extends Service {
     }
 
     public static void stopListeningForMessages() {
-        child_ref.removeEventListener(childEventListener);
+        if (childEventListener != null)
+            child_ref.removeEventListener(childEventListener);
     }
 
     @Override

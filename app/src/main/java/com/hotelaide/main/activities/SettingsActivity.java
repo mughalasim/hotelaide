@@ -48,7 +48,7 @@ public class SettingsActivity extends ParentActivity {
 
         setContentView(R.layout.activity_settings);
 
-        initialize(R.id.drawer_settings, TAG_LOG);
+        initialize(R.id.drawer_settings, getString(R.string.drawer_settings));
 
         findAllViews();
 

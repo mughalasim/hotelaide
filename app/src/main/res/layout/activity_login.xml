@@ -31,8 +31,6 @@
             android:scaleType="fitCenter"
             android:src="@drawable/main_logo_horizontal_white" />
 
-
-
     </RelativeLayout>
 
 

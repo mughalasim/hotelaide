@@ -49,6 +49,8 @@ import com.hotelaide.main.activities.AboutUsActivity;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.activities.FindJobsActivity;
 import com.hotelaide.main.activities.GalleryViewActivity;
+import com.hotelaide.main.activities.MyJobsActivity;
+import com.hotelaide.main.activities.MyMessages;
 import com.hotelaide.main.activities.ProfileActivity;
 import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.activities.SettingsActivity;
@@ -116,8 +118,6 @@ import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
 
-;
-
 public class Helpers {
 
     public final static String TAG_LOG = "HELPER CLASS";
@@ -137,24 +137,7 @@ public class Helpers {
         dialog.setContentView(R.layout.dialog_loading);
         dialog.setCancelable(false);
         ProgressDialogMessage = dialog.findViewById(R.id.message_text);
-//        sAnalytics = GoogleAnalytics.getInstance(context);
-//        getDefaultTracker();
     }
-
-
-    // GOOGLE ANALYTICS TRACKING ===================================================================
-//    synchronized private void getDefaultTracker() {
-//        if (sTracker == null) {
-//            sTracker = sAnalytics.newTracker(R.xml.global_tracker);
-//        }
-//    }
-
-//    public void setTracker(String TAG_LOG) {
-//        sTracker.setScreenName("ANDROID - " + TAG_LOG);
-//        sTracker.setAppVersion(BuildConfig.VERSION_NAME);
-//        sTracker.send(new HitBuilders.ScreenViewBuilder().build());
-//        Helpers.LogThis(TAG_LOG, "TRACKED");
-//    }
 
 
     // DRAWER CLICKS ===============================================================================
@@ -166,6 +149,18 @@ public class Helpers {
 
             case R.id.drawer_find_jobs:
                 context.startActivity(new Intent(context, FindJobsActivity.class));
+                break;
+
+            case R.id.drawer_my_jobs:
+                context.startActivity(new Intent(context, MyJobsActivity.class));
+                break;
+
+            case R.id.drawer_my_messages:
+                context.startActivity(new Intent(context, MyMessages.class));
+                break;
+
+            case R.id.drawer_find_members:
+                ToastMessage(context, "Under development ;)");
                 break;
 
             case R.id.drawer_profile:
@@ -655,7 +650,7 @@ public class Helpers {
             ToastMessage(context, "You have not set your date of birth");
             return false;
 
-        }else if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
+        } else if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
             ToastMessage(context, "You have not set your address");
             return false;
 
@@ -1258,7 +1253,7 @@ public class Helpers {
                     if (main.getBoolean("success")) {
                         db.deleteDocumentByID(String.valueOf(id));
                         context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
-                    } else{
+                    } else {
                         context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     }
                 } catch (JSONException e) {
