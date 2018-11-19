@@ -9,6 +9,7 @@ import com.hotelaide.BuildConfig;
 import com.hotelaide.main.models.DocumentModel;
 import com.hotelaide.main.models.ExperienceModel;
 import com.hotelaide.main.models.JobModel;
+import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.main.models.SearchFilterModel;
 
 import org.json.JSONException;
@@ -54,6 +55,12 @@ import static com.hotelaide.utils.StaticVariables.JOB_NAME;
 import static com.hotelaide.utils.StaticVariables.JOB_POSTED_ON;
 import static com.hotelaide.utils.StaticVariables.JOB_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_DATE;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_ID;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_MESSAGE;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_READ;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TITLE;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "HotelAide.db";
@@ -154,6 +161,18 @@ public class Database extends SQLiteOpenHelper {
                 ")"
         );
 
+        // NOTIFICATIONS TABLE =========================================================================
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                + NOTIFICATION_TABLE_NAME +
+                "(" +
+                NOTIFICATION_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                NOTIFICATION_TITLE + " TEXT," +
+                NOTIFICATION_MESSAGE + " TEXT," +
+                NOTIFICATION_DATE + " TEXT," +
+                NOTIFICATION_READ + " INTEGER" +
+                ")"
+        );
+
     }
 
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
@@ -187,6 +206,11 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
     }
 
+    public void deleteNotificationsTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + NOTIFICATION_TABLE_NAME);
+    }
+
     public void deleteJobTypeTable() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + JOB_TYPE_TABLE_NAME);
@@ -212,6 +236,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + EDUCATION_LEVEL_TABLE_NAME);
         db.execSQL("DELETE FROM " + JOB_TYPE_TABLE_NAME);
         db.execSQL("DELETE FROM " + DOCUMENTS_TABLE_NAME);
+        db.execSQL("DELETE FROM " + NOTIFICATION_TABLE_NAME);
         onCreate(db);
     }
 
@@ -713,6 +738,72 @@ public class Database extends SQLiteOpenHelper {
                     documentModel.date_uploaded = cursor.getString(cursor.getColumnIndex(DOCUMENTS_DATE_UPLOADED));
 
                     list.add(documentModel);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        return list;
+    }
+
+
+    // NOTIFICATION FUNCTIONS ======================================================================
+    public void setNotification(NotificationModel notification_model) {
+        try {
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(NOTIFICATION_TITLE, notification_model.title);
+            contentValues.put(NOTIFICATION_MESSAGE, notification_model.message);
+            contentValues.put(NOTIFICATION_DATE, notification_model.date);
+            contentValues.put(NOTIFICATION_READ, notification_model.read);
+
+            db.insert(NOTIFICATION_TABLE_NAME, null, contentValues);
+
+        } catch (Exception e) {
+            Helpers.LogThis(TAG_LOG, e.toString());
+        }
+    }
+
+    public void updateNotificationRead(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NOTIFICATION_READ, 1);
+        String whereClause = NOTIFICATION_ID+ " = ?";
+        String[] whereArgs = new String[]{String.valueOf(id)};
+        db.update(NOTIFICATION_TABLE_NAME, contentValues, whereClause, whereArgs);
+        db.close();
+    }
+
+    public void deleteNotificationByID(String notification_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = NOTIFICATION_ID + " = ?";
+        String[] whereArgs = new String[]{notification_id};
+        db.delete(NOTIFICATION_TABLE_NAME, whereClause, whereArgs);
+        db.close();
+    }
+
+    public ArrayList<NotificationModel> getAllNotifications() {
+
+        ArrayList<NotificationModel> list = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.query(NOTIFICATION_TABLE_NAME, null, null, null, null, null, null);
+
+        if (cursor != null) {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+                do {
+                    NotificationModel notificationModel = new NotificationModel();
+                    notificationModel.id = cursor.getInt(cursor.getColumnIndex(NOTIFICATION_ID));
+                    notificationModel.title = cursor.getString(cursor.getColumnIndex(NOTIFICATION_TITLE));
+                    notificationModel.message = cursor.getString(cursor.getColumnIndex(NOTIFICATION_MESSAGE));
+                    notificationModel.date = cursor.getString(cursor.getColumnIndex(NOTIFICATION_DATE));
+                    notificationModel.read = cursor.getInt(cursor.getColumnIndex(NOTIFICATION_READ));
+
+                    list.add(notificationModel);
 
                 } while (cursor.moveToNext());
             }

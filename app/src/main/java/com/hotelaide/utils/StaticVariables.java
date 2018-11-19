@@ -113,5 +113,12 @@ public class StaticVariables {
     public static final String DOCUMENTS_DATE_UPLOADED = "date_uploaded";
     public static final String DOCUMENTS_FILE_TYPE = "file_type";
     public static final String DOCUMENTS_IS_DIRTY = "is_dirty";
+    // NOTIFICATIONS TABLE =========================================================================
+    public static final String NOTIFICATION_TABLE_NAME = "NOTIFICATIONS";
+    public static final String NOTIFICATION_ID = "id";
+    public static final String NOTIFICATION_TITLE = "title";
+    public static final String NOTIFICATION_MESSAGE = "message";
+    public static final String NOTIFICATION_DATE = "date";
+    public static final String NOTIFICATION_READ = "read";
 
 }
