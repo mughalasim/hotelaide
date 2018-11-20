@@ -36,6 +36,7 @@ public class StaticVariables {
     // BOOLEAN VARIABLE NAMES ======================================================================
     public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
     public static final String ALLOW_MESSAGE_PUSH = "ALLOW_MESSAGE_PUSH";
+    public static final String ALLOW_NOTIFICATIONS = "ALLOW_NOTIFICATIONS";
     public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
     // FLOAT VARIABLES
     public final static float FLOAT_GOOGLE_MAP_ZOOM = 14f;

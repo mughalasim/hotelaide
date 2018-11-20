@@ -876,7 +876,7 @@ public class Helpers {
 
 
     // NOTIFICATION CREATOR ========================================================================
-    public void createNotification(Context context, String MessageTitle, String messageBody) {
+    public static void createNotification(Context context, String MessageTitle, String messageBody) {
         Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("notification_title", MessageTitle);
@@ -921,14 +921,14 @@ public class Helpers {
 
     }
 
-    private int getNotificationIcon() {
+    private static int getNotificationIcon() {
         boolean useWhiteIcon = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
         return useWhiteIcon ?
                 R.drawable.ic_logo :
                 R.mipmap.ic_launcher;
     }
 
-    private void createNotificationChannel(Context context) {
+    private static void createNotificationChannel(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);

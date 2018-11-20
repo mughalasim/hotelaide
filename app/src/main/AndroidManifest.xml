@@ -223,7 +223,7 @@
 
         <!--CLOUD MESSAGING SERVICES ============================================================-->
         <service
-            android:name=".utils.FireBaseMessagingService"
+            android:name=".utils.NotificationService"
             android:enabled="true"
             android:exported="false"
             android:permission=""

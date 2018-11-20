@@ -148,7 +148,7 @@ public class MessagingService extends Service {
                 CHANNEL_NAME = messageModel.from_name;
                 CHANNEL_DESC = messageModel.last_message;
 
-                helpers.createNotification(MessagingService.this, messageModel.from_name, messageModel.last_message);
+                Helpers.createNotification(MessagingService.this, messageModel.from_name, messageModel.last_message);
 
             }
 
