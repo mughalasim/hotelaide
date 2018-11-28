@@ -40,12 +40,12 @@ public interface LoginInterface {
                     Request request = requestBuilder.build();
 
                     Response response = chain.proceed(request);
-                    Helpers.LogThis(TAG_LOG, "URL: " + request.url());
-                    Helpers.LogThis(TAG_LOG, "CODE:" + response.code());
+                    Helpers.logThis(TAG_LOG, "URL: " + request.url());
+                    Helpers.logThis(TAG_LOG, "CODE:" + response.code());
                     if (response.code() == 401) {
-                        Helpers.LogThis(TAG_LOG, "MESSAGE: " + response.message());
+                        Helpers.logThis(TAG_LOG, "MESSAGE: " + response.message());
                     } else if (response.code() > 300) {
-                        Helpers.LogThis(TAG_LOG, "MESSAGE: " + response.message());
+                        Helpers.logThis(TAG_LOG, "MESSAGE: " + response.message());
                     }
 
                     return response;

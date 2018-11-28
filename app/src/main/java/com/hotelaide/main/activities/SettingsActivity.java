@@ -27,8 +27,6 @@ import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
-;
-
 public class SettingsActivity extends ParentActivity {
 
 
@@ -120,8 +118,7 @@ public class SettingsActivity extends ParentActivity {
 
     // ASYNC DELETE USER ===========================================================================
     public void asyncDeleteUser() {
-        helpers.setProgressDialogMessage("Deleting Account, Please wait...");
-        helpers.progressDialog(true);
+        helpers.setProgressDialog("Deleting Account, Please wait...");
 
         UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
         final Call<JsonObject> call = userInterface.deleteUser(SharedPrefs.getInt(USER_ID));
@@ -131,7 +128,7 @@ public class SettingsActivity extends ParentActivity {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                    Helpers.logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         Helpers.sessionExpiryBroadcast();
@@ -139,20 +136,20 @@ public class SettingsActivity extends ParentActivity {
 
                 } catch (JSONException e) {
                     helpers.ToastMessage(SettingsActivity.this, getString(R.string.error_server));
-                    Helpers.LogThis(TAG_LOG, e.toString());
+                    Helpers.logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
                     helpers.ToastMessage(SettingsActivity.this, getString(R.string.error_server));
-                    Helpers.LogThis(TAG_LOG, e.toString());
+                    Helpers.logThis(TAG_LOG, e.toString());
                 }
-                helpers.progressDialog(false);
+                helpers.dismissProgressDialog();
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
-                Helpers.LogThis(TAG_LOG, call.toString());
+                helpers.dismissProgressDialog();
+                Helpers.logThis(TAG_LOG, t.toString());
+                Helpers.logThis(TAG_LOG, call.toString());
             }
 
         });

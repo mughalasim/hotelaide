@@ -291,7 +291,7 @@ public class Database extends SQLiteOpenHelper {
 
             return true;
         } catch (JSONException e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
+            Helpers.logThis(TAG_LOG, e.toString());
             return false;
         }
     }
@@ -351,7 +351,7 @@ public class Database extends SQLiteOpenHelper {
 
     // JOB SEARCH FUNCTIONS ========================================================================
     public JobModel setJobFromJson(JSONObject job_object, Boolean is_applied) {
-//        Helpers.LogThis(TAG_LOG, job_object.toString());
+//        Helpers.logThis(TAG_LOG, job_object.toString());
         JobModel jobModel = new JobModel();
         try {
             jobModel.id = job_object.getInt("id");
@@ -388,7 +388,7 @@ public class Database extends SQLiteOpenHelper {
             return jobModel;
 
         } catch (JSONException e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
+            Helpers.logThis(TAG_LOG, e.toString());
             return jobModel;
         }
     }
@@ -666,7 +666,7 @@ public class Database extends SQLiteOpenHelper {
             }
 
         } catch (JSONException e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
+            Helpers.logThis(TAG_LOG, e.toString());
         }
     }
 
@@ -762,7 +762,7 @@ public class Database extends SQLiteOpenHelper {
             db.insert(NOTIFICATION_TABLE_NAME, null, contentValues);
 
         } catch (Exception e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
+            Helpers.logThis(TAG_LOG, e.toString());
         }
     }
 

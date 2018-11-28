@@ -52,8 +52,6 @@ import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
-;
-
 public class ExperienceEditFragment extends Fragment {
 
     private View root_view;
@@ -133,7 +131,7 @@ public class ExperienceEditFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(root_view);
+            container.removeView(root_view);
         }
         return root_view;
     }
@@ -272,8 +270,8 @@ public class ExperienceEditFragment extends Fragment {
                     if (spinner_education_level.getSelectedItemPosition() == 0) {
                         helpers.ToastMessage(getActivity(), "Set the education level");
                     } else {
-//                        Helpers.LogThis(TAG_LOG, spinner_education_level.getSelectedItem().toString());
-//                        Helpers.LogThis(TAG_LOG, "ID: " + db.getFilterIDByString(EDUCATION_LEVEL_TABLE_NAME, spinner_education_level.getSelectedItem().toString()));
+//                        Helpers.logThis(TAG_LOG, spinner_education_level.getSelectedItem().toString());
+//                        Helpers.logThis(TAG_LOG, "ID: " + db.getFilterIDByString(EDUCATION_LEVEL_TABLE_NAME, spinner_education_level.getSelectedItem().toString()));
                         experienceModel.education_level = db.getFilterIDByString(EDUCATION_LEVEL_TABLE_NAME, spinner_education_level.getSelectedItem().toString());
                         generalChecks();
                     }
@@ -473,7 +471,7 @@ public class ExperienceEditFragment extends Fragment {
     }
 
     private void logWorkExperienceModel(ExperienceModel experienceModel) {
-        Helpers.LogThis(TAG_LOG,
+        Helpers.logThis(TAG_LOG,
                 experienceModel.experience_id + " - " +
                         experienceModel.name + " - " +
                         experienceModel.position + " - " +
@@ -508,7 +506,7 @@ public class ExperienceEditFragment extends Fragment {
                     swipe_refresh.setRefreshing(false);
                     try {
                         JSONObject main = new JSONObject(String.valueOf(response.body()));
-                        Helpers.LogThis(TAG_LOG, main.toString());
+                        Helpers.logThis(TAG_LOG, main.toString());
                         if (main.getBoolean("success")) {
                             db.deleteExperienceTableByType(EXPERIENCE_TYPE);
                             JSONArray work_object = main.getJSONArray("data");
@@ -534,7 +532,7 @@ public class ExperienceEditFragment extends Fragment {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (getActivity() != null) {
                     swipe_refresh.setRefreshing(false);
-                    Helpers.LogThis(TAG_LOG, t.toString());
+                    Helpers.logThis(TAG_LOG, t.toString());
                     populateExperienceFromDB();
                     if (helpers.validateInternetConnection()) {
                         helpers.ToastMessage(getActivity(), getString(R.string.error_server));
@@ -554,7 +552,7 @@ public class ExperienceEditFragment extends Fragment {
         logWorkExperienceModel(experienceModel);
 
         if (isUpdate) {
-            helpers.setProgressDialogMessage("Updating experience, please wait...");
+            helpers.setProgressDialog("Updating experience, please wait...");
             ExperienceInterface experienceInterface = ExperienceInterface.retrofit.create(ExperienceInterface.class);
 
             if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
@@ -582,7 +580,7 @@ public class ExperienceEditFragment extends Fragment {
             }
 
         } else {
-            helpers.setProgressDialogMessage("Adding experience, please wait...");
+            helpers.setProgressDialog("Adding experience, please wait...");
             ExperienceInterface experienceInterface = ExperienceInterface.retrofit.create(ExperienceInterface.class);
 
             if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
@@ -608,16 +606,16 @@ public class ExperienceEditFragment extends Fragment {
             }
         }
 
-        helpers.progressDialog(true);
+        helpers.setProgressDialog("Loading, please wait...");
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (getActivity() != null) {
-                    helpers.progressDialog(false);
+                    helpers.dismissProgressDialog();
                     try {
                         JSONObject main = new JSONObject(String.valueOf(response.body()));
-                        Helpers.LogThis(TAG_LOG, main.toString());
+                        Helpers.logThis(TAG_LOG, main.toString());
                         if (main.getBoolean("success")) {
                             if (db.setExperienceFromJson(main.getJSONObject("data"), EXPERIENCE_TYPE)) {
                                 helpers.ToastMessage(getActivity(), getString(R.string.txt_success));
@@ -639,8 +637,8 @@ public class ExperienceEditFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (getActivity() != null) {
-                    helpers.progressDialog(false);
-                    Helpers.LogThis(TAG_LOG, t.toString());
+                    helpers.dismissProgressDialog();
+                    Helpers.logThis(TAG_LOG, t.toString());
                     if (helpers.validateInternetConnection()) {
                         helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     } else {
@@ -677,7 +675,7 @@ public class ExperienceEditFragment extends Fragment {
                     swipe_refresh.setRefreshing(false);
                     try {
                         JSONObject main = new JSONObject(String.valueOf(response.body()));
-                        Helpers.LogThis(TAG_LOG, main.toString());
+                        Helpers.logThis(TAG_LOG, main.toString());
                         if (main.getBoolean("success")) {
                             db.deleteExperienceByID(String.valueOf(experienceId), EXPERIENCE_TYPE);
                             adapter.removeItem(position);
@@ -694,7 +692,7 @@ public class ExperienceEditFragment extends Fragment {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (getActivity() != null) {
                     swipe_refresh.setRefreshing(false);
-                    Helpers.LogThis(TAG_LOG, t.toString());
+                    Helpers.logThis(TAG_LOG, t.toString());
                     populateExperienceFromDB();
                     if (helpers.validateInternetConnection()) {
                         helpers.ToastMessage(getActivity(), getString(R.string.error_server));

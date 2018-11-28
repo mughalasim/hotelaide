@@ -70,7 +70,7 @@ public class ExperienceViewFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(root_view);
+            container.removeView(root_view);
         }
         return root_view;
     }

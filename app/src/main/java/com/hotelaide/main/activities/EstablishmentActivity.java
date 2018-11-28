@@ -109,7 +109,7 @@ public class EstablishmentActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getInt("ESTABLISHMENT_ID") != 0) {
             INT_ESTABLISHMENT_ID = extras.getInt("ESTABLISHMENT_ID");
-            Helpers.LogThis(TAG_LOG, "ESTABLISHMENT ID: " + INT_ESTABLISHMENT_ID);
+            Helpers.logThis(TAG_LOG, "ESTABLISHMENT ID: " + INT_ESTABLISHMENT_ID);
             return true;
         } else {
             return false;
@@ -181,17 +181,16 @@ public class EstablishmentActivity extends AppCompatActivity {
 
         EstablishmentInterface userService = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
         Call<JsonObject> call = userService.getEstablishment(INT_ESTABLISHMENT_ID);
-        helpers.setProgressDialogMessage("Loading Establishment details");
-        helpers.progressDialog(true);
+        helpers.setProgressDialog("Loading Establishment details");
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
+                helpers.dismissProgressDialog();
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                    Helpers.logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
 //{"data":
@@ -255,8 +254,8 @@ public class EstablishmentActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
+                helpers.dismissProgressDialog();
+                Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_server));
                     onBackPressed();

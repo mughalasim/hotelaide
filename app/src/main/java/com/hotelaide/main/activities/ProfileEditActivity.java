@@ -61,7 +61,6 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_PASS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_CAMERA;
-import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
@@ -403,11 +402,11 @@ public class ProfileEditActivity extends FragmentActivity {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
+                helpers.dismissProgressDialog();
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                    Helpers.logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         if (SharedPrefs.setUser(main.getJSONObject("user"))) {
@@ -431,8 +430,8 @@ public class ProfileEditActivity extends FragmentActivity {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
+                helpers.dismissProgressDialog();
+                Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(ProfileEditActivity.this, getString(R.string.error_server));
                 } else {

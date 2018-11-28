@@ -84,7 +84,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                     for (int i = 0; i < final_position; i++) {
                         GalleryModel galleryModel = gallery_models.get(i);
                         image_urls.add(galleryModel.image);
-                        Helpers.LogThis(TAG_LOG, image_urls.get(i));
+                        Helpers.logThis(TAG_LOG, image_urls.get(i));
                     }
 
                     if (helpers.validateInternetConnection()) {

@@ -105,7 +105,7 @@ public class ProfileUpdateFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(root_view);
+            container.removeView(root_view);
         }
         return root_view;
     }
@@ -183,7 +183,7 @@ public class ProfileUpdateFragment extends Fragment {
                 userModel.about = fetchFromEditText(et_user_about);
                 userModel.email = txt_user_email.getText().toString();
                 userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
-                Helpers.LogThis(TAG_LOG, "GENDER POSITION: " + spinner_user_gender.getSelectedItemPosition());
+                Helpers.logThis(TAG_LOG, "GENDER POSITION: " + spinner_user_gender.getSelectedItemPosition());
                 userModel.gender = spinner_user_gender.getSelectedItemPosition();
 
                 if (!fetchFromEditText(et_user_phone).equals(""))
@@ -271,8 +271,7 @@ public class ProfileUpdateFragment extends Fragment {
     // ASYNC UPDATE DETAILS ========================================================================
     private void asyncUpdateDetails(final UserModel userModel) {
 
-        helpers.setProgressDialogMessage("Updating your profile, please wait...");
-        helpers.progressDialog(true);
+        helpers.setProgressDialog("Updating your profile, please wait...");
 
         UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
         final Call<JsonObject> call = userInterface.setUserDetails(
@@ -294,11 +293,11 @@ public class ProfileUpdateFragment extends Fragment {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
+                helpers.dismissProgressDialog();
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                    Helpers.logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         if (SharedPrefs.setUser(main.getJSONObject("data"))) {
@@ -323,8 +322,8 @@ public class ProfileUpdateFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
+                helpers.dismissProgressDialog();
+                Helpers.logThis(TAG_LOG, t.toString());
                 setFromSharedPrefs();
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));

@@ -19,7 +19,7 @@ public class BackgroundFetchService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Helpers.LogThis(TAG_LOG, "ON_START");
+        Helpers.logThis(TAG_LOG, "ON_START");
         super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
@@ -38,7 +38,7 @@ public class BackgroundFetchService extends Service {
 
     @Override
     public void onDestroy() {
-        Helpers.LogThis(TAG_LOG, "ON_DESTROY");
+        Helpers.logThis(TAG_LOG, "ON_DESTROY");
         super.onDestroy();
     }
 

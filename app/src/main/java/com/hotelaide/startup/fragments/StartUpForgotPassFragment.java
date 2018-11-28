@@ -22,8 +22,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-;
-
 
 public class StartUpForgotPassFragment extends Fragment {
 
@@ -86,8 +84,7 @@ public class StartUpForgotPassFragment extends Fragment {
     // RESET ASYNC FUNCTION ========================================================================
     private void asyncResetPassword(String email) {
 
-        helpers.setProgressDialogMessage("Sending Reset link, please wait...");
-        helpers.progressDialog(true);
+        helpers.setProgressDialog("Sending Reset link, please wait...");
 
         LoginInterface loginInterface = LoginInterface.retrofit.create(LoginInterface.class);
         final Call<JsonObject> call = loginInterface.resetPassword(email);
@@ -95,12 +92,12 @@ public class StartUpForgotPassFragment extends Fragment {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
+                helpers.dismissProgressDialog();
                 try {
 
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                    Helpers.logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success") && getActivity() != null) {
                         helpers.myDialog(getActivity(), getResources().getString(R.string.app_name), main.getString("message"));
@@ -116,8 +113,8 @@ public class StartUpForgotPassFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
+                helpers.dismissProgressDialog();
+                Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                 } else {

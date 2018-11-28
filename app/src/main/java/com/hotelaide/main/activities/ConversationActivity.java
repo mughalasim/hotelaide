@@ -97,7 +97,7 @@ public class ConversationActivity extends AppCompatActivity {
             STR_PAGE_TITLE = extras.getString("FROM_NAME");
             STR_FROM_PIC_URL = extras.getString("FROM_PIC_URL");
 
-            Helpers.LogThis(TAG_LOG, "FROM ID: " + INT_FROM_ID);
+            Helpers.logThis(TAG_LOG, "FROM ID: " + INT_FROM_ID);
 
             return true;
         } else {
@@ -206,7 +206,7 @@ public class ConversationActivity extends AppCompatActivity {
             main_hash.put("unread_messages", "0");
             main_hash.put("users", users);
 
-            Helpers.LogThis(TAG_LOG, main_hash.toString());
+            Helpers.logThis(TAG_LOG, main_hash.toString());
 
             parent_ref
                     .child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL + "/" + INT_FROM_ID + "/")
@@ -261,7 +261,7 @@ public class ConversationActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         parent_ref = database.getReference();
         child_ref = parent_ref.child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.CONVERSATION_URL + INT_FROM_ID);
-        Helpers.LogThis(TAG_LOG, "FB URL: " + BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.CONVERSATION_URL + INT_FROM_ID);
+        Helpers.logThis(TAG_LOG, "FB URL: " + BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.CONVERSATION_URL + INT_FROM_ID);
 
     }
 
@@ -270,7 +270,7 @@ public class ConversationActivity extends AppCompatActivity {
 //            Gson gson = new Gson();
 //            JSONArray message_array = new JSONArray(gson.toJson(dataSnapshot.getValue()));
 //
-//            Helpers.LogThis(TAG_LOG, "LENGTH: " + message_array.length());
+//            Helpers.logThis(TAG_LOG, "LENGTH: " + message_array.length());
 //
 //            if (!message_array.isNull(0)) {
 //                model_list.clear();
@@ -284,7 +284,7 @@ public class ConversationActivity extends AppCompatActivity {
 //                        conversationModel.text = conversation_object.getString("text");
 //                        conversationModel.is_empty = false;
 //
-//                        Helpers.LogThis(TAG_LOG, "TEXT: " + conversationModel.text);
+//                        Helpers.logThis(TAG_LOG, "TEXT: " + conversationModel.text);
 //
 //                        model_list.add(conversationModel);
 //                    }
@@ -319,7 +319,7 @@ public class ConversationActivity extends AppCompatActivity {
             conversationModel.from_id = object.getInt("from_id");
             conversationModel.text = object.getString("text");
 
-            Helpers.LogThis(TAG_LOG, "TEXT: " + conversationModel.text);
+            Helpers.logThis(TAG_LOG, "TEXT: " + conversationModel.text);
 
             if (conversationModel.from_id != SharedPrefs.getInt(USER_ID)) {
                 model_list.add(conversationModel);
@@ -330,7 +330,7 @@ public class ConversationActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
 
 
-//            Helpers.LogThis(TAG_LOG, STR_MESSAGE_URL);
+//            Helpers.logThis(TAG_LOG, STR_MESSAGE_URL);
 //            parent_ref.child(STR_MESSAGE_URL).setValue(conversationModel.text);
 
             recycler_view.scrollToPosition(model_list.size());

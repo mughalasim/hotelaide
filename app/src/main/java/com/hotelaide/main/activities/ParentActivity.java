@@ -368,7 +368,7 @@ public class ParentActivity extends FragmentActivity implements
                 try {
                     Gson gson = new Gson();
                     JSONObject jsonObject = new JSONObject(gson.toJson(dataSnapshot.getValue()));
-//                    Helpers.LogThis(TAG_LOG, "AFTER PARSING: " + jsonObject.toString());
+//                    Helpers.logThis(TAG_LOG, "AFTER PARSING: " + jsonObject.toString());
 
                     if (!jsonObject.isNull("version")) {
                         long NEW_VERSION_CODE = jsonObject.getLong("version");
@@ -412,7 +412,7 @@ public class ParentActivity extends FragmentActivity implements
                         } else {
                             ShortcutBadger.applyCount(ParentActivity.this, 0);
                         }
-//                        Helpers.LogThis(TAG_LOG, "DATABASE VERSION: " + NEW_VERSION_CODE);
+//                        Helpers.logThis(TAG_LOG, "DATABASE VERSION: " + NEW_VERSION_CODE);
                     }
 
                 } catch (JSONException e) {
@@ -424,7 +424,7 @@ public class ParentActivity extends FragmentActivity implements
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Helpers.LogThis(TAG_LOG, "DATABASE:" + databaseError.toString());
+                Helpers.logThis(TAG_LOG, "DATABASE:" + databaseError.toString());
 
             }
         });

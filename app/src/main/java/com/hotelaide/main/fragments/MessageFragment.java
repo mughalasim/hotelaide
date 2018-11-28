@@ -51,8 +51,6 @@ import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
-;
-
 public class MessageFragment extends Fragment {
 
     private View root_view;
@@ -102,7 +100,7 @@ public class MessageFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(root_view);
+            container.removeView(root_view);
         }
         return root_view;
     }
@@ -166,7 +164,7 @@ public class MessageFragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference parent_ref = database.getReference();
         child_ref = parent_ref.child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL);
-        Helpers.LogThis(TAG_LOG, "FB URL: " + BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL);
+        Helpers.logThis(TAG_LOG, "FB URL: " + BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL);
 
     }
 
@@ -197,7 +195,7 @@ public class MessageFragment extends Fragment {
 
             while (keys.hasNext()) {
                 String key = keys.next();
-                Helpers.LogThis(TAG_LOG, key);
+                Helpers.logThis(TAG_LOG, key);
 
                 JSONObject message_object = messages_object.getJSONObject(key);
                 MessageModel messageModel = new MessageModel();
@@ -254,7 +252,7 @@ public class MessageFragment extends Fragment {
                     try {
                         JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                        Helpers.LogThis(TAG_LOG, main.toString());
+                        Helpers.logThis(TAG_LOG, main.toString());
 
                         JSONArray data = main.getJSONArray("data");
                         int length = data.length();
@@ -280,10 +278,10 @@ public class MessageFragment extends Fragment {
                         }
 
                     } catch (JSONException e) {
-                        Helpers.LogThis(TAG_LOG, e.toString());
+                        Helpers.logThis(TAG_LOG, e.toString());
 
                     } catch (Exception e) {
-                        Helpers.LogThis(TAG_LOG, e.toString());
+                        Helpers.logThis(TAG_LOG, e.toString());
                     }
                 }
             }
@@ -291,8 +289,8 @@ public class MessageFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (getActivity() != null) {
-                    Helpers.LogThis(TAG_LOG, t.toString());
-                    Helpers.LogThis(TAG_LOG, call.toString());
+                    Helpers.logThis(TAG_LOG, t.toString());
+                    Helpers.logThis(TAG_LOG, call.toString());
                 }
             }
         });

@@ -232,8 +232,8 @@ public class PdfViewActivity extends AppCompatActivity implements OnPageChangeLi
                 .onPageError(this)
                 .load();
 
-        Helpers.LogThis(TAG_LOG, "FILE_PATH: " + STR_FILE_PATH);
-        Helpers.LogThis(TAG_LOG, "FILE_NAME: " + STR_FILE_NAME);
+        Helpers.logThis(TAG_LOG, "FILE_PATH: " + STR_FILE_PATH);
+        Helpers.logThis(TAG_LOG, "FILE_NAME: " + STR_FILE_NAME);
 
         et_file_name.setText(STR_FILE_NAME);
         et_file_name.addTextChangedListener(new TextWatcher() {

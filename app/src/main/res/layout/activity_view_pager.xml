@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -20,16 +20,20 @@
 
             <include layout="@layout/toolbar" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                style="@style/Tab_Text_Layout" />
-
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager"
+                android:layout_below="@+id/toolbar"
+                android:paddingBottom="@dimen/height_panel"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="UnknownIdInLayout" />
 
-        </LinearLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_alignParentBottom="true"
+                style="@style/Tab_Text_Layout" />
+
+        </RelativeLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

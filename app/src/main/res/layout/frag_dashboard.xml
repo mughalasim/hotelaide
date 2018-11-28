@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/img_size_medium"
+        android:background="@drawable/background_app2"
+        android:orientation="vertical" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- PROFILE PIC ====================================================================-->
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/img_user"
+                android:layout_width="@dimen/img_size_large"
+                android:layout_height="@dimen/img_size_large"
+                android:layout_marginTop="@dimen/padding_medium"
+                android:src="@color/light_grey"
+                app:riv_border_color="@color/colorPrimary"
+                app:riv_border_width="@dimen/line_thickness"
+                app:riv_corner_radius="@dimen/img_size_medium" />
+
+            <!-- WELCOME MESSAGE ================================================================-->
+            <TextView
+                android:id="@+id/txt_welcome"
+                style="@style/Text_Normal"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/padding_mini"
+                android:text="Good morning Asim"
+                android:textSize="@dimen/text_size_x_large" />
+
+            <!-- STATS ==========================================================================-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <View
+                    android:layout_width="@dimen/padding_small"
+                    android:layout_height="@dimen/padding_small" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_mini">
+
+                    <TextView
+                        style="@style/Text_Header"
+                        android:layout_marginTop="0dp"
+                        android:text="9"
+                        android:textSize="@dimen/text_size_x_large" />
+
+                    <TextView
+                        style="@style/Text_Title"
+                        android:gravity="center"
+                        android:minLines="2"
+                        android:text="@string/nav_applied"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/padding_small"
+                    android:layout_height="@dimen/padding_small" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_mini">
+
+                    <TextView
+                        style="@style/Text_Header"
+                        android:layout_marginTop="0dp"
+                        android:text="3"
+                        android:textSize="@dimen/text_size_x_large" />
+
+                    <TextView
+                        style="@style/Text_Title"
+                        android:gravity="center"
+                        android:minLines="2"
+                        android:text="@string/nav_saved"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/padding_small"
+                    android:layout_height="@dimen/padding_small" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_mini">
+
+                    <TextView
+                        style="@style/Text_Header"
+                        android:layout_marginTop="0dp"
+                        android:text="0"
+                        android:textSize="@dimen/text_size_x_large" />
+
+                    <TextView
+                        style="@style/Text_Title"
+                        android:gravity="center"
+                        android:minLines="2"
+                        android:text="@string/nav_shortlisted"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/padding_small"
+                    android:layout_height="@dimen/padding_small" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_mini">
+
+                    <TextView
+                        style="@style/Text_Header"
+                        android:layout_marginTop="0dp"
+                        android:text="0"
+                        android:textSize="@dimen/text_size_x_large" />
+
+                    <TextView
+                        style="@style/Text_Title"
+                        android:gravity="center"
+                        android:minLines="2"
+                        android:text="@string/nav_interviews"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/padding_small"
+                    android:layout_height="@dimen/padding_small" />
+
+
+            </LinearLayout>
+
+            <!-- PROGRESS ===================================================================-->
+            <RelativeLayout
+                android:id="@+id/rl_progress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_button"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/padding_small">
+
+                <SeekBar
+                    android:id="@+id/seek_bar_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:max="100"
+                    android:progress="15"
+                    android:progressDrawable="@drawable/progress_background"
+                    android:thumb="@drawable/progress_thumb" />
+
+                <TextView
+                    android:id="@+id/progress_label"
+                    style="@style/Text_Small"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/txt_profile_completion"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_progress"
+                    style="@style/Text_Small"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_toEndOf="@+id/progress_label"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <!-- NEW MESSAGE ====================================================================-->
+            <RelativeLayout
+                android:id="@+id/list_item_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_small"
+                android:background="@drawable/bckgrd_text_fields"
+                android:paddingStart="@dimen/padding_tiny"
+                android:paddingEnd="@dimen/padding_tiny">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/img_from_pic"
+                    android:layout_width="@dimen/img_size_medium"
+                    android:layout_height="@dimen/img_size_medium"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/padding_tiny"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@color/light_grey"
+                    app:riv_corner_radius="@dimen/img_size_medium" />
+
+                <LinearLayout
+                    android:id="@+id/top_panel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/padding_tiny"
+                    android:layout_toStartOf="@+id/txt_message_counter"
+                    android:layout_toEndOf="@+id/img_from_pic"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_from_name"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:maxLines="1"
+                        android:text="@string/app_name"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_last_message"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="@dimen/line_thickness"
+                        android:maxLines="1"
+                        android:text="@string/app_name"
+                        android:textColor="@color/colorPrimary" />
+
+                </LinearLayout>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/txt_message_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_small"
+                    app:chipBackgroundColor="@color/red" />
+
+            </RelativeLayout>
+
+            <!-- NOTIFICATION ===================================================================-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bckgrd_text_fields"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/padding_small"
+                android:layout_marginEnd="@dimen/padding_small"
+                android:layout_marginStart="@dimen/padding_small"
+                android:padding="@dimen/padding_tiny">
+
+                <TextView
+                    android:id="@+id/txt_title"
+                    style="@style/Text_Title"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1"
+                    android:text="@string/app_name"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_message"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="@dimen/line_thickness"
+                    android:maxLines="2"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_id"
+                    style="@style/Text_Normal"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txt_date"
+                    style="@style/Text_Normal"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/line_thickness"
+                    android:maxLines="1"
+                    android:text="@string/app_name"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

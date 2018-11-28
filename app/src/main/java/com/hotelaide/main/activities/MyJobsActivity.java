@@ -44,7 +44,7 @@ public class MyJobsActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_view_pager);
 
         initialize(R.id.drawer_my_jobs, getString(R.string.drawer_my_jobs));
 

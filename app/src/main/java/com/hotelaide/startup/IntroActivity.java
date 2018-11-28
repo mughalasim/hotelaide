@@ -101,8 +101,8 @@ public class IntroActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int i) {
-                Helpers.LogThis(TAG_LOG, "PAGE NO. " + i);
-                Helpers.LogThis(TAG_LOG, "ARRAY SIZE. " + images.length);
+                Helpers.logThis(TAG_LOG, "PAGE NO. " + i);
+                Helpers.logThis(TAG_LOG, "ARRAY SIZE. " + images.length);
 
                 if (i == (images.length - 1)) {
                     btn_confirm.setVisibility(View.VISIBLE);

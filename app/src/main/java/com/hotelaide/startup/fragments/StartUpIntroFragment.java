@@ -39,7 +39,7 @@ public class StartUpIntroFragment extends Fragment {
             desc = getArguments().getString(EXTRA_DESC);
 
             String TAG_LOG = "INTRO FRAGMENT";
-            Helpers.LogThis(TAG_LOG, getArguments().toString());
+            Helpers.logThis(TAG_LOG, getArguments().toString());
         }
     }
 

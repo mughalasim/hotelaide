@@ -193,18 +193,18 @@ public class SharedPrefs {
                 return false;
             }
         } catch (JSONException e) {
-            Helpers.LogThis(SHARED_PREFS, e.toString());
+            Helpers.logThis(SHARED_PREFS, e.toString());
             context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             return false;
         } catch (Exception e) {
-            Helpers.LogThis(SHARED_PREFS, e.toString());
+            Helpers.logThis(SHARED_PREFS, e.toString());
             context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             return false;
         }
     }
 
     public static UserModel getUser() {
-        Helpers.LogThis(SHARED_PREFS, "USER GET");
+        Helpers.logThis(SHARED_PREFS, "USER GET");
 
         UserModel userModel = new UserModel();
         userModel.id = getInt(USER_ID);
@@ -228,7 +228,7 @@ public class SharedPrefs {
     }
 
     public static void logUserModel() {
-        Helpers.LogThis(SHARED_PREFS,
+        Helpers.logThis(SHARED_PREFS,
                 "\n UID: " + getInt(USER_ID)
                         + "\n F_NAME: " + getString(USER_F_NAME)
                         + "\n L_NAME: " + getString(USER_L_NAME)

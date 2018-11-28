@@ -86,7 +86,7 @@ public class NewsFeedFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(root_view);
+            container.removeView(root_view);
         }
         return root_view;
     }
@@ -139,7 +139,7 @@ public class NewsFeedFragment extends Fragment {
                     swipe_refresh.setRefreshing(false);
                     try {
                         JSONObject main = new JSONObject(String.valueOf(response.body()));
-                        Helpers.LogThis(TAG_LOG, main.toString());
+                        Helpers.logThis(TAG_LOG, main.toString());
 
                         JSONArray items = main.getJSONArray("items");
 
@@ -147,7 +147,7 @@ public class NewsFeedFragment extends Fragment {
 
                         if (length > 0) {
 
-                            Helpers.LogThis(TAG_LOG, "LENGTH: " + length);
+                            Helpers.logThis(TAG_LOG, "LENGTH: " + length);
 
                             model_list.clear();
 
@@ -181,7 +181,7 @@ public class NewsFeedFragment extends Fragment {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (getActivity() != null) {
                     swipe_refresh.setRefreshing(false);
-                    Helpers.LogThis(TAG_LOG, t.toString());
+                    Helpers.logThis(TAG_LOG, t.toString());
                     if (helpers.validateInternetConnection()) {
                         helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     } else {
@@ -305,12 +305,12 @@ public class NewsFeedFragment extends Fragment {
 
                         okhttp3.Response response = chain.proceed(request);
 
-                        Helpers.LogThis(TAG_LOG, "URL: " + request.url());
-                        Helpers.LogThis(TAG_LOG, "CODE:" + response.code());
+                        Helpers.logThis(TAG_LOG, "URL: " + request.url());
+                        Helpers.logThis(TAG_LOG, "CODE:" + response.code());
                         if (response.code() == 401) {
-                            Helpers.LogThis(TAG_LOG, "MESSAGE: " + response.message());
+                            Helpers.logThis(TAG_LOG, "MESSAGE: " + response.message());
                         } else if (response.code() > 300) {
-                            Helpers.LogThis(TAG_LOG, "MESSAGE: " + response.message());
+                            Helpers.logThis(TAG_LOG, "MESSAGE: " + response.message());
                         }
 
                         return response;

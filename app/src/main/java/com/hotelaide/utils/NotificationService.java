@@ -14,7 +14,7 @@ public class NotificationService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
-        Helpers.LogThis("NEW_TOKEN",s);
+        Helpers.logThis("NEW_TOKEN",s);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class NotificationService extends FirebaseMessagingService {
         String notification_title = "", notification_message = "", notification_content = "";
 
         if (remoteMessage.getData().size() > 0) {
-            Helpers.LogThis(TAG_LOG, "Data: " + remoteMessage.getData());
+            Helpers.logThis(TAG_LOG, "Data: " + remoteMessage.getData());
             Bundle data = new Bundle();
             for (Map.Entry<String, String> entry : remoteMessage.getData().entrySet()) {
                 data.putString(entry.getKey(), entry.getValue());

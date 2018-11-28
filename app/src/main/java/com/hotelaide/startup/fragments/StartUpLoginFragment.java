@@ -56,8 +56,6 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
-;
-
 public class StartUpLoginFragment extends Fragment {
 
     private View rootview;
@@ -120,7 +118,7 @@ public class StartUpLoginFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Helpers.LogThis(TAG_LOG, "ACTIVITY RESULT " + data.toString() + " : " + requestCode + " : " + resultCode);
+        Helpers.logThis(TAG_LOG, "ACTIVITY RESULT " + data.toString() + " : " + requestCode + " : " + resultCode);
         if (requestCode == GOOGLE_REQUEST_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleGoogleAccessToken(task);
@@ -205,9 +203,8 @@ public class StartUpLoginFragment extends Fragment {
     }
 
     private void handleFacebookAccessToken(final Activity activity, final AccessToken token) {
-        helpers.setProgressDialogMessage(getString(R.string.progress_fetch_fb_details));
-        helpers.progressDialog(true);
-        Helpers.LogThis(TAG_LOG, "Access Token: " + token.getToken());
+        helpers.setProgressDialog(getString(R.string.progress_fetch_fb_details));
+        Helpers.logThis(TAG_LOG, "Access Token: " + token.getToken());
 
         if (helpers.validateGooglePlayServices(activity)) {
             AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
@@ -215,7 +212,7 @@ public class StartUpLoginFragment extends Fragment {
                     .addOnFailureListener(activity, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            helpers.progressDialog(false);
+                            helpers.dismissProgressDialog();
                             helpers.ToastMessage(activity, "Failed to login with Facebook");
                             signOutFaceBook();
                         }
@@ -229,8 +226,8 @@ public class StartUpLoginFragment extends Fragment {
                                     FirebaseUser user = fire_base_auth.getCurrentUser();
                                     if (user != null) {
                                         Profile profile = Profile.getCurrentProfile();
-                                        Helpers.LogThis(TAG_LOG, "FB USER ID: " + user.getUid());
-                                        Helpers.LogThis(TAG_LOG, "FB PROFILE ID: " + profile.getId());
+                                        Helpers.logThis(TAG_LOG, "FB USER ID: " + user.getUid());
+                                        Helpers.logThis(TAG_LOG, "FB PROFILE ID: " + profile.getId());
 
                                         asyncLogin(user.getEmail(), "", profile.getId(), "");
 
@@ -239,27 +236,27 @@ public class StartUpLoginFragment extends Fragment {
                                     } else {
                                         signOutFaceBook();
                                         helpers.ToastMessage(activity, "Failed to fetch details from Facebook, please try again later1");
-                                        Helpers.LogThis(TAG_LOG, "USER NULL");
+                                        Helpers.logThis(TAG_LOG, "USER NULL");
                                     }
 
                                 } catch (NullPointerException e) {
                                     signOutFaceBook();
-                                    Helpers.LogThis(TAG_LOG, e.toString());
+                                    Helpers.logThis(TAG_LOG, e.toString());
                                     helpers.ToastMessage(activity, "Failed to fetch details from Facebook, please try again later2");
                                 }
 
                             } else {
                                 helpers.ToastMessage(activity, getString(R.string.error_unknown));
-                                Helpers.LogThis(TAG_LOG, task.toString());
+                                Helpers.logThis(TAG_LOG, task.toString());
                             }
 
-                            helpers.progressDialog(false);
+                            helpers.dismissProgressDialog();
 
                         }
                     });
 
         } else {
-            helpers.progressDialog(false);
+            helpers.dismissProgressDialog();
             helpers.ToastMessage(activity, "Failed to fetch details from Facebook, Please update your Google Play Services");
             signOutFaceBook();
         }
@@ -296,7 +293,7 @@ public class StartUpLoginFragment extends Fragment {
             signOutGoogle();
 
         } catch (ApiException e) {
-            Helpers.LogThis(TAG_LOG, "signInResult : CODE: " + e.getStatusCode());
+            Helpers.logThis(TAG_LOG, "signInResult : CODE: " + e.getStatusCode());
             helpers.ToastMessage(getActivity(), getResources().getString(R.string.error_sign_in_cancelled));
         }
     }
@@ -312,13 +309,12 @@ public class StartUpLoginFragment extends Fragment {
                             final String fb_id,
                             final String google_id) {
 
-        Helpers.LogThis(TAG_LOG, email);
-        Helpers.LogThis(TAG_LOG, password);
-        Helpers.LogThis(TAG_LOG, fb_id);
-        Helpers.LogThis(TAG_LOG, google_id);
+        Helpers.logThis(TAG_LOG, email);
+        Helpers.logThis(TAG_LOG, password);
+        Helpers.logThis(TAG_LOG, fb_id);
+        Helpers.logThis(TAG_LOG, google_id);
 
-        helpers.setProgressDialogMessage("Validating your credentials, please wait...");
-        helpers.progressDialog(true);
+        helpers.setProgressDialog("Validating your credentials, please wait...");
 
         LoginInterface loginInterface = LoginInterface.retrofit.create(LoginInterface.class);
         final Call<JsonObject> call = loginInterface.userLogin(
@@ -332,7 +328,7 @@ public class StartUpLoginFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
-                    Helpers.LogThis(TAG_LOG, response.toString());
+                    Helpers.logThis(TAG_LOG, response.toString());
 
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
@@ -353,7 +349,7 @@ public class StartUpLoginFragment extends Fragment {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
 
-                    helpers.progressDialog(false);
+                    helpers.dismissProgressDialog();
 
                 } catch (JSONException e) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
@@ -363,8 +359,8 @@ public class StartUpLoginFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
+                helpers.dismissProgressDialog();
+                Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                 } else {

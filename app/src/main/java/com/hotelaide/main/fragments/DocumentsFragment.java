@@ -85,7 +85,7 @@ public class DocumentsFragment extends Fragment {
 
                 Bundle bundle = this.getArguments();
                 if (bundle != null) {
-                    Helpers.LogThis(TAG_LOG, "HAS BUNDLES");
+                    Helpers.logThis(TAG_LOG, "HAS BUNDLES");
                     btn_add.setVisibility(View.GONE);
                     btn_refresh.setVisibility(View.GONE);
                 } else {
@@ -98,10 +98,10 @@ public class DocumentsFragment extends Fragment {
 
 
             } catch (InflateException e) {
-                Helpers.LogThis(TAG_LOG, e.toString());
+                Helpers.logThis(TAG_LOG, e.toString());
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(root_view);
+            container.removeView(root_view);
         }
         return root_view;
     }
@@ -124,13 +124,13 @@ public class DocumentsFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Helpers.LogThis(TAG_LOG, "REQUEST CODE: " + requestCode);
+        Helpers.logThis(TAG_LOG, "REQUEST CODE: " + requestCode);
         switch (requestCode) {
             case INT_PDF_REQUEST_CODE:
                 if (resultCode == RESULT_OK && getActivity() != null) {
                     String path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
                     if (path != null) {
-                        Helpers.LogThis(TAG_LOG, "FILE PATH: " + path);
+                        Helpers.logThis(TAG_LOG, "FILE PATH: " + path);
                         startActivityForResult(
                                 new Intent(getActivity(), PdfViewActivity.class).putExtra("FILE_PATH", path)
                                 , INT_REFRESH_REQUEST_CODE);
@@ -234,10 +234,10 @@ public class DocumentsFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 if (intent.getExtras() != null && getActivity() != null) {
                     if (intent.getExtras().getString(EXTRA_PASSED) != null) {
-                        Helpers.LogThis(TAG_LOG, "PASSED");
+                        Helpers.logThis(TAG_LOG, "PASSED");
                         helpers.ToastMessage(getActivity(), "Update successful");
                     } else if (intent.getExtras().getString(EXTRA_FAILED) != null) {
-                        Helpers.LogThis(TAG_LOG, "FAILED");
+                        Helpers.logThis(TAG_LOG, "FAILED");
                         helpers.ToastMessage(getActivity(), "Update failed, please try again later");
                     }
                 }

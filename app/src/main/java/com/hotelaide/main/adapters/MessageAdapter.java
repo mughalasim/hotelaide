@@ -113,7 +113,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         if (messageModel.unread_messages > 0) {
                             FirebaseApp.initializeApp(context);
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            Helpers.LogThis("MESSAGE ADAPTER", messageModel.from_name + "  " + holder.getAdapterPosition());
+                            Helpers.logThis("MESSAGE ADAPTER", messageModel.from_name + "  " + holder.getAdapterPosition());
                             messageModel.unread_messages = 0;
                             database.getReference()
                                     .child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL + "/" + messageModel.from_id + "/unread_messages")
@@ -148,7 +148,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                             public void onClick(View v) {
                                 FirebaseApp.initializeApp(context);
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                Helpers.LogThis("MESSAGE ADAPTER", messageModel.from_name + "  " + holder.getAdapterPosition());
+                                Helpers.logThis("MESSAGE ADAPTER", messageModel.from_name + "  " + holder.getAdapterPosition());
                                 // Deletes the message
                                 database.getReference().child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.MESSAGE_URL + "/" + messageModel.from_id )
                                         .setValue(null);

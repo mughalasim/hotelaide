@@ -381,11 +381,11 @@ public class ProfileActivity extends ParentActivity {
             public void onReceive(Context context, Intent intent) {
                 if (intent.getExtras() != null) {
                     if (intent.getExtras().getString(EXTRA_PASSED) != null) {
-                        Helpers.LogThis(TAG_LOG, "PASSED");
+                        Helpers.logThis(TAG_LOG, "PASSED");
                         helpers.ToastMessage(ProfileActivity.this, "Update successful");
                         setTextAndImages();
                     } else if (intent.getExtras().getString(EXTRA_FAILED) != null) {
-                        Helpers.LogThis(TAG_LOG, "FAILED");
+                        Helpers.logThis(TAG_LOG, "FAILED");
                         helpers.ToastMessage(ProfileActivity.this, "Update failed, please try again later");
                     }
                 }

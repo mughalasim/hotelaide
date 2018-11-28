@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.hotelaide.R;
+import com.hotelaide.main.fragments.DashboardFragment;
 import com.hotelaide.main.fragments.NewsFeedFragment;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.utils.SharedPrefs;
@@ -20,6 +21,7 @@ import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 public class DashboardActivity extends ParentActivity {
 
     private final String[] fragment_extras = {
+            "",
             "https://www.hotelmanagement.net/rss/xml",
             "https://www.hotelmanagement.net/rss/tech/xml",
             "https://www.hotelmanagement.net/rss/design/xml",
@@ -27,6 +29,7 @@ public class DashboardActivity extends ParentActivity {
     };
 
     private int[] fragment_title_list = {
+            R.string.nav_home,
             R.string.nav_news_feed_latest,
             R.string.nav_news_feed_tech,
             R.string.nav_news_feed_design,
@@ -34,6 +37,7 @@ public class DashboardActivity extends ParentActivity {
     };
 
     private Fragment[] fragment_list = {
+            new DashboardFragment(),
             new NewsFeedFragment(),
             new NewsFeedFragment(),
             new NewsFeedFragment(),
@@ -46,9 +50,9 @@ public class DashboardActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_view_pager);
 
-        initialize(R.id.drawer_dashboard, getString(R.string.drawer_dashboard));
+        initialize(R.id.drawer_dashboard, getString(R.string.txt_welcome));
 
         handleExtraBundles();
 

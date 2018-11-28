@@ -17,7 +17,7 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
         <item name="android:statusBarColor" tools:targetApi="lollipop">@color/grey</item>
-        <item name="android:itemBackground">@drawable/bckgrd_app</item>
+        <item name="android:itemBackground">@drawable/background_app</item>
     </style>
 
 
@@ -45,16 +45,16 @@
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
-    <!-- TAB TEXT STYLE =============================================================================-->
+    <!-- TAB TEXT STYLE =========================================================================-->
     <style name="Tab_Text_Layout" parent="AppTheme">
         <item name="android:layout_height">@dimen/height_panel</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingStart">@dimen/padding_small</item>
         <item name="android:paddingEnd">@dimen/padding_small</item>
-        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
         <item name="tabTextColor">@color/grey</item>
-        <item name="android:background">@color/dark_grey</item>
-        <item name="tabIndicatorColor">@color/white</item>
+        <item name="android:background">@color/dimmer</item>
+        <item name="tabIndicatorColor">@color/colorPrimary</item>
         <item name="tabTextAppearance">@style/Text_Title</item>
         <item name="tabMode">scrollable</item>
         <item name="tabGravity">center</item>

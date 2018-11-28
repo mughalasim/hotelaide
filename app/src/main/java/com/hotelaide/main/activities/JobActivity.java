@@ -127,7 +127,7 @@ public class JobActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getInt("JOB_ID") != 0) {
             INT_JOB_ID = extras.getInt("JOB_ID");
-            Helpers.LogThis(TAG_LOG, "JOB ID: " + INT_JOB_ID);
+            Helpers.logThis(TAG_LOG, "JOB ID: " + INT_JOB_ID);
             return true;
         } else {
             return false;
@@ -219,17 +219,16 @@ public class JobActivity extends AppCompatActivity {
 
         EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
         Call<JsonObject> call = establishmentInterface.getJob(INT_JOB_ID);
-        helpers.setProgressDialogMessage("Loading Job details");
-        helpers.progressDialog(true);
+        helpers.setProgressDialog("Loading Job details");
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
+                helpers.dismissProgressDialog();
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                    Helpers.logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
 
@@ -283,8 +282,8 @@ public class JobActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
+                helpers.dismissProgressDialog();
+                Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));
                     onBackPressed();
@@ -302,17 +301,16 @@ public class JobActivity extends AppCompatActivity {
 
         EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
         Call<JsonObject> call = establishmentInterface.applyForJob(SharedPrefs.getInt(USER_ID), INT_JOB_ID);
-        helpers.setProgressDialogMessage("Applying for this position");
-        helpers.progressDialog(true);
+        helpers.setProgressDialog("Applying for this position");
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.progressDialog(false);
+                helpers.dismissProgressDialog();
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                    Helpers.logThis(TAG_LOG, main.toString());
 
                     db.setJobFromJson(globalJobObject, true);
 
@@ -328,8 +326,8 @@ public class JobActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.progressDialog(false);
-                Helpers.LogThis(TAG_LOG, t.toString());
+                helpers.dismissProgressDialog();
+                Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
                     helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));
                 } else {

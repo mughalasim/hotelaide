@@ -305,7 +305,7 @@ public class FindJobsActivity extends ParentActivity {
             public void requestCompleted(JSONObject content, AlgoliaException error) {
                 try {
                     if (content != null) {
-                        Helpers.LogThis(TAG_LOG, content.toString());
+                        Helpers.logThis(TAG_LOG, content.toString());
 
                         model_list.clear();
 
@@ -325,18 +325,18 @@ public class FindJobsActivity extends ParentActivity {
                         adapter.notifyDataSetChanged();
 
                     } else if (error != null) {
-                        Helpers.LogThis(TAG_LOG, error.toString());
+                        Helpers.logThis(TAG_LOG, error.toString());
 
                     }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
-                    Helpers.LogThis(TAG_LOG, e.toString());
+                    Helpers.logThis(TAG_LOG, e.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Helpers.LogThis(TAG_LOG, e.toString());
+                    Helpers.logThis(TAG_LOG, e.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Helpers.LogThis(TAG_LOG, e.toString());
+                    Helpers.logThis(TAG_LOG, e.toString());
                 }
             }
         };
@@ -353,7 +353,7 @@ public class FindJobsActivity extends ParentActivity {
                             && (visibleItemCount + pastVisibleItems) >= totalItemCount
                             && LAST_PAGE != CURRENT_PAGE) {
 //                        loadMoreResults();
-                        Helpers.LogThis(TAG_LOG, "Load more");
+                        Helpers.logThis(TAG_LOG, "Load more");
                         continue_pagination = false;
                     }
                 }
@@ -382,13 +382,13 @@ public class FindJobsActivity extends ParentActivity {
 //                    }
 //                } catch (NullPointerException e) {
 //                    e.printStackTrace();
-//                    Helpers.LogThis(TAG_LOG, e.toString());
+//                    Helpers.logThis(TAG_LOG, e.toString());
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
-//                    Helpers.LogThis(TAG_LOG, e.toString());
+//                    Helpers.logThis(TAG_LOG, e.toString());
 //                } catch (Exception e) {
 //                    e.printStackTrace();
-//                    Helpers.LogThis(TAG_LOG, e.toString());
+//                    Helpers.logThis(TAG_LOG, e.toString());
 //                }
 //            }
 //        });

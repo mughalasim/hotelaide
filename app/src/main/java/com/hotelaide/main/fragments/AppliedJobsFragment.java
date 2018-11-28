@@ -73,7 +73,7 @@ public class AppliedJobsFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(root_view);
+            container.removeView(root_view);
         }
         return root_view;
     }
@@ -138,7 +138,7 @@ public class AppliedJobsFragment extends Fragment {
                     swipe_refresh.setRefreshing(false);
                     try {
                         JSONObject main = new JSONObject(String.valueOf(response.body()));
-                        Helpers.LogThis(TAG_LOG, main.toString());
+                        Helpers.logThis(TAG_LOG, main.toString());
 
                         model_list.clear();
                         JSONObject data = main.getJSONObject("data");
@@ -170,7 +170,7 @@ public class AppliedJobsFragment extends Fragment {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (getActivity() != null) {
                     swipe_refresh.setRefreshing(false);
-                    Helpers.LogThis(TAG_LOG, t.toString());
+                    Helpers.logThis(TAG_LOG, t.toString());
                     if (helpers.validateInternetConnection()) {
                         helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     } else {

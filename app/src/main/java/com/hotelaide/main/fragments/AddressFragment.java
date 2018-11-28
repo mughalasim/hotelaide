@@ -117,7 +117,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 e.printStackTrace();
             }
         } else {
-            ((ViewGroup) container.getParent()).removeView(root_view);
+            container.removeView(root_view);
         }
         return root_view;
     }
@@ -134,8 +134,8 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         super.onResume();
         map_view.onResume();
         if (MAP_ACTIVITY_LATITUDE != 0.0) {
-            Helpers.LogThis(TAG_LOG, "MAP LAT: " + MAP_ACTIVITY_LATITUDE);
-            Helpers.LogThis(TAG_LOG, "ON RESUME, CHECK THE LOCATION");
+            Helpers.logThis(TAG_LOG, "MAP LAT: " + MAP_ACTIVITY_LATITUDE);
+            Helpers.logThis(TAG_LOG, "ON RESUME, CHECK THE LOCATION");
             SharedPrefs.logUserModel();
             onMapReady(google_map);
         }
@@ -240,9 +240,9 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 et_postcode.setText(postalCode + ", " + city + ", " + country);
 
         } catch (IOException e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
+            Helpers.logThis(TAG_LOG, e.toString());
         } catch (Exception e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
+            Helpers.logThis(TAG_LOG, e.toString());
         }
     }
 
@@ -315,7 +315,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void logAddress() {
-        Helpers.LogThis(TAG_LOG,
+        Helpers.logThis(TAG_LOG,
                 "COUNTY NAME: " + db.getFilterNameByID(COUNTY_TABLE_NAME, SharedPrefs.getInt(USER_COUNTY)) +
                         " POSTAL CODE: " + SharedPrefs.getString(USER_POSTAL_CODE) +
                         " LNG: " + SharedPrefs.getDouble(USER_LNG) +
@@ -346,7 +346,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 if (getActivity() != null) {
                     try {
                         JSONObject main = new JSONObject(String.valueOf(response.body()));
-                        Helpers.LogThis(TAG_LOG, main.toString());
+                        Helpers.logThis(TAG_LOG, main.toString());
                         if (main.getBoolean("success")) {
                             helpers.ToastMessage(getActivity(), main.getString("message"));
                             SharedPrefs.setInt(USER_COUNTY, county_id);
@@ -368,7 +368,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (getActivity() != null) {
-                    Helpers.LogThis(TAG_LOG, t.toString());
+                    Helpers.logThis(TAG_LOG, t.toString());
                     if (helpers.validateInternetConnection()) {
                         helpers.ToastMessage(getActivity(), getString(R.string.error_server));
                     } else {

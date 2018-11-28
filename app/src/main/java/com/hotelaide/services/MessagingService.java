@@ -49,14 +49,14 @@ public class MessagingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Helpers.LogThis(TAG_LOG, "ON_START");
+        Helpers.logThis(TAG_LOG, "ON_START");
         super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
 
     @Override
     public void onCreate() {
-        Helpers.LogThis(TAG_LOG, "ON_CREATE");
+        Helpers.logThis(TAG_LOG, "ON_CREATE");
         MyApplication.initFireBase();
         helpers = new Helpers(MessagingService.this);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -66,22 +66,22 @@ public class MessagingService extends Service {
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Helpers.LogThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
-                Helpers.LogThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
+                Helpers.logThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
+                Helpers.logThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
 
                 if (SharedPrefs.getBool(ALLOW_MESSAGE_PUSH) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
-                    Helpers.LogThis(TAG_LOG, "FB DB CHILD ADDED");
+                    Helpers.logThis(TAG_LOG, "FB DB CHILD ADDED");
                     setDataSnapshotFromObject(dataSnapshot);
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Helpers.LogThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
-                Helpers.LogThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
+                Helpers.logThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
+                Helpers.logThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
 
                 if (SharedPrefs.getBool(ALLOW_MESSAGE_PUSH) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
-                    Helpers.LogThis(TAG_LOG, "FB DB CHILD CHANGED");
+                    Helpers.logThis(TAG_LOG, "FB DB CHILD CHANGED");
                     setDataSnapshotFromObject(dataSnapshot);
                 }
             }
@@ -113,7 +113,7 @@ public class MessagingService extends Service {
 
     @Override
     public void onDestroy() {
-        Helpers.LogThis(TAG_LOG, "ON_DESTROY");
+        Helpers.logThis(TAG_LOG, "ON_DESTROY");
         super.onDestroy();
     }
 
@@ -124,10 +124,10 @@ public class MessagingService extends Service {
             Gson gson = new Gson();
             JSONObject message_object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
 
-            Helpers.LogThis(TAG_LOG, message_object.toString());
+            Helpers.logThis(TAG_LOG, message_object.toString());
 
             if (!message_object.isNull("unread_messages") && message_object.getInt("unread_messages") > 0) {
-                Helpers.LogThis(TAG_LOG, "UNREAD COUNT: " + message_object.getInt("unread_messages"));
+                Helpers.logThis(TAG_LOG, "UNREAD COUNT: " + message_object.getInt("unread_messages"));
                 MessageModel messageModel = new MessageModel();
                 messageModel.last_message = message_object.getString("last_message");
                 messageModel.unread_messages = message_object.getInt("unread_messages");
@@ -142,7 +142,7 @@ public class MessagingService extends Service {
                     }
                 }
 
-                Helpers.LogThis(TAG_LOG, "CREATE NOTIFICATION: " + messageModel.from_name + " : " + messageModel.last_message);
+                Helpers.logThis(TAG_LOG, "CREATE NOTIFICATION: " + messageModel.from_name + " : " + messageModel.last_message);
 
                 CHANNEL_ID = String.valueOf(messageModel.from_id);
                 CHANNEL_NAME = messageModel.from_name;
@@ -153,10 +153,10 @@ public class MessagingService extends Service {
             }
 
         } catch (JSONException e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
+            Helpers.logThis(TAG_LOG, e.toString());
             e.printStackTrace();
         } catch (Exception e) {
-            Helpers.LogThis(TAG_LOG, e.toString());
+            Helpers.logThis(TAG_LOG, e.toString());
             e.printStackTrace();
         }
 

@@ -61,7 +61,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     // BASIC FUNCTIONS =============================================================================
     private void setDataBaseVersion() {
         if (SharedPrefs.getInt(DATABASE_VERSION) < BuildConfig.DATABASE_VERSION) {
-            Helpers.LogThis(TAG_LOG, "DATABASE UPDATED");
+            Helpers.logThis(TAG_LOG, "DATABASE UPDATED");
             db.deleteAllTables();
             SharedPrefs.deleteAllSharedPrefs();
             SharedPrefs.setInt(DATABASE_VERSION, BuildConfig.DATABASE_VERSION);
@@ -90,7 +90,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Helpers.LogThis(TAG_LOG, "Start Up");
+                Helpers.logThis(TAG_LOG, "Start Up");
                 if (SharedPrefs.getString(ACCESS_TOKEN).equals("")) {
                     startActivity(new Intent(SplashScreenActivity.this, IntroActivity.class));
                 } else {

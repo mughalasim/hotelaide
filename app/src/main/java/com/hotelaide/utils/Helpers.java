@@ -122,8 +122,8 @@ public class Helpers {
 
     public final static String TAG_LOG = "HELPER CLASS";
     private final Context context;
-    private static Toast mToast;
-    private final TextView ProgressDialogMessage;
+    private static Toast toast;
+    private final TextView txt_loading_message;
     private final Dialog dialog;
 
 
@@ -136,7 +136,7 @@ public class Helpers {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_loading);
         dialog.setCancelable(false);
-        ProgressDialogMessage = dialog.findViewById(R.id.message_text);
+        txt_loading_message = dialog.findViewById(R.id.txt_loading_message);
     }
 
 
@@ -204,9 +204,9 @@ public class Helpers {
 
 
     // LOGS ========================================================================================
-    public static void LogThis(String PageName, String data) {
+    public static void logThis(String page_name, String data) {
         if (BuildConfig.LOGGING) {
-            Log.e(PageName, data);
+            Log.e(page_name, data);
         }
     }
 
@@ -228,21 +228,24 @@ public class Helpers {
             }
 
         } catch (NameNotFoundException e) {
-            LogThis(TAG_LOG, "name not found " + e.toString());
+            logThis(TAG_LOG, "name not found " + e.toString());
         } catch (NoSuchAlgorithmException e) {
-            LogThis(TAG_LOG, "no such algorithm " + e.toString());
+            logThis(TAG_LOG, "no such algorithm " + e.toString());
         } catch (Exception e) {
-            LogThis(TAG_LOG, "exception " + e.toString());
+            logThis(TAG_LOG, "exception " + e.toString());
         }
     }
 
 
     // DIALOGS AND DISPLAYS ========================================================================
-    public void progressDialog(Boolean status) {
-        if (status) {
+    public void setProgressDialog(String message) {
+        if (!dialog.isShowing()) {
             dialog.show();
+            txt_loading_message.setText(message);
         } else {
             dialog.cancel();
+            dialog.show();
+            txt_loading_message.setText(message);
         }
     }
 
@@ -252,18 +255,14 @@ public class Helpers {
         }
     }
 
-    public void setProgressDialogMessage(String message) {
-        ProgressDialogMessage.setText(message);
-    }
-
-    public void myDialog(Context DialogContext, String Title, String Message) {
+    public void myDialog(Context DialogContext, String title, String message) {
         final Dialog dialog = new Dialog(DialogContext);
         dialog.setContentView(R.layout.dialog_cancel);
         final TextView txt_message = dialog.findViewById(R.id.txt_message);
         final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
         final TextView txt_title = dialog.findViewById(R.id.txt_title);
-        txt_title.setText(Title);
-        txt_message.setText(Message);
+        txt_title.setText(title);
+        txt_message.setText(message);
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,10 +272,10 @@ public class Helpers {
         dialog.show();
     }
 
-    public void myPermissionsDialog(final Context dialogContext, int[] grantResults) {
-        for (int result : grantResults) {
+    public void myPermissionsDialog(final Context context, int[] grant_results) {
+        for (int result : grant_results) {
             if (result == -1) {
-                final Dialog dialog = new Dialog(dialogContext);
+                final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_confirm);
                 final TextView txt_message = dialog.findViewById(R.id.txt_message);
                 final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
@@ -297,9 +296,9 @@ public class Helpers {
                         Intent intent = new Intent();
                         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", dialogContext.getPackageName(), null);
+                        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
                         intent.setData(uri);
-                        dialogContext.startActivity(intent);
+                        context.startActivity(intent);
                         dialog.cancel();
                     }
                 });
@@ -337,7 +336,7 @@ public class Helpers {
         dialog.show();
     }
 
-    public void dialogShare(final Activity context, final String STR_SHARE_LINK) {
+    public void dialogShare(final Activity context, final String share_link_url){
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_share);
@@ -352,7 +351,7 @@ public class Helpers {
             public void onClick(View v) {
                 if (validateAppIsInstalled("com.facebook.katana")) {
                     ShareLinkContent content = new ShareLinkContent.Builder()
-                            .setContentUrl(Uri.parse(STR_SHARE_LINK))
+                            .setContentUrl(Uri.parse(share_link_url))
                             .build();
                     ShareDialog.show(context, content);
                     dialog.cancel();
@@ -369,7 +368,7 @@ public class Helpers {
                     Intent emailIntent = new Intent(Intent.ACTION_SEND);
                     emailIntent.setType("text/html");
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name));
-                    emailIntent.putExtra(Intent.EXTRA_TEXT, STR_SHARE_LINK);
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, share_link_url);
                     context.startActivity(Intent.createChooser(emailIntent, "Send Email"));
                     dialog.cancel();
                 } catch (Exception e) {
@@ -384,7 +383,7 @@ public class Helpers {
                 if (validateAppIsInstalled("com.facebook.orca")) {
                     Intent messengerIntent = new Intent();
                     messengerIntent.setAction(Intent.ACTION_SEND);
-                    messengerIntent.putExtra(Intent.EXTRA_TEXT, STR_SHARE_LINK);
+                    messengerIntent.putExtra(Intent.EXTRA_TEXT, share_link_url);
                     messengerIntent.setType("text/plain");
                     messengerIntent.setPackage("com.facebook.orca");
                     context.startActivity(messengerIntent);
@@ -399,7 +398,7 @@ public class Helpers {
             public void onClick(View v) {
                 try {
                     Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                    smsIntent.putExtra("sms_body", STR_SHARE_LINK);
+                    smsIntent.putExtra("sms_body", share_link_url);
                     smsIntent.setType("vnd.android-dir/mms-sms");
                     context.startActivity(smsIntent);
                     dialog.cancel();
@@ -416,7 +415,7 @@ public class Helpers {
                     Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
                     whatsappIntent.setType("text/plain");
                     whatsappIntent.setPackage("com.whatsapp");
-                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, STR_SHARE_LINK);
+                    whatsappIntent.putExtra(Intent.EXTRA_TEXT, share_link_url);
                     context.startActivity(whatsappIntent);
                     dialog.cancel();
                 } else {
@@ -429,7 +428,7 @@ public class Helpers {
         dialog.show();
     }
 
-    public void dialogMakeCall(final Context context, final String phoneNumber) {
+    public void dialogMakeCall(final Context context, final String phone_number) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm);
@@ -445,7 +444,7 @@ public class Helpers {
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) ==
                         PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse("tel:" + phoneNumber));
+                    intent.setData(Uri.parse("tel:" + phone_number));
                     context.startActivity(intent);
 
                 } else {
@@ -494,13 +493,13 @@ public class Helpers {
 
     }
 
-    public void ToastMessage(Context MessageContext, String Message) {
-        if (mToast != null) {
-            mToast.cancel();
+    public void ToastMessage(Context context, String message) {
+        if (toast != null) {
+            toast.cancel();
         }
-        mToast = Toast.makeText(MessageContext, Message, Toast.LENGTH_LONG);
-        mToast.setGravity(Gravity.CENTER, 0, 0);
-        mToast.show();
+        toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     public void openImageViewer(final Activity activity, final String image_url) {
@@ -519,18 +518,18 @@ public class Helpers {
 
 
     // VALIDATIONS =================================================================================
-    public boolean validateEmail(EditText editText) {
+    public boolean validateEmail(EditText edit_text) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
-        if (editText.getText().toString().length() < 1) {
-            editText.setError(context.getString(R.string.error_field_required));
-            animateFlash(editText);
+        if (edit_text.getText().toString().length() < 1) {
+            edit_text.setError(context.getString(R.string.error_field_required));
+            animateFlash(edit_text);
             return false;
-        } else if (!pattern.matcher(editText.getText().toString()).matches()) {
-            editText.setError(context.getString(R.string.error_field_required));
-            animateWobble(editText);
+        } else if (!pattern.matcher(edit_text.getText().toString()).matches()) {
+            edit_text.setError(context.getString(R.string.error_field_required));
+            animateWobble(edit_text);
             return false;
         } else {
-            editText.setError(null);
+            edit_text.setError(null);
             return true;
         }
     }
@@ -808,22 +807,22 @@ public class Helpers {
 
     public void handleErrorMessage(final Context context, JSONObject data) {
         try {
-            Iterator<String> iter = data.keys();
-            while (iter.hasNext()) {
-                String key = iter.next();
+            Iterator<String> i = data.keys();
+            while (i.hasNext()) {
+                String key = i.next();
                 try {
                     JSONArray message_array = new JSONArray(String.valueOf(data.get(key)));
                     String display_message = "";
-                    for (int i = 0; i < message_array.length(); i++) {
-                        display_message = display_message.concat(message_array.getString(i)).concat("\n");
+                    for (int y = 0; y < message_array.length(); y++) {
+                        display_message = display_message.concat(message_array.getString(y)).concat("\n");
                     }
                     myDialog(context, context.getString(R.string.txt_errors), display_message);
 
-                    Helpers.LogThis(TAG_LOG, display_message);
+                    Helpers.logThis(TAG_LOG, display_message);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
                     myDialog(context, context.getString(R.string.app_name), context.getString(R.string.error_unknown));
                 }
             }
@@ -831,7 +830,7 @@ public class Helpers {
 
         } catch (Exception j) {
             j.printStackTrace();
-            LogThis(TAG_LOG, j.toString());
+            logThis(TAG_LOG, j.toString());
             myDialog(context, context.getString(R.string.app_name), context.getString(R.string.error_unknown));
         }
 
@@ -876,11 +875,11 @@ public class Helpers {
 
 
     // NOTIFICATION CREATOR ========================================================================
-    public static void createNotification(Context context, String MessageTitle, String messageBody) {
+    public static void createNotification(Context context, String message_title, String message_body) {
         Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("notification_title", MessageTitle);
-        intent.putExtra("notification_body", messageBody);
+        intent.putExtra("notification_title", message_title);
+        intent.putExtra("notification_body", message_body);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
@@ -891,8 +890,8 @@ public class Helpers {
         if (SharedPrefs.getBool(APP_IS_RUNNING)) {
             mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(getNotificationIcon())
-                    .setContentTitle(MessageTitle)
-                    .setContentText(messageBody)
+                    .setContentTitle(message_title)
+                    .setContentText(message_body)
                     .setPriority(NotificationCompat.PRIORITY_LOW)
                     .setSound(null)
                     .setVibrate(null)
@@ -902,8 +901,8 @@ public class Helpers {
         } else {
             mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(getNotificationIcon())
-                    .setContentTitle(MessageTitle)
-                    .setContentText(messageBody)
+                    .setContentTitle(message_title)
+                    .setContentText(message_body)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
@@ -951,26 +950,26 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-//                    LogThis(TAG_LOG, main.toString());
+//                    logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         SharedPrefs.setUser(main.getJSONObject("data"));
                     }
 
                 } catch (JSONException e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
                     context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
 
                 } catch (Exception e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
                     context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, t.toString());
-                LogThis(TAG_LOG, call.toString());
+                logThis(TAG_LOG, t.toString());
+                logThis(TAG_LOG, call.toString());
                 context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             }
 
@@ -987,7 +986,7 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-//                    LogThis(TAG_LOG, main.toString());
+//                    logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
@@ -1002,17 +1001,17 @@ public class Helpers {
                     }
 
                 } catch (JSONException e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, t.toString());
-                LogThis(TAG_LOG, call.toString());
+                logThis(TAG_LOG, t.toString());
+                logThis(TAG_LOG, call.toString());
             }
 
         });
@@ -1028,7 +1027,7 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-//                    LogThis(TAG_LOG, main.toString());
+//                    logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
@@ -1044,17 +1043,17 @@ public class Helpers {
                     }
 
                 } catch (JSONException e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, t.toString());
-                LogThis(TAG_LOG, call.toString());
+                logThis(TAG_LOG, t.toString());
+                logThis(TAG_LOG, call.toString());
             }
 
         });
@@ -1070,7 +1069,7 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-//                    LogThis(TAG_LOG, main.toString());
+//                    logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
@@ -1086,17 +1085,17 @@ public class Helpers {
                     }
 
                 } catch (JSONException e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, t.toString());
-                LogThis(TAG_LOG, call.toString());
+                logThis(TAG_LOG, t.toString());
+                logThis(TAG_LOG, call.toString());
             }
 
         });
@@ -1112,7 +1111,7 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-//                    LogThis(TAG_LOG, main.toString());
+//                    logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
@@ -1128,17 +1127,17 @@ public class Helpers {
                     }
 
                 } catch (JSONException e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, t.toString());
-                LogThis(TAG_LOG, call.toString());
+                logThis(TAG_LOG, t.toString());
+                logThis(TAG_LOG, call.toString());
             }
 
         });
@@ -1154,7 +1153,7 @@ public class Helpers {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                    LogThis(TAG_LOG, main.toString());
+                    logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
                         JSONObject data_object = main.getJSONObject("data");
@@ -1173,17 +1172,17 @@ public class Helpers {
                     context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE));
 
                 } catch (JSONException e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, t.toString());
-                LogThis(TAG_LOG, call.toString());
+                logThis(TAG_LOG, t.toString());
+                logThis(TAG_LOG, call.toString());
                 context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE));
             }
 
@@ -1204,7 +1203,7 @@ public class Helpers {
                 try {
                     db.deleteDirtyDocuments();
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.LogThis(TAG_LOG, main.toString());
+                    Helpers.logThis(TAG_LOG, main.toString());
                     if (main.getBoolean("success")) {
                         db.deleteDirtyDocuments();
                         JSONObject data_object = main.getJSONObject("data");
@@ -1224,7 +1223,7 @@ public class Helpers {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.LogThis(TAG_LOG, t.toString());
+                Helpers.logThis(TAG_LOG, t.toString());
                 db.deleteDirtyDocuments();
                 if (validateInternetConnection()) {
                     createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
@@ -1249,7 +1248,7 @@ public class Helpers {
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    LogThis(TAG_LOG, main.toString());
+                    logThis(TAG_LOG, main.toString());
                     if (main.getBoolean("success")) {
                         db.deleteDocumentByID(String.valueOf(id));
                         context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
@@ -1258,18 +1257,18 @@ public class Helpers {
                     }
                 } catch (JSONException e) {
                     context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
                     context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-                    LogThis(TAG_LOG, e.toString());
+                    logThis(TAG_LOG, e.toString());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                LogThis(TAG_LOG, t.toString());
-                LogThis(TAG_LOG, call.toString());
+                logThis(TAG_LOG, t.toString());
+                logThis(TAG_LOG, call.toString());
                 context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             }
 
