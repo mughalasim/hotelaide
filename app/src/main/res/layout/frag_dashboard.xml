@@ -196,7 +196,7 @@
                     android:thumb="@drawable/progress_thumb" />
 
                 <TextView
-                    android:id="@+id/progress_label"
+                    android:id="@+id/txt_progress_label"
                     style="@style/Text_Small"
                     android:layout_centerInParent="true"
                     android:layout_centerHorizontal="true"
@@ -209,14 +209,14 @@
                     style="@style/Text_Small"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="0dp"
-                    android:layout_toEndOf="@+id/progress_label"
+                    android:layout_toEndOf="@+id/txt_progress_label"
                     android:textStyle="bold" />
 
             </RelativeLayout>
 
             <!-- NEW MESSAGE ====================================================================-->
             <RelativeLayout
-                android:id="@+id/list_item_message"
+                android:id="@+id/rl_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_small"

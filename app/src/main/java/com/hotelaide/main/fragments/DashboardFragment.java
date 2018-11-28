@@ -1,25 +1,22 @@
 package com.hotelaide.main.fragments;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
-import com.getkeepsafe.taptargetview.TapTargetView;
 import com.hotelaide.R;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
@@ -30,12 +27,16 @@ public class DashboardFragment extends Fragment {
     private View root_view;
     private Helpers helpers;
     private Database db;
+
     private TextView
             txt_welcome,
             txt_applied_jobs,
             txt_saved_jobs,
             txt_shortlisted,
-            txt_interviews;
+            txt_interviews,
+            txt_progress;
+    private RelativeLayout rl_message;
+
     private RoundedImageView
             img_avatar;
 
@@ -78,6 +79,7 @@ public class DashboardFragment extends Fragment {
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         txt_welcome = root_view.findViewById(R.id.txt_welcome);
+        txt_progress = root_view.findViewById(R.id.txt_progress);
 
         txt_applied_jobs = root_view.findViewById(R.id.txt_applied_jobs);
         txt_saved_jobs = root_view.findViewById(R.id.txt_saved_jobs);
@@ -85,6 +87,7 @@ public class DashboardFragment extends Fragment {
         txt_interviews = root_view.findViewById(R.id.txt_interviews);
 
         img_avatar = root_view.findViewById(R.id.img_avatar);
+        rl_message = root_view.findViewById(R.id.rl_message);
 
         setTarget();
     }
@@ -101,13 +104,21 @@ public class DashboardFragment extends Fragment {
         if (getActivity() != null)
             new TapTargetSequence(getActivity())
                     .targets(
-                            TapTarget.forView(root_view.findViewById(R.id.txt_applied_jobs), "Applied jobs", "Tap here for all your applied jobs"),
-                            TapTarget.forView(root_view.findViewById(R.id.txt_saved_jobs), "Saved jobs", "Tap here to see all your saved jobs")
-                                    .dimColor(R.color.dim)
-                                    .outerCircleColor(R.color.colorPrimaryLight)
-                                    .targetCircleColor(R.color.colorPrimary)
-                                    .textColor(R.color.white)
+                            getTapTarget(R.id.txt_applied_jobs, "Applied Jobs", "This will show you how many jobs you have applied for"),
+                            getTapTarget(R.id.txt_saved_jobs, "Saved Jobs", "This will show you how many jobs you have saved for later review"),
+                            getTapTarget(R.id.txt_shortlisted, "Shortlisted", "How many employers have shortlisted you, see that here"),
+                            getTapTarget(R.id.txt_interviews, "Interviews", "How many employers have invited you for an interview"),
+                            getTapTarget(R.id.rl_message, "Updates", "All your updates in one place, from Messages to notifications"),
+                            getTapTarget(R.id.txt_progress, "Profile", "And lastly....Make sure you fill out your profile completely to increase your chances of getting employed")
                     ).start();
+    }
+
+    private TapTarget getTapTarget(int view_id, String title, String message){
+        return  TapTarget.forView(root_view.findViewById(R.id.txt_saved_jobs), title, message)
+                .dimColor(R.color.dim)
+                .outerCircleColor(R.color.colorPrimaryLight)
+                .targetCircleColor(R.color.colorPrimary)
+                .textColor(R.color.white);
     }
 
 }
