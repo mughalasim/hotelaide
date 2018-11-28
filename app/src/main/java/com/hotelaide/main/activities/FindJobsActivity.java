@@ -313,7 +313,7 @@ public class FindJobsActivity extends ParentActivity {
                             JSONArray hits_array = content.getJSONArray("hits");
                             for (int i = 0; i < hits_array.length(); i++) {
                                 JSONObject hit_object = hits_array.getJSONObject(i);
-                                model_list.add(db.setJobFromJson(hit_object, false));
+                                model_list.add(db.setJobFromJson(hit_object, ""));
                             }
                         }
 

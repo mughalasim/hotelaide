@@ -25,14 +25,14 @@
 
             <!-- PROFILE PIC ====================================================================-->
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_user"
+                android:id="@+id/img_avatar"
                 android:layout_width="@dimen/img_size_large"
                 android:layout_height="@dimen/img_size_large"
                 android:layout_marginTop="@dimen/padding_medium"
                 android:src="@color/light_grey"
                 app:riv_border_color="@color/colorPrimary"
                 app:riv_border_width="@dimen/line_thickness"
-                app:riv_corner_radius="@dimen/img_size_medium" />
+                app:riv_corner_radius="@dimen/img_size_large" />
 
             <!-- WELCOME MESSAGE ================================================================-->
             <TextView
@@ -40,7 +40,6 @@
                 style="@style/Text_Normal"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/padding_mini"
-                android:text="Good morning Asim"
                 android:textSize="@dimen/text_size_x_large" />
 
             <!-- STATS ==========================================================================-->
@@ -56,6 +55,8 @@
                     android:layout_height="@dimen/padding_small" />
 
                 <LinearLayout
+                    android:id="@+id/ll_applied"
+                    android:onClick="openMyJobs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -63,9 +64,10 @@
                     android:padding="@dimen/padding_mini">
 
                     <TextView
+                        android:id="@+id/txt_applied_jobs"
                         style="@style/Text_Header"
                         android:layout_marginTop="0dp"
-                        android:text="9"
+                        android:text="@string/txt_zero"
                         android:textSize="@dimen/text_size_x_large" />
 
                     <TextView
@@ -83,6 +85,8 @@
                     android:layout_height="@dimen/padding_small" />
 
                 <LinearLayout
+                    android:id="@+id/ll_saved"
+                    android:onClick="openMyJobs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -90,9 +94,10 @@
                     android:padding="@dimen/padding_mini">
 
                     <TextView
+                        android:id="@+id/txt_saved_jobs"
                         style="@style/Text_Header"
                         android:layout_marginTop="0dp"
-                        android:text="3"
+                        android:text="@string/txt_zero"
                         android:textSize="@dimen/text_size_x_large" />
 
                     <TextView
@@ -110,6 +115,8 @@
                     android:layout_height="@dimen/padding_small" />
 
                 <LinearLayout
+                    android:id="@+id/ll_shortlisted"
+                    android:onClick="openMyJobs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -117,9 +124,10 @@
                     android:padding="@dimen/padding_mini">
 
                     <TextView
+                        android:id="@+id/txt_shortlisted"
                         style="@style/Text_Header"
                         android:layout_marginTop="0dp"
-                        android:text="0"
+                        android:text="@string/txt_zero"
                         android:textSize="@dimen/text_size_x_large" />
 
                     <TextView
@@ -137,6 +145,8 @@
                     android:layout_height="@dimen/padding_small" />
 
                 <LinearLayout
+                    android:id="@+id/ll_interviews"
+                    android:onClick="openMyJobs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -144,9 +154,10 @@
                     android:padding="@dimen/padding_mini">
 
                     <TextView
+                        android:id="@+id/txt_interviews"
                         style="@style/Text_Header"
                         android:layout_marginTop="0dp"
-                        android:text="0"
+                        android:text="@string/txt_zero"
                         android:textSize="@dimen/text_size_x_large" />
 
                     <TextView

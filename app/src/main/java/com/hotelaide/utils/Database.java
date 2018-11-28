@@ -18,9 +18,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hotelaide.utils.StaticVariables.APPLIED_JOBS_ID;
-import static com.hotelaide.utils.StaticVariables.APPLIED_JOBS_TABLE_ID;
-import static com.hotelaide.utils.StaticVariables.APPLIED_JOBS_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.DOCUMENTS_DATE_UPLOADED;
@@ -45,6 +42,10 @@ import static com.hotelaide.utils.StaticVariables.EXP_START_DATE;
 import static com.hotelaide.utils.StaticVariables.EXP_TABLE_ID;
 import static com.hotelaide.utils.StaticVariables.EXP_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXP_TYPE;
+import static com.hotelaide.utils.StaticVariables.FILTERED_JOBS_BY;
+import static com.hotelaide.utils.StaticVariables.FILTERED_JOBS_ID;
+import static com.hotelaide.utils.StaticVariables.FILTERED_JOBS_TABLE_ID;
+import static com.hotelaide.utils.StaticVariables.FILTERED_JOBS_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.FILTER_ID;
 import static com.hotelaide.utils.StaticVariables.FILTER_NAME;
 import static com.hotelaide.utils.StaticVariables.JOB_ESTABLISHMENT_ID;
@@ -102,12 +103,13 @@ public class Database extends SQLiteOpenHelper {
                 ")"
         );
 
-        // APPLIED JOBS TABLE ======================================================================
+        // FILTERED JOBS TABLE =====================================================================
         db.execSQL("CREATE TABLE IF NOT EXISTS "
-                + APPLIED_JOBS_TABLE_NAME +
+                + FILTERED_JOBS_TABLE_NAME +
                 "(" +
-                APPLIED_JOBS_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL," +
-                APPLIED_JOBS_ID + " INTEGER" +
+                FILTERED_JOBS_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                FILTERED_JOBS_ID + " INTEGER," +
+                FILTERED_JOBS_BY + " TEXT" +
                 ")"
         );
 
@@ -186,9 +188,12 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
     }
 
-    public void deleteAppliedJobTable() {
+    public void deleteFilteredJobTable(String filter_type) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + APPLIED_JOBS_TABLE_NAME);
+        String whereClause = FILTERED_JOBS_BY + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(filter_type)};
+        db.delete(FILTERED_JOBS_TABLE_NAME, whereClause, whereArgs);
+        db.close();
     }
 
     public void deleteExperienceTable() {
@@ -229,7 +234,7 @@ public class Database extends SQLiteOpenHelper {
     public void deleteAllTables() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + JOB_TABLE_NAME);
-        db.execSQL("DELETE FROM " + APPLIED_JOBS_TABLE_NAME);
+        db.execSQL("DELETE FROM " + FILTERED_JOBS_TABLE_NAME);
         db.execSQL("DELETE FROM " + EXP_TABLE_NAME);
         db.execSQL("DELETE FROM " + COUNTY_TABLE_NAME);
         db.execSQL("DELETE FROM " + CATEGORIES_TABLE_NAME);
@@ -350,7 +355,7 @@ public class Database extends SQLiteOpenHelper {
 
 
     // JOB SEARCH FUNCTIONS ========================================================================
-    public JobModel setJobFromJson(JSONObject job_object, Boolean is_applied) {
+    public JobModel setJobFromJson(JSONObject job_object, String filter_type) {
 //        Helpers.logThis(TAG_LOG, job_object.toString());
         JobModel jobModel = new JobModel();
         try {
@@ -381,8 +386,8 @@ public class Database extends SQLiteOpenHelper {
                 db.insert(JOB_TABLE_NAME, null, content_values1);
             }
 
-            if (is_applied) {
-                setAppliedJob(jobModel.id);
+            if (!filter_type.equals("")) {
+                setAppliedJob(jobModel.id, filter_type);
             }
 
             return jobModel;
@@ -393,26 +398,30 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public void setAppliedJob(int job_id) {
+    private void setAppliedJob(int job_id, String filter_type) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content_values2 = new ContentValues();
-        content_values2.put(APPLIED_JOBS_ID, job_id);
-        String where_clause2 = APPLIED_JOBS_ID + " = ?";
+
+        content_values2.put(FILTERED_JOBS_ID, job_id);
+        content_values2.put(FILTERED_JOBS_BY, filter_type);
+
+        String where_clause2 = FILTERED_JOBS_ID + " = ?";
+
         String[] where_args2 = new String[]{String.valueOf(job_id)};
-        int no_of_rows_affected2 = db.update(APPLIED_JOBS_TABLE_NAME, content_values2, where_clause2,
+        int no_of_rows_affected2 = db.update(FILTERED_JOBS_TABLE_NAME, content_values2, where_clause2,
                 where_args2);
         if (no_of_rows_affected2 == 0) {
-            db.insert(APPLIED_JOBS_TABLE_NAME, null, content_values2);
+            db.insert(FILTERED_JOBS_TABLE_NAME, null, content_values2);
         }
     }
 
-    public Boolean isAppliedJob(int job_id) {
+    public Boolean isFilteredJob(int job_id, String filter_type) {
         JobModel jobModel = new JobModel();
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String whereClause = APPLIED_JOBS_ID + " = ?";
-        String[] whereArgs = new String[]{String.valueOf(job_id)};
-        Cursor cursor = db.query(APPLIED_JOBS_TABLE_NAME, null, whereClause, whereArgs,
+        String whereClause = FILTERED_JOBS_ID + " = ? AND " + FILTERED_JOBS_BY + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(job_id), filter_type};
+        Cursor cursor = db.query(FILTERED_JOBS_TABLE_NAME, null, whereClause, whereArgs,
                 null, null, null);
 
         if (cursor != null) {
@@ -469,11 +478,11 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteAppliedJobByJobId(int job_id) {
+    public void deleteFilteredJobByJobId(int job_id, String filter_type) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String whereClause = APPLIED_JOBS_ID + " = ?";
-        String[] whereArgs = new String[]{String.valueOf(job_id)};
-        db.delete(APPLIED_JOBS_TABLE_NAME, whereClause, whereArgs);
+        String whereClause = FILTERED_JOBS_ID + " = ? AND " + FILTERED_JOBS_BY + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(job_id), filter_type};
+        db.delete(FILTERED_JOBS_TABLE_NAME, whereClause, whereArgs);
         db.close();
     }
 
@@ -507,12 +516,12 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    public ArrayList<JobModel> getAllAppliedJobs() {
+    public ArrayList<JobModel> getAllFilteredJobs(String filter_type) {
 
         ArrayList<JobModel> list = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery(createInnerJoin(APPLIED_JOBS_TABLE_NAME, APPLIED_JOBS_ID, JOB_TABLE_NAME, JOB_ID), null);
+        Cursor cursor = db.rawQuery(createInnerJoin(filter_type), null);
 
         if (cursor != null) {
             int count = cursor.getCount();
@@ -537,10 +546,29 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    private String createInnerJoin(String table_name1, String id_1, String table_name2, String id_2) {
-        return "SELECT * FROM " + table_name1 + " l INNER JOIN " + table_name2 + " a ON l." + id_1 + " = a." + id_2;
+    private String createInnerJoin(String filter_type) {
+        return "SELECT * FROM " + FILTERED_JOBS_TABLE_NAME + " l INNER JOIN " + JOB_TABLE_NAME + " a ON l."
+                + FILTERED_JOBS_ID + " = a." + JOB_ID + " WHERE " + FILTERED_JOBS_BY + " = \"" + filter_type +"\"";
     }
 
+
+    // COUNTING TABLES =============================================================================
+    public String getFilteredTableCount(String filter_type) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(createInnerJoin(filter_type), null);
+
+        String str_count = "0";
+
+        if (cursor != null) {
+            int count = cursor.getCount();
+            if (count > 0) {
+                str_count = String.valueOf(count);
+            }
+            cursor.close();
+        }
+
+        return str_count;
+    }
 
     // COUNTY FUNCTIONS ============================================================================
     public void setFilter(String table_name, SearchFilterModel searchFilterModel) {
@@ -766,11 +794,11 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public void updateNotificationRead(int id){
+    public void updateNotificationRead(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(NOTIFICATION_READ, 1);
-        String whereClause = NOTIFICATION_ID+ " = ?";
+        String whereClause = NOTIFICATION_ID + " = ?";
         String[] whereArgs = new String[]{String.valueOf(id)};
         db.update(NOTIFICATION_TABLE_NAME, contentValues, whereClause, whereArgs);
         db.close();

@@ -37,6 +37,8 @@ import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.button.MaterialButton;
@@ -336,7 +338,7 @@ public class Helpers {
         dialog.show();
     }
 
-    public void dialogShare(final Activity context, final String share_link_url){
+    public void dialogShare(final Activity context, final String share_link_url) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_share);
@@ -514,6 +516,30 @@ public class Helpers {
         } else {
             ToastMessage(activity, "Image not set");
         }
+    }
+
+    public void setWelcomeMessage(TextView txt_welcome) {
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        String greeting = "";
+        if (timeOfDay >= 0 && timeOfDay < 12) {
+            greeting = "Good Morning ";
+
+        } else if (timeOfDay >= 12 && timeOfDay < 16) {
+            greeting = "Good Afternoon ";
+
+        } else if (timeOfDay >= 16 && timeOfDay < 21) {
+            greeting = "Good Evening ";
+
+        } else if (timeOfDay >= 21 && timeOfDay < 24) {
+            greeting = "Good Night ";
+        }
+
+        txt_welcome.setText(greeting.concat(SharedPrefs.getString(USER_F_NAME)));
+    }
+
+    public void setTargets(Context context, View target_id) {
+
     }
 
 

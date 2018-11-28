@@ -98,4 +98,10 @@ public interface EstablishmentInterface {
             @Path("user_id") int user_id
     );
 
+    // GET SAVED JOBS ============================================================================
+    @GET("jobs/{user_id}/saved")
+    Call<JsonObject> getSavedJobs(
+            @Path("user_id") int user_id
+    );
+
 }

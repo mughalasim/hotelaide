@@ -13,7 +13,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-//import com.facebook.stetho.Stetho;
+import com.facebook.stetho.Stetho;
 
 public class MyApplication extends Application {
 
@@ -25,9 +25,9 @@ public class MyApplication extends Application {
         MyApplication.context = getApplicationContext();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         // then open this link in chrome -> chrome://inspect/#devices
-//        if (BuildConfig.LOGGING) {
-//            Stetho.initializeWithDefaults(this);
-//        }
+        if (BuildConfig.LOGGING) {
+            Stetho.initializeWithDefaults(this);
+        }
     }
 
     public static void initFireBase() {

@@ -101,10 +101,13 @@ public class StaticVariables {
     public static final String EDUCATION_LEVEL_TABLE_NAME = "EDUCATION_LEVEL";
     public static final String FILTER_ID = "id";
     public static final String FILTER_NAME = "name";
-    // APPLIED JOBS TABLE ==========================================================================
-    public static final String APPLIED_JOBS_TABLE_NAME = "APPLIED_JOBS";
-    public static final String APPLIED_JOBS_TABLE_ID = "id";
-    public static final String APPLIED_JOBS_ID = "job_id";
+    // FILTERED JOBS TABLE ==========================================================================
+    public static final String FILTERED_JOBS_TABLE_NAME = "FILTERED_JOBS";
+    public static final String FILTERED_JOBS_TABLE_ID = "id";
+    public static final String FILTERED_JOBS_ID = "job_id";
+    public static final String FILTERED_JOBS_BY = "filter_by";
+    public static final String FILTER_TYPE_APPLIED = "APPLIED";
+    public static final String FILTER_TYPE_SAVED = "SAVED";
     // DOCUMENTS TABLE =============================================================================
     public static final String DOCUMENTS_TABLE_NAME = "DOCUMENTS";
     public static final String DOCUMENTS_ID = "id";

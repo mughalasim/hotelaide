@@ -239,7 +239,7 @@ public class ParentActivity extends FragmentActivity implements
 
         for (int i = 0; i < fragment_title_list.length; i++) {
             Bundle bundle = new Bundle();
-            bundle.putString("NEWS_FEED_URL", fragment_extras[i]);
+            bundle.putString("EXTRA_STRING", fragment_extras[i]);
 
             Fragment fragment = fragment_list[i];
             fragment.setArguments(bundle);

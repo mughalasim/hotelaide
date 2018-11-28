@@ -70,7 +70,7 @@ public class NewsFeedFragment extends Fragment {
             try {
                 Bundle bundle = this.getArguments();
                 if (bundle != null) {
-                    NEWS_FEED_URL = bundle.getString("NEWS_FEED_URL");
+                    NEWS_FEED_URL = bundle.getString("EXTRA_STRING");
 
                     root_view = inflater.inflate(R.layout.frag_recycler_view, container, false);
 

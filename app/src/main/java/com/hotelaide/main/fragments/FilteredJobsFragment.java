@@ -30,15 +30,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 
-public class AppliedJobsFragment extends Fragment {
+public class FilteredJobsFragment extends Fragment {
 
     private View root_view;
     private Helpers helpers;
     private final String
-            TAG_LOG = "APPLIED JOBS";
+            TAG_LOG = "FILTERED JOBS";
     private Database db;
 
     // SEARCH ADAPTER ITEMS ------------------------------------------------------------------------
@@ -47,8 +48,9 @@ public class AppliedJobsFragment extends Fragment {
     private RecyclerView recycler_view;
     private ArrayList<JobModel> model_list = new ArrayList<>();
     private FindJobsAdapter adapter;
+    private String FILTER_TYPE = "";
 
-    public AppliedJobsFragment() {
+    public FilteredJobsFragment() {
     }
 
 
@@ -56,18 +58,23 @@ public class AppliedJobsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root_view == null && getActivity() != null) {
             try {
-                root_view = inflater.inflate(R.layout.frag_recycler_view, container, false);
+                Bundle bundle = this.getArguments();
+                if (bundle != null) {
+                    FILTER_TYPE = bundle.getString("EXTRA_STRING");
 
-                helpers = new Helpers(getActivity());
+                    root_view = inflater.inflate(R.layout.frag_recycler_view, container, false);
 
-                db = new Database();
+                    helpers = new Helpers(getActivity());
 
-                findAllViews();
+                    db = new Database();
 
-                setListeners();
+                    findAllViews();
 
-                asyncGetAppliedJobs();
+                    setListeners();
 
+                    asyncGetAppliedJobs();
+
+                }
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -109,26 +116,31 @@ public class AppliedJobsFragment extends Fragment {
     private void noListItems() {
         recycler_view.invalidate();
         model_list.clear();
-        JobModel jobModel = new JobModel();
-        model_list.add(jobModel);
-        adapter.notifyDataSetChanged();
+        model_list.add(new JobModel());
+        adapter.updateData(model_list);
     }
 
     private void populateAppliedJobsFromDB() {
         model_list.clear();
-        model_list = db.getAllAppliedJobs();
+        model_list = db.getAllFilteredJobs(FILTER_TYPE);
         recycler_view.invalidate();
         adapter.updateData(model_list);
-        adapter.notifyDataSetChanged();
         if (model_list.size() <= 0) {
             noListItems();
         }
     }
 
-    // ASYNC FETCH ALL APPLIED JOBS ================================================================
+    // ASYNC FETCH ALL JOBS ========================================================================
     private void asyncGetAppliedJobs() {
         EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
-        Call<JsonObject> call = establishmentInterface.getAppliedJobs(SharedPrefs.getInt(USER_ID));
+
+        Call<JsonObject> call;
+        if (FILTER_TYPE.equals(FILTER_TYPE_APPLIED)) {
+            call = establishmentInterface.getAppliedJobs(SharedPrefs.getInt(USER_ID));
+        } else {
+            call = establishmentInterface.getSavedJobs(SharedPrefs.getInt(USER_ID));
+        }
+
         swipe_refresh.setRefreshing(true);
 
         call.enqueue(new Callback<JsonObject>() {
@@ -144,20 +156,18 @@ public class AppliedJobsFragment extends Fragment {
                         JSONObject data = main.getJSONObject("data");
                         JSONArray applications = data.getJSONArray("applications");
 
-                        db.deleteAppliedJobTable();
+                        db.deleteFilteredJobTable(FILTER_TYPE);
 
                         for (int i = 0; i < applications.length(); i++) {
                             JSONObject hit_object = applications.getJSONObject(i);
-                            model_list.add(db.setJobFromJson(hit_object, true));
+                            model_list.add(db.setJobFromJson(hit_object, FILTER_TYPE));
                         }
 
-                        if (model_list.size() <= 0) {
+                        if (model_list.size() < 1) {
                             noListItems();
                         }
 
-                        recycler_view.invalidate();
                         adapter.updateData(model_list);
-                        adapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         helpers.ToastMessage(getActivity(), getString(R.string.error_server));

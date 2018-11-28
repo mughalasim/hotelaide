@@ -32,6 +32,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -191,7 +193,7 @@ public class JobActivity extends AppCompatActivity {
     }
 
     public void applyJob(View view) {
-        if (!db.isAppliedJob(INT_JOB_ID)) {
+        if (!db.isFilteredJob(INT_JOB_ID, FILTER_TYPE_APPLIED)) {
             if (helpers.validateJobApplication(JobActivity.this)) {
                 asyncApplyJob();
             }
@@ -205,7 +207,7 @@ public class JobActivity extends AppCompatActivity {
     }
 
     private void checkJobApplied() {
-        if (db.isAppliedJob(INT_JOB_ID)) {
+        if (db.isFilteredJob(INT_JOB_ID, FILTER_TYPE_APPLIED)) {
             btn_apply.setText("APPLIED");
             btn_apply.setTextAppearance(JobActivity.this, R.style.Material_Text);
             btn_apply.setBackground(null);
@@ -268,7 +270,7 @@ public class JobActivity extends AppCompatActivity {
                         checkJobApplied();
 
                     } else {
-                        db.deleteAppliedJobByJobId(INT_JOB_ID);
+                        db.deleteFilteredJobByJobId(INT_JOB_ID, FILTER_TYPE_APPLIED);
                         helpers.handleErrorMessage(JobActivity.this, main.getJSONObject("data"));
                     }
 
@@ -312,7 +314,9 @@ public class JobActivity extends AppCompatActivity {
 
                     Helpers.logThis(TAG_LOG, main.toString());
 
-                    db.setJobFromJson(globalJobObject, true);
+                    db.setJobFromJson(globalJobObject, FILTER_TYPE_APPLIED);
+
+                    db.deleteFilteredJobByJobId(INT_JOB_ID, FILTER_TYPE_SAVED);
 
                     helpers.ToastMessage(JobActivity.this, main.getString("message"));
 

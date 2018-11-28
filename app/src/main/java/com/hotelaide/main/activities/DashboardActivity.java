@@ -2,6 +2,7 @@ package com.hotelaide.main.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.DashboardFragment;
@@ -16,6 +17,8 @@ import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 public class DashboardActivity extends ParentActivity {
@@ -91,6 +94,15 @@ public class DashboardActivity extends ParentActivity {
             SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, true);
 
         }
+    }
+
+    public void openMyJobs(View view) {
+        if (view.getId() == R.id.ll_applied) {
+            startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class).putExtra(FILTER_TYPE_APPLIED, FILTER_TYPE_APPLIED));
+        } else if (view.getId() == R.id.ll_saved) {
+            startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class).putExtra(FILTER_TYPE_SAVED, FILTER_TYPE_SAVED));
+        }
+
     }
 
 }

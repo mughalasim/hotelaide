@@ -1,25 +1,36 @@
 package com.hotelaide.main.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.hotelaide.R;
-import com.hotelaide.main.fragments.AppliedJobsFragment;
+import com.hotelaide.main.fragments.FilteredJobsFragment;
+import com.hotelaide.utils.SharedPrefs;
 
 import androidx.fragment.app.Fragment;
+
+import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
+import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
+import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 public class MyJobsActivity extends ParentActivity {
 
     private int[] fragment_title_list = {
-            R.string.nav_applied
-//            R.string.nav_saved,
+            R.string.nav_applied,
+            R.string.nav_saved,
 //            R.string.nav_shortlisted,
 //            R.string.nav_invites,
 //            R.string.nav_interviews
     };
 
     private final String[] fragment_extras = {
-            "",
-            "",
+            FILTER_TYPE_APPLIED,
+            FILTER_TYPE_SAVED,
             "",
             "",
             ""
@@ -32,11 +43,11 @@ public class MyJobsActivity extends ParentActivity {
     //-Invites
     //-Interviews
     private Fragment[] fragment_list = {
-            new AppliedJobsFragment()
-//            new AppliedJobsFragment(),
-//            new AppliedJobsFragment(),
-//            new AppliedJobsFragment(),
-//            new AppliedJobsFragment()
+            new FilteredJobsFragment(),
+            new FilteredJobsFragment(),
+//            new FilteredJobsFragment(),
+//            new FilteredJobsFragment(),
+//            new FilteredJobsFragment()
     };
 
     // OVERRIDE METHODS ============================================================================
@@ -50,7 +61,19 @@ public class MyJobsActivity extends ParentActivity {
 
         setupViewPager(fragment_list, fragment_title_list, fragment_extras);
 
+        handleExtraBundles();
 
+    }
+
+    private void handleExtraBundles() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getString(FILTER_TYPE_APPLIED) != null) {
+           view_pager.setCurrentItem(0);
+
+        } else if (extras != null && extras.getString(FILTER_TYPE_SAVED) != null) {
+            view_pager.setCurrentItem(1);
+
+        }
     }
 
 }

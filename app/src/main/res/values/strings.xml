@@ -219,5 +219,6 @@
     <string name="txt_notify_me_desc">Turning this on will allow the app to notify you if there is a new update available in the Play Store</string>
     <string name="txt_notify_push">Message notifications</string>
     <string name="txt_notify_push_desc">Notify me when someone has sent me a new message</string>
+    <string name="txt_zero">0</string>
 
 </resources>

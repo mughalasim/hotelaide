@@ -44,7 +44,7 @@ public class GalleryViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root_view == null && getActivity() != null) {
-            root_view = inflater.inflate(R.layout.frag_gallery_view, container);
+            root_view = inflater.inflate(R.layout.frag_gallery_view, container, false);
 
             SubsamplingScaleImageView image = root_view.findViewById(R.id.frag_image);
             image.setMaxScale(20);
