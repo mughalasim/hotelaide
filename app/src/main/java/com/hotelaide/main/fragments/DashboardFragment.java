@@ -8,7 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.hotelaide.R;
 import com.hotelaide.utils.Database;
@@ -35,7 +34,10 @@ public class DashboardFragment extends Fragment {
             txt_shortlisted,
             txt_interviews,
             txt_progress;
-    private RelativeLayout rl_message;
+
+    private RelativeLayout
+            rl_progress,
+            rl_message;
 
     private RoundedImageView
             img_avatar;
@@ -104,21 +106,13 @@ public class DashboardFragment extends Fragment {
         if (getActivity() != null)
             new TapTargetSequence(getActivity())
                     .targets(
-                            getTapTarget(R.id.txt_applied_jobs, "Applied Jobs", "This will show you how many jobs you have applied for"),
-                            getTapTarget(R.id.txt_saved_jobs, "Saved Jobs", "This will show you how many jobs you have saved for later review"),
-                            getTapTarget(R.id.txt_shortlisted, "Shortlisted", "How many employers have shortlisted you, see that here"),
-                            getTapTarget(R.id.txt_interviews, "Interviews", "How many employers have invited you for an interview"),
-                            getTapTarget(R.id.rl_message, "Updates", "All your updates in one place, from Messages to notifications"),
-                            getTapTarget(R.id.txt_progress, "Profile", "And lastly....Make sure you fill out your profile completely to increase your chances of getting employed")
+                            helpers.getTapTarget(root_view.findViewById(R.id.txt_applied_jobs), "Applied Jobs", "This will show you how many jobs you have applied for"),
+                            helpers.getTapTarget(root_view.findViewById(R.id.txt_saved_jobs), "Saved Jobs", "This will show you how many jobs you have saved for later review"),
+                            helpers.getTapTarget(root_view.findViewById(R.id.txt_shortlisted), "Shortlisted", "How many employers have shortlisted you, see that here"),
+                            helpers.getTapTarget(root_view.findViewById(R.id.txt_interviews), "Interviews", "How many employers have invited you for an interview"),
+                            helpers.getTapTarget(root_view.findViewById(R.id.rl_message), "Updates", "All your updates in one place, from Messages to notifications"),
+                            helpers.getTapTarget(root_view.findViewById(R.id.rl_progress), "Profile Progress", "And lastly....Make sure you fill out your profile completely to increase your chances of getting employed")
                     ).start();
-    }
-
-    private TapTarget getTapTarget(int view_id, String title, String message){
-        return  TapTarget.forView(root_view.findViewById(R.id.txt_saved_jobs), title, message)
-                .dimColor(R.color.dim)
-                .outerCircleColor(R.color.colorPrimaryLight)
-                .targetCircleColor(R.color.colorPrimary)
-                .textColor(R.color.white);
     }
 
 }

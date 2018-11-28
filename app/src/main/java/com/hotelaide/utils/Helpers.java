@@ -38,7 +38,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.button.MaterialButton;
@@ -538,8 +537,16 @@ public class Helpers {
         txt_welcome.setText(greeting.concat(SharedPrefs.getString(USER_F_NAME)));
     }
 
-    public void setTargets(Context context, View target_id) {
-
+    public TapTarget getTapTarget(View view, String title, String message){
+        return  TapTarget.forView(view, title, message)
+                .dimColor(R.color.dimmer)
+                .outerCircleColor(R.color.colorAccent)
+                .targetCircleColor(R.color.colorPrimary)
+                .cancelable(false)
+                .descriptionTextColor(R.color.black)
+                .titleTextColor(R.color.dark_grey)
+                .drawShadow(true)
+                .transparentTarget(true);
     }
 
 

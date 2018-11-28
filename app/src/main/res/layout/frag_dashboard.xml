@@ -29,6 +29,7 @@
                 android:layout_width="@dimen/img_size_large"
                 android:layout_height="@dimen/img_size_large"
                 android:layout_marginTop="@dimen/padding_medium"
+                android:scaleType="centerCrop"
                 android:src="@color/light_grey"
                 app:riv_border_color="@color/colorPrimary"
                 app:riv_border_width="@dimen/line_thickness"

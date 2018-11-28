@@ -38,6 +38,15 @@ public class StaticVariables {
     public static final String ALLOW_MESSAGE_PUSH = "ALLOW_MESSAGE_PUSH";
     public static final String ALLOW_NOTIFICATIONS = "ALLOW_NOTIFICATIONS";
     public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
+
+    // BOOLEAN FIRST LAUNCHED SCREENS ==============================================================
+    public static final String FIRST_LAUNCH_DASH = "FIRST_LAUNCH_DASH";
+    public static final String FIRST_LAUNCH_PROFILE = "FIRST_LAUNCH_PROFILE";
+    public static final String FIRST_LAUNCH_PROFILE_EDIT = "FIRST_LAUNCH_PROFILE_EDIT";
+    public static final String FIRST_LAUNCH_SEARCH = "FIRST_LAUNCH_SEARCH";
+    public static final String FIRST_LAUNCH_MESSAGES = "FIRST_LAUNCH_MESSAGES";
+
+
     // FLOAT VARIABLES
     public final static float FLOAT_GOOGLE_MAP_ZOOM = 14f;
 
