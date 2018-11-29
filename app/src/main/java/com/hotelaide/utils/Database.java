@@ -548,7 +548,7 @@ public class Database extends SQLiteOpenHelper {
 
     private String createInnerJoin(String filter_type) {
         return "SELECT * FROM " + FILTERED_JOBS_TABLE_NAME + " l INNER JOIN " + JOB_TABLE_NAME + " a ON l."
-                + FILTERED_JOBS_ID + " = a." + JOB_ID + " WHERE " + FILTERED_JOBS_BY + " = \"" + filter_type +"\"";
+                + FILTERED_JOBS_ID + " = a." + JOB_ID + " WHERE " + FILTERED_JOBS_BY + " = \"" + filter_type + "\"";
     }
 
 
@@ -839,6 +839,38 @@ public class Database extends SQLiteOpenHelper {
         }
 
         return list;
+    }
+
+    public ArrayList<NotificationModel> getAllUnreadNotifications() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String whereClause = NOTIFICATION_READ + " = ?";
+        String[] whereArgs = new String[]{String.valueOf(1)};
+
+        Cursor cursor = db.query(NOTIFICATION_TABLE_NAME, null, whereClause, whereArgs, null, null, null);
+
+        ArrayList<NotificationModel> list = new ArrayList<>();
+
+        if (cursor != null) {
+            int count = cursor.getCount();
+            if (count > 0) {
+                cursor.moveToFirst();
+                do {
+                    NotificationModel notificationModel = new NotificationModel();
+                    notificationModel.id = cursor.getInt(cursor.getColumnIndex(NOTIFICATION_ID));
+                    notificationModel.title = cursor.getString(cursor.getColumnIndex(NOTIFICATION_TITLE));
+                    notificationModel.message = cursor.getString(cursor.getColumnIndex(NOTIFICATION_MESSAGE));
+                    notificationModel.date = cursor.getString(cursor.getColumnIndex(NOTIFICATION_DATE));
+                    notificationModel.read = cursor.getInt(cursor.getColumnIndex(NOTIFICATION_READ));
+
+                    list.add(notificationModel);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return list;
+
     }
 
 

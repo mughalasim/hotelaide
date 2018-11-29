@@ -544,10 +544,9 @@ public class Helpers {
             int length = titles.length;
             for (int i = 0; i < length; i++) {
                 tapTargets.add(TapTarget.forView(views[i], titles[i], messages[i])
-                        .dimColor(R.color.dimmer)
+                        .dimColor(R.color.dim)
                         .outerCircleColor(R.color.colorAccent)
-                        .targetCircleColor(R.color.colorPrimary)
-                        .cancelable(false)
+                        .cancelable(true)
                         .descriptionTextColor(R.color.black)
                         .titleTextColor(R.color.dark_grey)
                         .drawShadow(true)

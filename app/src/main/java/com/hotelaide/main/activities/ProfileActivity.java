@@ -40,6 +40,8 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_DOCUMENTS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_PASS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_ABOUT;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
@@ -107,6 +109,23 @@ public class ProfileActivity extends ParentActivity {
         findAllViews();
 
         setListeners();
+
+        if (SharedPrefs.getString(USER_IMG_AVATAR).equals("https://hotelaide.com/images/avatar.png")
+                || SharedPrefs.getString(USER_IMG_AVATAR).equals("")) {
+            helpers.setTarget(
+                    ProfileActivity.this,
+                    FIRST_LAUNCH_PROFILE,
+                    new View[]{
+                            findViewById(R.id.img_avatar)
+                    },
+                    new String[]{
+                            "Profile Picture"
+                    },
+                    new String[]{
+                            "Why don't you add a profile picture? Employers would better recognise you"
+                    }
+            );
+        }
 
 
     }

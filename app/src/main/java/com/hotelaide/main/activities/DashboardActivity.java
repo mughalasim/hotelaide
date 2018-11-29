@@ -105,4 +105,7 @@ public class DashboardActivity extends ParentActivity {
 
     }
 
+    public void openProfile(View view) {
+        startActivity(new Intent(DashboardActivity.this, ProfileActivity.class));
+    }
 }

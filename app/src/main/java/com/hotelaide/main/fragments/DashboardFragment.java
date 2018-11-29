@@ -1,24 +1,21 @@
 package com.hotelaide.main.fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.getkeepsafe.taptargetview.TapTarget;
-import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.hotelaide.R;
+import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
-import com.hotelaide.utils.StaticVariables;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -49,8 +46,11 @@ public class DashboardFragment extends Fragment {
             seek_bar_progress;
 
     private RelativeLayout
-            rl_progress,
-            rl_message;
+            rl_progress;
+
+    private LinearLayout
+            ll_message,
+            ll_notification;
 
     private RoundedImageView
             img_avatar;
@@ -91,7 +91,7 @@ public class DashboardFragment extends Fragment {
                                     root_view.findViewById(R.id.txt_saved_jobs),
                                     root_view.findViewById(R.id.txt_shortlisted),
                                     root_view.findViewById(R.id.txt_interviews),
-                                    root_view.findViewById(R.id.rl_message),
+                                    root_view.findViewById(R.id.ll_message),
                                     root_view.findViewById(R.id.rl_progress)
                             },
                             new String[]{
@@ -149,9 +149,10 @@ public class DashboardFragment extends Fragment {
         txt_progress = root_view.findViewById(R.id.txt_progress);
 
         // NEW MESSAGES
-        rl_message = root_view.findViewById(R.id.rl_message);
+        ll_message = root_view.findViewById(R.id.ll_message);
 
         // NEW NOTIFICATIONS
+        ll_notification = root_view.findViewById(R.id.ll_notification);
     }
 
     private void updateDashboard() {
@@ -162,6 +163,23 @@ public class DashboardFragment extends Fragment {
 
         // PROFILE PROGRESS
         updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
+
+        // NOTIFICATION
+        ArrayList<NotificationModel> notification_models = db.getAllUnreadNotifications();
+
+        if (notification_models.size() > 0) {
+            int size = notification_models.size();
+            for (int i = 0; i < size; i++) {
+                NotificationModel notification_model = notification_models.get(i);
+                // TODO - INFLATE THE LAYOUTS HERE FOR NOTIFICATIONS
+
+            }
+            ll_notification.setVisibility(View.VISIBLE);
+
+        } else {
+            ll_notification.setVisibility(View.GONE);
+        }
+
 
     }
 
