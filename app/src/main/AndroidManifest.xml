@@ -40,7 +40,6 @@
         <!--START UP PAGES ======================================================================-->
         <activity
             android:name=".startup.SplashScreenActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
             <intent-filter>

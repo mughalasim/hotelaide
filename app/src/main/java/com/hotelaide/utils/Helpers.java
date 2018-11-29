@@ -38,6 +38,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.button.MaterialButton;
@@ -537,16 +538,25 @@ public class Helpers {
         txt_welcome.setText(greeting.concat(SharedPrefs.getString(USER_F_NAME)));
     }
 
-    public TapTarget getTapTarget(View view, String title, String message){
-        return  TapTarget.forView(view, title, message)
-                .dimColor(R.color.dimmer)
-                .outerCircleColor(R.color.colorAccent)
-                .targetCircleColor(R.color.colorPrimary)
-                .cancelable(false)
-                .descriptionTextColor(R.color.black)
-                .titleTextColor(R.color.dark_grey)
-                .drawShadow(true)
-                .transparentTarget(true);
+    public void setTarget(Activity activity, String bool_value, View[] views, String[] titles, String[] messages) {
+        if (activity != null && !SharedPrefs.getBool(bool_value)) {
+            ArrayList<TapTarget> tapTargets = new ArrayList<>();
+            int length = titles.length;
+            for (int i = 0; i < length; i++) {
+                tapTargets.add(TapTarget.forView(views[i], titles[i], messages[i])
+                        .dimColor(R.color.dimmer)
+                        .outerCircleColor(R.color.colorAccent)
+                        .targetCircleColor(R.color.colorPrimary)
+                        .cancelable(false)
+                        .descriptionTextColor(R.color.black)
+                        .titleTextColor(R.color.dark_grey)
+                        .drawShadow(true)
+                        .transparentTarget(true));
+            }
+            new TapTargetSequence(activity)
+                    .targets(tapTargets).start();
+            SharedPrefs.setBool(bool_value, true);
+        }
     }
 
 

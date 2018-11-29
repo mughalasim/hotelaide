@@ -7,6 +7,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -49,6 +50,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_MESSAGES;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class MessageFragment extends Fragment {
@@ -94,6 +97,28 @@ public class MessageFragment extends Fragment {
                 setListeners();
 
                 fetchMessageList();
+
+
+                root_view.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
+                    @Override
+                    public void onDraw() {
+                        // Immediately detach the listener so it only is called once
+//                        root_view.getViewTreeObserver().removeOnDrawListener(this);
+                        helpers.setTarget(
+                                getActivity(),
+                                FIRST_LAUNCH_MESSAGES,
+                                new View[]{
+                                        root_view.findViewById(R.id.btn_add_message)
+                                },
+                                new String[]{
+                                        "Send"
+                                },
+                                new String[]{
+                                        "Tap this to bring up a list of available contacts you can send a message to"
+                                }
+                        );
+                    }
+                });
 
 
             } catch (InflateException e) {

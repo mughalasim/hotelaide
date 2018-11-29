@@ -10,6 +10,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -54,6 +55,7 @@ import static android.content.Context.LOCATION_SERVICE;
 import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LATITUDE;
 import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LONGITUDE;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.FLOAT_GOOGLE_MAP_ZOOM;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_LOCATIONS;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
@@ -111,6 +113,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 setListeners();
 
                 setFromSharedPrefs();
+
 
 
             } catch (InflateException e) {
@@ -249,7 +252,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
-        spinner_county = root_view.findViewById(R.id.spinner_location);
+        spinner_county = root_view.findViewById(R.id.spinner_county);
         if (getActivity() != null) {
             ArrayAdapter<SearchFilterModel> dataAdapter1 = new ArrayAdapter<>(
                     getActivity(),
@@ -263,7 +266,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         btn_update = root_view.findViewById(R.id.btn_update);
 
     }
-
 
     private void initializeMap(Bundle savedInstanceState) {
         map_view = root_view.findViewById(R.id.map_view);

@@ -41,6 +41,7 @@ import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_JOB;
 import static com.hotelaide.BuildConfig.ALGOLIA_SEARCH_API_KEY;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 
 public class FindJobsActivity extends ParentActivity {
@@ -143,7 +144,7 @@ public class FindJobsActivity extends ParentActivity {
         btn_confirm = findViewById(R.id.btn_confirm);
         btn_cancel.setText(getString(R.string.txt_clear));
         btn_confirm.setText(getString(R.string.txt_search));
-        spinner_location = findViewById(R.id.spinner_location);
+        spinner_location = findViewById(R.id.spinner_county);
         spinner_category = findViewById(R.id.spinner_category);
         spinner_type = findViewById(R.id.spinner_type);
 
@@ -173,6 +174,22 @@ public class FindJobsActivity extends ParentActivity {
         recycler_view.setLayoutManager(layoutManager);
 
 
+        helpers.setTarget(
+                FindJobsActivity.this,
+                FIRST_LAUNCH_SEARCH,
+                new View[]{
+                        findViewById(R.id.btn_add_filter),
+                        findViewById(R.id.et_search)
+                },
+                new String[]{
+                        "Add a Filter",
+                        "Search"
+                },
+                new String[]{
+                        "This will allow you to add certain filters to your search criteria",
+                        "Instant search as you type if youre online or offline"
+                }
+        );
     }
 
     private void setTextWatcher() {

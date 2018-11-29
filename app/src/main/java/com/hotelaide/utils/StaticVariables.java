@@ -1,8 +1,10 @@
 package com.hotelaide.utils;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+
 public class StaticVariables {
 
-// SHARED PREFERENCE VARIABLES =====================================================================
+    // SHARED PREFERENCE VARIABLES =====================================================================
     public final static int INT_ANIMATION_TIME = 1000;
 
     // INTEGER VARIABLE NAMES ======================================================================
@@ -43,6 +45,7 @@ public class StaticVariables {
     public static final String FIRST_LAUNCH_DASH = "FIRST_LAUNCH_DASH";
     public static final String FIRST_LAUNCH_PROFILE = "FIRST_LAUNCH_PROFILE";
     public static final String FIRST_LAUNCH_PROFILE_EDIT = "FIRST_LAUNCH_PROFILE_EDIT";
+    public static final String FIRST_LAUNCH_ADDRESS = "FIRST_LAUNCH_ADDRESS";
     public static final String FIRST_LAUNCH_SEARCH = "FIRST_LAUNCH_SEARCH";
     public static final String FIRST_LAUNCH_MESSAGES = "FIRST_LAUNCH_MESSAGES";
 
@@ -50,7 +53,7 @@ public class StaticVariables {
     // FLOAT VARIABLES
     public final static float FLOAT_GOOGLE_MAP_ZOOM = 14f;
 
-// PERMISSION VARIABLES ============================================================================
+    // PERMISSION VARIABLES ============================================================================
     public final static int INT_PERMISSIONS_CAMERA = 601;
     public final static int INT_PERMISSIONS_LOCATIONS = 602;
     public final static int INT_PERMISSIONS_CALL = 603;
@@ -58,7 +61,7 @@ public class StaticVariables {
     public final static int INT_PERMISSIONS_STORAGE_WRITE = 605;
 
 
-// BUNDLE EXTRA VARIABLES ==========================================================================
+    // BUNDLE EXTRA VARIABLES ==========================================================================
     public final static String EXTRA_START_FIRST_TIME = "FIRST_TIMER";
     public final static String EXTRA_START_RETURN = "RETURN";
     public final static String EXTRA_START_LAUNCH = "LAUNCH";
@@ -71,18 +74,18 @@ public class StaticVariables {
     public final static String EXTRA_FAILED = "FAILED";
     public final static String EXTRA_PASSED = "PASSED";
 
-// BROADCAST VARIABLES =============================================================================
+    // BROADCAST VARIABLES =============================================================================
     public final static String BROADCAST_LOG_OUT = "BROADCAST_LOG_OUT";
     public final static String BROADCAST_UPLOAD_COMPLETE = "BROADCAST_UPLOAD_COMPLETE";
     public final static String BROADCAST_SET_USER_COMPLETE = "BROADCAST_SET_USER_COMPLETE";
 
-// GLOBAL STATIC VARIABLES==========================================================================
+    // GLOBAL STATIC VARIABLES==========================================================================
     public static String STR_SHARE_LINK = "";
     public static String CHANNEL_ID = "CHANNEL_ID";
     public static String CHANNEL_NAME = "CHANNEL_NAME";
     public static String CHANNEL_DESC = "CHANNEL_DESC";
 
-// DATABASE VARIABLES ==============================================================================
+    // DATABASE VARIABLES ==============================================================================
     // JOBS TABLE ==================================================================================
     public static final String JOB_TABLE_NAME = "JOB_SEARCH";
     public static final String JOB_ID = "id";

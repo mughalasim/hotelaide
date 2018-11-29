@@ -8,6 +8,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -40,6 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE_EDIT;
 import static com.hotelaide.utils.StaticVariables.USER_ABOUT;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTRY_CODE;
@@ -100,6 +102,32 @@ public class ProfileUpdateFragment extends Fragment {
                 setListeners();
 
                 dropDownKeyboard(et_user_first_name);
+
+                root_view.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
+                    @Override
+                    public void onDraw() {
+                        // Immediately detach the listener so it only is called once
+//                        root_view.getViewTreeObserver().removeOnDrawListener(this);
+
+                        helpers.setTarget(
+                                getActivity(),
+                                FIRST_LAUNCH_PROFILE_EDIT,
+                                new View[]{
+                                        root_view.findViewById(R.id.et_user_about),
+                                        root_view.findViewById(R.id.btn_update)
+                                },
+                                new String[]{
+                                        "About you",
+                                        "Update"
+                                },
+                                new String[]{
+                                        "Tell us something about you, something that makes you stand out from the rest",
+                                        "Don't forget to tap this when you are done so we can save your information"
+                                }
+                        );
+
+                    }
+                });
 
             } catch (InflateException e) {
                 e.printStackTrace();
