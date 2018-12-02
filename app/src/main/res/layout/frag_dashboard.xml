@@ -28,7 +28,7 @@
                 android:id="@+id/img_avatar"
                 android:layout_width="@dimen/img_size_large"
                 android:layout_height="@dimen/img_size_large"
-                android:layout_marginTop="@dimen/padding_medium"
+                android:layout_marginTop="@dimen/padding_tiny"
                 android:scaleType="centerCrop"
                 android:onClick="openProfile"
                 android:src="@color/light_grey"
@@ -179,7 +179,7 @@
 
             </LinearLayout>
 
-            <!-- PROGRESS ===================================================================-->
+            <!-- PROGRESS =======================================================================-->
             <RelativeLayout
                 android:id="@+id/rl_progress"
                 android:layout_width="match_parent"
@@ -193,13 +193,13 @@
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:max="100"
-                    android:progress="15"
+                    android:progress="55"
                     android:progressDrawable="@drawable/progress_background"
                     android:thumb="@drawable/progress_thumb" />
 
                 <TextView
                     android:id="@+id/txt_progress_label"
-                    style="@style/Text_Small"
+                    style="@style/Text_Normal"
                     android:layout_centerInParent="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
@@ -208,7 +208,7 @@
 
                 <TextView
                     android:id="@+id/txt_progress"
-                    style="@style/Text_Small"
+                    style="@style/Text_Normal"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="0dp"
                     android:layout_toEndOf="@+id/txt_progress_label"
@@ -217,30 +217,68 @@
             </RelativeLayout>
 
             <!-- NEW MESSAGE ====================================================================-->
-            <LinearLayout
-                android:id="@+id/ll_message"
+            <RelativeLayout
+                android:id="@+id/rl_messages"
+                android:onClick="openMessages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/padding_small"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/padding_tiny"
-                android:paddingEnd="@dimen/padding_tiny">
+                android:layout_marginTop="@dimen/padding_small"
+                android:layout_marginStart="@dimen/padding_small"
+                android:layout_marginEnd="@dimen/padding_small"
+                android:background="@drawable/bckgrd_text_fields"
+                android:padding="@dimen/padding_tiny">
 
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1"
+                    android:layout_centerVertical="true"
+                    android:text="Tap to see new messages"
+                    android:textStyle="bold" />
 
-            </LinearLayout>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/txt_unread_messages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="@color/red" />
+
+            </RelativeLayout>
 
             <!-- NOTIFICATION ===================================================================-->
-            <LinearLayout
-                android:id="@+id/ll_notification"
+            <RelativeLayout
+                android:id="@+id/rl_notifications"
+                android:onClick="openNotifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="@dimen/padding_small"
+                android:layout_marginTop="@dimen/padding_small"
+                android:layout_marginStart="@dimen/padding_small"
                 android:layout_marginEnd="@dimen/padding_small"
-                android:layout_marginStart="@dimen/padding_small">
+                android:background="@drawable/bckgrd_text_fields"
+                android:padding="@dimen/padding_tiny">
 
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1"
+                    android:layout_centerVertical="true"
+                    android:text="Tap to see new notifications"
+                    android:textStyle="bold" />
 
-            </LinearLayout>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/txt_unread_notifications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="@color/white"
+                    app:chipBackgroundColor="@color/red" />
+
+            </RelativeLayout>
 
 
         </LinearLayout>

@@ -1,28 +1,19 @@
 package com.hotelaide.main.fragments;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.hotelaide.R;
-import com.hotelaide.main.activities.ConversationActivity;
-import com.hotelaide.main.adapters.FindJobsAdapter;
 import com.hotelaide.main.models.NotificationModel;
-import com.hotelaide.main.models.UserModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 
@@ -30,7 +21,6 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,12 +61,6 @@ public class NotificationFragment extends Fragment {
 
                 setListeners();
 
-                NotificationModel notificationModel = new NotificationModel();
-                notificationModel.title = "Welcome!";
-                notificationModel.message = "About Thyme offers an eclectic menu with imaginative, well-prepared and beautifully presented dishes from around the world. Intimate dining in a leafy, secluded area of Westlands where good food and drinks can be enjoyed in a tranquil setting. There is something to cater for all tastes with a wide range of vegetarian dishes & desserts. Here are special treats that have become famous over the years.";
-                notificationModel.date = "12-12-2018";
-                notificationModel.read = 0;
-                db.setNotification(notificationModel);
 
             } catch (InflateException e) {
                 e.printStackTrace();

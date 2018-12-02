@@ -8,6 +8,9 @@ import com.hotelaide.main.fragments.NotificationFragment;
 
 import androidx.fragment.app.Fragment;
 
+import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_INBOX;
+import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_NOTIFICATIONS;
+
 public class MyMessages extends ParentActivity {
     
     private int[] fragment_title_list = {
@@ -36,6 +39,21 @@ public class MyMessages extends ParentActivity {
 
         setupViewPager(fragment_list, fragment_title_list, fragment_extras);
 
+    }
+
+    @Override
+    public void onResume() {
+        handleExtraBundles();
+        super.onResume();
+    }
+
+    private void handleExtraBundles() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getString(EXTRA_MY_MESSAGES_INBOX) != null) {
+            view_pager.setCurrentItem(0);
+        } else if (extras != null && extras.getString(EXTRA_MY_MESSAGES_NOTIFICATIONS) != null) {
+            view_pager.setCurrentItem(1);
+        }
     }
 
 }

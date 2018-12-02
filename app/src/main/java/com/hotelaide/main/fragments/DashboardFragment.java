@@ -5,20 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.hotelaide.R;
-import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 import com.makeramen.roundedimageview.RoundedImageView;
-
-import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,12 +27,12 @@ import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
-import static com.hotelaide.utils.StaticVariables.USER_PROFILE_COMPLETION;
 
 public class DashboardFragment extends Fragment {
     private View root_view;
     private Helpers helpers;
     private Database db;
+    private String TAG_LOG = "DASH FRAG";
 
     private TextView
             txt_welcome,
@@ -40,7 +40,10 @@ public class DashboardFragment extends Fragment {
             txt_saved_jobs,
             txt_shortlisted,
             txt_interviews,
-            txt_progress;
+            txt_progress,
+            txt_unread_notifications,
+            txt_unread_messages
+                    ;
 
     private SeekBar
             seek_bar_progress;
@@ -48,9 +51,9 @@ public class DashboardFragment extends Fragment {
     private RelativeLayout
             rl_progress;
 
-    private LinearLayout
-            ll_message,
-            ll_notification;
+    private RelativeLayout
+            rl_messages,
+            rl_notifications;
 
     private RoundedImageView
             img_avatar;
@@ -91,7 +94,7 @@ public class DashboardFragment extends Fragment {
                                     root_view.findViewById(R.id.txt_saved_jobs),
                                     root_view.findViewById(R.id.txt_shortlisted),
                                     root_view.findViewById(R.id.txt_interviews),
-                                    root_view.findViewById(R.id.ll_message),
+                                    root_view.findViewById(R.id.rl_messages),
                                     root_view.findViewById(R.id.rl_progress)
                             },
                             new String[]{
@@ -114,6 +117,8 @@ public class DashboardFragment extends Fragment {
 
                 }
             });
+
+            fetchFacebookPosts();
 
         } else {
             container.removeView(root_view);
@@ -149,10 +154,12 @@ public class DashboardFragment extends Fragment {
         txt_progress = root_view.findViewById(R.id.txt_progress);
 
         // NEW MESSAGES
-        ll_message = root_view.findViewById(R.id.ll_message);
+        rl_messages = root_view.findViewById(R.id.rl_messages);
+        txt_unread_messages = root_view.findViewById(R.id.txt_unread_messages);
 
         // NEW NOTIFICATIONS
-        ll_notification = root_view.findViewById(R.id.ll_notification);
+        rl_notifications = root_view.findViewById(R.id.rl_notifications);
+        txt_unread_notifications = root_view.findViewById(R.id.txt_unread_notifications);
     }
 
     private void updateDashboard() {
@@ -162,25 +169,44 @@ public class DashboardFragment extends Fragment {
         txt_saved_jobs.setText(db.getFilteredTableCount(FILTER_TYPE_SAVED));
 
         // PROFILE PROGRESS
-        updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
+//        updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
+        updateProfileSeekBar(60);
 
-        // NOTIFICATION
-        ArrayList<NotificationModel> notification_models = db.getAllUnreadNotifications();
-
-        if (notification_models.size() > 0) {
-            int size = notification_models.size();
-            for (int i = 0; i < size; i++) {
-                NotificationModel notification_model = notification_models.get(i);
-                // TODO - INFLATE THE LAYOUTS HERE FOR NOTIFICATIONS
-
-            }
-            ll_notification.setVisibility(View.VISIBLE);
-
+        // NOTIFICATIONS
+        int notification_size = db.getAllUnreadNotifications();
+        if (notification_size > 0) {
+            txt_unread_notifications.setText(String.valueOf(notification_size));
+            rl_notifications.setVisibility(View.VISIBLE);
         } else {
-            ll_notification.setVisibility(View.GONE);
+            rl_notifications.setVisibility(View.GONE);
+        }
+
+        // MESSAGES
+        int message_size = db.getAllUnreadNotifications();
+        if(message_size>0){
+            txt_unread_messages.setText(String.valueOf(message_size));
+            rl_messages.setVisibility(View.VISIBLE);
+        }else{
+            rl_messages.setVisibility(View.GONE);
         }
 
 
+    }
+
+    private void fetchFacebookPosts(){
+        /* make the API call */
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/213335282601524/feed",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        /* handle the result */
+                        Helpers.logThis(TAG_LOG, response.toString());
+                    }
+                }
+        ).executeAsync();
     }
 
     private void updateProfileSeekBar(int completion) {
@@ -189,6 +215,7 @@ public class DashboardFragment extends Fragment {
         } else {
             rl_progress.setVisibility(View.VISIBLE);
             seek_bar_progress.setProgress(completion);
+            seek_bar_progress.setClickable(false);
             txt_progress.setText(String.valueOf(completion).concat("%"));
         }
     }

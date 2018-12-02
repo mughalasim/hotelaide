@@ -7,6 +7,7 @@ import android.view.View;
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.DashboardFragment;
 import com.hotelaide.main.fragments.NewsFeedFragment;
+import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.utils.SharedPrefs;
 
@@ -14,11 +15,14 @@ import androidx.fragment.app.Fragment;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_INBOX;
+import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_NOTIFICATIONS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 public class DashboardActivity extends ParentActivity {
@@ -76,10 +80,14 @@ public class DashboardActivity extends ParentActivity {
                         .putExtra(EXTRA_PROFILE_BASIC, EXTRA_PROFILE_BASIC));
 
             } else {
-                helpers.myDialog(DashboardActivity.this,
-                        "WELCOME", SharedPrefs.getString(USER_F_NAME) + ", thank you for joining "
-                                + getString(R.string.app_name) +
-                                ", You are on the Dashboard where you can easily navigate through the app.");
+                if(SharedPrefs.getBool(FIRST_LAUNCH_DASH)){
+                    NotificationModel notificationModel = new NotificationModel();
+                    notificationModel.title = "Welcome";
+                    notificationModel.message = "Thank you for joining Hotelaide!";
+                    notificationModel.date = "Management";
+                    notificationModel.read = 0;
+                    db.setNotification(notificationModel);
+                }
             }
 
             SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
@@ -98,14 +106,26 @@ public class DashboardActivity extends ParentActivity {
 
     public void openMyJobs(View view) {
         if (view.getId() == R.id.ll_applied) {
-            startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class).putExtra(FILTER_TYPE_APPLIED, FILTER_TYPE_APPLIED));
+            startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class)
+                    .putExtra(FILTER_TYPE_APPLIED, FILTER_TYPE_APPLIED));
         } else if (view.getId() == R.id.ll_saved) {
-            startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class).putExtra(FILTER_TYPE_SAVED, FILTER_TYPE_SAVED));
+            startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class)
+                    .putExtra(FILTER_TYPE_SAVED, FILTER_TYPE_SAVED));
         }
 
     }
 
     public void openProfile(View view) {
         startActivity(new Intent(DashboardActivity.this, ProfileActivity.class));
+    }
+
+    public void openNotifications(View view) {
+        startActivity(new Intent(DashboardActivity.this, MyMessages.class)
+                .putExtra(EXTRA_MY_MESSAGES_NOTIFICATIONS, EXTRA_MY_MESSAGES_NOTIFICATIONS));
+    }
+
+    public void openMessages(View view) {
+        startActivity(new Intent(DashboardActivity.this, MyMessages.class)
+                .putExtra(EXTRA_MY_MESSAGES_INBOX, EXTRA_MY_MESSAGES_INBOX));
     }
 }

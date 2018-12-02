@@ -841,37 +841,22 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
-    public ArrayList<NotificationModel> getAllUnreadNotifications() {
+    public int getAllUnreadNotifications() {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String whereClause = NOTIFICATION_READ + " = ?";
-        String[] whereArgs = new String[]{String.valueOf(1)};
+        String[] whereArgs = new String[]{"0"};
 
-        Cursor cursor = db.query(NOTIFICATION_TABLE_NAME, null, whereClause, whereArgs, null, null, null);
-
-        ArrayList<NotificationModel> list = new ArrayList<>();
+        Cursor cursor = db.query(NOTIFICATION_TABLE_NAME, null, whereClause, whereArgs,
+                null, null, null);
 
         if (cursor != null) {
             int count = cursor.getCount();
-            if (count > 0) {
-                cursor.moveToFirst();
-                do {
-                    NotificationModel notificationModel = new NotificationModel();
-                    notificationModel.id = cursor.getInt(cursor.getColumnIndex(NOTIFICATION_ID));
-                    notificationModel.title = cursor.getString(cursor.getColumnIndex(NOTIFICATION_TITLE));
-                    notificationModel.message = cursor.getString(cursor.getColumnIndex(NOTIFICATION_MESSAGE));
-                    notificationModel.date = cursor.getString(cursor.getColumnIndex(NOTIFICATION_DATE));
-                    notificationModel.read = cursor.getInt(cursor.getColumnIndex(NOTIFICATION_READ));
-
-                    list.add(notificationModel);
-
-                } while (cursor.moveToNext());
-            }
             cursor.close();
+            return count;
+        } else {
+            return 0;
         }
-        return list;
-
     }
-
 
 }

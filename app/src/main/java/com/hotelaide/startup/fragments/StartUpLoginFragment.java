@@ -263,8 +263,8 @@ public class StartUpLoginFragment extends Fragment {
     }
 
     private void signOutFaceBook() {
-        fire_base_auth.signOut();
-        LoginManager.getInstance().logOut();
+//        fire_base_auth.signOut();
+//        LoginManager.getInstance().logOut();
     }
 
     // GOOGLE SET UP ===============================================================================
@@ -299,7 +299,7 @@ public class StartUpLoginFragment extends Fragment {
     }
 
     private void signOutGoogle() {
-        google_sign_in_client.signOut();
+//        google_sign_in_client.signOut();
     }
 
 
