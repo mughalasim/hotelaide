@@ -225,12 +225,12 @@ public class MemberProfileActivity extends AppCompatActivity {
 
     }
 
-    public void startConversation(View view){
-        if(INT_MEMBER_ID!=0){
+    public void startConversation(View view) {
+        if (INT_MEMBER_ID != 0) {
             startActivity(new Intent(MemberProfileActivity.this, ConversationActivity.class)
                     .putExtra("FROM_NAME", STR_NAME)
                     .putExtra("FROM_ID", INT_MEMBER_ID)
-                    .putExtra("FROM_PIC_URL",STR_AVATAR_URL)
+                    .putExtra("FROM_PIC_URL", STR_AVATAR_URL)
             );
         }
     }
@@ -263,11 +263,22 @@ public class MemberProfileActivity extends AppCompatActivity {
                         Glide.with(MemberProfileActivity.this).load(STR_AVATAR_URL).into(img_avatar);
                         Glide.with(MemberProfileActivity.this).load(STR_BANNER_URL).into(img_banner);
 
+                        String f_name = user.getString("first_name");
+                        String l_name = user.getString("last_name");
 
-                        txt_user_f_name.setText(user.getString("first_name"));
-                        txt_user_l_name.setText(user.getString("last_name"));
+                        STR_NAME = f_name.concat(" ").concat(l_name);
 
-                        txt_user_about.setText(user.getString("about_me"));
+                        txt_user_f_name.setText(f_name);
+                        txt_user_l_name.setText(l_name);
+
+                        String about_me = user.getString("about_me");
+                        if (about_me.equals("")) {
+                            txt_user_about.setVisibility(View.GONE);
+                        } else {
+                            txt_user_about.setText(about_me);
+                            txt_user_about.setVisibility(View.VISIBLE);
+                        }
+
 
                         txt_user_dob.setText(user.getString("dob"));
 
@@ -331,7 +342,7 @@ public class MemberProfileActivity extends AppCompatActivity {
 
     }
 
-    private void populateExperience(JSONArray work_experience, final String type ) throws JSONException {
+    private void populateExperience(JSONArray work_experience, final String type) throws JSONException {
 
         LayoutInflater layout_inflater = LayoutInflater.from(MemberProfileActivity.this);
 
