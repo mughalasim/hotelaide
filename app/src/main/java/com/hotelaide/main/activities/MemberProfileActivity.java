@@ -36,7 +36,7 @@ import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 
-public class EstablishmentActivity extends AppCompatActivity {
+public class MemberProfileActivity extends AppCompatActivity {
     private Helpers helpers;
     private Toolbar toolbar;
     private TextView
@@ -52,9 +52,9 @@ public class EstablishmentActivity extends AppCompatActivity {
             STR_PAGE_TITLE = "";
     private String
             STR_BANNER_URL = "";
-    private int INT_ESTABLISHMENT_ID = 0;
+    private int INT_MEMBER_ID = 0;
     private final String
-            TAG_LOG = "ESTABLISHMENT";
+            TAG_LOG = "MEMBER PROFILE";
 
     private LinearLayout ll_gallery;
     private RecyclerView gallery_recycler;
@@ -67,10 +67,10 @@ public class EstablishmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        helpers = new Helpers(EstablishmentActivity.this);
+        helpers = new Helpers(MemberProfileActivity.this);
 
         if (handleExtraBundles()) {
-            setContentView(R.layout.activity_establishment);
+            setContentView(R.layout.activity_member_profile);
 
             setUpToolBarAndTabs();
 
@@ -81,7 +81,7 @@ public class EstablishmentActivity extends AppCompatActivity {
             asyncFetchHotel();
 
         } else {
-            helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_unknown));
+            helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_unknown));
             onBackPressed();
         }
 
@@ -98,7 +98,7 @@ public class EstablishmentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.share:
-                helpers.dialogShare(EstablishmentActivity.this, STR_SHARE_LINK);
+                helpers.dialogShare(MemberProfileActivity.this, STR_SHARE_LINK);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -108,8 +108,8 @@ public class EstablishmentActivity extends AppCompatActivity {
     private Boolean handleExtraBundles() {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getInt("ESTABLISHMENT_ID") != 0) {
-            INT_ESTABLISHMENT_ID = extras.getInt("ESTABLISHMENT_ID");
-            Helpers.logThis(TAG_LOG, "ESTABLISHMENT ID: " + INT_ESTABLISHMENT_ID);
+            INT_MEMBER_ID = extras.getInt("MEMBER_ID");
+            Helpers.logThis(TAG_LOG, "MEMBER ID: " + INT_MEMBER_ID);
             return true;
         } else {
             return false;
@@ -132,7 +132,7 @@ public class EstablishmentActivity extends AppCompatActivity {
         gallery_adapter = new GalleryAdapter(gallery_list);
         gallery_recycler.setAdapter(gallery_adapter);
         gallery_recycler.setHasFixedSize(true);
-        gallery_layout_manager = new LinearLayoutManager(EstablishmentActivity.this);
+        gallery_layout_manager = new LinearLayoutManager(MemberProfileActivity.this);
         gallery_layout_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         gallery_recycler.setLayoutManager(gallery_layout_manager);
 
@@ -141,7 +141,7 @@ public class EstablishmentActivity extends AppCompatActivity {
     private void setUpToolBarAndTabs() {
         toolbar = findViewById(R.id.toolbar);
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
-        toolbar.setNavigationIcon(ContextCompat.getDrawable(EstablishmentActivity.this, R.drawable.ic_back));
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(MemberProfileActivity.this, R.drawable.ic_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +155,7 @@ public class EstablishmentActivity extends AppCompatActivity {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
-                    toolbar.setBackground(ContextCompat.getDrawable(EstablishmentActivity.this, R.drawable.bckgrd_toolbar));
+                    toolbar.setBackground(ContextCompat.getDrawable(MemberProfileActivity.this, R.drawable.bckgrd_toolbar));
                     toolbar_text.setText(STR_PAGE_TITLE);
                 } else if (verticalOffset == 0) {
                     toolbar_text.setText("");
@@ -170,7 +170,7 @@ public class EstablishmentActivity extends AppCompatActivity {
         img_banner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helpers.openImageViewer(EstablishmentActivity.this, STR_BANNER_URL);
+                helpers.openImageViewer(MemberProfileActivity.this, STR_BANNER_URL);
             }
         });
 
@@ -180,7 +180,7 @@ public class EstablishmentActivity extends AppCompatActivity {
     private void asyncFetchHotel() {
 
         EstablishmentInterface service = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
-        Call<JsonObject> call = service.getEstablishment(INT_ESTABLISHMENT_ID);
+        Call<JsonObject> call = service.getEstablishment(INT_MEMBER_ID);
         helpers.setProgressDialog("Loading Establishment details");
 
         call.enqueue(new Callback<JsonObject>() {
@@ -214,7 +214,7 @@ public class EstablishmentActivity extends AppCompatActivity {
                         txt_establishment_description.setText(object.getString("establishment_description"));
                         STR_SHARE_LINK = "Please have a look at this establishment on HotelAide ".concat(object.getString("establishment_url"));
                         STR_BANNER_URL = object.getString("banner");
-                        Glide.with(EstablishmentActivity.this).load(STR_BANNER_URL).into(img_banner);
+                        Glide.with(MemberProfileActivity.this).load(STR_BANNER_URL).into(img_banner);
 
                         // JOB VACANCIES
                         JSONArray job_vacancies = object.getJSONArray("job_vacancies");
@@ -243,11 +243,11 @@ public class EstablishmentActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        helpers.handleErrorMessage(EstablishmentActivity.this, main.getJSONObject("data"));
+                        helpers.handleErrorMessage(MemberProfileActivity.this, main.getJSONObject("data"));
                     }
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_server));
+                    helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -257,10 +257,10 @@ public class EstablishmentActivity extends AppCompatActivity {
                 helpers.dismissProgressDialog();
                 Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_server));
+                    helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_server));
                     onBackPressed();
                 } else {
-                    helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_connection));
+                    helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_connection));
                     onBackPressed();
                 }
 

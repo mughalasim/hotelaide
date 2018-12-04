@@ -50,6 +50,7 @@ import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.AboutUsActivity;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.activities.FindJobsActivity;
+import com.hotelaide.main.activities.FindMembersActivity;
 import com.hotelaide.main.activities.GalleryViewActivity;
 import com.hotelaide.main.activities.MyJobsActivity;
 import com.hotelaide.main.activities.MyMessages;
@@ -162,7 +163,7 @@ public class Helpers {
                 break;
 
             case R.id.drawer_find_members:
-                ToastMessage(context, "Under development ;)");
+                context.startActivity(new Intent(context, FindMembersActivity.class));
                 break;
 
             case R.id.drawer_profile:

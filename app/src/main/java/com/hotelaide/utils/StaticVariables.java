@@ -45,6 +45,7 @@ public class StaticVariables {
     public static final String FIRST_LAUNCH_PROFILE_EDIT = "FIRST_LAUNCH_PROFILE_EDIT";
     public static final String FIRST_LAUNCH_ADDRESS = "FIRST_LAUNCH_ADDRESS";
     public static final String FIRST_LAUNCH_SEARCH = "FIRST_LAUNCH_SEARCH";
+    public static final String FIRST_LAUNCH_SEARCH_MEMBERS = "FIRST_LAUNCH_SEARCH_MEMBERS";
     public static final String FIRST_LAUNCH_MESSAGES = "FIRST_LAUNCH_MESSAGES";
 
 

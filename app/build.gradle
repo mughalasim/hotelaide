@@ -60,6 +60,7 @@ android {
             buildConfigField 'String', 'ALGOLIA_APP_ID', ALGOLIA_APP_ID
             buildConfigField 'String', 'ALGOLIA_SEARCH_API_KEY', ALGOLIA_SEARCH_API_KEY
             buildConfigField 'String', 'ALGOLIA_INDEX_JOB', ALGOLIA_INDEX_JOB
+            buildConfigField 'String', 'ALGOLIA_INDEX_MEMBERS', ALGOLIA_INDEX_MEMBERS
             buildConfigField 'String', 'FILTER_COUNTY', FILTER_COUNTY
             buildConfigField 'String', 'FILTER_CATEGORY', FILTER_CATEGORY
             buildConfigField 'String', 'FILTER_JOB_TYPE', FILTER_JOB_TYPE

@@ -19,6 +19,7 @@
     <string name="error_no_news">No latest updates</string>
     <string name="error_no_ee">No educational experience added</string>
     <string name="error_no_jobs">No Jobs found!</string>
+    <string name="error_no_members_found">No members found!</string>
     <string name="error_pass">Your new and confirmed password do not match</string>
     <string name="error_same_date">Start date cannot be the same as the end date</string>
     <string name="error_app_not_installed">This App is not installed on your device</string>
