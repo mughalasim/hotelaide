@@ -154,6 +154,13 @@ public interface UserInterface {
             @Query("page") int page_number
     );
 
+    // GET ONE MEMBER BY ID ========================================================================
+    @GET("user/{member_id}")
+    Call<JsonObject> getMemberByID(
+            @Path("member_id") int user_id
+    );
+
+
     // GET ALL DOCUMENTS ===========================================================================
     @GET("user/{user_id}/documents")
     Call<JsonObject> getAllDocuments(

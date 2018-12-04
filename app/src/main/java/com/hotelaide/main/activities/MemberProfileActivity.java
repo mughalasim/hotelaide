@@ -1,66 +1,89 @@
 package com.hotelaide.main.activities;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
-import com.hotelaide.interfaces.EstablishmentInterface;
-import com.hotelaide.main.adapters.GalleryAdapter;
-import com.hotelaide.main.models.GalleryModel;
+import com.hotelaide.interfaces.UserInterface;
+import com.hotelaide.main.models.ExperienceModel;
+import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 
 public class MemberProfileActivity extends AppCompatActivity {
     private Helpers helpers;
+    private Database db;
     private Toolbar toolbar;
-    private TextView
-            toolbar_text,
-            txt_establishment_name,
-            txt_establishment_description,
-            txt_establishment_location,
-            txt_establishment_type;
-    private ImageView
-            img_banner;
-    private AppBarLayout app_bar_layout;
-    public static String
-            STR_PAGE_TITLE = "";
-    private String
-            STR_BANNER_URL = "";
-    private int INT_MEMBER_ID = 0;
     private final String
             TAG_LOG = "MEMBER PROFILE";
 
-    private LinearLayout ll_gallery;
-    private RecyclerView gallery_recycler;
-    private LinearLayoutManager gallery_layout_manager;
-    private ArrayList<GalleryModel> gallery_list = new ArrayList<>();
-    private GalleryAdapter gallery_adapter;
+    // BANNER ----------------------------------------
+    private ImageView
+            img_banner,
+            img_avatar;
+    private AppBarLayout
+            app_bar_layout;
+
+
+    // INFO AND CONTACT ------------------------------
+    private TextView
+            txt_title_education,
+            txt_title_work,
+            txt_title_documents,
+            txt_user_f_name,
+            txt_user_l_name,
+            txt_user_about,
+            txt_user_gender,
+            txt_user_age,
+            txt_user_dob,
+            toolbar_text;
+
+    private LinearLayout
+            ll_education,
+            ll_work,
+            ll_documents;
+
+    public static String
+            STR_PAGE_TITLE = "";
+    private String
+            STR_NAME = "",
+            STR_AVATAR_URL = "",
+            STR_BANNER_URL = "";
+    private int INT_MEMBER_ID = 0;
+
+    // BACKGROUND ------------------------------------
+    private SwipeRefreshLayout swipe_refresh;
+    private RelativeLayout rl_header;
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -68,6 +91,8 @@ public class MemberProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         helpers = new Helpers(MemberProfileActivity.this);
+
+        db = new Database();
 
         if (handleExtraBundles()) {
             setContentView(R.layout.activity_member_profile);
@@ -78,7 +103,7 @@ public class MemberProfileActivity extends AppCompatActivity {
 
             setListeners();
 
-            asyncFetchHotel();
+            asyncFetchMember();
 
         } else {
             helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_unknown));
@@ -107,7 +132,7 @@ public class MemberProfileActivity extends AppCompatActivity {
     // BASIC FUNCTIONS =============================================================================
     private Boolean handleExtraBundles() {
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getInt("ESTABLISHMENT_ID") != 0) {
+        if (extras != null && extras.getInt("MEMBER_ID") != 0) {
             INT_MEMBER_ID = extras.getInt("MEMBER_ID");
             Helpers.logThis(TAG_LOG, "MEMBER ID: " + INT_MEMBER_ID);
             return true;
@@ -119,22 +144,39 @@ public class MemberProfileActivity extends AppCompatActivity {
     private void findAllViews() {
         app_bar_layout = findViewById(R.id.app_bar_layout);
 
+        rl_header = findViewById(R.id.rl_header);
+        swipe_refresh = findViewById(R.id.swipe_refresh);
+
+        // BANNER
+        img_avatar = findViewById(R.id.img_avatar);
         img_banner = findViewById(R.id.img_banner);
-        txt_establishment_name = findViewById(R.id.txt_establishment_name);
-        txt_establishment_location = findViewById(R.id.txt_establishment_location);
-        txt_establishment_type = findViewById(R.id.txt_establishment_type);
-        txt_establishment_description = findViewById(R.id.txt_establishment_description);
 
+        // INFO AND CONTACT DETAILS
+        txt_user_f_name = findViewById(R.id.txt_user_f_name);
+        txt_user_l_name = findViewById(R.id.txt_user_l_name);
+        txt_user_about = findViewById(R.id.txt_user_about);
+        txt_user_gender = findViewById(R.id.txt_user_gender);
+        txt_user_age = findViewById(R.id.txt_user_age);
+        txt_user_dob = findViewById(R.id.txt_user_dob);
 
-        // GALLERY ITEMS
-        ll_gallery = findViewById(R.id.ll_gallery);
-        gallery_recycler = findViewById(R.id.gallery_recycler_small);
-        gallery_adapter = new GalleryAdapter(gallery_list);
-        gallery_recycler.setAdapter(gallery_adapter);
-        gallery_recycler.setHasFixedSize(true);
-        gallery_layout_manager = new LinearLayoutManager(MemberProfileActivity.this);
-        gallery_layout_manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        gallery_recycler.setLayoutManager(gallery_layout_manager);
+        // EDUCATION
+        txt_title_education = findViewById(R.id.txt_title_education);
+        ll_education = findViewById(R.id.ll_education);
+        txt_title_education.setVisibility(View.GONE);
+        ll_education.setVisibility(View.GONE);
+
+        // WORK
+        txt_title_work = findViewById(R.id.txt_title_work);
+        ll_work = findViewById(R.id.ll_work);
+        txt_title_work.setVisibility(View.GONE);
+        ll_work.setVisibility(View.GONE);
+
+        // DOCUMENTS
+        txt_title_documents = findViewById(R.id.txt_title_documents);
+        ll_documents = findViewById(R.id.ll_documents);
+        txt_title_documents.setVisibility(View.GONE);
+        ll_documents.setVisibility(View.GONE);
+
 
     }
 
@@ -174,14 +216,31 @@ public class MemberProfileActivity extends AppCompatActivity {
             }
         });
 
+        img_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpers.openImageViewer(MemberProfileActivity.this, STR_AVATAR_URL);
+            }
+        });
+
     }
 
-    // GET ESTABLISHMENT ASYNC FUNCTION ============================================================
-    private void asyncFetchHotel() {
+    public void startConversation(View view){
+        if(INT_MEMBER_ID!=0){
+            startActivity(new Intent(MemberProfileActivity.this, ConversationActivity.class)
+                    .putExtra("FROM_NAME", STR_NAME)
+                    .putExtra("FROM_ID", INT_MEMBER_ID)
+                    .putExtra("FROM_PIC_URL",STR_AVATAR_URL)
+            );
+        }
+    }
 
-        EstablishmentInterface service = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
-        Call<JsonObject> call = service.getEstablishment(INT_MEMBER_ID);
-        helpers.setProgressDialog("Loading Establishment details");
+    // GET MEMBER ASYNC FUNCTION ============================================================
+    private void asyncFetchMember() {
+
+        UserInterface service = UserInterface.retrofit.create(UserInterface.class);
+        Call<JsonObject> call = service.getMemberByID(INT_MEMBER_ID);
+        helpers.setProgressDialog("Loading Member details");
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -193,53 +252,56 @@ public class MemberProfileActivity extends AppCompatActivity {
                     Helpers.logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success")) {
-//{"data":
-// {
-// "id":3,
-// "employer_id":10,
-// "establishment_url":null,
-// "establishment_name":"Test Establishment",
-// "establishment_email":null,
-// "establishment_description":null,
-// "establishment_type":{"id":1,"name":"Hotel"},
-// "job_vacancies":[{"id":2,"title":"Cashier","posted":"25-09-2018","location":null,"description":"Short description","requirements":"Short requirements.","end_date":"17-06-2009","url":"https:\/\/hotelaide.com\/jobs\/cashier-test-establishment","establishment":{"id":3,"name":"Test Establishment","image":""}}],
-// "gallery":[]},"success":true}
+                        JSONObject user = main.getJSONObject("data");
 
-                        JSONObject object = main.getJSONObject("data");
-                        STR_PAGE_TITLE = object.getString("establishment_name");
-                        txt_establishment_name.setText(STR_PAGE_TITLE);
-//                        txt_establishment_location.setText(object.getString("location"));
-                        JSONObject establishment_type_object = object.getJSONObject("establishment_type");
-                        txt_establishment_type.setText(establishment_type_object.getString("name"));
-                        txt_establishment_description.setText(object.getString("establishment_description"));
-                        STR_SHARE_LINK = "Please have a look at this establishment on HotelAide ".concat(object.getString("establishment_url"));
-                        STR_BANNER_URL = object.getString("banner");
+                        STR_PAGE_TITLE = user.getString("first_name");
+                        STR_SHARE_LINK = "Please have a look at this member on HotelAide ".concat(user.getString("profile_url"));
+
+                        STR_AVATAR_URL = user.getString("avatar");
+                        STR_BANNER_URL = user.getString("banner");
+
+                        Glide.with(MemberProfileActivity.this).load(STR_AVATAR_URL).into(img_avatar);
                         Glide.with(MemberProfileActivity.this).load(STR_BANNER_URL).into(img_banner);
 
-                        // JOB VACANCIES
-                        JSONArray job_vacancies = object.getJSONArray("job_vacancies");
-                        if (job_vacancies != null && job_vacancies.length() > 0) {
-                            int array_length = job_vacancies.length();
-                            for (int i = 0; i < array_length; i++) {
-                                JSONObject vacancy_object = job_vacancies.getJSONObject(i);
 
-                            }
+                        txt_user_f_name.setText(user.getString("first_name"));
+                        txt_user_l_name.setText(user.getString("last_name"));
+
+                        txt_user_about.setText(user.getString("about_me"));
+
+                        txt_user_dob.setText(user.getString("dob"));
+
+                        txt_user_age.setText(helpers.calculateAge(user.getString("dob")));
+
+                        // GENDER
+                        if (user.getInt("gender") == 0) {
+                            txt_user_gender.setText("Not set");
+                        } else if (user.getInt("gender") == 1) {
+                            txt_user_gender.setText("Male");
+                        } else {
+                            txt_user_gender.setText("Female");
                         }
 
-                        // GALLERY
-                        gallery_list.clear();
-                        JSONArray galleryImageArrays = object.getJSONArray("gallery");
-                        if (!galleryImageArrays.isNull(0)) {
-                            ll_gallery.setVisibility(View.VISIBLE);
-                            for (int v = 0; v < galleryImageArrays.length(); v++) {
-                                GalleryModel galleryModel = new GalleryModel();
-                                galleryModel.id = v+1;
-                                galleryModel.image = galleryImageArrays.getString(v);
-                                gallery_list.add(galleryModel);
+                        if (!user.isNull("work_experience")) {
+                            JSONArray work_experience = user.getJSONArray("work_experience");
+                            populateExperience(work_experience, EXPERIENCE_TYPE_WORK);
+                        }
+
+                        if (!user.isNull("education_experience")) {
+                            JSONArray education_experience = user.getJSONArray("education_experience");
+                            populateExperience(education_experience, EXPERIENCE_TYPE_EDUCATION);
+                        }
+
+                        if (!user.isNull("documents")) {
+                            JSONArray documents = user.getJSONArray("documents");
+                            if (documents != null && documents.length() > 0) {
+                                int array_length = documents.length();
+                                for (int i = 0; i < array_length; i++) {
+
+                                }
+                                txt_title_documents.setVisibility(View.VISIBLE);
+                                ll_documents.setVisibility(View.VISIBLE);
                             }
-                            gallery_adapter.notifyDataSetChanged();
-                        } else {
-                            ll_gallery.setVisibility(View.GONE);
                         }
 
                     } else {
@@ -267,6 +329,111 @@ public class MemberProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void populateExperience(JSONArray work_experience, final String type ) throws JSONException {
+
+        LayoutInflater layout_inflater = LayoutInflater.from(MemberProfileActivity.this);
+
+        if (work_experience != null && work_experience.length() > 0) {
+            int array_length = work_experience.length();
+
+            for (int i = 0; i < array_length; i++) {
+
+                JSONObject work_object = work_experience.getJSONObject(i);
+
+                @SuppressLint("InflateParams")
+                View v = layout_inflater.inflate(R.layout.list_item_experience, null);
+
+                final TextView txt_name = v.findViewById(R.id.txt_name);
+                final TextView txt_position = v.findViewById(R.id.txt_position);
+                final TextView txt_start_date = v.findViewById(R.id.txt_start_date);
+                final TextView txt_end_date = v.findViewById(R.id.txt_end_date);
+                final TextView txt_current = v.findViewById(R.id.txt_current);
+                final TextView txt_duration = v.findViewById(R.id.txt_duration);
+                final TextView txt_responsibilities_field_label = v.findViewById(R.id.txt_responsibilities_field_label);
+                final TextView txt_responsibilities_field = v.findViewById(R.id.txt_responsibilities_field);
+
+                ExperienceModel experienceModel = new ExperienceModel();
+                if (type.equals(EXPERIENCE_TYPE_WORK)) {
+                    experienceModel.experience_id = work_object.getInt("id");
+                    experienceModel.name = work_object.getString("company_name");
+                    experienceModel.position = work_object.getString("position");
+                    experienceModel.start_date = work_object.getString("start_date");
+                    experienceModel.end_date = work_object.getString("end_date");
+                    experienceModel.responsibilities_field = work_object.getString("responsibilities");
+                    experienceModel.current = work_object.getInt("current");
+                    experienceModel.type = EXPERIENCE_TYPE_WORK;
+
+                } else {
+                    experienceModel.experience_id = work_object.getInt("id");
+                    experienceModel.name = work_object.getString("institution_name");
+                    experienceModel.education_level = work_object.getInt("education_level");
+                    experienceModel.start_date = work_object.getString("start_date");
+                    experienceModel.end_date = work_object.getString("end_date");
+                    experienceModel.responsibilities_field = work_object.getString("study_field");
+                    experienceModel.current = work_object.getInt("current");
+
+                    experienceModel.type = EXPERIENCE_TYPE_EDUCATION;
+                }
+
+                txt_name.setText(experienceModel.name);
+                txt_position.setText(experienceModel.position);
+                txt_start_date.setText(helpers.formatDate(experienceModel.start_date));
+
+                if (experienceModel.current == 0) {
+                    txt_current.setVisibility(View.GONE);
+                    txt_end_date.setVisibility(View.VISIBLE);
+                    txt_end_date.setText(helpers.formatDate(experienceModel.end_date));
+                    txt_duration.setText(helpers.calculateDateInterval(experienceModel.start_date, experienceModel.end_date));
+                } else {
+                    txt_current.setVisibility(View.VISIBLE);
+                    txt_end_date.setVisibility(View.GONE);
+                    txt_duration.setText(helpers.calculateAge(experienceModel.start_date));
+                }
+
+                if (txt_duration.getText().toString().length() < 1) {
+                    txt_duration.setVisibility(View.GONE);
+                } else {
+                    txt_duration.setVisibility(View.VISIBLE);
+                }
+
+                if (experienceModel.type.equals(EXPERIENCE_TYPE_WORK)) {
+                    txt_responsibilities_field_label.setText(R.string.txt_responsibilities);
+                    txt_position.setText(experienceModel.position);
+                } else {
+                    txt_position.setText(db.getFilterNameByID(EDUCATION_LEVEL_TABLE_NAME, experienceModel.education_level));
+                    txt_responsibilities_field_label.setText(R.string.txt_field_study);
+                }
+
+                txt_responsibilities_field.setText(experienceModel.responsibilities_field);
+
+                txt_responsibilities_field.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (txt_responsibilities_field.getMaxLines() == 3) {
+                            txt_responsibilities_field.setMaxLines(Integer.MAX_VALUE);
+                        } else {
+                            txt_responsibilities_field.setMaxLines(3);
+                        }
+                    }
+                });
+
+                if (type.equals(EXPERIENCE_TYPE_WORK)) {
+                    ll_work.addView(v);
+                } else {
+                    ll_education.addView(v);
+                }
+            }
+
+            if (type.equals(EXPERIENCE_TYPE_WORK)) {
+                txt_title_work.setVisibility(View.VISIBLE);
+                ll_work.setVisibility(View.VISIBLE);
+            } else {
+                txt_title_education.setVisibility(View.VISIBLE);
+                ll_education.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
 

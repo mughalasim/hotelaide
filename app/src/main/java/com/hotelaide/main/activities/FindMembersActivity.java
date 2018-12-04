@@ -429,19 +429,6 @@ public class FindMembersActivity extends ParentActivity {
         spinner_category.setSelection(0);
     }
 
-    private void searchDatabase() {
-        model_list.clear();
-        if (spinner_location.getSelectedItemPosition() != 0) {
-//            model_list = db.getAllJobModelsBySearch(fetchFromEditText(et_search), spinner_location.getSelectedItem().toString());
-        } else {
-//            model_list = db.getAllJobModelsBySearch(fetchFromEditText(et_search), "");
-        }
-        recycler_view.invalidate();
-        adapter.updateData(model_list);
-        if (model_list.size() < 1) {
-            noListItems();
-        }
-    }
 
     private String fetchFromEditText(EditText editText) {
         String data = "";
@@ -456,6 +443,7 @@ public class FindMembersActivity extends ParentActivity {
         model_list.clear();
         model_list.add(new MemberModel());
         adapter.updateData(model_list);
+        adapter.notifyDataSetChanged();
     }
 
 }
