@@ -75,6 +75,9 @@ public class ParentActivity extends FragmentActivity implements
     public TextView
             menu_dashboard,
             menu_find_jobs,
+            menu_my_jobs,
+            menu_my_messages,
+            menu_find_members,
             menu_profile,
             menu_about_us,
             menu_settings,
@@ -142,10 +145,13 @@ public class ParentActivity extends FragmentActivity implements
         // FIND THE MENU ITEMS =====================================================================
         menu_dashboard = (TextView) navigation_view.getMenu().getItem(0).getActionView();
         menu_find_jobs = (TextView) navigation_view.getMenu().getItem(1).getActionView();
-        menu_profile = (TextView) navigation_view.getMenu().getItem(2).getActionView();
-        menu_about_us = (TextView) navigation_view.getMenu().getItem(3).getActionView();
-        menu_settings = (TextView) navigation_view.getMenu().getItem(4).getActionView();
-        menu_log_out = (TextView) navigation_view.getMenu().getItem(5).getActionView();
+        menu_my_jobs = (TextView) navigation_view.getMenu().getItem(2).getActionView();
+        menu_my_messages = (TextView) navigation_view.getMenu().getItem(3).getActionView();
+        menu_find_members = (TextView) navigation_view.getMenu().getItem(4).getActionView();
+        menu_profile = (TextView) navigation_view.getMenu().getItem(5).getActionView();
+        menu_about_us = (TextView) navigation_view.getMenu().getItem(6).getActionView();
+        menu_settings = (TextView) navigation_view.getMenu().getItem(7).getActionView();
+        menu_log_out = (TextView) navigation_view.getMenu().getItem(8).getActionView();
 
     }
 

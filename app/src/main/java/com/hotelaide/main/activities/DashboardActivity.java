@@ -22,7 +22,6 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
-import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 public class DashboardActivity extends ParentActivity {
@@ -78,16 +77,12 @@ public class DashboardActivity extends ParentActivity {
             if (SharedPrefs.getString(USER_F_NAME).equals("")) {
                 startActivity(new Intent(DashboardActivity.this, ProfileEditActivity.class)
                         .putExtra(EXTRA_PROFILE_BASIC, EXTRA_PROFILE_BASIC));
-
-            } else {
-                if(SharedPrefs.getBool(FIRST_LAUNCH_DASH)){
-                    NotificationModel notificationModel = new NotificationModel();
-                    notificationModel.title = "Welcome";
-                    notificationModel.message = "Thank you for joining Hotelaide!";
-                    notificationModel.date = "Management";
-                    notificationModel.read = 0;
-                    db.setNotification(notificationModel);
-                }
+                NotificationModel notificationModel = new NotificationModel();
+                notificationModel.title = "Welcome";
+                notificationModel.message = "Thank you for joining Hotelaide!";
+                notificationModel.date = "By Management";
+                notificationModel.read = 0;
+                db.setNotification(notificationModel);
             }
 
             SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
@@ -97,6 +92,14 @@ public class DashboardActivity extends ParentActivity {
         } else if (extras != null && extras.getString(EXTRA_START_RETURN) != null) {
             helpers.ToastMessage(DashboardActivity.this, "Welcome back " + SharedPrefs.getString(USER_F_NAME));
             setCountOnDrawerItem(menu_find_jobs, "(New)");
+            setCountOnDrawerItem(menu_my_messages, "(New)");
+
+            NotificationModel notificationModel = new NotificationModel();
+            notificationModel.title = "Welcome Back";
+            notificationModel.message = SharedPrefs.getString(USER_F_NAME) + " it's great to have you back";
+            notificationModel.date = "By Management";
+            notificationModel.read = 0;
+            db.setNotification(notificationModel);
 
             SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
             SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, true);

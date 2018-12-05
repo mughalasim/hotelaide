@@ -10,7 +10,6 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -55,7 +54,6 @@ import static android.content.Context.LOCATION_SERVICE;
 import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LATITUDE;
 import static com.hotelaide.main.activities.MapActivity.MAP_ACTIVITY_LONGITUDE;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
-import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.FLOAT_GOOGLE_MAP_ZOOM;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_LOCATIONS;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
@@ -142,6 +140,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             SharedPrefs.logUserModel();
             onMapReady(google_map);
         }
+        refreshCountySpinner();
     }
 
     @Override
@@ -253,18 +252,22 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         spinner_county = root_view.findViewById(R.id.spinner_county);
-        if (getActivity() != null) {
-            ArrayAdapter<SearchFilterModel> dataAdapter1 = new ArrayAdapter<>(
-                    getActivity(),
-                    R.layout.list_item_spinner,
-                    db.getAllFilterItems(COUNTY_TABLE_NAME));
-            spinner_county.setAdapter(dataAdapter1);
-        }
+        refreshCountySpinner();
 
         et_postcode = root_view.findViewById(R.id.et_postcode);
         et_full_address = root_view.findViewById(R.id.et_full_address);
         btn_update = root_view.findViewById(R.id.btn_update);
 
+    }
+
+    private void refreshCountySpinner(){
+        if (getActivity() != null) {
+            ArrayAdapter<SearchFilterModel> data_adapter = new ArrayAdapter<>(
+                    getActivity(),
+                    R.layout.list_item_spinner,
+                    db.getAllFilterItems(COUNTY_TABLE_NAME));
+            spinner_county.setAdapter(data_adapter);
+        }
     }
 
     private void initializeMap(Bundle savedInstanceState) {

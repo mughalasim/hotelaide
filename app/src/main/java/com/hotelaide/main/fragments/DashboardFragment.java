@@ -1,7 +1,10 @@
 package com.hotelaide.main.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -15,6 +18,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.hotelaide.R;
+import com.hotelaide.main.activities.ProfileActivity;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -27,6 +31,7 @@ import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
+import static com.hotelaide.utils.StaticVariables.USER_PROFILE_COMPLETION;
 
 public class DashboardFragment extends Fragment {
     private View root_view;
@@ -135,6 +140,7 @@ public class DashboardFragment extends Fragment {
     }
 
     // BASIC METHODS ===============================================================================
+    @SuppressLint("ClickableViewAccessibility")
     private void findAllViews() {
         // IMAGE
         img_avatar = root_view.findViewById(R.id.img_avatar);
@@ -152,6 +158,12 @@ public class DashboardFragment extends Fragment {
         rl_progress = root_view.findViewById(R.id.rl_progress);
         seek_bar_progress = root_view.findViewById(R.id.seek_bar_progress);
         txt_progress = root_view.findViewById(R.id.txt_progress);
+        seek_bar_progress.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
         // NEW MESSAGES
         rl_messages = root_view.findViewById(R.id.rl_messages);
@@ -169,8 +181,7 @@ public class DashboardFragment extends Fragment {
         txt_saved_jobs.setText(db.getFilteredTableCount(FILTER_TYPE_SAVED));
 
         // PROFILE PROGRESS
-//        updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
-        updateProfileSeekBar(60);
+        updateProfileSeekBar(SharedPrefs.getInt(USER_PROFILE_COMPLETION));
 
         // NOTIFICATIONS
         int notification_size = db.getAllUnreadNotifications();
@@ -197,7 +208,7 @@ public class DashboardFragment extends Fragment {
         /* make the API call */
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
-                "/213335282601524/feed",
+                "/"+ getString(R.string.FACEBOOK_APP_ID)+"/feed",
                 null,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {
@@ -215,8 +226,13 @@ public class DashboardFragment extends Fragment {
         } else {
             rl_progress.setVisibility(View.VISIBLE);
             seek_bar_progress.setProgress(completion);
-            seek_bar_progress.setClickable(false);
             txt_progress.setText(String.valueOf(completion).concat("%"));
+            rl_progress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), ProfileActivity.class));
+                }
+            });
         }
     }
 

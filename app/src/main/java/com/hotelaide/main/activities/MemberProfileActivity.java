@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
@@ -67,6 +68,8 @@ public class MemberProfileActivity extends AppCompatActivity {
             txt_user_age,
             txt_user_dob,
             toolbar_text;
+    private CardView
+            card_view_about;
 
     private LinearLayout
             ll_education,
@@ -83,7 +86,6 @@ public class MemberProfileActivity extends AppCompatActivity {
 
     // BACKGROUND ------------------------------------
     private SwipeRefreshLayout swipe_refresh;
-    private RelativeLayout rl_header;
 
     // OVERRIDE METHODS ============================================================================
     @Override
@@ -143,8 +145,6 @@ public class MemberProfileActivity extends AppCompatActivity {
 
     private void findAllViews() {
         app_bar_layout = findViewById(R.id.app_bar_layout);
-
-        rl_header = findViewById(R.id.rl_header);
         swipe_refresh = findViewById(R.id.swipe_refresh);
 
         // BANNER
@@ -152,6 +152,7 @@ public class MemberProfileActivity extends AppCompatActivity {
         img_banner = findViewById(R.id.img_banner);
 
         // INFO AND CONTACT DETAILS
+        card_view_about = findViewById(R.id.card_view_about);
         txt_user_f_name = findViewById(R.id.txt_user_f_name);
         txt_user_l_name = findViewById(R.id.txt_user_l_name);
         txt_user_about = findViewById(R.id.txt_user_about);
@@ -162,21 +163,30 @@ public class MemberProfileActivity extends AppCompatActivity {
         // EDUCATION
         txt_title_education = findViewById(R.id.txt_title_education);
         ll_education = findViewById(R.id.ll_education);
-        txt_title_education.setVisibility(View.GONE);
-        ll_education.setVisibility(View.GONE);
 
         // WORK
         txt_title_work = findViewById(R.id.txt_title_work);
         ll_work = findViewById(R.id.ll_work);
-        txt_title_work.setVisibility(View.GONE);
-        ll_work.setVisibility(View.GONE);
 
         // DOCUMENTS
         txt_title_documents = findViewById(R.id.txt_title_documents);
         ll_documents = findViewById(R.id.ll_documents);
+
+    }
+
+    private void hideAllViews() {
+        card_view_about.setVisibility(View.GONE);
+
+        txt_user_about.setVisibility(View.GONE);
+
+        txt_title_education.setVisibility(View.GONE);
+        ll_education.setVisibility(View.GONE);
+
+        txt_title_work.setVisibility(View.GONE);
+        ll_work.setVisibility(View.GONE);
+
         txt_title_documents.setVisibility(View.GONE);
         ll_documents.setVisibility(View.GONE);
-
 
     }
 
@@ -223,28 +233,55 @@ public class MemberProfileActivity extends AppCompatActivity {
             }
         });
 
+        swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                asyncFetchMember();
+            }
+        });
+
+        swipe_refresh.setSize(0);
+        swipe_refresh.setColorSchemeResources(
+                R.color.colorAccentLight,
+                R.color.colorAccent,
+                R.color.colorAccentDark,
+                R.color.dark_grey,
+                R.color.colorPrimaryDark,
+                R.color.colorPrimary,
+                R.color.colorPrimaryLight,
+                R.color.light_grey
+        );
     }
 
     public void startConversation(View view) {
-        if (INT_MEMBER_ID != 0) {
+        if (INT_MEMBER_ID != 0 && helpers.validateInternetConnection()) {
             startActivity(new Intent(MemberProfileActivity.this, ConversationActivity.class)
                     .putExtra("FROM_NAME", STR_NAME)
                     .putExtra("FROM_ID", INT_MEMBER_ID)
                     .putExtra("FROM_PIC_URL", STR_AVATAR_URL)
             );
+        } else {
+            helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_connection));
         }
     }
 
-    // GET MEMBER ASYNC FUNCTION ============================================================
+    public void share(View view) {
+        helpers.dialogShare(MemberProfileActivity.this, STR_SHARE_LINK);
+    }
+
+    // GET MEMBER ASYNC FUNCTION ===================================================================
     private void asyncFetchMember() {
+
+        hideAllViews();
 
         UserInterface service = UserInterface.retrofit.create(UserInterface.class);
         Call<JsonObject> call = service.getMemberByID(INT_MEMBER_ID);
-        helpers.setProgressDialog("Loading Member details");
+        swipe_refresh.setRefreshing(true);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                swipe_refresh.setRefreshing(false);
                 helpers.dismissProgressDialog();
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
@@ -277,8 +314,8 @@ public class MemberProfileActivity extends AppCompatActivity {
                         } else {
                             txt_user_about.setText(about_me);
                             txt_user_about.setVisibility(View.VISIBLE);
+                            helpers.animateFadeIn(txt_user_about);
                         }
-
 
                         txt_user_dob.setText(user.getString("dob"));
 
@@ -292,6 +329,9 @@ public class MemberProfileActivity extends AppCompatActivity {
                         } else {
                             txt_user_gender.setText("Female");
                         }
+
+                        card_view_about.setVisibility(View.VISIBLE);
+                        helpers.animateFadeIn(card_view_about);
 
                         if (!user.isNull("work_experience")) {
                             JSONArray work_experience = user.getJSONArray("work_experience");
@@ -308,10 +348,10 @@ public class MemberProfileActivity extends AppCompatActivity {
                             if (documents != null && documents.length() > 0) {
                                 int array_length = documents.length();
                                 for (int i = 0; i < array_length; i++) {
-
+                                    // TODO - SHOW DOCUMENTS
                                 }
-                                txt_title_documents.setVisibility(View.VISIBLE);
-                                ll_documents.setVisibility(View.VISIBLE);
+//                                txt_title_documents.setVisibility(View.VISIBLE);
+//                                ll_documents.setVisibility(View.VISIBLE);
                             }
                         }
 
@@ -322,21 +362,26 @@ public class MemberProfileActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_server));
                     e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.dismissProgressDialog();
-                Helpers.logThis(TAG_LOG, t.toString());
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_server));
-                    onBackPressed();
-                } else {
-                    helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_connection));
-                    onBackPressed();
+                try {
+                    helpers.dismissProgressDialog();
+                    swipe_refresh.setRefreshing(false);
+                    Helpers.logThis(TAG_LOG, t.toString());
+                    hideAllViews();
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_server));
+                    } else {
+                        helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_connection));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
             }
         });
 
@@ -348,6 +393,12 @@ public class MemberProfileActivity extends AppCompatActivity {
 
         if (work_experience != null && work_experience.length() > 0) {
             int array_length = work_experience.length();
+
+            if (type.equals(EXPERIENCE_TYPE_WORK)) {
+                ll_work.removeAllViews();
+            } else {
+                ll_education.removeAllViews();
+            }
 
             for (int i = 0; i < array_length; i++) {
 
@@ -364,6 +415,8 @@ public class MemberProfileActivity extends AppCompatActivity {
                 final TextView txt_duration = v.findViewById(R.id.txt_duration);
                 final TextView txt_responsibilities_field_label = v.findViewById(R.id.txt_responsibilities_field_label);
                 final TextView txt_responsibilities_field = v.findViewById(R.id.txt_responsibilities_field);
+                final RelativeLayout rl_no_list_items = v.findViewById(R.id.rl_no_list_items);
+                rl_no_list_items.setVisibility(View.GONE);
 
                 ExperienceModel experienceModel = new ExperienceModel();
                 if (type.equals(EXPERIENCE_TYPE_WORK)) {
@@ -440,9 +493,13 @@ public class MemberProfileActivity extends AppCompatActivity {
             if (type.equals(EXPERIENCE_TYPE_WORK)) {
                 txt_title_work.setVisibility(View.VISIBLE);
                 ll_work.setVisibility(View.VISIBLE);
+                helpers.animateFadeIn(txt_title_work);
+                helpers.animateFadeIn(ll_work);
             } else {
                 txt_title_education.setVisibility(View.VISIBLE);
                 ll_education.setVisibility(View.VISIBLE);
+                helpers.animateFadeIn(txt_title_education);
+                helpers.animateFadeIn(ll_education);
             }
         }
     }
