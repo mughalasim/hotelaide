@@ -14,7 +14,7 @@
     <!--IMAGE DIMENS ============================================================================-->
     <dimen name="img_size_large">108sp</dimen>
     <dimen name="img_size_medium_large">78sp</dimen>
-    <dimen name="img_size_medium">58sp</dimen>
+    <dimen name="img_size_medium">68sp</dimen>
     <dimen name="img_size_small">28sp</dimen>
 
 

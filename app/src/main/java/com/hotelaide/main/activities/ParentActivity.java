@@ -101,10 +101,6 @@ public class ParentActivity extends FragmentActivity implements
         this.toolbar_title = toolbarTitle;
 
         toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        }
         toolbar_text = toolbar.findViewById(R.id.toolbar_text);
         drawer = findViewById(R.id.drawer_layout);
         navigation_view = findViewById(R.id.nav_view);
@@ -203,6 +199,14 @@ public class ParentActivity extends FragmentActivity implements
 
             case R.id.drawer_find_jobs:
                 menu_find_jobs.setText("");
+                break;
+
+            case R.id.drawer_my_jobs:
+                menu_my_jobs.setText("");
+                break;
+
+            case R.id.drawer_find_members:
+                menu_find_members.setText("");
                 break;
 
             case R.id.drawer_profile:
