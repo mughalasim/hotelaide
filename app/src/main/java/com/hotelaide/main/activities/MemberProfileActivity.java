@@ -207,7 +207,7 @@ public class MemberProfileActivity extends AppCompatActivity {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
-                    toolbar.setBackground(ContextCompat.getDrawable(MemberProfileActivity.this, R.drawable.bckgrd_toolbar));
+                    toolbar.setBackground(ContextCompat.getDrawable(MemberProfileActivity.this, R.drawable.back_toolbar));
                     toolbar_text.setText(STR_PAGE_TITLE);
                 } else if (verticalOffset == 0) {
                     toolbar_text.setText("");
@@ -233,6 +233,7 @@ public class MemberProfileActivity extends AppCompatActivity {
             }
         });
 
+        helpers.animateSwipeRefresh(swipe_refresh);
         swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -240,17 +241,6 @@ public class MemberProfileActivity extends AppCompatActivity {
             }
         });
 
-        swipe_refresh.setSize(0);
-        swipe_refresh.setColorSchemeResources(
-                R.color.colorAccentLight,
-                R.color.colorAccent,
-                R.color.colorAccentDark,
-                R.color.dark_grey,
-                R.color.colorPrimaryDark,
-                R.color.colorPrimary,
-                R.color.colorPrimaryLight,
-                R.color.light_grey
-        );
     }
 
     public void startConversation(View view) {

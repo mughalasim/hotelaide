@@ -16,7 +16,7 @@
             android:id="@+id/txt_text_from"
             style="@style/Text_Normal"
             android:maxWidth="300dp"
-            android:background="@drawable/bckgrd_text_from"
+            android:background="@drawable/back_text_from"
             android:padding="@dimen/padding_mini"
             android:layout_marginTop="0dp" />
 
@@ -25,7 +25,7 @@
             style="@style/Text_Normal"
             android:maxWidth="300dp"
             android:textColor="@color/white"
-            android:background="@drawable/bckgrd_text_to"
+            android:background="@drawable/back_text_to"
             android:padding="@dimen/padding_mini"
             android:layout_marginTop="0dp"
             android:layout_alignParentEnd="true" />

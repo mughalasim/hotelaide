@@ -40,7 +40,6 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_DOCUMENTS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_PASS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
-import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_ABOUT;
@@ -223,6 +222,7 @@ public class ProfileActivity extends ParentActivity {
             }
         });
 
+        helpers.animateSwipeRefresh(swipe_refresh);
         swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -341,8 +341,8 @@ public class ProfileActivity extends ParentActivity {
             txt_user_availability.setText("Available");
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
 
-            rl_header.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.background_app));
-            swipe_refresh.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.background_app));
+            rl_header.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.back_main));
+            swipe_refresh.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.back_main));
 
         } else {
             txt_user_availability.setText("Hidden");

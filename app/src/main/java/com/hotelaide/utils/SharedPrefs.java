@@ -215,6 +215,7 @@ public class SharedPrefs {
         userModel.img_avatar = getString(USER_IMG_AVATAR);
         userModel.img_banner = getString(USER_IMG_BANNER);
         userModel.country_code = getInt(USER_COUNTRY_CODE);
+        userModel.county = getInt(USER_COUNTY);
         userModel.phone = getInt(USER_PHONE);
         userModel.dob = getString(USER_DOB);
         userModel.fb_id = getString(USER_FB_ID);
@@ -238,6 +239,7 @@ public class SharedPrefs {
                         + "\n AVATAR: " + getString(USER_IMG_AVATAR)
                         + "\n BANNER: " + getString(USER_IMG_BANNER)
                         + "\n COUNTRY CODE: " + getInt(USER_COUNTRY_CODE)
+                        + "\n COUNTY: " + getInt(USER_COUNTY)
                         + "\n PHONE: " + getInt(USER_PHONE)
                         + "\n DOB: " + getString(USER_DOB)
                         + "\n FB_ID: " + getString(USER_FB_ID)

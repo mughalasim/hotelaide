@@ -50,7 +50,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_MESSAGES;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -157,6 +156,7 @@ public class MessageFragment extends Fragment {
     }
 
     private void setListeners() {
+        helpers.animateSwipeRefresh(swipe_refresh);
         swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

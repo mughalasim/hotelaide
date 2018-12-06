@@ -11,6 +11,7 @@ public class UserModel {
     public String   img_banner = "";
 
     public int      country_code;
+    public int      county;
     public int      phone;
 
     public String   dob = "";

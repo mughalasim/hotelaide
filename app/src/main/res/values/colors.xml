@@ -19,7 +19,7 @@
     <color name="light_grey">#f0f0f0</color>
 
     <color name="transparent">#00000000</color>
-    <color name="dim">#28000000</color>
-    <color name="dimmer">#14000000</color>
+    <color name="dim">#2F000000</color>
+    <color name="dimmer">#19000000</color>
 
 </resources>

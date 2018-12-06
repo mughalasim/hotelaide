@@ -57,7 +57,7 @@
         <com.google.android.gms.maps.MapView
             android:id="@+id/map_view"
             android:layout_marginTop="@dimen/padding_small"
-            android:background="@drawable/bckgrd_text_fields"
+            android:background="@drawable/back_text_fields"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_map" />
 

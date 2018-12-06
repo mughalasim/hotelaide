@@ -9,7 +9,7 @@
     android:minWidth="320dp"
     android:orientation="horizontal"
     android:padding="@dimen/padding_small"
-    android:background="@drawable/bckgrd_text_fields"
+    android:background="@drawable/back_text_fields"
     tools:ignore="UseCompoundDrawables">
 
     <ImageView

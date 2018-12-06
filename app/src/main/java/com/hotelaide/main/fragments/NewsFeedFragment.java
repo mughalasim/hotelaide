@@ -44,6 +44,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
+
 
 public class NewsFeedFragment extends Fragment {
 
@@ -70,7 +72,7 @@ public class NewsFeedFragment extends Fragment {
             try {
                 Bundle bundle = this.getArguments();
                 if (bundle != null) {
-                    NEWS_FEED_URL = bundle.getString("EXTRA_STRING");
+                    NEWS_FEED_URL = bundle.getString(EXTRA_STRING);
 
                     root_view = inflater.inflate(R.layout.frag_recycler_view, container, false);
 
@@ -111,6 +113,7 @@ public class NewsFeedFragment extends Fragment {
     }
 
     private void setListeners() {
+        helpers.animateSwipeRefresh(swipe_refresh);
         swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -139,7 +142,7 @@ public class NewsFeedFragment extends Fragment {
                     swipe_refresh.setRefreshing(false);
                     try {
                         JSONObject main = new JSONObject(String.valueOf(response.body()));
-                        Helpers.logThis(TAG_LOG, main.toString());
+//                        Helpers.logThis(TAG_LOG, main.toString());
 
                         JSONArray items = main.getJSONArray("items");
 

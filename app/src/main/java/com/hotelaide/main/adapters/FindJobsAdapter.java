@@ -21,10 +21,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.hotelaide.utils.StaticVariables.EXTRA_JOB_ID;
+
 public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHolder> {
     private final ArrayList<JobModel> jobModels;
     private Context context;
     private Helpers helpers;
+    private String error_message = "";
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -53,8 +56,9 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
 
     }
 
-    public FindJobsAdapter(ArrayList<JobModel> jobModels) {
+    public FindJobsAdapter(ArrayList<JobModel> jobModels, String error_message) {
         this.jobModels = jobModels;
+        this.error_message = error_message;
     }
 
     @NonNull
@@ -76,7 +80,7 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
             holder.no_list_item.setVisibility(View.VISIBLE);
             holder.list_item.setVisibility(View.GONE);
             if (helpers.validateInternetConnection()) {
-                holder.txt_no_results.setText(R.string.error_no_jobs);
+                holder.txt_no_results.setText(error_message);
             } else {
                 holder.txt_no_results.setText(R.string.error_connection);
             }
@@ -93,9 +97,9 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(jobModel.id!=0 && !jobModel.name.equals("")){
+                    if (jobModel.id != 0 && !jobModel.name.equals("")) {
                         context.startActivity(new Intent(context, JobActivity.class)
-                                .putExtra("JOB_ID", jobModel.id)
+                                .putExtra(EXTRA_JOB_ID, jobModel.id)
                         );
                     }
                 }

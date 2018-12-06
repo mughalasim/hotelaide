@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:orientation="vertical"
-    android:background="@drawable/bckgrd_text_fields"
+    android:background="@drawable/back_text_fields"
     android:padding="@dimen/padding_small">
 
     <TextView

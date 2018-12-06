@@ -83,6 +83,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import me.leolin.shortcutbadger.ShortcutBadger;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -914,6 +915,21 @@ public class Helpers {
                 Animation.RELATIVE_TO_SELF, 0.5f);
         anim.setDuration(INT_ANIMATION_TIME);
         view.startAnimation(anim);
+    }
+
+    public void animateSwipeRefresh(SwipeRefreshLayout swipe_refresh){
+        swipe_refresh.setSize(0);
+        swipe_refresh.setDistanceToTriggerSync(500);
+        swipe_refresh.setColorSchemeResources(
+                R.color.colorAccentLight,
+                R.color.colorAccent,
+                R.color.colorAccentDark,
+                R.color.dark_grey,
+                R.color.colorPrimaryDark,
+                R.color.colorPrimary,
+                R.color.colorPrimaryLight,
+                R.color.light_grey
+        );
     }
 
 

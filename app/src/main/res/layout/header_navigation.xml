@@ -53,6 +53,6 @@
         app:riv_border_width="@dimen/line_thickness"
         app:riv_corner_radius="@dimen/img_size_medium"
         android:src="@color/light_grey"
-        app:riv_border_color="@color/colorAccentDark"/>
+        app:riv_border_color="@color/white"/>
 
 </RelativeLayout>

@@ -202,6 +202,7 @@ public class ExperienceEditFragment extends Fragment {
 
     private void setListeners() {
 
+        helpers.animateSwipeRefresh(swipe_refresh);
         swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

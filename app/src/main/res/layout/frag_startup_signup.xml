@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/height_edit_text"
                     android:layout_marginEnd="@dimen/padding_small"
-                    android:background="@drawable/bckgrd_text_fields"
+                    android:background="@drawable/back_text_fields"
                     android:gravity="center"
                     android:paddingEnd="@dimen/padding_small"
                     android:paddingStart="@dimen/padding_small"

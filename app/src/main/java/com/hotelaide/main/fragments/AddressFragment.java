@@ -113,7 +113,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 setFromSharedPrefs();
 
 
-
             } catch (InflateException e) {
                 e.printStackTrace();
             }
@@ -136,11 +135,11 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
         map_view.onResume();
         if (MAP_ACTIVITY_LATITUDE != 0.0) {
             Helpers.logThis(TAG_LOG, "MAP LAT: " + MAP_ACTIVITY_LATITUDE);
+            Helpers.logThis(TAG_LOG, "MAP LNG: " + MAP_ACTIVITY_LONGITUDE);
             Helpers.logThis(TAG_LOG, "ON RESUME, CHECK THE LOCATION");
             SharedPrefs.logUserModel();
             onMapReady(google_map);
         }
-        refreshCountySpinner();
     }
 
     @Override
@@ -252,15 +251,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
     // BASIC METHODS ===============================================================================
     private void findAllViews() {
         spinner_county = root_view.findViewById(R.id.spinner_county);
-        refreshCountySpinner();
-
-        et_postcode = root_view.findViewById(R.id.et_postcode);
-        et_full_address = root_view.findViewById(R.id.et_full_address);
-        btn_update = root_view.findViewById(R.id.btn_update);
-
-    }
-
-    private void refreshCountySpinner(){
         if (getActivity() != null) {
             ArrayAdapter<SearchFilterModel> data_adapter = new ArrayAdapter<>(
                     getActivity(),
@@ -268,6 +258,11 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                     db.getAllFilterItems(COUNTY_TABLE_NAME));
             spinner_county.setAdapter(data_adapter);
         }
+
+        et_postcode = root_view.findViewById(R.id.et_postcode);
+        et_full_address = root_view.findViewById(R.id.et_full_address);
+        btn_update = root_view.findViewById(R.id.btn_update);
+
     }
 
     private void initializeMap(Bundle savedInstanceState) {
@@ -292,7 +287,11 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 if (helpers.validateEmptyEditText(et_full_address) && helpers.validateEmptyEditText(et_postcode)) {
-                    asyncUpdateAddress(SharedPrefs.getDouble(USER_LAT), SharedPrefs.getDouble(USER_LNG));
+                    if (MAP_ACTIVITY_LATITUDE != 0.0) {
+                        asyncUpdateAddress(MAP_ACTIVITY_LATITUDE, MAP_ACTIVITY_LONGITUDE);
+                    } else {
+                        asyncUpdateAddress(SharedPrefs.getDouble(USER_LAT), SharedPrefs.getDouble(USER_LNG));
+                    }
                 }
             }
         });

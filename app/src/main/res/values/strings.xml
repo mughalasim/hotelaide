@@ -18,8 +18,10 @@
     <string name="error_no_we">No work experience added</string>
     <string name="error_no_news">No latest updates</string>
     <string name="error_no_ee">No educational experience added</string>
-    <string name="error_no_jobs">No Jobs found!</string>
-    <string name="error_no_members_found">No members found!</string>
+    <string name="error_no_jobs_found">No jobs found</string>
+    <string name="error_no_jobs_applied">No jobs applied</string>
+    <string name="error_no_jobs_saved">No jobs saved</string>
+    <string name="error_no_members_found">No members found</string>
     <string name="error_pass">Your new and confirmed password do not match</string>
     <string name="error_same_date">Start date cannot be the same as the end date</string>
     <string name="error_app_not_installed">This App is not installed on your device</string>
@@ -197,13 +199,14 @@
     <string name="txt_new_account_password">Please set your new password</string>
     <string name="txt_delete_your_account">Delete your account</string>
     <string name="txt_availability">Availability:&#160;</string>
-    <string name="txt_add_filters">Add Filters</string>
+    <string name="txt_add_filters">Add filters</string>
     <string name="txt_set_location">Set location</string>
-    <string name="txt_set_category">Set Category</string>
-    <string name="txt_set_job_type">Set Job Type</string>
-    <string name="txt_job_vacancies">Job Vacancies</string>
+    <string name="txt_set_category">Set category</string>
+    <string name="txt_set_job_type">Set job type</string>
+    <string name="txt_job_vacancies">More job vacancies</string>
     <string name="txt_social_media_title">Social Media</string>
-    <string name="txt_apply">Apply now</string>
+    <string name="txt_apply">Apply</string>
+    <string name="txt_applied">Applied</string>
     <string name="txt_description">Description</string>
     <string name="txt_requirements">Requirements</string>
     <string name="txt_view_establishment">View establishment</string>
@@ -221,5 +224,6 @@
     <string name="txt_notify_push">Message notifications</string>
     <string name="txt_notify_push_desc">Notify me when someone has sent me a new message</string>
     <string name="txt_zero">0</string>
+    <string name="txt_gallery">Gallery</string>
 
 </resources>

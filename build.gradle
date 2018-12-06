@@ -54,12 +54,12 @@ ext {
     SupportLibrary = '1.0.0'
 
     // Debug the App
-    debugMode = false
+    debugMode = true
     shrink = true
 
     // App Versioning
-    versionCode = 19
-    versionName = 1.9
+    versionCode = 20
+    versionName = 2.0
 }
 
 task clean_app(type: Delete) {

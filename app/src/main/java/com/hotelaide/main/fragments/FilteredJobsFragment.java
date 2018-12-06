@@ -30,6 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -48,7 +49,7 @@ public class FilteredJobsFragment extends Fragment {
     private RecyclerView recycler_view;
     private ArrayList<JobModel> model_list = new ArrayList<>();
     private FindJobsAdapter adapter;
-    private String FILTER_TYPE = "";
+    private String FILTER_TYPE = "", STR_ERROR_MESSAGE = "";
 
     public FilteredJobsFragment() {
     }
@@ -60,7 +61,13 @@ public class FilteredJobsFragment extends Fragment {
             try {
                 Bundle bundle = this.getArguments();
                 if (bundle != null) {
-                    FILTER_TYPE = bundle.getString("EXTRA_STRING");
+                    FILTER_TYPE = bundle.getString(EXTRA_STRING);
+
+                    if (FILTER_TYPE != null && FILTER_TYPE.equals(FILTER_TYPE_APPLIED)) {
+                        STR_ERROR_MESSAGE = getString(R.string.error_no_jobs_applied);
+                    } else {
+                        STR_ERROR_MESSAGE = getString(R.string.error_no_jobs_saved);
+                    }
 
                     root_view = inflater.inflate(R.layout.frag_recycler_view, container, false);
 
@@ -96,7 +103,7 @@ public class FilteredJobsFragment extends Fragment {
         // SEARCH FUNCTIONALITY --------------------------------------------------------------------
         swipe_refresh = root_view.findViewById(R.id.swipe_refresh);
         recycler_view = root_view.findViewById(R.id.recycler_view);
-        adapter = new FindJobsAdapter(model_list);
+        adapter = new FindJobsAdapter(model_list, STR_ERROR_MESSAGE);
         recycler_view.setAdapter(adapter);
         recycler_view.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -105,6 +112,7 @@ public class FilteredJobsFragment extends Fragment {
     }
 
     private void setListeners() {
+        helpers.animateSwipeRefresh(swipe_refresh);
         swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

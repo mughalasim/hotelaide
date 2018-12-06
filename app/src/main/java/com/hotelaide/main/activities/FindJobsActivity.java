@@ -167,7 +167,7 @@ public class FindJobsActivity extends ParentActivity {
 
         // SEARCH FUNCTIONALITY --------------------------------------------------------------------
         recycler_view = findViewById(R.id.recycler_view);
-        adapter = new FindJobsAdapter(model_list);
+        adapter = new FindJobsAdapter(model_list, getString(R.string.error_no_jobs_found));
         recycler_view.setAdapter(adapter);
         recycler_view.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(FindJobsActivity.this);
@@ -322,7 +322,7 @@ public class FindJobsActivity extends ParentActivity {
             public void requestCompleted(JSONObject content, AlgoliaException error) {
                 try {
                     if (content != null) {
-                        Helpers.logThis(TAG_LOG, content.toString());
+//                        Helpers.logThis(TAG_LOG, content.toString());
 
                         model_list.clear();
 

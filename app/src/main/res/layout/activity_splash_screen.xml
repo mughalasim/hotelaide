@@ -7,14 +7,14 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_app"
+        android:background="@drawable/back_main"
         android:contentDescription="@string/app_name" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.2"
-        android:background="@drawable/bckgrd_fade_to_transparent"
+        android:background="@drawable/back_fade"
         android:contentDescription="@string/app_name" />
 
     <ImageView
@@ -24,6 +24,6 @@
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
-        android:src="@drawable/main_logo_vertical" />
+        android:src="@drawable/logo_vertical" />
 
 </RelativeLayout>

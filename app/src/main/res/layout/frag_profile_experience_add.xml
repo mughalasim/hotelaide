@@ -9,7 +9,7 @@
         android:orientation="vertical"
         android:paddingStart="@dimen/padding_small"
         android:paddingEnd="@dimen/padding_small"
-        android:background="@drawable/bckgrd_text_fields"
+        android:background="@drawable/back_text_fields"
         android:paddingBottom="@dimen/padding_small">
 
         <TextView

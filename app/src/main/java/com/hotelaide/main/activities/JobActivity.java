@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,10 +29,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.EXTRA_JOB_ID;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
@@ -50,8 +53,7 @@ public class JobActivity extends AppCompatActivity {
             txt_job_requirements,
             txt_job_post_date,
             txt_job_end_date,
-            txt_establishment_name,
-            txt_establishment_id;
+            txt_establishment_name;
 
     private ImageView
             img_banner;
@@ -65,13 +67,22 @@ public class JobActivity extends AppCompatActivity {
             STR_PAGE_TITLE = "",
             STR_BANNER_URL = "";
 
-    private int INT_JOB_ID = 0;
+    private int
+            INT_ESTABLISHMENT_ID = 0,
+            INT_JOB_ID = 0;
 
     private final String
             TAG_LOG = "JOB VACANCY";
     private Database db;
 
-    private JSONObject globalJobObject;
+    private LinearLayout
+            ll_main_view;
+
+    private JSONObject
+            globalJobObject;
+
+    private SwipeRefreshLayout
+            swipe_refresh;
 
 
     // OVERRIDE METHODS ============================================================================
@@ -79,26 +90,17 @@ public class JobActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (handleExtraBundles()) {
-            setContentView(R.layout.activity_job);
+        setContentView(R.layout.activity_job);
 
-            helpers = new Helpers(JobActivity.this);
+        helpers = new Helpers(JobActivity.this);
 
-            db = new Database();
+        db = new Database();
 
-            setUpToolBarAndTabs();
+        setUpToolBarAndTabs();
 
-            findAllViews();
+        findAllViews();
 
-            setListeners();
-
-            asyncFetchHotel();
-
-        } else {
-            helpers.ToastMessage(JobActivity.this, getString(R.string.error_unknown));
-            onBackPressed();
-        }
-
+        setListeners();
 
     }
 
@@ -124,11 +126,19 @@ public class JobActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (handleExtraBundles()) {
+            asyncGetJob();
+        }
+    }
+
     // BASIC FUNCTIONS =============================================================================
     private Boolean handleExtraBundles() {
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getInt("JOB_ID") != 0) {
-            INT_JOB_ID = extras.getInt("JOB_ID");
+        if (extras != null && extras.getInt(EXTRA_JOB_ID) != 0) {
+            INT_JOB_ID = extras.getInt(EXTRA_JOB_ID);
             Helpers.logThis(TAG_LOG, "JOB ID: " + INT_JOB_ID);
             return true;
         } else {
@@ -138,12 +148,13 @@ public class JobActivity extends AppCompatActivity {
 
     private void findAllViews() {
         app_bar_layout = findViewById(R.id.app_bar_layout);
+        swipe_refresh = findViewById(R.id.swipe_refresh);
+        ll_main_view = findViewById(R.id.ll_main_view);
 
         btn_apply = findViewById(R.id.btn_apply);
 
         img_banner = findViewById(R.id.img_banner);
         txt_establishment_name = findViewById(R.id.txt_establishment_name);
-        txt_establishment_id = findViewById(R.id.txt_establishment_id);
 
         txt_job_name = findViewById(R.id.txt_job_name);
         txt_job_description = findViewById(R.id.txt_job_description);
@@ -152,6 +163,10 @@ public class JobActivity extends AppCompatActivity {
         txt_job_post_date = findViewById(R.id.txt_job_post_date);
         txt_job_end_date = findViewById(R.id.txt_job_end_date);
 
+    }
+
+    private void hideAllViews() {
+        ll_main_view.setVisibility(View.GONE);
     }
 
     private void setUpToolBarAndTabs() {
@@ -171,7 +186,7 @@ public class JobActivity extends AppCompatActivity {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
-                    toolbar.setBackground(ContextCompat.getDrawable(JobActivity.this, R.drawable.bckgrd_toolbar));
+                    toolbar.setBackground(ContextCompat.getDrawable(JobActivity.this, R.drawable.back_toolbar));
                     toolbar_text.setText(STR_PAGE_TITLE);
                 } else if (verticalOffset == 0) {
                     toolbar_text.setText("");
@@ -190,6 +205,14 @@ public class JobActivity extends AppCompatActivity {
             }
         });
 
+        helpers.animateSwipeRefresh(swipe_refresh);
+        swipe_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                asyncGetJob();
+            }
+        });
+
     }
 
     public void applyJob(View view) {
@@ -201,14 +224,15 @@ public class JobActivity extends AppCompatActivity {
     }
 
     public void viewEstablishment(View view) {
-        startActivity(new Intent(JobActivity.this, EstablishmentActivity.class)
-                .putExtra("ESTABLISHMENT_ID", Integer.parseInt(txt_establishment_id.getText().toString()))
-        );
+        if (INT_ESTABLISHMENT_ID != 0)
+            startActivity(new Intent(JobActivity.this, EstablishmentActivity.class)
+                    .putExtra("ESTABLISHMENT_ID", INT_ESTABLISHMENT_ID)
+            );
     }
 
     private void checkJobApplied() {
         if (db.isFilteredJob(INT_JOB_ID, FILTER_TYPE_APPLIED)) {
-            btn_apply.setText("APPLIED");
+            btn_apply.setText(getString(R.string.txt_applied));
             btn_apply.setTextAppearance(JobActivity.this, R.style.Material_Text);
             btn_apply.setBackground(null);
             btn_apply.setClickable(false);
@@ -217,17 +241,17 @@ public class JobActivity extends AppCompatActivity {
 
 
     // GET ESTABLISHMENT ASYNC FUNCTION ============================================================
-    private void asyncFetchHotel() {
-
+    private void asyncGetJob() {
+        hideAllViews();
+        swipe_refresh.setRefreshing(true);
         EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
         Call<JsonObject> call = establishmentInterface.getJob(INT_JOB_ID);
-        helpers.setProgressDialog("Loading Job details");
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                helpers.dismissProgressDialog();
                 try {
+                    swipe_refresh.setRefreshing(false);
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
                     Helpers.logThis(TAG_LOG, main.toString());
@@ -240,6 +264,7 @@ public class JobActivity extends AppCompatActivity {
 
                         STR_PAGE_TITLE = job_object.getString("title");
                         txt_job_name.setText(STR_PAGE_TITLE);
+                        helpers.animateFadeIn(txt_job_name);
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             txt_job_description.setText(Html.fromHtml(job_object.getString("description"), Html.FROM_HTML_MODE_COMPACT));
@@ -260,7 +285,7 @@ public class JobActivity extends AppCompatActivity {
                         // ESTABLISHMENT OBJECT
                         JSONObject establishment_object = job_object.getJSONObject("establishment");
                         if (establishment_object != null) {
-                            txt_establishment_id.setText(establishment_object.getString("id"));
+                            INT_ESTABLISHMENT_ID = establishment_object.getInt("id");
                             txt_establishment_name.setText(establishment_object.getString("name"));
                             STR_BANNER_URL = establishment_object.getString("image");
                             Glide.with(JobActivity.this).load(STR_BANNER_URL).into(img_banner);
@@ -269,31 +294,38 @@ public class JobActivity extends AppCompatActivity {
 
                         checkJobApplied();
 
+                        ll_main_view.setVisibility(View.VISIBLE);
+                        helpers.animateFadeIn(ll_main_view);
+
                     } else {
                         db.deleteFilteredJobByJobId(INT_JOB_ID, FILTER_TYPE_APPLIED);
                         helpers.handleErrorMessage(JobActivity.this, main.getJSONObject("data"));
                     }
 
-
                 } catch (JSONException e) {
                     helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));
                     e.printStackTrace();
                     onBackPressed();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                helpers.dismissProgressDialog();
-                Helpers.logThis(TAG_LOG, t.toString());
-                if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));
-                    onBackPressed();
-                } else {
-                    helpers.ToastMessage(JobActivity.this, getString(R.string.error_connection));
-                    onBackPressed();
+                try {
+                    Helpers.logThis(TAG_LOG, t.toString());
+                    hideAllViews();
+                    if (helpers.validateInternetConnection()) {
+                        helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));
+                        onBackPressed();
+                    } else {
+                        helpers.ToastMessage(JobActivity.this, getString(R.string.error_connection));
+                        onBackPressed();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
             }
         });
 

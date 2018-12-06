@@ -56,6 +56,7 @@ import me.leolin.shortcutbadger.ShortcutBadger;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
+import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
@@ -187,7 +188,7 @@ public class ParentActivity extends FragmentActivity implements
     void setCountOnDrawerItem(TextView drawer_text_view, String count) {
         drawer_text_view.setGravity(Gravity.CENTER_VERTICAL);
         drawer_text_view.setTypeface(null, Typeface.BOLD);
-        drawer_text_view.setTextColor(ContextCompat.getColor(this, R.color.red));
+        drawer_text_view.setTextColor(ContextCompat.getColor(this, R.color.white));
         drawer_text_view.setText(count);
     }
 
@@ -249,7 +250,7 @@ public class ParentActivity extends FragmentActivity implements
 
         for (int i = 0; i < fragment_title_list.length; i++) {
             Bundle bundle = new Bundle();
-            bundle.putString("EXTRA_STRING", fragment_extras[i]);
+            bundle.putString(EXTRA_STRING, fragment_extras[i]);
 
             Fragment fragment = fragment_list[i];
             fragment.setArguments(bundle);

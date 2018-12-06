@@ -4,7 +4,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
-    android:background="@drawable/bckgrd_toolbar"
+    android:background="@drawable/back_toolbar"
     app:layout_collapseMode="pin"
     app:titleTextColor="@color/white">
 
