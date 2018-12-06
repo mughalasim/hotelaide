@@ -54,7 +54,7 @@ ext {
     SupportLibrary = '1.0.0'
 
     // Debug the App
-    debugMode = true
+    debugMode = false
     shrink = true
 
     // App Versioning

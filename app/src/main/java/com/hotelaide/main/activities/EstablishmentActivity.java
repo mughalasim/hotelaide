@@ -39,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.StaticVariables.EXTRA_JOB_ID;
+import static com.hotelaide.utils.StaticVariables.INT_JOB_ID;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 
 public class EstablishmentActivity extends AppCompatActivity {
@@ -264,7 +264,6 @@ public class EstablishmentActivity extends AppCompatActivity {
                         // JOB VACANCIES
                         JSONArray job_vacancies = establishment_object.getJSONArray("job_vacancies");
                         if (job_vacancies != null && job_vacancies.length() > 0) {
-                            ll_vacancies.setVisibility(View.VISIBLE);
                             ll_vacancies_child.removeAllViews();
                             LayoutInflater layout_inflater = LayoutInflater.from(EstablishmentActivity.this);
                             int array_length = job_vacancies.length();
@@ -276,6 +275,13 @@ public class EstablishmentActivity extends AppCompatActivity {
                                 final String posted_on = vacancy_object.getString("posted_on");
                                 createVacancyListing(layout_inflater, id, title, desc, posted_on);
                             }
+
+                            if (ll_vacancies_child.getChildCount() > 0) {
+                                ll_vacancies.setVisibility(View.VISIBLE);
+                            } else {
+                                ll_vacancies.setVisibility(View.GONE);
+                            }
+
                         } else {
                             ll_vacancies.setVisibility(View.GONE);
                         }
@@ -335,14 +341,12 @@ public class EstablishmentActivity extends AppCompatActivity {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                startActivity(new Intent(EstablishmentActivity.this, JobActivity.class)
-                        .putExtra(EXTRA_JOB_ID, id)
-                );
+                INT_JOB_ID = id;
+                startActivity(new Intent(EstablishmentActivity.this, JobActivity.class));
             }
         });
-
-        ll_vacancies_child.addView(v);
+        if (id != INT_JOB_ID)
+            ll_vacancies_child.addView(v);
 
     }
 

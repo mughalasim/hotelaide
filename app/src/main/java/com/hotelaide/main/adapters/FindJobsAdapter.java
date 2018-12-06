@@ -14,14 +14,13 @@ import com.hotelaide.R;
 import com.hotelaide.main.activities.JobActivity;
 import com.hotelaide.main.models.JobModel;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.StaticVariables;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import static com.hotelaide.utils.StaticVariables.EXTRA_JOB_ID;
 
 public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHolder> {
     private final ArrayList<JobModel> jobModels;
@@ -98,9 +97,8 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     if (jobModel.id != 0 && !jobModel.name.equals("")) {
-                        context.startActivity(new Intent(context, JobActivity.class)
-                                .putExtra(EXTRA_JOB_ID, jobModel.id)
-                        );
+                        StaticVariables.INT_JOB_ID = jobModel.id;
+                        context.startActivity(new Intent(context, JobActivity.class));
                     }
                 }
             });

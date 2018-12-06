@@ -21,6 +21,7 @@ import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.models.ExperienceModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +41,7 @@ import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class MemberProfileActivity extends AppCompatActivity {
     private Helpers helpers;
@@ -244,14 +246,18 @@ public class MemberProfileActivity extends AppCompatActivity {
     }
 
     public void startConversation(View view) {
-        if (INT_MEMBER_ID != 0 && helpers.validateInternetConnection()) {
+        if(INT_MEMBER_ID==0){
+            helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_server));
+        } else if(INT_MEMBER_ID== SharedPrefs.getInt(USER_ID)){
+            helpers.ToastMessage(MemberProfileActivity.this,"LOL! You cant talk to yourself!");
+        } else if(!helpers.validateInternetConnection()){
+            helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_connection));
+        } else {
             startActivity(new Intent(MemberProfileActivity.this, ConversationActivity.class)
                     .putExtra("FROM_NAME", STR_NAME)
                     .putExtra("FROM_ID", INT_MEMBER_ID)
                     .putExtra("FROM_PIC_URL", STR_AVATAR_URL)
             );
-        } else {
-            helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_connection));
         }
     }
 

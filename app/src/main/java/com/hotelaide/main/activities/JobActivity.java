@@ -34,9 +34,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.StaticVariables.EXTRA_JOB_ID;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
+import static com.hotelaide.utils.StaticVariables.INT_JOB_ID;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -68,8 +68,7 @@ public class JobActivity extends AppCompatActivity {
             STR_BANNER_URL = "";
 
     private int
-            INT_ESTABLISHMENT_ID = 0,
-            INT_JOB_ID = 0;
+            INT_ESTABLISHMENT_ID = 0;
 
     private final String
             TAG_LOG = "JOB VACANCY";
@@ -129,16 +128,14 @@ public class JobActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (handleExtraBundles()) {
+        if (getStaticVariable()) {
             asyncGetJob();
         }
     }
 
     // BASIC FUNCTIONS =============================================================================
-    private Boolean handleExtraBundles() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.getInt(EXTRA_JOB_ID) != 0) {
-            INT_JOB_ID = extras.getInt(EXTRA_JOB_ID);
+    private Boolean getStaticVariable() {
+        if (INT_JOB_ID != 0) {
             Helpers.logThis(TAG_LOG, "JOB ID: " + INT_JOB_ID);
             return true;
         } else {

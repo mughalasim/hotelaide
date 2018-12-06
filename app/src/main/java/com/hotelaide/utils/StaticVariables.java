@@ -56,10 +56,10 @@ public class StaticVariables {
     public final static int INT_PERMISSIONS_LOCATIONS = 602;
     public final static int INT_PERMISSIONS_CALL = 603;
     public final static int INT_PERMISSIONS_STORAGE = 604;
+    public static int INT_JOB_ID = 0;
 
     // BUNDLE EXTRA VARIABLES ======================================================================
     public final static String EXTRA_STRING = "EXTRA_STRING";
-    public final static String EXTRA_JOB_ID = "EXTRA_JOB_ID";
     public final static String EXTRA_START_FIRST_TIME = "FIRST_TIMER";
     public final static String EXTRA_START_RETURN = "RETURN";
     public final static String EXTRA_START_LAUNCH = "LAUNCH";
