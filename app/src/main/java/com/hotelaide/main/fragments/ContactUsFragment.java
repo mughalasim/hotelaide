@@ -1,4 +1,4 @@
-package com.hotelaide.startup.fragments;
+package com.hotelaide.main.fragments;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -19,14 +19,14 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_CALL;
 
 
-public class StartUpContactUsFragment extends Fragment {
+public class ContactUsFragment extends Fragment {
 
     private View rootview;
     private Helpers helpers;
     private TextView txt_mobile, txt_land_line;
     private String STR_PHONE_NUMBER = "";
 
-    public StartUpContactUsFragment() {
+    public ContactUsFragment() {
 
     }
 

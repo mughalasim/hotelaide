@@ -8,7 +8,7 @@ import com.eftimoff.viewpagertransformers.ForegroundToBackgroundTransformer;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.hotelaide.R;
-import com.hotelaide.startup.fragments.StartUpIntroFragment;
+import com.hotelaide.startup.fragments.IntroFragment;
 import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ public class IntroActivity extends FragmentActivity {
             TAG_LOG = "INTRO";
 
     private MaterialButton
+            btn_cancel,
             btn_confirm;
 
     private ViewPagerAdapter
@@ -44,17 +45,13 @@ public class IntroActivity extends FragmentActivity {
 
     int[] images = {
             R.drawable.img_emploeyed,
-            R.drawable.img_resume,
-            R.drawable.img_emails,
             R.drawable.img_selected,
             R.drawable.img_office
     };
 
     String[] descriptions = {
-            "Hey there!\nWelcome to HotelAide",
-            "why don't you easily sign up with us and...",
-            "Send out your CV to the top employers in Kenya.",
-            "Get shortlisted instantly and ...",
+            "Hey there!\nWelcome to HotelAide\n\nSign up with us and send out your CV to top employers in Kenya by a tap of a button.",
+            "...Get shortlisted instantly...",
             "Start your new position today!"
     };
 
@@ -77,12 +74,31 @@ public class IntroActivity extends FragmentActivity {
 
     private void findAllViews() {
         btn_confirm = findViewById(R.id.btn_confirm);
+        btn_cancel = findViewById(R.id.btn_cancel);
         view_pager = findViewById(R.id.view_pager);
         tab_layout = findViewById(R.id.tabs);
+
+        btn_cancel.setVisibility(View.VISIBLE);
+        btn_confirm.setVisibility(View.VISIBLE);
+
+        btn_confirm.setText(getString(R.string.txt_next));
+        btn_cancel.setText(getString(R.string.txt_skip));
     }
 
     private void setListeners() {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btn_confirm.getText().toString().equals(getString(R.string.txt_continue))) {
+                    startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+                    finish();
+                } else {
+                    view_pager.setCurrentItem(view_pager.getCurrentItem() + 1);
+                }
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(IntroActivity.this, LoginActivity.class));
@@ -96,7 +112,6 @@ public class IntroActivity extends FragmentActivity {
         view_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
             }
 
             @Override
@@ -105,10 +120,14 @@ public class IntroActivity extends FragmentActivity {
                 Helpers.logThis(TAG_LOG, "ARRAY SIZE. " + images.length);
 
                 if (i == (images.length - 1)) {
-                    btn_confirm.setVisibility(View.VISIBLE);
+                    btn_cancel.setVisibility(View.GONE);
+                    btn_confirm.setText(getString(R.string.txt_continue));
                     helpers.animateFadeIn(btn_confirm);
                 } else {
-                    btn_confirm.setVisibility(View.GONE);
+                    btn_cancel.setVisibility(View.VISIBLE);
+                    btn_confirm.setText(getString(R.string.txt_next));
+                    helpers.animateFadeIn(btn_cancel);
+                    helpers.animateFadeIn(btn_confirm);
                 }
             }
 
@@ -129,7 +148,7 @@ public class IntroActivity extends FragmentActivity {
             Bundle bundle = new Bundle();
             bundle.putInt(EXTRA_IMAGE, images[i]);
             bundle.putString(EXTRA_DESC, descriptions[i]);
-            Fragment fragment = new StartUpIntroFragment();
+            Fragment fragment = new IntroFragment();
             fragment.setArguments(bundle);
             adapter.addFragment(fragment);
         }

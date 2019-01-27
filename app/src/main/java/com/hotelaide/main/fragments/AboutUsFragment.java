@@ -1,4 +1,4 @@
-package com.hotelaide.startup.fragments;
+package com.hotelaide.main.fragments;
 
 import android.os.Bundle;
 import android.view.InflateException;
@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
-public class StartUpAboutUsFragment extends Fragment {
+public class AboutUsFragment extends Fragment {
 
     private View rootview;
 
-    public StartUpAboutUsFragment() {
+    public AboutUsFragment() {
 
     }
 

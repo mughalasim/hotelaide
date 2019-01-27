@@ -41,7 +41,7 @@
 
 
     <!--FIXED ITEM HEIGHTS ======================================================================-->
-    <dimen name="height_button">50sp</dimen>
+    <dimen name="height_button">70sp</dimen>
     <dimen name="height_edit_text">50dp</dimen>
     <dimen name="height_panel">55sp</dimen>
     <dimen name="height_nav_header">110sp</dimen>

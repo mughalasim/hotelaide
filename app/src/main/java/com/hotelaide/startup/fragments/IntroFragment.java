@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 import static com.hotelaide.startup.IntroActivity.EXTRA_DESC;
 import static com.hotelaide.startup.IntroActivity.EXTRA_IMAGE;
 
-public class StartUpIntroFragment extends Fragment {
+public class IntroFragment extends Fragment {
 
     private View root_view;
 
@@ -27,7 +27,7 @@ public class StartUpIntroFragment extends Fragment {
     private String
             desc = "";
 
-    public StartUpIntroFragment() {
+    public IntroFragment() {
 
     }
 

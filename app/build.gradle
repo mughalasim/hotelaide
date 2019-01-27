@@ -1,9 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias SIGNING_ALIAS_PASS
+            keyPassword SIGNING_ALIAS_PASS
+            storeFile file('/Users/asimmughal/Documents/Docs/Android/hotelaide keystore/hotelaide_signing_key.jks')
+            storePassword SIGNING_ALIAS_PASS
+        }
+    }
     compileSdkVersion rootProject.compileSDK
     buildToolsVersion rootProject.buildTools
-    flavorDimensions "versionCode"
+    flavorDimensions "version"
     defaultConfig {
         applicationId "com.hotelaide"
         minSdkVersion rootProject.minSDK
@@ -13,7 +21,10 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         resConfigs "en"
+        signingConfig signingConfigs.config
     }
+
+
     buildTypes {
         release {
             debuggable rootProject.debugMode
@@ -22,40 +33,28 @@ android {
             shrinkResources rootProject.shrink
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
-            debuggable rootProject.debugMode
-            minifyEnabled rootProject.shrink
-            useProguard rootProject.shrink
-            shrinkResources rootProject.shrink
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
     }
-    productFlavors {
 
-        prod {
+    productFlavors {
+        cocoaFlavor {
             // MAIN URL'S
             buildConfigField 'String', 'MAIN_URL', MAIN_URL
             buildConfigField 'String', 'TERMS_URL', TERMS_URL
-
             // APP TYPE
             buildConfigField 'String', 'ACCOUNT_TYPE', ACCOUNT_TYPE
-
             // DATABASE INFO
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
             buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '15'
             buildConfigField 'Boolean', 'LOGGING', "$rootProject.debugMode"
-
             // FIREBASE INIT
             resValue "string", "FB_API_KEY", FB_API_KEY
             buildConfigField 'String', 'FB_APP_ID', FB_APP_ID
             buildConfigField 'String', 'FB_STORE', FB_STORE
-
             // FIREBASE PATHS
             buildConfigField 'String', 'FB_DB_URL', FB_DB_URL
             buildConfigField 'String', 'USERS_URL', USERS_URL
             buildConfigField 'String', 'MESSAGE_URL', MESSAGE_URL
             buildConfigField 'String', 'CONVERSATION_URL', CONVERSATION_URL
-
             // ALGOLIA SEARCH
             buildConfigField 'String', 'ALGOLIA_APP_ID', ALGOLIA_APP_ID
             buildConfigField 'String', 'ALGOLIA_SEARCH_API_KEY', ALGOLIA_SEARCH_API_KEY
@@ -65,10 +64,10 @@ android {
             buildConfigField 'String', 'FILTER_CATEGORY', FILTER_CATEGORY
             buildConfigField 'String', 'FILTER_JOB_TYPE', FILTER_JOB_TYPE
             buildConfigField 'String', 'FILTER_NAME', FILTER_NAME
-
             // FACEBOOK APP ID
             resValue "string", "FACEBOOK_APP_ID", FACEBOOK_APP_ID
             resValue "string", "FACEBOOK_PROTOCOL_SCHEME", FACEBOOK_PROTOCOL_SCHEME
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
@@ -147,8 +146,8 @@ dependencies {
     implementation 'pub.devrel:easypermissions:1.2.0'
 
     // STETHO INSPECTOR BY FACEBOOK
-     implementation 'com.facebook.stetho:stetho:1.5.0'
-     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
     // VIEWPAGER TRANSFORMER
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
@@ -165,7 +164,6 @@ dependencies {
 
     // TAP TARGET FOR INTRODUCTIONS
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.12.0'
-    
 }
 
 apply plugin: 'com.google.gms.google-services'

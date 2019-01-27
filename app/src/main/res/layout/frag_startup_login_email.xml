@@ -3,9 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/padding_small"
-    android:paddingLeft="@dimen/padding_small"
-    android:paddingRight="@dimen/padding_small"
     android:scrollbars="none">
 
     <LinearLayout
@@ -14,13 +11,19 @@
         android:layout_marginBottom="@dimen/padding_large"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/Text_Title"
-            android:text="@string/txt_welcome" />
+        <ImageView
+            android:id="@+id/main_logo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/img_size_large"
+            android:layout_marginTop="@dimen/padding_large"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
-            style="@style/Text_Normal"
-            android:text="@string/txt_welcome_login" />
+            style="@style/Text_Header"
+            android:gravity="center"
+            android:text="@string/nav_login" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Material_Edit_Text_Layout">
@@ -48,27 +51,11 @@
 
         <include layout="@layout/layout_button" />
 
-        <include layout="@layout/horizontal_line" />
-
-        <include layout="@layout/frag_startup_signup_bottom"/>
-
-        <include layout="@layout/horizontal_line" />
-
         <com.google.android.material.button.MaterialButton
             style="@style/Material_Text"
-            android:onClick="navigateToSignUpScreen"
             android:layout_marginTop="@dimen/padding_large"
-            android:text="@string/nav_sign_up" />
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Material_Text"
-            android:onClick="navigateToForgotPassScreen"
+            android:onClick="navigateToResetPassScreen"
             android:text="@string/txt_forgot_password" />
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Material_Text"
-            android:onClick="openTermsAndConditions"
-            android:text="@string/txt_terms_conditions" />
 
     </LinearLayout>
 

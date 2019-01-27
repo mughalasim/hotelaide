@@ -2,6 +2,7 @@
 <com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/btn_confirm"
     style="@style/Material_Button_Yes"
+    android:layout_height="@dimen/height_button"
     android:layout_width="match_parent"
     android:layout_marginTop="@dimen/padding_small"
     android:text="@string/txt_ok" />

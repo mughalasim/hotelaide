@@ -1,0 +1,143 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_small">
+
+        <ImageView
+            android:id="@+id/main_logo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/img_size_large"
+            android:layout_marginTop="@dimen/padding_large"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            style="@style/Text_Header"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:text="@string/txt_sign_up_header" />
+
+        <com.google.android.material.textfield.TextInputLayout style="@style/Material_Edit_Text_Layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_first_name"
+                style="@style/Material_Edit_Text"
+                android:hint="@string/et_hint_first_name"
+                android:inputType="textCapSentences" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout style="@style/Material_Edit_Text_Layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_last_name"
+                style="@style/Material_Edit_Text"
+                android:hint="@string/et_hint_last_name"
+                android:inputType="textCapSentences" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinner_user_gender"
+            style="@style/Edit_Text"
+            android:drawableStart="@drawable/ic_location"
+            android:gravity="start|center_vertical"
+            android:padding="0dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_medium"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp_user_country_code"
+                app:ccpDialog_textColor="@color/colorPrimaryDark"
+                app:ccp_defaultPhoneCode="254"
+                app:ccp_showArrow="false"
+                app:ccp_showFlag="true"
+                app:ccp_showNameCode="false"
+                app:ccp_textSize="@dimen/text_size_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/height_edit_text"
+                android:layout_marginEnd="@dimen/padding_small"
+                android:background="@drawable/back_text_fields"
+                android:gravity="center"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Material_Edit_Text_Layout"
+                app:hintEnabled="false"
+                android:layout_marginTop="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_user_phone"
+                    style="@style/Material_Edit_Text"
+                    android:digits="0123456789"
+                    android:hint="@string/et_hint_phone"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_user_dob"
+            style="@style/Edit_Text"
+            android:text="@string/et_hint_dob" />
+
+        <com.google.android.material.textfield.TextInputLayout style="@style/Material_Edit_Text_Layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_email"
+                style="@style/Material_Edit_Text"
+                android:hint="@string/et_hint_email"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Material_Edit_Text_Layout"
+            app:passwordToggleDrawable="@drawable/ic_pass_show"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_pass"
+                style="@style/Material_Edit_Text"
+                android:hint="@string/et_hint_pass"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Material_Edit_Text_Layout"
+            app:passwordToggleDrawable="@drawable/ic_pass_show"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_pass_confirm"
+                style="@style/Material_Edit_Text"
+                android:hint="@string/et_hint_pass_confirm"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <include layout="@layout/layout_button" />
+
+    </LinearLayout>
+
+</ScrollView>
+

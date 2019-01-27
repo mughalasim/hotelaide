@@ -79,7 +79,7 @@
     <!-- START UP NAVIGATION TEXT ===============================================================-->
     <string name="nav_login">Login</string>
     <string name="nav_sign_up">Sign Up</string>
-    <string name="nav_forgot_pass">Forgot Password</string>
+    <string name="nav_reset_password">Reset Password</string>
     <string name="nav_about_us">About Us</string>
     <string name="nav_contact_us">Contact Info</string>
 
@@ -148,8 +148,10 @@
     <string name="txt_terms_conditions">Terms and conditions</string>
     <string name="txt_forgot_password">Forgot password</string>
     <string name="txt_welcome">Welcome</string>
-    <string name="txt_welcome_login">Kindly enter your email and password to login</string>
+    <string name="txt_welcome_login">login with email</string>
     <string name="txt_continue">Continue</string>
+    <string name="txt_next">Next…</string>
+    <string name="txt_skip">Skip</string>
     <string name="txt_errors">Errors</string>
     <string name="txt_take_me_there">Take me there</string>
     <string name="txt_alert">Alert!</string>
@@ -189,7 +191,7 @@
     <string name="txt_profile_completion">Profile completion&#160;</string>
     <string name="txt_study_completed">Study completed</string>
     <string name="txt_study_incomplete">Currently studying</string>
-    <string name="txt_sign_up_header">You could opt to give us some details about you so we can sign you up and get you started</string>
+    <string name="txt_sign_up_header">Enter your details</string>
     <string name="txt_have_account">Already have an account</string>
     <string name="txt_sign_up_social">Sign up with social Media instead</string>
     <string name="txt_sign_up_facebook">Facebook</string>

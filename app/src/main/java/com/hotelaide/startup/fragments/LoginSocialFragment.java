@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -27,7 +28,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -56,25 +56,18 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
-public class StartUpLoginFragment extends Fragment {
+public class LoginSocialFragment extends Fragment {
 
     private View rootview;
-
-    private MaterialButton
-            btn_confirm;
-
-    private EditText
-            et_user_pass,
-            et_user_email;
 
     private Helpers helpers;
 
     private final String
             TAG_LOG = "FRAGMENT LOGIN";
 
-    private MaterialButton
-            btn_login_facebook,
-            btn_login_google;
+    private TextView
+            btn_facebook,
+            btn_google;
 
     // FACEBOOK
     private CallbackManager callback_manager;
@@ -84,7 +77,7 @@ public class StartUpLoginFragment extends Fragment {
     private GoogleSignInClient google_sign_in_client;
     private int GOOGLE_REQUEST_CODE = 777;
 
-    public StartUpLoginFragment() {
+    public LoginSocialFragment() {
 
     }
 
@@ -93,18 +86,14 @@ public class StartUpLoginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootview == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.frag_startup_login, container, false);
+                rootview = inflater.inflate(R.layout.frag_startup_login_social, container, false);
                 helpers = new Helpers(getActivity());
 
                 findAllViews();
 
-                setListeners();
-
                 initializeFacebook(getActivity());
 
                 initializeGoogle(getActivity());
-
-                dropDownKeyboard(et_user_email);
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -130,30 +119,9 @@ public class StartUpLoginFragment extends Fragment {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        btn_confirm = rootview.findViewById(R.id.btn_confirm);
-
-        et_user_email = rootview.findViewById(R.id.et_user_email);
-        et_user_pass = rootview.findViewById(R.id.et_user_password);
-
         // SOCIAL MEDIA LOGIN ====================================================
-        btn_login_google = rootview.findViewById(R.id.btn_login_google);
-        btn_login_facebook = rootview.findViewById(R.id.btn_login_facebook);
-
-    }
-
-    private void setListeners() {
-        btn_confirm.setText(getString(R.string.nav_login));
-
-        btn_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (helpers.validateEmptyEditText(et_user_pass)
-                        && helpers.validateEmptyEditText(et_user_email)
-                        && helpers.validateEmail(et_user_email)) {
-                    asyncLogin(et_user_email.getText().toString(), et_user_pass.getText().toString(), "", "");
-                }
-            }
-        });
+        btn_google = rootview.findViewById(R.id.btn_google);
+        btn_facebook = rootview.findViewById(R.id.btn_facebook);
 
     }
 
@@ -192,11 +160,11 @@ public class StartUpLoginFragment extends Fragment {
             }
         });
 
-        btn_login_facebook.setOnClickListener(new View.OnClickListener() {
+        btn_facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getActivity() != null) {
-                    LoginManager.getInstance().logInWithReadPermissions(StartUpLoginFragment.this, Arrays.asList("email", "public_profile"));
+                    LoginManager.getInstance().logInWithReadPermissions(LoginSocialFragment.this, Arrays.asList("email", "public_profile"));
                 }
             }
         });
@@ -273,7 +241,7 @@ public class StartUpLoginFragment extends Fragment {
                 .requestEmail()
                 .build();
         google_sign_in_client = GoogleSignIn.getClient(activity, gso);
-        btn_login_google.setOnClickListener(new View.OnClickListener() {
+        btn_google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent signInIntent = google_sign_in_client.getSignInIntent();

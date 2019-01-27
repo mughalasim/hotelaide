@@ -31,21 +31,21 @@
           }
         },
         {
-          "client_id": "962090500242-ivvupd2r3qid37u7refqraviehqenc5f.apps.googleusercontent.com",
+          "client_id": "962090500242-1q341pin8vt1uvcsampiin6ft04gavpk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.hotelaide",
-            "certificate_hash": "bf8a5b81b8f09c974c886fceee96e95752cd4345"
+            "certificate_hash": "548a983689e1e99d38a8b448a90aac2b9ce16101"
           }
         },
         {
-          "client_id": "962090500242-ictc6foiouqcq3g010mbschfi11vr8f4.apps.googleusercontent.com",
+          "client_id": "962090500242-qbri0onttp6lo14niipll1qna6s380q6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB-Wt5MbeXFpneRHJOzVc14WAJs6NWQjsk"
+          "current_key": "AIzaSyCdbdPBOcxlROP5Jr7PNxb1mwF8I5b6MSc"
         }
       ],
       "services": {
@@ -56,7 +56,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "962090500242-ictc6foiouqcq3g010mbschfi11vr8f4.apps.googleusercontent.com",
+              "client_id": "962090500242-qbri0onttp6lo14niipll1qna6s380q6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

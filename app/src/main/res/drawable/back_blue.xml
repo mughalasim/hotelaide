@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_focused="true" android:state_pressed="true">
+        <shape>
+            <gradient android:angle="@dimen/angle_color"
+                android:centerColor="@color/colorPrimary"
+                android:endColor="@color/colorPrimary"
+                android:startColor="@color/colorPrimary" />
+            <stroke
+                android:width="@dimen/line_thickness"
+                android:color="@color/colorPrimary" />
+            <corners
+                android:radius="@dimen/radius_corner" />
+        </shape>
+    </item>
+
+
+
+    <item android:state_focused="false" android:state_pressed="true">
+        <shape>
+            <gradient android:angle="@dimen/angle_color"
+                android:centerColor="@color/colorPrimary"
+                android:endColor="@color/colorPrimary"
+                android:startColor="@color/colorPrimary" />
+            <stroke
+                android:width="@dimen/line_thickness"
+                android:color="@color/colorPrimary" />
+            <corners
+                android:radius="@dimen/radius_corner" />
+        </shape>
+    </item>
+
+
+
+
+    <item android:state_focused="true" android:state_pressed="false">
+        <shape>
+            <gradient android:angle="@dimen/angle_color"
+                android:centerColor="@color/colorPrimary"
+                android:endColor="@color/colorPrimary"
+                android:startColor="@color/colorPrimary" />
+            <stroke
+                android:width="@dimen/line_thickness"
+                android:color="@color/colorPrimary" />
+            <corners
+                android:radius="@dimen/radius_corner" />
+        </shape>
+    </item>
+
+
+
+    <item android:state_focused="false" android:state_pressed="false">
+        <shape>
+            <gradient android:angle="@dimen/angle_color"
+                android:centerColor="@color/colorPrimary"
+                android:endColor="@color/colorPrimary"
+                android:startColor="@color/colorPrimary" />
+            <stroke
+                android:width="@dimen/line_thickness"
+                android:color="@color/colorPrimary" />
+            <corners
+                android:radius="@dimen/radius_corner" />
+        </shape>
+    </item>
+
+
+
+    <item android:state_enabled="true">
+        <shape>
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+
+</selector>

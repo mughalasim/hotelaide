@@ -13,17 +13,20 @@
         android:layout_marginBottom="@dimen/padding_large"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/main_logo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/img_size_large"
+            android:layout_marginTop="@dimen/padding_large"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_launcher" />
+
         <TextView
-            style="@style/Text_Title"
-            android:text="@string/txt_locked_out" />
-
-
-        <include layout="@layout/horizontal_line" />
-
-        <TextView
-            style="@style/Text_Normal"
-            android:layout_gravity="center"
-            android:text="@string/txt_locked_out_desc" />
+            android:id="@+id/panel_title"
+            style="@style/Text_Header"
+            android:text="@string/nav_reset_password"
+            android:textAllCaps="false" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Material_Edit_Text_Layout">
@@ -36,16 +39,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <include layout="@layout/layout_button" />
-
-        <include layout="@layout/horizontal_line"/>
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Material_Text"
-            android:layout_marginTop="@dimen/padding_large"
-            android:onClick="openTermsAndConditions"
-            android:text="@string/txt_terms_conditions" />
 
     </LinearLayout>
 

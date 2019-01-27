@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class StartUpForgotPassFragment extends Fragment {
+public class ResetPasswordFragment extends Fragment {
 
     private View rootview;
 
@@ -36,7 +36,7 @@ public class StartUpForgotPassFragment extends Fragment {
 
     private final String TAG_LOG = "FRAGMENT LOGIN";
 
-    public StartUpForgotPassFragment() {
+    public ResetPasswordFragment() {
 
     }
 

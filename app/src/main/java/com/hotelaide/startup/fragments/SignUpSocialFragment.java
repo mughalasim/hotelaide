@@ -1,8 +1,6 @@
 package com.hotelaide.startup.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +8,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -41,7 +36,6 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonObject;
-import com.hbb20.CountryCodePicker;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.LoginInterface;
@@ -49,14 +43,11 @@ import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.models.UserModel;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -67,40 +58,15 @@ import retrofit2.Response;
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 
-public class StartUpSignUpFragment extends Fragment {
+public class SignUpSocialFragment extends Fragment {
     private View rootview;
     private Helpers helpers;
 
     private TextView
-            txt_user_dob;
+            btn_facebook,
+            btn_google;
 
-    private MaterialButton
-            btn_confirm;
-
-    private SlidingUpPanelLayout sliding_panel;
-
-    private CountryCodePicker ccp_user_country_code;
-
-    private MaterialButton
-            btn_open_social_media,
-            btn_login_facebook,
-            btn_login_google;
-
-    private EditText
-            et_user_first_name,
-            et_user_last_name,
-            et_user_email,
-            et_user_phone,
-            et_user_pass,
-            et_user_pass_confirm;
-
-    private Spinner
-            spinner_user_gender;
-
-    private final String
-            TAG_LOG = "FRAGMENT SIGN UP";
-    private final String LOGIN_REGISTER = "REGISTER";
-    private final String LOGIN_FACEBOOK = "FACEBOOK";
+    private final String TAG_LOG = "FRAGMENT SIGN UP SOCIAL";
 
     // FACEBOOK
     private CallbackManager callback_manager;
@@ -109,9 +75,9 @@ public class StartUpSignUpFragment extends Fragment {
 
     // GOOGLE
     private GoogleSignInClient google_sign_in_client;
-    private int GOOGLE_REQUEST_CODE = 999;
+    private int GOOGLE_REQUEST_CODE = 969;
 
-    public StartUpSignUpFragment() {
+    public SignUpSocialFragment() {
 
     }
 
@@ -120,13 +86,11 @@ public class StartUpSignUpFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootview == null && getActivity() != null) {
             try {
-                rootview = inflater.inflate(R.layout.frag_startup_signup, container, false);
+                rootview = inflater.inflate(R.layout.frag_startup_signup_social, container, false);
 
                 helpers = new Helpers(getActivity());
 
                 findAllViews();
-
-                setListeners();
 
                 initializeFacebook(getActivity());
 
@@ -157,183 +121,51 @@ public class StartUpSignUpFragment extends Fragment {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        btn_confirm = rootview.findViewById(R.id.btn_confirm);
-
-        btn_confirm.setVisibility(View.VISIBLE);
-
-        btn_confirm.setText(getString(R.string.nav_sign_up));
-
-        et_user_first_name = rootview.findViewById(R.id.et_user_first_name);
-        et_user_last_name = rootview.findViewById(R.id.et_user_last_name);
-        et_user_email = rootview.findViewById(R.id.et_user_email);
-
-        et_user_phone = rootview.findViewById(R.id.et_user_phone);
-        ccp_user_country_code = rootview.findViewById(R.id.ccp_user_country_code);
-        ccp_user_country_code.registerCarrierNumberEditText(et_user_phone);
-
-        et_user_pass = rootview.findViewById(R.id.et_user_pass);
-        et_user_pass_confirm = rootview.findViewById(R.id.et_user_pass_confirm);
-        txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
-        spinner_user_gender = rootview.findViewById(R.id.spinner_user_gender);
-        if (getActivity() != null)
-            spinner_user_gender.setAdapter(new ArrayAdapter<>(
-                    getActivity(),
-                    R.layout.list_item_spinner,
-                    getResources().getStringArray(R.array.select_gender)
-            ));
-
         // SOCIAL MEDIA LOGIN ====================================================
-        sliding_panel = rootview.findViewById(R.id.sliding_panel);
-        btn_open_social_media = rootview.findViewById(R.id.btn_open_social_media);
-        btn_login_google = rootview.findViewById(R.id.btn_login_google);
-        btn_login_facebook = rootview.findViewById(R.id.btn_login_facebook);
+        btn_google = rootview.findViewById(R.id.btn_google);
+        btn_facebook = rootview.findViewById(R.id.btn_facebook);
 
-        setDates();
 
     }
 
-    private void setListeners() {
+    private void showDialogSetAccountPassword(final Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setContentView(R.layout.dialog_account_password);
+        dialog.setCancelable(false);
+        final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
+        final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        final EditText et_user_pass = dialog.findViewById(R.id.et_user_pass);
+        final EditText et_user_pass_confirm = dialog.findViewById(R.id.et_user_pass_confirm);
+
+        btn_cancel.setVisibility(View.VISIBLE);
+        btn_cancel.setText(getString(R.string.txt_cancel));
+        btn_confirm.setText(getString(R.string.nav_sign_up));
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (helpers.validateEmptyEditText(et_user_first_name) &&
-                        helpers.validateEmptyEditText(et_user_last_name) &&
-                        helpers.validateEmail(et_user_email) &&
-                        helpers.validateEmptyEditText(et_user_pass) &&
-                        helpers.validateEmptyEditText(et_user_pass_confirm) &&
-                        helpers.validateEmptyTextView(txt_user_dob, "Enter your Date of Birth") &&
-                        helpers.validateEmptyEditText(et_user_phone)) {
+                if (helpers.validateEmptyEditText(et_user_pass) && helpers.validateEmptyEditText(et_user_pass_confirm)) {
                     if (!et_user_pass.getText().toString().equals(et_user_pass_confirm.getText().toString())) {
                         helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
                     } else if (et_user_pass.getText().toString().length() < 8) {
                         helpers.ToastMessage(getContext(), "Password too short");
-                    } else if (!ccp_user_country_code.isValidFullNumber()) {
-                        helpers.ToastMessage(getContext(), "Phone number is invalid");
                     } else {
-                        showDialogSetAccountPassword(getActivity(), LOGIN_REGISTER);
+                        global_user_model.password = et_user_pass.getText().toString();
+                        logRegModel(global_user_model);
+                        asyncRegister(global_user_model);
                     }
                 }
             }
         });
 
-        btn_open_social_media.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                dialog.cancel();
             }
         });
 
-    }
-
-    private void setDates() {
-
-        final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int selectedYear,
-                                  int selectedMonth, int selectedDay) {
-                String year = String.valueOf(selectedYear);
-                String month, day;
-
-                if (selectedMonth < 9) {
-                    month = "0" + String.valueOf(selectedMonth + 1);
-                } else {
-                    month = String.valueOf(selectedMonth + 1);
-                }
-
-                if (selectedDay < 10) {
-                    day = "0" + String.valueOf(selectedDay);
-                } else {
-                    day = String.valueOf(selectedDay);
-                }
-
-                txt_user_dob.setText(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
-            }
-        };
-
-
-        txt_user_dob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getActivity() != null) {
-                    Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-                    DatePickerDialog datePicker = new DatePickerDialog(
-                            getActivity(), AlertDialog.THEME_HOLO_LIGHT,
-                            datePickerListener,
-                            cal.get(Calendar.YEAR),
-                            cal.get(Calendar.MONTH),
-                            cal.get(Calendar.DAY_OF_MONTH));
-                    datePicker.setCancelable(false);
-                    datePicker.setTitle("Set Date Of Birth");
-                    datePicker.show();
-                    datePicker.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
-                    datePicker.show();
-                }
-            }
-        });
-
-    }
-
-    private void showDialogSetAccountPassword(final Activity activity, final String loginType) {
-        if (loginType.equals(LOGIN_REGISTER)) {
-            setToModelFromFields();
-        } else {
-            final Dialog dialog = new Dialog(activity);
-            dialog.setContentView(R.layout.dialog_account_password);
-            dialog.setCancelable(false);
-            final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
-            final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
-            final EditText et_user_pass = dialog.findViewById(R.id.et_user_pass);
-            final EditText et_user_pass_confirm = dialog.findViewById(R.id.et_user_pass_confirm);
-
-            btn_cancel.setVisibility(View.VISIBLE);
-            btn_cancel.setText(getString(R.string.txt_cancel));
-            btn_confirm.setText(getString(R.string.nav_sign_up));
-
-            btn_confirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (helpers.validateEmptyEditText(et_user_pass) && helpers.validateEmptyEditText(et_user_pass_confirm)) {
-                        if (!et_user_pass.getText().toString().equals(et_user_pass_confirm.getText().toString())) {
-                            helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
-                        } else if (et_user_pass.getText().toString().length() < 8) {
-                            helpers.ToastMessage(getContext(), "Password too short");
-                        } else {
-                            global_user_model.password = et_user_pass.getText().toString();
-                            logRegModel(global_user_model);
-                            asyncRegister(global_user_model);
-                        }
-                    }
-                }
-            });
-
-            btn_cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.cancel();
-                }
-            });
-
-            dialog.show();
-        }
-
-    }
-
-    private void setToModelFromFields() {
-        UserModel userModel = new UserModel();
-        userModel.first_name = et_user_first_name.getText().toString();
-        userModel.last_name = et_user_last_name.getText().toString();
-        userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
-        userModel.phone = Integer.parseInt(et_user_phone.getText().toString());
-        userModel.email = et_user_email.getText().toString();
-        userModel.password = et_user_pass.getText().toString();
-        userModel.dob = txt_user_dob.getText().toString();
-        userModel.fb_id = "";
-        userModel.google_id = "";
-        userModel.gender = spinner_user_gender.getSelectedItemPosition();
-
-        logRegModel(userModel);
-
-        asyncRegister(userModel);
+        dialog.show();
     }
 
     private void logRegModel(UserModel userModel) {
@@ -363,7 +195,6 @@ public class StartUpSignUpFragment extends Fragment {
         LoginManager.getInstance().registerCallback(callback_manager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 handleFacebookAccessToken(activity, loginResult.getAccessToken());
             }
 
@@ -378,7 +209,7 @@ public class StartUpSignUpFragment extends Fragment {
             }
         });
 
-        btn_login_facebook.setOnClickListener(new View.OnClickListener() {
+        btn_facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getActivity() != null) {
@@ -417,7 +248,7 @@ public class StartUpSignUpFragment extends Fragment {
 
                                         global_user_model.fb_id = profile.getId();
 
-                                        global_user_model.gender = spinner_user_gender.getSelectedItemPosition();
+                                        global_user_model.gender = 0;
 
                                         if (user.getDisplayName() != null) {
                                             if (user.getDisplayName().contains(" ")) {
@@ -453,7 +284,7 @@ public class StartUpSignUpFragment extends Fragment {
 
                                         logRegModel(global_user_model);
 
-                                        showDialogSetAccountPassword(getActivity(), LOGIN_FACEBOOK);
+                                        showDialogSetAccountPassword(getActivity());
 
                                         signOutFaceBook();
 
@@ -498,7 +329,7 @@ public class StartUpSignUpFragment extends Fragment {
                 .requestEmail()
                 .build();
         google_sign_in_client = GoogleSignIn.getClient(activity, gso);
-        btn_login_google.setOnClickListener(new View.OnClickListener() {
+        btn_google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent signInIntent = google_sign_in_client.getSignInIntent();
@@ -516,9 +347,8 @@ public class StartUpSignUpFragment extends Fragment {
             global_user_model.last_name = account.getFamilyName();
             if (account.getPhotoUrl() != null)
                 global_user_model.img_avatar = account.getPhotoUrl().toString();
-            global_user_model.gender = spinner_user_gender.getSelectedItemPosition();
-            String LOGIN_GOOGLE = "GOOGLE";
-            showDialogSetAccountPassword(getActivity(), LOGIN_GOOGLE);
+            global_user_model.gender = 0;
+            showDialogSetAccountPassword(getActivity());
             signOutGoogle();
 
         } catch (ApiException e) {
