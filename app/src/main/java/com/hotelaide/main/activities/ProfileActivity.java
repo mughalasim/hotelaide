@@ -331,7 +331,7 @@ public class ProfileActivity extends ParentActivity {
 
         // COUNTRY
         String user_phone = String.valueOf(SharedPrefs.getInt(USER_COUNTRY_CODE)) + " "
-                + String.valueOf(SharedPrefs.getInt(USER_PHONE));
+                + SharedPrefs.getString(USER_PHONE);
 
         // PHONE
         txt_user_phone.setText(user_phone);
@@ -341,15 +341,15 @@ public class ProfileActivity extends ParentActivity {
             txt_user_availability.setText("Available");
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.colorPrimary));
 
-            rl_header.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.back_main));
-            swipe_refresh.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.back_main));
+            rl_header.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.white));
+            swipe_refresh.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.white));
 
         } else {
             txt_user_availability.setText("Hidden");
             txt_user_availability.setTextColor(ContextCompat.getColor(ProfileActivity.this, R.color.red));
 
-            rl_header.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.grey));
-            swipe_refresh.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.grey));
+            rl_header.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.light_grey));
+            swipe_refresh.setBackgroundColor(ContextCompat.getColor(ProfileActivity.this, R.color.light_grey));
 
         }
 

@@ -8,6 +8,7 @@ import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -92,7 +93,7 @@ public interface UserInterface {
             @Field("last_name") String last_name,
             @Field("about_me") String about_me,
             @Field("country_code") int country_code,
-            @Field("phone_number") int phone_number,
+            @Field("phone_number") String phone_number,
             @Field("email") String email,
             @Field("geo_lat") double geo_lat,
             @Field("geo_lng") double geo_lng,

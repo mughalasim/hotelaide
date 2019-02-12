@@ -78,7 +78,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Material_Edit_Text_Layout"
-                app:hintEnabled="false"
                 android:layout_marginTop="0dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -87,17 +86,23 @@
                     android:digits="0123456789"
                     android:hint="@string/et_hint_phone"
                     android:inputType="phone"
-                    android:maxLength="10"
+                    android:maxLength="@integer/max_phone_number"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_user_dob"
-            style="@style/Edit_Text"
-            android:text="@string/et_hint_dob" />
+        <com.google.android.material.textfield.TextInputLayout style="@style/Material_Edit_Text_Layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_dob"
+                style="@style/Material_Edit_Text"
+                android:hint="@string/et_hint_dob"
+                android:focusable="false"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout style="@style/Material_Edit_Text_Layout">
 

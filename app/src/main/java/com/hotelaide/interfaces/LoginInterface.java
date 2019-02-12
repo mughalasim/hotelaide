@@ -86,7 +86,7 @@ public interface LoginInterface {
             @Field("first_name") String first_name,
             @Field("last_name") String last_name,
             @Field("country_code") int country_code,
-            @Field("phone_number") int phone_number,
+            @Field("phone_number") String phone_number,
             @Field("email") String email,
             @Field("password") String password,
             @Field("password_confirmation") String password_confirmation,

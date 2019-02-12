@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textCapSentences|textMultiLine"
                 android:isScrollContainer="true"
-                android:maxLength="2000"
+                android:maxLength="@integer/max_profile_info"
                 android:maxLines="150"
                 android:minHeight="@dimen/height_edit_text" />
 

@@ -2,5 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/view_pager"
     android:layout_width="match_parent"
-    android:padding="@dimen/padding_large"
+    android:paddingStart="@dimen/padding_large"
+    android:paddingEnd="@dimen/padding_large"
+    android:paddingTop="@dimen/padding_tiny"
+    android:paddingBottom="@dimen/padding_tiny"
     android:layout_height="match_parent" />

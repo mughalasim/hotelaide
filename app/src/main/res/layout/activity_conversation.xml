@@ -80,7 +80,7 @@
                     android:paddingTop="@dimen/padding_tiny"
                     android:inputType="textCapSentences|textMultiLine"
                     android:maxHeight="200sp"
-                    android:maxLength="500"
+                    android:maxLength="@integer/max_conversation"
                     android:maxLines="10"
                     android:minHeight="@dimen/height_edit_text" />
 

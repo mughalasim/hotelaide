@@ -1,8 +1,6 @@
 package com.hotelaide.utils;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -44,50 +42,39 @@ import static com.hotelaide.utils.StaticVariables.USER_PROFILE_COMPLETION;
 import static com.hotelaide.utils.StaticVariables.USER_URL;
 
 public class SharedPrefs {
-    @SuppressLint("StaticFieldLeak")
-    private static final Context context = MyApplication.getAppContext();
     private static final String SHARED_PREFS = "SHARED_PREFS";
     private static final int MODE = Activity.MODE_PRIVATE;
 
+    private static SharedPreferences prefs = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
+    private static SharedPreferences.Editor editor = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE).edit();
 
     // GENERIC GET AND SET INTEGER VARIABLES =======================================================
     public static int getInt(String variableName) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
-        return mySharedPreferences.getInt(variableName, 0);
+        return prefs.getInt(variableName, 0);
     }
 
     public static void setInt(String variableName, int variableValue) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putInt(variableName, variableValue);
-        editor.apply();
+        editor.putInt(variableName, variableValue).apply();
     }
 
 
     // GENERIC GET AND SET STRING VARIABLES ========================================================
     public static String getString(String variableName) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
-        return mySharedPreferences.getString(variableName, "");
+        return prefs.getString(variableName, "");
     }
 
     public static void setString(String variableName, String variableValue) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString(variableName, variableValue);
-        editor.apply();
+        editor.putString(variableName, variableValue).apply();
     }
 
 
     // GENERIC GET AND SET BOOLEAN VARIABLES =======================================================
     @NonNull
     public static Boolean getBool(String variableName) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
-        return mySharedPreferences.getBoolean(variableName, false);
+        return prefs.getBoolean(variableName, false);
     }
 
     public static void setBool(String variableName, Boolean variableValue) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
         editor.putBoolean(variableName, variableValue);
         editor.apply();
     }
@@ -95,22 +82,22 @@ public class SharedPrefs {
 
     // GENERIC GET AND SET DOUBLE ==================================================================
     public static Double getDouble(String variableName) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
-        return Double.parseDouble(mySharedPreferences.getString(variableName, "0"));
+        String value = prefs.getString(variableName, "0.0");
+        if (value != null) {
+            return Double.parseDouble(value);
+        } else {
+            return 0.0;
+        }
     }
 
     public static void setDouble(String variableName, Double longitude) {
-        SharedPreferences mySharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE);
-        SharedPreferences.Editor editor = mySharedPreferences.edit();
-        editor.putString(variableName, String.valueOf(longitude));
-        editor.apply();
+        editor.putString(variableName, String.valueOf(longitude)).apply();
     }
 
 
     // DELETE FUNCTION =============================================================================
     public static void deleteAllSharedPrefs() {
-        SharedPreferences settings = context.getSharedPreferences(SHARED_PREFS, MODE);
-        settings.edit().clear().apply();
+        editor.clear().apply();
     }
 
 
@@ -127,8 +114,8 @@ public class SharedPrefs {
                 setString(USER_IMG_AVATAR, user.getString("avatar"));
                 setString(USER_IMG_BANNER, user.getString("banner"));
                 setString(PROFILE_URL, user.getString("profile_url"));
+                setString(USER_PHONE, user.getString("phone_number"));
                 setInt(USER_COUNTRY_CODE, user.getInt("country_code"));
-                setInt(USER_PHONE, user.getInt("phone_number"));
                 setString(USER_DOB, user.getString("dob"));
                 setString(USER_FB_ID, user.getString("facebook_id"));
                 setString(USER_GOOGLE_ID, user.getString("google_id"));
@@ -184,7 +171,7 @@ public class SharedPrefs {
                     }
                 }
 
-                context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
+                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
 
                 logUserModel();
 
@@ -194,11 +181,11 @@ public class SharedPrefs {
             }
         } catch (JSONException e) {
             Helpers.logThis(SHARED_PREFS, e.toString());
-            context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+            MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             return false;
         } catch (Exception e) {
             Helpers.logThis(SHARED_PREFS, e.toString());
-            context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+            MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             return false;
         }
     }
@@ -216,7 +203,7 @@ public class SharedPrefs {
         userModel.img_banner = getString(USER_IMG_BANNER);
         userModel.country_code = getInt(USER_COUNTRY_CODE);
         userModel.county = getInt(USER_COUNTY);
-        userModel.phone = getInt(USER_PHONE);
+        userModel.phone = getString(USER_PHONE);
         userModel.dob = getString(USER_DOB);
         userModel.fb_id = getString(USER_FB_ID);
         userModel.google_id = getString(USER_GOOGLE_ID);
@@ -240,7 +227,7 @@ public class SharedPrefs {
                         + "\n BANNER: " + getString(USER_IMG_BANNER)
                         + "\n COUNTRY CODE: " + getInt(USER_COUNTRY_CODE)
                         + "\n COUNTY: " + getInt(USER_COUNTY)
-                        + "\n PHONE: " + getInt(USER_PHONE)
+                        + "\n PHONE: " + getString(USER_PHONE)
                         + "\n DOB: " + getString(USER_DOB)
                         + "\n FB_ID: " + getString(USER_FB_ID)
                         + "\n GOOGLE_ID: " + getString(USER_GOOGLE_ID)

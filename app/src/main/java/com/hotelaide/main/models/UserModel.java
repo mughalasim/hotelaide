@@ -9,10 +9,10 @@ public class UserModel {
     public String   email = "";
     public String   img_avatar = "";
     public String   img_banner = "";
+    public String   phone = "";
 
     public int      country_code;
     public int      county;
-    public int      phone;
 
     public String   dob = "";
     public String   fb_id = "";

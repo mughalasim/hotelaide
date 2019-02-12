@@ -17,7 +17,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
@@ -32,6 +31,7 @@ import com.hotelaide.utils.SharedPrefs;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -66,7 +66,9 @@ public class ProfileUpdateFragment extends Fragment {
             et_user_first_name,
             et_user_last_name,
             et_user_about,
-            et_user_phone;
+            et_user_phone,
+            et_user_email,
+            et_user_dob;
 
     private Switch
             switch_availability;
@@ -74,11 +76,7 @@ public class ProfileUpdateFragment extends Fragment {
     private Spinner
             spinner_user_gender;
 
-    private TextView
-            txt_user_email,
-            txt_user_dob;
-
-    FloatingActionButton btn_update;
+    private FloatingActionButton btn_update;
 
     private CountryCodePicker ccp_user_country_code;
 
@@ -141,8 +139,8 @@ public class ProfileUpdateFragment extends Fragment {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        txt_user_email = root_view.findViewById(R.id.txt_user_email);
-        txt_user_dob = root_view.findViewById(R.id.txt_user_dob);
+        et_user_email = root_view.findViewById(R.id.txt_user_email);
+        et_user_dob = root_view.findViewById(R.id.et_user_dob);
 
         btn_update = root_view.findViewById(R.id.btn_update);
 
@@ -153,11 +151,10 @@ public class ProfileUpdateFragment extends Fragment {
         et_user_last_name = root_view.findViewById(R.id.et_user_last_name);
         et_user_about = root_view.findViewById(R.id.et_user_about);
         spinner_user_gender = root_view.findViewById(R.id.spinner_user_gender);
-        txt_user_email = root_view.findViewById(R.id.txt_user_email);
+        et_user_email = root_view.findViewById(R.id.et_user_email);
         et_user_phone = root_view.findViewById(R.id.et_user_phone);
         ccp_user_country_code = root_view.findViewById(R.id.ccp_user_country_code);
         ccp_user_country_code.registerCarrierNumberEditText(et_user_phone);
-        txt_user_dob = root_view.findViewById(R.id.txt_user_dob);
 
         if (getActivity() != null)
             spinner_user_gender.setAdapter(new ArrayAdapter<>(
@@ -174,15 +171,15 @@ public class ProfileUpdateFragment extends Fragment {
         et_user_first_name.setText(SharedPrefs.getString(USER_F_NAME));
         et_user_last_name.setText(SharedPrefs.getString(USER_L_NAME));
         et_user_about.setText(SharedPrefs.getString(USER_ABOUT));
-        txt_user_email.setText(SharedPrefs.getString(USER_EMAIL));
-        et_user_phone.setText(String.valueOf(SharedPrefs.getInt(USER_PHONE)));
+        et_user_email.setText(SharedPrefs.getString(USER_EMAIL));
+        et_user_phone.setText(SharedPrefs.getString(USER_PHONE));
         ccp_user_country_code.setCountryForPhoneCode(SharedPrefs.getInt(USER_COUNTRY_CODE));
         // DOB
         if (SharedPrefs.getString(USER_DOB).equals("null")) {
-            txt_user_dob.setText(getString(R.string.txt_not_set));
+            et_user_dob.setText(getString(R.string.txt_not_set));
         } else {
-            txt_user_dob.setText(helpers.formatDate(SharedPrefs.getString(USER_DOB)));
-            txt_user_dob.setTag(SharedPrefs.getString(USER_DOB));
+            et_user_dob.setText(helpers.formatDate(SharedPrefs.getString(USER_DOB)));
+            et_user_dob.setTag(SharedPrefs.getString(USER_DOB));
         }
         // GENDER
         spinner_user_gender.setSelection(SharedPrefs.getInt(USER_GENDER));
@@ -209,16 +206,14 @@ public class ProfileUpdateFragment extends Fragment {
                 userModel.first_name = fetchFromEditText(et_user_first_name);
                 userModel.last_name = fetchFromEditText(et_user_last_name);
                 userModel.about = fetchFromEditText(et_user_about);
-                userModel.email = txt_user_email.getText().toString();
+                userModel.email = et_user_email.getText().toString();
                 userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
                 Helpers.logThis(TAG_LOG, "GENDER POSITION: " + spinner_user_gender.getSelectedItemPosition());
                 userModel.gender = spinner_user_gender.getSelectedItemPosition();
+                userModel.phone = fetchFromEditText(et_user_phone);
 
-                if (!fetchFromEditText(et_user_phone).equals(""))
-                    userModel.phone = Integer.parseInt(fetchFromEditText(et_user_phone));
-
-                if (!txt_user_dob.getText().toString().equals(getString(R.string.txt_not_set))) {
-                    userModel.dob = txt_user_dob.getTag().toString();
+                if (!et_user_dob.getText().toString().equals(getString(R.string.txt_not_set))) {
+                    userModel.dob = et_user_dob.getTag().toString();
                 }
 
                 userModel.availability = SharedPrefs.getInt(USER_AVAILABILITY);
@@ -257,13 +252,13 @@ public class ProfileUpdateFragment extends Fragment {
                 }
 
                 String date = helpers.formatDate(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
-                txt_user_dob.setText(date);
-                txt_user_dob.setTag(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
+                et_user_dob.setText(date);
+                et_user_dob.setTag(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
             }
         };
 
 
-        txt_user_dob.setOnClickListener(new View.OnClickListener() {
+        et_user_dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getActivity() != null) {

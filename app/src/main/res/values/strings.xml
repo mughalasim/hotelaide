@@ -61,7 +61,7 @@
     <string name="et_hint_phone">Phone Number</string>
     <string name="et_hint_postcode">Postal Code</string>
     <string name="et_file_name">File name</string>
-    <string name="et_hint_dob">Date of birth:&#160;</string>
+    <string name="et_hint_dob">Date of birth&#160;</string>
 
 
     <!--ALL DRAWER TEXTS ========================================================================-->
@@ -118,7 +118,7 @@
 
     <!--ARRAY GENDER ============================================================================-->
     <string-array name="select_gender">
-        <item>Not set</item>
+        <item>Select Gender</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
@@ -227,5 +227,7 @@
     <string name="txt_notify_push_desc">Notify me when someone has sent me a new message</string>
     <string name="txt_zero">0</string>
     <string name="txt_gallery">Gallery</string>
+    <string name="txt_not_setup1">You cannot apply for this role just yet, It seems you have not setup your&#160;</string>
+    <string name="txt_not_setup2">, Set this now?</string>
 
 </resources>

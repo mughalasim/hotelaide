@@ -91,7 +91,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
-import static android.content.pm.PackageManager.GET_SIGNATURES;
+//import static android.content.pm.PackageManager.GET_SIGNATURES;
 import static android.content.pm.PackageManager.NameNotFoundException;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
@@ -214,31 +214,31 @@ public class Helpers {
         }
     }
 
-    @SuppressLint("PackageManagerGetSignatures")
-    public void getShaCertificate() {
-        PackageInfo info;
-        try {
-
-            info = context.getPackageManager().getPackageInfo(
-                    "com.hotelaide", GET_SIGNATURES);
-
-            for (android.content.pm.Signature signature : info.signatures) {
-                MessageDigest md;
-                md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String something = new String(Base64.encode(md.digest(), 0));
-                Log.e("Hash key", something);
-                System.out.println("Hash key" + something);
-            }
-
-        } catch (NameNotFoundException e) {
-            logThis(TAG_LOG, "name not found " + e.toString());
-        } catch (NoSuchAlgorithmException e) {
-            logThis(TAG_LOG, "no such algorithm " + e.toString());
-        } catch (Exception e) {
-            logThis(TAG_LOG, "exception " + e.toString());
-        }
-    }
+//    @SuppressLint("PackageManagerGetSignatures")
+//    public void getShaCertificate() {
+//        PackageInfo info;
+//        try {
+//
+//            info = context.getPackageManager().getPackageInfo(
+//                    "com.hotelaide", GET_SIGNATURES);
+//
+//            for (android.content.pm.Signature signature : info.signatures) {
+//                MessageDigest md;
+//                md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                String something = new String(Base64.encode(md.digest(), 0));
+//                Log.e("Hash key", something);
+//                System.out.println("Hash key" + something);
+//            }
+//
+//        } catch (NameNotFoundException e) {
+//            logThis(TAG_LOG, "name not found " + e.toString());
+//        } catch (NoSuchAlgorithmException e) {
+//            logThis(TAG_LOG, "no such algorithm " + e.toString());
+//        } catch (Exception e) {
+//            logThis(TAG_LOG, "exception " + e.toString());
+//        }
+//    }
 
 
     // DIALOGS AND DISPLAYS ========================================================================
@@ -477,7 +477,11 @@ public class Helpers {
         final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
         final TextView txt_title = dialog.findViewById(R.id.txt_title);
         txt_title.setText(R.string.txt_update);
-        txt_message.setText("You cannot apply for this role just yet, It seems you have not setup your " + message + ", Set this now?");
+        txt_message.setText(
+                dialogContext.getString(R.string.txt_not_setup1)
+                .concat(message)
+                .concat(dialogContext.getString(R.string.txt_not_setup2))
+        );
         btn_confirm.setText(R.string.txt_take_me_there);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -657,7 +661,7 @@ public class Helpers {
             dialogEditProfile(context, "full address", EXTRA_PROFILE_ADDRESS);
             return false;
 
-        } else if (SharedPrefs.getInt(USER_PHONE) == 0) {
+        } else if (SharedPrefs.getString(USER_PHONE).equals("")) {
             dialogEditProfile(context, "phone", EXTRA_PROFILE_BASIC);
             return false;
 
@@ -697,7 +701,7 @@ public class Helpers {
             ToastMessage(context, "You have not set your address");
             return false;
 
-        } else if (SharedPrefs.getInt(USER_PHONE) == 0) {
+        } else if (SharedPrefs.getString(USER_PHONE).equals("")) {
             ToastMessage(context, "You have not set your phone number");
             return false;
 
@@ -882,13 +886,13 @@ public class Helpers {
 
 
     // ANIMATIONS ==================================================================================
-    public void animateWobble(View v) {
+    private void animateWobble(View v) {
         YoYo.with(Techniques.Wobble)
                 .duration(INT_ANIMATION_TIME).delay(20)
                 .playOn(v);
     }
 
-    public void animateFlash(View v) {
+    private void animateFlash(View v) {
         YoYo.with(Techniques.Flash)
                 .duration(INT_ANIMATION_TIME)
                 .delay(0)

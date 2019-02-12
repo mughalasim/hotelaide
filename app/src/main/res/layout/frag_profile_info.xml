@@ -41,7 +41,7 @@
                 android:paddingBottom="@dimen/padding_mini"
                 android:inputType="textCapSentences|textMultiLine"
                 android:isScrollContainer="true"
-                android:maxLength="2000"
+                android:maxLength="@integer/max_profile_info"
                 android:maxLines="150"
                 android:hint="@string/et_hint_about_me"
                 android:minHeight="@dimen/height_edit_text" />
@@ -84,11 +84,17 @@
 
 
         <!--EMAIL ===============================================================================-->
-        <TextView
-            android:id="@+id/txt_user_email"
-            style="@style/Edit_Text"
-            android:gravity="start|center_vertical"
-            android:text="@string/app_name" />
+        <com.google.android.material.textfield.TextInputLayout style="@style/Material_Edit_Text_Layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_email"
+                style="@style/Material_Edit_Text"
+                android:hint="@string/et_hint_email"
+                android:clickable="false"
+                android:focusable="false"
+                android:inputType="textCapSentences" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <!--COUNTRY CODE AND PHONE ==============================================================-->
@@ -125,7 +131,7 @@
                     android:digits="0123456789"
                     android:hint="@string/et_hint_phone"
                     android:inputType="phone"
-                    android:maxLength="10"
+                    android:maxLength="@integer/max_phone_number"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -134,11 +140,15 @@
 
 
         <!--DATE OF BIRTH =======================================================================-->
-        <TextView
-            android:id="@+id/txt_user_dob"
-            style="@style/Edit_Text"
-            android:gravity="start|center_vertical"
-            android:text="@string/et_hint_dob" />
+        <com.google.android.material.textfield.TextInputLayout style="@style/Material_Edit_Text_Layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_dob"
+                style="@style/Material_Edit_Text"
+                android:hint="@string/et_hint_dob"
+                android:focusable="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <!-- UPDATE PROFILE =====================================================================-->

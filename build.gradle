@@ -14,7 +14,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0-alpha02'
+        classpath 'com.android.tools.build:gradle:3.3.1'
         classpath 'com.google.gms:google-services:4.1.0'
         classpath "com.gradle:build-scan-plugin:1.16"
     }
@@ -54,12 +54,12 @@ ext {
     SupportLibrary = '1.0.0'
 
     // Debug the App
-    debugMode = false
-    shrink = true
+    debugMode = true
+    shrink = false
 
     // App Versioning
-    versionCode = 21
-    versionName = 2.1
+    versionCode = 22
+    versionName = 2.2
 }
 
 task clean_app(type: Delete) {

@@ -21,7 +21,6 @@
 -renamesourcefileattribute SourceFile
 
 # FILE MAPPING======================================================================================
--printmapping proguard_mapping.txt
 -verbose
 
 #For retrofit issues

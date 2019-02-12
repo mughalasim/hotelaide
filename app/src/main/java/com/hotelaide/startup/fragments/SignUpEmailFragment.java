@@ -44,9 +44,6 @@ public class SignUpEmailFragment extends Fragment {
     private View rootview;
     private Helpers helpers;
 
-    private TextView
-            txt_user_dob;
-
     private MaterialButton
             btn_confirm;
 
@@ -56,6 +53,7 @@ public class SignUpEmailFragment extends Fragment {
             et_user_first_name,
             et_user_last_name,
             et_user_email,
+            et_user_dob,
             et_user_phone,
             et_user_pass,
             et_user_pass_confirm;
@@ -111,7 +109,7 @@ public class SignUpEmailFragment extends Fragment {
 
         et_user_pass = rootview.findViewById(R.id.et_user_pass);
         et_user_pass_confirm = rootview.findViewById(R.id.et_user_pass_confirm);
-        txt_user_dob = rootview.findViewById(R.id.txt_user_dob);
+        et_user_dob = rootview.findViewById(R.id.et_user_dob);
         spinner_user_gender = rootview.findViewById(R.id.spinner_user_gender);
         if (getActivity() != null)
             spinner_user_gender.setAdapter(new ArrayAdapter<>(
@@ -134,7 +132,7 @@ public class SignUpEmailFragment extends Fragment {
                         helpers.validateEmail(et_user_email) &&
                         helpers.validateEmptyEditText(et_user_pass) &&
                         helpers.validateEmptyEditText(et_user_pass_confirm) &&
-                        helpers.validateEmptyTextView(txt_user_dob, "Enter your Date of Birth") &&
+                        helpers.validateEmptyTextView(et_user_dob, "Enter your Date of Birth") &&
                         helpers.validateEmptyEditText(et_user_phone)) {
                     if (!et_user_pass.getText().toString().equals(et_user_pass_confirm.getText().toString())) {
                         helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
@@ -171,12 +169,12 @@ public class SignUpEmailFragment extends Fragment {
                     day = String.valueOf(selectedDay);
                 }
 
-                txt_user_dob.setText(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
+                et_user_dob.setText(day.concat(getString(R.string.txt_date_separator)).concat(month).concat(getString(R.string.txt_date_separator)).concat(year));
             }
         };
 
 
-        txt_user_dob.setOnClickListener(new View.OnClickListener() {
+        et_user_dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getActivity() != null) {
@@ -203,10 +201,10 @@ public class SignUpEmailFragment extends Fragment {
         userModel.first_name = et_user_first_name.getText().toString();
         userModel.last_name = et_user_last_name.getText().toString();
         userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
-        userModel.phone = Integer.parseInt(et_user_phone.getText().toString());
+        userModel.phone = et_user_phone.getText().toString();
         userModel.email = et_user_email.getText().toString();
         userModel.password = et_user_pass.getText().toString();
-        userModel.dob = txt_user_dob.getText().toString();
+        userModel.dob = et_user_dob.getText().toString();
         userModel.fb_id = "";
         userModel.google_id = "";
         userModel.gender = spinner_user_gender.getSelectedItemPosition();
