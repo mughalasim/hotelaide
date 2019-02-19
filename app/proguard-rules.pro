@@ -59,7 +59,7 @@
 -dontwarn com.google.android.gms.**
 
 # IGNORE ALL WARNING ===============================================================================
-#-ignorewarnings
+-ignorewarnings
 
 # YOYO ANIMATION ===================================================================================
 -keep class com.daimajia.* { *; }

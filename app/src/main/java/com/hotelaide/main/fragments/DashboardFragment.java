@@ -47,8 +47,7 @@ public class DashboardFragment extends Fragment {
             txt_interviews,
             txt_progress,
             txt_unread_notifications,
-            txt_unread_messages
-                    ;
+            txt_unread_messages;
 
     private SeekBar
             seek_bar_progress;
@@ -158,7 +157,7 @@ public class DashboardFragment extends Fragment {
         rl_progress = root_view.findViewById(R.id.rl_progress);
         seek_bar_progress = root_view.findViewById(R.id.seek_bar_progress);
         txt_progress = root_view.findViewById(R.id.txt_progress);
-        seek_bar_progress.setOnTouchListener(new View.OnTouchListener(){
+        seek_bar_progress.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
@@ -193,22 +192,22 @@ public class DashboardFragment extends Fragment {
         }
 
         // MESSAGES
-        int message_size = db.getAllUnreadNotifications();
-        if(message_size>0){
-            txt_unread_messages.setText(String.valueOf(message_size));
-            rl_messages.setVisibility(View.VISIBLE);
-        }else{
-            rl_messages.setVisibility(View.GONE);
-        }
+//        int message_size = db.getAllUnreadNotifications();
+//        if (message_size > 0) {
+//            txt_unread_messages.setText(String.valueOf(message_size));
+//            rl_messages.setVisibility(View.VISIBLE);
+//        } else {
+//        }
+        rl_messages.setVisibility(View.GONE);
 
 
     }
 
-    private void fetchFacebookPosts(){
+    private void fetchFacebookPosts() {
         /* make the API call */
         new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
-                "/"+ getString(R.string.FACEBOOK_APP_ID)+"/feed",
+                "/" + getString(R.string.FACEBOOK_APP_ID) + "/feed",
                 null,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {

@@ -8,23 +8,25 @@ import com.hotelaide.main.fragments.FilteredJobsFragment;
 import androidx.fragment.app.Fragment;
 
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_INVITES;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SHORTLISTED;
 
 public class MyJobsActivity extends ParentActivity {
 
     private int[] fragment_title_list = {
             R.string.nav_applied,
-            R.string.nav_saved,
-//            R.string.nav_shortlisted,
-//            R.string.nav_invites,
+//            R.string.nav_saved,
+            R.string.nav_shortlisted,
+            R.string.nav_invites,
 //            R.string.nav_interviews
     };
 
     private final String[] fragment_extras = {
             FILTER_TYPE_APPLIED,
-            FILTER_TYPE_SAVED,
-            "",
-            "",
+//            FILTER_TYPE_SAVED,
+            FILTER_TYPE_SHORTLISTED,
+            FILTER_TYPE_INVITES,
             ""
     };
 
@@ -36,9 +38,9 @@ public class MyJobsActivity extends ParentActivity {
     //-Interviews
     private Fragment[] fragment_list = {
             new FilteredJobsFragment(),
+//            new FilteredJobsFragment(),
             new FilteredJobsFragment(),
-//            new FilteredJobsFragment(),
-//            new FilteredJobsFragment(),
+            new FilteredJobsFragment(),
 //            new FilteredJobsFragment()
     };
 

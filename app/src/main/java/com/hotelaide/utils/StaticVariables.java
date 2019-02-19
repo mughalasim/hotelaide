@@ -120,6 +120,8 @@ public class StaticVariables {
     public static final String FILTERED_JOBS_BY = "filter_by";
     public static final String FILTER_TYPE_APPLIED = "APPLIED";
     public static final String FILTER_TYPE_SAVED = "SAVED";
+    public static final String FILTER_TYPE_SHORTLISTED = "SHORTLISTED";
+    public static final String FILTER_TYPE_INVITES = "INVITES";
     // DOCUMENTS TABLE =============================================================================
     public static final String DOCUMENTS_TABLE_NAME = "DOCUMENTS";
     public static final String DOCUMENTS_ID = "id";

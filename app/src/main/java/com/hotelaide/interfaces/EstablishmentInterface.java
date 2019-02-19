@@ -104,4 +104,16 @@ public interface EstablishmentInterface {
             @Path("user_id") int user_id
     );
 
+    // GET SAVED JOBS ============================================================================
+    @GET("jobs/{user_id}/shortlisted-jobs")
+    Call<JsonObject> getShortlistedJobs(
+            @Path("user_id") int user_id
+    );
+
+    // GET SAVED JOBS ============================================================================
+    @GET("jobs/{user_id}/interview-invites")
+    Call<JsonObject> getJobInvites(
+            @Path("user_id") int user_id
+    );
+
 }

@@ -32,8 +32,9 @@ import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_INVITES;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SHORTLISTED;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
-
 
 public class FilteredJobsFragment extends Fragment {
 
@@ -65,8 +66,10 @@ public class FilteredJobsFragment extends Fragment {
 
                     if (FILTER_TYPE != null && FILTER_TYPE.equals(FILTER_TYPE_APPLIED)) {
                         STR_ERROR_MESSAGE = getString(R.string.error_no_jobs_applied);
-                    } else {
-                        STR_ERROR_MESSAGE = getString(R.string.error_no_jobs_saved);
+                    } else if (FILTER_TYPE != null && FILTER_TYPE.equals(FILTER_TYPE_SHORTLISTED)) {
+                        STR_ERROR_MESSAGE = "You have not been short listed for any jobs";
+                    } else if (FILTER_TYPE != null && FILTER_TYPE.equals(FILTER_TYPE_INVITES)) {
+                        STR_ERROR_MESSAGE = "You have no job interviews yet";
                     }
 
                     root_view = inflater.inflate(R.layout.frag_recycler_view, container, false);
@@ -100,7 +103,6 @@ public class FilteredJobsFragment extends Fragment {
 
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
-        // SEARCH FUNCTIONALITY --------------------------------------------------------------------
         swipe_refresh = root_view.findViewById(R.id.swipe_refresh);
         recycler_view = root_view.findViewById(R.id.recycler_view);
         adapter = new FindJobsAdapter(model_list, STR_ERROR_MESSAGE);
@@ -143,10 +145,16 @@ public class FilteredJobsFragment extends Fragment {
         EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
 
         Call<JsonObject> call;
-        if (FILTER_TYPE.equals(FILTER_TYPE_APPLIED)) {
-            call = establishmentInterface.getAppliedJobs(SharedPrefs.getInt(USER_ID));
-        } else {
-            call = establishmentInterface.getSavedJobs(SharedPrefs.getInt(USER_ID));
+        switch (FILTER_TYPE) {
+            case FILTER_TYPE_APPLIED:
+                call = establishmentInterface.getAppliedJobs(SharedPrefs.getInt(USER_ID));
+                break;
+            case FILTER_TYPE_SHORTLISTED:
+                call = establishmentInterface.getShortlistedJobs(SharedPrefs.getInt(USER_ID));
+                break;
+            default:
+                call = establishmentInterface.getJobInvites(SharedPrefs.getInt(USER_ID));
+                break;
         }
 
         swipe_refresh.setRefreshing(true);
