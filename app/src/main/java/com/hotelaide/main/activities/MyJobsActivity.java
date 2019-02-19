@@ -1,22 +1,14 @@
 package com.hotelaide.main.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.FilteredJobsFragment;
-import com.hotelaide.utils.SharedPrefs;
 
 import androidx.fragment.app.Fragment;
 
-import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
-import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
-import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
-import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
-import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
-import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 
 public class MyJobsActivity extends ParentActivity {
 

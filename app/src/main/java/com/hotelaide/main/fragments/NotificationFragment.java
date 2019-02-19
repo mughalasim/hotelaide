@@ -168,7 +168,7 @@ public class NotificationFragment extends Fragment {
 
             final NotificationModel notificationModel = notificationModels.get(position);
 
-            if (notificationModel.id == 0) {
+            if (notificationModel.table_id == 0) {
                 holder.no_list_item.setVisibility(View.VISIBLE);
                 holder.list_item.setVisibility(View.GONE);
                 holder.itemView.setAlpha(1f);
@@ -183,7 +183,7 @@ public class NotificationFragment extends Fragment {
                 holder.list_item.setVisibility(View.VISIBLE);
 
                 holder.txt_title.setText(notificationModel.title);
-                holder.txt_message.setText(notificationModel.message);
+                holder.txt_message.setText(notificationModel.body);
                 holder.txt_date.setText(notificationModel.date);
 
                 if (notificationModel.read == 1) {
@@ -195,7 +195,7 @@ public class NotificationFragment extends Fragment {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (notificationModel.id != 0) {
+                        if (notificationModel.table_id != 0) {
                             final Dialog dialog = new Dialog(context);
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.setContentView(R.layout.dialog_confirm);
@@ -204,13 +204,13 @@ public class NotificationFragment extends Fragment {
                             final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
                             final TextView txt_title = dialog.findViewById(R.id.txt_title);
                             txt_title.setText(notificationModel.title);
-                            txt_message.setText(notificationModel.message);
+                            txt_message.setText(notificationModel.body);
                             btn_confirm.setText("READ");
                             btn_cancel.setText("DELETE");
                             btn_confirm.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    db.updateNotificationRead(notificationModel.id);
+                                    db.updateNotificationRead(notificationModel.table_id);
                                     populateFromDB();
                                     dialog.cancel();
                                 }
@@ -219,8 +219,8 @@ public class NotificationFragment extends Fragment {
                             btn_cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    if (notificationModel.id != 0)
-                                        db.deleteNotificationByID(String.valueOf(notificationModel.id));
+                                    if (notificationModel.table_id != 0)
+                                        db.deleteNotificationByID(String.valueOf(notificationModel.table_id));
                                     populateFromDB();
                                     dialog.cancel();
                                 }

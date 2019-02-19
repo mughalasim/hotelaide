@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.main.models.MessageModel;
+import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
@@ -23,7 +24,7 @@ import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
+import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_MESSAGES;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_DESC;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_ID;
@@ -66,10 +67,10 @@ public class MessagingService extends Service {
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Helpers.logThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
+                Helpers.logThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_PUSH_MESSAGES));
                 Helpers.logThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
 
-                if (SharedPrefs.getBool(ALLOW_MESSAGE_PUSH) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
+                if (SharedPrefs.getBool(ALLOW_PUSH_MESSAGES) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
                     Helpers.logThis(TAG_LOG, "FB DB CHILD ADDED");
                     setDataSnapshotFromObject(dataSnapshot);
                 }
@@ -77,10 +78,10 @@ public class MessagingService extends Service {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Helpers.logThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
+                Helpers.logThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_PUSH_MESSAGES));
                 Helpers.logThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
 
-                if (SharedPrefs.getBool(ALLOW_MESSAGE_PUSH) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
+                if (SharedPrefs.getBool(ALLOW_PUSH_MESSAGES) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
                     Helpers.logThis(TAG_LOG, "FB DB CHILD CHANGED");
                     setDataSnapshotFromObject(dataSnapshot);
                 }
@@ -141,15 +142,22 @@ public class MessagingService extends Service {
                         messageModel.from_pic_url = user_object.getString("pic_url");
                     }
                 }
+                if (SharedPrefs.getBool(ALLOW_PUSH_MESSAGES)) {
 
-                Helpers.logThis(TAG_LOG, "CREATE NOTIFICATION: " + messageModel.from_name + " : " + messageModel.last_message);
+                    Helpers.logThis(TAG_LOG, "CREATE NOTIFICATION: " + messageModel.from_name + " : " + messageModel.last_message);
 
-                CHANNEL_ID = String.valueOf(messageModel.from_id);
-                CHANNEL_NAME = messageModel.from_name;
-                CHANNEL_DESC = messageModel.last_message;
+                    CHANNEL_ID = String.valueOf(messageModel.from_id);
+                    CHANNEL_NAME = messageModel.from_name;
+                    CHANNEL_DESC = messageModel.last_message;
 
-                Helpers.createNotification(MessagingService.this, messageModel.from_name, messageModel.last_message);
+                    NotificationModel notification_model = new NotificationModel();
+                    notification_model.table_id = messageModel.from_id;
+                    notification_model.job_id = messageModel.from_id;
+                    notification_model.title = messageModel.from_name;
+                    notification_model.preview = messageModel.last_message;
 
+                    Helpers.createNotification(MessagingService.this, notification_model);
+                }
             }
 
         } catch (JSONException e) {

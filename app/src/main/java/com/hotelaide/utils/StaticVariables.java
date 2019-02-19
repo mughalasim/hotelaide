@@ -35,8 +35,8 @@ public class StaticVariables {
     public static final String EXPERIENCE_TYPE_EDUCATION = "EDUCATION_EXPERIENCE";
     // BOOLEAN VARIABLE NAMES ======================================================================
     public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
-    public static final String ALLOW_MESSAGE_PUSH = "ALLOW_MESSAGE_PUSH";
-    public static final String ALLOW_NOTIFICATIONS = "ALLOW_NOTIFICATIONS";
+    public static final String ALLOW_PUSH_MESSAGES = "ALLOW_PUSH_MESSAGES";
+    public static final String ALLOW_PUSH_NOTIFICATIONS = "ALLOW_PUSH_NOTIFICATIONS";
     public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
 
     // BOOLEAN FIRST LAUNCHED SCREENS ==============================================================
@@ -131,10 +131,16 @@ public class StaticVariables {
     public static final String DOCUMENTS_IS_DIRTY = "is_dirty";
     // NOTIFICATIONS TABLE =========================================================================
     public static final String NOTIFICATION_TABLE_NAME = "NOTIFICATIONS";
-    public static final String NOTIFICATION_ID = "id";
+    public static final String NOTIFICATION_TABLE_ID = "table_id";
     public static final String NOTIFICATION_TITLE = "title";
-    public static final String NOTIFICATION_MESSAGE = "message";
+    public static final String NOTIFICATION_PREVIEW = "preview";
+    public static final String NOTIFICATION_BODY = "body";
+    public static final String NOTIFICATION_JOB_ID = "id";
     public static final String NOTIFICATION_DATE = "date";
     public static final String NOTIFICATION_READ = "read";
+    public static final String NOTIFICATION_TYPE_CODE = "type_code";
+    public static final int NOTIFICATION_TYPE_CODE_MESSAGE = 1;
+    public static final int NOTIFICATION_TYPE_CODE_SHORTLIST = 2;
+    public static final int NOTIFICATION_TYPE_CODE_INTERVIEW = 3;
 
 }

@@ -10,8 +10,10 @@ import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
+import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.services.MessagingService;
 import com.hotelaide.utils.Database;
@@ -19,7 +21,11 @@ import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.DATABASE_VERSION;
@@ -27,6 +33,7 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_LAUNCH;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private Database db;
@@ -48,8 +55,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash_screen);
 
-        handleFireBase();
-
         // Uncomment Only when SHA Cert needed for Facebook API
 //         helpers.getShaCertificate();
 
@@ -66,18 +71,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             SharedPrefs.deleteAllSharedPrefs();
             SharedPrefs.setInt(DATABASE_VERSION, BuildConfig.DATABASE_VERSION);
         }
-    }
-
-    private void handleFireBase() {
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(SplashScreenActivity.this,
-                new OnSuccessListener<InstanceIdResult>() {
-                    @Override
-                    public void onSuccess(InstanceIdResult instanceIdResult) {
-                        String refreshedToken = instanceIdResult.getToken();
-                        AppEventsLogger.newLogger(SplashScreenActivity.this, refreshedToken);
-                        AppEventsLogger.setPushNotificationsRegistrationId(refreshedToken);
-                    }
-                });
     }
 
     private void startUp() {

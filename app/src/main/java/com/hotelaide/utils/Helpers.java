@@ -57,6 +57,7 @@ import com.hotelaide.main.activities.MyMessages;
 import com.hotelaide.main.activities.ProfileActivity;
 import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.activities.SettingsActivity;
+import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.services.FileUploadService;
@@ -113,6 +114,10 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_PREVIEW;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TITLE;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TYPE_CODE_INTERVIEW;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TYPE_CODE_MESSAGE;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_DOB;
@@ -479,8 +484,8 @@ public class Helpers {
         txt_title.setText(R.string.txt_update);
         txt_message.setText(
                 dialogContext.getString(R.string.txt_not_setup1)
-                .concat(message)
-                .concat(dialogContext.getString(R.string.txt_not_setup2))
+                        .concat(message)
+                        .concat(dialogContext.getString(R.string.txt_not_setup2))
         );
         btn_confirm.setText(R.string.txt_take_me_there);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -921,7 +926,7 @@ public class Helpers {
         view.startAnimation(anim);
     }
 
-    public void animateSwipeRefresh(SwipeRefreshLayout swipe_refresh){
+    public void animateSwipeRefresh(SwipeRefreshLayout swipe_refresh) {
         swipe_refresh.setSize(0);
         swipe_refresh.setDistanceToTriggerSync(500);
         swipe_refresh.setColorSchemeResources(
@@ -938,12 +943,13 @@ public class Helpers {
 
 
     // NOTIFICATION CREATOR ========================================================================
-    public static void createNotification(Context context, String message_title, String message_body) {
+    public static void createNotification(Context context, NotificationModel notification_model) {
+
         Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("notification_title", message_title);
-        intent.putExtra("notification_body", message_body);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
+        intent.putExtra(NOTIFICATION_TITLE, notification_model.title);
+        intent.putExtra(NOTIFICATION_PREVIEW, notification_model.body);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, notification_model.job_id, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         createNotificationChannel(context);
@@ -953,8 +959,8 @@ public class Helpers {
         if (SharedPrefs.getBool(APP_IS_RUNNING)) {
             mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(getNotificationIcon())
-                    .setContentTitle(message_title)
-                    .setContentText(message_body)
+                    .setContentTitle(notification_model.title)
+                    .setContentText(notification_model.preview)
                     .setPriority(NotificationCompat.PRIORITY_LOW)
                     .setSound(null)
                     .setVibrate(null)
@@ -964,8 +970,8 @@ public class Helpers {
         } else {
             mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(getNotificationIcon())
-                    .setContentTitle(message_title)
-                    .setContentText(message_body)
+                    .setContentTitle(notification_model.title)
+                    .setContentText(notification_model.preview)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                     .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
@@ -977,9 +983,8 @@ public class Helpers {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(1, mBuilder.build());
+        notificationManager.notify(notification_model.type_code, mBuilder.build());
         ShortcutBadger.applyCount(context, 1);
-
 
     }
 
@@ -1274,11 +1279,11 @@ public class Helpers {
 
                         context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
                     } else {
-                        createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_unknown));
+                        showErrorNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_unknown));
                         context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     }
                 } catch (JSONException e) {
-                    createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
+                    showErrorNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
                     context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     e.printStackTrace();
                 }
@@ -1289,13 +1294,24 @@ public class Helpers {
                 Helpers.logThis(TAG_LOG, t.toString());
                 db.deleteDirtyDocuments();
                 if (validateInternetConnection()) {
-                    createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
+                    showErrorNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
                 } else {
-                    createNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_connection));
+                    showErrorNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_connection));
                 }
                 context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             }
         });
+
+    }
+
+    private void showErrorNotification(Context context, String title, String preview) {
+        NotificationModel notification_model = new NotificationModel();
+        notification_model.table_id = 0;
+        notification_model.job_id = 1;
+        notification_model.type_code = NOTIFICATION_TYPE_CODE_MESSAGE;
+        notification_model.title = title;
+        notification_model.preview = preview;
+        createNotification(context, notification_model);
 
     }
 

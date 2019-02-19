@@ -103,6 +103,14 @@ public interface UserInterface {
             @Field("gender") int gender
     );
 
+    // UPDATE USER TOKEN ===========================================================================
+    @FormUrlEncoded
+    @PUT("user/{user_id}")
+    Call<JsonObject> setUserToken(
+            @Path("user_id") int user_id,
+            @Field("firebase_token") String token
+    );
+
     // IMAGE UPDATE ================================================================================
     @Multipart
     @POST("user/update-images/{user_id}")

@@ -23,7 +23,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.StaticVariables.ALLOW_MESSAGE_PUSH;
+import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_MESSAGES;
+import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_NOTIFICATIONS;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -34,6 +35,7 @@ public class SettingsActivity extends ParentActivity {
 
     private Switch
             switch_app_updates,
+            switch_push_messages,
             switch_push_notifications;
 
     private TextView delete_account;
@@ -64,6 +66,7 @@ public class SettingsActivity extends ParentActivity {
     private void findAllViews() {
         switch_app_updates = findViewById(R.id.switch_app_updates);
         switch_push_notifications = findViewById(R.id.switch_push_notifications);
+        switch_push_messages = findViewById(R.id.switch_push_messages);
         delete_account = findViewById(R.id.delete_account);
     }
 
@@ -76,11 +79,19 @@ public class SettingsActivity extends ParentActivity {
             }
         });
 
-        switch_push_notifications.setChecked(SharedPrefs.getBool(ALLOW_MESSAGE_PUSH));
+        switch_push_notifications.setChecked(SharedPrefs.getBool(ALLOW_PUSH_NOTIFICATIONS));
         switch_push_notifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPrefs.setBool(ALLOW_MESSAGE_PUSH, isChecked);
+                SharedPrefs.setBool(ALLOW_PUSH_NOTIFICATIONS, isChecked);
+            }
+        });
+
+        switch_push_messages.setChecked(SharedPrefs.getBool(ALLOW_PUSH_MESSAGES));
+        switch_push_messages.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPrefs.setBool(ALLOW_PUSH_MESSAGES, isChecked);
             }
         });
 

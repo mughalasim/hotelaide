@@ -57,11 +57,14 @@ import static com.hotelaide.utils.StaticVariables.JOB_POSTED_ON;
 import static com.hotelaide.utils.StaticVariables.JOB_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_DATE;
-import static com.hotelaide.utils.StaticVariables.NOTIFICATION_ID;
-import static com.hotelaide.utils.StaticVariables.NOTIFICATION_MESSAGE;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_JOB_ID;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_PREVIEW;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TABLE_ID;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_BODY;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_READ;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TITLE;
+import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TYPE_CODE;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "HotelAide.db";
@@ -167,11 +170,14 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS "
                 + NOTIFICATION_TABLE_NAME +
                 "(" +
-                NOTIFICATION_ID + " INTEGER PRIMARY KEY NOT NULL," +
+                NOTIFICATION_TABLE_ID + " INTEGER PRIMARY KEY NOT NULL," +
                 NOTIFICATION_TITLE + " TEXT," +
-                NOTIFICATION_MESSAGE + " TEXT," +
+                NOTIFICATION_PREVIEW + " TEXT," +
+                NOTIFICATION_BODY + " TEXT," +
                 NOTIFICATION_DATE + " TEXT," +
-                NOTIFICATION_READ + " INTEGER" +
+                NOTIFICATION_JOB_ID + " INTEGER," +
+                NOTIFICATION_READ + " INTEGER," +
+                NOTIFICATION_TYPE_CODE + " INTEGER" +
                 ")"
         );
 
@@ -783,7 +789,8 @@ public class Database extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(NOTIFICATION_TITLE, notification_model.title);
-            contentValues.put(NOTIFICATION_MESSAGE, notification_model.message);
+            contentValues.put(NOTIFICATION_PREVIEW, notification_model.preview);
+            contentValues.put(NOTIFICATION_BODY, notification_model.body);
             contentValues.put(NOTIFICATION_DATE, notification_model.date);
             contentValues.put(NOTIFICATION_READ, notification_model.read);
 
@@ -798,7 +805,7 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(NOTIFICATION_READ, 1);
-        String whereClause = NOTIFICATION_ID + " = ?";
+        String whereClause = NOTIFICATION_TABLE_ID + " = ?";
         String[] whereArgs = new String[]{String.valueOf(id)};
         db.update(NOTIFICATION_TABLE_NAME, contentValues, whereClause, whereArgs);
         db.close();
@@ -806,7 +813,7 @@ public class Database extends SQLiteOpenHelper {
 
     public void deleteNotificationByID(String notification_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String whereClause = NOTIFICATION_ID + " = ?";
+        String whereClause = NOTIFICATION_TABLE_ID + " = ?";
         String[] whereArgs = new String[]{notification_id};
         db.delete(NOTIFICATION_TABLE_NAME, whereClause, whereArgs);
         db.close();
@@ -825,9 +832,9 @@ public class Database extends SQLiteOpenHelper {
                 cursor.moveToFirst();
                 do {
                     NotificationModel notificationModel = new NotificationModel();
-                    notificationModel.id = cursor.getInt(cursor.getColumnIndex(NOTIFICATION_ID));
+                    notificationModel.table_id = cursor.getInt(cursor.getColumnIndex(NOTIFICATION_TABLE_ID));
                     notificationModel.title = cursor.getString(cursor.getColumnIndex(NOTIFICATION_TITLE));
-                    notificationModel.message = cursor.getString(cursor.getColumnIndex(NOTIFICATION_MESSAGE));
+                    notificationModel.body = cursor.getString(cursor.getColumnIndex(NOTIFICATION_BODY));
                     notificationModel.date = cursor.getString(cursor.getColumnIndex(NOTIFICATION_DATE));
                     notificationModel.read = cursor.getInt(cursor.getColumnIndex(NOTIFICATION_READ));
 

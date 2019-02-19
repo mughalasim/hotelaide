@@ -26,7 +26,6 @@ public class FileUploadService extends Service {
 
     @Override
     public void onCreate() {
-        Helpers helpers = new Helpers(MyApplication.getAppContext());
 
     }
 
