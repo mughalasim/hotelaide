@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -91,6 +93,9 @@ public class ParentActivity extends FragmentActivity implements
     private final String TAG_LOG = "PARENT";
     private final int INT_NAV_DRAWER_DELAY = 220;
     private int INT_NAV_DRAWER_UPDATE_COUNTER = 0;
+
+    public AppCompatImageView img_search;
+    public EditText et_search;
 
     public TabLayout tab_layout;
     public ViewPager view_pager;
@@ -240,9 +245,27 @@ public class ParentActivity extends FragmentActivity implements
         registerReceiver(receiver, filter);
     }
 
+    public void setUpHomeSearch() {
+        img_search = findViewById(R.id.img_search);
+        et_search = findViewById(R.id.et_search);
+
+        img_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et_search.getText().toString().length() > 1) {
+                    startActivity(new Intent(ParentActivity.this, FindJobsActivity.class)
+                            .putExtra(EXTRA_STRING, et_search.getText().toString()));
+                    et_search.setText("");
+                } else {
+                    helpers.ToastMessage(ParentActivity.this, "Nothing typed in the search field");
+                }
+            }
+        });
+    }
+
 
     // VIEW PAGER FUNCTIONS ========================================================================
-    public void setupViewPager(Fragment[] fragment_list, int[] fragment_title_list, String[] fragment_extras ) {
+    public void setupViewPager(Fragment[] fragment_list, int[] fragment_title_list, String[] fragment_extras) {
         view_pager = findViewById(R.id.view_pager);
         tab_layout = findViewById(R.id.tabs);
 

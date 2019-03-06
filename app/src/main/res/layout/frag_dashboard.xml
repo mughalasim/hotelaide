@@ -1,290 +1,324 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/img_size_medium"
-        android:background="@drawable/back_dash"
-        android:orientation="vertical" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_medium"
+        android:layout_marginEnd="@dimen/padding_medium"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/padding_small"
+        android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <!-- WELCOME MESSAGE ================================================================-->
+        <TextView
+            android:id="@+id/txt_welcome"
+            style="@style/Text_Normal"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/padding_mini"
+            android:text="@string/app_name"
+            android:textSize="@dimen/text_size_x_large" />
+
+        <TextView
+            style="@style/Text_Normal"
+            android:textColor="@color/colorPrimary"
+            android:text="Summary of your highlights" />
+
+        <!-- STATS ==========================================================================-->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_height="wrap_content">
 
-            <!-- PROFILE PIC ====================================================================-->
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_avatar"
-                android:layout_width="@dimen/img_size_large"
-                android:layout_height="@dimen/img_size_large"
-                android:layout_marginTop="@dimen/padding_tiny"
-                android:scaleType="centerCrop"
-                android:onClick="openProfile"
-                android:src="@color/light_grey"
-                app:riv_border_color="@color/colorPrimary"
-                app:riv_border_width="@dimen/line_thickness"
-                app:riv_corner_radius="@dimen/img_size_large" />
-
-            <!-- WELCOME MESSAGE ================================================================-->
-            <TextView
-                android:id="@+id/txt_welcome"
-                style="@style/Text_Normal"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/padding_mini"
-                android:textSize="@dimen/text_size_x_large" />
-
-            <!-- STATS ==========================================================================-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_small"
                 android:orientation="horizontal"
-                android:weightSum="4">
-
-                <View
-                    android:layout_width="@dimen/padding_small"
-                    android:layout_height="@dimen/padding_small" />
+                android:weightSum="3">
 
                 <LinearLayout
                     android:id="@+id/ll_applied"
-                    android:onClick="openMyJobs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="openMyJobs"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_mini">
 
                     <TextView
                         android:id="@+id/txt_applied_jobs"
                         style="@style/Text_Header"
+                        android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/txt_zero"
-                        android:textSize="@dimen/text_size_x_large" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_xx_large" />
 
                     <TextView
                         style="@style/Text_Title"
-                        android:gravity="center"
-                        android:minLines="2"
-                        android:text="@string/nav_applied"
-                        android:textColor="@color/colorPrimary"
+                        android:minLines="1"
+                        android:text="applied jobs"
                         android:textSize="@dimen/text_size_small" />
 
                 </LinearLayout>
 
                 <View
-                    android:layout_width="@dimen/padding_small"
-                    android:layout_height="@dimen/padding_small" />
+                    android:layout_width="@dimen/line_thickness"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/padding_small"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginBottom="@dimen/padding_small"
+                    android:background="@color/grey" />
 
-                <LinearLayout
-                    android:id="@+id/ll_saved"
-                    android:onClick="openMyJobs"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_mini">
-
-                    <TextView
-                        android:id="@+id/txt_saved_jobs"
-                        style="@style/Text_Header"
-                        android:layout_marginTop="0dp"
-                        android:text="@string/txt_zero"
-                        android:textSize="@dimen/text_size_x_large" />
-
-                    <TextView
-                        style="@style/Text_Title"
-                        android:gravity="center"
-                        android:minLines="2"
-                        android:text="@string/nav_saved"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_size_small" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="@dimen/padding_small"
-                    android:layout_height="@dimen/padding_small" />
 
                 <LinearLayout
                     android:id="@+id/ll_shortlisted"
-                    android:onClick="openMyJobs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="openMyJobs"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_mini">
 
                     <TextView
                         android:id="@+id/txt_shortlisted"
                         style="@style/Text_Header"
+                        android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/txt_zero"
-                        android:textSize="@dimen/text_size_x_large" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_xx_large" />
 
                     <TextView
                         style="@style/Text_Title"
-                        android:gravity="center"
-                        android:minLines="2"
+                        android:minLines="1"
                         android:text="@string/nav_shortlisted"
-                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_small" />
 
                 </LinearLayout>
 
                 <View
-                    android:layout_width="@dimen/padding_small"
-                    android:layout_height="@dimen/padding_small" />
+                    android:layout_width="@dimen/line_thickness"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/padding_small"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginBottom="@dimen/padding_small"
+                    android:background="@color/grey" />
 
                 <LinearLayout
                     android:id="@+id/ll_interviews"
-                    android:onClick="openMyJobs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="openMyJobs"
                     android:orientation="vertical"
                     android:padding="@dimen/padding_mini">
 
                     <TextView
                         android:id="@+id/txt_interviews"
                         style="@style/Text_Header"
+                        android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/txt_zero"
-                        android:textSize="@dimen/text_size_x_large" />
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_xx_large" />
 
                     <TextView
                         style="@style/Text_Title"
-                        android:gravity="center"
-                        android:minLines="2"
+                        android:minLines="1"
                         android:text="@string/nav_interviews"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/ll_saved_jobs"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="openMyJobs"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_mini">
+
+                    <TextView
+                        android:id="@+id/txt_saved_jobs"
+                        style="@style/Text_Header"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/txt_zero"
                         android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_xx_large" />
+
+                    <TextView
+                        style="@style/Text_Title"
+                        android:minLines="1"
+                        android:text="@string/nav_saved"
                         android:textSize="@dimen/text_size_small" />
 
                 </LinearLayout>
 
                 <View
-                    android:layout_width="@dimen/padding_small"
-                    android:layout_height="@dimen/padding_small" />
+                    android:layout_width="@dimen/line_thickness"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/padding_small"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginBottom="@dimen/padding_small"
+                    android:background="@color/grey" />
+
+                <LinearLayout
+                    android:id="@+id/ll_profile_views"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="openMyJobs"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_mini">
+
+                    <TextView
+                        android:id="@+id/txt_profile_views"
+                        style="@style/Text_Header"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/txt_zero"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_xx_large" />
+
+                    <TextView
+                        style="@style/Text_Title"
+                        android:minLines="1"
+                        android:text="@string/nav_profile_views"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/line_thickness"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/padding_small"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginBottom="@dimen/padding_small"
+                    android:background="@color/grey" />
+
+                <LinearLayout
+                    android:id="@+id/ll_messages"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="openMyJobs"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_mini">
+
+                    <TextView
+                        android:id="@+id/txt_unread_messages"
+                        style="@style/Text_Header"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/txt_zero"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_xx_large" />
+
+                    <TextView
+                        style="@style/Text_Title"
+                        android:minLines="1"
+                        android:text="@string/nav_messages"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
 
 
             </LinearLayout>
 
-            <!-- PROGRESS =======================================================================-->
-            <RelativeLayout
-                android:id="@+id/rl_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/padding_small">
-
-                <SeekBar
-                    android:id="@+id/seek_bar_progress"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:max="100"
-                    android:progress="55"
-                    android:progressDrawable="@drawable/progress_background"
-                    android:thumb="@drawable/progress_thumb" />
-
-                <TextView
-                    android:id="@+id/txt_progress_label"
-                    style="@style/Text_Normal"
-                    android:layout_centerInParent="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="0dp"
-                    android:textColor="@color/colorAccent"
-                    android:text="@string/txt_profile_completion"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txt_progress"
-                    style="@style/Text_Normal"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="0dp"
-                    android:textColor="@color/colorAccent"
-                    android:layout_toEndOf="@+id/txt_progress_label"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <!-- NEW MESSAGE ====================================================================-->
-            <RelativeLayout
-                android:id="@+id/rl_messages"
-                android:onClick="openMessages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_small"
-                android:layout_marginStart="@dimen/padding_small"
-                android:layout_marginEnd="@dimen/padding_small"
-                android:background="@drawable/back_text_fields"
-                android:padding="@dimen/padding_tiny">
-
-                <TextView
-                    style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:maxLines="1"
-                    android:layout_centerVertical="true"
-                    android:text="Tap to see new messages"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/txt_unread_messages"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/white"
-                    app:chipBackgroundColor="@color/red" />
-
-            </RelativeLayout>
-
-            <!-- NOTIFICATION ===================================================================-->
-            <RelativeLayout
-                android:id="@+id/rl_notifications"
-                android:onClick="openNotifications"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_small"
-                android:layout_marginStart="@dimen/padding_small"
-                android:layout_marginEnd="@dimen/padding_small"
-                android:background="@drawable/back_text_fields"
-                android:padding="@dimen/padding_tiny">
-
-                <TextView
-                    style="@style/Text_Normal"
-                    android:layout_marginTop="0dp"
-                    android:maxLines="1"
-                    android:layout_centerVertical="true"
-                    android:text="Tap to see new notifications"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/txt_unread_notifications"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="@color/white"
-                    app:chipBackgroundColor="@color/red" />
-
-            </RelativeLayout>
-
-
         </LinearLayout>
 
-    </ScrollView>
 
-</RelativeLayout>
+
+
+        <!-- PROGRESS =======================================================================-->
+        <RelativeLayout
+            android:id="@+id/rl_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/seek_bar_progress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:max="100"
+                android:progress="55"
+                android:progressDrawable="@drawable/progress_background"
+                android:thumb="@drawable/progress_thumb" />
+
+            <TextView
+                android:id="@+id/txt_progress_label"
+                style="@style/Text_Normal"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                android:text="@string/txt_profile_completion"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_progress"
+                style="@style/Text_Normal"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/txt_progress_label"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <!-- NOTIFICATION ===================================================================-->
+        <RelativeLayout
+            android:id="@+id/rl_notifications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small"
+            android:background="@drawable/back_text_fields"
+            android:onClick="openNotifications"
+            android:padding="@dimen/padding_tiny">
+
+            <TextView
+                style="@style/Text_Normal"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="0dp"
+                android:maxLines="1"
+                android:text="Tap to see new notifications"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/txt_unread_notifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_small"
+                app:chipBackgroundColor="@color/red" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

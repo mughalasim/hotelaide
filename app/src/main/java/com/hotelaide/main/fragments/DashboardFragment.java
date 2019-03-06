@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -22,7 +21,6 @@ import com.hotelaide.main.activities.ProfileActivity;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,7 +28,6 @@ import androidx.fragment.app.Fragment;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
-import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_PROFILE_COMPLETION;
 
 public class DashboardFragment extends Fragment {
@@ -42,12 +39,13 @@ public class DashboardFragment extends Fragment {
     private TextView
             txt_welcome,
             txt_applied_jobs,
-            txt_saved_jobs,
             txt_shortlisted,
             txt_interviews,
+            txt_saved_jobs,
+            txt_profile_views,
+            txt_unread_messages,
             txt_progress,
-            txt_unread_notifications,
-            txt_unread_messages;
+            txt_unread_notifications;
 
     private SeekBar
             seek_bar_progress;
@@ -56,11 +54,7 @@ public class DashboardFragment extends Fragment {
             rl_progress;
 
     private RelativeLayout
-            rl_messages,
             rl_notifications;
-
-    private RoundedImageView
-            img_avatar;
 
 
     public DashboardFragment() {
@@ -95,34 +89,34 @@ public class DashboardFragment extends Fragment {
                             FIRST_LAUNCH_DASH,
                             new View[]{
                                     root_view.findViewById(R.id.txt_applied_jobs),
-                                    root_view.findViewById(R.id.txt_saved_jobs),
                                     root_view.findViewById(R.id.txt_shortlisted),
                                     root_view.findViewById(R.id.txt_interviews),
-                                    root_view.findViewById(R.id.rl_messages),
-                                    root_view.findViewById(R.id.rl_progress)
+                                    root_view.findViewById(R.id.txt_saved_jobs),
+                                    root_view.findViewById(R.id.txt_profile_views),
+                                    root_view.findViewById(R.id.txt_unread_messages)
                             },
                             new String[]{
-                                    "Applied Jobs",
-                                    "Saved Jobs",
-                                    "Shortlisted",
-                                    "Interviews",
-                                    "Updates",
-                                    "Profile Progress",
+                                    getString(R.string.nav_applied),
+                                    getString(R.string.nav_shortlisted),
+                                    getString(R.string.nav_interviews),
+                                    getString(R.string.nav_saved),
+                                    getString(R.string.nav_profile_views),
+                                    getString(R.string.nav_messages),
                             },
                             new String[]{
                                     "This will show you how many jobs you have applied for",
-                                    "This will show you how many jobs you have saved for later review",
-                                    "How many employers have shortlisted you, see that here",
-                                    "How many employers have invited you for an interview",
-                                    "All your updates in one place, from Messages to notifications",
-                                    "And lastly....Make sure you fill out your profile completely to increase your chances of getting employed"
+                                    "This will show you how many jobs you have been short listed for",
+                                    "This will show you how many job interviews you have",
+                                    "Here you can save a job listing for later application",
+                                    "How many users have visited your profile",
+                                    "And lastly....See who sent you a message"
                             }
                     );
 
                 }
             });
 
-            fetchFacebookPosts();
+//            fetchFacebookPosts();
 
         } else {
             container.removeView(root_view);
@@ -141,9 +135,6 @@ public class DashboardFragment extends Fragment {
     // BASIC METHODS ===============================================================================
     @SuppressLint("ClickableViewAccessibility")
     private void findAllViews() {
-        // IMAGE
-        img_avatar = root_view.findViewById(R.id.img_avatar);
-
         // WELCOME GREETING
         txt_welcome = root_view.findViewById(R.id.txt_welcome);
 
@@ -152,6 +143,8 @@ public class DashboardFragment extends Fragment {
         txt_saved_jobs = root_view.findViewById(R.id.txt_saved_jobs);
         txt_shortlisted = root_view.findViewById(R.id.txt_shortlisted);
         txt_interviews = root_view.findViewById(R.id.txt_interviews);
+        txt_profile_views = root_view.findViewById(R.id.txt_profile_views);
+        txt_unread_messages = root_view.findViewById(R.id.txt_unread_messages);
 
         // PROGRESS
         rl_progress = root_view.findViewById(R.id.rl_progress);
@@ -164,18 +157,12 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        // NEW MESSAGES
-        rl_messages = root_view.findViewById(R.id.rl_messages);
-        txt_unread_messages = root_view.findViewById(R.id.txt_unread_messages);
-
         // NEW NOTIFICATIONS
         rl_notifications = root_view.findViewById(R.id.rl_notifications);
         txt_unread_notifications = root_view.findViewById(R.id.txt_unread_notifications);
     }
 
     private void updateDashboard() {
-        Glide.with(this).load(SharedPrefs.getString(USER_IMG_AVATAR)).into(img_avatar);
-
         txt_applied_jobs.setText(db.getFilteredTableCount(FILTER_TYPE_APPLIED));
         txt_saved_jobs.setText(db.getFilteredTableCount(FILTER_TYPE_SAVED));
 
@@ -192,14 +179,12 @@ public class DashboardFragment extends Fragment {
         }
 
         // MESSAGES
-//        int message_size = db.getAllUnreadNotifications();
-//        if (message_size > 0) {
-//            txt_unread_messages.setText(String.valueOf(message_size));
-//            rl_messages.setVisibility(View.VISIBLE);
-//        } else {
-//        }
-        rl_messages.setVisibility(View.GONE);
-
+        int message_size = db.getAllUnreadNotifications();
+        if (message_size > 0) {
+            txt_unread_messages.setText(String.valueOf(message_size));
+        } else{
+            txt_unread_messages.setText(R.string.txt_zero);
+        }
 
     }
 

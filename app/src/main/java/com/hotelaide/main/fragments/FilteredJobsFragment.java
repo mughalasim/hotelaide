@@ -32,7 +32,7 @@ import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
-import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_INVITES;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_INTERVIEWS;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SHORTLISTED;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -68,7 +68,7 @@ public class FilteredJobsFragment extends Fragment {
                         STR_ERROR_MESSAGE = getString(R.string.error_no_jobs_applied);
                     } else if (FILTER_TYPE != null && FILTER_TYPE.equals(FILTER_TYPE_SHORTLISTED)) {
                         STR_ERROR_MESSAGE = "You have not been short listed for any jobs";
-                    } else if (FILTER_TYPE != null && FILTER_TYPE.equals(FILTER_TYPE_INVITES)) {
+                    } else if (FILTER_TYPE != null && FILTER_TYPE.equals(FILTER_TYPE_INTERVIEWS)) {
                         STR_ERROR_MESSAGE = "You have no job interviews yet";
                     }
 
@@ -169,8 +169,17 @@ public class FilteredJobsFragment extends Fragment {
                         Helpers.logThis(TAG_LOG, main.toString());
 
                         model_list.clear();
-                        JSONObject data = main.getJSONObject("data");
-                        JSONArray applications = data.getJSONArray("applications");
+
+                        Object object = main.get("data");
+                        JSONObject data;
+                        JSONArray applications;
+
+                        if(object instanceof JSONObject){
+                            data = main.getJSONObject("data");
+                            applications = data.getJSONArray("applications");
+                        } else{
+                            applications = main.getJSONArray("data");
+                        }
 
                         db.deleteFilteredJobTable(FILTER_TYPE);
 

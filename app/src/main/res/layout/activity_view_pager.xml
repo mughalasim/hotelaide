@@ -18,20 +18,20 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/toolbar" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_below="@+id/toolbar"
-                android:paddingBottom="@dimen/height_panel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:ignore="UnknownIdInLayout" />
+            <include layout="@layout/toolbar_dash" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/toolbar"
+                tools:ignore="UnknownIdInLayout"
                 style="@style/Tab_Text_Layout" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:paddingBottom="@dimen/height_panel"
+                android:layout_below="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </RelativeLayout>
 

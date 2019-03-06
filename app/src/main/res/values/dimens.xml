@@ -27,6 +27,7 @@
 
 
     <!--TEXT SIZES ==============================================================================-->
+    <dimen name="text_size_xx_large">50sp</dimen>
     <dimen name="text_size_x_large">20sp</dimen>
     <dimen name="text_size_large">17sp</dimen>
     <dimen name="text_size_medium">15sp</dimen>

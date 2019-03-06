@@ -144,12 +144,12 @@ public class ProfileEditActivity extends FragmentActivity {
         super.onDestroy();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (helpers.validateProfileCompletion(ProfileEditActivity.this)) {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (helpers.validateProfileCompletion(ProfileEditActivity.this)) {
+//            super.onBackPressed();
+//        }
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

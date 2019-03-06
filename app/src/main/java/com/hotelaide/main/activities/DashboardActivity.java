@@ -3,6 +3,8 @@ package com.hotelaide.main.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,8 +34,11 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_NOTIFICATION
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
+import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_INTERVIEWS;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SHORTLISTED;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -43,7 +48,7 @@ public class DashboardActivity extends ParentActivity {
             "",
             "https://www.hotelmanagement.net/rss/xml",
             "https://www.hotelmanagement.net/rss/tech/xml",
-            "https://www.hotelmanagement.net/rss/design/xml",
+//            "https://www.hotelmanagement.net/rss/design/xml",
             "https://www.hotelmanagement.net/rss/operate/xml"
     };
 
@@ -51,7 +56,7 @@ public class DashboardActivity extends ParentActivity {
             R.string.nav_home,
             R.string.nav_news_feed_latest,
             R.string.nav_news_feed_tech,
-            R.string.nav_news_feed_design,
+//            R.string.nav_news_feed_design,
             R.string.nav_news_feed_operations
     };
 
@@ -59,9 +64,10 @@ public class DashboardActivity extends ParentActivity {
             new DashboardFragment(),
             new NewsFeedFragment(),
             new NewsFeedFragment(),
-            new NewsFeedFragment(),
+//            new NewsFeedFragment(),
             new NewsFeedFragment()
     };
+
 
     private final String TAG_LOG = "DASH";
 
@@ -83,6 +89,8 @@ public class DashboardActivity extends ParentActivity {
         }
 
         handleFireBase();
+
+        setUpHomeSearch();
 
     }
 
@@ -129,9 +137,18 @@ public class DashboardActivity extends ParentActivity {
         if (view.getId() == R.id.ll_applied) {
             startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class)
                     .putExtra(FILTER_TYPE_APPLIED, FILTER_TYPE_APPLIED));
-        } else if (view.getId() == R.id.ll_saved) {
+        } else if (view.getId() == R.id.ll_shortlisted) {
+            startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class)
+                    .putExtra(FILTER_TYPE_SHORTLISTED, FILTER_TYPE_SHORTLISTED));
+        } else if (view.getId() == R.id.ll_saved_jobs) {
             startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class)
                     .putExtra(FILTER_TYPE_SAVED, FILTER_TYPE_SAVED));
+        } else if (view.getId() == R.id.ll_interviews) {
+            startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class)
+                    .putExtra(FILTER_TYPE_INTERVIEWS, FILTER_TYPE_INTERVIEWS));
+        } else if (view.getId() == R.id.ll_messages) {
+            startActivity(new Intent(DashboardActivity.this, MyMessages.class)
+                    .putExtra(EXTRA_MY_MESSAGES_INBOX, EXTRA_MY_MESSAGES_INBOX));
         }
 
     }
@@ -153,31 +170,31 @@ public class DashboardActivity extends ParentActivity {
     private void handleFireBase() {
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(DashboardActivity.this,
                 new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                String refreshedToken = instanceIdResult.getToken();
-                Helpers.logThis(TAG_LOG, refreshedToken);
-                AppEventsLogger.newLogger(DashboardActivity.this, refreshedToken);
-                AppEventsLogger.setPushNotificationsRegistrationId(refreshedToken);
-
-                UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-                final Call<JsonObject> call = userInterface.setUserToken(SharedPrefs.getInt(USER_ID),
-                        refreshedToken);
-                call.enqueue(new Callback<JsonObject>() {
                     @Override
-                    public void onResponse(@NonNull Call<JsonObject> call, @NonNull
-                            Response<JsonObject> response) {
-                        Helpers.logThis(TAG_LOG, "Successfully updated token");
-                    }
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        String refreshedToken = instanceIdResult.getToken();
+                        Helpers.logThis(TAG_LOG, refreshedToken);
+                        AppEventsLogger.newLogger(DashboardActivity.this, refreshedToken);
+                        AppEventsLogger.setPushNotificationsRegistrationId(refreshedToken);
 
-                    @Override
-                    public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                        Helpers.logThis(TAG_LOG, "Failed to update token");
-                    }
+                        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
+                        final Call<JsonObject> call = userInterface.setUserToken(SharedPrefs.getInt(USER_ID),
+                                refreshedToken);
+                        call.enqueue(new Callback<JsonObject>() {
+                            @Override
+                            public void onResponse(@NonNull Call<JsonObject> call, @NonNull
+                                    Response<JsonObject> response) {
+                                Helpers.logThis(TAG_LOG, "Successfully updated token");
+                            }
 
+                            @Override
+                            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                                Helpers.logThis(TAG_LOG, "Failed to update token");
+                            }
+
+                        });
+
+                    }
                 });
-
-            }
-        });
     }
 }

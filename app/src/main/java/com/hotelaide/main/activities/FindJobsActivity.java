@@ -41,6 +41,8 @@ import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_JOB;
 import static com.hotelaide.BuildConfig.ALGOLIA_SEARCH_API_KEY;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
+import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 
@@ -117,6 +119,8 @@ public class FindJobsActivity extends ParentActivity {
 
         clearAllFilters();
 
+        handleExtraBundles();
+
     }
 
     @Override
@@ -190,6 +194,13 @@ public class FindJobsActivity extends ParentActivity {
                         "Instant search as you type if youre online or offline"
                 }
         );
+    }
+
+    private void handleExtraBundles() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getString(EXTRA_STRING) != null) {
+            et_search.setText(extras.getString(EXTRA_STRING));
+        }
     }
 
     private void setTextWatcher() {

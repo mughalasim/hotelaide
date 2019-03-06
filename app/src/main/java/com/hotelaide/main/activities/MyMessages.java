@@ -14,7 +14,7 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_NOTIFICATION
 public class MyMessages extends ParentActivity {
     
     private int[] fragment_title_list = {
-            R.string.nav_inbox,
+            R.string.nav_messages,
             R.string.nav_notifications
     };
 
@@ -38,6 +38,8 @@ public class MyMessages extends ParentActivity {
         initialize(R.id.drawer_my_messages, getString(R.string.drawer_my_messages));
 
         setupViewPager(fragment_list, fragment_title_list, fragment_extras);
+
+        setUpHomeSearch();
 
     }
 

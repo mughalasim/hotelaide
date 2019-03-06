@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias SIGNING_ALIAS_PASS
-            keyPassword SIGNING_ALIAS_PASS
-            storeFile file('/Users/asimmughal/Documents/Docs/Android/hotelaide keystore/hotelaide_signing_key.jks')
-            storePassword SIGNING_ALIAS_PASS
+            keyAlias 'hotelaide'
+            keyPassword 'hotelaide'
+            storeFile file('/Users/asimmughal/Documents/Android/Hotelaide/hotelaide_signing_key.jks')
+            storePassword 'hotelaide'
         }
     }
     compileSdkVersion rootProject.compileSDK
@@ -27,11 +27,18 @@ android {
 
     buildTypes {
         release {
-            debuggable rootProject.debugMode
-            minifyEnabled rootProject.shrink
-            useProguard rootProject.shrink
-            shrinkResources rootProject.shrink
+            debuggable false
+            minifyEnabled true
+            useProguard true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            useProguard false
+            shrinkResources false
         }
     }
 
@@ -95,7 +102,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
     // PICTURE LOADING
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     // ROUNDED IMAGE VIEW
