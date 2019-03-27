@@ -97,7 +97,7 @@ public class EstablishmentActivity extends AppCompatActivity {
             asyncGetEstablishment();
 
         } else {
-            helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_unknown));
+            helpers.toastMessage( getString(R.string.error_unknown));
             onBackPressed();
         }
 
@@ -294,7 +294,7 @@ public class EstablishmentActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_server));
+                    helpers.toastMessage( getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -305,10 +305,10 @@ public class EstablishmentActivity extends AppCompatActivity {
                     swipe_refresh.setRefreshing(false);
                     Helpers.logThis(TAG_LOG, t.toString());
                     if (helpers.validateInternetConnection()) {
-                        helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_server));
+                        helpers.toastMessage( getString(R.string.error_server));
                         onBackPressed();
                     } else {
-                        helpers.ToastMessage(EstablishmentActivity.this, getString(R.string.error_connection));
+                        helpers.toastMessage( getString(R.string.error_connection));
                         onBackPressed();
                     }
                 } catch (Exception e) {

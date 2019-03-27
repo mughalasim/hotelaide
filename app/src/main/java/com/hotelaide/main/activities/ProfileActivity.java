@@ -21,6 +21,7 @@ import com.hotelaide.R;
 import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceViewFragment;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import androidx.core.content.ContextCompat;
@@ -227,7 +228,7 @@ public class ProfileActivity extends ParentActivity {
             @Override
             public void onRefresh() {
                 swipe_refresh.setRefreshing(false);
-                helpers.asyncGetUser();
+                HelpersAsync.asyncGetUser();
             }
         });
     }
@@ -401,11 +402,11 @@ public class ProfileActivity extends ParentActivity {
                 if (intent.getExtras() != null) {
                     if (intent.getExtras().getString(EXTRA_PASSED) != null) {
                         Helpers.logThis(TAG_LOG, "PASSED");
-                        helpers.ToastMessage(ProfileActivity.this, "Update successful");
+                        helpers.toastMessage("Update successful");
                         setTextAndImages();
                     } else if (intent.getExtras().getString(EXTRA_FAILED) != null) {
                         Helpers.logThis(TAG_LOG, "FAILED");
-                        helpers.ToastMessage(ProfileActivity.this, "Update failed, please try again later");
+                        helpers.toastMessage("Update failed, please try again later");
                     }
                 }
             }

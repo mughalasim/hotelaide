@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.JsonObject;
@@ -135,11 +134,11 @@ public class SignUpEmailFragment extends Fragment {
                         helpers.validateEmptyTextView(et_user_dob, "Enter your Date of Birth") &&
                         helpers.validateEmptyEditText(et_user_phone)) {
                     if (!et_user_pass.getText().toString().equals(et_user_pass_confirm.getText().toString())) {
-                        helpers.ToastMessage(getContext(), "Password and Confirm password do not match");
+                        helpers.toastMessage("Password and Confirm password do not match");
                     } else if (et_user_pass.getText().toString().length() < 8) {
-                        helpers.ToastMessage(getContext(), "Password too short");
+                        helpers.toastMessage("Password too short");
                     } else if (!ccp_user_country_code.isValidFullNumber()) {
-                        helpers.ToastMessage(getContext(), "Phone number is invalid");
+                        helpers.toastMessage("Phone number is invalid");
                     } else {
                         setToModelFromFields();
                     }
@@ -266,16 +265,17 @@ public class SignUpEmailFragment extends Fragment {
                         JSONObject data = main.getJSONObject("data");
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
                             SharedPrefs.setString(ACCESS_TOKEN, data.getString("token"));
-                            startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
+                            startActivity(new Intent(getActivity(), DashboardActivity.class)
+                                    .putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
                             getActivity().finish();
                         } else {
-                            helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                            helpers.toastMessage(getString(R.string.error_server));
                         }
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -285,9 +285,9 @@ public class SignUpEmailFragment extends Fragment {
                 helpers.dismissProgressDialog();
                 Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                 } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    helpers.toastMessage(getString(R.string.error_connection));
                 }
 
             }

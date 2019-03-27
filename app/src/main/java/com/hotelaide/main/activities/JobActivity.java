@@ -214,7 +214,7 @@ public class JobActivity extends AppCompatActivity {
 
     public void applyJob(View view) {
         if (!db.isFilteredJob(INT_JOB_ID, FILTER_TYPE_APPLIED)) {
-            if (helpers.validateJobApplication(JobActivity.this)) {
+            if (helpers.validateJobApplication()) {
                 asyncApplyJob();
             }
         }
@@ -300,7 +300,7 @@ public class JobActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                     onBackPressed();
                 } catch (Exception e) {
@@ -314,10 +314,10 @@ public class JobActivity extends AppCompatActivity {
                     Helpers.logThis(TAG_LOG, t.toString());
                     hideAllViews();
                     if (helpers.validateInternetConnection()) {
-                        helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                         onBackPressed();
                     } else {
-                        helpers.ToastMessage(JobActivity.this, getString(R.string.error_connection));
+                        helpers.toastMessage(getString(R.string.error_connection));
                         onBackPressed();
                     }
                 } catch (Exception e) {
@@ -347,12 +347,12 @@ public class JobActivity extends AppCompatActivity {
 
                     db.deleteFilteredJobByJobId(INT_JOB_ID, FILTER_TYPE_SAVED);
 
-                    helpers.ToastMessage(JobActivity.this, main.getString("message"));
+                    helpers.toastMessage(main.getString("message"));
 
                     checkJobApplied();
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -362,9 +362,9 @@ public class JobActivity extends AppCompatActivity {
                 helpers.dismissProgressDialog();
                 Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(JobActivity.this, getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                 } else {
-                    helpers.ToastMessage(JobActivity.this, getString(R.string.error_connection));
+                    helpers.toastMessage(getString(R.string.error_connection));
                 }
 
             }

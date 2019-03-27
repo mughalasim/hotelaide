@@ -144,13 +144,15 @@ public class LoginEmailFragment extends Fragment {
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
                             SharedPrefs.setString(ACCESS_TOKEN, data.getString("token"));
                             if (SharedPrefs.getString(USER_F_NAME).equals("")) {
-                                startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
+                                startActivity(new Intent(getActivity(), DashboardActivity.class)
+                                        .putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
                             } else {
-                                startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_RETURN, EXTRA_START_RETURN));
+                                startActivity(new Intent(getActivity(), DashboardActivity.class)
+                                        .putExtra(EXTRA_START_RETURN, EXTRA_START_RETURN));
                             }
                             getActivity().finish();
                         } else {
-                            helpers.ToastMessage(getActivity(), getString(R.string.error_invalid_user));
+                            helpers.toastMessage(getString(R.string.error_invalid_user));
                         }
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
@@ -159,7 +161,7 @@ public class LoginEmailFragment extends Fragment {
                     helpers.dismissProgressDialog();
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -169,9 +171,9 @@ public class LoginEmailFragment extends Fragment {
                 helpers.dismissProgressDialog();
                 Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                 } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    helpers.toastMessage(getString(R.string.error_connection));
                 }
 
             }

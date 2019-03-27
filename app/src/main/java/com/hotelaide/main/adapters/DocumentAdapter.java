@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -17,9 +19,11 @@ import com.google.android.material.button.MaterialButton;
 import com.hotelaide.R;
 import com.hotelaide.main.models.DocumentModel;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -112,6 +116,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
                         final Dialog dialog = new Dialog(context);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.dialog_confirm);
+                        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         final TextView txt_message = dialog.findViewById(R.id.txt_message);
                         final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
                         final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
@@ -143,7 +148,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
                         dialog.show();
                     } else {
                         int grantResults[] = {-1, -1, -1};
-                        helpers.myPermissionsDialog(context, grantResults);
+                        helpers.myPermissionsDialog(grantResults);
                     }
                 }
             });
@@ -154,6 +159,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
                     final Dialog dialog = new Dialog(context);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.dialog_confirm);
+                    Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     final TextView txt_message = dialog.findViewById(R.id.txt_message);
                     final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
                     final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
@@ -164,8 +170,8 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
                     btn_confirm.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            helpers.ToastMessage(context, "Deleting document, please wait...");
-                            helpers.asyncDeleteDocument(documentModel.id);
+                            helpers.toastMessage("Deleting document, please wait...");
+                            HelpersAsync.asyncDeleteDocument(documentModel.id);
                             dialog.cancel();
                         }
                     });

@@ -65,7 +65,7 @@ public class GalleryViewActivity extends FragmentActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-        helpers.myPermissionsDialog(GalleryViewActivity.this, grantResults);
+        helpers.myPermissionsDialog(grantResults);
     }
 
     // BASIC FUNCTIONS =============================================================================
@@ -115,8 +115,7 @@ public class GalleryViewActivity extends FragmentActivity {
 
         } else {
             finish();
-            helpers.ToastMessage(GalleryViewActivity.this,
-                    getString(R.string.error_unknown));
+            helpers.toastMessage(getString(R.string.error_unknown));
         }
     }
 

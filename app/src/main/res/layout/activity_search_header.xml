@@ -16,9 +16,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_add_filter"
-            android:layout_width="@dimen/height_button"
+            android:layout_width="0dp"
+            android:layout_marginEnd="@dimen/padding_tiny"
+            android:layout_weight="0.5"
             android:layout_height="@dimen/height_button"
-            android:layout_marginEnd="@dimen/padding_small"
             android:contentDescription="@string/app_name"
             app:srcCompat="@drawable/ic_filter" />
 

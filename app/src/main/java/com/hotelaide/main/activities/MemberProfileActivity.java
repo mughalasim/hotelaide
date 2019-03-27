@@ -110,7 +110,7 @@ public class MemberProfileActivity extends AppCompatActivity {
             asyncFetchMember();
 
         } else {
-            helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_unknown));
+            helpers.toastMessage(getString(R.string.error_unknown));
             onBackPressed();
         }
 
@@ -247,11 +247,11 @@ public class MemberProfileActivity extends AppCompatActivity {
 
     public void startConversation(View view) {
         if(INT_MEMBER_ID==0){
-            helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_server));
+            helpers.toastMessage(getString(R.string.error_server));
         } else if(INT_MEMBER_ID== SharedPrefs.getInt(USER_ID)){
-            helpers.ToastMessage(MemberProfileActivity.this,"LOL! You cant talk to yourself!");
+            helpers.toastMessage("LOL! You cant talk to yourself!");
         } else if(!helpers.validateInternetConnection()){
-            helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_connection));
+            helpers.toastMessage(getString(R.string.error_connection));
         } else {
             startActivity(new Intent(MemberProfileActivity.this, ConversationActivity.class)
                     .putExtra("FROM_NAME", STR_NAME)
@@ -356,7 +356,7 @@ public class MemberProfileActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -371,9 +371,9 @@ public class MemberProfileActivity extends AppCompatActivity {
                     Helpers.logThis(TAG_LOG, t.toString());
                     hideAllViews();
                     if (helpers.validateInternetConnection()) {
-                        helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                     } else {
-                        helpers.ToastMessage(MemberProfileActivity.this, getString(R.string.error_connection));
+                        helpers.toastMessage(getString(R.string.error_connection));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

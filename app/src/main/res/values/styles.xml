@@ -105,6 +105,10 @@
         <item name="android:layout_marginTop">@dimen/padding_small</item>
         <item name="android:layout_width">match_parent</item>
         <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radius_corner</item>
+        <item name="boxCornerRadiusTopStart">@dimen/radius_corner</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radius_corner</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radius_corner</item>
         <item name="errorEnabled">true</item>
     </style>
 

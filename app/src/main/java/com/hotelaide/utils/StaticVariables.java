@@ -40,6 +40,7 @@ public class StaticVariables {
     public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
 
     // BOOLEAN FIRST LAUNCHED SCREENS ==============================================================
+    public static final String FIRST_LAUNCH = "FIRST_LAUNCH";
     public static final String FIRST_LAUNCH_DASH = "FIRST_LAUNCH_DASH";
     public static final String FIRST_LAUNCH_PROFILE = "FIRST_LAUNCH_PROFILE";
     public static final String FIRST_LAUNCH_PROFILE_EDIT = "FIRST_LAUNCH_PROFILE_EDIT";

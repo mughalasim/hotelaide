@@ -3,11 +3,12 @@ package com.hotelaide.main.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.facebook.appevents.AppEventsLogger;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.JsonObject;
@@ -18,6 +19,7 @@ import com.hotelaide.main.fragments.NewsFeedFragment;
 import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
 import androidx.annotation.NonNull;
@@ -26,15 +28,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_MESSAGES;
-import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_NOTIFICATIONS;
-import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_INBOX;
 import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_NOTIFICATIONS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
-import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_INTERVIEWS;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
@@ -101,34 +99,35 @@ public class DashboardActivity extends ParentActivity {
             if (SharedPrefs.getString(USER_F_NAME).equals("")) {
                 startActivity(new Intent(DashboardActivity.this, ProfileEditActivity.class)
                         .putExtra(EXTRA_PROFILE_BASIC, EXTRA_PROFILE_BASIC));
+
                 NotificationModel notificationModel = new NotificationModel();
                 notificationModel.title = "Welcome";
-                notificationModel.body = "Thank you for joining Hotelaide!";
+                notificationModel.body = "Thank you for joining HotelAide. Complete your profile to help increase your chances of being seen by yur future employer";
+                notificationModel.date = "By Management";
+                notificationModel.read = 0;
+                db.setNotification(notificationModel);
+
+            } else {
+                NotificationModel notificationModel = new NotificationModel();
+                notificationModel.title = "Welcome";
+                notificationModel.body = "Thank you " + SharedPrefs.getString(USER_F_NAME) + ", for joining Hotelaide!";
                 notificationModel.date = "By Management";
                 notificationModel.read = 0;
                 db.setNotification(notificationModel);
             }
 
-            SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
-            SharedPrefs.setBool(ALLOW_PUSH_MESSAGES, true);
-            SharedPrefs.setBool(ALLOW_PUSH_NOTIFICATIONS, true);
-            setCountOnDrawerItem(menu_profile, "*");
+            MyApplication.setFirstTimeTutorial(true);
 
-        } else if (extras != null && extras.getString(EXTRA_START_RETURN) != null) {
-            helpers.ToastMessage(DashboardActivity.this, "Welcome back " + SharedPrefs.getString(USER_F_NAME));
+            setCountOnDrawerItem(menu_profile, "*");
             setCountOnDrawerItem(menu_find_jobs, "*");
             setCountOnDrawerItem(menu_my_messages, "*");
 
-            NotificationModel notificationModel = new NotificationModel();
-            notificationModel.title = "Welcome Back";
-            notificationModel.body = SharedPrefs.getString(USER_F_NAME) + " it's great to have you back";
-            notificationModel.date = "By Management";
-            notificationModel.read = 0;
-            db.setNotification(notificationModel);
+        } else if (extras != null && extras.getString(EXTRA_START_RETURN) != null) {
+            helpers.toastMessage("Welcome back " + SharedPrefs.getString(USER_F_NAME));
 
-            SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
-            SharedPrefs.setBool(ALLOW_PUSH_MESSAGES, true);
-            SharedPrefs.setBool(ALLOW_PUSH_NOTIFICATIONS, true);
+            MyApplication.setFirstTimeTutorial(false);
+
+            setCountOnDrawerItem(menu_find_jobs, "*");
 
         }
     }
@@ -160,11 +159,6 @@ public class DashboardActivity extends ParentActivity {
     public void openNotifications(View view) {
         startActivity(new Intent(DashboardActivity.this, MyMessages.class)
                 .putExtra(EXTRA_MY_MESSAGES_NOTIFICATIONS, EXTRA_MY_MESSAGES_NOTIFICATIONS));
-    }
-
-    public void openMessages(View view) {
-        startActivity(new Intent(DashboardActivity.this, MyMessages.class)
-                .putExtra(EXTRA_MY_MESSAGES_INBOX, EXTRA_MY_MESSAGES_INBOX));
     }
 
     private void handleFireBase() {

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.MyApplication;
+import com.hotelaide.utils.HelpersAsync;
 
 public class BackgroundFetchService extends Service {
     private static final String TAG_LOG = "BACKGROUND SERVICE";
@@ -26,13 +26,12 @@ public class BackgroundFetchService extends Service {
 
     @Override
     public void onCreate() {
-        Helpers helpers = new Helpers(MyApplication.getAppContext());
-        helpers.asyncGetUser();
-        helpers.asyncGetCategories();
-        helpers.asyncGetJobTypes();
-        helpers.asyncGetEducationalLevels();
-        helpers.asyncGetCounties();
-        helpers.asyncGetAllDocuments();
+        HelpersAsync.asyncGetUser();
+        HelpersAsync.asyncGetCategories();
+        HelpersAsync.asyncGetJobTypes();
+        HelpersAsync.asyncGetEducationalLevels();
+        HelpersAsync.asyncGetCounties();
+        HelpersAsync.asyncGetAllDocuments();
         stopSelf();
     }
 

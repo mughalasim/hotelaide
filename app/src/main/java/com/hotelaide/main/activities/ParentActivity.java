@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -40,6 +42,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -136,14 +139,6 @@ public class ParentActivity extends FragmentActivity implements
 
         navigation_view.getMenu().findItem(drawer_id).setChecked(true);
 
-        TextView app_version = findViewById(R.id.app_version);
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            app_version.setText(getString(R.string.txt_version).concat(pInfo.versionName));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
         // FIND THE MENU ITEMS =====================================================================
         menu_dashboard = (TextView) navigation_view.getMenu().getItem(0).getActionView();
         menu_find_jobs = (TextView) navigation_view.getMenu().getItem(1).getActionView();
@@ -169,7 +164,7 @@ public class ParentActivity extends FragmentActivity implements
                 drawer.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        helpers.drawerItemClicked(ParentActivity.this, R.id.drawer_profile);
+                        helpers.drawerItemClicked(R.id.drawer_profile);
                     }
                 }, INT_NAV_DRAWER_DELAY);
             }
@@ -182,7 +177,7 @@ public class ParentActivity extends FragmentActivity implements
                 drawer.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        helpers.drawerItemClicked(ParentActivity.this, R.id.drawer_profile);
+                        helpers.drawerItemClicked(R.id.drawer_profile);
                     }
                 }, INT_NAV_DRAWER_DELAY);
             }
@@ -257,7 +252,7 @@ public class ParentActivity extends FragmentActivity implements
                             .putExtra(EXTRA_STRING, et_search.getText().toString()));
                     et_search.setText("");
                 } else {
-                    helpers.ToastMessage(ParentActivity.this, "Nothing typed in the search field");
+                    helpers.toastMessage("Nothing typed in the search field");
                 }
             }
         });
@@ -326,7 +321,7 @@ public class ParentActivity extends FragmentActivity implements
         drawer.postDelayed(new Runnable() {
             @Override
             public void run() {
-                helpers.drawerItemClicked(ParentActivity.this, id);
+                helpers.drawerItemClicked(id);
             }
         }, INT_NAV_DRAWER_DELAY);
         return true;
@@ -339,6 +334,7 @@ public class ParentActivity extends FragmentActivity implements
         } else if (this.isTaskRoot()) {
             final Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.dialog_confirm);
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             final TextView txt_message = dialog.findViewById(R.id.txt_message);
             final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
             final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
@@ -410,6 +406,7 @@ public class ParentActivity extends FragmentActivity implements
                             final Dialog dialog = new Dialog(ParentActivity.this);
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.setContentView(R.layout.dialog_confirm);
+                            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             final TextView txt_message = dialog.findViewById(R.id.txt_message);
                             final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
                             final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);

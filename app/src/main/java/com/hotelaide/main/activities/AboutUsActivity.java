@@ -15,7 +15,6 @@ public class AboutUsActivity extends ParentActivity {
         String TAG_LOG = "ABOUT US";
         initialize(R.id.drawer_about_us, getString(R.string.drawer_about_us));
 
-//        helper.setTracker(TAG_LOG);
 
     }
 

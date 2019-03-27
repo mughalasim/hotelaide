@@ -38,7 +38,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_small"
+                android:layout_marginTop="@dimen/padding_tiny"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
@@ -48,8 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="openMyJobs"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_mini">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_applied_jobs"
@@ -83,8 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="openMyJobs"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_mini">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_shortlisted"
@@ -117,8 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="openMyJobs"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_mini">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_interviews"
@@ -143,7 +140,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_small"
+                android:layout_marginTop="@dimen/padding_tiny"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
@@ -153,8 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="openMyJobs"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_mini">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_saved_jobs"
@@ -187,8 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="openMyJobs"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_mini">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_profile_views"
@@ -221,8 +216,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="openMyJobs"
-                    android:orientation="vertical"
-                    android:padding="@dimen/padding_mini">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/txt_unread_messages"
@@ -250,40 +244,44 @@
 
 
         <!-- PROGRESS =======================================================================-->
+
+
+
         <RelativeLayout
             android:id="@+id/rl_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_small"
-            android:orientation="horizontal">
+            android:onClick="openProfile"
+            android:layout_marginTop="@dimen/padding_small">
+
+            <TextView
+                android:id="@+id/txt_title"
+                style="@style/Text_Normal"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:textColor="@color/colorPrimary"
+                android:text="Profile Completion" />
 
             <SeekBar
+                android:layout_below="@+id/txt_title"
                 android:id="@+id/seek_bar_progress"
+                android:layout_marginTop="@dimen/padding_tiny"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
+                android:layout_height="wrap_content"
                 android:max="100"
-                android:progress="55"
+                android:progress="75"
                 android:progressDrawable="@drawable/progress_background"
                 android:thumb="@drawable/progress_thumb" />
 
             <TextView
-                android:id="@+id/txt_progress_label"
-                style="@style/Text_Normal"
-                android:layout_centerInParent="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:text="@string/txt_profile_completion"
-                android:textColor="@color/colorAccent"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/txt_progress"
                 style="@style/Text_Normal"
-                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/padding_tiny"
+                android:gravity="center"
+                android:layout_toEndOf="@+id/txt_title"
+                android:text="@string/txt_zero"
                 android:layout_marginTop="0dp"
-                android:layout_toEndOf="@+id/txt_progress_label"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/red"
                 android:textStyle="bold" />
 
         </RelativeLayout>

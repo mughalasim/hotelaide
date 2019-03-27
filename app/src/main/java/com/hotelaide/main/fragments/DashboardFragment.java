@@ -156,6 +156,7 @@ public class DashboardFragment extends Fragment {
                 return true;
             }
         });
+        seek_bar_progress.setPadding(0, 0, 0, 0);
 
         // NEW NOTIFICATIONS
         rl_notifications = root_view.findViewById(R.id.rl_notifications);
@@ -179,12 +180,12 @@ public class DashboardFragment extends Fragment {
         }
 
         // MESSAGES
-        int message_size = db.getAllUnreadNotifications();
-        if (message_size > 0) {
-            txt_unread_messages.setText(String.valueOf(message_size));
-        } else{
-            txt_unread_messages.setText(R.string.txt_zero);
-        }
+//        int message_size = db.getAllUnreadNotifications();
+//        if (message_size > 0) {
+//            txt_unread_messages.setText(String.valueOf(message_size));
+//        } else {
+//            txt_unread_messages.setText(R.string.txt_zero);
+//        }
 
     }
 
@@ -209,14 +210,13 @@ public class DashboardFragment extends Fragment {
             rl_progress.setVisibility(View.GONE);
         } else {
             rl_progress.setVisibility(View.VISIBLE);
-            seek_bar_progress.setProgress(completion);
-            txt_progress.setText(String.valueOf(completion).concat("%"));
-            rl_progress.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), ProfileActivity.class));
-                }
-            });
+            if (completion < 10) {
+                seek_bar_progress.setProgress(10);
+                txt_progress.setText("10%");
+            }else{
+                seek_bar_progress.setProgress(completion);
+                txt_progress.setText(String.valueOf(completion).concat("%"));
+            }
         }
     }
 

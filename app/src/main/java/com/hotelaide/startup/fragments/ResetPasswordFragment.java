@@ -100,13 +100,13 @@ public class ResetPasswordFragment extends Fragment {
                     Helpers.logThis(TAG_LOG, main.toString());
 
                     if (main.getBoolean("success") && getActivity() != null) {
-                        helpers.myDialog(getActivity(), getResources().getString(R.string.app_name), main.getString("message"));
+                        helpers.myDialog(getResources().getString(R.string.app_name), main.getString("message"));
                         et_user_email.setText("");
                     } else {
-                        helpers.myDialog(getActivity(), getResources().getString(R.string.app_name), main.getString("message"));
+                        helpers.myDialog(getResources().getString(R.string.app_name), main.getString("message"));
                     }
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -116,9 +116,9 @@ public class ResetPasswordFragment extends Fragment {
                 helpers.dismissProgressDialog();
                 Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                 } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    helpers.toastMessage(getString(R.string.error_connection));
                 }
 
             }

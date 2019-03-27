@@ -95,7 +95,7 @@ public class ChangePasswordFragment extends Fragment {
                     et_user_pass_confirm.setError(getString(R.string.error_field_length));
 
                 } else if (!et_user_pass_new.getText().toString().equals(et_user_pass_confirm.getText().toString())) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_pass));
+                    helpers.toastMessage(getString(R.string.error_pass));
 
                 } else {
                     asyncUpdatePassword();
@@ -123,10 +123,10 @@ public class ChangePasswordFragment extends Fragment {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
                     Helpers.logThis(TAG_LOG, main.toString());
                     if (main.getBoolean("success")) {
-                        helpers.ToastMessage(getActivity(), main.getString("message"));
+                        helpers.toastMessage( main.getString("message"));
                     }
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -135,9 +135,9 @@ public class ChangePasswordFragment extends Fragment {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                 } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    helpers.toastMessage(getString(R.string.error_connection));
                 }
 
             }

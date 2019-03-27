@@ -1,6 +1,8 @@
 package com.hotelaide.main.activities;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +19,8 @@ import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import retrofit2.Call;
@@ -101,6 +105,7 @@ public class SettingsActivity extends ParentActivity {
                 final Dialog dialog = new Dialog(SettingsActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_confirm);
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 final TextView txt_message = dialog.findViewById(R.id.txt_message);
                 final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
                 final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
@@ -110,7 +115,7 @@ public class SettingsActivity extends ParentActivity {
                 btn_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        helpers.ToastMessage(SettingsActivity.this, "Coming soon :)");
+                        helpers.toastMessage( "Coming soon :)");
 //                        asyncDeleteUser();
                         dialog.cancel();
                     }
@@ -146,11 +151,11 @@ public class SettingsActivity extends ParentActivity {
                     }
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(SettingsActivity.this, getString(R.string.error_server));
+                    helpers.toastMessage( getString(R.string.error_server));
                     Helpers.logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    helpers.ToastMessage(SettingsActivity.this, getString(R.string.error_server));
+                    helpers.toastMessage( getString(R.string.error_server));
                     Helpers.logThis(TAG_LOG, e.toString());
                 }
                 helpers.dismissProgressDialog();

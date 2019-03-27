@@ -3,13 +3,14 @@ package com.hotelaide.startup;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.eftimoff.viewpagertransformers.BackgroundToForegroundTransformer;
-import com.eftimoff.viewpagertransformers.ForegroundToBackgroundTransformer;
 import com.hotelaide.R;
 import com.hotelaide.startup.fragments.LoginEmailFragment;
 import com.hotelaide.startup.fragments.LoginSocialFragment;
@@ -20,6 +21,7 @@ import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -71,6 +73,7 @@ public class LoginActivity extends FragmentActivity {
             } else {
                 final Dialog dialog = new Dialog(this);
                 dialog.setContentView(R.layout.dialog_confirm);
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 final TextView txt_message = dialog.findViewById(R.id.txt_message);
                 final TextView btn_confirm = dialog.findViewById(R.id.btn_confirm);
                 final TextView btn_cancel = dialog.findViewById(R.id.btn_cancel);
@@ -101,19 +104,14 @@ public class LoginActivity extends FragmentActivity {
     // BASIC FUNCTIONS =============================================================================
     private void findAllViews() {
         viewPager = findViewById(R.id.view_pager);
-//        TabLayout tabLayout = findViewById(R.id.tabs);
-
         setupViewPager(viewPager);
-//        tabLayout.setupWithViewPager(viewPager, true);
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        int frag_number = fragments.length;
 
-        for (int i = 0; i < frag_number; i++) {
-            adapter.addFragment(fragments[i]);
+        for (Fragment fragment : fragments) {
+            adapter.addFragment(fragment);
         }
 
         viewPager.setAdapter(adapter);
@@ -125,7 +123,6 @@ public class LoginActivity extends FragmentActivity {
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
-//        private final List<String> mFragmentTitleList = new ArrayList<>();
 
         private ViewPagerAdapter(FragmentManager manager) {
             super(manager);
@@ -143,7 +140,6 @@ public class LoginActivity extends FragmentActivity {
 
         void addFragment(Fragment fragment) {
             mFragmentList.add(fragment);
-//            mFragmentTitleList.add(title);
         }
 
         @Override
@@ -160,7 +156,7 @@ public class LoginActivity extends FragmentActivity {
             Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://hotelaide.com/terms"));
             startActivity(myIntent);
         } catch (ActivityNotFoundException e) {
-            helpers.ToastMessage(LoginActivity.this, "No application can handle this request."
+            helpers.toastMessage("No application can handle this request."
                     + " Please install a web browser");
             e.printStackTrace();
         }

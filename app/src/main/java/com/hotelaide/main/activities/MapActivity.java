@@ -65,7 +65,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-        helpers.myPermissionsDialog(MapActivity.this, grantResults);
+        helpers.myPermissionsDialog(grantResults);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 public boolean onMyLocationButtonClick() {
                     LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                     if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                        helpers.dialogNoGPS(MapActivity.this);
+                        helpers.dialogNoGPS();
                     }
                     return false;
                 }
@@ -160,7 +160,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             assert fm != null;
             fm.getMapAsync(this);
         } else {
-            helpers.ToastMessage(MapActivity.this, getString(R.string.error_update_google_play));
+            helpers.toastMessage(getString(R.string.error_update_google_play));
             onBackPressed();
         }
     }

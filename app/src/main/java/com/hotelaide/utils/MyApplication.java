@@ -15,6 +15,17 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.facebook.stetho.Stetho;
 
+import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_MESSAGES;
+import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_NOTIFICATIONS;
+import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_MESSAGES;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE_EDIT;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH_MEMBERS;
+
 public class MyApplication extends Application {
 
     @SuppressLint("StaticFieldLeak")
@@ -25,7 +36,7 @@ public class MyApplication extends Application {
         MyApplication.context = getApplicationContext();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         // then open this link in chrome -> chrome://inspect/#devices
-        if (BuildConfig.LOGGING) {
+        if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this);
         }
     }
@@ -43,10 +54,25 @@ public class MyApplication extends Application {
         if (fire_base_app_list.size() < 1) {
             FirebaseApp.initializeApp(getAppContext(), builder);
         }
+
     }
 
     public static Context getAppContext() {
         return MyApplication.context;
+    }
+
+    public static void setFirstTimeTutorial(Boolean state){
+        SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
+        SharedPrefs.setBool(ALLOW_PUSH_MESSAGES, true);
+        SharedPrefs.setBool(ALLOW_PUSH_NOTIFICATIONS, true);
+
+        SharedPrefs.setBool(FIRST_LAUNCH_DASH, state);
+        SharedPrefs.setBool(FIRST_LAUNCH_PROFILE, state);
+        SharedPrefs.setBool(FIRST_LAUNCH_PROFILE_EDIT, state);
+        SharedPrefs.setBool(FIRST_LAUNCH_SEARCH, state);
+        SharedPrefs.setBool(FIRST_LAUNCH_SEARCH_MEMBERS, state);
+        SharedPrefs.setBool(FIRST_LAUNCH_MESSAGES, state);
+        SharedPrefs.setBool(FIRST_LAUNCH_ADDRESS, state);
     }
 
 }

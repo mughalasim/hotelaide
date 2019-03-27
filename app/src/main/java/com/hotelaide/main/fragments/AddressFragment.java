@@ -126,7 +126,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, getActivity());
-        helpers.myPermissionsDialog(getActivity(), grantResults);
+        helpers.myPermissionsDialog(grantResults);
     }
 
     @Override
@@ -205,7 +205,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
             if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 startActivity(new Intent(getActivity(), MapActivity.class));
             } else {
-                helpers.dialogNoGPS(getActivity());
+                helpers.dialogNoGPS();
             }
         }
     }
@@ -352,7 +352,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                         JSONObject main = new JSONObject(String.valueOf(response.body()));
                         Helpers.logThis(TAG_LOG, main.toString());
                         if (main.getBoolean("success")) {
-                            helpers.ToastMessage(getActivity(), main.getString("message"));
+                            helpers.toastMessage(main.getString("message"));
                             SharedPrefs.setInt(USER_COUNTY, county_id);
                             SharedPrefs.setString(USER_POSTAL_CODE, et_postcode.getText().toString());
                             SharedPrefs.setDouble(USER_LAT, latitude);
@@ -363,7 +363,7 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                             ((ProfileEditActivity) getActivity()).moveViewPagerNext();
                         }
                     } catch (JSONException e) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                         e.printStackTrace();
                     }
                 }
@@ -374,9 +374,9 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 if (getActivity() != null) {
                     Helpers.logThis(TAG_LOG, t.toString());
                     if (helpers.validateInternetConnection()) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                     } else {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                        helpers.toastMessage(getString(R.string.error_connection));
                     }
                 }
             }

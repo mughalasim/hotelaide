@@ -65,8 +65,14 @@ public class MyJobsActivity extends ParentActivity {
         if (extras != null && extras.getString(FILTER_TYPE_APPLIED) != null) {
            view_pager.setCurrentItem(0);
 
-        } else if (extras != null && extras.getString(FILTER_TYPE_SAVED) != null) {
+        } else if (extras != null && extras.getString(FILTER_TYPE_SHORTLISTED) != null) {
             view_pager.setCurrentItem(1);
+
+        } else if (extras != null && extras.getString(FILTER_TYPE_INTERVIEWS) != null) {
+            view_pager.setCurrentItem(2);
+
+        } else if (extras != null && extras.getString(FILTER_TYPE_SAVED) != null) {
+            view_pager.setCurrentItem(0);
 
         }
     }

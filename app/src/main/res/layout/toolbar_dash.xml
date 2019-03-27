@@ -26,17 +26,17 @@
             android:background="@drawable/back_text_fields"
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="2.5"
-            android:layout_margin="4sp"
+            android:layout_weight="2.4"
+            android:layout_margin="@dimen/text_margin"
             android:maxLines="1"
             android:maxLength="20"
             android:inputType="text"
-            android:hint="@string/search_hint" />
+            android:hint="@string/txt_search_jobs" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_search"
             android:layout_width="0dp"
-            android:padding="@dimen/padding_mini"
+            android:padding="@dimen/padding_tiny"
             android:layout_weight="0.5"
             android:layout_height="match_parent"
             app:srcCompat="@drawable/ic_search_white"

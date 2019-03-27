@@ -3,6 +3,8 @@ package com.hotelaide.main.adapters;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -136,6 +139,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         final Dialog dialog = new Dialog(context);
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setContentView(R.layout.dialog_confirm);
+                        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         final TextView txt_message = dialog.findViewById(R.id.txt_message);
                         final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
                         final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);

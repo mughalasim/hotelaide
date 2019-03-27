@@ -233,8 +233,6 @@
         <service
             android:name=".utils.NotificationService"
             android:enabled="true"
-            android:exported="false"
-            android:permission=""
             android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -245,9 +243,7 @@
         <!--GOOGLE PLAY STORE CAMPAIGN MANAGEMENT ===============================================-->
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
-            android:enabled="true"
-            android:exported="false"
-            android:permission="">
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>

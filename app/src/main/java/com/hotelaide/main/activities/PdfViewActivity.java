@@ -22,6 +22,7 @@ import com.google.android.material.button.MaterialButton;
 import com.hotelaide.R;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 
 import java.io.File;
 
@@ -83,7 +84,7 @@ public class PdfViewActivity extends AppCompatActivity implements OnPageChangeLi
 
         } else {
             finish();
-            helpers.ToastMessage(PdfViewActivity.this, getString(R.string.error_unknown));
+            helpers.toastMessage(getString(R.string.error_unknown));
         }
 
     }
@@ -208,12 +209,12 @@ public class PdfViewActivity extends AppCompatActivity implements OnPageChangeLi
             @Override
             public void onClick(View v) {
                 if (STR_FILE_NAME.equals("")) {
-                    helpers.myDialog(PdfViewActivity.this, getString(R.string.txt_alert), "File name cannot be empty");
+                    helpers.myDialog(getString(R.string.txt_alert), "File name cannot be empty");
                 } else {
                     MultipartBody.Part partFile = MultipartBody.Part.createFormData("file",
                             STR_FILE_NAME, RequestBody.create(MediaType.parse("application/pdf"), file));
                     db.setDirtyDocument();
-                    helpers.asyncUploadDocument(partFile);
+                    HelpersAsync.asyncUploadDocument(partFile);
                     onBackPressed();
                 }
             }

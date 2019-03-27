@@ -95,7 +95,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
                         );
                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     } else {
-                        helpers.ToastMessage(context, context.getString(R.string.error_connection));
+                        helpers.toastMessage(context.getString(R.string.error_connection));
                     }
                 }
             });

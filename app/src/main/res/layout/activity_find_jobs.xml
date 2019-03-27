@@ -35,7 +35,7 @@
                     app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                     app:titleEnabled="false">
 
-                    <include layout="@layout/activity_find_job_header" />
+                    <include layout="@layout/activity_search_header" />
 
                     <include layout="@layout/toolbar" />
 

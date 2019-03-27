@@ -10,15 +10,15 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -68,8 +68,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,6 +75,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import androidx.annotation.NonNull;
@@ -116,7 +115,6 @@ import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_PREVIEW;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TITLE;
-import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TYPE_CODE_INTERVIEW;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TYPE_CODE_MESSAGE;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
@@ -135,7 +133,6 @@ public class Helpers {
     private final TextView txt_loading_message;
     private final Dialog dialog;
 
-
     private Database db;
 
     public Helpers(Context context) {
@@ -150,7 +147,7 @@ public class Helpers {
 
 
     // DRAWER CLICKS ===============================================================================
-    public void drawerItemClicked(Context context, int id) {
+    public void drawerItemClicked(int id) {
         switch (id) {
             case R.id.drawer_dashboard:
                 context.startActivity(new Intent(context, DashboardActivity.class));
@@ -214,7 +211,7 @@ public class Helpers {
 
     // LOGS ========================================================================================
     public static void logThis(String page_name, String data) {
-        if (BuildConfig.LOGGING) {
+        if (BuildConfig.DEBUG) {
             Log.e(page_name, data);
         }
     }
@@ -250,6 +247,7 @@ public class Helpers {
     public void setProgressDialog(String message) {
         if (!dialog.isShowing()) {
             dialog.show();
+            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             txt_loading_message.setText(message);
         } else {
             dialog.cancel();
@@ -264,9 +262,10 @@ public class Helpers {
         }
     }
 
-    public void myDialog(Context DialogContext, String title, String message) {
-        final Dialog dialog = new Dialog(DialogContext);
+    public void myDialog(String title, String message) {
+        final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_cancel);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final TextView txt_message = dialog.findViewById(R.id.txt_message);
         final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
         final TextView txt_title = dialog.findViewById(R.id.txt_title);
@@ -281,11 +280,12 @@ public class Helpers {
         dialog.show();
     }
 
-    public void myPermissionsDialog(final Context context, int[] grant_results) {
+    public void myPermissionsDialog(int[] grant_results) {
         for (int result : grant_results) {
             if (result == -1) {
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_confirm);
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 final TextView txt_message = dialog.findViewById(R.id.txt_message);
                 final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
                 final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
@@ -317,10 +317,11 @@ public class Helpers {
         }
     }
 
-    public void dialogNoGPS(final Context context) {
+    public void dialogNoGPS() {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final TextView txt_message = dialog.findViewById(R.id.txt_message);
         final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
         final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
@@ -349,6 +350,7 @@ public class Helpers {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_share);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final ImageView share_facebook = dialog.findViewById(R.id.share_facebook);
         final ImageView share_email = dialog.findViewById(R.id.share_email);
         final ImageView share_messenger = dialog.findViewById(R.id.share_messenger);
@@ -365,7 +367,7 @@ public class Helpers {
                     ShareDialog.show(context, content);
                     dialog.cancel();
                 } else {
-                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                    toastMessage(context.getString(R.string.error_app_not_installed));
                 }
             }
         });
@@ -381,7 +383,7 @@ public class Helpers {
                     context.startActivity(Intent.createChooser(emailIntent, "Send Email"));
                     dialog.cancel();
                 } catch (Exception e) {
-                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                    toastMessage(context.getString(R.string.error_app_not_installed));
                 }
             }
         });
@@ -397,7 +399,7 @@ public class Helpers {
                     messengerIntent.setPackage("com.facebook.orca");
                     context.startActivity(messengerIntent);
                 } else {
-                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                    toastMessage(context.getString(R.string.error_app_not_installed));
                 }
             }
         });
@@ -412,7 +414,7 @@ public class Helpers {
                     context.startActivity(smsIntent);
                     dialog.cancel();
                 } catch (Exception e) {
-                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                    toastMessage(context.getString(R.string.error_app_not_installed));
                 }
             }
         });
@@ -428,7 +430,7 @@ public class Helpers {
                     context.startActivity(whatsappIntent);
                     dialog.cancel();
                 } else {
-                    ToastMessage(context, context.getString(R.string.error_app_not_installed));
+                    toastMessage(context.getString(R.string.error_app_not_installed));
                 }
             }
         });
@@ -437,10 +439,11 @@ public class Helpers {
         dialog.show();
     }
 
-    public void dialogMakeCall(final Context context, final String phone_number) {
+    public void dialogMakeCall(final String phone_number) {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final TextView txt_message = dialog.findViewById(R.id.txt_message);
         final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
         final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
@@ -457,7 +460,7 @@ public class Helpers {
                     context.startActivity(intent);
 
                 } else {
-                    myDialog(context,
+                    myDialog(
                             context.getString(R.string.app_name),
                             context.getString(R.string.error_call_permissions));
                 }
@@ -474,18 +477,19 @@ public class Helpers {
         dialog.show();
     }
 
-    private void dialogEditProfile(final Context dialogContext, String message, final String bundle_extra) {
-        final Dialog dialog = new Dialog(dialogContext);
+    private void dialogEditProfile(String message, final String bundle_extra) {
+        final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_confirm);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         final TextView txt_message = dialog.findViewById(R.id.txt_message);
         final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
         final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
         final TextView txt_title = dialog.findViewById(R.id.txt_title);
         txt_title.setText(R.string.txt_update);
         txt_message.setText(
-                dialogContext.getString(R.string.txt_not_setup1)
+                context.getString(R.string.txt_not_setup1)
                         .concat(message)
-                        .concat(dialogContext.getString(R.string.txt_not_setup2))
+                        .concat(context.getString(R.string.txt_not_setup2))
         );
         btn_confirm.setText(R.string.txt_take_me_there);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -497,7 +501,7 @@ public class Helpers {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogContext.startActivity(new Intent(dialogContext, ProfileEditActivity.class)
+                context.startActivity(new Intent(context, ProfileEditActivity.class)
                         .putExtra(bundle_extra, bundle_extra));
                 dialog.cancel();
             }
@@ -506,7 +510,7 @@ public class Helpers {
 
     }
 
-    public void ToastMessage(Context context, String message) {
+    public void toastMessage(String message) {
         if (toast != null) {
             toast.cancel();
         }
@@ -525,7 +529,7 @@ public class Helpers {
             );
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else {
-            ToastMessage(activity, "Image not set");
+            toastMessage("Image not set");
         }
     }
 
@@ -550,16 +554,16 @@ public class Helpers {
     }
 
     public void setTarget(Activity activity, String bool_value, View[] views, String[] titles, String[] messages) {
-        if (activity != null && !SharedPrefs.getBool(bool_value)) {
+        if (activity != null && SharedPrefs.getBool(bool_value)) {
             ArrayList<TapTarget> tapTargets = new ArrayList<>();
             int length = titles.length;
             for (int i = 0; i < length; i++) {
                 tapTargets.add(TapTarget.forView(views[i], titles[i], messages[i])
-                        .dimColor(R.color.dim)
-                        .outerCircleColor(R.color.colorAccent)
+                        .dimColor(R.color.dimmer)
+                        .outerCircleColor(R.color.colorPrimary)
                         .cancelable(true)
-                        .descriptionTextColor(R.color.black)
-                        .titleTextColor(R.color.dark_grey)
+                        .descriptionTextColor(R.color.white)
+                        .titleTextColor(R.color.black)
                         .drawShadow(true)
                         .transparentTarget(true));
             }
@@ -595,7 +599,7 @@ public class Helpers {
             app_installed = true;
         } catch (NameNotFoundException e) {
             app_installed = false;
-            ToastMessage(context, "This app has not been installed");
+            toastMessage("This app has not been installed");
         }
         return app_installed;
     }
@@ -636,7 +640,7 @@ public class Helpers {
 
     public boolean validateEmptyTextView(TextView textView, String errorMessage) {
         if (textView.getText().toString().length() < 1) {
-            ToastMessage(context, errorMessage);
+            toastMessage(errorMessage);
             animateFlash(textView);
             return false;
         } else {
@@ -656,30 +660,30 @@ public class Helpers {
         return true;
     }
 
-    public boolean validateJobApplication(Context context) {
+    public boolean validateJobApplication() {
 
         if (SharedPrefs.getInt(USER_AVAILABILITY) == 0) {
-            dialogEditProfile(context, "availability", EXTRA_PROFILE_BASIC);
+            dialogEditProfile("availability", EXTRA_PROFILE_BASIC);
             return false;
 
         } else if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
-            dialogEditProfile(context, "full address", EXTRA_PROFILE_ADDRESS);
+            dialogEditProfile("full address", EXTRA_PROFILE_ADDRESS);
             return false;
 
         } else if (SharedPrefs.getString(USER_PHONE).equals("")) {
-            dialogEditProfile(context, "phone", EXTRA_PROFILE_BASIC);
+            dialogEditProfile("phone", EXTRA_PROFILE_BASIC);
             return false;
 
         } else if (SharedPrefs.getInt(USER_COUNTY) == 0) {
-            dialogEditProfile(context, "county", EXTRA_PROFILE_ADDRESS);
+            dialogEditProfile("county", EXTRA_PROFILE_ADDRESS);
             return false;
 
         } else if (db.getAllExperience(EXPERIENCE_TYPE_EDUCATION).size() < 1) {
-            dialogEditProfile(context, "education history", EXTRA_PROFILE_EDUCATION);
+            dialogEditProfile("education history", EXTRA_PROFILE_EDUCATION);
             return false;
 
         } else if (db.getAllExperience(EXPERIENCE_TYPE_WORK).size() < 1) {
-            dialogEditProfile(context, "employment history", EXTRA_PROFILE_WORK);
+            dialogEditProfile("employment history", EXTRA_PROFILE_WORK);
             return false;
 
         } else {
@@ -690,28 +694,28 @@ public class Helpers {
     public boolean validateProfileCompletion(Context context) {
 
         if (SharedPrefs.getString(USER_F_NAME).equals("")) {
-            ToastMessage(context, "You have not set your first name");
+            toastMessage("You have not set your first name");
             return false;
 
         } else if (SharedPrefs.getString(USER_L_NAME).equals("")) {
-            ToastMessage(context, "You have not set your last name");
+            toastMessage("You have not set your last name");
             return false;
 
         }
         if (SharedPrefs.getString(USER_DOB).equals("")) {
-            ToastMessage(context, "You have not set your date of birth");
+            toastMessage("You have not set your date of birth");
             return false;
 
         } else if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
-            ToastMessage(context, "You have not set your address");
+            toastMessage("You have not set your address");
             return false;
 
         } else if (SharedPrefs.getString(USER_PHONE).equals("")) {
-            ToastMessage(context, "You have not set your phone number");
+            toastMessage("You have not set your phone number");
             return false;
 
         } else if (SharedPrefs.getInt(USER_COUNTY) == 0) {
-            ToastMessage(context, "You have not set your county");
+            toastMessage("You have not set your county");
             return false;
 
         } else {
@@ -869,14 +873,14 @@ public class Helpers {
                     for (int y = 0; y < message_array.length(); y++) {
                         display_message = display_message.concat(message_array.getString(y)).concat("\n");
                     }
-                    myDialog(context, context.getString(R.string.txt_errors), display_message);
+                    myDialog(context.getString(R.string.txt_errors), display_message);
 
                     Helpers.logThis(TAG_LOG, display_message);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                     logThis(TAG_LOG, e.toString());
-                    myDialog(context, context.getString(R.string.app_name), context.getString(R.string.error_unknown));
+                    myDialog(context.getString(R.string.app_name), context.getString(R.string.error_unknown));
                 }
             }
 
@@ -884,7 +888,7 @@ public class Helpers {
         } catch (Exception j) {
             j.printStackTrace();
             logThis(TAG_LOG, j.toString());
-            myDialog(context, context.getString(R.string.app_name), context.getString(R.string.error_unknown));
+            myDialog(context.getString(R.string.app_name), context.getString(R.string.error_unknown));
         }
 
     }
@@ -1004,354 +1008,6 @@ public class Helpers {
             if (notificationManager != null)
                 notificationManager.createNotificationChannel(channel);
         }
-    }
-
-
-    // COMMON ASYNC TASKS ==========================================================================
-    // GET USER ====================================================================================
-    public void asyncGetUser() {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.getUser();
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-
-//                    logThis(TAG_LOG, main.toString());
-
-                    if (main.getBoolean("success")) {
-                        SharedPrefs.setUser(main.getJSONObject("data"));
-                    }
-
-                } catch (JSONException e) {
-                    logThis(TAG_LOG, e.toString());
-                    context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-
-                } catch (Exception e) {
-                    logThis(TAG_LOG, e.toString());
-                    context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                logThis(TAG_LOG, t.toString());
-                logThis(TAG_LOG, call.toString());
-                context.sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-            }
-
-        });
-    }
-
-    // GET COUNTIES ================================================================================
-    public void asyncGetCounties() {
-        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
-        final Call<JsonObject> call = generalInterface.getCounties();
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-
-//                    logThis(TAG_LOG, main.toString());
-
-                    if (main.getBoolean("success")) {
-                        JSONArray main_array = main.getJSONArray("data");
-                        int length = main_array.length();
-                        for (int i = 0; i < length; i++) {
-                            JSONObject object = main_array.getJSONObject(i);
-                            SearchFilterModel searchFilterModel = new SearchFilterModel();
-                            searchFilterModel.id = object.getInt("id");
-                            searchFilterModel.name = object.getString("county_name");
-                            db.setFilter(COUNTY_TABLE_NAME, searchFilterModel);
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    logThis(TAG_LOG, e.toString());
-
-                } catch (Exception e) {
-                    logThis(TAG_LOG, e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                logThis(TAG_LOG, t.toString());
-                logThis(TAG_LOG, call.toString());
-            }
-
-        });
-    }
-
-    // GET EDUCATIONAL LEVEL =======================================================================
-    public void asyncGetEducationalLevels() {
-        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
-        final Call<JsonObject> call = generalInterface.getEducationalLevels();
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-
-//                    logThis(TAG_LOG, main.toString());
-
-                    if (main.getBoolean("success")) {
-                        JSONArray main_array = main.getJSONArray("data");
-                        int length = main_array.length();
-                        db.deleteEducationLevelsTable();
-                        for (int i = 0; i < length; i++) {
-                            JSONObject object = main_array.getJSONObject(i);
-                            SearchFilterModel searchFilterModel = new SearchFilterModel();
-                            searchFilterModel.id = object.getInt("id");
-                            searchFilterModel.name = object.getString("name");
-                            db.setFilter(EDUCATION_LEVEL_TABLE_NAME, searchFilterModel);
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    logThis(TAG_LOG, e.toString());
-
-                } catch (Exception e) {
-                    logThis(TAG_LOG, e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                logThis(TAG_LOG, t.toString());
-                logThis(TAG_LOG, call.toString());
-            }
-
-        });
-    }
-
-    // GET JOB TYPES ===============================================================================
-    public void asyncGetJobTypes() {
-        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
-        final Call<JsonObject> call = generalInterface.getJobTypes();
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-
-//                    logThis(TAG_LOG, main.toString());
-
-                    if (main.getBoolean("success")) {
-                        JSONArray main_array = main.getJSONArray("data");
-                        int length = main_array.length();
-                        db.deleteJobTypeTable();
-                        for (int i = 0; i < length; i++) {
-                            JSONObject object = main_array.getJSONObject(i);
-                            SearchFilterModel searchFilterModel = new SearchFilterModel();
-                            searchFilterModel.id = object.getInt("id");
-                            searchFilterModel.name = object.getString("name");
-                            db.setFilter(JOB_TYPE_TABLE_NAME, searchFilterModel);
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    logThis(TAG_LOG, e.toString());
-
-                } catch (Exception e) {
-                    logThis(TAG_LOG, e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                logThis(TAG_LOG, t.toString());
-                logThis(TAG_LOG, call.toString());
-            }
-
-        });
-    }
-
-    // GET CATEGORIES ==============================================================================
-    public void asyncGetCategories() {
-        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
-        final Call<JsonObject> call = generalInterface.getCategories();
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-
-//                    logThis(TAG_LOG, main.toString());
-
-                    if (main.getBoolean("success")) {
-                        JSONArray main_array = main.getJSONArray("data");
-                        db.deleteCategoriesTable();
-                        int length = main_array.length();
-                        for (int i = 0; i < length; i++) {
-                            JSONObject object = main_array.getJSONObject(i);
-                            SearchFilterModel searchFilterModel = new SearchFilterModel();
-                            searchFilterModel.id = object.getInt("id");
-                            searchFilterModel.name = object.getString("name");
-                            db.setFilter(CATEGORIES_TABLE_NAME, searchFilterModel);
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    logThis(TAG_LOG, e.toString());
-
-                } catch (Exception e) {
-                    logThis(TAG_LOG, e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                logThis(TAG_LOG, t.toString());
-                logThis(TAG_LOG, call.toString());
-            }
-
-        });
-    }
-
-    // GET DOCUMENTS ===============================================================================
-    public void asyncGetAllDocuments() {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.getAllDocuments(SharedPrefs.getInt(USER_ID));
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-
-                    logThis(TAG_LOG, main.toString());
-
-                    if (main.getBoolean("success")) {
-                        JSONObject data_object = main.getJSONObject("data");
-                        JSONArray document_array = data_object.getJSONArray("documents");
-
-                        db.deleteDocumentsTable();
-
-                        if (document_array != null && document_array.length() > 0) {
-                            int length = document_array.length();
-                            for (int i = 0; i < length; i++) {
-                                JSONObject document_object = document_array.getJSONObject(i);
-                                db.setDocumentFromJson(document_object);
-                            }
-                        }
-                    }
-                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE));
-
-                } catch (JSONException e) {
-                    logThis(TAG_LOG, e.toString());
-
-                } catch (Exception e) {
-                    logThis(TAG_LOG, e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                logThis(TAG_LOG, t.toString());
-                logThis(TAG_LOG, call.toString());
-                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE));
-            }
-
-        });
-    }
-
-    // UPLOAD DOCUMENTS ============================================================================
-    public void asyncUploadDocument(final MultipartBody.Part partFile) {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        Call<JsonObject> call = userInterface.setUserDocument(
-                SharedPrefs.getInt(USER_ID),
-                partFile
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    db.deleteDirtyDocuments();
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    Helpers.logThis(TAG_LOG, main.toString());
-                    if (main.getBoolean("success")) {
-                        db.deleteDirtyDocuments();
-                        JSONObject data_object = main.getJSONObject("data");
-                        db.setDocumentFromJson(data_object.getJSONObject("document"));
-
-                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
-                    } else {
-                        showErrorNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_unknown));
-                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-                    }
-                } catch (JSONException e) {
-                    showErrorNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
-                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Helpers.logThis(TAG_LOG, t.toString());
-                db.deleteDirtyDocuments();
-                if (validateInternetConnection()) {
-                    showErrorNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_server));
-                } else {
-                    showErrorNotification(context, context.getString(R.string.txt_upload_failed), context.getString(R.string.error_connection));
-                }
-                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-            }
-        });
-
-    }
-
-    private void showErrorNotification(Context context, String title, String preview) {
-        NotificationModel notification_model = new NotificationModel();
-        notification_model.table_id = 0;
-        notification_model.job_id = 1;
-        notification_model.type_code = NOTIFICATION_TYPE_CODE_MESSAGE;
-        notification_model.title = title;
-        notification_model.preview = preview;
-        createNotification(context, notification_model);
-
-    }
-
-    // GET DOCUMENTS ===============================================================================
-    public void asyncDeleteDocument(final int id) {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.deleteDocument(
-                SharedPrefs.getInt(USER_ID),
-                id
-        );
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    logThis(TAG_LOG, main.toString());
-                    if (main.getBoolean("success")) {
-                        db.deleteDocumentByID(String.valueOf(id));
-                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
-                    } else {
-                        context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-                    }
-                } catch (JSONException e) {
-                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-                    logThis(TAG_LOG, e.toString());
-
-                } catch (Exception e) {
-                    context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-                    logThis(TAG_LOG, e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                logThis(TAG_LOG, t.toString());
-                logThis(TAG_LOG, call.toString());
-                context.sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-            }
-
-        });
     }
 
 }

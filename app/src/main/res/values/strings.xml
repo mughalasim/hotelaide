@@ -179,8 +179,10 @@
     <string name="txt_at">&#160;at&#160;</string>
     <string name="txt_full_address">Full Address</string>
     <string name="txt_map_location">Map (Tap to set your location)</string>
-    <string name="txt_search_here">search here…</string>
     <string name="txt_search">Search</string>
+    <string name="txt_search_here">Search here…</string>
+    <string name="txt_search_jobs">Search jobs</string>
+    <string name="txt_search_members">Search members</string>
     <string name="txt_clear">Clear</string>
     <string name="txt_delete_experience">Are you sure you wish to delete your experience at&#160;</string>
     <string name="txt_delete">Delete</string>

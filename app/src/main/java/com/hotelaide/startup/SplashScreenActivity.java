@@ -31,6 +31,8 @@ import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.DATABASE_VERSION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_LAUNCH;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
@@ -56,7 +58,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         // Uncomment Only when SHA Cert needed for Facebook API
-//         helpers.getShaCertificate();
+//        helpers.getShaCertificate();
 
         startUp();
 
@@ -85,15 +87,22 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 Helpers.logThis(TAG_LOG, "Start Up");
                 if (SharedPrefs.getString(ACCESS_TOKEN).equals("")) {
-                    startActivity(new Intent(SplashScreenActivity.this, IntroActivity.class));
+                    if (SharedPrefs.getGlobalBool(FIRST_LAUNCH)) {
+                        startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                    } else {
+                        SharedPrefs.setGlobalBool(FIRST_LAUNCH, true);
+                        startActivity(new Intent(SplashScreenActivity.this, IntroActivity.class));
+                    }
                 } else {
                     if (helpers.validateServiceRunning(MessagingService.class)) {
                         startService(new Intent(SplashScreenActivity.this, MessagingService.class));
                     }
                     if (SharedPrefs.getString(USER_F_NAME).equals("")) {
-                        startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class).putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
+                        startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class)
+                                .putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
                     } else {
-                        startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class).putExtra(EXTRA_START_LAUNCH, EXTRA_START_LAUNCH));
+                        startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class)
+                                .putExtra(EXTRA_START_LAUNCH, EXTRA_START_LAUNCH));
                     }
                 }
                 finish();

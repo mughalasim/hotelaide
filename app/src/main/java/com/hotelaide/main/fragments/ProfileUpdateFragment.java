@@ -31,7 +31,6 @@ import com.hotelaide.utils.SharedPrefs;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -324,12 +323,12 @@ public class ProfileUpdateFragment extends Fragment {
 
                     if (main.getBoolean("success")) {
                         if (SharedPrefs.setUser(main.getJSONObject("data"))) {
-                            helpers.ToastMessage(getActivity(), main.getString("message"));
+                            helpers.toastMessage(main.getString("message"));
                             if (getActivity() != null) {
                                 ((ProfileEditActivity) getActivity()).moveViewPagerNext();
                             }
                         } else {
-                            helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                            helpers.toastMessage(getString(R.string.error_server));
                         }
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
@@ -338,7 +337,7 @@ public class ProfileUpdateFragment extends Fragment {
                     setFromSharedPrefs();
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -349,9 +348,9 @@ public class ProfileUpdateFragment extends Fragment {
                 Helpers.logThis(TAG_LOG, t.toString());
                 setFromSharedPrefs();
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                 } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    helpers.toastMessage(getString(R.string.error_connection));
                 }
 
             }
@@ -381,7 +380,7 @@ public class ProfileUpdateFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (getActivity() != null) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    helpers.toastMessage(getString(R.string.error_connection));
                 }
             }
         });

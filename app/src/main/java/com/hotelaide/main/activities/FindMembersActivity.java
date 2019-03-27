@@ -41,6 +41,7 @@ import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_MEMBERS;
 import static com.hotelaide.BuildConfig.ALGOLIA_SEARCH_API_KEY;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH_MEMBERS;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 
 public class FindMembersActivity extends ParentActivity {
@@ -133,6 +134,7 @@ public class FindMembersActivity extends ParentActivity {
         btn_add_filter = findViewById(R.id.btn_add_filter);
         btn_add_filter.setVisibility(View.GONE);
         et_search = findViewById(R.id.et_search);
+        et_search.setHint(R.string.txt_search_members);
         txt_filter_location = findViewById(R.id.txt_filter_location);
         txt_filter_type = findViewById(R.id.txt_filter_type);
         txt_filter_category = findViewById(R.id.txt_filter_category);
@@ -172,19 +174,19 @@ public class FindMembersActivity extends ParentActivity {
         recycler_view.setLayoutManager(layoutManager);
 
 
-//        helpers.setTarget(
-//                FindMembersActivity.this,
-//                FIRST_LAUNCH_SEARCH_MEMBERS,
-//                new View[]{
-//                        findViewById(R.id.et_search)
-//                },
-//                new String[]{
-//                        "Search"
-//                },
-//                new String[]{
-//                        "Instant search as you type if you're online or offline"
-//                }
-//        );
+        helpers.setTarget(
+                FindMembersActivity.this,
+                FIRST_LAUNCH_SEARCH_MEMBERS,
+                new View[]{
+                        findViewById(R.id.et_search)
+                },
+                new String[]{
+                        "Search"
+                },
+                new String[]{
+                        "Instant search as you type if you're online or offline"
+                }
+        );
     }
 
     private void setTextWatcher() {

@@ -1,6 +1,6 @@
 <resources>
     <!-- BORDER CORNERS =========================================================================-->
-    <dimen name="radius_corner">5sp</dimen>
+    <dimen name="radius_corner">10sp</dimen>
 
 
     <!-- LINE THICKNESS =========================================================================-->

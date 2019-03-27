@@ -6,21 +6,21 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:fitsSystemWindows="false"
-    app:itemTextColor="@color/white"
-    app:itemIconTint="@color/white"
-    android:background="@drawable/back_toolbar"
     app:headerLayout="@layout/header_navigation"
+    app:itemTextColor="@color/drawer_selector"
+    app:itemIconTint="@color/drawer_selector"
+    app:itemBackground="@color/transparent"
+    android:background="@color/white"
     app:menu="@menu/drawer">
 
     <TextView
-        android:id="@+id/app_version"
         style="@style/Text_Normal"
-        android:paddingBottom="@dimen/padding_small"
-        android:paddingEnd="@dimen/padding_small"
-        android:paddingStart="0dp"
         android:layout_gravity="bottom|end"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding_small"
+        android:text="@string/VERSION_NAME"
+        android:textColor="@color/grey"
         android:textSize="@dimen/text_size_small" />
 
 </com.google.android.material.navigation.NavigationView>

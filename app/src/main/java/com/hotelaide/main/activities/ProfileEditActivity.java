@@ -173,8 +173,7 @@ public class ProfileEditActivity extends FragmentActivity {
                         }
 
                     } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                        helpers.ToastMessage(ProfileEditActivity.this,
-                                getResources().getString(R.string.error_unknown));
+                        helpers.toastMessage(getResources().getString(R.string.error_unknown));
                     }
                     break;
             }
@@ -185,7 +184,7 @@ public class ProfileEditActivity extends FragmentActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-        helpers.myPermissionsDialog(ProfileEditActivity.this, grantResults);
+        helpers.myPermissionsDialog(grantResults);
     }
 
     // BASIC FUNCTIONS =============================================================================
@@ -410,10 +409,10 @@ public class ProfileEditActivity extends FragmentActivity {
 
                     if (main.getBoolean("success")) {
                         if (SharedPrefs.setUser(main.getJSONObject("user"))) {
-                            helpers.ToastMessage(ProfileEditActivity.this, "Image updated");
+                            helpers.toastMessage("Image updated");
 
                         } else {
-                            helpers.ToastMessage(ProfileEditActivity.this, getString(R.string.error_server));
+                            helpers.toastMessage(getString(R.string.error_server));
                         }
                     } else {
                         helpers.handleErrorMessage(ProfileEditActivity.this, main.getJSONObject("data"));
@@ -422,7 +421,7 @@ public class ProfileEditActivity extends FragmentActivity {
                     setFromSharedPrefs();
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(ProfileEditActivity.this, getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                     setFromSharedPrefs();
                 }
@@ -433,9 +432,9 @@ public class ProfileEditActivity extends FragmentActivity {
                 helpers.dismissProgressDialog();
                 Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(ProfileEditActivity.this, getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                 } else {
-                    helpers.ToastMessage(ProfileEditActivity.this, getString(R.string.error_connection));
+                    helpers.toastMessage(getString(R.string.error_connection));
                 }
 
             }

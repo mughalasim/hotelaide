@@ -22,6 +22,7 @@ import com.hotelaide.main.adapters.DocumentAdapter;
 import com.hotelaide.main.models.DocumentModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
@@ -119,7 +120,7 @@ public class DocumentsFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, getActivity());
-        helpers.myPermissionsDialog(getActivity(), grantResults);
+        helpers.myPermissionsDialog(grantResults);
     }
 
     @Override
@@ -136,7 +137,7 @@ public class DocumentsFragment extends Fragment {
                                 , INT_REFRESH_REQUEST_CODE);
                     }
                 } else {
-                    helpers.ToastMessage(getActivity(), "Invalid file selected");
+                    helpers.toastMessage("Invalid file selected");
                 }
                 break;
 
@@ -176,8 +177,8 @@ public class DocumentsFragment extends Fragment {
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helpers.ToastMessage(getActivity(), "Refreshing in a minute, please wait...");
-                helpers.asyncGetAllDocuments();
+                helpers.toastMessage("Refreshing in a minute, please wait...");
+                HelpersAsync.asyncGetAllDocuments();
             }
         });
 
@@ -235,10 +236,10 @@ public class DocumentsFragment extends Fragment {
                 if (intent.getExtras() != null && getActivity() != null) {
                     if (intent.getExtras().getString(EXTRA_PASSED) != null) {
                         Helpers.logThis(TAG_LOG, "PASSED");
-                        helpers.ToastMessage(getActivity(), "Update successful");
+                        helpers.toastMessage("Update successful");
                     } else if (intent.getExtras().getString(EXTRA_FAILED) != null) {
                         Helpers.logThis(TAG_LOG, "FAILED");
-                        helpers.ToastMessage(getActivity(), "Update failed, please try again later");
+                        helpers.toastMessage("Update failed, please try again later");
                     }
                 }
                 populateDocumentsFromDB();

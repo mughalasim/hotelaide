@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'hotelaide'
             keyPassword 'hotelaide'
-            storeFile file('/Users/asimmughal/Documents/Android/Hotelaide/hotelaide_signing_key.jks')
+            storeFile file('E:\\Work\\Project Documentation\\ANDROID\\HotelAide\\APK\'s\\Signing Credentials\\hotelaide_signing_key.jks')
             storePassword 'hotelaide'
         }
     }
@@ -22,6 +22,9 @@ android {
         multiDexEnabled true
         resConfigs "en"
         signingConfig signingConfigs.config
+
+        // VERSION NAME
+        resValue "string", "VERSION_NAME", "Version: $rootProject.versionName"
     }
 
 
@@ -52,7 +55,6 @@ android {
             // DATABASE INFO
             buildConfigField 'Integer', 'DATABASE_VERSION', "$rootProject.versionCode"
             buildConfigField 'Integer', 'CONNECTION_TIMEOUT', '15'
-            buildConfigField 'Boolean', 'LOGGING', "$rootProject.debugMode"
             // FIREBASE INIT
             resValue "string", "FB_API_KEY", FB_API_KEY
             buildConfigField 'String', 'FB_APP_ID', FB_APP_ID
@@ -74,13 +76,22 @@ android {
             // FACEBOOK APP ID
             resValue "string", "FACEBOOK_APP_ID", FACEBOOK_APP_ID
             resValue "string", "FACEBOOK_PROTOCOL_SCHEME", FACEBOOK_PROTOCOL_SCHEME
-            signingConfig signingConfigs.config
         }
     }
 //    compileOptions {
 //        sourceCompatibility = '1.8'
 //        targetCompatibility = '1.8'
 //    }
+
+        splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+            universalApk false
+        }
+    }
+
 }
 
 dependencies {

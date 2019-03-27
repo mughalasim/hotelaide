@@ -139,6 +139,7 @@ public class FindJobsActivity extends ParentActivity {
         // HEADER ELEMENTS -------------------------------------------------------------------------
         btn_add_filter = findViewById(R.id.btn_add_filter);
         et_search = findViewById(R.id.et_search);
+        et_search.setHint(R.string.txt_search_jobs);
         txt_filter_location = findViewById(R.id.txt_filter_location);
         txt_filter_type = findViewById(R.id.txt_filter_type);
         txt_filter_category = findViewById(R.id.txt_filter_category);
@@ -191,7 +192,7 @@ public class FindJobsActivity extends ParentActivity {
                 },
                 new String[]{
                         "This will allow you to add certain filters to your search criteria",
-                        "Instant search as you type if youre online or offline"
+                        "Instant search as you type if you're online or offline"
                 }
         );
     }

@@ -72,6 +72,7 @@ public class LoginSocialFragment extends Fragment {
     // FACEBOOK
     private CallbackManager callback_manager;
     private FirebaseAuth fire_base_auth;
+    private LoginManager login_manager;
 
     // GOOGLE
     private GoogleSignInClient google_sign_in_client;
@@ -106,7 +107,6 @@ public class LoginSocialFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         Helpers.logThis(TAG_LOG, "ACTIVITY RESULT " + data.toString() + " : " + requestCode + " : " + resultCode);
         if (requestCode == GOOGLE_REQUEST_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -114,6 +114,7 @@ public class LoginSocialFragment extends Fragment {
         } else {
             callback_manager.onActivityResult(requestCode, resultCode, data);
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -143,7 +144,9 @@ public class LoginSocialFragment extends Fragment {
 
         callback_manager = CallbackManager.Factory.create();
 
-        LoginManager.getInstance().registerCallback(callback_manager, new FacebookCallback<LoginResult>() {
+        login_manager = LoginManager.getInstance();
+
+        login_manager.registerCallback(callback_manager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 handleFacebookAccessToken(activity, loginResult.getAccessToken());
@@ -151,12 +154,12 @@ public class LoginSocialFragment extends Fragment {
 
             @Override
             public void onCancel() {
-                helpers.ToastMessage(activity, "Login Cancelled");
+                helpers.toastMessage("Login cancelled");
             }
 
             @Override
             public void onError(FacebookException exception) {
-                helpers.ToastMessage(activity, "Error " + exception);
+                helpers.toastMessage("Error " + exception);
             }
         });
 
@@ -164,7 +167,7 @@ public class LoginSocialFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (getActivity() != null) {
-                    LoginManager.getInstance().logInWithReadPermissions(LoginSocialFragment.this, Arrays.asList("email", "public_profile"));
+                    login_manager.logInWithReadPermissions(LoginSocialFragment.this, Arrays.asList("email", "public_profile"));
                 }
             }
         });
@@ -181,7 +184,7 @@ public class LoginSocialFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             helpers.dismissProgressDialog();
-                            helpers.ToastMessage(activity, "Failed to login with Facebook");
+                            helpers.toastMessage("Failed to login with Facebook");
                             signOutFaceBook();
                         }
                     })
@@ -203,18 +206,18 @@ public class LoginSocialFragment extends Fragment {
 
                                     } else {
                                         signOutFaceBook();
-                                        helpers.ToastMessage(activity, "Failed to fetch details from Facebook, please try again later1");
+                                        helpers.toastMessage("Failed to fetch details from Facebook, please try again later1");
                                         Helpers.logThis(TAG_LOG, "USER NULL");
                                     }
 
                                 } catch (NullPointerException e) {
                                     signOutFaceBook();
                                     Helpers.logThis(TAG_LOG, e.toString());
-                                    helpers.ToastMessage(activity, "Failed to fetch details from Facebook, please try again later2");
+                                    helpers.toastMessage("Failed to fetch details from Facebook, please try again later2");
                                 }
 
                             } else {
-                                helpers.ToastMessage(activity, getString(R.string.error_unknown));
+                                helpers.toastMessage(getString(R.string.error_unknown));
                                 Helpers.logThis(TAG_LOG, task.toString());
                             }
 
@@ -225,7 +228,7 @@ public class LoginSocialFragment extends Fragment {
 
         } else {
             helpers.dismissProgressDialog();
-            helpers.ToastMessage(activity, "Failed to fetch details from Facebook, Please update your Google Play Services");
+            helpers.toastMessage("Failed to fetch details from Facebook, Please update your Google Play Services");
             signOutFaceBook();
         }
     }
@@ -256,13 +259,13 @@ public class LoginSocialFragment extends Fragment {
             if (account != null) {
                 asyncLogin(account.getEmail(), "", "", account.getId());
             } else {
-                helpers.ToastMessage(getActivity(), getResources().getString(R.string.error_unknown));
+                helpers.toastMessage(getResources().getString(R.string.error_unknown));
             }
             signOutGoogle();
 
         } catch (ApiException e) {
             Helpers.logThis(TAG_LOG, "signInResult : CODE: " + e.getStatusCode());
-            helpers.ToastMessage(getActivity(), getResources().getString(R.string.error_sign_in_cancelled));
+            helpers.toastMessage(getResources().getString(R.string.error_sign_in_cancelled));
         }
     }
 
@@ -282,7 +285,7 @@ public class LoginSocialFragment extends Fragment {
         Helpers.logThis(TAG_LOG, fb_id);
         Helpers.logThis(TAG_LOG, google_id);
 
-        helpers.setProgressDialog("Validating your credentials, please wait...");
+        helpers.setProgressDialog("Logging you in, please wait...");
 
         LoginInterface loginInterface = LoginInterface.retrofit.create(LoginInterface.class);
         final Call<JsonObject> call = loginInterface.userLogin(
@@ -305,13 +308,15 @@ public class LoginSocialFragment extends Fragment {
                         if (SharedPrefs.setUser(data.getJSONObject("user"))) {
                             SharedPrefs.setString(ACCESS_TOKEN, data.getString("token"));
                             if (SharedPrefs.getString(USER_F_NAME).equals("")) {
-                                startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
+                                startActivity(new Intent(getActivity(), DashboardActivity.class)
+                                        .putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
                             } else {
-                                startActivity(new Intent(getActivity(), DashboardActivity.class).putExtra(EXTRA_START_RETURN, EXTRA_START_RETURN));
+                                startActivity(new Intent(getActivity(), DashboardActivity.class)
+                                        .putExtra(EXTRA_START_RETURN, EXTRA_START_RETURN));
                             }
                             getActivity().finish();
                         } else {
-                            helpers.ToastMessage(getActivity(), getString(R.string.error_invalid_user));
+                            helpers.toastMessage(getString(R.string.error_invalid_user));
                         }
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
@@ -320,7 +325,7 @@ public class LoginSocialFragment extends Fragment {
                     helpers.dismissProgressDialog();
 
                 } catch (JSONException e) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     e.printStackTrace();
                 }
             }
@@ -330,9 +335,9 @@ public class LoginSocialFragment extends Fragment {
                 helpers.dismissProgressDialog();
                 Helpers.logThis(TAG_LOG, t.toString());
                 if (helpers.validateInternetConnection()) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                 } else {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                    helpers.toastMessage(getString(R.string.error_connection));
                 }
 
             }

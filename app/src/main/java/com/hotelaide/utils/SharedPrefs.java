@@ -42,11 +42,15 @@ import static com.hotelaide.utils.StaticVariables.USER_PROFILE_COMPLETION;
 import static com.hotelaide.utils.StaticVariables.USER_URL;
 
 public class SharedPrefs {
+    private static final String GLOBAL_PREF = "GLOBAL_PREF";
     private static final String SHARED_PREFS = "SHARED_PREFS";
     private static final int MODE = Activity.MODE_PRIVATE;
 
     private static SharedPreferences prefs = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE);
     private static SharedPreferences.Editor editor = MyApplication.getAppContext().getSharedPreferences(SHARED_PREFS, MODE).edit();
+
+    private static SharedPreferences global_prefs = MyApplication.getAppContext().getSharedPreferences(GLOBAL_PREF, MODE);
+    private static SharedPreferences.Editor global_editor = MyApplication.getAppContext().getSharedPreferences(GLOBAL_PREF, MODE).edit();
 
     // GENERIC GET AND SET INTEGER VARIABLES =======================================================
     public static int getInt(String variableName) {
@@ -99,6 +103,21 @@ public class SharedPrefs {
     public static void deleteAllSharedPrefs() {
         editor.clear().apply();
     }
+
+
+    // GLOBAL GET AND SET BOOLEAN VARIABLES ========================================================
+    @NonNull
+    public static Boolean getGlobalBool(String variableName) {
+        return global_prefs.getBoolean(variableName, false);
+    }
+
+    public static void setGlobalBool(String variableName, Boolean variableValue) {
+        global_editor.putBoolean(variableName, variableValue);
+        global_editor.apply();
+    }
+
+
+
 
 
     // USER FUNCTIONS ==============================================================================

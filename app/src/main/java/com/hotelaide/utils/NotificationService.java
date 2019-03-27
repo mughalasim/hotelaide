@@ -28,6 +28,8 @@ public class NotificationService extends FirebaseMessagingService {
         Helpers.logThis("NEW_TOKEN", token);
     }
 
+
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);

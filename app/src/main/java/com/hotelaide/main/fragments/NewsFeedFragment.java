@@ -174,7 +174,7 @@ public class NewsFeedFragment extends Fragment {
                         }
 
                     } catch (JSONException e) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                         e.printStackTrace();
                     }
                 }
@@ -186,9 +186,9 @@ public class NewsFeedFragment extends Fragment {
                     swipe_refresh.setRefreshing(false);
                     Helpers.logThis(TAG_LOG, t.toString());
                     if (helpers.validateInternetConnection()) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                     } else {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                        helpers.toastMessage(getString(R.string.error_connection));
                     }
                 }
             }

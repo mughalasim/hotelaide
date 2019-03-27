@@ -34,7 +34,7 @@ public class ContactUsFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-        helpers.myPermissionsDialog(getActivity(), grantResults);
+        helpers.myPermissionsDialog(grantResults);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ContactUsFragment extends Fragment {
         if (getActivity() != null) {
             final String[] perms = {Manifest.permission.CALL_PHONE};
             if (EasyPermissions.hasPermissions(getActivity(), perms)) {
-                helpers.dialogMakeCall(getActivity(), STR_PHONE_NUMBER);
+                helpers.dialogMakeCall(STR_PHONE_NUMBER);
             } else {
                 EasyPermissions.requestPermissions(getActivity(), getString(R.string.rationale_call),
                         INT_PERMISSIONS_CALL, perms);

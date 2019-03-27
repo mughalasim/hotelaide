@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import androidx.annotation.NonNull;
@@ -257,7 +260,7 @@ public class ExperienceEditFragment extends Fragment {
 
                 if (rl_end_date.getVisibility() == View.VISIBLE) {
                     if (txt_end_date.getText().toString().equals(getString(R.string.txt_select_date))) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.txt_select_date));
+                        helpers.toastMessage(getString(R.string.txt_select_date));
                     } else {
                         experienceTypeCheck();
                     }
@@ -269,7 +272,7 @@ public class ExperienceEditFragment extends Fragment {
             private void experienceTypeCheck() {
                 if (spinner_education_level.getVisibility() == View.VISIBLE) {
                     if (spinner_education_level.getSelectedItemPosition() == 0) {
-                        helpers.ToastMessage(getActivity(), "Set the education level");
+                        helpers.toastMessage("Set the education level");
                     } else {
 //                        Helpers.logThis(TAG_LOG, spinner_education_level.getSelectedItem().toString());
 //                        Helpers.logThis(TAG_LOG, "ID: " + db.getFilterIDByString(EDUCATION_LEVEL_TABLE_NAME, spinner_education_level.getSelectedItem().toString()));
@@ -284,9 +287,9 @@ public class ExperienceEditFragment extends Fragment {
 
             private void generalChecks() {
                 if (txt_start_date.getText().toString().equals(getString(R.string.txt_select_date))) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.txt_select_date));
+                    helpers.toastMessage(getString(R.string.txt_select_date));
                 } else if (txt_start_date.getText().toString().equals(txt_end_date.getText().toString())) {
-                    helpers.ToastMessage(getActivity(), getString(R.string.error_same_date));
+                    helpers.toastMessage(getString(R.string.error_same_date));
                 } else if (helpers.validateEmptyEditText(et_name) &&
                         helpers.validateEmptyEditText(et_responsibilities_field)) {
                     if (!txt_id.getText().toString().equals(""))
@@ -523,7 +526,7 @@ public class ExperienceEditFragment extends Fragment {
                         }
 
                     } catch (JSONException e) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                         e.printStackTrace();
                     }
                 }
@@ -536,9 +539,9 @@ public class ExperienceEditFragment extends Fragment {
                     Helpers.logThis(TAG_LOG, t.toString());
                     populateExperienceFromDB();
                     if (helpers.validateInternetConnection()) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                     } else {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                        helpers.toastMessage(getString(R.string.error_connection));
                     }
                 }
             }
@@ -619,17 +622,17 @@ public class ExperienceEditFragment extends Fragment {
                         Helpers.logThis(TAG_LOG, main.toString());
                         if (main.getBoolean("success")) {
                             if (db.setExperienceFromJson(main.getJSONObject("data"), EXPERIENCE_TYPE)) {
-                                helpers.ToastMessage(getActivity(), getString(R.string.txt_success));
+                                helpers.toastMessage(getString(R.string.txt_success));
                                 populateExperienceFromDB();
                                 sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                             } else {
-                                helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                                helpers.toastMessage(getString(R.string.error_server));
                             }
                         } else {
                             helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                         }
                     } catch (JSONException e) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                         e.printStackTrace();
                     }
                 }
@@ -641,9 +644,9 @@ public class ExperienceEditFragment extends Fragment {
                     helpers.dismissProgressDialog();
                     Helpers.logThis(TAG_LOG, t.toString());
                     if (helpers.validateInternetConnection()) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                     } else {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                        helpers.toastMessage(getString(R.string.error_connection));
                     }
                 }
             }
@@ -683,7 +686,7 @@ public class ExperienceEditFragment extends Fragment {
                         }
                         populateExperienceFromDB();
                     } catch (JSONException e) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                         e.printStackTrace();
                     }
                 }
@@ -696,9 +699,9 @@ public class ExperienceEditFragment extends Fragment {
                     Helpers.logThis(TAG_LOG, t.toString());
                     populateExperienceFromDB();
                     if (helpers.validateInternetConnection()) {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_server));
+                        helpers.toastMessage(getString(R.string.error_server));
                     } else {
-                        helpers.ToastMessage(getActivity(), getString(R.string.error_connection));
+                        helpers.toastMessage(getString(R.string.error_connection));
                     }
                 }
             }
@@ -829,6 +832,7 @@ public class ExperienceEditFragment extends Fragment {
                         if (getActivity() != null) {
                             final Dialog dialog = new Dialog(getActivity());
                             dialog.setContentView(R.layout.dialog_confirm);
+                            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                             final TextView txt_message = dialog.findViewById(R.id.txt_message);
                             final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
                             final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
