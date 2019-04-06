@@ -83,6 +83,11 @@ public interface UserInterface {
     @GET("user")
     Call<JsonObject> getUser();
 
+    // GET USER STATS ==================================================================================
+    @GET("user/{id}/stats")
+    Call<JsonObject> getUserStats(
+            @Path("id") int id
+    );
 
     // UPDATE USER =================================================================================
     @FormUrlEncoded

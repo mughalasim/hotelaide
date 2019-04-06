@@ -2,6 +2,7 @@
 <TextView style="@style/Text_Normal"
     android:layout_width="match_parent"
     android:height="@dimen/height_edit_text"
+    android:background="@drawable/back_text_fields"
     android:gravity="start|center_vertical"
     android:text="@string/app_name"
     android:paddingEnd="@dimen/padding_tiny"

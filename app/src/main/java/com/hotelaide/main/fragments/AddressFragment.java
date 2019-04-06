@@ -331,20 +331,16 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     // ASYNC UPDATE ADDRESS ========================================================================
     private void asyncUpdateAddress(final Double latitude, final Double longitude) {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-
         final int county_id = db.getFilterIDByString(COUNTY_TABLE_NAME, spinner_county.getSelectedItem().toString());
 
-        Call<JsonObject> call = userInterface.setUserAddress(
-                SharedPrefs.getInt(USER_ID),
-                county_id,
-                et_postcode.getText().toString(),
-                latitude,
-                longitude,
-                et_full_address.getText().toString()
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class)
+                .setUserAddress(
+                        SharedPrefs.getInt(USER_ID),
+                        county_id,
+                        et_postcode.getText().toString(),
+                        latitude,
+                        longitude,
+                        et_full_address.getText().toString()).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (getActivity() != null) {

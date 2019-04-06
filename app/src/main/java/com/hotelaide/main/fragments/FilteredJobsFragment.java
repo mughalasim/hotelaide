@@ -13,6 +13,7 @@ import com.hotelaide.main.adapters.FindJobsAdapter;
 import com.hotelaide.main.models.JobModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONArray;
@@ -83,6 +84,8 @@ public class FilteredJobsFragment extends Fragment {
                     setListeners();
 
                     asyncGetAppliedJobs();
+
+                    HelpersAsync.setTrackerPage(FILTER_TYPE);
 
                 }
 

@@ -42,11 +42,8 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.button.MaterialButton;
-import com.google.gson.JsonObject;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.interfaces.GeneralInterface;
-import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.AboutUsActivity;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.activities.FindJobsActivity;
@@ -58,7 +55,6 @@ import com.hotelaide.main.activities.ProfileActivity;
 import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.activities.SettingsActivity;
 import com.hotelaide.main.models.NotificationModel;
-import com.hotelaide.main.models.SearchFilterModel;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.services.FileUploadService;
 import com.hotelaide.services.MessagingService;
@@ -78,56 +74,41 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import me.leolin.shortcutbadger.ShortcutBadger;
-import okhttp3.MultipartBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
 //import static android.content.pm.PackageManager.GET_SIGNATURES;
 import static android.content.pm.PackageManager.NameNotFoundException;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
-import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER_COMPLETE;
-import static com.hotelaide.utils.StaticVariables.BROADCAST_UPLOAD_COMPLETE;
-import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_DESC;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_ID;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_NAME;
-import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
-import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
-import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
-import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
-import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_PREVIEW;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TITLE;
-import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TYPE_CODE_MESSAGE;
 import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_DOB;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
-import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
 
 public class Helpers {
 
-    public final static String TAG_LOG = "HELPER CLASS";
+    public final static String TAG_LOG = "HELPER";
     private final Context context;
     private static Toast toast;
     private final TextView txt_loading_message;
@@ -453,16 +434,14 @@ public class Helpers {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) ==
-                        PackageManager.PERMISSION_GRANTED) {
+                try {
                     Intent intent = new Intent(Intent.ACTION_CALL);
                     intent.setData(Uri.parse("tel:" + phone_number));
                     context.startActivity(intent);
-
-                } else {
+                } catch (Exception e) {
                     myDialog(
                             context.getString(R.string.app_name),
-                            context.getString(R.string.error_call_permissions));
+                            context.getString(R.string.error_app_not_installed));
                 }
                 dialog.cancel();
             }
@@ -877,9 +856,12 @@ public class Helpers {
 
                     Helpers.logThis(TAG_LOG, display_message);
 
+                    HelpersAsync.setTrackerEvent(TAG_LOG, false);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     logThis(TAG_LOG, e.toString());
+                    HelpersAsync.setTrackerEvent(TAG_LOG, false);
                     myDialog(context.getString(R.string.app_name), context.getString(R.string.error_unknown));
                 }
             }
@@ -889,6 +871,7 @@ public class Helpers {
             j.printStackTrace();
             logThis(TAG_LOG, j.toString());
             myDialog(context.getString(R.string.app_name), context.getString(R.string.error_unknown));
+            HelpersAsync.setTrackerEvent(TAG_LOG, false);
         }
 
     }

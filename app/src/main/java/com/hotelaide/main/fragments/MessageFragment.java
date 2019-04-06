@@ -268,9 +268,8 @@ public class MessageFragment extends Fragment {
     // CONTACT ASYNC FUNCTIONS =====================================================================
     private void asyncFetchContacts(final int page_number) {
         helpers.toastMessage("Loading... please wait...");
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.getAllUsers(page_number);
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class)
+                .getAllUsers(page_number).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (getActivity() != null) {

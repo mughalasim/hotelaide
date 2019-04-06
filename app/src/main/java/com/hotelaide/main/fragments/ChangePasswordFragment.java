@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
@@ -38,7 +39,8 @@ public class ChangePasswordFragment extends Fragment {
             et_user_pass_confirm;
     private FloatingActionButton btn_update;
 
-    public ChangePasswordFragment() {}
+    public ChangePasswordFragment() {
+    }
 
 
     @Override
@@ -50,11 +52,11 @@ public class ChangePasswordFragment extends Fragment {
                 helpers = new Helpers(getActivity());
 
 
-
                 findAllViews();
 
                 setListeners();
 
+                HelpersAsync.setTrackerPage(TAG_LOG);
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -107,23 +109,19 @@ public class ChangePasswordFragment extends Fragment {
 
     // ASYNC UPDATE PASSWORD =======================================================================
     private void asyncUpdatePassword() {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-
-        Call<JsonObject> call = userInterface.updateUserPassword(
-                SharedPrefs.getInt(USER_ID),
-                et_user_pass_old.getText().toString(),
-                et_user_pass_new.getText().toString(),
-                et_user_pass_confirm.getText().toString()
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class)
+                .updateUserPassword(
+                        SharedPrefs.getInt(USER_ID),
+                        et_user_pass_old.getText().toString(),
+                        et_user_pass_new.getText().toString(),
+                        et_user_pass_confirm.getText().toString()).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
                     Helpers.logThis(TAG_LOG, main.toString());
                     if (main.getBoolean("success")) {
-                        helpers.toastMessage( main.getString("message"));
+                        helpers.toastMessage(main.getString("message"));
                     }
                 } catch (JSONException e) {
                     helpers.toastMessage(getString(R.string.error_server));

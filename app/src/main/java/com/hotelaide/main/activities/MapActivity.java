@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.button.MaterialButton;
 import com.hotelaide.R;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import androidx.annotation.NonNull;
@@ -58,6 +59,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setUpToolBar();
 
         startUpMap();
+
+        HelpersAsync.setTrackerPage("MAP VIEW");
 
     }
 

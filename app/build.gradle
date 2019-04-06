@@ -87,7 +87,7 @@ android {
         abi {
             enable true
             reset()
-            include 'armeabi-v7a'
+            include 'armeabi-v7a', 'x86'
             universalApk false
         }
     }
@@ -128,7 +128,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.3'
 
     // GOOGLE
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation('com.google.android.gms:play-services-analytics:16.0.4') {
         exclude module: 'play-services-ads'
@@ -140,6 +140,9 @@ dependencies {
 
     // MORE FROM LOTTIE
     implementation 'com.airbnb.android:lottie:2.8.0'
+
+    // ANIMATED TEXT VIEW
+    implementation 'com.robinhood.ticker:ticker:2.0.1'
 
     // NOTIFICATION BADGES
     implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
@@ -182,6 +185,9 @@ dependencies {
 
     // TAP TARGET FOR INTRODUCTIONS
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.12.0'
+
+    // EXPANDABLE LIST VIEW
+    implementation 'com.robertlevonyan.view:MaterialExpansionPanel:1.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

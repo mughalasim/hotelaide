@@ -77,8 +77,9 @@ public class StaticVariables {
 
     // BROADCAST VARIABLES =========================================================================
     public final static String BROADCAST_LOG_OUT = "BROADCAST_LOG_OUT";
-    public final static String BROADCAST_UPLOAD_COMPLETE = "BROADCAST_UPLOAD_COMPLETE";
-    public final static String BROADCAST_SET_USER_COMPLETE = "BROADCAST_SET_USER_COMPLETE";
+    public final static String BROADCAST_UPLOAD = "BROADCAST_UPLOAD";
+    public final static String BROADCAST_SET_USER = "BROADCAST_SET_USER";
+    public final static String BROADCAST_SET_USER_STATS = "BROADCAST_SET_USER_STATS";
 
     // GLOBAL STATIC VARIABLES======================================================================
     public static String STR_SHARE_LINK = "";

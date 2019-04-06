@@ -3,6 +3,7 @@ package com.hotelaide.main.activities;
 import android.os.Bundle;
 
 import com.hotelaide.R;
+import com.hotelaide.utils.HelpersAsync;
 
 public class AboutUsActivity extends ParentActivity {
 

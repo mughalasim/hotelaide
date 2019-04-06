@@ -19,6 +19,7 @@ import com.hotelaide.R;
 import com.hotelaide.main.adapters.ConversationAdapter;
 import com.hotelaide.main.models.ConversationModel;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
@@ -47,7 +48,7 @@ public class ConversationActivity extends AppCompatActivity {
     private int INT_FROM_ID = 0;
 
     private final String
-            TAG_LOG = "CONVERSATION";
+            TAG_LOG = "CONVERSATION VIEW";
 
     private DatabaseReference parent_ref, child_ref;
 
@@ -81,6 +82,8 @@ public class ConversationActivity extends AppCompatActivity {
             setListeners();
 
 //            fetchConversationList();
+
+            HelpersAsync.setTrackerPage(TAG_LOG);
 
         } else {
             onBackPressed();

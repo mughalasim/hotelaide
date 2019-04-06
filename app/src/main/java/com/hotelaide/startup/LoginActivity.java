@@ -18,6 +18,7 @@ import com.hotelaide.startup.fragments.ResetPasswordFragment;
 import com.hotelaide.startup.fragments.SignUpEmailFragment;
 import com.hotelaide.startup.fragments.SignUpSocialFragment;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 
 import java.util.ArrayList;
 import java.util.List;

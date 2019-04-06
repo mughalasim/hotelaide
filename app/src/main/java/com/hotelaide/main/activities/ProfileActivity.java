@@ -29,7 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER_COMPLETE;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
@@ -127,6 +127,7 @@ public class ProfileActivity extends ParentActivity {
             );
         }
 
+        HelpersAsync.setTrackerPage(TAG_LOG);
 
     }
 
@@ -395,7 +396,7 @@ public class ProfileActivity extends ParentActivity {
 
     private void listenSetUserBroadcast() {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(BROADCAST_SET_USER_COMPLETE);
+        filter.addAction(BROADCAST_SET_USER);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

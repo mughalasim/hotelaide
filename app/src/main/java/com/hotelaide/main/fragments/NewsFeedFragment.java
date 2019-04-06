@@ -131,68 +131,68 @@ public class NewsFeedFragment extends Fragment {
 
     // ASYNC FETCH ALL NEWS FEEDS ================================================================
     private void asyncGetRssFeeds() {
-        NewsFeedInterface newsFeedInterface = NewsFeedInterface.retrofit.create(NewsFeedInterface.class);
-        Call<JsonObject> call = newsFeedInterface.getNewsFeed(NEWS_FEED_URL);
         swipe_refresh.setRefreshing(true);
 
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                if (getActivity() != null) {
-                    swipe_refresh.setRefreshing(false);
-                    try {
-                        JSONObject main = new JSONObject(String.valueOf(response.body()));
+        NewsFeedInterface.retrofit.create(NewsFeedInterface.class)
+                .getNewsFeed(NEWS_FEED_URL)
+                .enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                        if (getActivity() != null) {
+                            swipe_refresh.setRefreshing(false);
+                            try {
+                                JSONObject main = new JSONObject(String.valueOf(response.body()));
 //                        Helpers.logThis(TAG_LOG, main.toString());
 
-                        JSONArray items = main.getJSONArray("items");
+                                JSONArray items = main.getJSONArray("items");
 
-                        int length = items.length();
+                                int length = items.length();
 
-                        if (length > 0) {
+                                if (length > 0) {
 
-                            Helpers.logThis(TAG_LOG, "LENGTH: " + length);
+                                    Helpers.logThis(TAG_LOG, "LENGTH: " + length);
 
-                            model_list.clear();
+                                    model_list.clear();
 
-                            for (int i = 0; i < length; i++) {
-                                JSONObject object = items.getJSONObject(i);
-                                NewsFeedModel newsFeedModel = new NewsFeedModel();
-                                newsFeedModel.id = i + 1;
-                                newsFeedModel.title = object.getString("title");
-                                newsFeedModel.desc = object.getString("description");
-                                newsFeedModel.content = object.getString("content");
-                                newsFeedModel.pub_date = object.getString("pubDate");
-                                newsFeedModel.link = object.getString("link");
+                                    for (int i = 0; i < length; i++) {
+                                        JSONObject object = items.getJSONObject(i);
+                                        NewsFeedModel newsFeedModel = new NewsFeedModel();
+                                        newsFeedModel.id = i + 1;
+                                        newsFeedModel.title = object.getString("title");
+                                        newsFeedModel.desc = object.getString("description");
+                                        newsFeedModel.content = object.getString("content");
+                                        newsFeedModel.pub_date = object.getString("pubDate");
+                                        newsFeedModel.link = object.getString("link");
 
-                                model_list.add(newsFeedModel);
+                                        model_list.add(newsFeedModel);
+                                    }
+
+                                    adapter.notifyDataSetChanged();
+
+                                } else {
+                                    noListItems();
+                                }
+
+                            } catch (JSONException e) {
+                                helpers.toastMessage(getString(R.string.error_server));
+                                e.printStackTrace();
                             }
-
-                            adapter.notifyDataSetChanged();
-
-                        } else {
-                            noListItems();
                         }
-
-                    } catch (JSONException e) {
-                        helpers.toastMessage(getString(R.string.error_server));
-                        e.printStackTrace();
                     }
-                }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                if (getActivity() != null) {
-                    swipe_refresh.setRefreshing(false);
-                    Helpers.logThis(TAG_LOG, t.toString());
-                    if (helpers.validateInternetConnection()) {
-                        helpers.toastMessage(getString(R.string.error_server));
-                    } else {
-                        helpers.toastMessage(getString(R.string.error_connection));
+                    @Override
+                    public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                        if (getActivity() != null) {
+                            swipe_refresh.setRefreshing(false);
+                            Helpers.logThis(TAG_LOG, t.toString());
+                            if (helpers.validateInternetConnection()) {
+                                helpers.toastMessage(getString(R.string.error_server));
+                            } else {
+                                helpers.toastMessage(getString(R.string.error_connection));
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
     }
 
     // ADAPTER CLASS ===============================================================================

@@ -295,24 +295,21 @@ public class ProfileUpdateFragment extends Fragment {
 
         helpers.setProgressDialog("Updating your profile, please wait...");
 
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.setUserDetails(
-                userModel.id,
-                userModel.first_name,
-                userModel.last_name,
-                userModel.about,
-                userModel.country_code,
-                userModel.phone,
-                userModel.email,
-                userModel.geo_lat,
-                userModel.geo_lng,
-                userModel.dob,
-                userModel.fb_id,
-                userModel.google_id,
-                userModel.gender
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class)
+                .setUserDetails(
+                        userModel.id,
+                        userModel.first_name,
+                        userModel.last_name,
+                        userModel.about,
+                        userModel.country_code,
+                        userModel.phone,
+                        userModel.email,
+                        userModel.geo_lat,
+                        userModel.geo_lng,
+                        userModel.dob,
+                        userModel.fb_id,
+                        userModel.google_id,
+                        userModel.gender).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 helpers.dismissProgressDialog();
@@ -360,12 +357,10 @@ public class ProfileUpdateFragment extends Fragment {
 
     // ASYNC UPDATE AVAILABILITY ===================================================================
     private void asyncUpdateUserAvailability(final int availability) {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.setUserAvailability(
-                SharedPrefs.getInt(USER_ID),
-                availability);
-
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class)
+                .setUserAvailability(
+                        SharedPrefs.getInt(USER_ID),
+                        availability).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -377,6 +372,7 @@ public class ProfileUpdateFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 if (getActivity() != null) {

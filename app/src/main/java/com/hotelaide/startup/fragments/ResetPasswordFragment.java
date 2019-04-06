@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.LoginInterface;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +35,7 @@ public class ResetPasswordFragment extends Fragment {
 
     private Helpers helpers;
 
-    private final String TAG_LOG = "FRAGMENT LOGIN";
+    private final String TAG_LOG = "RESET PASSWORD";
 
     public ResetPasswordFragment() {
 
@@ -51,7 +52,7 @@ public class ResetPasswordFragment extends Fragment {
 
                 setListeners();
 
-
+                HelpersAsync.setTrackerPage(TAG_LOG);
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -73,7 +74,7 @@ public class ResetPasswordFragment extends Fragment {
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (helpers.validateEmail(et_user_email)){
+                if (helpers.validateEmail(et_user_email)) {
                     asyncResetPassword(et_user_email.getText().toString());
                 }
             }
@@ -86,10 +87,8 @@ public class ResetPasswordFragment extends Fragment {
 
         helpers.setProgressDialog("Sending Reset link, please wait...");
 
-        LoginInterface loginInterface = LoginInterface.retrofit.create(LoginInterface.class);
-        final Call<JsonObject> call = loginInterface.resetPassword(email);
-
-        call.enqueue(new Callback<JsonObject>() {
+        LoginInterface.retrofit.create(LoginInterface.class)
+                .resetPassword(email).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 helpers.dismissProgressDialog();
@@ -102,11 +101,14 @@ public class ResetPasswordFragment extends Fragment {
                     if (main.getBoolean("success") && getActivity() != null) {
                         helpers.myDialog(getResources().getString(R.string.app_name), main.getString("message"));
                         et_user_email.setText("");
+                        HelpersAsync.setTrackerEvent(TAG_LOG, true);
                     } else {
                         helpers.myDialog(getResources().getString(R.string.app_name), main.getString("message"));
+                        HelpersAsync.setTrackerEvent(TAG_LOG, false);
                     }
                 } catch (JSONException e) {
                     helpers.toastMessage(getString(R.string.error_server));
+                    HelpersAsync.setTrackerEvent(TAG_LOG, false);
                     e.printStackTrace();
                 }
             }
@@ -120,7 +122,7 @@ public class ResetPasswordFragment extends Fragment {
                 } else {
                     helpers.toastMessage(getString(R.string.error_connection));
                 }
-
+                HelpersAsync.setTrackerEvent(TAG_LOG, false);
             }
         });
 

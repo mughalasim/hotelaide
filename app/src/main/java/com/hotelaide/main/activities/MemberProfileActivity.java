@@ -21,6 +21,7 @@ import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.models.ExperienceModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONArray;
@@ -108,6 +109,8 @@ public class MemberProfileActivity extends AppCompatActivity {
             setListeners();
 
             asyncFetchMember();
+
+            HelpersAsync.setTrackerPage(TAG_LOG);
 
         } else {
             helpers.toastMessage(getString(R.string.error_unknown));
@@ -246,11 +249,11 @@ public class MemberProfileActivity extends AppCompatActivity {
     }
 
     public void startConversation(View view) {
-        if(INT_MEMBER_ID==0){
+        if (INT_MEMBER_ID == 0) {
             helpers.toastMessage(getString(R.string.error_server));
-        } else if(INT_MEMBER_ID== SharedPrefs.getInt(USER_ID)){
+        } else if (INT_MEMBER_ID == SharedPrefs.getInt(USER_ID)) {
             helpers.toastMessage("LOL! You cant talk to yourself!");
-        } else if(!helpers.validateInternetConnection()){
+        } else if (!helpers.validateInternetConnection()) {
             helpers.toastMessage(getString(R.string.error_connection));
         } else {
             startActivity(new Intent(MemberProfileActivity.this, ConversationActivity.class)
@@ -270,11 +273,10 @@ public class MemberProfileActivity extends AppCompatActivity {
 
         hideAllViews();
 
-        UserInterface service = UserInterface.retrofit.create(UserInterface.class);
-        Call<JsonObject> call = service.getMemberByID(INT_MEMBER_ID);
         swipe_refresh.setRefreshing(true);
 
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class)
+                .getMemberByID(INT_MEMBER_ID).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 swipe_refresh.setRefreshing(false);

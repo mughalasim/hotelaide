@@ -118,16 +118,16 @@ public class DashboardActivity extends ParentActivity {
 
             MyApplication.setFirstTimeTutorial(true);
 
-            setCountOnDrawerItem(menu_profile, "*");
-            setCountOnDrawerItem(menu_find_jobs, "*");
-            setCountOnDrawerItem(menu_my_messages, "*");
+//            setCountOnDrawerItem(menu_profile, "*");
+//            setCountOnDrawerItem(menu_find_jobs, "*");
+//            setCountOnDrawerItem(menu_my_messages, "*");
 
         } else if (extras != null && extras.getString(EXTRA_START_RETURN) != null) {
             helpers.toastMessage("Welcome back " + SharedPrefs.getString(USER_F_NAME));
 
             MyApplication.setFirstTimeTutorial(false);
 
-            setCountOnDrawerItem(menu_find_jobs, "*");
+//            setCountOnDrawerItem(menu_find_jobs, "*");
 
         }
     }
@@ -171,10 +171,8 @@ public class DashboardActivity extends ParentActivity {
                         AppEventsLogger.newLogger(DashboardActivity.this, refreshedToken);
                         AppEventsLogger.setPushNotificationsRegistrationId(refreshedToken);
 
-                        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-                        final Call<JsonObject> call = userInterface.setUserToken(SharedPrefs.getInt(USER_ID),
-                                refreshedToken);
-                        call.enqueue(new Callback<JsonObject>() {
+                        UserInterface.retrofit.create(UserInterface.class)
+                                .setUserToken(SharedPrefs.getInt(USER_ID), refreshedToken).enqueue(new Callback<JsonObject>() {
                             @Override
                             public void onResponse(@NonNull Call<JsonObject> call, @NonNull
                                     Response<JsonObject> response) {

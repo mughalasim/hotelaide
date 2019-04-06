@@ -21,6 +21,7 @@ import com.hotelaide.main.fragments.ExperienceEditFragment;
 import com.hotelaide.main.fragments.ProfileUpdateFragment;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -128,6 +129,8 @@ public class ProfileEditActivity extends FragmentActivity {
         setFromSharedPrefs();
 
         setListeners();
+
+        HelpersAsync.setTrackerPage(TAG_LOG);
 
         if (helpers.validateServiceRunning(BackgroundFetchService.class)) {
             startService(new Intent(ProfileEditActivity.this, BackgroundFetchService.class));

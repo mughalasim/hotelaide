@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.JsonObject;
+import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.GeneralInterface;
 import com.hotelaide.interfaces.UserInterface;
@@ -24,8 +27,9 @@ import retrofit2.Response;
 
 import static com.hotelaide.utils.Helpers.createNotification;
 import static com.hotelaide.utils.Helpers.logThis;
-import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER_COMPLETE;
-import static com.hotelaide.utils.StaticVariables.BROADCAST_UPLOAD_COMPLETE;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER_STATS;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_UPLOAD;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
@@ -38,15 +42,15 @@ import static com.hotelaide.utils.StaticVariables.USER_ID;
 public class HelpersAsync {
 
     public final static String TAG_LOG = "HELPER ASYNC CLASS";
+    private final static Tracker tracker = MyApplication.getDefaultTracker();
 
-    public HelpersAsync(){ }
+    public HelpersAsync() {
+    }
 
     // COMMON ASYNC TASKS ==========================================================================
     // GET USER ====================================================================================
     public static void asyncGetUser() {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.getUser();
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class).getUser().enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -60,11 +64,11 @@ public class HelpersAsync {
 
                 } catch (JSONException e) {
                     logThis(TAG_LOG, e.toString());
-                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER).putExtra(EXTRA_FAILED, EXTRA_FAILED));
 
                 } catch (Exception e) {
                     logThis(TAG_LOG, e.toString());
-                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                 }
             }
 
@@ -72,7 +76,48 @@ public class HelpersAsync {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 logThis(TAG_LOG, t.toString());
                 logThis(TAG_LOG, call.toString());
-                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+            }
+
+        });
+    }
+
+    // GET USER STATS ==============================================================================
+    public static void asyncGetUserStats() {
+        UserInterface.retrofit.create(UserInterface.class)
+                .getUserStats(SharedPrefs.getInt(USER_ID)).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                try {
+                    JSONObject main = new JSONObject(String.valueOf(response.body()));
+
+//                    logThis(TAG_LOG, main.toString());
+
+                    if (main.getBoolean("success")) {
+                        JSONObject data = main.getJSONObject("data");
+
+                        MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_STATS)
+                                .putExtra(EXTRA_PASSED, EXTRA_PASSED)
+                                .putExtra("data", data.toString())
+                        );
+
+                    }
+
+                } catch (JSONException e) {
+                    logThis(TAG_LOG, e.toString());
+                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_STATS).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+
+                } catch (Exception e) {
+                    logThis(TAG_LOG, e.toString());
+                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_STATS).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                logThis(TAG_LOG, t.toString());
+                logThis(TAG_LOG, call.toString());
+                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_STATS).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             }
 
         });
@@ -80,9 +125,7 @@ public class HelpersAsync {
 
     // GET COUNTIES ================================================================================
     public static void asyncGetCounties() {
-        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
-        final Call<JsonObject> call = generalInterface.getCounties();
-        call.enqueue(new Callback<JsonObject>() {
+        GeneralInterface.retrofit.create(GeneralInterface.class).getCounties().enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -122,9 +165,7 @@ public class HelpersAsync {
 
     // GET EDUCATIONAL LEVEL =======================================================================
     public static void asyncGetEducationalLevels() {
-        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
-        final Call<JsonObject> call = generalInterface.getEducationalLevels();
-        call.enqueue(new Callback<JsonObject>() {
+        GeneralInterface.retrofit.create(GeneralInterface.class).getEducationalLevels().enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -165,9 +206,7 @@ public class HelpersAsync {
 
     // GET JOB TYPES ===============================================================================
     public static void asyncGetJobTypes() {
-        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
-        final Call<JsonObject> call = generalInterface.getJobTypes();
-        call.enqueue(new Callback<JsonObject>() {
+        GeneralInterface.retrofit.create(GeneralInterface.class).getJobTypes().enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -208,9 +247,7 @@ public class HelpersAsync {
 
     // GET CATEGORIES ==============================================================================
     public static void asyncGetCategories() {
-        GeneralInterface generalInterface = GeneralInterface.retrofit.create(GeneralInterface.class);
-        final Call<JsonObject> call = generalInterface.getCategories();
-        call.enqueue(new Callback<JsonObject>() {
+        GeneralInterface.retrofit.create(GeneralInterface.class).getCategories().enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -251,9 +288,7 @@ public class HelpersAsync {
 
     // GET DOCUMENTS ===============================================================================
     public static void asyncGetAllDocuments() {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.getAllDocuments(SharedPrefs.getInt(USER_ID));
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class).getAllDocuments(SharedPrefs.getInt(USER_ID)).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -276,7 +311,7 @@ public class HelpersAsync {
                             }
                         }
                     }
-                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE));
+                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD));
 
                 } catch (JSONException e) {
                     logThis(TAG_LOG, e.toString());
@@ -290,7 +325,7 @@ public class HelpersAsync {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 logThis(TAG_LOG, t.toString());
                 logThis(TAG_LOG, call.toString());
-                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE));
+                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD));
             }
 
         });
@@ -298,50 +333,46 @@ public class HelpersAsync {
 
     // UPLOAD DOCUMENTS ============================================================================
     public static void asyncUploadDocument(final MultipartBody.Part partFile) {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        Call<JsonObject> call = userInterface.setUserDocument(
-                SharedPrefs.getInt(USER_ID),
-                partFile
-        );
+        UserInterface.retrofit.create(UserInterface.class)
+                .setUserDocument(SharedPrefs.getInt(USER_ID), partFile)
+                .enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                        try {
+                            Database db = new Database();
+                            db.deleteDirtyDocuments();
+                            JSONObject main = new JSONObject(String.valueOf(response.body()));
+                            logThis(TAG_LOG, main.toString());
+                            if (main.getBoolean("success")) {
+                                db.deleteDirtyDocuments();
+                                JSONObject data_object = main.getJSONObject("data");
+                                db.setDocumentFromJson(data_object.getJSONObject("document"));
 
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    Database db = new Database();
-                    db.deleteDirtyDocuments();
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-                    logThis(TAG_LOG, main.toString());
-                    if (main.getBoolean("success")) {
-                        db.deleteDirtyDocuments();
-                        JSONObject data_object = main.getJSONObject("data");
-                        db.setDocumentFromJson(data_object.getJSONObject("document"));
-
-                        MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
-                    } else {
-                        showErrorNotification(MyApplication.getAppContext(), MyApplication.getAppContext().getString(R.string.txt_upload_failed), MyApplication.getAppContext().getString(R.string.error_unknown));
-                        MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_PASSED, EXTRA_PASSED));
+                            } else {
+                                showErrorNotification(MyApplication.getAppContext(), MyApplication.getAppContext().getString(R.string.txt_upload_failed), MyApplication.getAppContext().getString(R.string.error_unknown));
+                                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                            }
+                        } catch (JSONException e) {
+                            showErrorNotification(MyApplication.getAppContext(), MyApplication.getAppContext().getString(R.string.txt_upload_failed), MyApplication.getAppContext().getString(R.string.error_server));
+                            MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    showErrorNotification(MyApplication.getAppContext(), MyApplication.getAppContext().getString(R.string.txt_upload_failed), MyApplication.getAppContext().getString(R.string.error_server));
-                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                logThis(TAG_LOG, t.toString());
-                Database db = new Database();
-                db.deleteDirtyDocuments();
-                if (validateInternetConnection()) {
-                    showErrorNotification(MyApplication.getAppContext(), MyApplication.getAppContext().getString(R.string.txt_upload_failed), MyApplication.getAppContext().getString(R.string.error_server));
-                } else {
-                    showErrorNotification(MyApplication.getAppContext(), MyApplication.getAppContext().getString(R.string.txt_upload_failed), MyApplication.getAppContext().getString(R.string.error_connection));
-                }
-                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                        logThis(TAG_LOG, t.toString());
+                        Database db = new Database();
+                        db.deleteDirtyDocuments();
+                        if (validateInternetConnection()) {
+                            showErrorNotification(MyApplication.getAppContext(), MyApplication.getAppContext().getString(R.string.txt_upload_failed), MyApplication.getAppContext().getString(R.string.error_server));
+                        } else {
+                            showErrorNotification(MyApplication.getAppContext(), MyApplication.getAppContext().getString(R.string.txt_upload_failed), MyApplication.getAppContext().getString(R.string.error_connection));
+                        }
+                        MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                    }
+                });
 
     }
 
@@ -368,12 +399,8 @@ public class HelpersAsync {
 
     // GET DOCUMENTS ===============================================================================
     public static void asyncDeleteDocument(final int id) {
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.deleteDocument(
-                SharedPrefs.getInt(USER_ID),
-                id
-        );
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class)
+                .deleteDocument(SharedPrefs.getInt(USER_ID), id).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -382,16 +409,16 @@ public class HelpersAsync {
                     Database db = new Database();
                     if (main.getBoolean("success")) {
                         db.deleteDocumentByID(String.valueOf(id));
-                        MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
+                        MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_PASSED, EXTRA_PASSED));
                     } else {
-                        MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                        MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     }
                 } catch (JSONException e) {
-                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                    MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_FAILED, EXTRA_FAILED));
                     logThis(TAG_LOG, e.toString());
                 }
             }
@@ -400,9 +427,28 @@ public class HelpersAsync {
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 logThis(TAG_LOG, t.toString());
                 logThis(TAG_LOG, call.toString());
-                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             }
 
         });
+    }
+
+    // SET TRACKERS ================================================================================
+    public static void setTrackerPage(String page_name) {
+        tracker.setScreenName(page_name);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    public static void setTrackerEvent(String category, Boolean success) {
+        String event;
+        if (success) {
+            event = "Success";
+        } else {
+            event = "Failed";
+        }
+        tracker.send(new HitBuilders.EventBuilder()
+                .setCategory(category)
+                .setAction(event)
+                .build());
     }
 }

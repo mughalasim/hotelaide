@@ -13,10 +13,6 @@ import com.hotelaide.utils.Helpers;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_CALL;
 
 
 public class ContactUsFragment extends Fragment {
@@ -24,17 +20,9 @@ public class ContactUsFragment extends Fragment {
     private View rootview;
     private Helpers helpers;
     private TextView txt_mobile, txt_land_line;
-    private String STR_PHONE_NUMBER = "";
 
     public ContactUsFragment() {
 
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-        helpers.myPermissionsDialog(grantResults);
     }
 
     @Override
@@ -49,16 +37,14 @@ public class ContactUsFragment extends Fragment {
                 txt_mobile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        STR_PHONE_NUMBER = txt_mobile.getText().toString();
-                        makeCall();
+                        helpers.dialogMakeCall(txt_mobile.getText().toString());
                     }
                 });
 
                 txt_land_line.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        STR_PHONE_NUMBER = txt_land_line.getText().toString();
-                        makeCall();
+                        helpers.dialogMakeCall(txt_land_line.getText().toString());
                     }
                 });
 
@@ -69,19 +55,6 @@ public class ContactUsFragment extends Fragment {
             ((ViewGroup) container.getParent()).removeView(rootview);
         }
         return rootview;
-    }
-
-    @AfterPermissionGranted(INT_PERMISSIONS_CALL)
-    public void makeCall() {
-        if (getActivity() != null) {
-            final String[] perms = {Manifest.permission.CALL_PHONE};
-            if (EasyPermissions.hasPermissions(getActivity(), perms)) {
-                helpers.dialogMakeCall(STR_PHONE_NUMBER);
-            } else {
-                EasyPermissions.requestPermissions(getActivity(), getString(R.string.rationale_call),
-                        INT_PERMISSIONS_CALL, perms);
-            }
-        }
     }
 
 }

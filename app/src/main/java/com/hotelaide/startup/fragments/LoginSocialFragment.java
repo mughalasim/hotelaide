@@ -38,6 +38,7 @@ import com.hotelaide.R;
 import com.hotelaide.interfaces.LoginInterface;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
@@ -63,7 +64,7 @@ public class LoginSocialFragment extends Fragment {
     private Helpers helpers;
 
     private final String
-            TAG_LOG = "FRAGMENT LOGIN";
+            TAG_LOG = "LOGIN SOCIAL";
 
     private TextView
             btn_facebook,
@@ -95,6 +96,8 @@ public class LoginSocialFragment extends Fragment {
                 initializeFacebook(getActivity());
 
                 initializeGoogle(getActivity());
+
+                HelpersAsync.setTrackerPage(TAG_LOG);
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -287,15 +290,12 @@ public class LoginSocialFragment extends Fragment {
 
         helpers.setProgressDialog("Logging you in, please wait...");
 
-        LoginInterface loginInterface = LoginInterface.retrofit.create(LoginInterface.class);
-        final Call<JsonObject> call = loginInterface.userLogin(
-                email,
-                password,
-                fb_id,
-                google_id
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
+        LoginInterface.retrofit.create(LoginInterface.class)
+                .userLogin(
+                        email,
+                        password,
+                        fb_id,
+                        google_id).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -315,8 +315,10 @@ public class LoginSocialFragment extends Fragment {
                                         .putExtra(EXTRA_START_RETURN, EXTRA_START_RETURN));
                             }
                             getActivity().finish();
+                            HelpersAsync.setTrackerEvent(TAG_LOG, true);
                         } else {
                             helpers.toastMessage(getString(R.string.error_invalid_user));
+                            HelpersAsync.setTrackerEvent(TAG_LOG, false);
                         }
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
@@ -326,6 +328,7 @@ public class LoginSocialFragment extends Fragment {
 
                 } catch (JSONException e) {
                     helpers.toastMessage(getString(R.string.error_server));
+                    HelpersAsync.setTrackerEvent(TAG_LOG, false);
                     e.printStackTrace();
                 }
             }
@@ -339,7 +342,7 @@ public class LoginSocialFragment extends Fragment {
                 } else {
                     helpers.toastMessage(getString(R.string.error_connection));
                 }
-
+                HelpersAsync.setTrackerEvent(TAG_LOG, false);
             }
         });
 

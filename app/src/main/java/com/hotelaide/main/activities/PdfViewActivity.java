@@ -82,6 +82,8 @@ public class PdfViewActivity extends AppCompatActivity implements OnPageChangeLi
 
             loadPdfFromFile();
 
+            HelpersAsync.setTrackerPage(TAG_LOG);
+
         } else {
             finish();
             helpers.toastMessage(getString(R.string.error_unknown));

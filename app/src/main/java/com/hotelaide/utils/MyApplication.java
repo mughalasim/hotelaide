@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.hotelaide.BuildConfig;
@@ -31,14 +33,20 @@ public class MyApplication extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Context context;
 
+    private static GoogleAnalytics analytics;
+    private static Tracker tracker;
+
     public void onCreate() {
         super.onCreate();
         MyApplication.context = getApplicationContext();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         // then open this link in chrome -> chrome://inspect/#devices
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this);
         }
+
+        analytics = GoogleAnalytics.getInstance(this);
     }
 
     public static void initFireBase() {
@@ -59,6 +67,15 @@ public class MyApplication extends Application {
 
     public static Context getAppContext() {
         return MyApplication.context;
+    }
+
+    synchronized static public Tracker getDefaultTracker() {
+        // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+        if (tracker == null) {
+            tracker = analytics.newTracker(R.xml.global_tracker);
+            tracker.setAppVersion(BuildConfig.VERSION_NAME);
+        }
+        return tracker;
     }
 
     public static void setFirstTimeTutorial(Boolean state){

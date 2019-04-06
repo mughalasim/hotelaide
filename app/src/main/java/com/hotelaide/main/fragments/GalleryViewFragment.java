@@ -13,6 +13,7 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.hotelaide.R;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -35,8 +36,9 @@ public class GalleryViewFragment extends Fragment {
         if (getArguments() != null) {
             STR_IMAGE_URL = getArguments().getString("image_urls");
 
-            Helpers.logThis("GALLERY VIEW FRAGMENT: ", getArguments().toString());
+            Helpers.logThis("GALLERY VIEW: ", getArguments().toString());
 
+            HelpersAsync.setTrackerPage("GALLERY VIEW");
 
         }
     }

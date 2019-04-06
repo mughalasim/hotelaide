@@ -20,6 +20,7 @@ import com.hotelaide.R;
 import com.hotelaide.interfaces.EstablishmentInterface;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
@@ -71,7 +72,7 @@ public class JobActivity extends AppCompatActivity {
             INT_ESTABLISHMENT_ID = 0;
 
     private final String
-            TAG_LOG = "JOB VACANCY";
+            TAG_LOG = "JOB APPLICATION";
     private Database db;
 
     private LinearLayout
@@ -216,6 +217,8 @@ public class JobActivity extends AppCompatActivity {
         if (!db.isFilteredJob(INT_JOB_ID, FILTER_TYPE_APPLIED)) {
             if (helpers.validateJobApplication()) {
                 asyncApplyJob();
+            } else {
+                HelpersAsync.setTrackerEvent(TAG_LOG, false);
             }
         }
     }
@@ -241,10 +244,8 @@ public class JobActivity extends AppCompatActivity {
     private void asyncGetJob() {
         hideAllViews();
         swipe_refresh.setRefreshing(true);
-        EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
-        Call<JsonObject> call = establishmentInterface.getJob(INT_JOB_ID);
-
-        call.enqueue(new Callback<JsonObject>() {
+        EstablishmentInterface.retrofit.create(EstablishmentInterface.class)
+                .getJob(INT_JOB_ID).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -330,11 +331,10 @@ public class JobActivity extends AppCompatActivity {
 
     private void asyncApplyJob() {
 
-        EstablishmentInterface establishmentInterface = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
-        Call<JsonObject> call = establishmentInterface.applyForJob(SharedPrefs.getInt(USER_ID), INT_JOB_ID);
         helpers.setProgressDialog("Applying for this position");
 
-        call.enqueue(new Callback<JsonObject>() {
+        EstablishmentInterface.retrofit.create(EstablishmentInterface.class)
+                .applyForJob(SharedPrefs.getInt(USER_ID), INT_JOB_ID).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 helpers.dismissProgressDialog();
@@ -351,8 +351,11 @@ public class JobActivity extends AppCompatActivity {
 
                     checkJobApplied();
 
+                    HelpersAsync.setTrackerEvent(TAG_LOG, true);
+
                 } catch (JSONException e) {
                     helpers.toastMessage(getString(R.string.error_server));
+                    HelpersAsync.setTrackerEvent(TAG_LOG, false);
                     e.printStackTrace();
                 }
             }
@@ -366,7 +369,7 @@ public class JobActivity extends AppCompatActivity {
                 } else {
                     helpers.toastMessage(getString(R.string.error_connection));
                 }
-
+                HelpersAsync.setTrackerEvent(TAG_LOG, false);
             }
         });
 

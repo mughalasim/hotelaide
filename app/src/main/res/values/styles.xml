@@ -11,8 +11,10 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="actionOverflowMenuStyle">@style/actionOverflowMenu</item>
         <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowMinWidthMajor">98%</item>
-        <item name="android:windowMinWidthMinor">98%</item>
+        <item name="android:windowMinWidthMajor">75%</item>
+        <item name="android:windowMinWidthMinor">75%</item>
+        <item name="android:popupBackground">@color/transparent</item>
+        <item name="android:popupElevation" tools:targetApi="lollipop">@dimen/text_margin</item>
         <item name="windowActionBar">false</item>
         <item name="windowActionModeOverlay">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>

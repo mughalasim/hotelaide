@@ -9,13 +9,17 @@ import com.google.android.material.tabs.TabLayout;
 import com.hotelaide.R;
 import com.hotelaide.main.fragments.GalleryViewFragment;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -23,7 +27,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class GalleryViewActivity extends FragmentActivity {
+public class GalleryViewActivity extends AppCompatActivity {
     private Helpers helpers;
 
     private Toolbar toolbar;
@@ -50,6 +54,8 @@ public class GalleryViewActivity extends FragmentActivity {
         setUpToolBar();
 
         handleExtraBundles();
+
+        HelpersAsync.setTrackerPage(TAG_LOG);
 
     }
 
@@ -120,22 +126,19 @@ public class GalleryViewActivity extends FragmentActivity {
     }
 
     private void setUpToolBar() {
-//        setSupportActionBar(toolbar);
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().setDisplayShowTitleEnabled(false);
-//            getSupportActionBar().setTitle("");
-//            getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(GalleryViewActivity.this, R.drawable.ic_cancel));
-//        }
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("");
+        }
         toolbar.setTitle("");
-        toolbar.setBackground(null);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     // VIEWPAGER ADAPTER ===========================================================================

@@ -37,7 +37,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
-import static com.hotelaide.utils.StaticVariables.BROADCAST_UPLOAD_COMPLETE;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_UPLOAD;
 import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_STORAGE;
@@ -229,7 +229,7 @@ public class DocumentsFragment extends Fragment {
 
     private void listenUploadCompleteBroadcast() {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(BROADCAST_UPLOAD_COMPLETE);
+        filter.addAction(BROADCAST_UPLOAD);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

@@ -22,6 +22,7 @@ import com.hotelaide.interfaces.LoginInterface;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.models.UserModel;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
@@ -61,7 +62,7 @@ public class SignUpEmailFragment extends Fragment {
             spinner_user_gender;
 
     private final String
-            TAG_LOG = "FRAGMENT SIGN UP EMAIL";
+            TAG_LOG = "SIGN UP EMAIL";
 
     public SignUpEmailFragment() {
 
@@ -80,6 +81,7 @@ public class SignUpEmailFragment extends Fragment {
 
                 setListeners();
 
+                HelpersAsync.setTrackerPage(TAG_LOG);
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -235,23 +237,20 @@ public class SignUpEmailFragment extends Fragment {
         helpers.setProgressDialog(getString(R.string.progress_sign_up));
         logRegModel(userModel);
 
-        LoginInterface loginInterface = LoginInterface.retrofit.create(LoginInterface.class);
-        final Call<JsonObject> call = loginInterface.userRegister(
-                userModel.first_name,
-                userModel.last_name,
-                userModel.country_code,
-                userModel.phone,
-                userModel.email,
-                userModel.password,
-                userModel.password,
-                userModel.dob,
-                userModel.fb_id,
-                userModel.google_id,
-                BuildConfig.ACCOUNT_TYPE,
-                userModel.gender
-        );
-
-        call.enqueue(new Callback<JsonObject>() {
+        LoginInterface.retrofit.create(LoginInterface.class)
+                .userRegister(
+                        userModel.first_name,
+                        userModel.last_name,
+                        userModel.country_code,
+                        userModel.phone,
+                        userModel.email,
+                        userModel.password,
+                        userModel.password,
+                        userModel.dob,
+                        userModel.fb_id,
+                        userModel.google_id,
+                        BuildConfig.ACCOUNT_TYPE,
+                        userModel.gender).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 helpers.dismissProgressDialog();
@@ -268,14 +267,17 @@ public class SignUpEmailFragment extends Fragment {
                             startActivity(new Intent(getActivity(), DashboardActivity.class)
                                     .putExtra(EXTRA_START_FIRST_TIME, EXTRA_START_FIRST_TIME));
                             getActivity().finish();
+                            HelpersAsync.setTrackerEvent(TAG_LOG, true);
                         } else {
                             helpers.toastMessage(getString(R.string.error_server));
+                            HelpersAsync.setTrackerEvent(TAG_LOG, false);
                         }
                     } else {
                         helpers.handleErrorMessage(getActivity(), main.getJSONObject("data"));
                     }
                 } catch (JSONException e) {
                     helpers.toastMessage(getString(R.string.error_server));
+                    HelpersAsync.setTrackerEvent(TAG_LOG, false);
                     e.printStackTrace();
                 }
             }
@@ -289,7 +291,7 @@ public class SignUpEmailFragment extends Fragment {
                 } else {
                     helpers.toastMessage(getString(R.string.error_connection));
                 }
-
+                HelpersAsync.setTrackerEvent(TAG_LOG, false);
             }
         });
 

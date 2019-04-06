@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
 
-import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER_COMPLETE;
+import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
@@ -190,7 +190,7 @@ public class SharedPrefs {
                     }
                 }
 
-                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_PASSED, EXTRA_PASSED));
+                MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER).putExtra(EXTRA_PASSED, EXTRA_PASSED));
 
                 logUserModel();
 
@@ -200,11 +200,11 @@ public class SharedPrefs {
             }
         } catch (JSONException e) {
             Helpers.logThis(SHARED_PREFS, e.toString());
-            MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+            MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             return false;
         } catch (Exception e) {
             Helpers.logThis(SHARED_PREFS, e.toString());
-            MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER_COMPLETE).putExtra(EXTRA_FAILED, EXTRA_FAILED));
+            MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER).putExtra(EXTRA_FAILED, EXTRA_FAILED));
             return false;
         }
     }

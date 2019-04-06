@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/padding_medium"
-        android:layout_marginEnd="@dimen/padding_medium"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/padding_small"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/padding_large">
 
         <!-- WELCOME MESSAGE ================================================================-->
         <TextView
@@ -24,16 +22,16 @@
 
         <TextView
             style="@style/Text_Normal"
-            android:textColor="@color/colorPrimary"
-            android:text="Summary of your highlights" />
+            android:text="Summary of your highlights"
+            android:textColor="@color/colorPrimary" />
 
         <!-- STATS ==========================================================================-->
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="2"
-            android:layout_height="wrap_content">
+            android:weightSum="2">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,12 +48,13 @@
                     android:onClick="openMyJobs"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.robinhood.ticker.TickerView
                         android:id="@+id/txt_applied_jobs"
                         style="@style/Text_Header"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/txt_zero"
+                        app:ticker_animationDuration="@integer/dash_anim_time"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_xx_large" />
 
@@ -70,8 +69,8 @@
                 <View
                     android:layout_width="@dimen/line_thickness"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/padding_small"
                     android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginEnd="@dimen/padding_small"
                     android:layout_marginBottom="@dimen/padding_small"
                     android:background="@color/grey" />
 
@@ -84,12 +83,13 @@
                     android:onClick="openMyJobs"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.robinhood.ticker.TickerView
                         android:id="@+id/txt_shortlisted"
                         style="@style/Text_Header"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/txt_zero"
+                        app:ticker_animationDuration="@integer/dash_anim_time"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_xx_large" />
 
@@ -104,8 +104,8 @@
                 <View
                     android:layout_width="@dimen/line_thickness"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/padding_small"
                     android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginEnd="@dimen/padding_small"
                     android:layout_marginBottom="@dimen/padding_small"
                     android:background="@color/grey" />
 
@@ -117,12 +117,13 @@
                     android:onClick="openMyJobs"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.robinhood.ticker.TickerView
                         android:id="@+id/txt_interviews"
                         style="@style/Text_Header"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/txt_zero"
+                        app:ticker_animationDuration="@integer/dash_anim_time"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_xx_large" />
 
@@ -152,12 +153,13 @@
                     android:onClick="openMyJobs"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.robinhood.ticker.TickerView
                         android:id="@+id/txt_saved_jobs"
                         style="@style/Text_Header"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/txt_zero"
+                        app:ticker_animationDuration="@integer/dash_anim_time"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_xx_large" />
 
@@ -172,8 +174,8 @@
                 <View
                     android:layout_width="@dimen/line_thickness"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/padding_small"
                     android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginEnd="@dimen/padding_small"
                     android:layout_marginBottom="@dimen/padding_small"
                     android:background="@color/grey" />
 
@@ -185,12 +187,13 @@
                     android:onClick="openMyJobs"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.robinhood.ticker.TickerView
                         android:id="@+id/txt_profile_views"
                         style="@style/Text_Header"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/txt_zero"
+                        app:ticker_animationDuration="@integer/dash_anim_time"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_xx_large" />
 
@@ -205,8 +208,8 @@
                 <View
                     android:layout_width="@dimen/line_thickness"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/padding_small"
                     android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginEnd="@dimen/padding_small"
                     android:layout_marginBottom="@dimen/padding_small"
                     android:background="@color/grey" />
 
@@ -218,12 +221,13 @@
                     android:onClick="openMyJobs"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.robinhood.ticker.TickerView
                         android:id="@+id/txt_unread_messages"
                         style="@style/Text_Header"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/txt_zero"
+                        app:ticker_animationDuration="@integer/dash_anim_time"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_xx_large" />
 
@@ -241,33 +245,30 @@
         </LinearLayout>
 
 
-
-
         <!-- PROGRESS =======================================================================-->
-
 
 
         <RelativeLayout
             android:id="@+id/rl_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="openProfile"
-            android:layout_marginTop="@dimen/padding_small">
+            android:layout_marginTop="@dimen/padding_small"
+            android:onClick="openProfile">
 
             <TextView
                 android:id="@+id/txt_title"
                 style="@style/Text_Normal"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Profile Completion" />
+                android:text="Profile Completion"
+                android:textColor="@color/colorPrimary" />
 
             <SeekBar
-                android:layout_below="@+id/txt_title"
                 android:id="@+id/seek_bar_progress"
-                android:layout_marginTop="@dimen/padding_tiny"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_title"
+                android:layout_marginTop="@dimen/padding_tiny"
                 android:max="100"
                 android:progress="75"
                 android:progressDrawable="@drawable/progress_background"
@@ -277,10 +278,10 @@
                 android:id="@+id/txt_progress"
                 style="@style/Text_Normal"
                 android:layout_marginStart="@dimen/padding_tiny"
-                android:gravity="center"
-                android:layout_toEndOf="@+id/txt_title"
-                android:text="@string/txt_zero"
                 android:layout_marginTop="0dp"
+                android:layout_toEndOf="@+id/txt_title"
+                android:gravity="center"
+                android:text="@string/txt_zero"
                 android:textColor="@color/red"
                 android:textStyle="bold" />
 
@@ -319,4 +320,4 @@
 
     </LinearLayout>
 
-</ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

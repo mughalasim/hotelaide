@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
@@ -56,6 +57,7 @@ public class SettingsActivity extends ParentActivity {
 
         findAllViews();
 
+        HelpersAsync.setTrackerPage(TAG_LOG);
 
     }
 
@@ -115,7 +117,7 @@ public class SettingsActivity extends ParentActivity {
                 btn_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        helpers.toastMessage( "Coming soon :)");
+                        helpers.toastMessage("Coming soon :)");
 //                        asyncDeleteUser();
                         dialog.cancel();
                     }
@@ -136,9 +138,8 @@ public class SettingsActivity extends ParentActivity {
     public void asyncDeleteUser() {
         helpers.setProgressDialog("Deleting Account, Please wait...");
 
-        UserInterface userInterface = UserInterface.retrofit.create(UserInterface.class);
-        final Call<JsonObject> call = userInterface.deleteUser(SharedPrefs.getInt(USER_ID));
-        call.enqueue(new Callback<JsonObject>() {
+        UserInterface.retrofit.create(UserInterface.class)
+                .deleteUser(SharedPrefs.getInt(USER_ID)).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 try {
@@ -151,11 +152,11 @@ public class SettingsActivity extends ParentActivity {
                     }
 
                 } catch (JSONException e) {
-                    helpers.toastMessage( getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     Helpers.logThis(TAG_LOG, e.toString());
 
                 } catch (Exception e) {
-                    helpers.toastMessage( getString(R.string.error_server));
+                    helpers.toastMessage(getString(R.string.error_server));
                     Helpers.logThis(TAG_LOG, e.toString());
                 }
                 helpers.dismissProgressDialog();

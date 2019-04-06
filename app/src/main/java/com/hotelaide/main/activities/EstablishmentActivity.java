@@ -21,6 +21,7 @@ import com.hotelaide.interfaces.EstablishmentInterface;
 import com.hotelaide.main.adapters.GalleryAdapter;
 import com.hotelaide.main.models.GalleryModel;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,7 +62,7 @@ public class EstablishmentActivity extends AppCompatActivity {
     private int INT_ESTABLISHMENT_ID = 0;
 
     private final String
-            TAG_LOG = "ESTABLISHMENT";
+            TAG_LOG = "ESTABLISHMENT VIEW";
 
     private SwipeRefreshLayout
             swipe_refresh;
@@ -96,8 +97,10 @@ public class EstablishmentActivity extends AppCompatActivity {
 
             asyncGetEstablishment();
 
+            HelpersAsync.setTrackerPage(TAG_LOG);
+
         } else {
-            helpers.toastMessage( getString(R.string.error_unknown));
+            helpers.toastMessage(getString(R.string.error_unknown));
             onBackPressed();
         }
 
@@ -216,107 +219,108 @@ public class EstablishmentActivity extends AppCompatActivity {
     // GET ESTABLISHMENT ASYNC FUNCTION ============================================================
     private void asyncGetEstablishment() {
         swipe_refresh.setRefreshing(true);
-        EstablishmentInterface service = EstablishmentInterface.retrofit.create(EstablishmentInterface.class);
-        Call<JsonObject> call = service.getEstablishment(INT_ESTABLISHMENT_ID);
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                try {
-                    swipe_refresh.setRefreshing(false);
-                    JSONObject main = new JSONObject(String.valueOf(response.body()));
-
-                    Helpers.logThis(TAG_LOG, main.toString());
-
-                    if (main.getBoolean("success")) {
-
-                        JSONObject establishment_object = main.getJSONObject("data");
-                        STR_PAGE_TITLE = establishment_object.getString("establishment_name");
-                        txt_establishment_name.setText(STR_PAGE_TITLE);
-                        helpers.animateFadeIn(txt_establishment_name);
-                        txt_establishment_location.setText(establishment_object.getString("full_address"));
-
-                        txt_establishment_description.setText(establishment_object.getString("establishment_description"));
-                        STR_SHARE_LINK = "Please have a look at this establishment on HotelAide ".concat(establishment_object.getString("establishment_url"));
-                        STR_BANNER_URL = establishment_object.getString("banner");
-                        Glide.with(EstablishmentActivity.this).load(STR_BANNER_URL).into(img_banner);
-
-                        JSONObject establishment_type = establishment_object.getJSONObject("establishment_type");
-                        txt_establishment_type.setText(establishment_type.getString("name"));
 
 
-                        // GALLERY
-                        gallery_list.clear();
-                        JSONArray galleryImageArrays = establishment_object.getJSONArray("gallery");
-                        if (!galleryImageArrays.isNull(0)) {
-                            ll_gallery.setVisibility(View.VISIBLE);
-                            for (int v = 0; v < galleryImageArrays.length(); v++) {
-                                GalleryModel galleryModel = new GalleryModel();
-                                galleryModel.id = v + 1;
-                                galleryModel.image = galleryImageArrays.getString(v);
-                                gallery_list.add(galleryModel);
-                            }
-                            gallery_adapter.notifyDataSetChanged();
-                        } else {
-                            ll_gallery.setVisibility(View.GONE);
-                        }
+        EstablishmentInterface.retrofit.create(EstablishmentInterface.class)
+                .getEstablishment(INT_ESTABLISHMENT_ID)
+                .enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                        try {
+                            swipe_refresh.setRefreshing(false);
+                            JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-                        // JOB VACANCIES
-                        JSONArray job_vacancies = establishment_object.getJSONArray("job_vacancies");
-                        if (job_vacancies != null && job_vacancies.length() > 0) {
-                            ll_vacancies_child.removeAllViews();
-                            LayoutInflater layout_inflater = LayoutInflater.from(EstablishmentActivity.this);
-                            int array_length = job_vacancies.length();
-                            for (int i = 0; i < array_length; i++) {
-                                JSONObject vacancy_object = job_vacancies.getJSONObject(i);
-                                final int id = vacancy_object.getInt("id");
-                                final String title = vacancy_object.getString("title");
-                                final String desc = vacancy_object.getString("description");
-                                final String posted_on = vacancy_object.getString("posted_on");
-                                createVacancyListing(layout_inflater, id, title, desc, posted_on);
-                            }
+                            Helpers.logThis(TAG_LOG, main.toString());
 
-                            if (ll_vacancies_child.getChildCount() > 0) {
-                                ll_vacancies.setVisibility(View.VISIBLE);
+                            if (main.getBoolean("success")) {
+
+                                JSONObject establishment_object = main.getJSONObject("data");
+                                STR_PAGE_TITLE = establishment_object.getString("establishment_name");
+                                txt_establishment_name.setText(STR_PAGE_TITLE);
+                                helpers.animateFadeIn(txt_establishment_name);
+                                txt_establishment_location.setText(establishment_object.getString("full_address"));
+
+                                txt_establishment_description.setText(establishment_object.getString("establishment_description"));
+                                STR_SHARE_LINK = "Please have a look at this establishment on HotelAide ".concat(establishment_object.getString("establishment_url"));
+                                STR_BANNER_URL = establishment_object.getString("banner");
+                                Glide.with(EstablishmentActivity.this).load(STR_BANNER_URL).into(img_banner);
+
+                                JSONObject establishment_type = establishment_object.getJSONObject("establishment_type");
+                                txt_establishment_type.setText(establishment_type.getString("name"));
+
+
+                                // GALLERY
+                                gallery_list.clear();
+                                JSONArray galleryImageArrays = establishment_object.getJSONArray("gallery");
+                                if (!galleryImageArrays.isNull(0)) {
+                                    ll_gallery.setVisibility(View.VISIBLE);
+                                    for (int v = 0; v < galleryImageArrays.length(); v++) {
+                                        GalleryModel galleryModel = new GalleryModel();
+                                        galleryModel.id = v + 1;
+                                        galleryModel.image = galleryImageArrays.getString(v);
+                                        gallery_list.add(galleryModel);
+                                    }
+                                    gallery_adapter.notifyDataSetChanged();
+                                } else {
+                                    ll_gallery.setVisibility(View.GONE);
+                                }
+
+                                // JOB VACANCIES
+                                JSONArray job_vacancies = establishment_object.getJSONArray("job_vacancies");
+                                if (job_vacancies != null && job_vacancies.length() > 0) {
+                                    ll_vacancies_child.removeAllViews();
+                                    LayoutInflater layout_inflater = LayoutInflater.from(EstablishmentActivity.this);
+                                    int array_length = job_vacancies.length();
+                                    for (int i = 0; i < array_length; i++) {
+                                        JSONObject vacancy_object = job_vacancies.getJSONObject(i);
+                                        final int id = vacancy_object.getInt("id");
+                                        final String title = vacancy_object.getString("title");
+                                        final String desc = vacancy_object.getString("description");
+                                        final String posted_on = vacancy_object.getString("posted_on");
+                                        createVacancyListing(layout_inflater, id, title, desc, posted_on);
+                                    }
+
+                                    if (ll_vacancies_child.getChildCount() > 0) {
+                                        ll_vacancies.setVisibility(View.VISIBLE);
+                                    } else {
+                                        ll_vacancies.setVisibility(View.GONE);
+                                    }
+
+                                } else {
+                                    ll_vacancies.setVisibility(View.GONE);
+                                }
+
+                                ll_main_view.setVisibility(View.VISIBLE);
+                                helpers.animateFadeIn(ll_main_view);
+
                             } else {
-                                ll_vacancies.setVisibility(View.GONE);
+                                helpers.handleErrorMessage(EstablishmentActivity.this, main.getJSONObject("data"));
                             }
 
-                        } else {
-                            ll_vacancies.setVisibility(View.GONE);
+                        } catch (JSONException e) {
+                            helpers.toastMessage(getString(R.string.error_server));
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                        try {
+                            swipe_refresh.setRefreshing(false);
+                            Helpers.logThis(TAG_LOG, t.toString());
+                            if (helpers.validateInternetConnection()) {
+                                helpers.toastMessage(getString(R.string.error_server));
+                                onBackPressed();
+                            } else {
+                                helpers.toastMessage(getString(R.string.error_connection));
+                                onBackPressed();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
-                        ll_main_view.setVisibility(View.VISIBLE);
-                        helpers.animateFadeIn(ll_main_view);
-
-                    } else {
-                        helpers.handleErrorMessage(EstablishmentActivity.this, main.getJSONObject("data"));
                     }
-
-                } catch (JSONException e) {
-                    helpers.toastMessage( getString(R.string.error_server));
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                try {
-                    swipe_refresh.setRefreshing(false);
-                    Helpers.logThis(TAG_LOG, t.toString());
-                    if (helpers.validateInternetConnection()) {
-                        helpers.toastMessage( getString(R.string.error_server));
-                        onBackPressed();
-                    } else {
-                        helpers.toastMessage( getString(R.string.error_connection));
-                        onBackPressed();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
+                });
 
     }
 
