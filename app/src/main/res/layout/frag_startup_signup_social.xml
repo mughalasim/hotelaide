@@ -84,7 +84,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:onClick="openTermsAndConditions"
-            android:text="By signing up you agree to the terms and conditions, privacy policy and that HotelAide may notify you about job offers" />
+            android:text="@string/txt_signup_terms" />
 
         <include layout="@layout/horizontal_line" />
 

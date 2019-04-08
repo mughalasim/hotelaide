@@ -142,6 +142,13 @@
 
         <include layout="@layout/layout_button" />
 
+        <TextView
+            style="@style/Text_Normal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:onClick="openTermsAndConditions"
+            android:text="@string/txt_signup_terms" />
+
     </LinearLayout>
 
 </ScrollView>

@@ -70,6 +70,8 @@ public class IntroActivity extends FragmentActivity {
 
         setListeners();
 
+        helpers.dialogPrivacyPolicy(IntroActivity.this);
+
     }
 
     private void findAllViews() {

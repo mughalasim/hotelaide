@@ -153,14 +153,7 @@ public class LoginActivity extends FragmentActivity {
 
     // SET ON CLICKS ===============================================================================
     public void openTermsAndConditions(View view) {
-        try {
-            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://hotelaide.com/terms"));
-            startActivity(myIntent);
-        } catch (ActivityNotFoundException e) {
-            helpers.toastMessage("No application can handle this request."
-                    + " Please install a web browser");
-            e.printStackTrace();
-        }
+        helpers.dialogPrivacyPolicy(LoginActivity.this);
     }
 
     public void navigateToLoginScreen(View view) {

@@ -76,6 +76,13 @@
             android:paddingStart="@dimen/padding_small"
             android:paddingEnd="@dimen/padding_small" />
 
+        <TextView
+            style="@style/Text_Normal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:onClick="openTermsAndConditions"
+            android:text="@string/txt_signup_terms" />
+
     </LinearLayout>
 
 </ScrollView>

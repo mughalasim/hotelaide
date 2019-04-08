@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:orientation="vertical"
+    android:background="@drawable/back_text_fields"
+    android:padding="@dimen/padding_small">
+
+    <TextView
+        android:id="@+id/txt_title"
+        style="@style/Text_Header"
+        android:text="@string/txt_privacy_policy_title"
+        android:textSize="@dimen/text_size_x_large" />
+
+
+    <include layout="@layout/horizontal_line"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_map"
+        android:layout_gravity="center"
+        android:scrollbarSize="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_message"
+                style="@style/Text_Normal"
+                android:gravity="center"
+                android:text="@string/txt_privacy_policy"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/txt_link"
+                style="@style/Text_Normal"
+                android:text="@string/txt_privacy_policy_more"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textSize="@dimen/text_size_small" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="match_parent"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/padding_small"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginBottom="@dimen/padding_small"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/txt_privacy_policy_check"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/layout_buttons" />
+
+</LinearLayout>

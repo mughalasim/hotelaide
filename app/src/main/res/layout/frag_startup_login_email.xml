@@ -57,6 +57,13 @@
             android:onClick="navigateToResetPassScreen"
             android:text="@string/txt_forgot_password" />
 
+        <TextView
+            style="@style/Text_Normal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:onClick="openTermsAndConditions"
+            android:text="@string/txt_signup_terms" />
+
     </LinearLayout>
 
 </ScrollView>

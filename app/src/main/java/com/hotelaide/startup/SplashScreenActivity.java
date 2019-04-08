@@ -90,7 +90,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                     if (SharedPrefs.getGlobalBool(FIRST_LAUNCH)) {
                         startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                     } else {
-                        SharedPrefs.setGlobalBool(FIRST_LAUNCH, true);
                         startActivity(new Intent(SplashScreenActivity.this, IntroActivity.class));
                     }
                 } else {

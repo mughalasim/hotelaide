@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -95,6 +97,7 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_PREVIEW;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TITLE;
@@ -322,6 +325,57 @@ public class Helpers {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
+
+    public void dialogPrivacyPolicy(final Activity activity) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_policy);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final TextView txt_link = dialog.findViewById(R.id.txt_link);
+        final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
+        final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        final CheckBox checkBox = dialog.findViewById(R.id.checkbox);
+
+        txt_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.TERMS_URL));
+                    activity.startActivity(myIntent);
+                } catch (ActivityNotFoundException e) {
+                    toastMessage(context.getString(R.string.error_app_not_installed));
+                    e.printStackTrace();
+                } catch (Exception e){
+                    toastMessage(context.getString(R.string.error_unknown));
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        btn_confirm.setText(context.getString(R.string.txt_accept));
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkBox.isChecked()) {
+                    SharedPrefs.setGlobalBool(FIRST_LAUNCH, true);
+                    dialog.cancel();
+                } else {
+                    toastMessage("Please scroll down to accept the terms and conditions");
+                }
+            }
+        });
+
+        btn_cancel.setText(context.getString(R.string.txt_decline));
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+                SharedPrefs.setGlobalBool(FIRST_LAUNCH, false);
+                activity.finish();
             }
         });
         dialog.show();
