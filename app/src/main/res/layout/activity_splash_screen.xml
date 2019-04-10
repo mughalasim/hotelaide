@@ -15,9 +15,19 @@
         android:id="@+id/main_logo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/img_size_large"
+        android:layout_above="@+id/main_logo2"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_logo_round" />
+
+    <ImageView
+        android:id="@+id/main_logo2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/img_size_small"
         android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
-        android:src="@drawable/logo_vertical" />
+        android:src="@drawable/logo_horizontal" />
+
 
 </RelativeLayout>

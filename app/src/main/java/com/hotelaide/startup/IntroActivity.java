@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.eftimoff.viewpagertransformers.ForegroundToBackgroundTransformer;
+import com.eftimoff.viewpagertransformers.TabletTransformer;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
 import com.hotelaide.R;
@@ -139,7 +139,7 @@ public class IntroActivity extends FragmentActivity {
             }
         });
 
-        view_pager.setPageTransformer(true, new ForegroundToBackgroundTransformer());
+        view_pager.setPageTransformer(true, new TabletTransformer());
 
     }
 

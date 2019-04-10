@@ -1,6 +1,5 @@
 package com.hotelaide.utils;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -76,7 +75,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
@@ -1033,7 +1031,7 @@ public class Helpers {
         boolean useWhiteIcon = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
         return useWhiteIcon ?
                 R.drawable.ic_logo :
-                R.mipmap.ic_launcher;
+                R.mipmap.ic_logo;
     }
 
     private static void createNotificationChannel(Context context) {

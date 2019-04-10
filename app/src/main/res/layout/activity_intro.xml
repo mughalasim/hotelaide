@@ -15,7 +15,8 @@
         android:layout_above="@id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_mini"
+        android:layout_marginStart="@dimen/padding_large"
+        android:layout_marginEnd="@dimen/padding_large"
         layout="@layout/layout_buttons"/>
 
     <com.google.android.material.tabs.TabLayout
@@ -31,7 +32,7 @@
     <ImageView
         android:contentDescription="@string/app_name"
         android:layout_width="match_parent"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/ic_logo_round"
         android:padding="@dimen/padding_small"
         android:layout_height="@dimen/img_size_large" />
 

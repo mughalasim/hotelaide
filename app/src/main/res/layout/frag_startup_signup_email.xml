@@ -18,7 +18,7 @@
             android:layout_marginTop="@dimen/padding_large"
             android:contentDescription="@string/app_name"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_logo_adaptive" />
 
         <TextView
             style="@style/Text_Header"
