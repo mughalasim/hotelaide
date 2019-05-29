@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
@@ -24,8 +25,11 @@ import com.hotelaide.utils.SharedPrefs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -50,7 +54,7 @@ public class ConversationActivity extends AppCompatActivity {
     private final String
             TAG_LOG = "CONVERSATION VIEW";
 
-    private DatabaseReference parent_ref, child_ref;
+    private DatabaseReference parent_ref, child_ref, child_ref_status;
 
     private RecyclerView recycler_view;
     private ArrayList<ConversationModel> model_list = new ArrayList<>();
@@ -61,6 +65,8 @@ public class ConversationActivity extends AppCompatActivity {
     private EditText et_message;
 
     private boolean show_my_texts = true;
+
+    private TextView user_status;
 
 
     // OVERRIDE METHODS ============================================================================
@@ -133,13 +139,22 @@ public class ConversationActivity extends AppCompatActivity {
             }
         });
 
-        TextView toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        TextView toolbar_text = findViewById(R.id.toolbar_text);
+        user_status = findViewById(R.id.user_status);
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         toolbar_text.setText(STR_PAGE_TITLE);
+        toolbar_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +190,31 @@ public class ConversationActivity extends AppCompatActivity {
             }
         });
 
+        child_ref_status.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() instanceof String) {
+                    if (dataSnapshot.getValue().toString().equals("Online")) {
+                        user_status.setText("Online");
+                    } else {
+                        try {
+                            PrettyTime p = new PrettyTime();
+                            user_status.setText("Last Seen: " + p.format(new Date(Long.valueOf(dataSnapshot.getValue().toString()))));
+                        } catch (Exception e) {
+                            user_status.setText("Last Seen: Unknown");
+                        }
+                    }
+                } else {
+                    user_status.setText("Last Seen: Unknown");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,7 +240,7 @@ public class ConversationActivity extends AppCompatActivity {
             user2.put("name", STR_PAGE_TITLE);
             user2.put("pic_url", STR_FROM_PIC_URL);
 
-            HashMap< String ,Object> users = new HashMap<>();
+            HashMap<String, Object> users = new HashMap<>();
             users.put("0", user1);
             users.put("1", user2);
 
@@ -264,6 +304,8 @@ public class ConversationActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         parent_ref = database.getReference();
         child_ref = parent_ref.child(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.CONVERSATION_URL + INT_FROM_ID);
+        child_ref_status = parent_ref.child(BuildConfig.USERS_URL + INT_FROM_ID + BuildConfig.USERS_STATUS_URL);
+
         Helpers.logThis(TAG_LOG, "FB URL: " + BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.CONVERSATION_URL + INT_FROM_ID);
 
     }

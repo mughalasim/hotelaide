@@ -13,17 +13,21 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.google.gms:google-services:4.2.0'
-        classpath "com.gradle:build-scan-plugin:1.16"
+        classpath "com.gradle:build-scan-plugin:2.3"
     }
 }
+
 apply plugin: 'com.gradle.build-scan'
 apply plugin: 'java'
+
 buildScan {
-    licenseAgreementUrl = 'https://gradle.com/terms-of-service'
-    licenseAgree = 'yes'
+    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+    termsOfServiceAgree = 'yes'
+    publishAlways()
 }
+
 allprojects {
 
     repositories {
@@ -49,8 +53,8 @@ ext {
     SupportLibrary = '1.0.0'
 
     // App Versioning
-    versionCode = 26
-    versionName = 2.6
+    versionCode = 28
+    versionName = 2.8
 }
 task clean_app(type: Delete) {
     delete rootProject.buildDir

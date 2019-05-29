@@ -59,6 +59,7 @@
             android:layout_marginTop="@dimen/padding_small"
             android:background="@drawable/back_text_fields"
             android:layout_width="match_parent"
+            android:padding="@dimen/padding_mini"
             android:layout_height="@dimen/height_map" />
 
 

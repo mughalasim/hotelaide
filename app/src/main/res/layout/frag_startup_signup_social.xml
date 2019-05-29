@@ -14,7 +14,7 @@
         android:layout_marginBottom="@dimen/padding_large"
         android:orientation="vertical">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_logo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/img_size_large"

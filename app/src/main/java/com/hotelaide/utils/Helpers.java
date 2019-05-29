@@ -43,6 +43,8 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main.activities.AboutUsActivity;
@@ -59,6 +61,7 @@ import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.services.FileUploadService;
 import com.hotelaide.services.MessagingService;
+import com.hotelaide.services.ReminderService;
 import com.hotelaide.startup.SplashScreenActivity;
 
 import org.json.JSONArray;
@@ -79,6 +82,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
@@ -104,6 +108,7 @@ import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_DOB;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
 
@@ -173,6 +178,15 @@ public class Helpers {
     // BROADCASTS ==================================================================================
     public static void sessionExpiryBroadcast() {
         Context context = MyApplication.getAppContext();
+
+        updateUserOnlineStatus(Calendar.getInstance().getTimeInMillis());
+
+        MessagingService.stopListeningForMessages();
+        context.stopService(new Intent(context, MessagingService.class));
+        context.stopService(new Intent(context, BackgroundFetchService.class));
+        context.stopService(new Intent(context, ReminderService.class));
+        context.stopService(new Intent(context, FileUploadService.class));
+
         SharedPrefs.deleteAllSharedPrefs();
 
         AccessToken.setCurrentAccessToken(null);
@@ -181,15 +195,17 @@ public class Helpers {
         Database db = new Database();
         db.deleteAllTables();
 
-        MessagingService.stopListeningForMessages();
-        context.stopService(new Intent(context, MessagingService.class));
-        context.stopService(new Intent(context, BackgroundFetchService.class));
-        context.stopService(new Intent(context, FileUploadService.class));
-
         context.sendBroadcast(new Intent().setAction(BROADCAST_LOG_OUT));
         context.startActivity(new Intent(context, SplashScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
+    public static void updateUserOnlineStatus(Object status) {
+        if (SharedPrefs.getInt(USER_ID) != 0) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference parent_ref = database.getReference(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.USERS_STATUS_URL);
+            parent_ref.setValue(status);
+        }
+    }
 
     // LOGS ========================================================================================
     public static void logThis(String page_name, String data) {
@@ -347,7 +363,7 @@ public class Helpers {
                 } catch (ActivityNotFoundException e) {
                     toastMessage(context.getString(R.string.error_app_not_installed));
                     e.printStackTrace();
-                } catch (Exception e){
+                } catch (Exception e) {
                     toastMessage(context.getString(R.string.error_unknown));
                     e.printStackTrace();
                 }

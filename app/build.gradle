@@ -35,6 +35,14 @@ android {
             useProguard true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            splits {
+                abi {
+                    enable true
+                    reset()
+                    include 'armeabi-v7a'
+                    universalApk false
+                }
+            }
         }
 
         debug {
@@ -42,6 +50,14 @@ android {
             minifyEnabled false
             useProguard false
             shrinkResources false
+            splits {
+                abi {
+                    enable true
+                    reset()
+                    include 'armeabi-v7a', 'x86'
+                    universalApk false
+                }
+            }
         }
     }
 
@@ -62,6 +78,7 @@ android {
             // FIREBASE PATHS
             buildConfigField 'String', 'FB_DB_URL', FB_DB_URL
             buildConfigField 'String', 'USERS_URL', USERS_URL
+            buildConfigField 'String', 'USERS_STATUS_URL', USERS_STATUS_URL
             buildConfigField 'String', 'MESSAGE_URL', MESSAGE_URL
             buildConfigField 'String', 'CONVERSATION_URL', CONVERSATION_URL
             // ALGOLIA SEARCH
@@ -83,15 +100,6 @@ android {
 //        targetCompatibility = '1.8'
 //    }
 
-        splits {
-        abi {
-            enable true
-            reset()
-            include 'armeabi-v7a', 'x86'
-            universalApk false
-        }
-    }
-
 }
 
 dependencies {
@@ -106,7 +114,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.SupportLibrary"
     implementation "androidx.dynamicanimation:dynamicanimation:$rootProject.SupportLibrary"
     implementation "androidx.vectordrawable:vectordrawable-animated:$rootProject.SupportLibrary"
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     // RETROFIT DEPENDENCIES
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -188,6 +196,9 @@ dependencies {
 
     // EXPANDABLE LIST VIEW
     implementation 'com.robertlevonyan.view:MaterialExpansionPanel:1.2.0'
+
+    // TIME CALCULATOR
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
 }
 
 apply plugin: 'com.google.gms.google-services'

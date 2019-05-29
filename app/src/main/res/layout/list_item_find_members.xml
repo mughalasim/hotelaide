@@ -24,7 +24,7 @@
                 android:src="@color/light_grey"
                 app:riv_border_color="@color/dark_grey"
                 app:riv_border_width="@dimen/line_thickness"
-                app:riv_corner_radius="@dimen/radius_corner" />
+                app:riv_corner_radius="@dimen/img_size_medium_large" />
 
             <LinearLayout
                 android:id="@+id/top_panel"

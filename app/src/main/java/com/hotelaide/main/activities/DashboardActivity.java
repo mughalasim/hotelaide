@@ -9,6 +9,8 @@ import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.JsonObject;
@@ -18,16 +20,22 @@ import com.hotelaide.main.fragments.DashboardFragment;
 import com.hotelaide.main.fragments.NewsFeedFragment;
 import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.services.BackgroundFetchService;
+import com.hotelaide.services.ReminderService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import java.util.Calendar;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_REMINDERS;
+import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_INBOX;
 import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_NOTIFICATIONS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
@@ -84,6 +92,14 @@ public class DashboardActivity extends ParentActivity {
 
         if (helpers.validateServiceRunning(BackgroundFetchService.class)) {
             startService(new Intent(DashboardActivity.this, BackgroundFetchService.class));
+        }
+
+        if (helpers.validateServiceRunning(ReminderService.class)) {
+            if (SharedPrefs.getBool(ALLOW_PUSH_REMINDERS)) {
+                startService(new Intent(DashboardActivity.this, ReminderService.class));
+            } else {
+                stopService(new Intent(DashboardActivity.this, ReminderService.class));
+            }
         }
 
         handleFireBase();
@@ -189,4 +205,31 @@ public class DashboardActivity extends ParentActivity {
                     }
                 });
     }
+
+    @Override
+    protected void onPause() {
+        if (isFinishing()) {
+            SharedPrefs.setBool(APP_IS_RUNNING, false);
+            Helpers.logThis(TAG_LOG, "OFFLINE");
+            Helpers.updateUserOnlineStatus(Calendar.getInstance().getTimeInMillis());
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        SharedPrefs.setBool(APP_IS_RUNNING, false);
+        Helpers.logThis(TAG_LOG, "OFFLINE");
+        Helpers.updateUserOnlineStatus(Calendar.getInstance().getTimeInMillis());
+        super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        SharedPrefs.setBool(APP_IS_RUNNING, true);
+        Helpers.logThis(TAG_LOG, "ONLINE");
+        Helpers.updateUserOnlineStatus("Online");
+        super.onResume();
+    }
+
 }

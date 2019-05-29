@@ -186,6 +186,10 @@
             android:name=".services.FileUploadService"
             android:process=":service" />
 
+        <service
+            android:name=".services.ReminderService"
+            android:process=":service" />
+
 
         <!-- FACEBOOK LOGIN =====================================================================-->
         <meta-data

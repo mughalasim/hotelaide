@@ -441,8 +441,8 @@ public class FindMembersActivity extends ParentActivity {
     private void noListItems() {
         recycler_view.invalidate();
         model_list.clear();
-        model_list.add(new MemberModel());
-        adapter.updateData(model_list);
+        MemberModel member_model = new MemberModel();
+        model_list.add(member_model);
         adapter.notifyDataSetChanged();
     }
 

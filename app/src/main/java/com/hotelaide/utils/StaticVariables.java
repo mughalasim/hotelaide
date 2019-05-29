@@ -37,6 +37,7 @@ public class StaticVariables {
     public static final String ALLOW_UPDATE_APP = "ALLOW_UPDATE_APP";
     public static final String ALLOW_PUSH_MESSAGES = "ALLOW_PUSH_MESSAGES";
     public static final String ALLOW_PUSH_NOTIFICATIONS = "ALLOW_PUSH_NOTIFICATIONS";
+    public static final String ALLOW_PUSH_REMINDERS = "ALLOW_PUSH_REMINDERS";
     public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
 
     // BOOLEAN FIRST LAUNCHED SCREENS ==============================================================

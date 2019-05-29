@@ -159,13 +159,13 @@ public class SignUpEmailFragment extends Fragment {
                 String month, day;
 
                 if (selectedMonth < 9) {
-                    month = "0" + String.valueOf(selectedMonth + 1);
+                    month = "0" + (selectedMonth + 1);
                 } else {
                     month = String.valueOf(selectedMonth + 1);
                 }
 
                 if (selectedDay < 10) {
-                    day = "0" + String.valueOf(selectedDay);
+                    day = "0" + selectedDay;
                 } else {
                     day = String.valueOf(selectedDay);
                 }

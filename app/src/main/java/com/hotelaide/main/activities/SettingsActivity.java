@@ -30,6 +30,7 @@ import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_MESSAGES;
 import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_NOTIFICATIONS;
+import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_REMINDERS;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -41,6 +42,7 @@ public class SettingsActivity extends ParentActivity {
     private Switch
             switch_app_updates,
             switch_push_messages,
+            switch_push_reminders,
             switch_push_notifications;
 
     private TextView delete_account;
@@ -72,6 +74,7 @@ public class SettingsActivity extends ParentActivity {
     private void findAllViews() {
         switch_app_updates = findViewById(R.id.switch_app_updates);
         switch_push_notifications = findViewById(R.id.switch_push_notifications);
+        switch_push_reminders = findViewById(R.id.switch_push_reminders);
         switch_push_messages = findViewById(R.id.switch_push_messages);
         delete_account = findViewById(R.id.delete_account);
     }
@@ -90,6 +93,14 @@ public class SettingsActivity extends ParentActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPrefs.setBool(ALLOW_PUSH_NOTIFICATIONS, isChecked);
+            }
+        });
+
+        switch_push_reminders.setChecked(SharedPrefs.getBool(ALLOW_PUSH_REMINDERS));
+        switch_push_reminders.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPrefs.setBool(ALLOW_PUSH_REMINDERS, isChecked);
             }
         });
 

@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.facebook.stetho.Stetho;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.FirebaseApp;
@@ -13,12 +16,9 @@ import com.hotelaide.R;
 
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatDelegate;
-
-import com.facebook.stetho.Stetho;
-
 import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_MESSAGES;
 import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_NOTIFICATIONS;
+import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_REMINDERS;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
@@ -78,10 +78,11 @@ public class MyApplication extends Application {
         return tracker;
     }
 
-    public static void setFirstTimeTutorial(Boolean state){
+    public static void setFirstTimeTutorial(Boolean state) {
         SharedPrefs.setBool(ALLOW_UPDATE_APP, true);
         SharedPrefs.setBool(ALLOW_PUSH_MESSAGES, true);
         SharedPrefs.setBool(ALLOW_PUSH_NOTIFICATIONS, true);
+        SharedPrefs.setBool(ALLOW_PUSH_REMINDERS, true);
 
         SharedPrefs.setBool(FIRST_LAUNCH_DASH, state);
         SharedPrefs.setBool(FIRST_LAUNCH_PROFILE, state);

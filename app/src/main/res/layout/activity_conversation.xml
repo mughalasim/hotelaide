@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
+        android:layout_alignParentTop="true"
         android:background="@drawable/back_toolbar"
         app:layout_collapseMode="pin"
-        app:titleTextColor="@color/white">
+        app:titleTextColor="@color/white" />
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_marginStart="?android:attr/actionBarSize">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_from_pic"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
+            android:padding="@dimen/padding_mini"
+            android:scaleType="centerCrop"
+            android:src="@color/light_grey"
+            app:riv_corner_radius="?android:attr/actionBarSize" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_from_pic"
-                android:layout_width="?android:attr/actionBarSize"
-                android:layout_height="?android:attr/actionBarSize"
-                android:padding="@dimen/padding_mini"
-                android:scaleType="centerCrop"
-                android:src="@color/light_grey"
-                app:riv_corner_radius="?android:attr/actionBarSize" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_toEndOf="@+id/img_from_pic"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/toolbar_text"
                 style="@style/Text_Header"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/text_margin"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                android:layout_toEndOf="@+id/img_from_pic"
                 android:gravity="start|center"
                 android:maxLines="1"
                 android:paddingStart="0dp"
@@ -41,65 +48,75 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 
-        </RelativeLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/bottom" />
-
-        <RelativeLayout
-            android:id="@+id/bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:padding="@dimen/padding_mini">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Material_Edit_Text_Layout"
+            <TextView
+                android:id="@+id/user_status"
+                style="@style/Text_Small"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginTop="0dp"
-                android:layout_toStartOf="@+id/btn_send">
+                android:gravity="start|center"
+                android:maxLines="1"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:text="Online"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_message"
-                    style="@style/Material_Edit_Text"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/et_hint_message"
-                    android:layout_marginTop="0dp"
-                    android:paddingBottom="@dimen/padding_tiny"
-                    android:paddingTop="@dimen/padding_tiny"
-                    android:inputType="textCapSentences|textMultiLine"
-                    android:maxHeight="200sp"
-                    android:maxLength="@integer/max_conversation"
-                    android:maxLines="10"
-                    android:minHeight="@dimen/height_edit_text" />
+        </LinearLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <ImageView
-                android:id="@+id/btn_send"
-                android:layout_width="@dimen/img_size_small"
-                android:layout_height="@dimen/img_size_small"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/padding_tiny"
-                android:contentDescription="@string/app_name"
-                android:padding="@dimen/line_thickness"
-                app:srcCompat="@drawable/ic_send" />
-
-        </RelativeLayout>
 
     </RelativeLayout>
 
-</LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom"
+        android:layout_marginTop="@dimen/padding_mini"
+        android:layout_below="@+id/toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_mini">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Material_Edit_Text_Layout"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="0dp"
+            android:layout_toStartOf="@+id/btn_send">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_message"
+                style="@style/Material_Edit_Text"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:hint="@string/et_hint_message"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxHeight="200sp"
+                android:maxLength="@integer/max_conversation"
+                android:maxLines="10"
+                android:minHeight="@dimen/height_edit_text"
+                android:paddingTop="@dimen/padding_tiny"
+                android:paddingBottom="@dimen/padding_tiny" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/btn_send"
+            android:layout_width="@dimen/img_size_small"
+            android:layout_height="@dimen/img_size_small"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/padding_tiny"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/line_thickness"
+            app:srcCompat="@drawable/ic_send" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
 

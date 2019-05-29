@@ -42,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -65,6 +66,7 @@ import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
 import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
+import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
@@ -365,19 +367,12 @@ public class ParentActivity extends FragmentActivity implements
 
     @Override
     public void onResume() {
-        SharedPrefs.setBool(APP_IS_RUNNING, true);
         updateDrawer();
         navigation_view.getMenu().findItem(drawer_id).setChecked(true);
         if (SharedPrefs.getBool(ALLOW_UPDATE_APP) && INT_NAV_DRAWER_UPDATE_COUNTER == 0) {
             getAppVersionFromFireBase();
         }
         super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        SharedPrefs.setBool(APP_IS_RUNNING, false);
-        super.onPause();
     }
 
     @Override

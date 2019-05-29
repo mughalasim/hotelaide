@@ -16,7 +16,7 @@
         android:layout_centerInParent="true"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/anim_not_found" />
+        app:lottie_rawRes="@raw/anim_404" />
 
     <TextView
         android:id="@+id/txt_no_results"

@@ -70,3 +70,6 @@
 -keep class com.nineoldandroids.* { *; }
 -keep interface com.nineoldandroids.* { *; }
 -keep public class com.nineoldandroids.* { *; }
+
+# PRETY TIME FORMATTER =============================================================================
+-keep class org.ocpsoft.prettytime.i18n.**

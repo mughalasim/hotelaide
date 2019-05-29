@@ -289,7 +289,9 @@ This Service does not use these “cookies” explicitly. However, the app may u
     <string name="txt_notify_me">Notify me on updates</string>
     <string name="txt_notify_me_desc">Turning this on will allow the app to notify you if there is a new update available in the Play Store</string>
     <string name="txt_notify_push_messages">Chat notifications</string>
+    <string name="txt_notify_push_reminders">Reminders</string>
     <string name="txt_notify_push_messages_desc">Notify me when someone has sent me a new message</string>
+    <string name="txt_notify_push_reminders_desc">Assist in reminding me on what items I have left out in my profile to better help me search for jobs</string>
     <string name="txt_notify_push">Push notifications</string>
     <string name="txt_notify_push_desc">Notify me when employers have shortlisted me, sent me interview invites and general app features and marketing messages</string>
     <string name="txt_zero">0</string>
