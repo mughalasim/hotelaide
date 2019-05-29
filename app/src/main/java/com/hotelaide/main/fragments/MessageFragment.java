@@ -27,6 +27,7 @@ import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.ConversationActivity;
+import com.hotelaide.main.activities.MemberProfileActivity;
 import com.hotelaide.main.adapters.MessageAdapter;
 import com.hotelaide.main.models.MessageModel;
 import com.hotelaide.main.models.UserModel;
@@ -46,6 +47,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,6 +76,10 @@ public class MessageFragment extends Fragment {
     RecyclerView recycler_view_contacts;
     private ArrayList<UserModel> model_list_contacts = new ArrayList<>();
     private ContactAdapter adapter_contacts;
+
+    private int
+            int_current_page = 1,
+            int_last_page = 1;
 
 
     public MessageFragment() {
@@ -169,7 +175,7 @@ public class MessageFragment extends Fragment {
                 sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                 if (model_list_contacts.size() < 1) {
                     model_list_contacts.clear();
-                    asyncFetchContacts(1);
+                    asyncFetchContacts();
                 }
             }
         });
@@ -266,10 +272,10 @@ public class MessageFragment extends Fragment {
 
 
     // CONTACT ASYNC FUNCTIONS =====================================================================
-    private void asyncFetchContacts(final int page_number) {
+    private void asyncFetchContacts() {
         helpers.toastMessage("Loading... please wait...");
         UserInterface.retrofit.create(UserInterface.class)
-                .getAllUsers(page_number).enqueue(new Callback<JsonObject>() {
+                .getAllUsers(int_current_page).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (getActivity() != null) {
@@ -288,6 +294,7 @@ public class MessageFragment extends Fragment {
                             userModel.id = user_object.getInt("id");
                             userModel.first_name = user_object.getString("first_name");
                             userModel.last_name = user_object.getString("last_name");
+                            userModel.about = user_object.getString("about_me");
                             if (userModel.id != SharedPrefs.getInt(USER_ID)) {
                                 model_list_contacts.add(userModel);
                             }
@@ -296,10 +303,8 @@ public class MessageFragment extends Fragment {
                         adapter_contacts.notifyDataSetChanged();
 
                         JSONObject metadata = main.getJSONObject("meta");
-                        int last_page = metadata.getInt("last_page");
-                        if (last_page > page_number) {
-                            asyncFetchContacts(page_number + 1);
-                        }
+                        int_last_page = metadata.getInt("last_page");
+                        int_current_page = metadata.getInt("current_page") + 1;
 
                     } catch (JSONException e) {
                         Helpers.logThis(TAG_LOG, e.toString());
@@ -333,6 +338,7 @@ public class MessageFragment extends Fragment {
                     list_item;
             final TextView
                     txt_no_results,
+                    txt_about_me,
                     txt_name;
 
             final ImageView
@@ -343,6 +349,7 @@ public class MessageFragment extends Fragment {
                 img_user = v.findViewById(R.id.img_user);
                 txt_no_results = v.findViewById(R.id.txt_no_results);
                 txt_name = v.findViewById(R.id.txt_name);
+                txt_about_me = v.findViewById(R.id.txt_about_me);
                 no_list_item = v.findViewById(R.id.rl_no_list_items);
                 list_item = v.findViewById(R.id.list_item);
             }
@@ -372,7 +379,7 @@ public class MessageFragment extends Fragment {
                 holder.no_list_item.setVisibility(View.VISIBLE);
                 holder.list_item.setVisibility(View.GONE);
                 if (helpers.validateInternetConnection()) {
-                    holder.txt_no_results.setText("No contacts followed");
+                    holder.txt_no_results.setText("No contacts");
                 } else {
                     holder.txt_no_results.setText(R.string.error_connection);
                 }
@@ -384,7 +391,11 @@ public class MessageFragment extends Fragment {
                 final String name = userModel.first_name + " " + userModel.last_name;
 
                 holder.txt_name.setText(name);
-                Glide.with(context).load(userModel.img_avatar).into(holder.img_user);
+                holder.txt_about_me.setText(userModel.about);
+                Glide.with(context)
+                        .load(userModel.img_avatar)
+                        .placeholder(R.drawable.ic_profile)
+                        .into(holder.img_user);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -399,6 +410,25 @@ public class MessageFragment extends Fragment {
                         }
                     }
                 });
+
+                holder.img_user.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (userModel.id != 0) {
+                            context.startActivity(new Intent(context, MemberProfileActivity.class)
+                                    .putExtra("MEMBER_ID", userModel.id)
+                            );
+                            sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                        }
+                    }
+                });
+
+                if (position == (getItemCount() - 1)) {
+                    if (int_current_page < int_last_page) {
+                        Helpers.logThis(TAG_LOG, "LAST PAGE REACHED");
+                        asyncFetchContacts();
+                    }
+                }
             }
         }
 

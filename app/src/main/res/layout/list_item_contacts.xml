@@ -23,16 +23,30 @@
             android:src="@color/light_grey"
             app:riv_corner_radius="@dimen/img_size_medium" />
 
-        <TextView
-            android:id="@+id/txt_name"
-            style="@style/Text_Normal"
-            android:layout_marginTop="0dp"
-            android:maxLines="1"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/padding_tiny"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
             android:layout_toEndOf="@+id/img_user"
-            android:text="@string/app_name"
-            android:textStyle="bold" />
+            android:layout_centerInParent="true"
+            android:paddingEnd="@dimen/padding_small"
+            android:paddingStart="@dimen/padding_small"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_name"
+                style="@style/Text_Normal"
+                android:layout_marginTop="0dp"
+                android:maxLines="1"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_about_me"
+                style="@style/Text_Small"
+                android:layout_marginTop="0dp"
+                android:maxLines="1" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

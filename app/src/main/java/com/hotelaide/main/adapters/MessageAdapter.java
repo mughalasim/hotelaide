@@ -21,9 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main.activities.ConversationActivity;
+import com.hotelaide.main.activities.MemberProfileActivity;
 import com.hotelaide.main.models.MessageModel;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -128,6 +130,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                                 .putExtra("FROM_ID", messageModel.from_id)
                                 .putExtra("FROM_PIC_URL", messageModel.from_pic_url)
                         );
+                    }
+                }
+            });
+
+            holder.img_from_pic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (messageModel.from_id != 0) {
+                        context.startActivity(new Intent(context, MemberProfileActivity.class)
+                                .putExtra("MEMBER_ID", messageModel.from_id
+                        ));
                     }
                 }
             });
