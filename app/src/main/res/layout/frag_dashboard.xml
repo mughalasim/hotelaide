@@ -41,7 +41,7 @@
                 android:weightSum="3">
 
                 <LinearLayout
-                    android:id="@+id/ll_applied"
+                    android:id="@+id/ll_applied_jobs"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -214,7 +214,7 @@
                     android:background="@color/grey" />
 
                 <LinearLayout
-                    android:id="@+id/ll_messages"
+                    android:id="@+id/ll_unread_messages"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

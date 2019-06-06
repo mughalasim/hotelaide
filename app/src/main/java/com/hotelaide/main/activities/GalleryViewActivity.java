@@ -78,7 +78,7 @@ public class GalleryViewActivity extends AppCompatActivity {
     private void findAllViews() {
         toolbar = findViewById(R.id.toolbar);
         TextView txt_no_results = findViewById(R.id.txt_no_results);
-        TextView toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        TextView toolbar_text = findViewById(R.id.toolbar_text);
         toolbar_text.setText("");
         txt_no_results.setText(getString(R.string.error_unknown));
 

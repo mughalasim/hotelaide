@@ -20,7 +20,6 @@ import com.hotelaide.R;
 import com.hotelaide.main.activities.PdfViewActivity;
 import com.hotelaide.main.adapters.DocumentAdapter;
 import com.hotelaide.main.models.DocumentModel;
-import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
@@ -33,6 +32,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -41,13 +45,14 @@ import static com.hotelaide.utils.StaticVariables.BROADCAST_UPLOAD;
 import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_STORAGE;
+import static com.hotelaide.utils.StaticVariables.db;
 
 
 public class DocumentsFragment extends Fragment {
 
     private View root_view;
     private Helpers helpers;
-    private Database db;
+
     private final String TAG_LOG = "DOCUMENTS";
 
     private final int
@@ -61,13 +66,17 @@ public class DocumentsFragment extends Fragment {
             txt_no_results;
 
     private BroadcastReceiver receiver;
+    private Boolean isEditMode;
+    private JSONArray documents_array;
 
     private RelativeLayout rl_no_list_items;
     private RecyclerView recycler_view;
     private ArrayList<DocumentModel> model_list = new ArrayList<>();
     private DocumentAdapter adapter;
 
-    public DocumentsFragment() {
+    public DocumentsFragment(Boolean isEditMode, JSONArray documents_array) {
+        this.isEditMode = isEditMode;
+        this.documents_array = documents_array;
     }
 
     // OVERRIDE METHODS ============================================================================
@@ -78,19 +87,19 @@ public class DocumentsFragment extends Fragment {
             try {
                 root_view = inflater.inflate(R.layout.frag_profile_documents, container, false);
 
-                db = new Database();
-
                 helpers = new Helpers(getActivity());
 
                 findAllViews();
 
-                Bundle bundle = this.getArguments();
-                if (bundle != null) {
-                    Helpers.logThis(TAG_LOG, "HAS BUNDLES");
+                if (isEditMode) {
+                    Helpers.logThis(TAG_LOG, "IS EDIT MODE");
+                    btn_add.setVisibility(View.VISIBLE);
+                    btn_refresh.setVisibility(View.VISIBLE);
+                    listenUploadCompleteBroadcast();
+                } else {
+                    Helpers.logThis(TAG_LOG, "IS VIEW MODE");
                     btn_add.setVisibility(View.GONE);
                     btn_refresh.setVisibility(View.GONE);
-                } else {
-                    listenUploadCompleteBroadcast();
                 }
 
                 setListeners();
@@ -187,13 +196,42 @@ public class DocumentsFragment extends Fragment {
     private void populateDocumentsFromDB() {
         rl_no_list_items.setVisibility(View.GONE);
         model_list.clear();
-        model_list = db.getAllDocuments();
+        if (documents_array == null) {
+            model_list = db.getAllDocuments();
+        } else {
+            model_list = parseJsonArray();
+        }
         recycler_view.invalidate();
         adapter.updateData(model_list);
         adapter.notifyDataSetChanged();
         if (model_list.size() <= 0) {
             noListItems();
         }
+    }
+
+    private ArrayList<DocumentModel> parseJsonArray() {
+        ArrayList<DocumentModel> list = new ArrayList<>();
+        int array_length = documents_array.length();
+        try {
+            for (int i = 0; i < array_length; i++) {
+                JSONObject document_object = documents_array.getJSONObject(i);
+                DocumentModel documentModel = new DocumentModel();
+                documentModel.id = document_object.getInt("id");
+                documentModel.name = document_object.getString("name");
+                documentModel.image = document_object.getString("image");
+                documentModel.file_url = document_object.getString("file_url");
+                documentModel.file_type = document_object.getString("file_type");
+                documentModel.date_uploaded = document_object.getString("date_uploaded");
+
+                list.add(documentModel);
+            }
+
+        } catch (JSONException e) {
+            Helpers.logThis(TAG_LOG, e.toString());
+        } catch (Exception e) {
+            Helpers.logThis(TAG_LOG, e.toString());
+        }
+        return list;
     }
 
     private void noListItems() {

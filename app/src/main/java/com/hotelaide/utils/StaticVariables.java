@@ -2,6 +2,8 @@ package com.hotelaide.utils;
 
 public class StaticVariables {
 
+    public static Database db;
+
     // SHARED PREFERENCE VARIABLES =====================================================================
     public final static int INT_ANIMATION_TIME = 1200;
 
@@ -26,6 +28,7 @@ public class StaticVariables {
     public static final String USER_GOOGLE_ID = "USER_GOOGLE_ID";
     public static final String USER_LAT = "USER_LAT";
     public static final String USER_LNG = "USER_LNG";
+    public static final String USER_SKILLS = "USER_SKILLS";
     public static final String USER_POSTAL_CODE = "USER_POSTAL_CODE";
     public static final String USER_FULL_ADDRESS = "USER_FULL_ADDRESS";
     public static final String USER_COUNTY = "USER_COUNTY";
@@ -38,7 +41,7 @@ public class StaticVariables {
     public static final String ALLOW_PUSH_MESSAGES = "ALLOW_PUSH_MESSAGES";
     public static final String ALLOW_PUSH_NOTIFICATIONS = "ALLOW_PUSH_NOTIFICATIONS";
     public static final String ALLOW_PUSH_REMINDERS = "ALLOW_PUSH_REMINDERS";
-    public static final String APP_IS_RUNNING = "APP_IS_RUNNING";
+    public static boolean APP_IS_RUNNING = false;
 
     // BOOLEAN FIRST LAUNCHED SCREENS ==============================================================
     public static final String FIRST_LAUNCH = "FIRST_LAUNCH";

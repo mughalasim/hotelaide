@@ -172,7 +172,7 @@ public class EstablishmentActivity extends AppCompatActivity {
 
     private void setUpToolBarAndTabs() {
         toolbar = findViewById(R.id.toolbar);
-        toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        toolbar_text = findViewById(R.id.toolbar_text);
         toolbar.setNavigationIcon(ContextCompat.getDrawable(EstablishmentActivity.this, R.drawable.ic_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

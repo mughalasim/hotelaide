@@ -1,47 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_toolbar"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/actionBarSize"
-    android:background="@drawable/back_toolbar"
-    app:layout_collapseMode="pin"
-    app:titleTextColor="@color/white">
+    android:layout_height="?android:attr/actionBarSize">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/back_toolbar"
+        app:layout_collapseMode="pin"
+        app:titleTextColor="@color/white" />
 
     <TextView
         android:id="@+id/toolbar_text"
-        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="3"
-        android:orientation="horizontal">
+        android:layout_marginStart="?android:attr/actionBarSize"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search"
             style="@style/Material_Edit_Text"
-            android:background="@drawable/back_text_fields"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="2.4"
             android:layout_margin="@dimen/text_margin"
-            android:maxLines="1"
-            android:maxLength="20"
+            android:background="@drawable/back_text_fields"
+            android:layout_toStartOf="@+id/img_search"
+            android:hint="@string/txt_search_jobs"
             android:inputType="text"
-            android:hint="@string/txt_search_jobs" />
+            android:maxLength="20"
+            android:maxLines="1" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_search"
-            android:layout_width="0dp"
-            android:padding="@dimen/padding_tiny"
-            android:layout_weight="0.5"
+            android:padding="@dimen/padding_small"
+            android:layout_width="?android:attr/actionBarSize"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_search_white"
-            android:contentDescription="@string/app_name"/>
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/ic_search_white" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</androidx.appcompat.widget.Toolbar>
+</RelativeLayout>

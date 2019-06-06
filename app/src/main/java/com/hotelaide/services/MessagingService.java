@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.main.models.MessageModel;
 import com.hotelaide.main.models.NotificationModel;
+import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
@@ -24,12 +25,13 @@ import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import static com.hotelaide.main.activities.ConversationActivity.CONVERSATION_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_MESSAGES;
-import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_DESC;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_ID;
 import static com.hotelaide.utils.StaticVariables.CHANNEL_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class MessagingService extends Service {
 
@@ -58,6 +60,7 @@ public class MessagingService extends Service {
     @Override
     public void onCreate() {
         Helpers.logThis(TAG_LOG, "ON_CREATE");
+        db = new Database();
         MyApplication.initFireBase();
         helpers = new Helpers(MessagingService.this);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -68,9 +71,9 @@ public class MessagingService extends Service {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Helpers.logThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_PUSH_MESSAGES));
-                Helpers.logThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
+                Helpers.logThis(TAG_LOG, "CONVERSATION IS RUNNING: " + CONVERSATION_IS_RUNNING);
 
-                if (SharedPrefs.getBool(ALLOW_PUSH_MESSAGES) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
+                if (SharedPrefs.getBool(ALLOW_PUSH_MESSAGES) && !CONVERSATION_IS_RUNNING) {
                     Helpers.logThis(TAG_LOG, "FB DB CHILD ADDED");
                     setDataSnapshotFromObject(dataSnapshot);
                 }
@@ -79,9 +82,9 @@ public class MessagingService extends Service {
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Helpers.logThis(TAG_LOG, "ALLOW PUSH: " + SharedPrefs.getBool(ALLOW_PUSH_MESSAGES));
-                Helpers.logThis(TAG_LOG, "APP RUNNING: " + SharedPrefs.getBool(APP_IS_RUNNING));
+                Helpers.logThis(TAG_LOG, "CONVERSATION IS RUNNING: " + CONVERSATION_IS_RUNNING);
 
-                if (SharedPrefs.getBool(ALLOW_PUSH_MESSAGES) && !SharedPrefs.getBool(APP_IS_RUNNING)) {
+                if (SharedPrefs.getBool(ALLOW_PUSH_MESSAGES) && !CONVERSATION_IS_RUNNING) {
                     Helpers.logThis(TAG_LOG, "FB DB CHILD CHANGED");
                     setDataSnapshotFromObject(dataSnapshot);
                 }

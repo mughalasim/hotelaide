@@ -38,6 +38,7 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TYPE_CODE_MESSAGE;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class HelpersAsync {
 
@@ -131,9 +132,6 @@ public class HelpersAsync {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-//                    logThis(TAG_LOG, main.toString());
-
-                    Database db = new Database();
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
                         int length = main_array.length();
@@ -173,7 +171,7 @@ public class HelpersAsync {
 
 //                    logThis(TAG_LOG, main.toString());
 
-                    Database db = new Database();
+//                    Database db = new Database();
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
                         int length = main_array.length();
@@ -212,9 +210,6 @@ public class HelpersAsync {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
 
-//                    logThis(TAG_LOG, main.toString());
-
-                    Database db = new Database();
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
                         int length = main_array.length();
@@ -257,7 +252,7 @@ public class HelpersAsync {
 
                     if (main.getBoolean("success")) {
                         JSONArray main_array = main.getJSONArray("data");
-                        Database db = new Database();
+//                        Database db = new Database();
                         db.deleteCategoriesTable();
                         int length = main_array.length();
                         for (int i = 0; i < length; i++) {
@@ -300,7 +295,6 @@ public class HelpersAsync {
                         JSONObject data_object = main.getJSONObject("data");
                         JSONArray document_array = data_object.getJSONArray("documents");
 
-                        Database db = new Database();
                         db.deleteDocumentsTable();
 
                         if (document_array != null && document_array.length() > 0) {
@@ -339,7 +333,7 @@ public class HelpersAsync {
                     @Override
                     public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                         try {
-                            Database db = new Database();
+//                            Database db = new Database();
                             db.deleteDirtyDocuments();
                             JSONObject main = new JSONObject(String.valueOf(response.body()));
                             logThis(TAG_LOG, main.toString());
@@ -363,7 +357,6 @@ public class HelpersAsync {
                     @Override
                     public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                         logThis(TAG_LOG, t.toString());
-                        Database db = new Database();
                         db.deleteDirtyDocuments();
                         if (validateInternetConnection()) {
                             showErrorNotification(MyApplication.getAppContext(), MyApplication.getAppContext().getString(R.string.txt_upload_failed), MyApplication.getAppContext().getString(R.string.error_server));
@@ -406,7 +399,7 @@ public class HelpersAsync {
                 try {
                     JSONObject main = new JSONObject(String.valueOf(response.body()));
                     logThis(TAG_LOG, main.toString());
-                    Database db = new Database();
+//                    Database db = new Database();
                     if (main.getBoolean("success")) {
                         db.deleteDocumentByID(String.valueOf(id));
                         MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_UPLOAD).putExtra(EXTRA_PASSED, EXTRA_PASSED));

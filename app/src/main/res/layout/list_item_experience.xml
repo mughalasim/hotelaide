@@ -4,126 +4,124 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:id="@+id/list_item"
-        style="@style/Card_Layout">
+        android:paddingTop="@dimen/padding_small"
+        android:paddingStart="@dimen/padding_large"
+        android:paddingEnd="@dimen/padding_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/top_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_tiny">
-
-            <RelativeLayout
-                android:id="@+id/top_panel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/panel_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/txt_position"
-                        style="@style/Text_Normal"
-                        android:layout_marginTop="0dp"
-                        android:maxLines="1"
-                        android:textSize="@dimen/text_size_medium"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        style="@style/Text_Normal"
-                        android:layout_marginTop="0dp"
-                        android:text="@string/txt_at"
-                        android:textColor="@color/colorPrimary" />
-
-                    <TextView
-                        android:id="@+id/txt_name"
-                        style="@style/Text_Normal"
-                        android:layout_marginTop="0dp"
-                        android:maxLines="1"
-                        android:textSize="@dimen/text_size_medium"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/panel_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/panel_1"
-                    android:layout_marginTop="@dimen/text_margin"
-                    android:layout_toStartOf="@+id/txt_duration"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/Text_Normal"
-                        android:layout_marginTop="0dp"
-                        android:text="@string/txt_from"
-                        android:textColor="@color/colorPrimary" />
-
-                    <TextView
-                        android:id="@+id/txt_start_date"
-                        style="@style/Text_Normal"
-                        android:layout_marginTop="0dp"
-                        android:maxLines="1" />
-
-                    <TextView
-                        style="@style/Text_Normal"
-                        android:layout_marginTop="0dp"
-                        android:text="@string/txt_to"
-                        android:textColor="@color/colorPrimary" />
-
-                    <TextView
-                        android:id="@+id/txt_end_date"
-                        style="@style/Text_Normal"
-                        android:layout_marginTop="0dp"
-                        android:maxLines="1" />
-
-                    <TextView
-                        android:id="@+id/txt_current"
-                        style="@style/Text_Normal"
-                        android:layout_marginTop="0dp"
-                        android:text="@string/txt_present"
-                        android:textColor="@color/colorPrimary" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/txt_duration"
-                    style="@style/Text_Normal"
-                    android:layout_below="@+id/panel_1"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="0dp" />
-
-            </RelativeLayout>
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/panel_1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/top_panel"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/txt_responsibilities_field_label"
+                    android:id="@+id/txt_position"
                     style="@style/Text_Normal"
-                    android:layout_marginTop="@dimen/padding_tiny"
-                    android:text="@string/txt_responsibilities"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/txt_at"
                     android:textColor="@color/colorPrimary" />
 
                 <TextView
-                    android:id="@+id/txt_responsibilities_field"
+                    android:id="@+id/txt_name"
                     style="@style/Text_Normal"
-                    android:layout_marginTop="@dimen/text_margin"
-                    android:maxLines="3"
-                    android:text="@string/about1" />
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/panel_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/panel_1"
+                android:layout_marginTop="@dimen/text_margin"
+                android:layout_toStartOf="@+id/txt_duration"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/txt_from"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_start_date"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1" />
+
+                <TextView
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/txt_to"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txt_end_date"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:id="@+id/txt_current"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/txt_present"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_duration"
+                style="@style/Text_Normal"
+                android:layout_below="@+id/panel_1"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="0dp" />
+
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:id="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/top_panel"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_responsibilities_field_label"
+                style="@style/Text_Normal"
+                android:layout_marginTop="@dimen/text_margin"
+                android:text="@string/txt_responsibilities"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/txt_responsibilities_field"
+                style="@style/Text_Normal"
+                android:layout_marginTop="@dimen/text_margin"
+                android:maxLines="3"
+                android:text="@string/about1" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <include layout="@layout/list_item_none" />
 

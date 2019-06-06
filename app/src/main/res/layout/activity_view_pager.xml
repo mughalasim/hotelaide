@@ -20,7 +20,7 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
-                android:layout_below="@+id/toolbar"
+                android:layout_below="@+id/rl_toolbar"
                 tools:ignore="UnknownIdInLayout"
                 style="@style/Tab_Text_Layout" />
 

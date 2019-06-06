@@ -45,6 +45,7 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class FindJobsActivity extends ParentActivity {
 

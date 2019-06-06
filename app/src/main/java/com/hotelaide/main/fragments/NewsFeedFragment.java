@@ -129,7 +129,7 @@ public class NewsFeedFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    // ASYNC FETCH ALL NEWS FEEDS ================================================================
+    // ASYNC FETCH ALL NEWS FEEDS ==================================================================
     private void asyncGetRssFeeds() {
         swipe_refresh.setRefreshing(true);
 
@@ -294,6 +294,7 @@ public class NewsFeedFragment extends Fragment {
 
     }
 
+    // INTERFACE ===================================================================================
     private interface NewsFeedInterface {
         String TAG_LOG = "CALL: RSS";
 
@@ -334,7 +335,7 @@ public class NewsFeedFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        // AUTHENTICATE FUNCTION =======================================================================
+        // AUTHENTICATE FUNCTION ===================================================================
         @GET("api.json")
         Call<JsonObject> getNewsFeed(
                 @Query("rss_url") String url

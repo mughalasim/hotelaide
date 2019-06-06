@@ -40,6 +40,7 @@ import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
 import static com.hotelaide.utils.StaticVariables.INT_JOB_ID;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class JobActivity extends AppCompatActivity {
     private Helpers helpers;
@@ -73,7 +74,7 @@ public class JobActivity extends AppCompatActivity {
 
     private final String
             TAG_LOG = "JOB APPLICATION";
-    private Database db;
+
 
     private LinearLayout
             ll_main_view;
@@ -93,8 +94,6 @@ public class JobActivity extends AppCompatActivity {
         setContentView(R.layout.activity_job);
 
         helpers = new Helpers(JobActivity.this);
-
-        db = new Database();
 
         setUpToolBarAndTabs();
 
@@ -169,7 +168,7 @@ public class JobActivity extends AppCompatActivity {
 
     private void setUpToolBarAndTabs() {
         toolbar = findViewById(R.id.toolbar);
-        toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        toolbar_text = findViewById(R.id.toolbar_text);
         toolbar.setNavigationIcon(ContextCompat.getDrawable(JobActivity.this, R.drawable.ic_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

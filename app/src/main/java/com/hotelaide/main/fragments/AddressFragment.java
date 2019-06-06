@@ -63,12 +63,13 @@ import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_LAT;
 import static com.hotelaide.utils.StaticVariables.USER_LNG;
 import static com.hotelaide.utils.StaticVariables.USER_POSTAL_CODE;
+import static com.hotelaide.utils.StaticVariables.db;
 
 
 public class AddressFragment extends Fragment implements OnMapReadyCallback {
 
     private Helpers helpers;
-    private Database db;
+
     private View root_view;
     private final String TAG_LOG = "ADDRESS";
 
@@ -101,8 +102,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                 root_view = inflater.inflate(R.layout.frag_profile_address, container, false);
 
                 helpers = new Helpers(getActivity());
-
-                db = new Database();
 
                 initializeMap(savedInstanceState);
 
@@ -356,7 +355,6 @@ public class AddressFragment extends Fragment implements OnMapReadyCallback {
                             SharedPrefs.setString(USER_FULL_ADDRESS, et_full_address.getText().toString());
                             logAddress();
 
-                            ((ProfileEditActivity) getActivity()).moveViewPagerNext();
                         }
                     } catch (JSONException e) {
                         helpers.toastMessage(getString(R.string.error_server));

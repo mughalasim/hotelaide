@@ -29,6 +29,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import static com.hotelaide.utils.StaticVariables.db;
+
 
 public class NotificationFragment extends Fragment {
 
@@ -36,7 +38,7 @@ public class NotificationFragment extends Fragment {
     private final String
             TAG_LOG = "NOTIFICATIONS";
     private Helpers helpers;
-    private Database db;
+
 
     // TOP PANEL ITEMS ------------------------------
     private SwipeRefreshLayout swipe_refresh;
@@ -57,8 +59,6 @@ public class NotificationFragment extends Fragment {
                 root_view = inflater.inflate(R.layout.frag_recycler_view, container, false);
 
                 helpers = new Helpers(getActivity());
-
-                db = new Database();
 
                 findAllViews();
 

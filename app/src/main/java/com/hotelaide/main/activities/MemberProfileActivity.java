@@ -18,6 +18,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
+import com.hotelaide.main.fragments.ExperienceViewFragment;
 import com.hotelaide.main.models.ExperienceModel;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
@@ -33,6 +34,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,10 +46,11 @@ import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class MemberProfileActivity extends AppCompatActivity {
     private Helpers helpers;
-    private Database db;
+
     private Toolbar toolbar;
     private final String
             TAG_LOG = "MEMBER PROFILE";
@@ -96,8 +100,6 @@ public class MemberProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         helpers = new Helpers(MemberProfileActivity.this);
-
-        db = new Database();
 
         if (handleExtraBundles()) {
             setContentView(R.layout.activity_member_profile);
@@ -188,7 +190,7 @@ public class MemberProfileActivity extends AppCompatActivity {
         ll_education.setVisibility(View.GONE);
 
         txt_title_work.setVisibility(View.GONE);
-        ll_work.setVisibility(View.GONE);
+//        ll_work.setVisibility(View.GONE);
 
         txt_title_documents.setVisibility(View.GONE);
         ll_documents.setVisibility(View.GONE);
@@ -197,7 +199,7 @@ public class MemberProfileActivity extends AppCompatActivity {
 
     private void setUpToolBarAndTabs() {
         toolbar = findViewById(R.id.toolbar);
-        toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        toolbar_text = findViewById(R.id.toolbar_text);
         toolbar.setNavigationIcon(ContextCompat.getDrawable(MemberProfileActivity.this, R.drawable.ic_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,7 +335,12 @@ public class MemberProfileActivity extends AppCompatActivity {
 
                         if (!user.isNull("work_experience")) {
                             JSONArray work_experience = user.getJSONArray("work_experience");
-                            populateExperience(work_experience, EXPERIENCE_TYPE_WORK);
+                            Fragment myFrag = new ExperienceViewFragment(work_experience, EXPERIENCE_TYPE_WORK);
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.ll_work, myFrag)
+                                    .commit();
+//                            populateExperience(work_experience, EXPERIENCE_TYPE_WORK);
                         }
 
                         if (!user.isNull("education_experience")) {

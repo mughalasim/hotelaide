@@ -196,7 +196,7 @@ This Service does not use these “cookies” explicitly. However, the app may u
     <string name="txt_enable">Enable</string>
     <string name="txt_loading_please_wait">Loading… please wait…</string>
     <string name="txt_no_items_found">No results found</string>
-    <string name="txt_open_bracket">(</string>
+    <string name="txt_open_bracket">&#160;(</string>
     <string name="txt_closed_bracket">)&#160;</string>
     <string name="txt_call">You are about to make a call. Are you sure you wish to proceed?</string>
     <string name="txt_call_title">Make a call</string>
@@ -217,7 +217,7 @@ This Service does not use these “cookies” explicitly. However, the app may u
     <string name="txt_next">Next…</string>
     <string name="txt_skip">Skip</string>
     <string name="txt_errors">Errors</string>
-    <string name="txt_take_me_there">Take me there</string>
+    <string name="txt_take_me_there">Show me</string>
     <string name="txt_alert">Alert!</string>
     <string name="txt_upload_failed">Upload failed</string>
     <string name="txt_delete_account">Are you sure you wish to delete your account. You may not be able to recover your information once deleted. Tap YES to proceed or CANCEL to go back</string>
@@ -282,7 +282,7 @@ This Service does not use these “cookies” explicitly. However, the app may u
     <string name="txt_posted_on">&#160;Posted:&#160;</string>
     <string name="txt_exit_desc">Are you sure you wish to exit?</string>
     <string name="txt_exit">Leaving&#160;</string>
-    <string name="txt_change_image">Set images</string>
+    <string name="txt_change_image">Edit</string>
     <string name="txt_yes">Yes</string>
     <string name="txt_refresh">Refresh</string>
     <string name="txt_delete_desc">Are you sure you wish to delete this message, this cannot be undone?</string>

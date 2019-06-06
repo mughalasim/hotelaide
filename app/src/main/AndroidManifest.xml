@@ -183,7 +183,8 @@
             android:process=":service" />
 
         <service
-            android:name=".services.FileUploadService"
+            android:name=".services.UserIsOnlineService"
+            android:stopWithTask="false"
             android:process=":service" />
 
         <service

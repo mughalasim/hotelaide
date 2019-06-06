@@ -4,8 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class BackgroundFetchService extends Service {
     private static final String TAG_LOG = "BACKGROUND SERVICE";
@@ -26,6 +28,7 @@ public class BackgroundFetchService extends Service {
 
     @Override
     public void onCreate() {
+        db = new Database();
         HelpersAsync.asyncGetUser();
         HelpersAsync.asyncGetCategories();
         HelpersAsync.asyncGetJobTypes();

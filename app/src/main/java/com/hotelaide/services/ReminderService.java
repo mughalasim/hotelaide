@@ -20,15 +20,17 @@ import java.util.TimerTask;
 
 import static com.hotelaide.utils.StaticVariables.NOTIFICATION_TYPE_CODE_MESSAGE;
 import static com.hotelaide.utils.StaticVariables.USER_ABOUT;
+import static com.hotelaide.utils.StaticVariables.USER_AVAILABILITY;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class ReminderService extends Service {
     private static final String TAG_LOG = "REMINDER SERVICE";
-//    private static final int TIME =  48 * 60 * 60 * 1000;
-    private static final int TIME =  30 * 1000;
+    private static final int TIME =  48 * 60 * 60 * 1000;
+//    private static final int TIME =  30 * 1000;
 
 
     // BASIC OVERRIDE METHODS ======================================================================
@@ -46,6 +48,7 @@ public class ReminderService extends Service {
 
     @Override
     public void onCreate() {
+        db = new Database();
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -56,13 +59,17 @@ public class ReminderService extends Service {
                     notification_model.job_id = 0;
                     notification_model.read = 0;
                     notification_model.type_code = NOTIFICATION_TYPE_CODE_MESSAGE;
-                    notification_model.title = SharedPrefs.getString(USER_F_NAME);
+                    notification_model.title = "Hey ".concat(SharedPrefs.getString(USER_F_NAME));
                     notification_model.preview = "Your profile seems incomplete";
 
                     if (SharedPrefs.getString(USER_IMG_AVATAR).equals("")) {
                         notification_model.body = "Add a profile picture so that your employer can easily find you";
-                    } else if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
+                    } else if (SharedPrefs.getInt(USER_AVAILABILITY)==0) {
+                        notification_model.body = "Seems your availability is set to hidden, Your employers may not be able to find you. You can chnage this from yur profile edit section";
+                    }else if (SharedPrefs.getString(USER_FULL_ADDRESS).equals("")) {
                         notification_model.body = "Add an address so that your employer knows where you are located";
+                    } else if (SharedPrefs.getString(USER_F_NAME).equals("")) {
+                        notification_model.body = "Add your full name so that your employers can easily find you";
                     } else if (SharedPrefs.getString(USER_ABOUT).equals("")) {
                         notification_model.body = "Add a small description about yourself so that you stand out from the rest";
                     } else if (SharedPrefs.getString(USER_PHONE).equals("")) {
@@ -75,7 +82,6 @@ public class ReminderService extends Service {
                     notification_model.date = dateFormat.format(date);
 
                     if (!notification_model.body.equals("")) {
-                        Database db = new Database();
                         db.setNotification(notification_model);
                         Helpers.createNotification(MyApplication.getAppContext(), notification_model);
                     }

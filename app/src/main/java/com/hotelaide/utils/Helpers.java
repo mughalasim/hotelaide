@@ -59,7 +59,6 @@ import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.activities.SettingsActivity;
 import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.services.BackgroundFetchService;
-import com.hotelaide.services.FileUploadService;
 import com.hotelaide.services.MessagingService;
 import com.hotelaide.services.ReminderService;
 import com.hotelaide.startup.SplashScreenActivity;
@@ -111,6 +110,7 @@ import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class Helpers {
 
@@ -120,11 +120,8 @@ public class Helpers {
     private final TextView txt_loading_message;
     private final Dialog dialog;
 
-    private Database db;
-
     public Helpers(Context context) {
         this.context = context;
-        db = new Database();
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_loading);
@@ -185,14 +182,13 @@ public class Helpers {
         context.stopService(new Intent(context, MessagingService.class));
         context.stopService(new Intent(context, BackgroundFetchService.class));
         context.stopService(new Intent(context, ReminderService.class));
-        context.stopService(new Intent(context, FileUploadService.class));
 
         SharedPrefs.deleteAllSharedPrefs();
 
         AccessToken.setCurrentAccessToken(null);
         LoginManager.getInstance().logOut();
 
-        Database db = new Database();
+//        Database db = new Database();
         db.deleteAllTables();
 
         context.sendBroadcast(new Intent().setAction(BROADCAST_LOG_OUT));
@@ -620,6 +616,22 @@ public class Helpers {
         }
     }
 
+    public void setTarget(Activity activity, View view, String title, String message) {
+        if (activity != null) {
+            ArrayList<TapTarget> tapTargets = new ArrayList<>();
+            tapTargets.add(TapTarget.forView(view, title, message)
+                    .dimColor(R.color.dimmer)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .cancelable(true)
+                    .descriptionTextColor(R.color.white)
+                    .titleTextColor(R.color.black)
+                    .drawShadow(true)
+                    .transparentTarget(true));
+            new TapTargetSequence(activity)
+                    .targets(tapTargets).start();
+        }
+    }
+
 
     // VALIDATIONS =================================================================================
     public boolean validateEmail(EditText edit_text) {
@@ -1011,7 +1023,7 @@ public class Helpers {
 
         NotificationCompat.Builder mBuilder;
 
-        if (SharedPrefs.getBool(APP_IS_RUNNING)) {
+        if (APP_IS_RUNNING) {
             mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(getNotificationIcon())
                     .setContentTitle(notification_model.title)

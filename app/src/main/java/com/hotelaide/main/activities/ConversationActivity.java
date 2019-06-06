@@ -1,5 +1,6 @@
 package com.hotelaide.main.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -53,6 +54,7 @@ public class ConversationActivity extends AppCompatActivity {
 
     private final String
             TAG_LOG = "CONVERSATION VIEW";
+    public static boolean CONVERSATION_IS_RUNNING = false;
 
     private DatabaseReference parent_ref, child_ref, child_ref_status;
 
@@ -96,6 +98,18 @@ public class ConversationActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        CONVERSATION_IS_RUNNING = true;
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        CONVERSATION_IS_RUNNING = false;
+        super.onPause();
     }
 
     // BASIC FUNCTIONS =============================================================================
@@ -151,7 +165,9 @@ public class ConversationActivity extends AppCompatActivity {
         toolbar_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(ConversationActivity.this, MemberProfileActivity.class)
+                        .putExtra("MEMBER_ID", INT_FROM_ID
+                        ));
             }
         });
 
@@ -197,15 +213,18 @@ public class ConversationActivity extends AppCompatActivity {
                     if (dataSnapshot.getValue().toString().equals("Online")) {
                         user_status.setText("Online");
                     } else {
-                        try {
-                            PrettyTime p = new PrettyTime();
-                            user_status.setText("Last Seen: " + p.format(new Date(Long.valueOf(dataSnapshot.getValue().toString()))));
-                        } catch (Exception e) {
-                            user_status.setText("Last Seen: Unknown");
-                        }
+                        user_status.setText("Last seen: Unknown");
+                    }
+                } else if (dataSnapshot.getValue() instanceof Long) {
+                    try {
+                        PrettyTime p = new PrettyTime();
+                        String time = p.format(new Date(Long.valueOf(dataSnapshot.getValue().toString())));
+                        user_status.setText("Last seen: ".concat(time) );
+                    } catch (Exception e) {
+                        user_status.setText("Last seen: Unknown");
                     }
                 } else {
-                    user_status.setText("Last Seen: Unknown");
+                    user_status.setText("Last seen: Unknown");
                 }
             }
 
@@ -364,7 +383,7 @@ public class ConversationActivity extends AppCompatActivity {
             conversationModel.from_id = object.getInt("from_id");
             conversationModel.text = object.getString("text");
 
-            Helpers.logThis(TAG_LOG, "TEXT: " + conversationModel.text);
+//            Helpers.logThis(TAG_LOG, "TEXT: " + conversationModel.text);
 
             if (conversationModel.from_id != SharedPrefs.getInt(USER_ID)) {
                 model_list.add(conversationModel);

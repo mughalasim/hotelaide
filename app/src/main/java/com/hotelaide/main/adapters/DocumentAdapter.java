@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -50,7 +51,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
                 txt_name,
                 txt_date_uploaded;
 
-        private final CardView
+        private final RelativeLayout
                 list_item;
 
         ViewHolder(View v) {

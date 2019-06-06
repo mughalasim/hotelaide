@@ -36,9 +36,10 @@ import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private Database db;
+
     private final String TAG_LOG = "SPLASH";
     private Helpers helpers;
 
@@ -48,8 +49,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         MyApplication.initFireBase();
-
-        db = new Database();
 
         helpers = new Helpers(SplashScreenActivity.this);
 

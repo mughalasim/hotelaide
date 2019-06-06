@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_documents"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/padding_small" />
+    android:layout_height="match_parent">
 
     <include
         layout="@layout/list_item_none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recycler_view" />
+        android:layout_centerInParent="true"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_refresh"
+        style="@style/Material_Text"
+        android:layout_below="@+id/rl_no_list_items"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/txt_refresh" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/padding_small" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recycler_view"
         android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/padding_small"
-        app:fabSize="mini"
+        android:layout_margin="@dimen/padding_large"
+        app:fabSize="normal"
+        android:baselineAlignBottom="true"
+        android:layout_alignParentBottom="true"
         app:rippleColor="@color/white"
         app:srcCompat="@drawable/ic_add" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_refresh"
-        style="@style/Material_Text"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/recycler_view"
-        android:layout_centerHorizontal="true"
-        android:text="@string/txt_refresh" />
 
 </RelativeLayout>

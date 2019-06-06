@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom"
         android:layout_marginTop="@dimen/padding_mini"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/rl_toolbar" />
 
     <RelativeLayout
         android:id="@+id/bottom"

@@ -43,6 +43,7 @@ import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH_MEMBERS;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class FindMembersActivity extends ParentActivity {
 
@@ -184,7 +185,7 @@ public class FindMembersActivity extends ParentActivity {
                         "Search"
                 },
                 new String[]{
-                        "Instant search as you type if you're online or offline"
+                        "Instant search as you type"
                 }
         );
     }

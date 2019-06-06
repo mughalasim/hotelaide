@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/actionBarSize"
-    android:background="@drawable/back_toolbar"
-    app:layout_collapseMode="pin"
-    app:titleTextColor="@color/white">
+    android:layout_height="?android:attr/actionBarSize">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/back_toolbar"
+        app:layout_collapseMode="pin"
+        app:titleTextColor="@color/white" />
 
-        <TextView
-            android:id="@+id/toolbar_text"
-            style="@style/Text_Header"
-            android:gravity="center_vertical|center"
-            android:layout_marginTop="0dp"
-            android:maxLines="1"
-            android:paddingStart="-75sp"
-            android:paddingEnd="0dp"
-            android:text="@string/app_name"
-            android:layout_height="match_parent"
-            android:textColor="@color/white" />
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/toolbar_text"
+        style="@style/Text_Header"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:maxLines="1"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white" />
 
-</androidx.appcompat.widget.Toolbar>
+</RelativeLayout>

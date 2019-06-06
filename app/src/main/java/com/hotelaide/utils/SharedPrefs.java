@@ -13,6 +13,9 @@ import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
@@ -39,7 +42,9 @@ import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
 import static com.hotelaide.utils.StaticVariables.USER_POSTAL_CODE;
 import static com.hotelaide.utils.StaticVariables.USER_PROFILE_COMPLETION;
+import static com.hotelaide.utils.StaticVariables.USER_SKILLS;
 import static com.hotelaide.utils.StaticVariables.USER_URL;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class SharedPrefs {
     private static final String GLOBAL_PREF = "GLOBAL_PREF";
@@ -69,6 +74,22 @@ public class SharedPrefs {
 
     public static void setString(String variableName, String variableValue) {
         editor.putString(variableName, variableValue).apply();
+    }
+
+
+    // GENERIC GET AND SET ARRAY LIST VARIABLES ====================================================
+    public static ArrayList<String> getArrayList(String name) {
+        HashSet<String> set = (HashSet<String>) prefs.getStringSet(name, null);
+        if (set != null) {
+            return new ArrayList<>(set);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public static void setArrayList(String name, ArrayList<String> value) {
+        HashSet<String> set = new HashSet<>(value);
+        editor.putStringSet(name, set).apply();
     }
 
 
@@ -115,9 +136,6 @@ public class SharedPrefs {
         global_editor.putBoolean(variableName, variableValue);
         global_editor.apply();
     }
-
-
-
 
 
     // USER FUNCTIONS ==============================================================================
@@ -168,9 +186,19 @@ public class SharedPrefs {
                 if (!user.isNull("postal_code"))
                     setString(USER_POSTAL_CODE, user.getString("postal_code"));
 
+                JSONArray skills_array = user.getJSONArray("skills");
+                if (skills_array != null && skills_array.length() > 0) {
+                    int array_length = skills_array.length();
+                    ArrayList<String> list = new ArrayList<>();
+                    for (int i = 0; i < array_length; i++) {
+                        JSONObject object = skills_array.getJSONObject(i);
+                        list.add(object.getString("name"));
+                    }
+                    setArrayList(USER_SKILLS, list);
+                }
+
                 JSONArray work_experience = user.getJSONArray("work_experience");
                 if (work_experience != null && work_experience.length() > 0) {
-                    Database db = new Database();
 
                     int array_length = work_experience.length();
 
@@ -181,7 +209,7 @@ public class SharedPrefs {
 
                 JSONArray education_experience = user.getJSONArray("education_experience");
                 if (education_experience != null && education_experience.length() > 0) {
-                    Database db = new Database();
+//                    Database db = new Database();
 
                     int array_length = education_experience.length();
 

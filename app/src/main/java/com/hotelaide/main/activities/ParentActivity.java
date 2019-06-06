@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
+import com.hotelaide.services.UserIsOnlineService;
 import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
@@ -70,12 +71,13 @@ import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class ParentActivity extends FragmentActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
     Helpers helpers;
-    Database db;
+
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigation_view;
@@ -97,7 +99,7 @@ public class ParentActivity extends FragmentActivity implements
     private int drawer_id;
     private String toolbar_title;
     private final String TAG_LOG = "PARENT";
-    private final int INT_NAV_DRAWER_DELAY = 220;
+    private final int INT_NAV_DRAWER_DELAY = 120;
     private int INT_NAV_DRAWER_UPDATE_COUNTER = 0;
 
     public AppCompatImageView img_search;
@@ -108,12 +110,11 @@ public class ParentActivity extends FragmentActivity implements
 
     void initialize(int drawer_id, String toolbarTitle) {
         helpers = new Helpers(ParentActivity.this);
-        db = new Database();
         this.drawer_id = drawer_id;
         this.toolbar_title = toolbarTitle;
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar_text = toolbar.findViewById(R.id.toolbar_text);
+        toolbar_text = findViewById(R.id.toolbar_text);
         drawer = findViewById(R.id.drawer_layout);
         navigation_view = findViewById(R.id.nav_view);
 
@@ -350,6 +351,9 @@ public class ParentActivity extends FragmentActivity implements
                 @Override
                 public void onClick(View v) {
                     dialog.cancel();
+                    if(!helpers.validateServiceRunning(UserIsOnlineService.class)){
+                        stopService(new Intent(ParentActivity.this, UserIsOnlineService.class));
+                    }
                     finish();
                 }
             });

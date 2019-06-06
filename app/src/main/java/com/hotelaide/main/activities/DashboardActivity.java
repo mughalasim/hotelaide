@@ -21,6 +21,7 @@ import com.hotelaide.main.fragments.NewsFeedFragment;
 import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.services.BackgroundFetchService;
 import com.hotelaide.services.ReminderService;
+import com.hotelaide.services.UserIsOnlineService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
@@ -47,6 +48,7 @@ import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SHORTLISTED;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class DashboardActivity extends ParentActivity {
 
@@ -102,6 +104,8 @@ public class DashboardActivity extends ParentActivity {
             }
         }
 
+        startService(new Intent(DashboardActivity.this, UserIsOnlineService.class));
+
         handleFireBase();
 
         setUpHomeSearch();
@@ -149,7 +153,7 @@ public class DashboardActivity extends ParentActivity {
     }
 
     public void openMyJobs(View view) {
-        if (view.getId() == R.id.ll_applied) {
+        if (view.getId() == R.id.ll_applied_jobs) {
             startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class)
                     .putExtra(FILTER_TYPE_APPLIED, FILTER_TYPE_APPLIED));
         } else if (view.getId() == R.id.ll_shortlisted) {
@@ -161,7 +165,7 @@ public class DashboardActivity extends ParentActivity {
         } else if (view.getId() == R.id.ll_interviews) {
             startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class)
                     .putExtra(FILTER_TYPE_INTERVIEWS, FILTER_TYPE_INTERVIEWS));
-        } else if (view.getId() == R.id.ll_messages) {
+        } else if (view.getId() == R.id.ll_unread_messages) {
             startActivity(new Intent(DashboardActivity.this, MyMessages.class)
                     .putExtra(EXTRA_MY_MESSAGES_INBOX, EXTRA_MY_MESSAGES_INBOX));
         }
@@ -204,32 +208,6 @@ public class DashboardActivity extends ParentActivity {
 
                     }
                 });
-    }
-
-    @Override
-    protected void onPause() {
-        if (isFinishing()) {
-            SharedPrefs.setBool(APP_IS_RUNNING, false);
-            Helpers.logThis(TAG_LOG, "OFFLINE");
-            Helpers.updateUserOnlineStatus(Calendar.getInstance().getTimeInMillis());
-        }
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        SharedPrefs.setBool(APP_IS_RUNNING, false);
-        Helpers.logThis(TAG_LOG, "OFFLINE");
-        Helpers.updateUserOnlineStatus(Calendar.getInstance().getTimeInMillis());
-        super.onDestroy();
-    }
-
-    @Override
-    public void onResume() {
-        SharedPrefs.setBool(APP_IS_RUNNING, true);
-        Helpers.logThis(TAG_LOG, "ONLINE");
-        Helpers.updateUserOnlineStatus("Online");
-        super.onResume();
     }
 
 }

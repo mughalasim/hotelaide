@@ -33,6 +33,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class PdfViewActivity extends AppCompatActivity implements OnPageChangeListener, OnLoadCompleteListener, OnPageErrorListener {
     private Helpers helpers;
@@ -58,7 +59,7 @@ public class PdfViewActivity extends AppCompatActivity implements OnPageChangeLi
     private final String
             TAG_LOG = "PDF VIEW";
 
-    private Database db;
+
 
 
     // OVERRIDE METHODS ============================================================================
@@ -67,8 +68,6 @@ public class PdfViewActivity extends AppCompatActivity implements OnPageChangeLi
         super.onCreate(savedInstanceState);
 
         helpers = new Helpers(PdfViewActivity.this);
-
-        db = new Database();
 
         if (handleExtraBundles()) {
 

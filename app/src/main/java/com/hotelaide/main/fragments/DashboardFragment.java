@@ -42,11 +42,12 @@ import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SAVED;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
 import static com.hotelaide.utils.StaticVariables.USER_PROFILE_COMPLETION;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class DashboardFragment extends Fragment {
     private View root_view;
     private Helpers helpers;
-    private Database db;
+
     private String TAG_LOG = "DASH FRAG";
 
     private TickerView
@@ -87,7 +88,6 @@ public class DashboardFragment extends Fragment {
             root_view = inflater.inflate(R.layout.frag_dashboard, container, false);
 
             helpers = new Helpers(getActivity());
-            db = new Database();
 
             findAllViews();
 
@@ -97,45 +97,34 @@ public class DashboardFragment extends Fragment {
 
             swipe_refresh.setRefreshing(true);
 
-            root_view.getViewTreeObserver().addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
-                @Override
-                public void onDraw() {
-                    // Immediately detach the listener so it only is called once
-//                    root_view.getViewTreeObserver().removeOnDrawListener(this);
-                    // FIRST LAUNCH
-                    helpers.setTarget(
-                            getActivity(),
-                            FIRST_LAUNCH_DASH,
-                            new View[]{
-                                    root_view.findViewById(R.id.txt_applied_jobs),
-                                    root_view.findViewById(R.id.txt_shortlisted),
-                                    root_view.findViewById(R.id.txt_interviews),
-                                    root_view.findViewById(R.id.txt_saved_jobs),
-                                    root_view.findViewById(R.id.txt_profile_views),
-                                    root_view.findViewById(R.id.txt_unread_messages)
-                            },
-                            new String[]{
-                                    getString(R.string.nav_applied),
-                                    getString(R.string.nav_shortlisted),
-                                    getString(R.string.nav_interviews),
-                                    getString(R.string.nav_saved),
-                                    getString(R.string.nav_profile_views),
-                                    getString(R.string.nav_messages),
-                            },
-                            new String[]{
-                                    "This will show you how many jobs you have applied for",
-                                    "This will show you how many jobs you have been short listed for",
-                                    "This will show you how many job interviews you have",
-                                    "Here you can save a job listing for later application",
-                                    "How many users have visited your profile",
-                                    "And lastly....See who sent you a message"
-                            }
-                    );
-
-                }
-            });
-
-//            fetchFacebookPosts();
+            helpers.setTarget(
+                    getActivity(),
+                    FIRST_LAUNCH_DASH,
+                    new View[]{
+                            root_view.findViewById(R.id.ll_applied_jobs),
+                            root_view.findViewById(R.id.ll_shortlisted),
+                            root_view.findViewById(R.id.ll_interviews),
+                            root_view.findViewById(R.id.ll_saved_jobs),
+                            root_view.findViewById(R.id.ll_profile_views),
+                            root_view.findViewById(R.id.ll_unread_messages)
+                    },
+                    new String[]{
+                            getString(R.string.nav_applied),
+                            getString(R.string.nav_shortlisted),
+                            getString(R.string.nav_interviews),
+                            getString(R.string.nav_saved),
+                            getString(R.string.nav_profile_views),
+                            getString(R.string.nav_messages),
+                    },
+                    new String[]{
+                            "This will show you how many jobs you have applied for",
+                            "This will show you how many jobs you have been short listed for",
+                            "This will show you how many job interviews you have",
+                            "Here you can save a job listing for later application",
+                            "How many users have visited your profile",
+                            "And lastly....See who sent you a message"
+                    }
+            );
 
         } else {
             container.removeView(root_view);

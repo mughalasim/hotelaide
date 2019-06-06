@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ImageView
@@ -12,25 +11,36 @@
         android:background="@drawable/back_fade"
         android:contentDescription="@string/app_name" />
 
-    <com.makeramen.roundedimageview.RoundedImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/main_logo"
-        android:layout_width="@dimen/img_size_large"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/img_size_large"
-        android:layout_centerHorizontal="true"
         android:layout_above="@+id/main_logo2"
+        android:layout_marginTop="@dimen/padding_large"
         android:contentDescription="@string/app_name"
-        android:scaleType="centerInside"
-        app:riv_corner_radius="@dimen/img_size_large"
-        android:src="@mipmap/ic_logo_adaptive_round" />
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_logo_round" />
 
     <ImageView
         android:id="@+id/main_logo2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/img_size_small"
         android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/padding_small"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
         android:src="@drawable/logo_horizontal" />
+
+    <TextView
+        style="@style/Text_Normal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding_small"
+        android:text="@string/VERSION_NAME"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_small" />
 
 
 </RelativeLayout>

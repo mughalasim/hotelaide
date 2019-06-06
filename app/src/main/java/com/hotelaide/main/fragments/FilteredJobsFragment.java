@@ -36,6 +36,7 @@ import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_INTERVIEWS;
 import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_SHORTLISTED;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class FilteredJobsFragment extends Fragment {
 
@@ -43,7 +44,7 @@ public class FilteredJobsFragment extends Fragment {
     private Helpers helpers;
     private final String
             TAG_LOG = "FILTERED JOBS";
-    private Database db;
+
 
     // SEARCH ADAPTER ITEMS ------------------------------------------------------------------------
     private SwipeRefreshLayout swipe_refresh;
@@ -76,8 +77,6 @@ public class FilteredJobsFragment extends Fragment {
                     root_view = inflater.inflate(R.layout.frag_recycler_view, container, false);
 
                     helpers = new Helpers(getActivity());
-
-                    db = new Database();
 
                     findAllViews();
 

@@ -27,6 +27,7 @@ import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE_EDIT;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH_MEMBERS;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class MyApplication extends Application {
 
@@ -35,6 +36,7 @@ public class MyApplication extends Application {
 
     private static GoogleAnalytics analytics;
     private static Tracker tracker;
+
 
     public void onCreate() {
         super.onCreate();
@@ -47,6 +49,9 @@ public class MyApplication extends Application {
         }
 
         analytics = GoogleAnalytics.getInstance(this);
+
+        db = new Database();
+
     }
 
     public static void initFireBase() {

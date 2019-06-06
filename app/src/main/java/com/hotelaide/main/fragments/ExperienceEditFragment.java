@@ -54,12 +54,13 @@ import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class ExperienceEditFragment extends Fragment {
 
     private View root_view;
     private Helpers helpers;
-    private Database db;
+
     private final String TAG_LOG = "EXPERIENCE";
     private String EXPERIENCE_TYPE = "";
 
@@ -112,7 +113,6 @@ public class ExperienceEditFragment extends Fragment {
         if (root_view == null && getActivity() != null) {
             try {
                 helpers = new Helpers(getActivity());
-                db = new Database();
 
                 Bundle bundle = this.getArguments();
                 if (bundle != null) {
@@ -715,9 +715,9 @@ public class ExperienceEditFragment extends Fragment {
         private Context context;
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            CardView
-                    list_item;
+
             RelativeLayout
+                    list_item,
                     no_list_item;
             final TextView
                     txt_no_results,

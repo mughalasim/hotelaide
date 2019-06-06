@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.JsonArray;
 import com.hotelaide.R;
 import com.hotelaide.main.models.ExperienceModel;
 import com.hotelaide.utils.Database;
@@ -22,14 +23,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
+import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class ExperienceViewFragment extends Fragment {
 
     private View root_view;
     private Helpers helpers;
-    private Database db;
+
+    private final String
+            TAG_LOG = "EXPERIENCE VIEW";
     private String EXPERIENCE_TYPE = "";
 
     // TOP PANEL ===================================================================================
@@ -37,13 +46,16 @@ public class ExperienceViewFragment extends Fragment {
     private ArrayList<ExperienceModel> model_list = new ArrayList<>();
     private ExperienceAdapter adapter;
     private RelativeLayout rl_no_list_items;
+    private JSONArray experience_array;
 
     // BOTTOM PANEL ================================================================================
     private TextView
             txt_no_results;
 
 
-    public ExperienceViewFragment() {
+    public ExperienceViewFragment(JSONArray experience_array, String EXPERIENCE_TYPE) {
+        this.EXPERIENCE_TYPE = EXPERIENCE_TYPE;
+        this.experience_array = experience_array;
     }
 
 
@@ -52,19 +64,12 @@ public class ExperienceViewFragment extends Fragment {
         if (root_view == null && getActivity() != null) {
             try {
                 helpers = new Helpers(getActivity());
-                db = new Database();
 
-                Bundle bundle = this.getArguments();
-                if (bundle != null) {
-                    EXPERIENCE_TYPE = bundle.getString("EXPERIENCE_TYPE");
+                root_view = inflater.inflate(R.layout.frag_experience_view, container, false);
 
-                    root_view = inflater.inflate(R.layout.frag_experience_view, container, false);
+                findAllViews();
 
-                    findAllViews();
-
-                    populateExperienceFromDB();
-
-                }
+                populateExperienceFromDB();
 
             } catch (InflateException e) {
                 e.printStackTrace();
@@ -107,7 +112,11 @@ public class ExperienceViewFragment extends Fragment {
     private void populateExperienceFromDB() {
         rl_no_list_items.setVisibility(View.GONE);
         model_list.clear();
-        model_list = db.getAllExperience(EXPERIENCE_TYPE);
+        if (experience_array == null) {
+            model_list = db.getAllExperience(EXPERIENCE_TYPE);
+        } else {
+            model_list = parseJsonArray();
+        }
         recycler_view.invalidate();
         adapter.updateData(model_list);
         adapter.notifyDataSetChanged();
@@ -126,6 +135,45 @@ public class ExperienceViewFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    private ArrayList<ExperienceModel> parseJsonArray() {
+        ArrayList<ExperienceModel> list = new ArrayList<>();
+        int array_length = experience_array.length();
+        try {
+            for (int i = 0; i < array_length; i++) {
+                JSONObject work_object = experience_array.getJSONObject(i);
+                ExperienceModel experienceModel = new ExperienceModel();
+                if (EXPERIENCE_TYPE.equals(EXPERIENCE_TYPE_WORK)) {
+                    experienceModel.experience_id = work_object.getInt("id");
+                    experienceModel.name = work_object.getString("company_name");
+                    experienceModel.position = work_object.getString("position");
+                    experienceModel.start_date = work_object.getString("start_date");
+                    experienceModel.end_date = work_object.getString("end_date");
+                    experienceModel.responsibilities_field = work_object.getString("responsibilities");
+                    experienceModel.current = work_object.getInt("current");
+                    experienceModel.type = EXPERIENCE_TYPE_WORK;
+
+                } else {
+                    experienceModel.experience_id = work_object.getInt("id");
+                    experienceModel.name = work_object.getString("institution_name");
+                    experienceModel.education_level = work_object.getInt("education_level");
+                    experienceModel.start_date = work_object.getString("start_date");
+                    experienceModel.end_date = work_object.getString("end_date");
+                    experienceModel.responsibilities_field = work_object.getString("study_field");
+                    experienceModel.current = work_object.getInt("current");
+
+                    experienceModel.type = EXPERIENCE_TYPE_EDUCATION;
+                }
+                list.add(experienceModel);
+            }
+
+        } catch (JSONException e) {
+            Helpers.logThis(TAG_LOG, e.toString());
+        } catch (Exception e) {
+            Helpers.logThis(TAG_LOG, e.toString());
+        }
+        return list;
+    }
+
     // ADAPTER CLASS ===============================================================================
     public class ExperienceAdapter extends RecyclerView.Adapter<ExperienceAdapter.ViewHolder> {
         private final ArrayList<ExperienceModel> experienceModels;
@@ -133,9 +181,8 @@ public class ExperienceViewFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder {
 
-            CardView
-                    list_item;
             RelativeLayout
+                    list_item,
                     no_list_item;
             final TextView
                     txt_no_results,
