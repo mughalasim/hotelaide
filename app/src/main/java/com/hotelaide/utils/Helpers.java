@@ -32,6 +32,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.AccessToken;
@@ -77,15 +82,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static android.content.pm.PackageManager.GET_ACTIVITIES;
-//import static android.content.pm.PackageManager.GET_SIGNATURES;
 import static android.content.pm.PackageManager.NameNotFoundException;
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
@@ -111,6 +110,8 @@ import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
 import static com.hotelaide.utils.StaticVariables.db;
+
+//import static android.content.pm.PackageManager.GET_SIGNATURES;
 
 public class Helpers {
 
@@ -867,11 +868,11 @@ public class Helpers {
             String str_years = "", str_months = "";
 
             if (years > 0) {
-                str_years = String.valueOf(years) + "yrs ";
+                str_years = String.valueOf(years) + " yrs ";
             }
 
             if (months > 0) {
-                str_months = String.valueOf(months) + "mth";
+                str_months = String.valueOf(months) + " mths";
             }
 
             return str_years + str_months;
@@ -956,6 +957,13 @@ public class Helpers {
 
     }
 
+    public String fetchFromEditText(EditText editText) {
+        String data = "";
+        if (editText.getText().toString().length() > 1) {
+            data = editText.getText().toString();
+        }
+        return data;
+    }
 
     // ANIMATIONS ==================================================================================
     private void animateWobble(View v) {

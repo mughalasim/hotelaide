@@ -32,6 +32,7 @@ import com.hotelaide.utils.SharedPrefs;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static com.hotelaide.utils.StaticVariables.EXTRA_INT;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
@@ -141,7 +142,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 public void onClick(View v) {
                     if (messageModel.from_id != 0) {
                         context.startActivity(new Intent(context, MemberProfileActivity.class)
-                                .putExtra("MEMBER_ID", messageModel.from_id
+                                .putExtra(EXTRA_INT, messageModel.from_id
                         ));
                     }
                 }

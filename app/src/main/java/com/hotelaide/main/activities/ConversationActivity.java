@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import static com.hotelaide.utils.StaticVariables.EXTRA_INT;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
@@ -168,7 +169,7 @@ public class ConversationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ConversationActivity.this, MemberProfileActivity.class)
-                        .putExtra("MEMBER_ID", INT_FROM_ID
+                        .putExtra(EXTRA_INT, INT_FROM_ID
                         ));
             }
         });

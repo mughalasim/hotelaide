@@ -8,7 +8,6 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -18,12 +17,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonObject;
 import com.hbb20.CountryCodePicker;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
-import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.models.UserModel;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
@@ -34,8 +35,6 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -193,14 +192,14 @@ public class ProfileUpdateFragment extends Fragment {
             public void onClick(View v) {
                 UserModel userModel = new UserModel();
                 userModel.id = SharedPrefs.getInt(USER_ID);
-                userModel.first_name = fetchFromEditText(et_user_first_name);
-                userModel.last_name = fetchFromEditText(et_user_last_name);
-                userModel.about = fetchFromEditText(et_user_about);
+                userModel.first_name = helpers.fetchFromEditText(et_user_first_name);
+                userModel.last_name = helpers.fetchFromEditText(et_user_last_name);
+                userModel.about = helpers.fetchFromEditText(et_user_about);
                 userModel.email = et_user_email.getText().toString();
                 userModel.country_code = ccp_user_country_code.getSelectedCountryCodeAsInt();
                 Helpers.logThis(TAG_LOG, "GENDER POSITION: " + spinner_user_gender.getSelectedItemPosition());
                 userModel.gender = spinner_user_gender.getSelectedItemPosition();
-                userModel.phone = fetchFromEditText(et_user_phone);
+                userModel.phone = helpers.fetchFromEditText(et_user_phone);
 
                 if (!et_user_dob.getText().toString().equals(getString(R.string.txt_not_set))) {
                     userModel.dob = et_user_dob.getTag().toString();
@@ -211,14 +210,6 @@ public class ProfileUpdateFragment extends Fragment {
                 asyncUpdateDetails(userModel);
             }
         });
-    }
-
-    private String fetchFromEditText(EditText editText) {
-        String data = "";
-        if (editText.getText().toString().length() > 1) {
-            data = editText.getText().toString();
-        }
-        return data;
     }
 
     private void setDates() {

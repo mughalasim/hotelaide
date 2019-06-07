@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
@@ -32,16 +35,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import static com.hotelaide.BuildConfig.ALGOLIA_APP_ID;
 import static com.hotelaide.BuildConfig.ALGOLIA_INDEX_JOB;
 import static com.hotelaide.BuildConfig.ALGOLIA_SEARCH_API_KEY;
 import static com.hotelaide.utils.StaticVariables.CATEGORIES_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
-import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH;
 import static com.hotelaide.utils.StaticVariables.JOB_TYPE_TABLE_NAME;
@@ -75,17 +73,11 @@ public class FindJobsActivity extends ParentActivity {
 
 
     // SEARCH TOOLS --------------------------------------------------------------------------------
-//    private Client client;
     private Index index;
     private Query query;
-    private int
-            pastVisibleItems,
-            visibleItemCount,
-            totalItemCount,
+    public static int
             CURRENT_PAGE = 0,
             LAST_PAGE = 1;
-    private boolean
-            continue_pagination = true;
     private CompletionHandler completionHandler;
     private static final int HITS_PER_PAGE = 20;
 
@@ -334,30 +326,7 @@ public class FindJobsActivity extends ParentActivity {
             @Override
             public void requestCompleted(JSONObject content, AlgoliaException error) {
                 try {
-                    if (content != null) {
-//                        Helpers.logThis(TAG_LOG, content.toString());
-
-                        model_list.clear();
-
-                        if (content.getInt("nbHits") > 0) {
-                            JSONArray hits_array = content.getJSONArray("hits");
-                            for (int i = 0; i < hits_array.length(); i++) {
-                                JSONObject hit_object = hits_array.getJSONObject(i);
-                                model_list.add(db.setJobFromJson(hit_object, ""));
-                            }
-                        }
-
-                        if (model_list.size() <= 0) {
-                            noListItems();
-                        }
-                        recycler_view.invalidate();
-                        adapter.updateData(model_list);
-                        adapter.notifyDataSetChanged();
-
-                    } else if (error != null) {
-                        Helpers.logThis(TAG_LOG, error.toString());
-
-                    }
+                    handleResponse(content, error, true);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                     Helpers.logThis(TAG_LOG, e.toString());
@@ -371,58 +340,58 @@ public class FindJobsActivity extends ParentActivity {
             }
         };
 
-        recycler_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0) {
-                    visibleItemCount = layoutManager.getChildCount();
-                    totalItemCount = layoutManager.getItemCount();
-                    pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
-                    if (helpers.validateInternetConnection()
-                            && continue_pagination
-                            && (visibleItemCount + pastVisibleItems) >= totalItemCount
-                            && LAST_PAGE != CURRENT_PAGE) {
-//                        loadMoreResults();
-                        Helpers.logThis(TAG_LOG, "Load more");
-                        continue_pagination = false;
-                    }
-                }
-            }
-        });
-
 
     }
 
-//    private void loadMoreResults() {
-//        Query loadMoreQuery = new Query(query);
-//        loadMoreQuery.setPage(CURRENT_PAGE++);
-//        index.searchAsync(loadMoreQuery, new CompletionHandler() {
-//            @Override
-//            public void requestCompleted(JSONObject content, AlgoliaException error) {
-//                try {
-//                    if (content != null && error == null) {
-//                        if (content.getInt("nbHits") > 0) {
-//                            JSONArray hits_array = content.getJSONArray("hits");
-//                            for (int i = 0; i < hits_array.length(); i++) {
-//                                JSONObject hit_object = hits_array.getJSONObject(i);
-//                                model_list.add(db.setJobFromJson(hit_object));
-//                            }
-//                            adapter.notifyDataSetChanged();
-//                        }
-//                    }
-//                } catch (NullPointerException e) {
-//                    e.printStackTrace();
-//                    Helpers.logThis(TAG_LOG, e.toString());
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Helpers.logThis(TAG_LOG, e.toString());
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    Helpers.logThis(TAG_LOG, e.toString());
-//                }
-//            }
-//        });
-//    }
+    public void loadMoreResults() {
+        helpers.toastMessage("Loading...");
+        Query loadMoreQuery = new Query(query);
+        loadMoreQuery.setPage(CURRENT_PAGE + 1);
+        index.searchAsync(loadMoreQuery, new CompletionHandler() {
+            @Override
+            public void requestCompleted(JSONObject content, AlgoliaException error) {
+                try {
+                    handleResponse(content, error, false);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    Helpers.logThis(TAG_LOG, e.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Helpers.logThis(TAG_LOG, e.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Helpers.logThis(TAG_LOG, e.toString());
+                }
+            }
+        });
+    }
+
+    private void handleResponse(JSONObject content, AlgoliaException error, boolean afresh) throws JSONException {
+        if (content != null) {
+//            Helpers.logThis(TAG_LOG, content.toString());
+            if (afresh)
+                model_list.clear();
+
+            if (content.getInt("nbHits") > 0) {
+                JSONArray hits_array = content.getJSONArray("hits");
+                for (int i = 0; i < hits_array.length(); i++) {
+                    JSONObject hit_object = hits_array.getJSONObject(i);
+                    model_list.add(db.setJobFromJson(hit_object, ""));
+                }
+            }
+
+            CURRENT_PAGE = content.getInt("page");
+            LAST_PAGE = content.getInt("nbPages");
+
+            if (model_list.size() < 1) {
+                noListItems();
+            } else {
+                adapter.notifyDataSetChanged();
+            }
+        } else if (error != null) {
+            Helpers.logThis(TAG_LOG, error.toString());
+        }
+    }
 
     private void clearAllFilters() {
         spinner_location.setSelection(0);
@@ -433,9 +402,9 @@ public class FindJobsActivity extends ParentActivity {
     private void searchDatabase() {
         model_list.clear();
         if (spinner_location.getSelectedItemPosition() != 0) {
-            model_list = db.getAllJobModelsBySearch(fetchFromEditText(et_search), spinner_location.getSelectedItem().toString());
+            model_list = db.getAllJobModelsBySearch(helpers.fetchFromEditText(et_search), spinner_location.getSelectedItem().toString());
         } else {
-            model_list = db.getAllJobModelsBySearch(fetchFromEditText(et_search), "");
+            model_list = db.getAllJobModelsBySearch(helpers.fetchFromEditText(et_search), "");
         }
         recycler_view.invalidate();
         adapter.updateData(model_list);
@@ -443,14 +412,6 @@ public class FindJobsActivity extends ParentActivity {
         if (model_list.size() < 1) {
             noListItems();
         }
-    }
-
-    private String fetchFromEditText(EditText editText) {
-        String data = "";
-        if (editText.getText().toString().length() > 1) {
-            data = editText.getText().toString();
-        }
-        return data;
     }
 
     private void noListItems() {

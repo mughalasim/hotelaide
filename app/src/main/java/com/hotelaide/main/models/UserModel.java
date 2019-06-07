@@ -1,5 +1,9 @@
 package com.hotelaide.main.models;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+
 public class UserModel {
     public int      id;
 
@@ -10,6 +14,7 @@ public class UserModel {
     public String   img_avatar = "";
     public String   img_banner = "";
     public String   phone = "";
+    public String   share_link = "";
 
     public int      country_code;
     public int      county;
@@ -25,5 +30,10 @@ public class UserModel {
 
     public int      availability ;
     public int      gender ;
+
+    public JSONArray work_experience;
+    public JSONArray educational_experience;
+    public JSONArray documents;
+    public ArrayList<String> skills;
 
 }

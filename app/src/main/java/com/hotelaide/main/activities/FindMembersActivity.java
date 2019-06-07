@@ -20,6 +20,9 @@ import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
 import com.google.android.material.chip.Chip;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main.adapters.MembersAdapter;
@@ -160,10 +163,12 @@ public class FindMembersActivity extends ParentActivity {
                 db.getAllFilterItems(CATEGORIES_TABLE_NAME)
         ));
 
-
+        FirebaseApp.initializeApp(FindMembersActivity.this);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference parent_ref = database.getReference();
         // SEARCH FUNCTIONALITY --------------------------------------------------------------------
         recycler_view = findViewById(R.id.recycler_view);
-        adapter = new MembersAdapter(model_list);
+        adapter = new MembersAdapter(model_list, parent_ref);
         recycler_view.setAdapter(adapter);
         recycler_view.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(FindMembersActivity.this);
@@ -294,7 +299,7 @@ public class FindMembersActivity extends ParentActivity {
         }
 
         if (et_search.getText().toString().length() > 0) {
-            query.setQuery(fetchFromEditText(et_search));
+            query.setQuery(helpers.fetchFromEditText(et_search));
         } else {
             query.setQuery("");
         }
@@ -397,14 +402,6 @@ public class FindMembersActivity extends ParentActivity {
         spinner_location.setSelection(0);
         spinner_type.setSelection(0);
         spinner_category.setSelection(0);
-    }
-
-    private String fetchFromEditText(EditText editText) {
-        String data = "";
-        if (editText.getText().toString().length() > 1) {
-            data = editText.getText().toString();
-        }
-        return data;
     }
 
     private void noListItems() {

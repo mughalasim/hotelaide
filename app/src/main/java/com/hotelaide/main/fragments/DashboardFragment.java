@@ -10,17 +10,19 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.hotelaide.R;
-import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
@@ -30,11 +32,6 @@ import com.robinhood.ticker.TickerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_SET_USER_STATS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
@@ -101,12 +98,12 @@ public class DashboardFragment extends Fragment {
                     getActivity(),
                     FIRST_LAUNCH_DASH,
                     new View[]{
-                            root_view.findViewById(R.id.ll_applied_jobs),
-                            root_view.findViewById(R.id.ll_shortlisted),
-                            root_view.findViewById(R.id.ll_interviews),
-                            root_view.findViewById(R.id.ll_saved_jobs),
-                            root_view.findViewById(R.id.ll_profile_views),
-                            root_view.findViewById(R.id.ll_unread_messages)
+                            root_view.findViewById(R.id.txt_applied_jobs),
+                            root_view.findViewById(R.id.txt_shortlisted),
+                            root_view.findViewById(R.id.txt_interviews),
+                            root_view.findViewById(R.id.txt_saved_jobs),
+                            root_view.findViewById(R.id.txt_profile_views),
+                            root_view.findViewById(R.id.txt_unread_messages)
                     },
                     new String[]{
                             getString(R.string.nav_applied),

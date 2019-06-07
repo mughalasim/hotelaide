@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +52,7 @@ import static com.hotelaide.utils.StaticVariables.COUNTY_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_WORK;
 import static com.hotelaide.utils.StaticVariables.EXTRA_FAILED;
+import static com.hotelaide.utils.StaticVariables.EXTRA_INT;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PASSED;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
@@ -162,42 +161,28 @@ public class ProfileActivity extends ParentActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_share, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        helpers.dialogShare(ProfileActivity.this, STR_SHARE_LINK);
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_CANCELED)
-            switch (requestCode) {
-                case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
-                    CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                    if (resultCode == RESULT_OK) {
-                        Uri resultUri = result.getUri();
-                        File file = new File(resultUri.getPath());
-                        if (RESULT_EXPECTED == RESULT_AVATAR) {
-                            Glide.with(this).load(resultUri).into(img_avatar);
-                            MultipartBody.Part partFile = MultipartBody.Part.createFormData("avatar",
-                                    file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                            asyncUpdateImages(partFile, RESULT_EXPECTED);
-                        } else {
-                            Glide.with(this).load(resultUri).into(img_banner);
-                            MultipartBody.Part partFile = MultipartBody.Part.createFormData("banner",
-                                    file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-                            asyncUpdateImages(partFile, RESULT_EXPECTED);
-                        }
-
-                    } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                        helpers.toastMessage(getResources().getString(R.string.error_unknown));
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK) {
+                    Uri resultUri = result.getUri();
+                    File file = new File(resultUri.getPath());
+                    if (RESULT_EXPECTED == RESULT_AVATAR) {
+                        Glide.with(this).load(resultUri).into(img_avatar);
+                        MultipartBody.Part partFile = MultipartBody.Part.createFormData("avatar",
+                                file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        asyncUpdateImages(partFile, RESULT_EXPECTED);
+                    } else {
+                        Glide.with(this).load(resultUri).into(img_banner);
+                        MultipartBody.Part partFile = MultipartBody.Part.createFormData("banner",
+                                file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                        asyncUpdateImages(partFile, RESULT_EXPECTED);
                     }
-                    break;
+
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    helpers.toastMessage(getResources().getString(R.string.error_unknown));
+                }
             }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -332,12 +317,8 @@ public class ProfileActivity extends ParentActivity {
             for (int i = 0; i < length; i++) {
                 Chip chip = new Chip(ProfileActivity.this);
                 chip.setText(list.get(i));
-                //chip.setCloseIconEnabled(true);
-                //chip.setCloseIconResource(R.drawable.your_icon);
-                //chip.setChipIconResource(R.drawable.your_icon);
                 chip.setChipBackgroundColorResource(R.color.light_grey);
                 chip.setTextAppearanceResource(R.style.Text_Small);
-                //chip.setElevation(15);
                 chip_group_user_skills.addView(chip);
             }
         }
@@ -442,7 +423,7 @@ public class ProfileActivity extends ParentActivity {
 
         } else if (view.getId() == R.id.rl_view_as_member) {
             startActivity(new Intent(ProfileActivity.this, MemberProfileActivity.class)
-                    .putExtra("MEMBER_ID", SharedPrefs.getInt(USER_ID))
+                    .putExtra(EXTRA_INT, SharedPrefs.getInt(USER_ID))
             );
 
         } else if (view.getId() == R.id.rl_edit_profile_banner) {
@@ -462,6 +443,8 @@ public class ProfileActivity extends ParentActivity {
                 EasyPermissions.requestPermissions(ProfileActivity.this, getString(R.string.rationale_image),
                         INT_PERMISSIONS_CAMERA, perms);
             }
+        } else if (view.getId() == R.id.rl_share) {
+            helpers.dialogShare(ProfileActivity.this, STR_SHARE_LINK);
         }
     }
 

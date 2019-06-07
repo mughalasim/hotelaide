@@ -9,8 +9,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.hotelaide.R;
+import com.hotelaide.main.activities.FindJobsActivity;
 import com.hotelaide.main.activities.JobActivity;
 import com.hotelaide.main.models.JobModel;
 import com.hotelaide.utils.Helpers;
@@ -18,9 +23,8 @@ import com.hotelaide.utils.StaticVariables;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
+import static com.hotelaide.main.activities.FindJobsActivity.CURRENT_PAGE;
+import static com.hotelaide.main.activities.FindJobsActivity.LAST_PAGE;
 
 public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHolder> {
     private final ArrayList<JobModel> jobModels;
@@ -102,6 +106,13 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
                     }
                 }
             });
+
+            if (context instanceof FindJobsActivity && position == (getItemCount() - 1)) {
+                if (CURRENT_PAGE < LAST_PAGE) {
+                    Helpers.logThis("MEMBERS ADAPTER", "LAST PAGE REACHED");
+                    ((FindJobsActivity)context).loadMoreResults();
+                }
+            }
         }
     }
 

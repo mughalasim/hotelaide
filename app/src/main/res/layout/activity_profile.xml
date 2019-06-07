@@ -88,22 +88,33 @@
                         android:orientation="vertical"
                         android:visibility="visible">
 
-                        <com.makeramen.roundedimageview.RoundedImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@color/grey"
-                            app:riv_border_color="@color/white"
-                            app:riv_border_width="5sp"
-                            app:riv_corner_radius="@dimen/img_size_normal"
-                            app:riv_oval="false" />
+                            android:tint="@color/white"
+                            app:srcCompat="@drawable/ic_profile" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_share"
+                        android:layout_width="@dimen/img_size_normal"
+                        android:layout_height="@dimen/img_size_normal"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="@dimen/padding_small"
+                        android:onClick="editProfile"
+                        android:alpha="0.8"
+                        android:orientation="vertical"
+                        android:visibility="visible">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="@dimen/padding_tiny"
                             android:tint="@color/white"
-                            app:srcCompat="@drawable/ic_profile" />
+                            android:padding="@dimen/padding_tiny"
+                            app:tint="@color/colorAccent"
+                            app:srcCompat="@drawable/ic_share" />
 
                     </RelativeLayout>
 

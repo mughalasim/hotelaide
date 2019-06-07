@@ -53,16 +53,16 @@
         android:layout_width="@dimen/text_size_x_large"
         android:layout_height="@dimen/text_size_x_large"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/padding_mini"
-        android:layout_toStartOf="@+id/btn_delete"
         android:scaleType="centerCrop"
+        android:layout_alignParentEnd="true"
         android:background="@drawable/ic_download" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/btn_delete"
         android:layout_width="@dimen/text_size_x_large"
         android:layout_height="@dimen/text_size_x_large"
-        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/padding_mini"
+        android:layout_toStartOf="@+id/btn_download"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_delete" />
 

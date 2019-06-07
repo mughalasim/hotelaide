@@ -14,21 +14,29 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main.activities.FindMembersActivity;
 import com.hotelaide.main.activities.MemberProfileActivity;
 import com.hotelaide.main.models.MemberModel;
 import com.hotelaide.utils.Helpers;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
 import static com.hotelaide.main.activities.FindMembersActivity.CURRENT_PAGE;
 import static com.hotelaide.main.activities.FindMembersActivity.LAST_PAGE;
+import static com.hotelaide.utils.StaticVariables.EXTRA_INT;
 
 public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHolder> {
     private final ArrayList<MemberModel> member_models;
     private Context context;
     private Helpers helpers;
+    private DatabaseReference parent_ref, child_ref_status;
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -43,6 +51,8 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
                 txt_about_me;
         final ImageView
                 img_avatar;
+        final RoundedImageView
+                img_user_status;
 
         ViewHolder(View v) {
             super(v);
@@ -50,6 +60,7 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
             txt_last_name = v.findViewById(R.id.txt_last_name);
             txt_about_me = v.findViewById(R.id.txt_about_me);
             img_avatar = v.findViewById(R.id.img_avatar);
+            img_user_status = v.findViewById(R.id.img_user_status);
 
             txt_no_results = v.findViewById(R.id.txt_no_results);
             no_list_item = v.findViewById(R.id.rl_no_list_items);
@@ -58,8 +69,9 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
 
     }
 
-    public MembersAdapter(ArrayList<MemberModel> jobModels) {
+    public MembersAdapter(ArrayList<MemberModel> jobModels, DatabaseReference parent_ref) {
         this.member_models = jobModels;
+        this.parent_ref = parent_ref;
     }
 
     @NonNull
@@ -110,11 +122,33 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
                 public void onClick(View v) {
                     if (member_model.id != 0) {
                         context.startActivity(new Intent(context, MemberProfileActivity.class)
-                                .putExtra("MEMBER_ID", member_model.id)
+                                .putExtra(EXTRA_INT, member_model.id)
                         );
                     }
                 }
             });
+
+            child_ref_status = parent_ref.child(BuildConfig.USERS_URL + member_model.id + BuildConfig.USERS_STATUS_URL);
+            child_ref_status.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() instanceof String) {
+                        if (dataSnapshot.getValue().toString().equals("Online")) {
+                            holder.img_user_status.setImageResource(R.color.green);
+                        } else {
+                            holder.img_user_status.setImageResource(R.color.red);
+                        }
+                    } else {
+                        holder.img_user_status.setImageResource(R.color.red);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    holder.img_user_status.setImageResource(R.color.red);
+                }
+            });
+
 
             if (position == (getItemCount() - 1)) {
                 if (CURRENT_PAGE < LAST_PAGE) {

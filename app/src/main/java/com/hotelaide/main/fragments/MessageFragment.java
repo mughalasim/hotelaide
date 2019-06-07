@@ -7,10 +7,15 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
@@ -42,16 +47,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hotelaide.utils.StaticVariables.EXTRA_INT;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_MESSAGES;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -409,7 +409,7 @@ public class MessageFragment extends Fragment {
                     public void onClick(View v) {
                         if (userModel.id != 0) {
                             context.startActivity(new Intent(context, MemberProfileActivity.class)
-                                    .putExtra("MEMBER_ID", userModel.id)
+                                    .putExtra(EXTRA_INT, userModel.id)
                             );
                             sliding_panel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                         }

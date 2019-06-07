@@ -1,8 +1,7 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -20,7 +19,8 @@
             <RelativeLayout
                 android:id="@+id/rl_header"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_collapsing_toolbar">
+                android:layout_height="@dimen/height_collapsing_toolbar"
+                android:layout_marginTop="?android:attr/actionBarSize">
 
                 <ImageView
                     android:id="@+id/img_banner"
@@ -40,31 +40,29 @@
                     android:scaleType="centerCrop"
                     android:src="@color/black" />
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btn_share"
+                    android:layout_width="@dimen/img_size_normal"
+                    android:layout_height="@dimen/img_size_normal"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/padding_small"
+                    android:padding="@dimen/padding_tiny"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_share"
+                    app:tint="@color/colorAccent" />
+
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/img_avatar"
-                    android:layout_width="@dimen/img_size_large"
-                    android:layout_height="@dimen/img_size_large"
+                    android:layout_width="@dimen/img_size_x_large"
+                    android:layout_height="@dimen/img_size_x_large"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:scaleType="centerCrop"
                     android:src="@color/light_grey"
-                    app:riv_border_color="@color/colorAccentDark"
-                    app:riv_border_width="@dimen/line_thickness"
-                    app:riv_corner_radius="@dimen/img_size_large"
+                    app:riv_border_color="@color/white"
+                    app:riv_border_width="5sp"
+                    app:riv_corner_radius="@dimen/img_size_x_large"
                     app:riv_oval="false" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_share"
-                    style="@style/Material_Text"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:onClick="share"
-                    android:text="@string/txt_share"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    tools:ignore="RelativeOverlap" />
-
 
             </RelativeLayout>
 
@@ -85,32 +83,131 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:paddingBottom="@dimen/height_panel"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/padding_large">
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/padding_large"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/padding_large"
+                        android:paddingEnd="@dimen/padding_large">
+
+                        <TextView
+                            android:id="@+id/txt_user_f_name"
+                            style="@style/Text_Header"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="0dp"
+                            android:text="ASIM"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txt_user_l_name"
+                            style="@style/Text_Header"
+                            android:layout_width="wrap_content"
+                            android:layout_below="@+id/txt_user_f_name"
+                            android:layout_marginTop="0dp"
+                            android:text="MUGHAL"
+                            android:textStyle="bold" />
 
 
-                <!-- ABOUT ME ===================================================================-->
-                <TextView
-                    android:id="@+id/txt_user_about"
-                    style="@style/Text_Normal"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="@dimen/padding_small"
-                    android:layout_marginBottom="@dimen/padding_tiny"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/padding_large"
-                    android:paddingEnd="@dimen/padding_large"
-                    android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/txt_user_age"
+                            style="@style/Text_Title"
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/back_text_fields"
+                            android:padding="@dimen/padding_tiny"
+                            android:text="Age"
+                            android:textAllCaps="false" />
 
-                <!-- BASIC INFO =================================================================-->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_view_about"
-                    style="@style/Card_Layout">
 
+                    </RelativeLayout>
+
+                    <!-- ABOUT ME ===================================================================-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_tiny"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_about_me"
+                            style="@style/Text_Title"
+                            android:layout_height="@dimen/height_panel"
+                            android:layout_marginTop="0dp"
+                            android:background="@color/light_grey"
+                            android:gravity="start|center_vertical"
+                            android:paddingStart="@dimen/padding_large"
+                            android:paddingEnd="@dimen/padding_large"
+                            android:text="About"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/txt_user_about"
+                            style="@style/Text_Normal"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="@dimen/padding_small"
+                            android:layout_marginBottom="@dimen/padding_tiny"
+                            android:paddingStart="@dimen/padding_large"
+                            android:paddingEnd="@dimen/padding_large" />
+
+                    </LinearLayout>
+
+                    <!-- SKILLS =====================================================================-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_skills"
+                            style="@style/Text_Title"
+                            android:layout_height="@dimen/height_panel"
+                            android:background="@color/light_grey"
+                            android:gravity="start|center_vertical"
+                            android:paddingStart="@dimen/padding_large"
+                            android:paddingEnd="@dimen/padding_large"
+                            android:text="Skills"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/txt_user_skills"
+                            style="@style/Text_Normal"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="@dimen/padding_small"
+                            android:paddingStart="@dimen/padding_large"
+                            android:paddingEnd="@dimen/padding_large"
+                            android:text="No skills added"
+                            android:textColor="@color/colorAccent" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chip_group_user_skills"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/padding_large"
+                            android:layout_marginTop="@dimen/padding_small"
+                            android:layout_marginEnd="@dimen/padding_large"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <!-- BASIC INFO =================================================================-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -119,79 +216,28 @@
                         <TextView
                             android:id="@+id/txt_basic_info"
                             style="@style/Text_Title"
-                            android:layout_height="@dimen/height_button"
-                            android:layout_marginTop="0dp"
+                            android:layout_height="@dimen/height_panel"
                             android:background="@color/light_grey"
                             android:gravity="start|center_vertical"
-                            android:paddingStart="@dimen/padding_small"
-                            android:paddingEnd="@dimen/padding_small"
+                            android:paddingStart="@dimen/padding_large"
+                            android:paddingEnd="@dimen/padding_large"
                             android:text="@string/nav_profile"
                             android:textColor="@color/colorPrimary" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/padding_tiny"
+                            android:layout_marginTop="@dimen/padding_small"
                             android:orientation="horizontal"
-                            android:paddingStart="@dimen/padding_small"
-                            android:paddingEnd="@dimen/padding_small">
+                            android:paddingStart="@dimen/padding_large"
+                            android:paddingEnd="@dimen/padding_large">
 
                             <TextView
-                                android:id="@+id/txt_user_f_name"
                                 style="@style/Text_Normal"
                                 android:layout_width="wrap_content"
                                 android:layout_marginTop="0dp"
+                                android:text="@string/et_hint_dob"
                                 android:textStyle="bold" />
-
-                            <View
-                                android:layout_width="@dimen/line_thickness"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:id="@+id/txt_user_l_name"
-                                style="@style/Text_Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:textStyle="bold" />
-
-                            <View
-                                android:layout_width="@dimen/line_thickness"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                style="@style/Text_Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:text="@string/txt_open_bracket" />
-
-                            <TextView
-                                android:id="@+id/txt_user_age"
-                                style="@style/Text_Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp" />
-
-                            <TextView
-                                style="@style/Text_Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:text="@string/txt_closed_bracket" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/padding_tiny"
-                            android:orientation="horizontal"
-                            android:paddingStart="@dimen/padding_small"
-                            android:paddingEnd="@dimen/padding_small">
-
-                            <TextView
-                                style="@style/Text_Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="0dp"
-                                android:text="@string/et_hint_dob" />
 
                             <TextView
                                 android:id="@+id/txt_user_dob"
@@ -204,11 +250,11 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/padding_tiny"
-                            android:layout_marginBottom="@dimen/padding_tiny"
+                            android:layout_marginTop="@dimen/text_margin"
+                            android:layout_marginBottom="@dimen/text_margin"
                             android:orientation="horizontal"
-                            android:paddingStart="@dimen/padding_small"
-                            android:paddingEnd="@dimen/padding_small">
+                            android:paddingStart="@dimen/padding_large"
+                            android:paddingEnd="@dimen/padding_large">
 
                             <TextView
                                 style="@style/Text_Normal"
@@ -216,7 +262,8 @@
                                 android:layout_marginTop="0dp"
                                 android:paddingStart="0dp"
                                 android:paddingEnd="@dimen/padding_tiny"
-                                android:text="@string/txt_gender" />
+                                android:text="@string/txt_gender"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/txt_user_gender"
@@ -229,67 +276,67 @@
 
                     </LinearLayout>
 
-                </androidx.cardview.widget.CardView>
+                    <!-- EDUCATION EXPERIENCE =======================================================-->
+                    <TextView
+                        android:id="@+id/txt_education_edit"
+                        style="@style/Text_Title"
+                        android:layout_height="@dimen/height_panel"
+                        android:layout_marginTop="@dimen/padding_tiny"
+                        android:background="@color/light_grey"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="@dimen/padding_large"
+                        android:paddingEnd="@dimen/padding_large"
+                        android:text="@string/nav_education"
+                        android:textColor="@color/colorPrimary" />
 
+                    <LinearLayout
+                        android:id="@+id/ll_fragment_education"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
 
-                <!-- EDUCATION EXPERIENCE =======================================================-->
-                <TextView
-                    android:id="@+id/txt_title_education"
-                    style="@style/Text_Title"
-                    android:layout_height="@dimen/height_button"
-                    android:layout_marginTop="@dimen/padding_small"
-                    android:background="@color/light_grey"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="@dimen/padding_large"
-                    android:paddingEnd="@dimen/padding_large"
-                    android:text="@string/nav_education"
-                    android:textColor="@color/colorPrimary" />
+                    <!-- WORK EXPERIENCE ============================================================-->
+                    <TextView
+                        android:id="@+id/txt_work_edit"
+                        style="@style/Text_Title"
+                        android:layout_height="@dimen/height_panel"
+                        android:layout_marginTop="@dimen/padding_tiny"
+                        android:background="@color/light_grey"
+                        android:gravity="start|center_vertical"
 
-                <LinearLayout
-                    android:id="@+id/ll_education"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                        android:paddingStart="@dimen/padding_large"
+                        android:paddingEnd="@dimen/padding_large"
+                        android:text="@string/nav_work"
+                        android:textColor="@color/colorPrimary" />
 
+                    <LinearLayout
+                        android:id="@+id/ll_fragment_work"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
 
-                <!-- WORK EXPERIENCE ============================================================-->
-                <TextView
-                    android:id="@+id/txt_title_work"
-                    style="@style/Text_Title"
-                    android:layout_height="@dimen/height_button"
-                    android:layout_marginTop="@dimen/padding_small"
-                    android:background="@color/light_grey"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="@dimen/padding_large"
-                    android:paddingEnd="@dimen/padding_large"
-                    android:text="@string/nav_work"
-                    android:textColor="@color/colorPrimary" />
+                    <!-- DOCUMENTS ==================================================================-->
+                    <TextView
+                        android:id="@+id/txt_documents_edit"
+                        style="@style/Text_Title"
+                        android:layout_height="@dimen/height_panel"
+                        android:layout_marginTop="@dimen/padding_tiny"
+                        android:background="@color/light_grey"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="@dimen/padding_large"
+                        android:paddingEnd="@dimen/padding_large"
+                        android:text="@string/nav_documents"
+                        android:textColor="@color/colorPrimary" />
 
-                <LinearLayout
-                    android:id="@+id/ll_work"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                    <LinearLayout
+                        android:id="@+id/ll_fragment_documents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
 
+                </LinearLayout>
 
-                <!-- DOCUMENTS ==================================================================-->
-                <TextView
-                    android:id="@+id/txt_title_documents"
-                    style="@style/Text_Title"
-                    android:layout_height="@dimen/height_button"
-                    android:layout_marginTop="@dimen/padding_small"
-                    android:background="@color/light_grey"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="@dimen/padding_large"
-                    android:paddingEnd="@dimen/padding_large"
-                    android:text="@string/nav_documents"
-                    android:textColor="@color/colorPrimary" />
-
-                <LinearLayout
-                    android:id="@+id/ll_documents"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                <include layout="@layout/list_item_none" />
 
             </LinearLayout>
 
@@ -298,12 +345,13 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_message"
         android:layout_width="wrap_content"
-        android:layout_margin="@dimen/padding_small"
+        android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        app:srcCompat="@drawable/ic_my_messages"
-        android:tint="@color/white"
+        android:layout_margin="@dimen/padding_small"
         android:onClick="startConversation"
-        android:layout_height="wrap_content" />
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_my_messages" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

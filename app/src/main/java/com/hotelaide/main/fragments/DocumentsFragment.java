@@ -14,7 +14,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hotelaide.R;
 import com.hotelaide.main.activities.PdfViewActivity;
@@ -25,17 +29,12 @@ import com.hotelaide.utils.HelpersAsync;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
-import java.util.ArrayList;
-import java.util.regex.Pattern;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -60,8 +59,8 @@ public class DocumentsFragment extends Fragment {
             INT_REFRESH_REQUEST_CODE = 4565;
 
     private FloatingActionButton
+            btn_refresh,
             btn_add;
-    private MaterialButton btn_refresh;
     private TextView
             txt_no_results;
 
@@ -164,7 +163,7 @@ public class DocumentsFragment extends Fragment {
         txt_no_results.setText("No Documents uploaded");
 
         recycler_view = root_view.findViewById(R.id.recycler_view);
-        adapter = new DocumentAdapter(model_list);
+        adapter = new DocumentAdapter(model_list, isEditMode);
         recycler_view.setAdapter(adapter);
         recycler_view.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

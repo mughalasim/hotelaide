@@ -47,7 +47,7 @@
                         android:layout_marginTop="0dp"
                         android:maxLines="1"
                         android:text="@string/app_name"
-                        android:textSize="@dimen/text_size_medium"
+                        android:textSize="@dimen/text_size_normal"
                         android:textStyle="bold" />
 
                     <TextView
@@ -64,7 +64,7 @@
                         android:layout_marginTop="0dp"
                         android:maxLines="1"
                         android:text="@string/app_name"
-                        android:textSize="@dimen/text_size_medium"
+                        android:textSize="@dimen/text_size_normal"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -78,9 +78,18 @@
                     android:gravity="start"
                     android:maxLines="1"
                     android:text="@string/app_name"
-                    android:textSize="@dimen/text_size_medium" />
+                    android:textSize="@dimen/text_size_small" />
 
             </LinearLayout>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/img_user_status"
+                android:layout_width="@dimen/text_size_small"
+                android:layout_height="@dimen/text_size_small"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="@dimen/text_margin"
+                android:src="@color/red"
+                app:riv_corner_radius="@dimen/text_size_small" />
 
 
         </RelativeLayout>

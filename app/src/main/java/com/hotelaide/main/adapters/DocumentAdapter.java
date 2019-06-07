@@ -15,6 +15,9 @@ import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.hotelaide.R;
@@ -26,9 +29,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -40,6 +40,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
     private Context context;
     private Helpers helpers;
     private int final_position = 0;
+    private boolean isEditMode;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private final RoundedImageView
@@ -66,8 +67,9 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
 
     }
 
-    public DocumentAdapter(ArrayList<DocumentModel> document_models) {
+    public DocumentAdapter(ArrayList<DocumentModel> document_models, boolean isEditMode) {
         this.document_models = document_models;
+        this.isEditMode = isEditMode;
     }
 
     @NonNull
@@ -107,7 +109,45 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
             Glide.with(context).load(documentModel.image).into(holder.img_image);
 
             holder.btn_download.setVisibility(View.VISIBLE);
-            holder.btn_delete.setVisibility(View.VISIBLE);
+
+            if (isEditMode) {
+                holder.btn_delete.setVisibility(View.VISIBLE);
+                holder.btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Dialog dialog = new Dialog(context);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setContentView(R.layout.dialog_confirm);
+                        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        final TextView txt_message = dialog.findViewById(R.id.txt_message);
+                        final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
+                        final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                        final TextView txt_title = dialog.findViewById(R.id.txt_title);
+                        txt_title.setText("Delete");
+                        txt_message.setText("You are about to delete " + documentModel.name + " \nAre you sure you wish to proceed?");
+                        btn_confirm.setText(context.getString(R.string.txt_yes));
+                        btn_confirm.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                helpers.toastMessage("Deleting document, please wait...");
+                                HelpersAsync.asyncDeleteDocument(documentModel.id);
+                                dialog.cancel();
+                            }
+                        });
+                        btn_cancel.setVisibility(View.VISIBLE);
+                        btn_cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+                        dialog.show();
+
+                    }
+                });
+            } else {
+                holder.btn_delete.setVisibility(View.GONE);
+            }
 
             holder.btn_download.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,7 +171,7 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
                                 DownloadManager.Request r = new DownloadManager.Request(Uri.parse(documentModel.file_url));
                                 r.setTitle(context.getString(R.string.app_name));
                                 r.setDescription("Downloading " + documentModel.name);
-                                r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/HotelAide/" + "/" + documentModel.name+ ".pdf");
+                                r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/HotelAide/" + "/" + documentModel.name + ".pdf");
                                 r.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
                                 DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
@@ -148,45 +188,13 @@ public class DocumentAdapter extends RecyclerView.Adapter<DocumentAdapter.ViewHo
                         });
                         dialog.show();
                     } else {
-                        int grantResults[] = {-1, -1, -1};
+                        int [] grantResults = {-1, -1, -1};
                         helpers.myPermissionsDialog(grantResults);
                     }
                 }
             });
 
-            holder.btn_delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Dialog dialog = new Dialog(context);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_confirm);
-                    Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    final TextView txt_message = dialog.findViewById(R.id.txt_message);
-                    final MaterialButton btn_confirm = dialog.findViewById(R.id.btn_confirm);
-                    final MaterialButton btn_cancel = dialog.findViewById(R.id.btn_cancel);
-                    final TextView txt_title = dialog.findViewById(R.id.txt_title);
-                    txt_title.setText("Delete");
-                    txt_message.setText("You are about to delete " + documentModel.name + " \nAre you sure you wish to proceed?");
-                    btn_confirm.setText(context.getString(R.string.txt_yes));
-                    btn_confirm.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            helpers.toastMessage("Deleting document, please wait...");
-                            HelpersAsync.asyncDeleteDocument(documentModel.id);
-                            dialog.cancel();
-                        }
-                    });
-                    btn_cancel.setVisibility(View.VISIBLE);
-                    btn_cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                        }
-                    });
-                    dialog.show();
 
-                }
-            });
 
         }
     }
