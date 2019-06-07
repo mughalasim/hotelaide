@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.hotelaide.R;
@@ -17,9 +20,6 @@ import com.hotelaide.utils.HelpersAsync;
 
 import java.io.InputStream;
 import java.net.URL;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 
 public class GalleryViewFragment extends Fragment {
@@ -80,7 +80,8 @@ public class GalleryViewFragment extends Fragment {
                 InputStream is = new URL(urlOfImage).openStream();
                 logo = BitmapFactory.decodeStream(is);
             } catch (Exception e) { // Catch the download exception
-                e.printStackTrace();
+                Helpers.logThis(Helpers.TAG_LOG, e.toString());
+                image_view.setBackgroundResource(R.drawable.ic_image_box);
             }
             return logo;
         }
@@ -89,6 +90,8 @@ public class GalleryViewFragment extends Fragment {
             try {
                 image_view.setImage(ImageSource.bitmap(result));
             } catch (Exception e) {
+                Helpers.logThis(Helpers.TAG_LOG, e.toString());
+                image_view.setBackgroundResource(R.drawable.ic_image_box);
                 e.printStackTrace();
             }
         }

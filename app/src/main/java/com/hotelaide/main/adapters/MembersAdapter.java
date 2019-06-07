@@ -9,17 +9,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.hotelaide.R;
+import com.hotelaide.main.activities.FindMembersActivity;
 import com.hotelaide.main.activities.MemberProfileActivity;
 import com.hotelaide.main.models.MemberModel;
 import com.hotelaide.utils.Helpers;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
+import static com.hotelaide.main.activities.FindMembersActivity.CURRENT_PAGE;
+import static com.hotelaide.main.activities.FindMembersActivity.LAST_PAGE;
 
 public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHolder> {
     private final ArrayList<MemberModel> member_models;
@@ -96,11 +100,11 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
                 holder.txt_about_me.setText("");
             }
 
-            if (member_model.avatar != null && !member_model.avatar.equals("")) {
-                Glide.with(context).load(member_model.avatar).into(holder.img_avatar);
-            } else {
-                Glide.with(context).load("https://live-hotelaide.nyc3.digitaloceanspaces.com/12/300x300.png").into(holder.img_avatar);
-            }
+            Glide.with(context)
+                    .load(member_model.avatar)
+                    .placeholder(R.drawable.ic_profile)
+                    .into(holder.img_avatar);
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -111,6 +115,13 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
                     }
                 }
             });
+
+            if (position == (getItemCount() - 1)) {
+                if (CURRENT_PAGE < LAST_PAGE) {
+                    Helpers.logThis("MEMBERS ADAPTER", "LAST PAGE REACHED");
+                    ((FindMembersActivity)context).loadMoreResults();
+                }
+            }
         }
     }
 

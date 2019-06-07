@@ -9,20 +9,15 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
@@ -33,7 +28,6 @@ import com.hotelaide.R;
 import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.fragments.DocumentsFragment;
 import com.hotelaide.main.fragments.ExperienceViewFragment;
-import com.hotelaide.main.fragments.ProfileUpdateFragment;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
@@ -67,7 +61,6 @@ import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_DOCUMENTS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_EDUCATION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_PASS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_WORK;
-import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE;
 import static com.hotelaide.utils.StaticVariables.INT_PERMISSIONS_CAMERA;
 import static com.hotelaide.utils.StaticVariables.STR_SHARE_LINK;
 import static com.hotelaide.utils.StaticVariables.USER_ABOUT;
@@ -301,8 +294,13 @@ public class ProfileActivity extends ParentActivity {
                     "Profile Picture",
                     "Help your employer find you be uploading a profile picture here");
         }
-        Glide.with(this).load(SharedPrefs.getString(USER_IMG_AVATAR)).into(img_avatar);
-        Glide.with(this).load(SharedPrefs.getString(USER_IMG_BANNER)).into(img_banner);
+        Glide.with(this)
+                .load(SharedPrefs.getString(USER_IMG_AVATAR))
+                .placeholder(R.drawable.ic_profile)
+                .into(img_avatar);
+        Glide.with(this)
+                .load(SharedPrefs.getString(USER_IMG_BANNER))
+                .into(img_banner);
 
         // INFO AND CONTACT DETAILS
         txt_user_f_name.setText(SharedPrefs.getString(USER_F_NAME).concat(" "));

@@ -12,13 +12,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.EstablishmentInterface;
-import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
@@ -26,11 +31,6 @@ import com.hotelaide.utils.SharedPrefs;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -285,7 +285,8 @@ public class JobActivity extends AppCompatActivity {
                             INT_ESTABLISHMENT_ID = establishment_object.getInt("id");
                             txt_establishment_name.setText(establishment_object.getString("name"));
                             STR_BANNER_URL = establishment_object.getString("image");
-                            Glide.with(JobActivity.this).load(STR_BANNER_URL).into(img_banner);
+                            Glide.with(JobActivity.this).load(STR_BANNER_URL)
+                                    .placeholder(R.drawable.ic_home).into(img_banner);
                             txt_job_location.setText(establishment_object.getString("full_address"));
                         }
 

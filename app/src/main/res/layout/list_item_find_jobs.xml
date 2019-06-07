@@ -19,11 +19,11 @@
                 android:layout_width="@dimen/img_size_medium_large"
                 android:layout_height="@dimen/img_size_medium_large"
                 android:scaleType="centerCrop"
-                app:riv_border_color="@color/dark_grey"
-                app:riv_border_width="@dimen/line_thickness"
+                app:riv_border_color="@color/light_grey"
+                app:riv_border_width="@dimen/text_margin"
                 android:layout_centerVertical="true"
                 app:riv_corner_radius="@dimen/img_size_medium_large"
-                android:src="@color/light_grey"
+                android:src="@color/grey"
                 android:contentDescription="@string/app_name" />
 
             <LinearLayout

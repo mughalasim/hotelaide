@@ -5,8 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -19,6 +17,19 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
@@ -33,7 +44,6 @@ import com.google.gson.Gson;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.services.UserIsOnlineService;
-import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
@@ -43,35 +53,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
-import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
 import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
 import static com.hotelaide.utils.StaticVariables.USER_EMAIL;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
-import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_AVATAR;
 import static com.hotelaide.utils.StaticVariables.USER_IMG_BANNER;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
-import static com.hotelaide.utils.StaticVariables.db;
 
 public class ParentActivity extends FragmentActivity implements
         NavigationView.OnNavigationItemSelectedListener {
@@ -160,8 +154,15 @@ public class ParentActivity extends FragmentActivity implements
 
     void updateDrawer() {
         nav_user_name.setText(SharedPrefs.getString(USER_F_NAME).concat(" ").concat(SharedPrefs.getString(USER_L_NAME)));
-        Glide.with(this).load(SharedPrefs.getString(USER_IMG_AVATAR)).into(nav_img_user_pic);
-        Glide.with(this).load(SharedPrefs.getString(USER_IMG_BANNER)).into(nav_user_banner);
+        Glide.with(this)
+                .load(SharedPrefs.getString(USER_IMG_AVATAR))
+                .placeholder(R.drawable.ic_profile)
+                .into(nav_img_user_pic);
+
+        Glide.with(this)
+                .load(SharedPrefs.getString(USER_IMG_BANNER))
+                .into(nav_user_banner);
+
         nav_user_email.setText(SharedPrefs.getString(USER_EMAIL));
         nav_img_user_pic.setOnClickListener(new View.OnClickListener() {
             @Override

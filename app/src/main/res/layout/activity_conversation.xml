@@ -71,6 +71,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbarSize="5dp"
         android:layout_marginTop="@dimen/padding_mini"
         android:layout_below="@+id/rl_toolbar" />
 

@@ -13,22 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.gson.JsonObject;
-import com.hotelaide.R;
-import com.hotelaide.interfaces.UserInterface;
-import com.hotelaide.main.fragments.ExperienceViewFragment;
-import com.hotelaide.main.models.ExperienceModel;
-import com.hotelaide.utils.Database;
-import com.hotelaide.utils.Helpers;
-import com.hotelaide.utils.HelpersAsync;
-import com.hotelaide.utils.SharedPrefs;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,6 +21,22 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.gson.JsonObject;
+import com.hotelaide.R;
+import com.hotelaide.interfaces.UserInterface;
+import com.hotelaide.main.fragments.ExperienceViewFragment;
+import com.hotelaide.main.models.ExperienceModel;
+import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.HelpersAsync;
+import com.hotelaide.utils.SharedPrefs;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -297,7 +297,8 @@ public class MemberProfileActivity extends AppCompatActivity {
                         STR_AVATAR_URL = user.getString("avatar");
                         STR_BANNER_URL = user.getString("banner");
 
-                        Glide.with(MemberProfileActivity.this).load(STR_AVATAR_URL).into(img_avatar);
+                        Glide.with(MemberProfileActivity.this).load(STR_AVATAR_URL)
+                                .placeholder(R.drawable.ic_profile).into(img_avatar);
                         Glide.with(MemberProfileActivity.this).load(STR_BANNER_URL).into(img_banner);
 
                         String f_name = user.getString("first_name");

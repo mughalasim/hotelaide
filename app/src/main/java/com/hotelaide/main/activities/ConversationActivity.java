@@ -7,6 +7,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ChildEventListener;
@@ -29,16 +36,8 @@ import org.json.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_ID;
@@ -145,7 +144,10 @@ public class ConversationActivity extends AppCompatActivity {
     private void setUpToolBarAndTabs() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         ImageView img_from_pic = findViewById(R.id.img_from_pic);
-        Glide.with(this).load(STR_FROM_PIC_URL).into(img_from_pic);
+        Glide.with(this)
+                .load(STR_FROM_PIC_URL)
+                .placeholder(R.drawable.ic_profile)
+                .into(img_from_pic);
         img_from_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

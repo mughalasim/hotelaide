@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
@@ -25,13 +28,9 @@ import com.hotelaide.main.activities.MemberProfileActivity;
 import com.hotelaide.main.models.MessageModel;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.SharedPrefs;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import static com.hotelaide.utils.StaticVariables.USER_ID;
 
@@ -108,7 +107,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 holder.txt_message_counter.setText(String.valueOf(messageModel.unread_messages));
             }
 
-            Glide.with(context).load(messageModel.from_pic_url).into(holder.img_from_pic);
+            Glide.with(context)
+                    .load(messageModel.from_pic_url)
+                    .placeholder(R.drawable.ic_profile)
+                    .into(holder.img_from_pic);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
