@@ -108,7 +108,7 @@ public class FindJobsActivity extends ParentActivity {
 
         setTextWatcher();
 
-        searchDatabase();
+        search();
 
         clearAllFilters();
 
@@ -164,10 +164,10 @@ public class FindJobsActivity extends ParentActivity {
 
 
         // SEARCH FUNCTIONALITY --------------------------------------------------------------------
-        recycler_view = findViewById(R.id.recycler_view);
         adapter = new FindJobsAdapter(model_list, getString(R.string.error_no_jobs_found));
-        recycler_view.setAdapter(adapter);
+        recycler_view = findViewById(R.id.recycler_view);
         recycler_view.setHasFixedSize(false);
+        recycler_view.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(FindJobsActivity.this);
         recycler_view.setLayoutManager(layoutManager);
 
@@ -211,11 +211,7 @@ public class FindJobsActivity extends ParentActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (helpers.validateInternetConnection()) {
-                    searchOnline();
-                } else {
-                    searchDatabase();
-                }
+                search();
             }
         });
     }
@@ -243,6 +239,20 @@ public class FindJobsActivity extends ParentActivity {
             }
         });
 
+        sliding_panel.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                if (newState == SlidingUpPanelLayout.PanelState.DRAGGING) {
+                    search();
+                }
+            }
+        });
+
         setAllListenersForFilter(spinner_location, txt_filter_location);
         setAllListenersForFilter(spinner_category, txt_filter_category);
         setAllListenersForFilter(spinner_type, txt_filter_type);
@@ -260,11 +270,6 @@ public class FindJobsActivity extends ParentActivity {
                 } else {
                     chip.setText(spinner.getSelectedItem().toString());
                     chip.setVisibility(View.VISIBLE);
-                }
-                if (helpers.validateInternetConnection()) {
-                    searchOnline();
-                } else {
-                    searchDatabase();
                 }
             }
 
@@ -290,25 +295,6 @@ public class FindJobsActivity extends ParentActivity {
         query = new Query();
         query.setAttributesToRetrieve("id", "title", "posted_on", "establishment.id", "establishment.image", "establishment.full_address");
         query.setHitsPerPage(HITS_PER_PAGE);
-    }
-
-    private void searchOnline() {
-        if (spinner_location.getSelectedItemPosition() != 0) {
-            setFilter(BuildConfig.FILTER_COUNTY, spinner_location);
-        } else if (spinner_category.getSelectedItemPosition() != 0) {
-            setFilter(BuildConfig.FILTER_CATEGORY, spinner_category);
-        } else if (spinner_type.getSelectedItemPosition() != 0) {
-            setFilter(BuildConfig.FILTER_JOB_TYPE, spinner_type);
-        } else {
-            query.setFilters("");
-        }
-
-        if (et_search.getText().toString().length() > 0) {
-            query.setQuery(et_search.getText().toString());
-        } else {
-            query.setQuery("");
-        }
-        index.searchAsync(query, completionHandler);
     }
 
     private void setFilter(String filter_type, Spinner spinner) {
@@ -344,7 +330,6 @@ public class FindJobsActivity extends ParentActivity {
     }
 
     public void loadMoreResults() {
-        helpers.toastMessage("Loading...");
         Query loadMoreQuery = new Query(query);
         loadMoreQuery.setPage(CURRENT_PAGE + 1);
         index.searchAsync(loadMoreQuery, new CompletionHandler() {
@@ -399,18 +384,36 @@ public class FindJobsActivity extends ParentActivity {
         spinner_category.setSelection(0);
     }
 
-    private void searchDatabase() {
-        model_list.clear();
-        if (spinner_location.getSelectedItemPosition() != 0) {
-            model_list = db.getAllJobModelsBySearch(helpers.fetchFromEditText(et_search), spinner_location.getSelectedItem().toString());
+    private void search() {
+        if (helpers.validateInternetConnection()) {
+            if (spinner_location.getSelectedItemPosition() != 0) {
+                setFilter(BuildConfig.FILTER_COUNTY, spinner_location);
+            } else if (spinner_category.getSelectedItemPosition() != 0) {
+                setFilter(BuildConfig.FILTER_CATEGORY, spinner_category);
+            } else if (spinner_type.getSelectedItemPosition() != 0) {
+                setFilter(BuildConfig.FILTER_JOB_TYPE, spinner_type);
+            } else {
+                query.setFilters("");
+            }
+
+            if (et_search.getText().toString().length() > 0) {
+                query.setQuery(et_search.getText().toString());
+            } else {
+                query.setQuery("");
+            }
+            index.searchAsync(query, completionHandler);
         } else {
-            model_list = db.getAllJobModelsBySearch(helpers.fetchFromEditText(et_search), "");
-        }
-        recycler_view.invalidate();
-        adapter.updateData(model_list);
-        adapter.notifyDataSetChanged();
-        if (model_list.size() < 1) {
-            noListItems();
+            recycler_view.invalidate();
+            model_list.clear();
+            if (spinner_location.getSelectedItemPosition() != 0) {
+                model_list = db.getAllJobModelsBySearch(helpers.fetchFromEditText(et_search), spinner_location.getSelectedItem().toString());
+            } else {
+                model_list = db.getAllJobModelsBySearch(helpers.fetchFromEditText(et_search), "");
+            }
+            if (model_list.size() < 1) {
+                noListItems();
+            }
+            adapter.notifyDataSetChanged();
         }
     }
 

@@ -6,12 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.gson.JsonObject;
 import com.hotelaide.R;
 import com.hotelaide.interfaces.EstablishmentInterface;
 import com.hotelaide.main.adapters.FindJobsAdapter;
 import com.hotelaide.main.models.JobModel;
-import com.hotelaide.utils.Database;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
@@ -22,11 +27,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,8 +82,6 @@ public class FilteredJobsFragment extends Fragment {
 
                     setListeners();
 
-                    asyncGetAppliedJobs();
-
                     HelpersAsync.setTrackerPage(FILTER_TYPE);
 
                 }
@@ -100,7 +98,7 @@ public class FilteredJobsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        populateAppliedJobsFromDB();
+        asyncGetAppliedJobs();
     }
 
     // BASIC FUNCTIONS =============================================================================
@@ -125,21 +123,30 @@ public class FilteredJobsFragment extends Fragment {
         });
     }
 
+    private void populateJobs() {
+        if (helpers.validateInternetConnection()) {
+            if (model_list.size() < 1) {
+                noListItems();
+            } else {
+                adapter.notifyDataSetChanged();
+            }
+        } else {
+            recycler_view.invalidate();
+            model_list.clear();
+            model_list = db.getAllFilteredJobs(FILTER_TYPE);
+            if (model_list.size() < 1) {
+                noListItems();
+            } else {
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
     private void noListItems() {
         recycler_view.invalidate();
         model_list.clear();
         model_list.add(new JobModel());
-        adapter.updateData(model_list);
-    }
-
-    private void populateAppliedJobsFromDB() {
-        model_list.clear();
-        model_list = db.getAllFilteredJobs(FILTER_TYPE);
-        recycler_view.invalidate();
-        adapter.updateData(model_list);
-        if (model_list.size() <= 0) {
-            noListItems();
-        }
+        adapter.notifyDataSetChanged();
     }
 
     // ASYNC FETCH ALL JOBS ========================================================================
@@ -176,10 +183,10 @@ public class FilteredJobsFragment extends Fragment {
                         JSONObject data;
                         JSONArray applications;
 
-                        if(object instanceof JSONObject){
+                        if (object instanceof JSONObject) {
                             data = main.getJSONObject("data");
                             applications = data.getJSONArray("applications");
-                        } else{
+                        } else {
                             applications = main.getJSONArray("data");
                         }
 
@@ -190,14 +197,11 @@ public class FilteredJobsFragment extends Fragment {
                             model_list.add(db.setJobFromJson(hit_object, FILTER_TYPE));
                         }
 
-                        if (model_list.size() < 1) {
-                            noListItems();
-                        }
-
-                        adapter.updateData(model_list);
+                        populateJobs();
 
                     } catch (JSONException e) {
                         helpers.toastMessage(getString(R.string.error_server));
+                        populateJobs();
                         e.printStackTrace();
                     }
                 }
@@ -213,6 +217,7 @@ public class FilteredJobsFragment extends Fragment {
                     } else {
                         helpers.toastMessage(getString(R.string.error_connection));
                     }
+                    populateJobs();
                 }
             }
         });

@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.chip.Chip;
 import com.hotelaide.R;
 import com.hotelaide.main.activities.FindJobsActivity;
 import com.hotelaide.main.activities.JobActivity;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 
 import static com.hotelaide.main.activities.FindJobsActivity.CURRENT_PAGE;
 import static com.hotelaide.main.activities.FindJobsActivity.LAST_PAGE;
+import static com.hotelaide.utils.StaticVariables.FILTER_TYPE_APPLIED;
+import static com.hotelaide.utils.StaticVariables.db;
 
 public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHolder> {
     private final ArrayList<JobModel> jobModels;
@@ -45,15 +48,18 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
                 txt_posted_on;
         final ImageView
                 img_image;
+        final Chip chip_job_applied;
 
         ViewHolder(View v) {
             super(v);
-            txt_no_results = v.findViewById(R.id.txt_no_results);
+            img_image = v.findViewById(R.id.img_image);
             txt_name = v.findViewById(R.id.txt_name);
             txt_location = v.findViewById(R.id.txt_location);
             txt_posted_on = v.findViewById(R.id.txt_posted_on);
-            img_image = v.findViewById(R.id.img_image);
+            chip_job_applied = v.findViewById(R.id.chip_job_applied);
+
             no_list_item = v.findViewById(R.id.rl_no_list_items);
+            txt_no_results = v.findViewById(R.id.txt_no_results);
             list_item = v.findViewById(R.id.list_item);
         }
 
@@ -107,10 +113,16 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
                 }
             });
 
+            if (db.isFilteredJob(jobModel.id, FILTER_TYPE_APPLIED)) {
+                holder.chip_job_applied.setVisibility(View.VISIBLE);
+            } else {
+                holder.chip_job_applied.setVisibility(View.GONE);
+            }
+
             if (context instanceof FindJobsActivity && position == (getItemCount() - 1)) {
                 if (CURRENT_PAGE < LAST_PAGE) {
                     Helpers.logThis("MEMBERS ADAPTER", "LAST PAGE REACHED");
-                    ((FindJobsActivity)context).loadMoreResults();
+                    ((FindJobsActivity) context).loadMoreResults();
                 }
             }
         }
@@ -120,11 +132,4 @@ public class FindJobsAdapter extends RecyclerView.Adapter<FindJobsAdapter.ViewHo
     public int getItemCount() {
         return jobModels.size();
     }
-
-    public void updateData(ArrayList<JobModel> view_model) {
-        jobModels.clear();
-        jobModels.addAll(view_model);
-        notifyDataSetChanged();
-    }
-
 }

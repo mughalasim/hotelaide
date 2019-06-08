@@ -164,10 +164,4 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
         return member_models.size();
     }
 
-    public void updateData(ArrayList<MemberModel> view_model) {
-        member_models.clear();
-        member_models.addAll(view_model);
-        notifyDataSetChanged();
-    }
-
 }

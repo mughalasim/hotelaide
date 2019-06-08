@@ -30,7 +30,7 @@
                 android:id="@+id/top_panel"
                 android:layout_toEndOf="@+id/img_image"
                 android:layout_width="match_parent"
-                android:layout_toStartOf="@+id/chip_job_type"
+                android:layout_toStartOf="@+id/chip_panel"
                 android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/padding_mini"
@@ -62,14 +62,34 @@
 
             </LinearLayout>
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_job_type"
-                android:text="Full-time"
+            <LinearLayout
+                android:id="@+id/chip_panel"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:textAppearance="@style/Text_Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_job_type"
+                    android:text="Full-time"
+                    android:textAppearance="@style/Text_Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_job_applied"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/text_margin"
+                    android:text="Applied"
+                    app:chipBackgroundColor="@color/green"
+                    android:textColor="@color/white"
+                    android:textAppearance="@style/Text_Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 

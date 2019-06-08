@@ -33,12 +33,12 @@
                     android:id="@+id/txt_job_name"
                     style="@style/Text_Header"
                     android:layout_alignParentBottom="true"
-                    android:paddingStart="@dimen/padding_medium"
-                    android:paddingEnd="@dimen/padding_medium"
-                    android:gravity="start"
                     android:background="@color/dim"
-                    android:paddingBottom="@dimen/padding_tiny"
+                    android:gravity="start"
+                    android:paddingStart="@dimen/padding_large"
                     android:paddingTop="@dimen/padding_tiny"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:paddingBottom="@dimen/padding_tiny"
                     android:textColor="@color/white" />
 
             </RelativeLayout>
@@ -55,7 +55,6 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -68,153 +67,145 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <!-- BASIC INFO =================================================================-->
+                <TextView
+                    style="@style/Text_Title"
+                    android:layout_height="@dimen/height_panel"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/light_grey"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/padding_large"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:text="Basic Info" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/padding_medium"
-                    android:layout_marginTop="@dimen/padding_medium"
-                    android:layout_marginEnd="@dimen/padding_small"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginStart="@dimen/padding_large"
+                    android:layout_marginEnd="@dimen/padding_large"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/padding_mini"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/txt_job_location"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="0dp"
+                        android:drawableStart="@drawable/ic_location"
+                        android:maxLines="2"
+                        android:textColor="@color/colorPrimary" />
 
-                        <TextView
-                            android:id="@+id/txt_job_location"
-                            style="@style/Text_Small"
-                            android:layout_marginTop="0dp"
-                            android:textColor="@color/colorPrimary"
-                            android:drawableStart="@drawable/ic_location"
-                            android:maxLines="2" />
+                    <TextView
+                        android:id="@+id/txt_job_post_date"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="@dimen/text_margin"
+                        android:drawableStart="@drawable/ic_posted_on"
+                        android:maxLines="1"
+                        android:textColor="@color/colorPrimary" />
 
-                        <TextView
-                            android:id="@+id/txt_job_post_date"
-                            style="@style/Text_Small"
-                            android:layout_marginTop="@dimen/padding_tiny"
-                            android:textColor="@color/colorPrimary"
-                            android:drawableStart="@drawable/ic_posted_on"
-                            android:maxLines="1" />
+                    <TextView
+                        android:id="@+id/txt_job_end_date"
+                        style="@style/Text_Normal"
+                        android:layout_marginTop="@dimen/text_margin"
+                        android:drawableStart="@drawable/ic_expires"
+                        android:maxLines="1"
+                        android:textColor="@color/red" />
 
-                        <TextView
-                            android:id="@+id/txt_job_end_date"
-                            style="@style/Text_Small"
-                            android:layout_marginTop="@dimen/padding_tiny"
-                            android:textColor="@color/red"
-                            android:drawableStart="@drawable/ic_expires"
-                            android:maxLines="1" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <!-- APPLY BUTTON ===========================================================-->
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_apply"
-                            style="@style/Material_Button_Yes"
-                            android:layout_width="match_parent"
-                            android:onClick="applyJob"
-                            android:text="@string/txt_apply" />
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
 
-                <!-- BASIC INFO =====================================================================-->
-                <androidx.cardview.widget.CardView style="@style/Card_Layout">
+                <!-- DESCRIPTION ================================================================-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                    <TextView
+                        style="@style/Text_Title"
+                        android:layout_height="@dimen/height_panel"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/light_grey"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="@dimen/padding_large"
+                        android:paddingEnd="@dimen/padding_large"
+                        android:text="@string/txt_description" />
 
-                        <TextView
-                            style="@style/Text_Title"
-                            android:layout_height="@dimen/height_button"
-                            android:layout_marginTop="0dp"
-                            android:background="@color/light_grey"
-                            android:gravity="start|center_vertical"
-                            android:paddingStart="@dimen/padding_small"
-                            android:paddingEnd="@dimen/padding_small"
-                            android:text="@string/txt_description" />
+                    <TextView
+                        android:id="@+id/txt_job_description"
+                        style="@style/Text_Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:padding="@dimen/padding_large"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/txt_job_description"
-                            style="@style/Text_Normal"
-                            android:layout_width="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:padding="@dimen/padding_small"
-                            android:textStyle="bold" />
+                </LinearLayout>
 
-                    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                </androidx.cardview.widget.CardView>
+                    <TextView
+                        style="@style/Text_Title"
+                        android:layout_height="@dimen/height_panel"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/light_grey"
+                        android:gravity="start|center_vertical"
+                        android:paddingStart="@dimen/padding_large"
+                        android:paddingEnd="@dimen/padding_large"
+                        android:text="@string/txt_requirements" />
 
+                    <TextView
+                        android:id="@+id/txt_job_requirements"
+                        style="@style/Text_Normal"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:padding="@dimen/padding_large"
+                        android:textStyle="bold" />
 
-                <androidx.cardview.widget.CardView style="@style/Card_Layout">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/Text_Title"
-                            android:layout_height="@dimen/height_button"
-                            android:layout_marginTop="0dp"
-                            android:background="@color/light_grey"
-                            android:gravity="start|center_vertical"
-                            android:paddingStart="@dimen/padding_small"
-                            android:paddingEnd="@dimen/padding_small"
-                            android:text="@string/txt_requirements" />
-
-                        <TextView
-                            android:id="@+id/txt_job_requirements"
-                            style="@style/Text_Normal"
-                            android:layout_width="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:padding="@dimen/padding_small"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/txt_establishment_name"
-                    style="@style/Text_Normal"
-                    android:layout_width="match_parent"
-                    android:paddingTop="@dimen/padding_tiny"
-                    android:paddingBottom="@dimen/padding_tiny"
-                    android:layout_gravity="center"
-                    android:text="@string/app_name"
-                    android:textAllCaps="true"
-                    android:gravity="center"
-                    android:background="@color/dim"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    style="@style/Text_Title"
+                    android:layout_height="@dimen/height_panel"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/light_grey"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/padding_large"
+                    android:paddingEnd="@dimen/padding_large"
+                    android:text="@string/app_name" />
 
-                <com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
-                    style="@style/Material_Button_Yes"
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginStart="@dimen/padding_medium"
-                    android:layout_marginTop="@dimen/padding_medium"
-                    android:layout_marginEnd="@dimen/padding_medium"
-                    android:layout_marginBottom="@dimen/padding_medium"
-                    android:onClick="viewEstablishment"
-                    android:text="@string/txt_view_establishment" />
+                    android:layout_height="@dimen/height_button"
+                    android:layout_marginStart="@dimen/padding_large"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginEnd="@dimen/padding_large"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Material_Button_Yes"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:onClick="viewEstablishment"
+                        android:text="@string/txt_view_establishment" />
+
+                    <View
+                        android:layout_width="@dimen/padding_small"
+                        android:layout_height="match_parent" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_apply"
+                        style="@style/Material_Button_Yes"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:onClick="applyJob"
+                        android:text="@string/txt_apply" />
+
+                </LinearLayout>
 
 
             </LinearLayout>
