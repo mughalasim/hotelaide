@@ -198,6 +198,7 @@ public class Helpers {
 
     public static void updateUserOnlineStatus(Object status) {
         if (SharedPrefs.getInt(USER_ID) != 0) {
+            MyApplication.initFireBase();
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference parent_ref = database.getReference(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.USERS_STATUS_URL);
             parent_ref.setValue(status);
