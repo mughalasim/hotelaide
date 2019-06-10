@@ -1,28 +1,40 @@
 # HotelAide
-**Designed for the  hospitality industry.** 
 
-The App that connects the jobseeker to the employer effortlessly in Kenya's growing Hospitality ecosystem.
-Employers and Job seekers in the Hotel industry are all welcome to join.
+Designed for the  hospitality industry
 
-Simple yet elegant using android latest Material Design 2 allows users to easily sign up with google and/or facebook and start looking for a potential employers.
-Users will be categorized into two groups, but this app will focus on the main group ie Job Seekers
+![](https://static1.squarespace.com/static/55e50bdfe4b0a8e8abf3e82c/t/5b57434ef950b7329f3f65f0/1532445581749/global-playstore.png)
+>**Get it on the playstore [here](https://play.google.com/store/apps/details?id=com.hotelaide)**
 
-- **The Job Seeker**
-    - Can get a basic blog feed of whats new in the hotel Industry
-    - Have access to a dashboard that will show them recent notifications and messages from potential employers
-    - Can manage, create and update his/her profile in the following areas
-        - basic information
-        - work experience
-        - educational experience
-        - Documents and certificates
-    - Search for potential job vacancies for which they qualify for
-    - Receive messages and notifications on potential employers that are interested or have been shortlisted
-    - Share their profile and activities on their respective social media accounts
+The App that connects the job seeker to the employer effortlessly in Kenya's growing Hospitality ecosystem.
 
-Like and follow our page on Facebook and get updates on project progress
+Employers and job seekers in the hotel industry are all welcome to join.
 
-https://www.facebook.com/hotelAIDE/
+Simple yet elegant using android latest Material Design 2 allows users to easily sign up with google and/or facebook in order to instantly start searching for a potential employers.
 
-https://www.hotelaide.com
+This app will focus on the job seekers
+
+>**The Job Seeker**
+    
+   1. Can get a basic rss feed on whats new in the hotel industry
+   2. Have access to a dashboard that shows recent notifications and messages from potential employers
+   3. Can manage, create and update a profile in the following areas
+        - [ ] Basic information
+        - [ ] Skills
+        - [ ] Profile pictures and banners
+        - [ ] Work experience
+        - [ ] Educational experience
+        - [ ] Documents and certificates in PDF format
+    4. Search for potential job vacancies that match your qualifications
+    5. Receive messages and notifications on potential employers that are interested 
+    6. Get shortlisted for a job
+    7. Share profile and activities on respective social media accounts
+    8. Search for other members
+    9. Message other members
+
+Like and follow us on Facebook and get updates on project progress
+
+>**<https://www.facebook.com/hotelAIDE/>**
+
+>**<https://www.hotelaide.com>**
 
  
