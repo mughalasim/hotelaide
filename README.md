@@ -2,10 +2,18 @@
 
 Designed for the  hospitality industry
 
-![](https://static1.squarespace.com/static/55e50bdfe4b0a8e8abf3e82c/t/5b57434ef950b7329f3f65f0/1532445581749/global-playstore.png)
->**Get it on the playstore [here](https://play.google.com/store/apps/details?id=com.hotelaide)**
+[![](images/google.png)](https://play.google.com/store/apps/details?id=com.hotelaide)
 
-The App that connects the job seeker to the employer effortlessly in Kenya's growing Hospitality ecosystem.
+>**Get it on the [Google Play Store](https://play.google.com/store/apps/details?id=com.hotelaide)**
+
+![](images/screen1.png) 
+![](images/screen2.png) 
+![](images/screen3.png) 
+![](images/screen4.png) 
+![](images/screen5.png) 
+
+
+Connects the job seeker to the employer effortlessly in Kenya's growing Hospitality ecosystem.
 
 Employers and job seekers in the hotel industry are all welcome to join.
 
