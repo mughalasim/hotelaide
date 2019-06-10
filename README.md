@@ -4,9 +4,8 @@ Designed for the  hospitality industry
 
 [![](images/google.png)](https://play.google.com/store/apps/details?id=com.hotelaide)
 
->**Get it on the [Google Play Store](https://play.google.com/store/apps/details?id=com.hotelaide)**
+>**Screenshots**
 
-![](images/screen1.png) 
 ![](images/screen2.png) 
 ![](images/screen3.png) 
 ![](images/screen4.png) 
@@ -41,8 +40,9 @@ This app will focus on the job seekers
 
 Like and follow us on Facebook and get updates on project progress
 
->**<https://www.facebook.com/hotelAIDE/>**
+>[![](https://cdn6.aptoide.com/imgs/2/2/b/22b7282d7515ccb44de7f5cd4213c096_icon.png?w=240)](https://www.facebook.com/hotelAIDE) [Facebook](https://www.facebook.com/hotelAIDE)
 
->**<https://www.hotelaide.com>**
+>[![](https://www.kwarts.be/assets/front/images/website/icon-lng.png)](https://www.hotelaide.com)[Website](https://www.hotelaide.com)
+
 
  
