@@ -4,12 +4,12 @@ Designed for the  hospitality industry
 
 [![](images/google.png)](https://play.google.com/store/apps/details?id=com.hotelaide)
 
->**Screenshots**
+>**APP SCREENS**
 
-![](images/screen2.png) 
-![](images/screen3.png) 
-![](images/screen4.png) 
-![](images/screen5.png) 
+[![](images/screen2.png)](https://play.google.com/store/apps/details?id=com.hotelaide) 
+[![](images/screen3.png)](https://play.google.com/store/apps/details?id=com.hotelaide) 
+[![](images/screen4.png)](https://play.google.com/store/apps/details?id=com.hotelaide) 
+[![](images/screen5.png)](https://play.google.com/store/apps/details?id=com.hotelaide) 
 
 
 Connects the job seeker to the employer effortlessly in Kenya's growing Hospitality ecosystem.
@@ -20,7 +20,7 @@ Simple yet elegant using android latest Material Design 2 allows users to easily
 
 This app will focus on the job seekers
 
->**The Job Seeker**
+>**JOB SEEKER**
     
    1. Can get a basic rss feed on whats new in the hotel industry
    2. Have access to a dashboard that shows recent notifications and messages from potential employers
@@ -42,7 +42,7 @@ Like and follow us on Facebook and get updates on project progress
 
 >[![](https://cdn6.aptoide.com/imgs/2/2/b/22b7282d7515ccb44de7f5cd4213c096_icon.png?w=240)](https://www.facebook.com/hotelAIDE) [Facebook](https://www.facebook.com/hotelAIDE)
 
->[![](https://www.kwarts.be/assets/front/images/website/icon-lng.png)](https://www.hotelaide.com)[Website](https://www.hotelaide.com)
+>[![](https://www.kwarts.be/assets/front/images/website/icon-lng.png)](https://www.hotelaide.com) [Website](https://www.hotelaide.com)
 
 
  
