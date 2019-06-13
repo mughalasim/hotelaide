@@ -219,7 +219,7 @@ public class MemberProfileActivity extends AppCompatActivity {
         } else if (!helpers.validateInternetConnection()) {
             helpers.toastMessage(getString(R.string.error_connection));
         } else {
-            startActivity(new Intent(MemberProfileActivity.this, ConversationActivity.class)
+            startActivity(new Intent(MemberProfileActivity.this, MessagingActivity.class)
                     .putExtra("FROM_NAME", model.first_name.concat(" ").concat(model.last_name))
                     .putExtra("FROM_ID", INT_USER_ID)
                     .putExtra("FROM_PIC_URL", model.img_avatar)

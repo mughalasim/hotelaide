@@ -48,23 +48,21 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main.activities.AboutUsActivity;
+import com.hotelaide.main.activities.ConversationActivity;
 import com.hotelaide.main.activities.DashboardActivity;
 import com.hotelaide.main.activities.FindJobsActivity;
 import com.hotelaide.main.activities.FindMembersActivity;
 import com.hotelaide.main.activities.GalleryViewActivity;
 import com.hotelaide.main.activities.MyJobsActivity;
-import com.hotelaide.main.activities.MyMessages;
 import com.hotelaide.main.activities.ProfileActivity;
 import com.hotelaide.main.activities.ProfileEditActivity;
 import com.hotelaide.main.activities.SettingsActivity;
 import com.hotelaide.main.models.NotificationModel;
 import com.hotelaide.services.BackgroundFetchService;
-import com.hotelaide.services.MessagingService;
+import com.hotelaide.services.ConversationService;
 import com.hotelaide.services.ReminderService;
 import com.hotelaide.startup.SplashScreenActivity;
 
@@ -106,7 +104,6 @@ import static com.hotelaide.utils.StaticVariables.USER_COUNTY;
 import static com.hotelaide.utils.StaticVariables.USER_DOB;
 import static com.hotelaide.utils.StaticVariables.USER_FULL_ADDRESS;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
-import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.USER_L_NAME;
 import static com.hotelaide.utils.StaticVariables.USER_PHONE;
 import static com.hotelaide.utils.StaticVariables.db;
@@ -146,8 +143,8 @@ public class Helpers {
                 context.startActivity(new Intent(context, MyJobsActivity.class));
                 break;
 
-            case R.id.drawer_my_messages:
-                context.startActivity(new Intent(context, MyMessages.class));
+            case R.id.drawer_conversations:
+                context.startActivity(new Intent(context, ConversationActivity.class));
                 break;
 
             case R.id.drawer_find_members:
@@ -177,10 +174,10 @@ public class Helpers {
     public static void sessionExpiryBroadcast() {
         Context context = MyApplication.getAppContext();
 
-        updateUserOnlineStatus(Calendar.getInstance().getTimeInMillis());
+        FBDatabase.setUserStatus(Calendar.getInstance().getTimeInMillis());
 
-        MessagingService.stopListeningForMessages();
-        context.stopService(new Intent(context, MessagingService.class));
+        ConversationService.stopListeningForMessages();
+        context.stopService(new Intent(context, ConversationService.class));
         context.stopService(new Intent(context, BackgroundFetchService.class));
         context.stopService(new Intent(context, ReminderService.class));
 
@@ -189,21 +186,13 @@ public class Helpers {
         AccessToken.setCurrentAccessToken(null);
         LoginManager.getInstance().logOut();
 
-//        Database db = new Database();
         db.deleteAllTables();
 
         context.sendBroadcast(new Intent().setAction(BROADCAST_LOG_OUT));
         context.startActivity(new Intent(context, SplashScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
-    public static void updateUserOnlineStatus(Object status) {
-        if (SharedPrefs.getInt(USER_ID) != 0) {
-            MyApplication.initFireBase();
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference parent_ref = database.getReference(BuildConfig.USERS_URL + SharedPrefs.getInt(USER_ID) + BuildConfig.USERS_STATUS_URL);
-            parent_ref.setValue(status);
-        }
-    }
+
 
     // LOGS ========================================================================================
     public static void logThis(String page_name, String data) {

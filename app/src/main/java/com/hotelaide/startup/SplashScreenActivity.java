@@ -6,36 +6,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.gson.JsonObject;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
-import com.hotelaide.interfaces.UserInterface;
 import com.hotelaide.main.activities.DashboardActivity;
-import com.hotelaide.services.MessagingService;
-import com.hotelaide.utils.Database;
+import com.hotelaide.services.ConversationService;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.ACCESS_TOKEN;
 import static com.hotelaide.utils.StaticVariables.DATABASE_VERSION;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_LAUNCH;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH;
-import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
 import static com.hotelaide.utils.StaticVariables.INT_ANIMATION_TIME;
 import static com.hotelaide.utils.StaticVariables.USER_F_NAME;
-import static com.hotelaide.utils.StaticVariables.USER_ID;
 import static com.hotelaide.utils.StaticVariables.db;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -92,8 +79,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                         startActivity(new Intent(SplashScreenActivity.this, IntroActivity.class));
                     }
                 } else {
-                    if (helpers.validateServiceRunning(MessagingService.class)) {
-                        startService(new Intent(SplashScreenActivity.this, MessagingService.class));
+                    if (helpers.validateServiceRunning(ConversationService.class)) {
+                        startService(new Intent(SplashScreenActivity.this, ConversationService.class));
                     }
                     if (SharedPrefs.getString(USER_F_NAME).equals("")) {
                         startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class)

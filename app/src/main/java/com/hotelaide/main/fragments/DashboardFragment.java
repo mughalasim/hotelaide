@@ -111,7 +111,7 @@ public class DashboardFragment extends Fragment {
                             getString(R.string.nav_interviews),
                             getString(R.string.nav_saved),
                             getString(R.string.nav_profile_views),
-                            getString(R.string.nav_messages),
+                            getString(R.string.nav_conversations),
                     },
                     new String[]{
                             "This will show you how many jobs you have applied for",

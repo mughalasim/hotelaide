@@ -14,9 +14,6 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.hotelaide.R;
 import com.hotelaide.main.adapters.MembersAdapter;
 import com.hotelaide.main.models.MemberModel;
@@ -83,11 +80,11 @@ public class FindMembersActivity extends ParentActivity {
         et_search.setHint(R.string.txt_search_members);
 
         // SEARCH FUNCTIONALITY --------------------------------------------------------------------
-        FirebaseApp.initializeApp(FindMembersActivity.this);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference parent_ref = database.getReference();
+//        FirebaseApp.initializeApp(FindMembersActivity.this);
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference parent_ref = database.getReference();
         recycler_view = findViewById(R.id.recycler_view);
-        adapter = new MembersAdapter(model_list, parent_ref);
+        adapter = new MembersAdapter(model_list);
         recycler_view.setAdapter(adapter);
         recycler_view.setHasFixedSize(false);
         layoutManager = new LinearLayoutManager(FindMembersActivity.this);

@@ -76,11 +76,16 @@ android {
             buildConfigField 'String', 'FB_APP_ID', FB_APP_ID
             buildConfigField 'String', 'FB_STORE', FB_STORE
             // FIREBASE PATHS
-            buildConfigField 'String', 'FB_DB_URL', FB_DB_URL
-            buildConfigField 'String', 'USERS_URL', USERS_URL
-            buildConfigField 'String', 'USERS_STATUS_URL', USERS_STATUS_URL
-            buildConfigField 'String', 'MESSAGE_URL', MESSAGE_URL
-            buildConfigField 'String', 'CONVERSATION_URL', CONVERSATION_URL
+            buildConfigField 'String', 'URL_FB_DB', URL_FB_DB
+            buildConfigField 'String', 'URL_SLASH', URL_SLASH
+            buildConfigField 'String', 'URL_USER', URL_USER
+            buildConfigField 'String', 'URL_USER_STATUS', URL_USER_STATUS
+            buildConfigField 'String', 'URL_USER_IMG', URL_USER_IMG
+            buildConfigField 'String', 'URL_USER_NAME', URL_USER_NAME
+            buildConfigField 'String', 'URL_UNREAD', URL_UNREAD
+            buildConfigField 'String', 'URL_LAST', URL_LAST
+            buildConfigField 'String', 'URL_CONVERSATIONS ', URL_CONVERSATIONS
+            buildConfigField 'String', 'URL_MESSAGES', URL_MESSAGES
             // ALGOLIA SEARCH
             buildConfigField 'String', 'ALGOLIA_APP_ID', ALGOLIA_APP_ID
             buildConfigField 'String', 'ALGOLIA_SEARCH_API_KEY', ALGOLIA_SEARCH_API_KEY
@@ -199,6 +204,9 @@ dependencies {
 
     // TIME CALCULATOR
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+
+    // CHAT UI UX
+    implementation 'com.github.bassaer:chatmessageview:2.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

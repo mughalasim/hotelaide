@@ -11,6 +11,8 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 
@@ -21,8 +23,8 @@ import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_NOTIFICATIONS;
 import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_REMINDERS;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_ADDRESS;
+import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_CONVERSATIONS;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_DASH;
-import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_MESSAGES;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_PROFILE_EDIT;
 import static com.hotelaide.utils.StaticVariables.FIRST_LAUNCH_SEARCH;
@@ -36,6 +38,7 @@ public class MyApplication extends Application {
 
     private static GoogleAnalytics analytics;
     private static Tracker tracker;
+    public static DatabaseReference fb_parent_ref;
 
 
     public void onCreate() {
@@ -52,13 +55,15 @@ public class MyApplication extends Application {
 
         db = new Database();
 
+//        initFireBase();
+
     }
 
     public static void initFireBase() {
         FirebaseOptions builder = new FirebaseOptions.Builder()
                 .setApplicationId(BuildConfig.FB_APP_ID)
                 .setApiKey(getAppContext().getString(R.string.FB_API_KEY))
-                .setDatabaseUrl(BuildConfig.FB_DB_URL)
+                .setDatabaseUrl(BuildConfig.URL_FB_DB)
                 .setStorageBucket(BuildConfig.FB_STORE)
                 .build();
 
@@ -67,6 +72,8 @@ public class MyApplication extends Application {
         if (fire_base_app_list.size() < 1) {
             FirebaseApp.initializeApp(getAppContext(), builder);
         }
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        fb_parent_ref = database.getReference();
 
     }
 
@@ -94,7 +101,7 @@ public class MyApplication extends Application {
         SharedPrefs.setBool(FIRST_LAUNCH_PROFILE_EDIT, state);
         SharedPrefs.setBool(FIRST_LAUNCH_SEARCH, state);
         SharedPrefs.setBool(FIRST_LAUNCH_SEARCH_MEMBERS, state);
-        SharedPrefs.setBool(FIRST_LAUNCH_MESSAGES, state);
+        SharedPrefs.setBool(FIRST_LAUNCH_CONVERSATIONS, state);
         SharedPrefs.setBool(FIRST_LAUNCH_ADDRESS, state);
     }
 

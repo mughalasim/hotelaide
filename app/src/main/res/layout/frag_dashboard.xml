@@ -234,7 +234,7 @@
                     <TextView
                         style="@style/Text_Title"
                         android:minLines="1"
-                        android:text="@string/nav_messages"
+                        android:text="@string/nav_conversations"
                         android:textSize="@dimen/text_size_small" />
 
                 </LinearLayout>

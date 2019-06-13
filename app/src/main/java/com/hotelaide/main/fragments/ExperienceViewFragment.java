@@ -9,23 +9,20 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.JsonArray;
-import com.hotelaide.R;
-import com.hotelaide.main.models.ExperienceModel;
-import com.hotelaide.utils.Database;
-import com.hotelaide.utils.Helpers;
-
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hotelaide.R;
+import com.hotelaide.main.models.ExperienceModel;
+import com.hotelaide.utils.Helpers;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import static com.hotelaide.utils.StaticVariables.EDUCATION_LEVEL_TABLE_NAME;
 import static com.hotelaide.utils.StaticVariables.EXPERIENCE_TYPE_EDUCATION;
@@ -120,7 +117,7 @@ public class ExperienceViewFragment extends Fragment {
         recycler_view.invalidate();
         adapter.updateData(model_list);
         adapter.notifyDataSetChanged();
-        if (model_list.size() <= 0) {
+        if (model_list.size() < 1) {
             noListItems();
         }
 

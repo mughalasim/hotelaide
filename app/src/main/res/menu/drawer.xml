@@ -27,10 +27,10 @@
 
         <!--3-->
         <item
-            android:id="@+id/drawer_my_messages"
+            android:id="@+id/drawer_conversations"
             android:icon="@drawable/ic_my_messages"
             app:actionViewClass="android.widget.TextView"
-            android:title="@string/drawer_my_messages" />
+            android:title="@string/drawer_conversations" />
 
         <!--4-->
         <item

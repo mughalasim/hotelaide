@@ -51,7 +51,7 @@ public class StaticVariables {
     public static final String FIRST_LAUNCH_ADDRESS = "FIRST_LAUNCH_ADDRESS";
     public static final String FIRST_LAUNCH_SEARCH = "FIRST_LAUNCH_SEARCH";
     public static final String FIRST_LAUNCH_SEARCH_MEMBERS = "FIRST_LAUNCH_SEARCH_MEMBERS";
-    public static final String FIRST_LAUNCH_MESSAGES = "FIRST_LAUNCH_MESSAGES";
+    public static final String FIRST_LAUNCH_CONVERSATIONS = "FIRST_LAUNCH_CONVERSATIONS";
 
     // FLOAT VARIABLES
     public final static float FLOAT_GOOGLE_MAP_ZOOM = 14f;
@@ -76,8 +76,8 @@ public class StaticVariables {
     public final static String EXTRA_PROFILE_PASS = "PASSWORD";
     public final static String EXTRA_FAILED = "FAILED";
     public final static String EXTRA_PASSED = "PASSED";
-    public final static String EXTRA_MY_MESSAGES_INBOX = "EXTRA_MY_MESSAGES_INBOX";
-    public final static String EXTRA_MY_MESSAGES_NOTIFICATIONS = "EXTRA_MY_MESSAGES_NOTIFICATIONS";
+    public final static String EXTRA_CONVERSATIONS = "EXTRA_CONVERSATIONS";
+    public final static String EXTRA_NOTIFICATIONS = "EXTRA_NOTIFICATIONS";
 
     // BROADCAST VARIABLES =========================================================================
     public final static String BROADCAST_LOG_OUT = "BROADCAST_LOG_OUT";

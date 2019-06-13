@@ -97,7 +97,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".main.activities.MyMessages"
+            android:name=".main.activities.ConversationActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -149,7 +149,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".main.activities.ConversationActivity"
+            android:name=".main.activities.MessagingActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -175,7 +175,7 @@
 
         <!--CUSTOM SERVICES =====================================================================-->
         <service
-            android:name=".services.MessagingService"
+            android:name=".services.ConversationService"
             android:process=":service" />
 
         <service

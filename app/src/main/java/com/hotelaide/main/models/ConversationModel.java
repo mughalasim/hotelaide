@@ -1,11 +1,7 @@
 package com.hotelaide.main.models;
 
 public class ConversationModel {
-
     public int      from_id;
-
-    public String   text = "";
-
-    public boolean  is_empty = false;
-
+    public String   last_message = "";
+    public int      unread_messages;
 }

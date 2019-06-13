@@ -13,21 +13,20 @@ import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButton;
-import com.hotelaide.R;
-import com.hotelaide.main.models.NotificationModel;
-import com.hotelaide.utils.Database;
-import com.hotelaide.utils.Helpers;
-
-import java.util.ArrayList;
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.button.MaterialButton;
+import com.hotelaide.R;
+import com.hotelaide.main.models.NotificationModel;
+import com.hotelaide.utils.Helpers;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.hotelaide.utils.StaticVariables.db;
 
@@ -107,7 +106,7 @@ public class NotificationFragment extends Fragment {
         model_list = db.getAllNotifications();
         recycler_view.invalidate();
         adapter.updateData(model_list);
-        if (model_list.size() <= 0) {
+        if (model_list.size() < 1) {
             noListItems();
         }
         swipe_refresh.setRefreshing(false);

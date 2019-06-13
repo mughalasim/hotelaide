@@ -18,11 +18,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.hotelaide.BuildConfig;
 import com.hotelaide.R;
 import com.hotelaide.main.activities.FindMembersActivity;
 import com.hotelaide.main.activities.MemberProfileActivity;
 import com.hotelaide.main.models.MemberModel;
+import com.hotelaide.utils.FBDatabase;
 import com.hotelaide.utils.Helpers;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -36,7 +36,7 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
     private final ArrayList<MemberModel> member_models;
     private Context context;
     private Helpers helpers;
-    private DatabaseReference parent_ref, child_ref_status;
+    private DatabaseReference child_ref_status;
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -69,9 +69,9 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
 
     }
 
-    public MembersAdapter(ArrayList<MemberModel> jobModels, DatabaseReference parent_ref) {
+    public MembersAdapter(ArrayList<MemberModel> jobModels) {
         this.member_models = jobModels;
-        this.parent_ref = parent_ref;
+//        this.parent_ref = parent_ref;
     }
 
     @NonNull
@@ -128,7 +128,7 @@ public class MembersAdapter extends RecyclerView.Adapter<MembersAdapter.ViewHold
                 }
             });
 
-            child_ref_status = parent_ref.child(BuildConfig.USERS_URL + member_model.id + BuildConfig.USERS_STATUS_URL);
+            child_ref_status = FBDatabase.getURLMemberStatus(member_model.id);
             child_ref_status.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

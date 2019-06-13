@@ -203,7 +203,7 @@ public class DocumentsFragment extends Fragment {
         recycler_view.invalidate();
         adapter.updateData(model_list);
         adapter.notifyDataSetChanged();
-        if (model_list.size() <= 0) {
+        if (model_list.size() < 1) {
             noListItems();
         }
     }

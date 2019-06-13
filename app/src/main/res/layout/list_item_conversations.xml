@@ -17,7 +17,7 @@
         android:paddingStart="@dimen/padding_small">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_from_pic"
+            android:id="@+id/img_pic"
             android:layout_width="@dimen/img_size_medium"
             android:layout_height="@dimen/img_size_medium"
             android:layout_centerVertical="true"
@@ -34,7 +34,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/padding_tiny"
             android:layout_toStartOf="@+id/txt_message_counter"
-            android:layout_toEndOf="@+id/img_from_pic"
+            android:layout_toEndOf="@+id/img_pic"
             android:orientation="vertical">
 
             <TextView

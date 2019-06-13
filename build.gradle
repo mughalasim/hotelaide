@@ -53,8 +53,8 @@ ext {
     SupportLibrary = '1.0.0'
 
     // App Versioning
-    versionCode = 29
-    versionName = 2.9
+    versionCode = 30
+    versionName = 3.0
 }
 task clean_app(type: Delete) {
     delete rootProject.buildDir

@@ -38,7 +38,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.hotelaide.BuildConfig;
@@ -58,6 +57,7 @@ import java.util.Objects;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
+import static com.hotelaide.utils.MyApplication.fb_parent_ref;
 import static com.hotelaide.utils.StaticVariables.ALLOW_UPDATE_APP;
 import static com.hotelaide.utils.StaticVariables.BROADCAST_LOG_OUT;
 import static com.hotelaide.utils.StaticVariables.EXTRA_STRING;
@@ -392,8 +392,7 @@ public class ParentActivity extends FragmentActivity implements
 
     // FIREBASE DATABASE VERSION CONTROL NOTIFICATION CHECKER ======================================
     private void getAppVersionFromFireBase() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference parent_ref = database.getReference("AppVersion");
+        DatabaseReference parent_ref = fb_parent_ref.child("AppVersion");
         INT_NAV_DRAWER_UPDATE_COUNTER = 1;
         parent_ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

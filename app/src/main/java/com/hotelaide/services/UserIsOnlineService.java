@@ -4,13 +4,13 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.hotelaide.utils.Database;
+import com.hotelaide.utils.FBDatabase;
 import com.hotelaide.utils.Helpers;
+import com.hotelaide.utils.MyApplication;
 
 import java.util.Calendar;
 
 import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
-import static com.hotelaide.utils.StaticVariables.db;
 
 public class UserIsOnlineService extends Service {
     private static final String TAG_LOG = "USER IS ONLINE";
@@ -33,14 +33,15 @@ public class UserIsOnlineService extends Service {
     public void onCreate() {
         APP_IS_RUNNING = true;
         Helpers.logThis(TAG_LOG, "ONLINE");
-        Helpers.updateUserOnlineStatus("Online");
+        MyApplication.initFireBase();
+        FBDatabase.setUserStatus("Online");
     }
 
     @Override
     public void onDestroy() {
         APP_IS_RUNNING = false;
         Helpers.logThis(TAG_LOG, "OFFLINE");
-        Helpers.updateUserOnlineStatus(Calendar.getInstance().getTimeInMillis());
+        FBDatabase.setUserStatus(Calendar.getInstance().getTimeInMillis());
         super.onDestroy();
     }
 
@@ -48,7 +49,7 @@ public class UserIsOnlineService extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         APP_IS_RUNNING = false;
         Helpers.logThis(TAG_LOG, "OFFLINE");
-        Helpers.updateUserOnlineStatus(Calendar.getInstance().getTimeInMillis());
+        FBDatabase.setUserStatus(Calendar.getInstance().getTimeInMillis());
         stopSelf();
         super.onTaskRemoved(rootIntent);
     }

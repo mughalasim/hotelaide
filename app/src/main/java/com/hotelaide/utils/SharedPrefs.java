@@ -4,14 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DatabaseReference;
 import com.hotelaide.BuildConfig;
 import com.hotelaide.main.models.UserModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -217,6 +218,8 @@ public class SharedPrefs {
                         db.setExperienceFromJson(education_experience.getJSONObject(i), EXPERIENCE_TYPE_EDUCATION);
                     }
                 }
+
+                DatabaseReference parent_ref, child_ref, child_ref_status;
 
                 MyApplication.getAppContext().sendBroadcast(new Intent().setAction(BROADCAST_SET_USER).putExtra(EXTRA_PASSED, EXTRA_PASSED));
 

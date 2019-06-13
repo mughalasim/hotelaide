@@ -3,14 +3,12 @@ package com.hotelaide.main.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.JsonObject;
@@ -26,19 +24,13 @@ import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.MyApplication;
 import com.hotelaide.utils.SharedPrefs;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import java.util.Calendar;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hotelaide.utils.StaticVariables.ALLOW_PUSH_REMINDERS;
-import static com.hotelaide.utils.StaticVariables.APP_IS_RUNNING;
-import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_INBOX;
-import static com.hotelaide.utils.StaticVariables.EXTRA_MY_MESSAGES_NOTIFICATIONS;
+import static com.hotelaide.utils.StaticVariables.EXTRA_CONVERSATIONS;
+import static com.hotelaide.utils.StaticVariables.EXTRA_NOTIFICATIONS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_PROFILE_BASIC;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_FIRST_TIME;
 import static com.hotelaide.utils.StaticVariables.EXTRA_START_RETURN;
@@ -112,6 +104,14 @@ public class DashboardActivity extends ParentActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        if (helpers.validateServiceRunning(UserIsOnlineService.class)) {
+            stopService(new Intent(DashboardActivity.this, UserIsOnlineService.class));
+        }
+        super.onDestroy();
+    }
+
     // BASIC FUNCTIONS =============================================================================
     private void handleExtraBundles() {
         Bundle extras = getIntent().getExtras();
@@ -166,8 +166,8 @@ public class DashboardActivity extends ParentActivity {
             startActivity(new Intent(DashboardActivity.this, MyJobsActivity.class)
                     .putExtra(FILTER_TYPE_INTERVIEWS, FILTER_TYPE_INTERVIEWS));
         } else if (view.getId() == R.id.ll_unread_messages) {
-            startActivity(new Intent(DashboardActivity.this, MyMessages.class)
-                    .putExtra(EXTRA_MY_MESSAGES_INBOX, EXTRA_MY_MESSAGES_INBOX));
+            startActivity(new Intent(DashboardActivity.this, ConversationActivity.class)
+                    .putExtra(EXTRA_CONVERSATIONS, EXTRA_CONVERSATIONS));
         }
 
     }
@@ -177,8 +177,8 @@ public class DashboardActivity extends ParentActivity {
     }
 
     public void openNotifications(View view) {
-        startActivity(new Intent(DashboardActivity.this, MyMessages.class)
-                .putExtra(EXTRA_MY_MESSAGES_NOTIFICATIONS, EXTRA_MY_MESSAGES_NOTIFICATIONS));
+        startActivity(new Intent(DashboardActivity.this, ConversationActivity.class)
+                .putExtra(EXTRA_NOTIFICATIONS, EXTRA_NOTIFICATIONS));
     }
 
     private void handleFireBase() {
