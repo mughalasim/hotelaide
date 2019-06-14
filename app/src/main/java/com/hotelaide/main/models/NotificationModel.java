@@ -6,6 +6,7 @@ public class NotificationModel {
     public int      job_id = 0;
     public int      read = 0;
     public int      type_code = 0;
+    public int      count = 0;
 
     public String   title = "";
     public String   preview = "";

@@ -5,67 +5,89 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/list_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_mini"
-        android:paddingEnd="@dimen/padding_small"
-        android:layout_marginStart="@dimen/padding_small"
-        android:layout_marginEnd="@dimen/padding_small"
-        android:background="@drawable/back_text_fields"
-        android:paddingStart="@dimen/padding_small">
+        style="@style/Card_Layout">
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/img_pic"
-            android:layout_width="@dimen/img_size_medium"
-            android:layout_height="@dimen/img_size_medium"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/app_name"
-            android:layout_marginTop="@dimen/padding_tiny"
-            android:scaleType="centerCrop"
-            android:src="@color/light_grey"
-            app:riv_corner_radius="@dimen/img_size_medium" />
-
-        <LinearLayout
-            android:id="@+id/top_panel"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/padding_tiny"
-            android:layout_toStartOf="@+id/txt_message_counter"
-            android:layout_toEndOf="@+id/img_pic"
-            android:orientation="vertical">
+            android:padding="@dimen/padding_mini">
 
-            <TextView
-                android:id="@+id/txt_from_name"
-                style="@style/Text_Normal"
-                android:layout_marginTop="0dp"
-                android:maxLines="1"
-                android:text="@string/app_name"
-                android:textStyle="bold" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/img_pic"
+                android:layout_width="@dimen/img_size_medium_large"
+                android:layout_height="@dimen/img_size_medium_large"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:src="@color/grey"
+                app:riv_border_color="@color/light_grey"
+                app:riv_border_width="@dimen/line_thickness"
+                app:riv_corner_radius="@dimen/img_size_medium_large" />
 
-            <TextView
-                android:id="@+id/txt_last_message"
-                style="@style/Text_Normal"
-                android:layout_marginTop="@dimen/line_thickness"
-                android:maxLines="1"
-                android:text="@string/app_name"
-                android:textColor="@color/colorPrimary" />
+            <LinearLayout
+                android:id="@+id/top_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/padding_tiny"
+                android:layout_toStartOf="@+id/chip_panel"
+                android:layout_toEndOf="@+id/img_pic"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/txt_from_name"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="0dp"
+                    android:maxLines="1"
+                    android:text="@string/app_name"
+                    android:textStyle="bold" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/txt_message_counter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:textSize="@dimen/text_size_small"
-            android:textColor="@color/white"
-            app:chipBackgroundColor="@color/red" />
+                <TextView
+                    android:id="@+id/txt_last_message"
+                    style="@style/Text_Normal"
+                    android:layout_marginTop="@dimen/line_thickness"
+                    android:maxLines="1"
+                    android:text="@string/app_name"
+                    android:textColor="@color/colorPrimary" />
 
-    </RelativeLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/chip_panel"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_message_count"
+                    app:chipBackgroundColor="@color/red"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:textAppearance="@style/Text_Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_user_status"
+                    android:layout_marginTop="@dimen/text_margin"
+                    android:text="Offline"
+                    app:chipBackgroundColor="@color/grey"
+                    android:textColor="@color/white"
+                    android:textAppearance="@style/Text_Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <include layout="@layout/list_item_none" />
 

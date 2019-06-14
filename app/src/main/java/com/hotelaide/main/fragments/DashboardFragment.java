@@ -18,11 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.hotelaide.R;
+import com.hotelaide.utils.FBDatabase;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
 import com.hotelaide.utils.SharedPrefs;
@@ -70,6 +72,8 @@ public class DashboardFragment extends Fragment {
             rl_notifications;
 
     private SwipeRefreshLayout swipe_refresh;
+
+    private DatabaseReference child_ref;
 
     private BroadcastReceiver receiver;
 
@@ -188,6 +192,8 @@ public class DashboardFragment extends Fragment {
         // NEW NOTIFICATIONS
         rl_notifications = root_view.findViewById(R.id.rl_notifications);
         txt_unread_notifications = root_view.findViewById(R.id.txt_unread_notifications);
+
+        child_ref = FBDatabase.getURLConversation();
     }
 
     private void setListeners() {
@@ -223,13 +229,6 @@ public class DashboardFragment extends Fragment {
                 rl_notifications.setVisibility(View.GONE);
             }
 
-            // MESSAGES
-//        int message_size = db.getAllUnreadNotifications();
-//        if (message_size > 0) {
-//            txt_unread_messages.setText(String.valueOf(message_size));
-//        } else {
-//            txt_unread_messages.setText(R.string.txt_zero);
-//        }
         } else {
             try {
                 txt_shortlisted.setText(data.getString("shortlisted_jobs"));
@@ -253,6 +252,32 @@ public class DashboardFragment extends Fragment {
                 helpers.toastMessage("Update failed, please try again later");
             }
         }
+
+        // MESSAGES
+        child_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    Gson gson = new Gson();
+                    JSONObject object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
+                    txt_unread_messages.setText(String.valueOf(object.length()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    if (getContext() != null)
+                        txt_unread_messages.setText(getContext().getString(R.string.txt_zero));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (getContext() != null)
+                        txt_unread_messages.setText(getContext().getString(R.string.txt_zero));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                if (getContext() != null)
+                    txt_unread_messages.setText(getContext().getString(R.string.txt_zero));
+            }
+        });
 
     }
 
@@ -281,22 +306,6 @@ public class DashboardFragment extends Fragment {
         };
         if (getActivity() != null)
             getActivity().registerReceiver(receiver, filter);
-    }
-
-    private void fetchFacebookPosts() {
-        /* make the API call */
-        new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/" + getString(R.string.FACEBOOK_APP_ID) + "/feed",
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-                        /* handle the result */
-                        Helpers.logThis(TAG_LOG, response.toString());
-                    }
-                }
-        ).executeAsync();
     }
 
     private void updateProfileSeekBar(int completion) {

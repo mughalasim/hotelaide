@@ -66,16 +66,12 @@
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.github.bassaer.chatmessageview.view.MessageView
+        android:id="@+id/message_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/bottom"
-        android:scrollbars="vertical"
-        android:scrollbarThumbVertical="@android:color/darker_gray"
-        android:scrollbarSize="5dp"
-        android:layout_marginTop="@dimen/padding_mini"
-        android:layout_below="@+id/rl_toolbar" />
+        android:layout_below="@+id/toolbar" />
 
     <RelativeLayout
         android:id="@+id/bottom"

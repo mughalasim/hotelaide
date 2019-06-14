@@ -1,6 +1,7 @@
 package com.hotelaide.main.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -11,19 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.github.bassaer.chatmessageview.model.IChatUser;
+import com.github.bassaer.chatmessageview.model.Message;
+import com.github.bassaer.chatmessageview.view.MessageView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 import com.google.gson.Gson;
 import com.hotelaide.R;
-import com.hotelaide.main.adapters.MessagingAdapter;
-import com.hotelaide.main.models.MessagingModel;
+import com.hotelaide.services.ConversationService;
 import com.hotelaide.utils.FBDatabase;
 import com.hotelaide.utils.Helpers;
 import com.hotelaide.utils.HelpersAsync;
@@ -33,10 +36,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 
 import static com.hotelaide.BuildConfig.URL_USER_IMG;
 import static com.hotelaide.BuildConfig.URL_USER_NAME;
@@ -50,17 +51,21 @@ public class MessagingActivity extends AppCompatActivity {
             STR_STATUS = "",
             STR_FROM_PIC_URL = "";
 
-    private int INT_FROM_ID = 0;
+    private int
+            INT_MY_ID = SharedPrefs.getInt(USER_ID),
+            INT_FROM_ID = 0;
 
     private final String TAG_LOG = "MESSAGING";
 
     private DatabaseReference
             db_message,
-            db_user;
+            db_member;
 
-    private RecyclerView recycler_view;
-    private ArrayList<MessagingModel> model_list = new ArrayList<>();
-    private MessagingAdapter adapter;
+    private MessageView message_view;
+    private User
+            user,
+            member;
+
     private Helpers helpers;
 
     private ImageView btn_send;
@@ -84,7 +89,9 @@ public class MessagingActivity extends AppCompatActivity {
             helpers = new Helpers(MessagingActivity.this);
 
             db_message = FBDatabase.getURLMessages(INT_FROM_ID);
-            db_user = FBDatabase.getURLMember(INT_FROM_ID);
+            db_member = FBDatabase.getURLMember(INT_FROM_ID);
+
+            Helpers.cancelNotification(MessagingActivity.this, INT_FROM_ID);
 
             findAllViews();
 
@@ -96,11 +103,18 @@ public class MessagingActivity extends AppCompatActivity {
 
             HelpersAsync.setTrackerPage(TAG_LOG);
 
+            stopService(new Intent(MessagingActivity.this, ConversationService.class));
+
         } else {
             onBackPressed();
         }
 
+    }
 
+    @Override
+    protected void onDestroy() {
+        startService(new Intent(MessagingActivity.this, ConversationService.class));
+        super.onDestroy();
     }
 
     // BASIC FUNCTIONS =============================================================================
@@ -115,7 +129,9 @@ public class MessagingActivity extends AppCompatActivity {
                     FBDatabase.updateMemberDetails(INT_FROM_ID, STR_PAGE_TITLE, STR_FROM_PIC_URL);
                 }
             }
-            Helpers.logThis(TAG_LOG, "FROM ID: " + INT_FROM_ID);
+            user = new User(String.valueOf(INT_MY_ID), "Me", null);
+            member = new User(String.valueOf(INT_FROM_ID), STR_PAGE_TITLE, null);
+
             return true;
         } else {
             return false;
@@ -128,12 +144,20 @@ public class MessagingActivity extends AppCompatActivity {
         img_pic = findViewById(R.id.img_pic);
 
         // MESSAGE DISPLAY  FUNCTIONALITY ----------------------------------------------------------
-        recycler_view = findViewById(R.id.recycler_view);
-        adapter = new MessagingAdapter(model_list, INT_FROM_ID);
-        recycler_view.setAdapter(adapter);
-        recycler_view.setHasFixedSize(false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(MessagingActivity.this);
-        recycler_view.setLayoutManager(layoutManager);
+        message_view = findViewById(R.id.message_view);
+        // RIGHT SIDE
+        message_view.setRightBubbleColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        message_view.setRightMessageTextColor(ContextCompat.getColor(this, R.color.white));
+        // LEFT SIDE
+        message_view.setLeftBubbleColor(ContextCompat.getColor(this, R.color.colorAccent));
+        message_view.setLeftMessageTextColor(ContextCompat.getColor(this, R.color.white));
+
+        message_view.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+        message_view.setSendTimeTextColor(ContextCompat.getColor(this, R.color.grey));
+        message_view.setUsernameTextColor(ContextCompat.getColor(this, R.color.grey));
+
+        message_view.setMessageMarginTop(5);
+        message_view.setMessageMarginBottom(10);
 
         btn_send = findViewById(R.id.btn_send);
         et_message = findViewById(R.id.et_message);
@@ -164,13 +188,16 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     private void updateToolbar() {
-        Glide.with(this)
-                .load(STR_FROM_PIC_URL)
-                .placeholder(R.drawable.ic_profile)
-                .into(img_pic);
-
-        toolbar_text.setText(STR_PAGE_TITLE);
-        txt_user_status.setText(STR_STATUS);
+        try {
+            Glide.with(this)
+                    .load(STR_FROM_PIC_URL)
+                    .placeholder(R.drawable.ic_profile)
+                    .into(img_pic);
+            toolbar_text.setText(STR_PAGE_TITLE);
+            txt_user_status.setText(STR_STATUS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setListeners() {
@@ -178,6 +205,48 @@ public class MessagingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 helpers.openImageViewer(MessagingActivity.this, STR_FROM_PIC_URL);
+            }
+        });
+
+        db_member.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    Gson gson = new Gson();
+                    JSONObject user_object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
+
+                    STR_PAGE_TITLE = user_object.getString(URL_USER_NAME);
+                    STR_FROM_PIC_URL = user_object.getString(URL_USER_IMG);
+
+                    if (!user_object.isNull(URL_USER_STATUS) && user_object.get(URL_USER_STATUS) instanceof String) {
+                        STR_STATUS = "Online";
+                    } else if (!user_object.isNull(URL_USER_STATUS) && user_object.get(URL_USER_STATUS) instanceof Long) {
+                        try {
+                            PrettyTime p = new PrettyTime();
+                            String time = p.format(new Date(user_object.getLong(URL_USER_STATUS)));
+                            STR_STATUS = "Last seen: ".concat(time);
+                        } catch (Exception e) {
+                            STR_STATUS = "Last seen: Unknown";
+                        }
+                    } else {
+                        STR_STATUS = "Last seen: Unknown";
+                    }
+
+                } catch (JSONException e) {
+                    STR_STATUS = "Last seen: Unknown";
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    STR_STATUS = "Last seen: Unknown";
+                    e.printStackTrace();
+                }
+                updateToolbar();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                STR_STATUS = "Last seen: Unknown";
+                STR_PAGE_TITLE = "Unknown user";
+                updateToolbar();
             }
         });
 
@@ -208,53 +277,12 @@ public class MessagingActivity extends AppCompatActivity {
             }
         });
 
-        db_user.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    Gson gson = new Gson();
-                    JSONObject user_object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
-
-                    STR_PAGE_TITLE = user_object.getString(URL_USER_NAME);
-                    STR_FROM_PIC_URL = user_object.getString(URL_USER_IMG);
-
-                    if (!user_object.isNull(URL_USER_STATUS) && user_object.get(URL_USER_STATUS) instanceof String) {
-                        STR_STATUS = "Online";
-                    } else if (!user_object.isNull(URL_USER_STATUS) && user_object.get(URL_USER_STATUS) instanceof Long) {
-                        try {
-                            PrettyTime p = new PrettyTime();
-                            String time = p.format(new Date(user_object.getLong(URL_USER_STATUS)));
-                            STR_STATUS = "Last seen: ".concat(time);
-                        } catch (Exception e) {
-                            STR_STATUS = "Last seen: Unknown";
-                        }
-                    } else {
-                        STR_STATUS = "Last seen: Unknown";
-                    }
-                } catch (JSONException e) {
-                    STR_STATUS = "Last seen: Unknown";
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    STR_STATUS = "Last seen: Unknown";
-                    e.printStackTrace();
-                }
-                updateToolbar();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                STR_STATUS = "Last seen: Unknown";
-                STR_PAGE_TITLE = "Unknown user";
-                updateToolbar();
-            }
-        });
-
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (et_message.getText().toString().length() > 0) {
                     FBDatabase.sendMessage(
-                            SharedPrefs.getInt(USER_ID),
+                            INT_MY_ID,
                             INT_FROM_ID,
                             et_message.getText().toString(),
                             Calendar.getInstance().getTimeInMillis());
@@ -269,70 +297,79 @@ public class MessagingActivity extends AppCompatActivity {
         try {
             Gson gson = new Gson();
             JSONObject object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
-            MessagingModel messagingModel = new MessagingModel();
-            messagingModel.from_id = object.getInt("from_id");
-            messagingModel.text = object.getString("text");
-            messagingModel.time = object.getLong("time");
 
-            Helpers.logThis(TAG_LOG, "TEXT: " + messagingModel.text);
+            String text = object.getString("text");
+            boolean is_me = INT_MY_ID == object.getInt("from_id");
 
-            model_list.add(messagingModel);
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(object.getLong("time"));
 
-            adapter.notifyDataSetChanged();
-
-            recycler_view.scrollToPosition(model_list.size());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void receiveMessageArray(DataSnapshot dataSnapshot) {
-        try {
-            Gson gson = new Gson();
-            JSONObject main_object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
-            Iterator<String> keys = main_object.keys();
-
-            while (keys.hasNext()) {
-                String key = keys.next();
-                Helpers.logThis(TAG_LOG, key);
-
-                JSONObject object = main_object.getJSONObject(key);
-                MessagingModel messagingModel = new MessagingModel();
-                messagingModel.from_id = object.getInt("from_id");
-                messagingModel.text = object.getString("text");
-                messagingModel.time = Long.parseLong(key);
-
-                Helpers.logThis(TAG_LOG, "TEXT: " + messagingModel.text);
-
-                model_list.add(messagingModel);
-
-            }
-
-            if (model_list.size() < 1) {
-                noListItems();
+            Message message;
+            if (is_me) {
+                message = new Message.Builder()
+                        .setUser(user)
+                        .setRight(true)
+                        .setSendTime(cal)
+                        .setText(text)
+                        .hideIcon(true)
+                        .build();
             } else {
-                adapter.notifyDataSetChanged();
+                message = new Message.Builder()
+                        .setUser(member)
+                        .setRight(false)
+                        .setSendTime(cal)
+                        .setText(text)
+                        .hideIcon(true)
+                        .build();
+                FBDatabase.setMessageRead(INT_FROM_ID);
             }
 
-            recycler_view.scrollToPosition(model_list.size());
+            message_view.setMessage(message);
+            message_view.scrollToEnd();
+
 
         } catch (JSONException e) {
             e.printStackTrace();
-            noListItems();
         } catch (Exception e) {
             e.printStackTrace();
-            noListItems();
         }
     }
 
-    private void noListItems() {
-        recycler_view.invalidate();
-        model_list.clear();
-        model_list.add(new MessagingModel());
-        adapter.notifyDataSetChanged();
+    // IMPLEMENTATIONS =============================================================================
+    class User implements IChatUser {
+
+        private String id;
+        private String name;
+        private Bitmap icon;
+
+        public User(String id, String name, Bitmap icon) {
+            this.id = id;
+            this.name = name;
+            this.icon = icon;
+        }
+
+        @NotNull
+        @Override
+        public String getId() {
+            return id;
+        }
+
+        @Nullable
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Nullable
+        @Override
+        public Bitmap getIcon() {
+            return icon;
+        }
+
+        @Override
+        public void setIcon(Bitmap bitmap) {
+            this.icon = bitmap;
+        }
     }
 
 }

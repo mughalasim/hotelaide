@@ -96,8 +96,6 @@ public class DashboardActivity extends ParentActivity {
             }
         }
 
-        startService(new Intent(DashboardActivity.this, UserIsOnlineService.class));
-
         handleFireBase();
 
         setUpHomeSearch();
@@ -105,8 +103,16 @@ public class DashboardActivity extends ParentActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStart() {
         if (helpers.validateServiceRunning(UserIsOnlineService.class)) {
+            startService(new Intent(DashboardActivity.this, UserIsOnlineService.class));
+        }
+        super.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (!helpers.validateServiceRunning(UserIsOnlineService.class)) {
             stopService(new Intent(DashboardActivity.this, UserIsOnlineService.class));
         }
         super.onDestroy();

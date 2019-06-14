@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -28,6 +29,7 @@ import com.hotelaide.R;
 import com.hotelaide.main.activities.MemberProfileActivity;
 import com.hotelaide.main.activities.MessagingActivity;
 import com.hotelaide.main.models.ConversationModel;
+import com.hotelaide.main.models.UserModel;
 import com.hotelaide.utils.FBDatabase;
 import com.hotelaide.utils.Helpers;
 
@@ -39,6 +41,7 @@ import java.util.Objects;
 
 import static com.hotelaide.BuildConfig.URL_USER_IMG;
 import static com.hotelaide.BuildConfig.URL_USER_NAME;
+import static com.hotelaide.BuildConfig.URL_USER_STATUS;
 import static com.hotelaide.utils.StaticVariables.EXTRA_INT;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ViewHolder> {
@@ -49,7 +52,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout
-                no_list_item,
+                no_list_item;
+        CardView
                 list_item;
         final TextView
                 txt_no_results,
@@ -57,7 +61,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 txt_last_message;
         final ImageView
                 img_from_pic;
-        final Chip txt_message_counter;
+        final Chip
+                chip_message_count,
+                chip_user_status;
 
         ViewHolder(View v) {
             super(v);
@@ -65,7 +71,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             txt_no_results = v.findViewById(R.id.txt_no_results);
             txt_from_name = v.findViewById(R.id.txt_from_name);
             txt_last_message = v.findViewById(R.id.txt_last_message);
-            txt_message_counter = v.findViewById(R.id.txt_message_counter);
+            chip_message_count = v.findViewById(R.id.chip_message_count);
+            chip_user_status = v.findViewById(R.id.chip_user_status);
             no_list_item = v.findViewById(R.id.rl_no_list_items);
             list_item = v.findViewById(R.id.list_item);
         }
@@ -90,6 +97,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         helpers = new Helpers(context);
 
         final ConversationModel conversationModel = conversationModels.get(position);
+        final UserModel userModel = new UserModel();
 
         if (conversationModel.from_id == 0) {
             holder.no_list_item.setVisibility(View.VISIBLE);
@@ -104,15 +112,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             holder.no_list_item.setVisibility(View.GONE);
             holder.list_item.setVisibility(View.VISIBLE);
 
-            final String img_url="", from_name = "";
-
             DatabaseReference child_ref = FBDatabase.getURLMember(conversationModel.from_id);
-            child_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            child_ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    try{
+                    try {
                         Gson gson = new Gson();
                         JSONObject user_object = new JSONObject(gson.toJson(dataSnapshot.getValue()));
+
+                        userModel.img_avatar = user_object.getString(URL_USER_IMG);
+                        userModel.first_name = user_object.getString(URL_USER_NAME);
+
                         holder.txt_from_name.setText(user_object.getString(URL_USER_NAME));
 
                         Glide.with(context)
@@ -120,9 +130,24 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                                 .placeholder(R.drawable.ic_profile)
                                 .into(holder.img_from_pic);
 
+                        if (!user_object.isNull(URL_USER_STATUS) && user_object.get(URL_USER_STATUS) instanceof String) {
+                            holder.chip_user_status.setText("Online");
+                            holder.chip_user_status.setChipBackgroundColorResource(R.color.green);
 
-                    } catch (JSONException e){
+                        } else if (!user_object.isNull(URL_USER_STATUS) && user_object.get(URL_USER_STATUS) instanceof Long) {
+                            holder.chip_user_status.setText("Offline");
+                            holder.chip_user_status.setChipBackgroundColorResource(R.color.grey);
+                        } else {
+                            holder.chip_user_status.setText("Offline");
+                            holder.chip_user_status.setChipBackgroundColorResource(R.color.grey);
+                        }
+                    } catch (JSONException e) {
                         holder.txt_from_name.setText("Unknown user");
+                        holder.chip_user_status.setText("Offline");
+                        holder.chip_user_status.setChipBackgroundColorResource(R.color.grey);
+
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
 
@@ -135,12 +160,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             holder.txt_last_message.setText(conversationModel.last_message);
 
             if (conversationModel.unread_messages == 0) {
-                holder.txt_message_counter.setVisibility(View.GONE);
+                holder.chip_message_count.setVisibility(View.GONE);
             } else {
-                holder.txt_message_counter.setVisibility(View.VISIBLE);
-                holder.txt_message_counter.setText(String.valueOf(conversationModel.unread_messages));
+                holder.chip_message_count.setVisibility(View.VISIBLE);
+                holder.chip_message_count.setText(String.valueOf(conversationModel.unread_messages));
             }
-
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -154,9 +178,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                         }
 
                         context.startActivity(new Intent(context, MessagingActivity.class)
-                                .putExtra("FROM_NAME", from_name)
+                                .putExtra("FROM_NAME", userModel.first_name)
                                 .putExtra("FROM_ID", conversationModel.from_id)
-                                .putExtra("FROM_PIC_URL", img_url)
+                                .putExtra("FROM_PIC_URL", userModel.img_avatar)
                         );
                     }
                 }
@@ -168,7 +192,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                     if (conversationModel.from_id != 0) {
                         context.startActivity(new Intent(context, MemberProfileActivity.class)
                                 .putExtra(EXTRA_INT, conversationModel.from_id
-                        ));
+                                ));
                     }
                 }
             });
@@ -191,13 +215,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                         btn_confirm.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-//                                FirebaseApp.initializeApp(context);
-//                                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                Helpers.logThis("MESSAGE ADAPTER", from_name + "  " + holder.getAdapterPosition());
                                 FBDatabase.deleteConversation(conversationModel.from_id);
                                 conversationModels.remove(holder.getAdapterPosition());
                                 notifyItemRemoved(holder.getAdapterPosition());
                                 notifyDataSetChanged();
+                                Helpers.logThis(Helpers.TAG_LOG, "MESSAGE DELETED " + holder.getAdapterPosition());
                                 dialog.cancel();
                             }
                         });

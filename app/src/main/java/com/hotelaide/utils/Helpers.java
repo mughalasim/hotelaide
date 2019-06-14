@@ -1048,9 +1048,14 @@ public class Helpers {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(notification_model.type_code, mBuilder.build());
-        ShortcutBadger.applyCount(context, 1);
+        notificationManager.notify(notification_model.job_id, mBuilder.build());
+        ShortcutBadger.applyCount(context, notification_model.count);
 
+    }
+
+    public static void cancelNotification(Context context, int notification_id){
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.cancel(notification_id);
     }
 
     private static int getNotificationIcon() {
